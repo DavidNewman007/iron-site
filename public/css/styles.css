@@ -492,6 +492,12 @@ section {
   filter: saturate(1.05) contrast(1.02);
 }
 
+/* Обрезка встроенных полей у картинки MacBook */
+.poster-strip .poster-frame--crop img {
+  transform: scale(1.14);
+  object-position: center 42%;
+}
+
 .poster-strip figcaption {
   font-size: 0.7rem;
   text-align: center;
@@ -858,10 +864,6 @@ section {
     grid-template-columns: 1fr;
   }
 
-  .poster-strip {
-    grid-template-columns: 1fr;
-  }
-
   .header-phone {
     display: none;
   }
@@ -888,14 +890,133 @@ section {
   .main-nav ul {
     flex-direction: column;
   }
+
+  section {
+    padding: 2.5rem 0;
+  }
+
+  .page-hero {
+    padding: 1.75rem 0 1.25rem;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .card {
+    padding: 1rem 1.1rem;
+  }
+
+  .loft-note {
+    margin: 1rem 0;
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .telegram-poster-wrap {
+    margin: 1.5rem auto;
+  }
+
+  .telegram-poster-btn {
+    width: min(100%, 280px);
+    box-shadow: 4px 4px 0 var(--charcoal), 6px 6px 0 var(--gold);
+  }
+
+  .map-wrap,
+  .map-wrap iframe {
+    min-height: 280px;
+    height: 280px;
+  }
 }
 
 @media (max-width: 600px) {
+  :root {
+    --header-h: 60px;
+  }
+
   body {
-    font-size: 16px;
+    font-size: 15px;
+  }
+
+  .container {
+    width: min(100% - 1.25rem, var(--max-width));
   }
 
   .hero {
+    padding: 1.5rem 0 2rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.85rem, 9vw, 2.5rem);
+  }
+
+  .hero-lead {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-stats {
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .stat strong {
+    font-size: 1.5rem;
+  }
+
+  .hero-poster img {
+    border-width: 2px;
+    box-shadow: 4px 4px 0 var(--charcoal), 6px 6px 0 var(--gold);
+  }
+
+  .btn {
+    padding: 0.7rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  section {
     padding: 2rem 0;
+  }
+
+  .section-title {
+    font-size: 1.35rem;
+  }
+
+  .section-sub {
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .poster-strip {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.45rem;
+    margin-top: 1rem;
+  }
+
+  .poster-strip figure {
+    aspect-ratio: 4 / 5;
+    border-width: 1px;
+  }
+
+  .poster-strip .poster-frame--crop img {
+    transform: scale(1.2);
+    object-position: center 40%;
+  }
+
+  .poster-strip figcaption {
+    font-size: 0.5rem;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.15rem;
+    line-height: 1.2;
+  }
+
+  .site-footer {
+    margin-top: 2rem;
+    padding: 1.5rem 0;
   }
 }
