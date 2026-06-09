@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Контакты — IRON SERVICE Сочи</title>
+  <meta name="description" content="Адрес, телефоны, часы работы IRON SERVICE. Московская 5, Сочи. Заявка на ремонт Apple.">
+  <link rel="icon" href="assets/logo-icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img" width="180" height="48">
+      </a>
+      <a href="tel:+79288509404" class="header-phone">+7 928 850-94-04</a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-label="Меню">Меню</button>
+      <nav class="main-nav" aria-label="Основное меню">
+        <ul>
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="uslugi.html">Услуги</a></li>
+          <li><a href="garantiya.html">Гарантия</a></li>
+          <li><a href="magazin.html">Магазин</a></li>
+          <li><a href="kontakty.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <h1>Контакты</h1>
+        <p>IRON SERVICE — специализированный сервис Apple в Сочи.</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="container contact-grid">
+        <div class="contact-block">
+          <h3>Адрес</h3>
+          <p>
+            <strong>Сочи, ул. Московская, 5</strong><br>
+            Цокольный этаж<br>
+            Вход со двора ул. Островского
+          </p>
+
+          <h3>Телефоны</h3>
+          <p>
+            <a href="tel:+79288509404">+7 928 850-94-04</a><br>
+            <a href="tel:+79284489530">+7 928 448-95-30</a>
+          </p>
+
+          <h3>Email</h3>
+          <p><a href="mailto:ironsapple@gmail.com">ironsapple@gmail.com</a></p>
+
+          <h3>Telegram</h3>
+          <p>
+            Канал: <a href="https://t.me/ironservice" target="_blank" rel="noopener">@ironservice</a><br>
+            Заявки: <a href="https://t.me/ironsochi" target="_blank" rel="noopener">@ironsochi</a>
+          </p>
+
+          <h3>Часы работы</h3>
+          <p>Каждый день, без перерывов и выходных</p>
+          <table class="hours-table">
+            <tr><td>Пн — Пт</td><td>10:00 — 19:00</td></tr>
+            <tr><td>Сб — Вс</td><td>10:00 — 17:00</td></tr>
+          </table>
+        </div>
+
+        <div class="contact-block" id="zayavka">
+          <h3>Заявка на ремонт</h3>
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="name">Имя</label>
+              <input type="text" id="name" name="name" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="phone">Телефон</label>
+              <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="+7 9XX XXX-XX-XX">
+            </div>
+            <div class="form-group">
+              <label for="device">Устройство</label>
+              <select id="device" name="device">
+                <option value="iPhone">iPhone</option>
+                <option value="iPad">iPad</option>
+                <option value="MacBook">MacBook</option>
+                <option value="iMac">iMac</option>
+                <option value="Apple Watch">Apple Watch</option>
+                <option value="Другое">Другое</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Что случилось?</label>
+              <textarea id="message" name="message" required placeholder="Опишите проблему кратко"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить заявку</button>
+            <div id="form-status" class="form-status" role="status"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="container">
+        <h2 class="section-title">На карте</h2>
+        <div class="map-wrap" id="yandex-map"></div>
+        <p style="margin-top:1rem;color:var(--text-muted);font-size:0.9rem">
+          Если карта показывает не точку входа — уточните координаты в <code>js/config.js</code> (поле map).
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">© IRON SERVICE · Сочи</div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
