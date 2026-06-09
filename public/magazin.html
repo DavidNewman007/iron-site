@@ -74,7 +74,10 @@
           <div id="price-grid" class="price-grid" aria-live="polite"></div>
 
           <aside class="cart-panel" id="cart-panel">
-            <h3>Корзина <span id="cart-count">0</span></h3>
+            <div class="cart-panel__head">
+              <h3>Корзина <span id="cart-count">0</span></h3>
+              <button type="button" class="cart-close" id="cart-close" aria-label="Закрыть корзину">×</button>
+            </div>
             <ul class="cart-list" id="cart-list">
               <li class="cart-empty">Выберите устройства в прайсе</li>
             </ul>
@@ -114,7 +117,9 @@
   </main>
 
   <div class="cart-mobile-bar">
-    <span>Выбрано: <strong id="cart-count-mobile">0</strong></span>
+    <span class="cart-mobile-bar__info">
+      <strong id="cart-count-mobile">0</strong> шт. · <strong id="cart-total-mobile">—</strong>
+    </span>
     <button type="button" class="btn btn-primary" id="cart-toggle">Корзина</button>
   </div>
 

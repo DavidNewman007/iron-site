@@ -56,8 +56,11 @@
     cartTotal: document.getElementById("cart-total"),
     cartPanel: document.getElementById("cart-panel"),
     cartToggle: document.getElementById("cart-toggle"),
+    cartClose: document.getElementById("cart-close"),
     cartClear: document.getElementById("cart-clear"),
     cartTelegram: document.getElementById("cart-telegram"),
+    cartMobileBar: document.querySelector(".cart-mobile-bar"),
+    cartTotalMobile: document.getElementById("cart-total-mobile"),
   };
 
   if (!els.root) return;
@@ -116,6 +119,19 @@
     els.cartToggle?.addEventListener("click", () => {
       els.cartPanel?.classList.toggle("is-open");
     });
+    els.cartClose?.addEventListener("click", () => {
+      els.cartPanel?.classList.remove("is-open");
+    });
+  }
+
+  function isMobileShop() {
+    return window.matchMedia("(max-width: 900px)").matches;
+  }
+
+  function pulseMobileCartBar() {
+    if (!els.cartMobileBar) return;
+    els.cartMobileBar.classList.add("is-highlight");
+    window.setTimeout(() => els.cartMobileBar.classList.remove("is-highlight"), 700);
   }
 
   async function fetchProducts() {
@@ -386,20 +402,28 @@
     const product = allProducts.find((p) => p.id === id);
     if (!product) return;
     const idx = cart.findIndex((c) => c.id === id);
-    if (idx >= 0) cart.splice(idx, 1);
-    else cart.push(product);
+    const added = idx < 0;
+    if (added) cart.push(product);
+    else cart.splice(idx, 1);
     saveCart();
     renderCart();
     renderGrid();
-    els.cartPanel?.classList.add("is-open");
+    if (isMobileShop()) {
+      if (added) pulseMobileCartBar();
+      else if (!cart.length) els.cartPanel?.classList.remove("is-open");
+    } else {
+      els.cartPanel?.classList.add("is-open");
+    }
   }
 
   function renderCart() {
     const count = cart.length;
     const total = cart.reduce((s, p) => s + p.price, 0);
 
+    const totalLabel = count ? formatPrice(total) : "—";
     if (els.cartCount) els.cartCount.textContent = String(count);
-    if (els.cartTotal) els.cartTotal.textContent = count ? formatPrice(total) : "—";
+    if (els.cartTotal) els.cartTotal.textContent = totalLabel;
+    if (els.cartTotalMobile) els.cartTotalMobile.textContent = totalLabel;
     if (els.cartTelegram) els.cartTelegram.disabled = count === 0;
 
     if (!els.cartList) return;

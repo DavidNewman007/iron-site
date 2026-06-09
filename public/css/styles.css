@@ -464,6 +464,47 @@ section {
   font-size: 0.95rem;
 }
 
+.card-note {
+  margin-top: 0.65rem !important;
+  font-size: 0.82rem !important;
+  line-height: 1.45;
+  color: var(--text-muted);
+  opacity: 0.92;
+}
+
+/* ——— Отзывы ——— */
+.section-reviews {
+  padding-top: 0;
+}
+
+.review-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.review-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7rem;
+  padding: 0.7rem 1.1rem;
+  border: 2px solid rgba(212, 160, 18, 0.45);
+  background: var(--charcoal);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cream);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.review-link:hover {
+  border-color: var(--gold);
+  background: rgba(212, 160, 18, 0.1);
+  color: var(--cream);
+}
+
 .card-icon {
   font-size: 2rem;
   margin-bottom: 0.75rem;
@@ -1018,5 +1059,17 @@ section {
   .site-footer {
     margin-top: 2rem;
     padding: 1.5rem 0;
+  }
+
+  .review-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .review-link {
+    min-width: 0;
+    padding: 0.6rem 0.5rem;
+    font-size: 0.72rem;
   }
 }
