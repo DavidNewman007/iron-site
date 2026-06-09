@@ -11,7 +11,7 @@ window.IRON_CONFIG = {
   // Куда уходит заказ из корзины (deep link ?text=)
   telegramOrderUser: "ironsochi",
 
-  siteUrl: "https://ваш-домен.ru",
+  siteUrl: "https://1iron.ru",
 
   map: {
     lat: 43.5852,
