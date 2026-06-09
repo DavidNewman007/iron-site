@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Купить iPhone, MacBook в Сочи — прайс IRON SERVICE</title>
+  <meta name="description" content="Купить iPhone, iPad, MacBook в Сочи. Актуальный прайс Apple, б/у техника, trade-in. IRON SERVICE — Московская 5.">
+  <meta name="keywords" content="купить айфон сочи, купить iphone сочи, купить macbook сочи, apple сочи, техника apple сочи">
+  <link rel="canonical" href="https://ваш-домен.ru/magazin.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Магазин Apple — IRON SERVICE Сочи">
+  <meta property="og:description" content="Актуальный прайс iPhone, MacBook, iPad. Выберите и забронируйте в Telegram.">
+  <meta property="og:locale" content="ru_RU">
+  <link rel="icon" href="assets/logo-icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/shop.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img" width="180" height="48">
+      </a>
+      <a href="tel:+79288509404" class="header-phone">+7 928 850-94-04</a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-label="Меню">Меню</button>
+      <nav class="main-nav" aria-label="Основное меню">
+        <ul>
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="uslugi.html">Услуги</a></li>
+          <li><a href="garantiya.html">Гарантия</a></li>
+          <li><a href="magazin.html">Магазин</a></li>
+          <li><a href="kontakty.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <h1>Магазин</h1>
+        <p>Актуальный прайс из нашей таблицы · выберите устройства и забронируйте в Telegram</p>
+      </div>
+    </div>
+
+    <section class="shop-section" id="shop-prices">
+      <div class="container">
+        <p class="shop-intro">
+          Цены подгружаются из отдельной публичной таблицы (лист <strong>Prices</strong>) — копия прайса без закупочных цен, обновляется вместе с каналом
+          <a href="https://t.me/ironservice" target="_blank" rel="noopener">@ironservice</a>.
+          Отметьте одно или несколько устройств и нажмите «Забронировать» — откроется чат с готовым списком.
+        </p>
+
+        <div class="shop-toolbar">
+          <input type="search" id="price-search" placeholder="Поиск: iPhone 16, MacBook Air…" autocomplete="off">
+          <select id="price-category" aria-label="Категория">
+            <option value="all">Все категории</option>
+            <option value="iphone">iPhone</option>
+            <option value="ipad">iPad</option>
+            <option value="mac">Mac · AirPods</option>
+            <option value="watch">Apple Watch</option>
+            <option value="samsung">Samsung · Meta</option>
+            <option value="other">Прочее</option>
+          </select>
+        </div>
+
+        <p class="price-status" id="price-updated"></p>
+        <p class="price-status" id="price-loading">Загрузка прайса…</p>
+        <p class="price-status price-status--error" id="price-error" hidden></p>
+
+        <div class="shop-layout">
+          <div id="price-grid" class="price-grid" aria-live="polite"></div>
+
+          <aside class="cart-panel" id="cart-panel">
+            <h3>Корзина <span id="cart-count">0</span></h3>
+            <ul class="cart-list" id="cart-list">
+              <li class="cart-empty">Выберите устройства в прайсе</li>
+            </ul>
+            <div class="cart-summary">
+              <span>Ориентир</span>
+              <strong id="cart-total">—</strong>
+            </div>
+            <div class="cart-actions">
+              <button type="button" class="btn btn-primary" id="cart-telegram" disabled>
+                Забронировать в Telegram
+              </button>
+              <button type="button" class="btn btn-secondary" id="cart-clear">Очистить</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="container">
+        <div class="cards">
+          <article class="card">
+            <h3>Trade-in</h3>
+            <p>Сдайте старый iPhone — зачтём в стоимость нового.</p>
+          </article>
+          <article class="card">
+            <h3>Б/у с проверкой</h3>
+            <p>Проверенные устройства с понятным состоянием.</p>
+          </article>
+          <article class="card">
+            <h3>Запчасти</h3>
+            <p>Дисплеи, АКБ, аксессуары — в сервисе и на заказ.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="cart-mobile-bar">
+    <span>Выбрано: <strong id="cart-count-mobile">0</strong></span>
+    <button type="button" class="btn btn-primary" id="cart-toggle">Корзина</button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">© IRON SERVICE · Запчасти • Аксессуары • Сервис</div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/prices.js"></script>
+  <script>
+    document.getElementById("cart-count-mobile") &&
+      new MutationObserver(() => {
+        const n = document.getElementById("cart-count")?.textContent || "0";
+        const m = document.getElementById("cart-count-mobile");
+        if (m) m.textContent = n;
+      }).observe(document.getElementById("cart-count"), { childList: true, characterData: true, subtree: true });
+  </script>
+</body>
+</html>
