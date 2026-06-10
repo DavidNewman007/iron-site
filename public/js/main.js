@@ -26,8 +26,12 @@
   // Yandex Map embed
   const mapEl = document.getElementById("yandex-map");
   if (mapEl && config.map) {
-    const { lat, lon, zoom } = config.map;
-    mapEl.innerHTML = `<iframe src="https://yandex.ru/map-widget/v1/?ll=${lon}%2C${lat}&z=${zoom}&pt=${lon}%2C${lat}%2Cpm2rdm&l=map" allowfullscreen loading="lazy" title="IRON SERVICE на карте"></iframe>`;
+    const { lat, lon, zoom, orgId } = config.map;
+    const z = zoom || 17;
+    const src = orgId
+      ? `https://yandex.ru/map-widget/v1/?z=${z}&ol=biz&oid=${orgId}&l=map`
+      : `https://yandex.ru/map-widget/v1/?ll=${lon}%2C${lat}&z=${z}&pt=${lon}%2C${lat}%2Cpm2rdm&l=map`;
+    mapEl.innerHTML = `<iframe src="${src}" allowfullscreen loading="lazy" title="IRON SERVICE на карте"></iframe>`;
   }
 
   // Contact form

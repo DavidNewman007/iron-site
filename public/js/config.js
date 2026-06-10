@@ -14,9 +14,10 @@ window.IRON_CONFIG = {
   siteUrl: "https://1iron.ru",
 
   map: {
-    lat: 43.5852,
-    lon: 39.7231,
-    zoom: 17,
+    lat: 43.5854,
+    lon: 39.724,
+    zoom: 18,
+    orgId: "1716684342",
     address: "Сочи, ул. Московская, 5 (цоколь, вход со двора ул. Островского)",
   },
 };

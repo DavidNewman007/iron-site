@@ -1,9 +1,9 @@
 /* IRON SERVICE — Soviet Modern / Loft */
 
 :root {
-  --black: #0c0c0c;
-  --charcoal: #1a1a1a;
-  --slab: #2d2419;
+  --black: #161616;
+  --charcoal: #242424;
+  --slab: #352c22;
   --red: #b91c1c;
   --red-bright: #dc2626;
   --gold: #d4a012;
@@ -15,7 +15,7 @@
   --font-display: "Oswald", "Arial Narrow", sans-serif;
   --font-body: "PT Sans Narrow", "Arial", sans-serif;
   --max-width: 1200px;
-  --header-h: 72px;
+  --header-h: 88px;
 }
 
 *,
@@ -73,7 +73,7 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(12, 12, 12, 0.95);
+  background: rgba(22, 22, 22, 0.96);
   border-bottom: 3px solid var(--red);
   backdrop-filter: blur(8px);
 }
@@ -81,10 +81,13 @@ a:hover {
 .header-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  gap: 1.25rem;
   min-height: var(--header-h);
   padding: 0.5rem 0;
+}
+
+.main-nav {
+  margin-left: auto;
 }
 
 .logo-link {
@@ -100,7 +103,7 @@ a:hover {
 }
 
 .logo-img {
-  height: 48px;
+  height: 72px;
   width: auto;
 }
 
@@ -336,24 +339,47 @@ a:hover {
   position: relative;
 }
 
-.hero-poster img {
+.hero-poster-link {
+  display: block;
+  position: relative;
+  overflow: hidden;
   border: 4px solid var(--red);
   box-shadow:
     8px 8px 0 var(--charcoal),
     12px 12px 0 var(--gold);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
 
-.hero-poster::after {
-  content: "СОЧИ";
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  letter-spacing: 0.3em;
-  background: var(--red);
-  color: var(--cream);
-  padding: 0.25rem 0.5rem;
+.hero-poster-link img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.45s ease, filter 0.3s ease;
+}
+
+.hero-poster-link:hover,
+.hero-poster-link:focus-visible {
+  transform: translate(-4px, -4px);
+  border-color: var(--gold);
+  box-shadow:
+    12px 12px 0 var(--charcoal),
+    14px 14px 0 var(--gold),
+    0 0 48px rgba(185, 28, 28, 0.35);
+}
+
+.hero-poster-link:hover img,
+.hero-poster-link:focus-visible img {
+  transform: scale(1.04);
+  filter: brightness(1.08);
+}
+
+.hero-poster-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
 }
 
 /* ——— Buttons ——— */
@@ -432,7 +458,7 @@ section {
 }
 
 .card {
-  background: var(--charcoal);
+  background: #2c2c2c;
   border: 1px solid rgba(212, 160, 18, 0.25);
   padding: 1.5rem;
   position: relative;
@@ -880,7 +906,7 @@ section {
 .site-footer {
   margin-top: 4rem;
   padding: 2.5rem 0;
-  background: var(--charcoal);
+  background: #2a2a2a;
   border-top: 4px solid var(--red);
 }
 
@@ -916,6 +942,17 @@ section {
   font-size: 0.85rem;
   color: var(--text-muted);
   text-align: center;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+.footer-tagline {
+  margin-top: 0.35rem !important;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
 }
 
 .telegram-cta {
@@ -960,19 +997,27 @@ section {
   }
 
   .header-inner {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.35rem 0.75rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.5rem 0.65rem;
     min-height: auto;
-    padding: 0.4rem 0 0.5rem;
+    padding: 0.35rem 0 0.45rem;
   }
 
   .logo-link {
-    flex: 0 0 auto;
+    grid-column: 1;
+    justify-self: start;
   }
 
   .logo-img {
-    height: 40px;
+    height: 52px;
+  }
+
+  .main-nav {
+    grid-column: 2;
+    margin-left: 0;
+    width: 100%;
   }
 
   .header-phone {
@@ -986,8 +1031,6 @@ section {
   .main-nav {
     display: block;
     position: static;
-    width: 100%;
-    order: 3;
     background: transparent;
     border: none;
     padding: 0;
@@ -996,8 +1039,8 @@ section {
   .main-nav ul {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.2rem 0.45rem;
+    justify-content: flex-end;
+    gap: 0.15rem 0.35rem;
   }
 
   .main-nav a {
@@ -1035,15 +1078,6 @@ section {
     font-size: 0.9rem;
   }
 
-  .telegram-poster-wrap {
-    margin: 1.5rem auto;
-  }
-
-  .telegram-poster-btn {
-    width: min(100%, 280px);
-    box-shadow: 4px 4px 0 var(--charcoal), 6px 6px 0 var(--gold);
-  }
-
   .map-wrap,
   .map-wrap iframe {
     min-height: 280px;
@@ -1053,12 +1087,12 @@ section {
 
 @media (max-width: 600px) {
   :root {
-    --header-h: 88px;
+    --header-h: 64px;
   }
 
   .main-nav a {
     font-size: 0.58rem;
-    padding: 0.22rem 0.25rem;
+    padding: 0.22rem 0.2rem;
   }
 
   body {
@@ -1091,7 +1125,7 @@ section {
     font-size: 1.5rem;
   }
 
-  .hero-poster img {
+  .hero-poster-link {
     border-width: 2px;
     box-shadow: 4px 4px 0 var(--charcoal), 6px 6px 0 var(--gold);
   }
