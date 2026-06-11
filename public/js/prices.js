@@ -135,13 +135,14 @@
   }
 
   async function fetchProducts() {
-    const range = "A2:E800";
+    const range = "A1:E800";
     const sheetUrl =
       `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq` +
       `?tqx=out:json&sheet=${encodeURIComponent(SHEET_TAB)}&range=${range}`;
 
     const json = await loadSheetJson(sheetUrl);
     const rows = json.table?.rows || [];
+    const colMap = buildColumnMap(json.table?.cols || []);
 
     const products = [];
     let updatedAt = "";
@@ -149,8 +150,9 @@
     let currentSection = "";
 
     for (const row of rows) {
-      const { name, warranty, country, qty, priceRaw } = parseSheetRow(row);
+      const { name, warranty, country, qty, priceRaw } = parseSheetRow(row, colMap);
       if (!name) continue;
+      if (/^товар$/i.test(name)) continue;
 
       const updatedMatch = name.match(/^обновлено:\s*(.+)$/i);
       if (updatedMatch) {
@@ -249,21 +251,37 @@
     return n >= 1000;
   }
 
-  /** Колонки A–E: товар, гарантия, страна, кол-во, цена. Поддержка старого формата без гарантии. */
-  function parseSheetRow(row) {
-    const c0 = getSheetCell(row, 0);
-    const c1 = getSheetCell(row, 1);
-    const c2 = getSheetCell(row, 2);
-    const c3 = getSheetCell(row, 3);
-    const c4 = getSheetCell(row, 4);
+  /** По заголовкам листа (Товар, Гарантия, Страна, Количество, Цена продажи). */
+  function buildColumnMap(cols) {
+    const map = { name: 0, warranty: -1, country: -1, qty: -1, price: -1 };
+    cols.forEach((col, i) => {
+      const label = String(col.label || "").toLowerCase().trim();
+      if (label.includes("товар")) map.name = i;
+      else if (label.includes("гарант")) map.warranty = i;
+      else if (label.includes("страна")) map.country = i;
+      else if (label.includes("колич")) map.qty = i;
+      else if (label.includes("продаж")) map.price = i;
+      else if (label.includes("цена") && map.price < 0) map.price = i;
+    });
+    if (map.country < 0) map.country = map.warranty >= 0 ? 2 : 1;
+    if (map.qty < 0) map.qty = map.warranty >= 0 ? 3 : 2;
+    if (map.price < 0) map.price = map.warranty >= 0 ? 4 : 3;
+    return map;
+  }
 
-    if (looksLikeSalePrice(c4)) {
-      return { name: c0, warranty: c1, country: c2, qty: c3, priceRaw: c4 };
-    }
-    if (looksLikeSalePrice(c3) && !c4) {
-      return { name: c0, warranty: "", country: c1, qty: c2, priceRaw: c3 };
-    }
-    return { name: c0, warranty: c1, country: c2, qty: c3, priceRaw: c4 };
+  function parseSheetRow(row, colMap) {
+    const pick = (idx) => (idx >= 0 ? getSheetCell(row, idx) : "");
+    return {
+      name: cleanStoredProductName(pick(colMap.name)),
+      warranty: pick(colMap.warranty),
+      country: pick(colMap.country),
+      qty: pick(colMap.qty),
+      priceRaw: pick(colMap.price),
+    };
+  }
+
+  function cleanStoredProductName(name) {
+    return String(name || "").replace(/(\D)(\d{4,})$/, "$1").trim();
   }
 
   function isCategoryRow(name, warranty, country, qty, price) {

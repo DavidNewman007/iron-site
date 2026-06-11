@@ -30,7 +30,7 @@ app.get("/api/prices", async (_req, res) => {
 
   const url =
     `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq` +
-    `?tqx=out:json&sheet=${encodeURIComponent(GOOGLE_SHEET_TAB)}&range=A2:E800`;
+    `?tqx=out:json&sheet=${encodeURIComponent(GOOGLE_SHEET_TAB)}&range=A1:E800`;
 
   try {
     const r = await fetch(url);
