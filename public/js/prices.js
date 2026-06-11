@@ -365,6 +365,9 @@
   }
 
   const SORTED_TRANSLATIONS = [...SEARCH_DICT.translate].sort((a, b) => b[0].length - a[0].length);
+  const SORTED_TRANSLIT_ENTRIES = Object.entries(SEARCH_DICT.translit).sort(
+    (a, b) => b[0].length - a[0].length
+  );
   const REVERSE_TRANSLATIONS = new Map();
   for (const [en, ruList] of SORTED_TRANSLATIONS) {
     const normEn = normalizeSearch(en);
@@ -423,37 +426,107 @@
     return parts;
   }
 
+  function compactToken(s) {
+    return normalizeSearch(s).replace(/\s+/g, "");
+  }
+
+  /** Строгое совпадение формы слова (с учётом мн. ч. и пробелов). */
+  function tokenMatchesForm(token, form) {
+    const t = compactToken(token);
+    const f = compactToken(form);
+    if (!t || !f) return false;
+    if (t === f) return true;
+    if (t === f + "ы" || t === f + "и" || t + "ы" === f || t + "и" === f) return true;
+    return false;
+  }
+
+  function getLongestTranslitMatch(token) {
+    for (const [en, variants] of SORTED_TRANSLIT_ENTRIES) {
+      const forms = [en, ...variants];
+      if (forms.some((f) => tokenMatchesForm(token, f))) return { en, variants };
+    }
+    return null;
+  }
+
+  function getLongestTranslateMatch(token) {
+    for (const [en, ruList] of SORTED_TRANSLATIONS) {
+      const forms = [en, ...ruList];
+      if (forms.some((f) => tokenMatchesForm(token, f))) return { en, ruList };
+    }
+    return null;
+  }
+
+  /** Составное слово (airpods) в запросе — убираем укороченные токены (эир, air). */
+  function refineQueryTokens(tokens) {
+    const compoundKeys = new Set();
+
+    for (const token of tokens) {
+      const translitHit = getLongestTranslitMatch(token);
+      const translateHit = getLongestTranslateMatch(token);
+      const candidates = [];
+      if (translitHit) candidates.push(translitHit.en);
+      if (translateHit) candidates.push(compactToken(translateHit.en));
+      const best = candidates.sort((a, b) => b.length - a.length)[0];
+      if (best && best.length >= 5) compoundKeys.add(best);
+    }
+
+    if (!compoundKeys.size) return tokens;
+
+    const subsumedShort = new Set();
+    for (const compound of compoundKeys) {
+      for (const [en] of SORTED_TRANSLIT_ENTRIES) {
+        if (en.length < compound.length && compound.startsWith(en)) subsumedShort.add(en);
+      }
+    }
+
+    const refined = tokens.filter((token) => {
+      const translitHit = getLongestTranslitMatch(token);
+      if (translitHit && compoundKeys.has(translitHit.en)) return true;
+
+      const translateHit = getLongestTranslateMatch(token);
+      if (translateHit && compoundKeys.has(compactToken(translateHit.en))) return true;
+
+      for (const short of subsumedShort) {
+        const forms = [short, ...SEARCH_DICT.translit[short]];
+        if (forms.some((f) => tokenMatchesForm(token, f))) return false;
+      }
+      return true;
+    });
+
+    return refined.length ? refined : tokens;
+  }
+
   function expandToken(token) {
     const variants = new Set();
     const norm = normalizeSearch(token);
     if (!norm) return [];
 
+    const translitHit = getLongestTranslitMatch(token);
+    const translateHit = getLongestTranslateMatch(token);
+    const hits = [];
+    if (translitHit) hits.push({ key: translitHit.en, forms: [translitHit.en, ...translitHit.variants] });
+    if (translateHit) {
+      hits.push({
+        key: compactToken(translateHit.en),
+        forms: [translateHit.en, ...translateHit.ruList],
+      });
+    }
+    hits.sort((a, b) => b.key.length - a.key.length);
+
+    if (hits.length) {
+      const best = hits[0];
+      best.forms.forEach((f) => {
+        variants.add(normalizeSearch(f));
+        variants.add(compactToken(f));
+        variants.add(translitRuToLat(f));
+      });
+      return [...variants].filter(Boolean);
+    }
+
     variants.add(norm);
     variants.add(translitRuToLat(norm));
-
-    for (const [en, ruList] of Object.entries(SEARCH_DICT.translit)) {
-      if (norm === en || ruList.some((r) => normalizeSearch(r) === norm)) {
-        variants.add(en);
-        ruList.forEach((r) => variants.add(normalizeSearch(r)));
-      }
-    }
-
-    for (const [en, ruList] of SORTED_TRANSLATIONS) {
-      const normEn = normalizeSearch(en);
-      const ruNorms = ruList.map((r) => normalizeSearch(r));
-      const hit =
-        norm === normEn ||
-        ruNorms.includes(norm) ||
-        ruNorms.some((r) => r.includes(norm) || norm.includes(r));
-      if (hit) {
-        variants.add(normEn);
-        ruNorms.forEach((r) => variants.add(r));
-      }
-    }
-
     const reverse = REVERSE_TRANSLATIONS.get(norm);
     if (reverse) reverse.forEach((v) => variants.add(v));
-
     return [...variants].filter(Boolean);
   }
 
@@ -487,7 +560,7 @@
       if (haystackIncludes(hay, variant)) return true;
     }
 
-    const tokens = q.split(/\s+/).filter(Boolean);
+    const tokens = refineQueryTokens(q.split(/\s+/).filter(Boolean));
     if (!tokens.length) return true;
 
     return tokens.every((token) => expandToken(token).some((variant) => haystackIncludes(hay, variant)));
