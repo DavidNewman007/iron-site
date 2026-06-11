@@ -150,7 +150,7 @@
     let currentSection = "";
 
     for (const row of dataRows) {
-      const { name, warranty, country, qty, priceRaw } = parseSheetRow(row, colMap);
+      let { name, warranty, country, qty, priceRaw } = parseSheetRow(row, colMap);
       if (!name) continue;
 
       const updatedMatch = name.match(/^обновлено:\s*(.+)$/i);
@@ -166,9 +166,7 @@
         continue;
       }
 
-      const fields = normalizeProductFields(qty, priceRaw);
-      qty = fields.qty;
-      priceRaw = fields.priceRaw;
+      ({ qty, priceRaw } = normalizeProductFields(qty, priceRaw));
       if (priceRaw === "") continue;
 
       const price = parsePrice(priceRaw);
@@ -180,7 +178,7 @@
         name,
         warranty: warranty || "",
         country: country || "",
-        qty,
+        qty: qty || "",
         price,
         priceLabel: formatPrice(price),
         category: currentCategory,
