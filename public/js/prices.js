@@ -166,7 +166,10 @@
         continue;
       }
 
-      if (!qty || priceRaw === "") continue;
+      const fields = normalizeProductFields(qty, priceRaw);
+      qty = fields.qty;
+      priceRaw = fields.priceRaw;
+      if (priceRaw === "") continue;
 
       const price = parsePrice(priceRaw);
       if (!price || price < 1000) continue;
@@ -266,7 +269,13 @@
       if (label.includes("гарант")) map.warranty = i;
       else if (label.includes("страна")) map.country = i;
       else if (label.includes("колич")) map.qty = i;
-      else if (label.includes("продаж") || label.includes("цена")) map.price = i;
+    }
+    for (let i = 4; i >= 0; i--) {
+      const label = getSheetCell(rows[0], i).toLowerCase();
+      if (label.includes("продаж") || label.includes("цена")) {
+        map.price = i;
+        break;
+      }
     }
     return { colMap: map, dataRows: rows.slice(1) };
   }
@@ -280,6 +289,28 @@
       qty: pick(colMap.qty),
       priceRaw: pick(colMap.price),
     };
+  }
+
+  /** Различаем «2шт» и «58200₽», если колонки перепутаны или D/E дублируют цену. */
+  function normalizeProductFields(qty, priceRaw) {
+    let q = String(qty || "").trim();
+    let p = String(priceRaw || "").trim();
+    const priceNum = parsePrice(p);
+    const qtyNum = parsePrice(q);
+
+    if (priceNum > 0 && priceNum < 1000 && /шт/i.test(q)) {
+      return { qty: q, priceRaw: "" };
+    }
+
+    if (priceNum >= 1000 && qtyNum >= 1000 && q === p) {
+      return { qty: "", priceRaw: p };
+    }
+
+    if ((priceNum < 1000 || !p) && qtyNum >= 1000 && !/шт/i.test(q)) {
+      return { qty: "", priceRaw: q };
+    }
+
+    return { qty: q, priceRaw: p };
   }
 
   function cleanStoredProductName(name) {
@@ -414,7 +445,7 @@
         </div>
         <h3 class="price-card__name">${escapeHtml(p.name)}</h3>
         ${p.warranty ? `<p class="price-card__warranty">${escapeHtml(p.warranty)}</p>` : ""}
-        <p class="price-card__qty">${escapeHtml(p.qty)}</p>
+        ${p.qty ? `<p class="price-card__qty">${escapeHtml(p.qty)}</p>` : ""}
         <div class="price-card__footer">
           <strong class="price-card__price">${escapeHtml(p.priceLabel)}</strong>
           <button type="button" class="price-card__btn ${inCart ? "is-active" : ""}" data-action="toggle" data-id="${p.id}">
