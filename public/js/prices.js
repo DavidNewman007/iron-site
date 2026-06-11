@@ -142,17 +142,16 @@
 
     const json = await loadSheetJson(sheetUrl);
     const rows = json.table?.rows || [];
-    const colMap = buildColumnMap(json.table?.cols || []);
+    const { colMap, dataRows } = resolveSheetLayout(rows);
 
     const products = [];
     let updatedAt = "";
     let currentCategory = "other";
     let currentSection = "";
 
-    for (const row of rows) {
+    for (const row of dataRows) {
       const { name, warranty, country, qty, priceRaw } = parseSheetRow(row, colMap);
       if (!name) continue;
-      if (/^товар$/i.test(name)) continue;
 
       const updatedMatch = name.match(/^обновлено:\s*(.+)$/i);
       if (updatedMatch) {
@@ -170,7 +169,7 @@
       if (!qty || priceRaw === "") continue;
 
       const price = parsePrice(priceRaw);
-      if (!price) continue;
+      if (!price || price < 1000) continue;
 
       const id = slugify(name + country + price);
       products.push({
@@ -246,27 +245,30 @@
     return String(cell.v).trim();
   }
 
-  function looksLikeSalePrice(val) {
-    const n = parsePrice(val);
-    return n >= 1000;
-  }
+  /** Фиксированная схема публичной таблицы: A–E. */
+  const DEFAULT_COL_MAP = { name: 0, warranty: 1, country: 2, qty: 3, price: 4 };
 
-  /** По заголовкам листа (Товар, Гарантия, Страна, Количество, Цена продажи). */
-  function buildColumnMap(cols) {
-    const map = { name: 0, warranty: -1, country: -1, qty: -1, price: -1 };
-    cols.forEach((col, i) => {
-      const label = String(col.label || "").toLowerCase().trim();
-      if (label.includes("товар")) map.name = i;
-      else if (label.includes("гарант")) map.warranty = i;
+  /**
+   * gviz не отдаёт русские заголовки в cols.label (там буквы A,B,C…),
+   * поэтому читаем первую строку диапазона или используем DEFAULT_COL_MAP.
+   */
+  function resolveSheetLayout(rows) {
+    if (!rows.length) return { colMap: DEFAULT_COL_MAP, dataRows: [] };
+
+    const firstCell = getSheetCell(rows[0], 0).toLowerCase();
+    if (!firstCell.includes("товар")) {
+      return { colMap: DEFAULT_COL_MAP, dataRows: rows };
+    }
+
+    const map = { name: 0, warranty: 1, country: 2, qty: 3, price: 4 };
+    for (let i = 0; i < 5; i++) {
+      const label = getSheetCell(rows[0], i).toLowerCase();
+      if (label.includes("гарант")) map.warranty = i;
       else if (label.includes("страна")) map.country = i;
       else if (label.includes("колич")) map.qty = i;
-      else if (label.includes("продаж")) map.price = i;
-      else if (label.includes("цена") && map.price < 0) map.price = i;
-    });
-    if (map.country < 0) map.country = map.warranty >= 0 ? 2 : 1;
-    if (map.qty < 0) map.qty = map.warranty >= 0 ? 3 : 2;
-    if (map.price < 0) map.price = map.warranty >= 0 ? 4 : 3;
-    return map;
+      else if (label.includes("продаж") || label.includes("цена")) map.price = i;
+    }
+    return { colMap: map, dataRows: rows.slice(1) };
   }
 
   function parseSheetRow(row, colMap) {
