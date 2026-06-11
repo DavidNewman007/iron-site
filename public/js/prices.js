@@ -15,12 +15,17 @@
       label: "Mac · AirPods · аксессуары",
       icon: "💻",
       test: (t) =>
-        /macbook|airpods|pencil|аксессуар|accessor|apple tv|playstation|dyson|sony|airwrap|supersonic|airstrait/i.test(
+        /macbook|airpods|pencil|аксессуар|accessories|гравировк|apple tv|playstation|dyson|sony|airwrap|supersonic|airstrait/i.test(
           t
         ),
     },
     { id: "watch", label: "Apple Watch", icon: "⌚", test: (t) => /watch/i.test(t) },
-    { id: "samsung", label: "Samsung · Meta", icon: "📱", test: (t) => /samsung|meta/i.test(t) },
+    {
+      id: "samsung",
+      label: "Samsung · Meta",
+      icon: "📱",
+      test: (t) => /samsung|meta|oakley|wayfarer|skyler/i.test(t),
+    },
     { id: "other", label: "Прочее", icon: "◆", test: () => true },
   ];
 
@@ -181,7 +186,7 @@
         qty: qty || "",
         price,
         priceLabel: formatPrice(price),
-        category: currentCategory,
+        category: detectCategory(name) || currentCategory,
         section: currentSection,
         searchText: buildSearchText(name, country, currentSection, warranty),
         inStock: !/0\s*шт/i.test(qty),
