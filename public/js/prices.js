@@ -20,7 +20,7 @@
         ),
     },
     { id: "watch", label: "Apple Watch", icon: "⌚", test: (t) => /watch/i.test(t) },
-    { id: "samsung", label: "Samsung · Meta", icon: "◈", test: (t) => /samsung|meta/i.test(t) },
+    { id: "samsung", label: "Samsung · Meta", icon: "📱", test: (t) => /samsung|meta/i.test(t) },
     { id: "other", label: "Прочее", icon: "◆", test: () => true },
   ];
 
@@ -135,7 +135,7 @@
   }
 
   async function fetchProducts() {
-    const range = "A2:D800";
+    const range = "A2:E800";
     const sheetUrl =
       `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq` +
       `?tqx=out:json&sheet=${encodeURIComponent(SHEET_TAB)}&range=${range}`;
@@ -149,8 +149,7 @@
     let currentSection = "";
 
     for (const row of rows) {
-      const cells = (row.c || []).map((c) => (c && c.v != null ? String(c.v).trim() : ""));
-      const [name, country, qty, priceRaw] = cells;
+      const { name, warranty, country, qty, priceRaw } = parseSheetRow(row);
       if (!name) continue;
 
       const updatedMatch = name.match(/^обновлено:\s*(.+)$/i);
@@ -159,7 +158,7 @@
         continue;
       }
 
-      if (isCategoryRow(name, country, qty, priceRaw)) {
+      if (isCategoryRow(name, warranty, country, qty, priceRaw)) {
         currentSection = name;
         const cat = detectCategory(name);
         if (cat) currentCategory = cat;
@@ -175,13 +174,14 @@
       products.push({
         id,
         name,
+        warranty: warranty || "",
         country: country || "",
         qty,
         price,
         priceLabel: formatPrice(price),
         category: currentCategory,
         section: currentSection,
-        searchText: buildSearchText(name, country, currentSection),
+        searchText: buildSearchText(name, country, currentSection, warranty),
         inStock: !/0\s*шт/i.test(qty),
       });
     }
@@ -238,8 +238,36 @@
     });
   }
 
-  function isCategoryRow(name, country, qty, price) {
-    return name && !country && !qty && !price;
+  function getSheetCell(row, index) {
+    const cell = row.c && row.c[index];
+    if (!cell || cell.v == null) return "";
+    return String(cell.v).trim();
+  }
+
+  function looksLikeSalePrice(val) {
+    const n = parsePrice(val);
+    return n >= 1000;
+  }
+
+  /** Колонки A–E: товар, гарантия, страна, кол-во, цена. Поддержка старого формата без гарантии. */
+  function parseSheetRow(row) {
+    const c0 = getSheetCell(row, 0);
+    const c1 = getSheetCell(row, 1);
+    const c2 = getSheetCell(row, 2);
+    const c3 = getSheetCell(row, 3);
+    const c4 = getSheetCell(row, 4);
+
+    if (looksLikeSalePrice(c4)) {
+      return { name: c0, warranty: c1, country: c2, qty: c3, priceRaw: c4 };
+    }
+    if (looksLikeSalePrice(c3) && !c4) {
+      return { name: c0, warranty: "", country: c1, qty: c2, priceRaw: c3 };
+    }
+    return { name: c0, warranty: c1, country: c2, qty: c3, priceRaw: c4 };
+  }
+
+  function isCategoryRow(name, warranty, country, qty, price) {
+    return name && !warranty && !country && !qty && !price;
   }
 
   function detectCategory(text) {
@@ -308,8 +336,8 @@
     return [...variants];
   }
 
-  function buildSearchText(name, country, section) {
-    const base = normalizeSearch([name, country, section].filter(Boolean).join(" "));
+  function buildSearchText(name, country, section, warranty) {
+    const base = normalizeSearch([name, country, section, warranty].filter(Boolean).join(" "));
     const parts = new Set([base, translitRuToLat(base)]);
     for (const variant of expandSearchAliases(base)) {
       parts.add(variant);
@@ -328,7 +356,7 @@
       queryVariants.add(translitRuToLat(variant));
     }
 
-    const hay = product.searchText || buildSearchText(product.name, product.country, product.section);
+    const hay = product.searchText || buildSearchText(product.name, product.country, product.section, product.warranty);
     return [...queryVariants].some((qv) => qv && hay.includes(qv));
   }
 
@@ -365,6 +393,7 @@
           ${p.country ? `<span class="price-card__country">${escapeHtml(p.country)}</span>` : ""}
         </div>
         <h3 class="price-card__name">${escapeHtml(p.name)}</h3>
+        ${p.warranty ? `<p class="price-card__warranty">${escapeHtml(p.warranty)}</p>` : ""}
         <p class="price-card__qty">${escapeHtml(p.qty)}</p>
         <div class="price-card__footer">
           <strong class="price-card__price">${escapeHtml(p.priceLabel)}</strong>
