@@ -29,24 +29,7 @@
     { id: "other", label: "Прочее", icon: "◆", test: () => true },
   ];
 
-  const SEARCH_ALIASES = [
-    ["iphone", "айфон"],
-    ["ipad", "айпад"],
-    ["macbook", "макбук"],
-    ["airpods", "аирподс"],
-    ["airpod", "аирпод"],
-    ["watch", "вотч"],
-    ["ultra", "ультра"],
-    ["pro", "про"],
-    ["max", "макс"],
-    ["mini", "мини"],
-    ["plus", "плюс"],
-    ["samsung", "самсунг"],
-    ["galaxy", "галакси"],
-    ["playstation", "плейстейшн"],
-    ["dyson", "дайсон"],
-    ["pencil", "пенсил"],
-  ];
+  const SEARCH_DICT = window.IRON_SEARCH_DICT || { translit: {}, translate: [] };
 
   const els = {
     root: document.getElementById("shop-prices"),
@@ -381,37 +364,133 @@
       .join("");
   }
 
-  function expandSearchAliases(s) {
-    const variants = new Set([s]);
-    for (const [en, ru] of SEARCH_ALIASES) {
-      if (s.includes(en)) variants.add(s.replaceAll(en, ru));
-      if (s.includes(ru)) variants.add(s.replaceAll(ru, en));
+  const SORTED_TRANSLATIONS = [...SEARCH_DICT.translate].sort((a, b) => b[0].length - a[0].length);
+  const REVERSE_TRANSLATIONS = new Map();
+  for (const [en, ruList] of SORTED_TRANSLATIONS) {
+    const normEn = normalizeSearch(en);
+    for (const ru of ruList) {
+      const normRu = normalizeSearch(ru);
+      if (!REVERSE_TRANSLATIONS.has(normRu)) REVERSE_TRANSLATIONS.set(normRu, new Set());
+      REVERSE_TRANSLATIONS.get(normRu).add(normEn);
+      ruList.forEach((r) => REVERSE_TRANSLATIONS.get(normRu).add(normalizeSearch(r)));
     }
-    return [...variants];
+  }
+
+  function escapeRegExp(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function termPattern(term) {
+    const t = normalizeSearch(term);
+    if (t.length <= 3) return new RegExp(`\\b${escapeRegExp(t)}\\b`, "i");
+    return new RegExp(escapeRegExp(t), "i");
+  }
+
+  function textHasTerm(text, term) {
+    return termPattern(term).test(normalizeSearch(text));
+  }
+
+  function expandTransliteration(text) {
+    const parts = new Set();
+    const normalized = normalizeSearch(text);
+    parts.add(normalized);
+
+    for (const [en, variants] of Object.entries(SEARCH_DICT.translit)) {
+      if (!textHasTerm(normalized, en)) continue;
+      parts.add(en);
+      variants.forEach((v) => parts.add(normalizeSearch(v)));
+    }
+
+    for (const [en, ruList] of SORTED_TRANSLATIONS) {
+      if (!textHasTerm(normalized, en)) continue;
+      parts.add(normalizeSearch(en));
+      ruList.forEach((ru) => parts.add(normalizeSearch(ru)));
+    }
+
+    return parts;
+  }
+
+  function expandTranslations(text) {
+    const parts = new Set();
+    const normalized = normalizeSearch(text);
+
+    for (const [en, ruList] of SORTED_TRANSLATIONS) {
+      if (!textHasTerm(normalized, en)) continue;
+      parts.add(normalizeSearch(en));
+      ruList.forEach((ru) => parts.add(normalizeSearch(ru)));
+    }
+
+    return parts;
+  }
+
+  function expandToken(token) {
+    const variants = new Set();
+    const norm = normalizeSearch(token);
+    if (!norm) return [];
+
+    variants.add(norm);
+    variants.add(translitRuToLat(norm));
+
+    for (const [en, ruList] of Object.entries(SEARCH_DICT.translit)) {
+      if (norm === en || ruList.some((r) => normalizeSearch(r) === norm)) {
+        variants.add(en);
+        ruList.forEach((r) => variants.add(normalizeSearch(r)));
+      }
+    }
+
+    for (const [en, ruList] of SORTED_TRANSLATIONS) {
+      const normEn = normalizeSearch(en);
+      const ruNorms = ruList.map((r) => normalizeSearch(r));
+      const hit =
+        norm === normEn ||
+        ruNorms.includes(norm) ||
+        ruNorms.some((r) => r.includes(norm) || norm.includes(r));
+      if (hit) {
+        variants.add(normEn);
+        ruNorms.forEach((r) => variants.add(r));
+      }
+    }
+
+    const reverse = REVERSE_TRANSLATIONS.get(norm);
+    if (reverse) reverse.forEach((v) => variants.add(v));
+
+    return [...variants].filter(Boolean);
   }
 
   function buildSearchText(name, country, section, warranty) {
     const base = normalizeSearch([name, country, section, warranty].filter(Boolean).join(" "));
     const parts = new Set([base, translitRuToLat(base)]);
-    for (const variant of expandSearchAliases(base)) {
-      parts.add(variant);
-      parts.add(translitRuToLat(variant));
-    }
+
+    expandTransliteration(base).forEach((p) => parts.add(p));
+    expandTranslations(base).forEach((p) => parts.add(p));
+
+    [...parts].forEach((p) => parts.add(translitRuToLat(p)));
     return [...parts].join(" ");
+  }
+
+  function haystackIncludes(hay, needle) {
+    if (!needle) return false;
+    return hay.includes(needle) || hay.includes(translitRuToLat(needle));
   }
 
   function matchesSearch(product, query) {
     const q = normalizeSearch(query);
     if (!q) return true;
 
-    const queryVariants = new Set([q, translitRuToLat(q)]);
-    for (const variant of expandSearchAliases(q)) {
-      queryVariants.add(variant);
-      queryVariants.add(translitRuToLat(variant));
+    const hay =
+      product.searchText || buildSearchText(product.name, product.country, product.section, product.warranty);
+
+    const phraseVariants = new Set([q, translitRuToLat(q)]);
+    expandTransliteration(q).forEach((v) => phraseVariants.add(v));
+    expandTranslations(q).forEach((v) => phraseVariants.add(v));
+    for (const variant of phraseVariants) {
+      if (haystackIncludes(hay, variant)) return true;
     }
 
-    const hay = product.searchText || buildSearchText(product.name, product.country, product.section, product.warranty);
-    return [...queryVariants].some((qv) => qv && hay.includes(qv));
+    const tokens = q.split(/\s+/).filter(Boolean);
+    if (!tokens.length) return true;
+
+    return tokens.every((token) => expandToken(token).some((variant) => haystackIncludes(hay, variant)));
   }
 
   function getFiltered() {
