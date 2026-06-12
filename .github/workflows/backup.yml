@@ -1,0 +1,38 @@
+# Ежедневный бэкап сайта. Архивы хранятся 30 дней в Actions → Artifacts.
+# Восстановление: Actions → Daily site backup → нужный запуск → скачать .tar.gz
+name: Daily site backup
+
+on:
+  schedule:
+    # 03:00 по Москве (UTC+3)
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create backup archive
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          ARCHIVE="iron-site-backup-${DATE}.tar.gz"
+          tar -czf "$ARCHIVE" \
+            --exclude='node_modules' \
+            --exclude='.DS_Store' \
+            public server scripts .github .gitignore
+          ls -lh "$ARCHIVE"
+          echo "ARCHIVE=$ARCHIVE" >> "$GITHUB_ENV"
+
+      - name: Upload backup (30 days retention)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARCHIVE }}
+          path: ${{ env.ARCHIVE }}
+          retention-days: 30
+          if-no-files-found: error
