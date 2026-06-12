@@ -30,7 +30,7 @@
   ];
 
   const SEARCH_DICT = window.IRON_SEARCH_DICT || { translit: {}, translate: [] };
-  const PRICE_CACHE_KEY = "iron_prices_sheet_v1";
+  const PRICE_CACHE_KEY = "iron_prices_sheet_v2";
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   const USER_LOAD_ERROR = "Не удалось загрузить товары. Идут технические работы. Скоро все починим";
 
@@ -61,8 +61,6 @@
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
 
-  init();
-
   async function init() {
     bindEvents();
     renderCart();
@@ -74,20 +72,27 @@
       return;
     }
 
-    const cached = readPriceCache();
-    if (cached && applyProducts(parseSheetJson(cached.json))) {
-      refreshProductsInBackground();
-      return;
-    }
+    tryShowCachedProducts();
 
     try {
-      const result = await fetchProducts();
-      if (!applyProducts(result)) return;
+      applyProducts(await fetchProducts());
     } catch (e) {
       console.error(e);
-      const stale = readPriceCache(true);
-      if (stale && applyProducts(parseSheetJson(stale.json))) return;
-      showError(USER_LOAD_ERROR);
+      if (!allProducts.length && !tryShowCachedProducts(true)) {
+        showError(USER_LOAD_ERROR);
+      }
+    }
+  }
+
+  function tryShowCachedProducts(allowExpired) {
+    const cached = readPriceCache(allowExpired);
+    if (!cached) return false;
+    try {
+      return applyProducts(parseSheetJson(cached.json));
+    } catch (e) {
+      console.warn("Кэш прайса повреждён, очищаем:", e);
+      clearPriceCache();
+      return false;
     }
   }
 
@@ -105,21 +110,6 @@
     }
     renderGrid();
     return true;
-  }
-
-  async function refreshProductsInBackground() {
-    try {
-      const result = await fetchProducts();
-      if (!result.products.length) return;
-      allProducts = result.products;
-      if (els.updated) {
-        const when = result.updatedAt || formatNow();
-        els.updated.textContent = `Обновлено: ${when} · ${allProducts.length} позиций`;
-      }
-      renderGrid();
-    } catch (e) {
-      console.warn("Фоновое обновление прайса не удалось:", e);
-    }
   }
 
   function bindEvents() {
@@ -238,6 +228,14 @@
     }
   }
 
+  function clearPriceCache() {
+    try {
+      sessionStorage.removeItem(PRICE_CACHE_KEY);
+    } catch {
+      /* ignore */
+    }
+  }
+
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -271,14 +269,14 @@
 
   async function loadSheetJson(sheetUrl) {
     let lastError = null;
-    for (let attempt = 0; attempt < 3; attempt++) {
+    for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const json = await loadSheetJsonOnce(sheetUrl);
         writePriceCache(json);
         return json;
       } catch (e) {
         lastError = e;
-        if (attempt < 2) await sleep(600 * (attempt + 1));
+        if (attempt < 1) await sleep(400);
       }
     }
     throw lastError || new Error("Не удалось загрузить таблицу");
@@ -903,4 +901,6 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
   }
+
+  init();
 })();
