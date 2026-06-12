@@ -680,7 +680,7 @@
   /** Разбор запроса один раз на ввод, не на каждый товар. */
   function prepareQueryPlan(query) {
     const q = normalizeSearch(query);
-    if (queryPlanCache.raw === q) return queryPlanCache.plan;
+    if (queryPlanCache.raw === q && queryPlanCache.plan) return queryPlanCache.plan;
 
     if (!q) {
       queryPlanCache = { raw: q, plan: { matchAll: true } };
@@ -703,7 +703,7 @@
   }
 
   function matchesSearch(product, plan) {
-    if (plan.matchAll) return true;
+    if (!plan || plan.matchAll) return true;
 
     const hay = product.searchText;
     if (!hay) return false;
