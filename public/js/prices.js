@@ -55,6 +55,8 @@
 
   let allProducts = [];
   let cart = loadCart();
+  let searchRenderTimer = null;
+  let queryPlanCache = { raw: "", plan: null };
 
   init();
 
@@ -95,7 +97,7 @@
   }
 
   function bindEvents() {
-    els.search?.addEventListener("input", renderGrid);
+    els.search?.addEventListener("input", scheduleRenderGrid);
     els.category?.addEventListener("change", renderGrid);
     els.cartClear?.addEventListener("click", () => {
       cart = [];
@@ -379,18 +381,32 @@
     }
   }
 
+  const termPatternCache = new Map();
+  const longestTranslitCache = new Map();
+  const longestTranslateCache = new Map();
+  const expandTokenCache = new Map();
+
   function escapeRegExp(s) {
     return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
   function termPattern(term) {
     const t = normalizeSearch(term);
-    if (t.length <= 3) return new RegExp(`\\b${escapeRegExp(t)}\\b`, "i");
-    return new RegExp(escapeRegExp(t), "i");
+    if (!termPatternCache.has(t)) {
+      const re =
+        t.length <= 3
+          ? new RegExp(`\\b${escapeRegExp(t)}\\b`, "i")
+          : new RegExp(escapeRegExp(t), "i");
+      termPatternCache.set(t, re);
+    }
+    return termPatternCache.get(t);
   }
 
   function textHasTerm(text, term) {
-    return termPattern(term).test(normalizeSearch(text));
+    const normalized = normalizeSearch(text);
+    const t = normalizeSearch(term);
+    if (t.length > 3) return normalized.includes(t);
+    return termPattern(term).test(normalized);
   }
 
   function expandTransliteration(text) {
@@ -398,7 +414,7 @@
     const normalized = normalizeSearch(text);
     parts.add(normalized);
 
-    for (const [en, variants] of Object.entries(SEARCH_DICT.translit)) {
+    for (const [en, variants] of SORTED_TRANSLIT_ENTRIES) {
       if (!textHasTerm(normalized, en)) continue;
       parts.add(en);
       variants.forEach((v) => parts.add(normalizeSearch(v)));
@@ -426,6 +442,17 @@
     return parts;
   }
 
+  function expandNeedles(variants) {
+    const out = new Set();
+    for (const variant of variants) {
+      if (!variant) continue;
+      out.add(variant);
+      const lat = translitRuToLat(variant);
+      if (lat) out.add(lat);
+    }
+    return [...out];
+  }
+
   function compactToken(s) {
     return normalizeSearch(s).replace(/\s+/g, "");
   }
@@ -441,19 +468,33 @@
   }
 
   function getLongestTranslitMatch(token) {
+    const key = compactToken(token);
+    if (longestTranslitCache.has(key)) return longestTranslitCache.get(key);
+    let hit = null;
     for (const [en, variants] of SORTED_TRANSLIT_ENTRIES) {
       const forms = [en, ...variants];
-      if (forms.some((f) => tokenMatchesForm(token, f))) return { en, variants };
+      if (forms.some((f) => tokenMatchesForm(token, f))) {
+        hit = { en, variants };
+        break;
+      }
     }
-    return null;
+    longestTranslitCache.set(key, hit);
+    return hit;
   }
 
   function getLongestTranslateMatch(token) {
+    const key = compactToken(token);
+    if (longestTranslateCache.has(key)) return longestTranslateCache.get(key);
+    let hit = null;
     for (const [en, ruList] of SORTED_TRANSLATIONS) {
       const forms = [en, ...ruList];
-      if (forms.some((f) => tokenMatchesForm(token, f))) return { en, ruList };
+      if (forms.some((f) => tokenMatchesForm(token, f))) {
+        hit = { en, ruList };
+        break;
+      }
     }
-    return null;
+    longestTranslateCache.set(key, hit);
+    return hit;
   }
 
   /** Составное слово (airpods) в запросе — убираем укороченные токены (эир, air). */
@@ -497,9 +538,15 @@
   }
 
   function expandToken(token) {
+    const key = compactToken(token);
+    if (expandTokenCache.has(key)) return expandTokenCache.get(key);
+
     const variants = new Set();
     const norm = normalizeSearch(token);
-    if (!norm) return [];
+    if (!norm) {
+      expandTokenCache.set(key, []);
+      return [];
+    }
 
     const translitHit = getLongestTranslitMatch(token);
     const translateHit = getLongestTranslateMatch(token);
@@ -518,16 +565,16 @@
       best.forms.forEach((f) => {
         variants.add(normalizeSearch(f));
         variants.add(compactToken(f));
-        variants.add(translitRuToLat(f));
       });
-      return [...variants].filter(Boolean);
+    } else {
+      variants.add(norm);
+      const reverse = REVERSE_TRANSLATIONS.get(norm);
+      if (reverse) reverse.forEach((v) => variants.add(v));
     }
 
-    variants.add(norm);
-    variants.add(translitRuToLat(norm));
-    const reverse = REVERSE_TRANSLATIONS.get(norm);
-    if (reverse) reverse.forEach((v) => variants.add(v));
-    return [...variants].filter(Boolean);
+    const result = expandNeedles([...variants].filter(Boolean));
+    expandTokenCache.set(key, result);
+    return result;
   }
 
   function buildSearchText(name, country, section, warranty) {
@@ -541,38 +588,75 @@
     return [...parts].join(" ");
   }
 
-  function haystackIncludes(hay, needle) {
-    if (!needle) return false;
-    return hay.includes(needle) || hay.includes(translitRuToLat(needle));
-  }
-
-  function matchesSearch(product, query) {
+  /** Разбор запроса один раз на ввод, не на каждый товар. */
+  function prepareQueryPlan(query) {
     const q = normalizeSearch(query);
-    if (!q) return true;
+    if (queryPlanCache.raw === q) return queryPlanCache.plan;
 
-    const hay =
-      product.searchText || buildSearchText(product.name, product.country, product.section, product.warranty);
-
-    const phraseVariants = new Set([q, translitRuToLat(q)]);
-    expandTransliteration(q).forEach((v) => phraseVariants.add(v));
-    expandTranslations(q).forEach((v) => phraseVariants.add(v));
-    for (const variant of phraseVariants) {
-      if (haystackIncludes(hay, variant)) return true;
+    if (!q) {
+      queryPlanCache = { raw: q, plan: { matchAll: true } };
+      return queryPlanCache.plan;
     }
 
-    const tokens = refineQueryTokens(q.split(/\s+/).filter(Boolean));
-    if (!tokens.length) return true;
+    const phraseVariants = new Set([q]);
+    expandTransliteration(q).forEach((v) => phraseVariants.add(v));
+    expandTranslations(q).forEach((v) => phraseVariants.add(v));
 
-    return tokens.every((token) => expandToken(token).some((variant) => haystackIncludes(hay, variant)));
+    const tokens = refineQueryTokens(q.split(/\s+/).filter(Boolean));
+    const plan = {
+      matchAll: false,
+      phraseNeedles: expandNeedles([...phraseVariants]),
+      tokenNeedles: tokens.map((token) => expandToken(token)),
+    };
+
+    queryPlanCache = { raw: q, plan };
+    return plan;
+  }
+
+  function matchesSearch(product, plan) {
+    if (plan.matchAll) return true;
+
+    const hay = product.searchText;
+    if (!hay) return false;
+
+    for (let i = 0; i < plan.phraseNeedles.length; i++) {
+      if (hay.includes(plan.phraseNeedles[i])) return true;
+    }
+
+    if (!plan.tokenNeedles.length) return true;
+
+    for (let t = 0; t < plan.tokenNeedles.length; t++) {
+      const needles = plan.tokenNeedles[t];
+      let found = false;
+      for (let n = 0; n < needles.length; n++) {
+        if (hay.includes(needles[n])) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) return false;
+    }
+
+    return true;
   }
 
   function getFiltered() {
     const q = (els.search?.value || "").trim();
     const cat = els.category?.value || "all";
+    const plan = prepareQueryPlan(q);
+
     return allProducts.filter((p) => {
       if (cat !== "all" && p.category !== cat) return false;
-      return matchesSearch(p, q);
+      return matchesSearch(p, plan);
     });
+  }
+
+  function scheduleRenderGrid() {
+    if (searchRenderTimer) clearTimeout(searchRenderTimer);
+    searchRenderTimer = setTimeout(() => {
+      searchRenderTimer = null;
+      renderGrid();
+    }, 120);
   }
 
   function groupBySection(items) {
