@@ -30,6 +30,9 @@
   ];
 
   const SEARCH_DICT = window.IRON_SEARCH_DICT || { translit: {}, translate: [] };
+  const PRICE_CACHE_KEY = "iron_prices_sheet_v1";
+  const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
+  const USER_LOAD_ERROR = "Не удалось загрузить товары. Идут технические работы. Скоро все починим";
 
   const els = {
     root: document.getElementById("shop-prices"),
@@ -71,28 +74,51 @@
       return;
     }
 
+    const cached = readPriceCache();
+    if (cached && applyProducts(parseSheetJson(cached.json))) {
+      refreshProductsInBackground();
+      return;
+    }
+
     try {
-      const { products, updatedAt } = await fetchProducts();
-      allProducts = products;
-      if (!allProducts.length) {
-        showError("Прайс пуст или не удалось разобрать данные. Проверьте публичный лист Prices.");
-        return;
-      }
-      els.loading.hidden = true;
+      const result = await fetchProducts();
+      if (!applyProducts(result)) return;
+    } catch (e) {
+      console.error(e);
+      const stale = readPriceCache(true);
+      if (stale && applyProducts(parseSheetJson(stale.json))) return;
+      showError(USER_LOAD_ERROR);
+    }
+  }
+
+  function applyProducts(result) {
+    allProducts = result.products || [];
+    if (!allProducts.length) {
+      showError(USER_LOAD_ERROR);
+      return false;
+    }
+    els.loading.hidden = true;
+    if (els.error) els.error.hidden = true;
+    if (els.updated) {
+      const when = result.updatedAt || formatNow();
+      els.updated.textContent = `Обновлено: ${when} · ${allProducts.length} позиций`;
+    }
+    renderGrid();
+    return true;
+  }
+
+  async function refreshProductsInBackground() {
+    try {
+      const result = await fetchProducts();
+      if (!result.products.length) return;
+      allProducts = result.products;
       if (els.updated) {
-        const when = updatedAt || formatNow();
+        const when = result.updatedAt || formatNow();
         els.updated.textContent = `Обновлено: ${when} · ${allProducts.length} позиций`;
       }
       renderGrid();
     } catch (e) {
-      console.error(e);
-      const hint =
-        location.protocol === "file:"
-          ? " При открытии файла с диска (file://) используйте локальный сервер: npm start в папке iron-service-site."
-          : "";
-      showError(
-        "Не удалось загрузить прайс. Проверьте доступ к таблице и ID в config.js." + hint
-      );
+      console.warn("Фоновое обновление прайса не удалось:", e);
     }
   }
 
@@ -124,13 +150,20 @@
     window.setTimeout(() => els.cartMobileBar.classList.remove("is-highlight"), 700);
   }
 
-  async function fetchProducts() {
+  function getSheetUrl() {
     const range = "A1:E800";
-    const sheetUrl =
+    return (
       `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq` +
-      `?tqx=out:json&sheet=${encodeURIComponent(SHEET_TAB)}&range=${range}`;
+      `?tqx=out:json&sheet=${encodeURIComponent(SHEET_TAB)}&range=${range}`
+    );
+  }
 
-    const json = await loadSheetJson(sheetUrl);
+  async function fetchProducts() {
+    const json = await loadSheetJson(getSheetUrl());
+    return parseSheetJson(json);
+  }
+
+  function parseSheetJson(json) {
     const rows = json.table?.rows || [];
     const { colMap, dataRows } = resolveSheetLayout(rows);
 
@@ -181,8 +214,42 @@
     return { products, updatedAt };
   }
 
+  function readPriceCache(allowExpired) {
+    try {
+      const raw = sessionStorage.getItem(PRICE_CACHE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed?.json) return null;
+      if (!allowExpired && Date.now() - parsed.ts > PRICE_CACHE_TTL_MS) return null;
+      return { json: parsed.json, ts: parsed.ts };
+    } catch {
+      return null;
+    }
+  }
+
+  function writePriceCache(json) {
+    try {
+      sessionStorage.setItem(
+        PRICE_CACHE_KEY,
+        JSON.stringify({ ts: Date.now(), json })
+      );
+    } catch {
+      /* sessionStorage может быть недоступен */
+    }
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  function parseGvizResponse(text) {
+    const match = text.match(/setResponse\(([\s\S]*)\);?\s*$/);
+    if (!match) throw new Error("Неверный ответ Google Sheets");
+    return JSON.parse(match[1]);
+  }
+
   /** fetch на http(s); JSONP через <script> при file:// (иначе CORS блокирует Google Sheets). */
-  async function loadSheetJson(sheetUrl) {
+  async function loadSheetJsonOnce(sheetUrl) {
     const apiBase = (cfg.apiUrl || "").replace(/\/$/, "");
     if (apiBase) {
       const res = await fetch(`${apiBase}/api/prices`);
@@ -192,11 +259,8 @@
 
     if (location.protocol !== "file:") {
       try {
-        const res = await fetch(sheetUrl);
-        if (res.ok) {
-          const text = await res.text();
-          return JSON.parse(text.replace(/^.*setResponse\(/, "").replace(/\);?\s*$/, ""));
-        }
+        const res = await fetch(sheetUrl, { cache: "no-store" });
+        if (res.ok) return parseGvizResponse(await res.text());
       } catch {
         /* fallback to JSONP below */
       }
@@ -205,10 +269,25 @@
     return loadSheetJsonp(sheetUrl);
   }
 
+  async function loadSheetJson(sheetUrl) {
+    let lastError = null;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const json = await loadSheetJsonOnce(sheetUrl);
+        writePriceCache(json);
+        return json;
+      } catch (e) {
+        lastError = e;
+        if (attempt < 2) await sleep(600 * (attempt + 1));
+      }
+    }
+    throw lastError || new Error("Не удалось загрузить таблицу");
+  }
+
   function loadSheetJsonp(sheetUrl) {
     return new Promise((resolve, reject) => {
       const handler = "__ironSheet_" + Date.now();
-      const timer = setTimeout(() => cleanup(new Error("Таймаут загрузки таблицы")), 20000);
+      const timer = setTimeout(() => cleanup(new Error("Таймаут загрузки таблицы")), 25000);
 
       function cleanup(err, data) {
         clearTimeout(timer);
@@ -577,13 +656,25 @@
     return result;
   }
 
+  /** Синонимы только из слов, уже есть в названии товара — быстрее при загрузке. */
+  function appendProductSynonyms(base, parts) {
+    for (const [en, ruList] of SORTED_TRANSLATIONS) {
+      const normEn = normalizeSearch(en);
+      if (normEn.length < 2 || !base.includes(normEn)) continue;
+      parts.add(normEn);
+      ruList.forEach((ru) => parts.add(normalizeSearch(ru)));
+    }
+    for (const [en, variants] of SORTED_TRANSLIT_ENTRIES) {
+      if (!base.includes(en)) continue;
+      parts.add(en);
+      variants.forEach((v) => parts.add(normalizeSearch(v)));
+    }
+  }
+
   function buildSearchText(name, country, section, warranty) {
     const base = normalizeSearch([name, country, section, warranty].filter(Boolean).join(" "));
     const parts = new Set([base, translitRuToLat(base)]);
-
-    expandTransliteration(base).forEach((p) => parts.add(p));
-    expandTranslations(base).forEach((p) => parts.add(p));
-
+    appendProductSynonyms(base, parts);
     [...parts].forEach((p) => parts.add(translitRuToLat(p)));
     return [...parts].join(" ");
   }
