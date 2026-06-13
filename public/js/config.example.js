@@ -1,27 +1,24 @@
 /**
- * Скопируйте в config.js и заполните перед деплоем.
- * config.js не коммитьте в git, если там секреты.
+ * Шаблон конфигурации сайта.
+ * При деплое копируется в config.js (см. .github/workflows/pages.yml).
+ * Локально: cp public/js/config.example.js public/js/config.js
+ * Секреты (apiToken) — через GitHub Secrets, не коммитьте в config.js.
  */
 window.IRON_CONFIG = {
-  // URL вашего backend (Node на VDS или Yandex Cloud Function-прокси)
   apiUrl: "",
-
-  // Токен для Yandex Function (заголовок X-Function-Token), если форма шлёт напрямую
   apiToken: "",
-
-  // Телефон менеджера для уведомлений в Telegram (через вашу функцию Send-to-telegram)
   notifyPhone: "+79288509404",
 
   googleSheetId: "11xhKh4rPN5XfZA7y8D14_rVxzT1dfvOjs_nv1HMSols",
   googleSheetTab: "Prices",
   telegramOrderUser: "ironsochi",
-  siteUrl: "https://ваш-домен.ru",
+  siteUrl: "https://1iron.ru",
 
-  // Яндекс.Карты: координаты входа (уточните при необходимости)
   map: {
-    lat: 43.5852,
-    lon: 39.7231,
-    zoom: 17,
+    lat: 43.5854,
+    lon: 39.724,
+    zoom: 18,
+    orgId: "1716684342",
     address: "Сочи, ул. Московская, 5 (цоколь, вход со двора ул. Островского)",
   },
 };

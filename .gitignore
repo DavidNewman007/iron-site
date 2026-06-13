@@ -1,4 +1,5 @@
 node_modules/
 server/.env
+public/js/config.js
 .DS_Store
 *.md

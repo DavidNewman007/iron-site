@@ -63,6 +63,7 @@
 
   async function init() {
     bindEvents();
+    bindMobileCartCountSync();
     renderCart();
 
     if (!SHEET_ID) {
@@ -110,6 +111,16 @@
     }
     renderGrid();
     return true;
+  }
+
+  function bindMobileCartCountSync() {
+    const cartCount = els.cartCount;
+    const cartCountMobile = document.getElementById("cart-count-mobile");
+    if (!cartCount || !cartCountMobile) return;
+
+    new MutationObserver(() => {
+      cartCountMobile.textContent = cartCount.textContent || "0";
+    }).observe(cartCount, { childList: true, characterData: true, subtree: true });
   }
 
   function bindEvents() {
