@@ -4,7 +4,7 @@
 (function () {
   const cfg = window.IRON_CONFIG || {};
   const SHEET_ID = cfg.googleSheetId || "";
-  const SHEET_TAB = cfg.googleSheetTab || "Prices";
+  const SHEET_TAB = cfg.googleSheetTab || "Prices-2";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
 
   const CATEGORY_RULES = [
@@ -30,7 +30,7 @@
   ];
 
   const SEARCH_DICT = window.IRON_SEARCH_DICT || { translit: {}, translate: [] };
-  const PRICE_CACHE_KEY = "iron_prices_sheet_v2";
+  const PRICE_CACHE_KEY = `iron_prices_sheet_${SHEET_TAB || "default"}_v3`;
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   const USER_LOAD_ERROR = "Не удалось загрузить товары. Идут технические работы. Скоро все починим";
 
@@ -152,7 +152,7 @@
   }
 
   function getSheetUrl() {
-    const range = "A1:E800";
+    const range = "A1:F1200";
     return (
       `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq` +
       `?tqx=out:json&sheet=${encodeURIComponent(SHEET_TAB)}&range=${range}`
@@ -174,7 +174,7 @@
     let currentSection = "";
 
     for (const row of dataRows) {
-      let { name, warranty, country, qty, priceRaw } = parseSheetRow(row, colMap);
+      let { name, warranty, country, qty, priceRaw, warehouse } = parseSheetRow(row, colMap);
       if (!name) continue;
 
       const updatedMatch = name.match(/^обновлено:\s*(.+)$/i);
@@ -196,13 +196,14 @@
       const price = parsePrice(priceRaw);
       if (!price || price < 1000) continue;
 
-      const id = slugify(name + country + price);
+      const id = slugify(name + country + warehouse + price);
       products.push({
         id,
         name,
         warranty: warranty || "",
         country: country || "",
         qty: qty || "",
+        warehouse: warehouse || "",
         price,
         priceLabel: formatPrice(price),
         category: detectCategory(name) || currentCategory,
@@ -324,8 +325,8 @@
     return String(cell.v).trim();
   }
 
-  /** Фиксированная схема публичной таблицы: A–E. */
-  const DEFAULT_COL_MAP = { name: 0, warranty: 1, country: 2, qty: 3, price: 4 };
+  /** Фиксированная схема публичной таблицы: A–F. */
+  const DEFAULT_COL_MAP = { name: 0, warranty: 1, country: 2, qty: 3, price: 4, warehouse: 5 };
 
   /**
    * gviz не отдаёт русские заголовки в cols.label (там буквы A,B,C…),
@@ -339,14 +340,15 @@
       return { colMap: DEFAULT_COL_MAP, dataRows: rows };
     }
 
-    const map = { name: 0, warranty: 1, country: 2, qty: 3, price: 4 };
-    for (let i = 0; i < 5; i++) {
+    const map = { name: 0, warranty: 1, country: 2, qty: 3, price: 4, warehouse: 5 };
+    for (let i = 0; i < 6; i++) {
       const label = getSheetCell(rows[0], i).toLowerCase();
       if (label.includes("гарант")) map.warranty = i;
       else if (label.includes("страна")) map.country = i;
       else if (label.includes("колич")) map.qty = i;
+      else if (label.includes("склад")) map.warehouse = i;
     }
-    for (let i = 4; i >= 0; i--) {
+    for (let i = 5; i >= 0; i--) {
       const label = getSheetCell(rows[0], i).toLowerCase();
       if (label.includes("продаж") || label.includes("цена")) {
         map.price = i;
@@ -364,6 +366,7 @@
       country: pick(colMap.country),
       qty: pick(colMap.qty),
       priceRaw: pick(colMap.price),
+      warehouse: pick(colMap.warehouse),
     };
   }
 
@@ -784,7 +787,7 @@
         </div>
         <h3 class="price-card__name">${escapeHtml(p.name)}</h3>
         ${p.warranty ? `<p class="price-card__warranty">${escapeHtml(p.warranty)}</p>` : ""}
-        ${p.qty ? `<p class="price-card__qty">${escapeHtml(p.qty)}</p>` : ""}
+        ${p.warehouse ? `<p class="price-card__qty">${escapeHtml(p.warehouse)}</p>` : ""}
         <div class="price-card__footer">
           <strong class="price-card__price">${escapeHtml(p.priceLabel)}</strong>
           <button type="button" class="price-card__btn ${inCart ? "is-active" : ""}" data-action="toggle" data-id="${p.id}">
@@ -858,7 +861,7 @@
         <span class="cart-item__num">${i + 1}</span>
         <div class="cart-item__body">
           <strong>${escapeHtml(p.name)}</strong>
-          <span>${escapeHtml(p.priceLabel)}${p.country ? " · " + escapeHtml(p.country) : ""}</span>
+          <span>${escapeHtml(p.priceLabel)}${p.country ? " · " + escapeHtml(p.country) : ""}${p.warehouse ? " · " + escapeHtml(p.warehouse) : ""}</span>
         </div>
         <button type="button" class="cart-item__remove" data-id="${p.id}" aria-label="Убрать">×</button>
       </li>`
@@ -874,7 +877,7 @@
     if (!cart.length) return;
     const lines = cart.map(
       (p, i) =>
-        `${i + 1}. ${p.name}${p.country ? " " + p.country : ""} — ${p.priceLabel}`
+        `${i + 1}. ${p.name}${p.country ? " " + p.country : ""}${p.warehouse ? " " + p.warehouse : ""} — ${p.priceLabel}`
     );
     const text = [
       "Заявка с сайта IRON SERVICE",
