@@ -4,15 +4,18 @@
 (function () {
   const cfg = window.IRON_CONFIG || {};
   const SHEET_ID = cfg.googleSheetId || "";
-  const SHEET_TAB =
-    cfg.googleSheetTab && cfg.googleSheetTab !== "Prices"
-      ? cfg.googleSheetTab
-      : "Prices-2";
+  const SHEET_TABS = ["Prices", "Prices-2"];
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
 
   const CATEGORY_RULES = [
     { id: "iphone", label: "iPhone", icon: "📱", test: (t) => /iphone/i.test(t) },
     { id: "ipad", label: "iPad", icon: "🔳", test: (t) => /ipad/i.test(t) },
+    {
+      id: "airpods",
+      label: "AirPods",
+      icon: "🎧",
+      test: (t) => /airpods/i.test(t),
+    },
     {
       id: "gaming",
       label: "Gaming · Console",
@@ -32,26 +35,29 @@
       test: (t) => /whoop|gopro|instax|fujifilm|canon|dji|osmo|airtag|smarttag|magic mouse|dyson/i.test(t),
     },
     {
-      id: "mac",
-      label: "Mac · AirPods · аксессуары",
+      id: "macbook",
+      label: "MacBook",
       icon: "💻",
-      test: (t) =>
-        /macbook|airpods|pencil|аксессуар|accessories|гравировк|apple tv|pitaka/i.test(
-          t
-        ),
+      test: (t) => /macbook/i.test(t),
     },
     {
       id: "samsung",
-      label: "Samsung · Meta",
+      label: "Samsung",
       icon: "📱",
-      test: (t) => /samsung|meta|oakley|wayfarer|skyler|galaxy watch|galaxy buds/i.test(t),
+      test: (t) => /samsung|galaxy watch|galaxy buds/i.test(t),
+    },
+    {
+      id: "meta",
+      label: "Meta",
+      icon: "👓",
+      test: (t) => /meta|oakley|wayfarer|skyler/i.test(t),
     },
     { id: "watch", label: "Apple Watch", icon: "⌚", test: (t) => /watch/i.test(t) },
     { id: "other", label: "Прочее", icon: "◆", test: () => true },
   ];
 
   const SEARCH_DICT = window.IRON_SEARCH_DICT || { translit: {}, translate: [] };
-  const PRICE_CACHE_KEY = `iron_prices_sheet_${SHEET_TAB || "default"}_v3`;
+  const PRICE_CACHE_KEY = `iron_prices_sheet_${SHEET_TABS.join("_")}_v4`;
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   const USER_LOAD_ERROR = "Не удалось загрузить товары. Идут технические работы. Скоро все починим";
 
@@ -175,14 +181,29 @@
   function getSheetUrl() {
     const range = "A1:F1200";
     return (
-      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq` +
-      `?tqx=out:json&sheet=${encodeURIComponent(SHEET_TAB)}&range=${range}`
+      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq`
     );
   }
 
   async function fetchProducts() {
-    const json = await loadSheetJson(getSheetUrl());
-    return parseSheetJson(json);
+    const base = getSheetUrl();
+    const merged = { products: [], updatedAt: "" };
+    const seenIds = new Set();
+
+    for (const tab of SHEET_TABS) {
+      const url = `${base}?tqx=out:json&sheet=${encodeURIComponent(tab)}&range=${encodeURIComponent("A1:F1200")}`;
+      const json = await loadSheetJson(url);
+      const parsed = parseSheetJson(json);
+      if (!merged.updatedAt && parsed.updatedAt) merged.updatedAt = parsed.updatedAt;
+
+      for (const product of parsed.products || []) {
+        if (seenIds.has(product.id)) continue;
+        seenIds.add(product.id);
+        merged.products.push(product);
+      }
+    }
+
+    return merged;
   }
 
   function parseSheetJson(json) {
