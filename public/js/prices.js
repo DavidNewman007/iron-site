@@ -8,6 +8,15 @@
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
 
   const CATEGORY_RULES = [
+    // Accessories must come before iPhone/Samsung so that items like
+    // "Защитное стекло 3D Remax для iPhone 14 Pro Max" land here, not in iPhone.
+    {
+      id: "accessories",
+      label: "Accessories",
+      icon: "🔌",
+      test: (t) =>
+        /pencil|remax|pitaka|чехол|кейс|ремешк|wallet|сзу|charger|кабель|аксесс|accessories|magic mouse|airtag|smarttag/i.test(t),
+    },
     { id: "iphone", label: "iPhone", icon: "📱", test: (t) => /iphone/i.test(t) },
     { id: "ipad", label: "iPad", icon: "🔳", test: (t) => /ipad/i.test(t) },
     {
@@ -32,7 +41,8 @@
       id: "gadgets",
       label: "Gadgets",
       icon: "🖱",
-      test: (t) => /whoop|gopro|instax|fujifilm|canon|dji|osmo|airtag|smarttag|magic mouse|dyson/i.test(t),
+      // magic mouse / airtag / smarttag moved to accessories
+      test: (t) => /whoop|gopro|instax|fujifilm|canon|dji|osmo|dyson|apple tv/i.test(t),
     },
     {
       id: "macbook",
@@ -236,7 +246,7 @@
       if (priceRaw === "") continue;
 
       const price = parsePrice(priceRaw);
-      if (!price || price < 1000) continue;
+      if (!price || price < 100) continue;
 
       const id = slugify(name + country + warehouse + price);
       products.push({
