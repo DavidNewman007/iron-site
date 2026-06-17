@@ -248,6 +248,15 @@
       const price = parsePrice(priceRaw);
       if (!price || price < 100) continue;
 
+      const productCategory = detectCategory(name) || currentCategory;
+      // For accessories items, assign section by product name so that
+      // S1 and S2 items land in the same sub-section regardless of the
+      // last category header seen (fixes "Meta Glasses" appearing for Pencil/AirTag).
+      const productSection =
+        productCategory === "accessories"
+          ? resolveAccessorySection(name)
+          : currentSection;
+
       const id = slugify(name + country + warehouse + price);
       products.push({
         id,
@@ -258,9 +267,9 @@
         warehouse: warehouse || "",
         price,
         priceLabel: formatPrice(price),
-        category: detectCategory(name) || currentCategory,
-        section: currentSection,
-        searchText: buildSearchText(name, country, currentSection, warranty),
+        category: productCategory,
+        section: productSection,
+        searchText: buildSearchText(name, country, productSection, warranty),
         inStock: !/0\s*шт/i.test(qty),
       });
     }
@@ -446,6 +455,21 @@
 
   function cleanStoredProductName(name) {
     return String(name || "").replace(/(\D)(\d{4,})$/, "$1").trim();
+  }
+
+  function resolveAccessorySection(name) {
+    const t = name || "";
+    if (/pencil/i.test(t))                              return "✏️ Pencil";
+    if (/magic mouse/i.test(t))                         return "🖱 Apple Mouse";
+    if (/airtag/i.test(t))                              return "📍 AirTag";
+    if (/smarttag/i.test(t))                            return "📍 Galaxy SmartTag";
+    if (/антишпион/i.test(t))                           return "🛡 Стекло 3D Remax Антишпион";
+    if (/remax|защитное стекло/i.test(t))               return "🛡 Стекло 3D Remax";
+    if (/чехол-бумажник|wallet/i.test(t))               return "👜 Чехол-бумажник PITAKA";
+    if (/чехол pitaka/i.test(t))                        return "📱 Чехлы PITAKA";
+    if (/ремешк/i.test(t))                              return "⌚ Ремешки PITAKA";
+    if (/сзу|charger|зарядк/i.test(t))                  return "🔌 Зарядки";
+    return "🔌 Accessories";
   }
 
   function isCategoryRow(name, warranty, country, qty, price) {
