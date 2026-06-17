@@ -4,28 +4,49 @@
 (function () {
   const cfg = window.IRON_CONFIG || {};
   const SHEET_ID = cfg.googleSheetId || "";
-  const SHEET_TAB = cfg.googleSheetTab || "Prices-2";
+  const SHEET_TAB =
+    cfg.googleSheetTab && cfg.googleSheetTab !== "Prices"
+      ? cfg.googleSheetTab
+      : "Prices-2";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
 
   const CATEGORY_RULES = [
     { id: "iphone", label: "iPhone", icon: "📱", test: (t) => /iphone/i.test(t) },
     { id: "ipad", label: "iPad", icon: "🔳", test: (t) => /ipad/i.test(t) },
     {
+      id: "gaming",
+      label: "Gaming · Console",
+      icon: "🎮",
+      test: (t) => /playstation|ps5|ps vr|vr2|gamepad|pulse|xbox|nintendo/i.test(t),
+    },
+    {
+      id: "audio",
+      label: "Audio",
+      icon: "🎵",
+      test: (t) => /jbl|marshall|акустик|колонк|станци|speaker|street|дуо max|midi|max zigbee/i.test(t),
+    },
+    {
+      id: "gadgets",
+      label: "Gadgets",
+      icon: "🖱",
+      test: (t) => /whoop|gopro|instax|fujifilm|canon|dji|osmo|airtag|smarttag|magic mouse|dyson/i.test(t),
+    },
+    {
       id: "mac",
       label: "Mac · AirPods · аксессуары",
       icon: "💻",
       test: (t) =>
-        /macbook|airpods|pencil|аксессуар|accessories|гравировк|apple tv|playstation|dyson|sony|airwrap|supersonic|airstrait/i.test(
+        /macbook|airpods|pencil|аксессуар|accessories|гравировк|apple tv|pitaka/i.test(
           t
         ),
     },
-    { id: "watch", label: "Apple Watch", icon: "⌚", test: (t) => /watch/i.test(t) },
     {
       id: "samsung",
       label: "Samsung · Meta",
       icon: "📱",
-      test: (t) => /samsung|meta|oakley|wayfarer|skyler/i.test(t),
+      test: (t) => /samsung|meta|oakley|wayfarer|skyler|galaxy watch|galaxy buds/i.test(t),
     },
+    { id: "watch", label: "Apple Watch", icon: "⌚", test: (t) => /watch/i.test(t) },
     { id: "other", label: "Прочее", icon: "◆", test: () => true },
   ];
 
