@@ -62,7 +62,8 @@
       icon: "👓",
       test: (t) => /meta|oakley|wayfarer|skyler/i.test(t),
     },
-    { id: "watch", label: "Apple Watch", icon: "⌚", test: (t) => /watch/i.test(t) },
+    // ⌚ catches S1 headers like "⌚ Series SE 3 44mm" which don't contain "watch"
+    { id: "watch", label: "Apple Watch", icon: "⌚", test: (t) => /watch|⌚/iu.test(t) },
     { id: "other", label: "Прочее", icon: "◆", test: () => true },
   ];
 
@@ -236,8 +237,10 @@
       }
 
       if (isCategoryRow(name, warranty, country, qty, priceRaw)) {
-        currentSection = name;
-        const cat = detectCategory(name);
+        // Strip trailing 🆕 so that S1 sections ("📱 iPhone 17 Pro eSIM 🆕")
+        // and S2 sections ("📱 iPhone 17 Pro eSIM") group together on the website.
+        currentSection = name.replace(/\s*🆕\s*$/u, "").trim();
+        const cat = detectCategory(currentSection);
         if (cat) currentCategory = cat;
         continue;
       }
