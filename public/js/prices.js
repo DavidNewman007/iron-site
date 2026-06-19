@@ -239,7 +239,7 @@
       if (isCategoryRow(name, warranty, country, qty, priceRaw)) {
         // Strip trailing 🆕 so that S1 sections ("📱 iPhone 17 Pro eSIM 🆕")
         // and S2 sections ("📱 iPhone 17 Pro eSIM") group together on the website.
-        currentSection = name.replace(/\s*🆕\s*$/u, "").trim();
+        currentSection = normalizeSectionLabel(name.replace(/\s*🆕\s*$/u, "").trim());
         const cat = detectCategory(currentSection);
         if (cat) currentCategory = cat;
         continue;
@@ -473,6 +473,12 @@
     if (/ремешк/i.test(t))                              return "⌚ Ремешки PITAKA";
     if (/сзу|charger|зарядк/i.test(t))                  return "🔌 Зарядки";
     return "🔌 Accessories";
+  }
+
+  function normalizeSectionLabel(section) {
+    const s = String(section || "").replace(/\s+/g, " ").trim();
+    if (/^📱\s*iPhone Air(?:\s+eSIM)?$/i.test(s)) return "📱 iPhone Air eSIM";
+    return s;
   }
 
   function isCategoryRow(name, warranty, country, qty, price) {
@@ -857,6 +863,41 @@
     return groups;
   }
 
+  function getIphoneSectionSortKey(section) {
+    const s = String(section || "")
+      .replace(/^📱\s*/u, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+
+    let modelRank = 9999;
+    if (/^iphone 14\b/.test(s)) modelRank = /\bplus\b/.test(s) ? 141 : 140;
+    else if (/^iphone 15\b/.test(s)) modelRank = /\bplus\b/.test(s) ? 151 : 150;
+    else if (/^iphone 16e\b/.test(s)) modelRank = 160;
+    else if (/^iphone 16\b/.test(s)) modelRank = /\bplus\b/.test(s) ? 162 : 161;
+    else if (/^iphone 17e\b/.test(s)) modelRank = 170;
+    else if (/^iphone 17 pro max\b/.test(s)) modelRank = 174;
+    else if (/^iphone 17 pro\b/.test(s)) modelRank = 173;
+    else if (/^iphone air\b/.test(s)) modelRank = 172;
+    else if (/^iphone 17\b/.test(s)) modelRank = 171;
+
+    let simRank = 0;
+    if (/\bsim\s*\+\s*esim\b/.test(s)) simRank = 2;
+    else if (/\besim\b/.test(s)) simRank = 1;
+
+    return modelRank * 10 + simRank;
+  }
+
+  function sortGroups(groups, selectedCategory) {
+    if (selectedCategory !== "iphone") return groups;
+    return [...groups].sort((a, b) => {
+      const ka = getIphoneSectionSortKey(a.section);
+      const kb = getIphoneSectionSortKey(b.section);
+      if (ka !== kb) return ka - kb;
+      return String(a.section || "").localeCompare(String(b.section || ""), "ru");
+    });
+  }
+
   function renderProductCard(p) {
     const inCart = cart.some((c) => c.id === p.id);
     return `
@@ -878,7 +919,8 @@
 
   function renderGrid() {
     if (!els.grid) return;
-    const groups = groupBySection(getFiltered());
+    const selectedCategory = els.category?.value || "all";
+    const groups = sortGroups(groupBySection(getFiltered()), selectedCategory);
 
     if (!groups.length) {
       els.grid.innerHTML = '<p class="price-grid-empty">Ничего не найдено. Попробуйте другой запрос.</p>';
