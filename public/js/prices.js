@@ -80,7 +80,7 @@
   ];
 
   const SEARCH_DICT = window.IRON_SEARCH_DICT || { translit: {}, translate: [] };
-  const PRICE_CACHE_KEY = `iron_prices_sheet_${SHEET_TABS.join("_")}_v4`;
+  const PRICE_CACHE_KEY = `iron_prices_sheet_${SHEET_TABS.join("_")}_v5`;
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   const USER_LOAD_ERROR = "Не удалось загрузить товары. Идут технические работы. Скоро все починим";
 
