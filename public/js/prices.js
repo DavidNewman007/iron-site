@@ -38,11 +38,17 @@
       test: (t) => /jbl|marshall|акустик|колонк|станци|speaker|street|дуо max|midi|max zigbee/i.test(t),
     },
     {
+      id: "dyson",
+      label: "Dyson",
+      icon: "💨",
+      test: (t) => /dyson|\bhs\d{2}\b|\bhd\d{2}\b|\bht\d{2}\b/i.test(t),
+    },
+    {
       id: "gadgets",
       label: "Gadgets",
       icon: "🖱",
       // magic mouse / airtag / smarttag moved to accessories
-      test: (t) => /whoop|gopro|instax|fujifilm|canon|dji|osmo|dyson|apple tv/i.test(t),
+      test: (t) => /whoop|gopro|instax|fujifilm|canon|dji|osmo|apple tv/i.test(t),
     },
     {
       id: "macbook",
@@ -54,7 +60,13 @@
       id: "samsung",
       label: "Samsung",
       icon: "📱",
-      test: (t) => /samsung|galaxy watch|galaxy buds/i.test(t),
+      test: (t) => /samsung|galaxy buds/i.test(t),
+    },
+    {
+      id: "galaxy_watch",
+      label: "Samsung Galaxy Watch",
+      icon: "⌚",
+      test: (t) => /galaxy watch|^watch\s*(8|ultra|classic)\b/i.test(t),
     },
     {
       id: "meta",
@@ -62,8 +74,8 @@
       icon: "👓",
       test: (t) => /meta|oakley|wayfarer|skyler/i.test(t),
     },
-    // ⌚ catches S1 headers like "⌚ Series SE 3 44mm" which don't contain "watch"
-    { id: "watch", label: "Apple Watch", icon: "⌚", test: (t) => /watch|⌚/iu.test(t) },
+    // Apple Watch only (Galaxy Watch handled by galaxy_watch rule above).
+    { id: "watch", label: "Apple Watch", icon: "⌚", test: (t) => /apple\s*watch|series\s*(se|\d+|ultra)|^ultra\s*\d+\b|⌚/iu.test(t) },
     { id: "other", label: "Прочее", icon: "◆", test: () => true },
   ];
 
