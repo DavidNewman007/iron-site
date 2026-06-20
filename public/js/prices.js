@@ -6,7 +6,11 @@
   const SHEET_ID = cfg.googleSheetId || "";
   const SHEET_TABS = ["Prices", "Prices-2"];
   const HYBRID_IPHONE_MANIFEST = "hybrid-products/iphone-cards.json";
-  const HYBRID_IPHONE_MANIFEST_VERSION = "2026-06-20-2";
+  const HYBRID_MACBOOK_MANIFEST = "hybrid-products/macbook-cards.json";
+  const HYBRID_WATCH_MANIFEST = "hybrid-products/watch-cards.json";
+  const HYBRID_IPHONE_MANIFEST_VERSION = "2026-06-20-3";
+  const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-20-1";
+  const HYBRID_WATCH_MANIFEST_VERSION = "2026-06-20-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
 
   const CATEGORY_RULES = [
@@ -111,7 +115,16 @@
   let allProducts = [];
   let iphoneHybridById = {};
   let iphoneHybridByIdNoPrice = new Map();
+  let iphoneHybridByVariantKey = new Map();
+  let iphoneHybridByModelKey = new Map();
+  let macbookHybridById = {};
+  let macbookHybridByIdNoPrice = new Map();
+  let watchHybridById = {};
+  let watchHybridByIdNoPrice = new Map();
+  let watchHybridByVariantKey = new Map();
   let iphoneHybridManifestLoaded = false;
+  let macbookHybridManifestLoaded = false;
+  let watchHybridManifestLoaded = false;
   let cart = loadCart();
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
@@ -120,7 +133,11 @@
     bindEvents();
     bindMobileCartCountSync();
     renderCart();
-    const hybridLoadPromise = loadIphoneHybridCards();
+    const hybridLoadPromise = Promise.all([
+      loadIphoneHybridCards(),
+      loadMacbookHybridCards(),
+      loadWatchHybridCards(),
+    ]);
 
     if (!SHEET_ID) {
       showError(
@@ -134,7 +151,7 @@
     try {
       applyProducts(await fetchProducts());
       await hybridLoadPromise;
-      applyIphoneHybridData();
+      applyHybridData();
       renderGrid();
     } catch (e) {
       console.error(e);
@@ -162,33 +179,139 @@
     }
   }
 
-  function applyIphoneHybridData() {
+  async function loadMacbookHybridCards() {
+    try {
+      const manifestUrl = `${HYBRID_MACBOOK_MANIFEST}?v=${encodeURIComponent(
+        HYBRID_MACBOOK_MANIFEST_VERSION
+      )}`;
+      const res = await fetch(manifestUrl, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      macbookHybridById = data && typeof data.byId === "object" ? data.byId : {};
+      buildMacbookHybridIndex();
+      macbookHybridManifestLoaded = true;
+    } catch (_) {
+      macbookHybridById = {};
+      macbookHybridByIdNoPrice = new Map();
+      macbookHybridManifestLoaded = false;
+    }
+  }
+
+  async function loadWatchHybridCards() {
+    try {
+      const manifestUrl = `${HYBRID_WATCH_MANIFEST}?v=${encodeURIComponent(
+        HYBRID_WATCH_MANIFEST_VERSION
+      )}`;
+      const res = await fetch(manifestUrl, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      watchHybridById = data && typeof data.byId === "object" ? data.byId : {};
+      buildWatchHybridIndex();
+      watchHybridManifestLoaded = true;
+    } catch (_) {
+      watchHybridById = {};
+      watchHybridByIdNoPrice = new Map();
+      watchHybridByVariantKey = new Map();
+      watchHybridManifestLoaded = false;
+    }
+  }
+
+  function applyHybridData() {
     if (!allProducts.length) return;
-    const allowHeuristicFallback = location.protocol === "file:" || !iphoneHybridManifestLoaded;
     for (const product of allProducts) {
-      if (product.category !== "iphone") {
-        product.hybridDetailUrl = "";
+      if (isHybridIphoneCandidate(product)) {
+        const allowHeuristicFallback = location.protocol === "file:" || !iphoneHybridManifestLoaded;
+        const meta = resolveIphoneHybridMeta(product);
+        if (meta && meta.url) {
+          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridCoverUrl = meta.cover ? String(meta.cover) : "";
+          continue;
+        }
+        product.hybridDetailUrl = allowHeuristicFallback ? buildIphoneDetailFallbackUrl(product) : "";
         product.hybridCoverUrl = "";
         continue;
       }
-      const meta = resolveIphoneHybridMeta(product);
-      if (meta && meta.url) {
-        product.hybridDetailUrl = encodeURI(String(meta.url));
-        product.hybridCoverUrl = meta.cover ? String(meta.cover) : "";
+
+      if (isHybridMacbookCandidate(product)) {
+        const allowHeuristicFallback = location.protocol === "file:" || !macbookHybridManifestLoaded;
+        const meta = resolveMacbookHybridMeta(product);
+        if (meta && meta.url) {
+          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridCoverUrl = meta.cover ? String(meta.cover) : "";
+          continue;
+        }
+        product.hybridDetailUrl = allowHeuristicFallback ? buildMacbookDetailFallbackUrl(product) : "";
+        product.hybridCoverUrl = "";
         continue;
       }
-      product.hybridDetailUrl = allowHeuristicFallback ? buildIphoneDetailFallbackUrl(product) : "";
+
+      if (isHybridWatchCandidate(product)) {
+        const allowHeuristicFallback = location.protocol === "file:" || !watchHybridManifestLoaded;
+        const meta = resolveWatchHybridMeta(product);
+        if (meta && meta.url) {
+          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridCoverUrl = meta.cover ? String(meta.cover) : "";
+          continue;
+        }
+        product.hybridDetailUrl = allowHeuristicFallback ? buildWatchDetailFallbackUrl(product) : "";
+        product.hybridCoverUrl = "";
+        continue;
+      }
+
+      product.hybridDetailUrl = "";
       product.hybridCoverUrl = "";
     }
   }
 
   function buildIphoneHybridIndex() {
     iphoneHybridByIdNoPrice = new Map();
+    iphoneHybridByVariantKey = new Map();
+    iphoneHybridByModelKey = new Map();
     for (const [id, meta] of Object.entries(iphoneHybridById)) {
       const noPrice = stripTrailingPrice(id);
       if (!noPrice) continue;
       if (!iphoneHybridByIdNoPrice.has(noPrice)) iphoneHybridByIdNoPrice.set(noPrice, []);
       iphoneHybridByIdNoPrice.get(noPrice).push({ id, meta, price: extractTrailingPrice(id) });
+
+      const variantKey = buildIphoneVariantKey(meta?.name || "");
+      if (variantKey) {
+        if (!iphoneHybridByVariantKey.has(variantKey)) iphoneHybridByVariantKey.set(variantKey, []);
+        iphoneHybridByVariantKey.get(variantKey).push({ id, meta, price: extractTrailingPrice(id) });
+      }
+
+      const modelKey = buildIphoneModelKey(meta?.name || "");
+      if (modelKey) {
+        if (!iphoneHybridByModelKey.has(modelKey)) iphoneHybridByModelKey.set(modelKey, []);
+        iphoneHybridByModelKey.get(modelKey).push({ id, meta, price: extractTrailingPrice(id) });
+      }
+    }
+  }
+
+  function buildMacbookHybridIndex() {
+    macbookHybridByIdNoPrice = new Map();
+    for (const [id, meta] of Object.entries(macbookHybridById)) {
+      const noPrice = stripTrailingPrice(id);
+      if (!noPrice) continue;
+      if (!macbookHybridByIdNoPrice.has(noPrice)) macbookHybridByIdNoPrice.set(noPrice, []);
+      macbookHybridByIdNoPrice.get(noPrice).push({ id, meta, price: extractTrailingPrice(id) });
+    }
+  }
+
+  function buildWatchHybridIndex() {
+    watchHybridByIdNoPrice = new Map();
+    watchHybridByVariantKey = new Map();
+    for (const [id, meta] of Object.entries(watchHybridById)) {
+      const noPrice = stripTrailingPrice(id);
+      if (noPrice) {
+        if (!watchHybridByIdNoPrice.has(noPrice)) watchHybridByIdNoPrice.set(noPrice, []);
+        watchHybridByIdNoPrice.get(noPrice).push({ id, meta, price: extractTrailingPrice(id) });
+      }
+
+      const variantKey = buildWatchVariantKey(meta?.name || "");
+      if (variantKey) {
+        if (!watchHybridByVariantKey.has(variantKey)) watchHybridByVariantKey.set(variantKey, []);
+        watchHybridByVariantKey.get(variantKey).push({ id, meta, price: extractTrailingPrice(id) });
+      }
     }
   }
 
@@ -196,8 +319,29 @@
     const exact = iphoneHybridById[product.id];
     if (exact && exact.url) return exact;
 
+    const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
+
     const noPrice = stripTrailingPrice(product.id);
     const candidates = noPrice ? iphoneHybridByIdNoPrice.get(noPrice) : null;
+    if (candidates?.length) return pickBestIphoneHybridCandidate(candidates, targetPrice);
+
+    const variantKey = buildIphoneVariantKey(product.name, product.section);
+    const variantCandidates = variantKey ? iphoneHybridByVariantKey.get(variantKey) : null;
+    if (variantCandidates?.length) return pickBestIphoneHybridCandidate(variantCandidates, targetPrice);
+
+    const modelKey = buildIphoneModelKey(product.name, product.section);
+    const modelCandidates = modelKey ? iphoneHybridByModelKey.get(modelKey) : null;
+    if (modelCandidates?.length) return pickBestIphoneHybridCandidate(modelCandidates, targetPrice);
+
+    return null;
+  }
+
+  function resolveMacbookHybridMeta(product) {
+    const exact = macbookHybridById[product.id];
+    if (exact && exact.url) return exact;
+
+    const noPrice = stripTrailingPrice(product.id);
+    const candidates = noPrice ? macbookHybridByIdNoPrice.get(noPrice) : null;
     if (!candidates || !candidates.length) return null;
 
     const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
@@ -214,6 +358,137 @@
       }
     }
     return best.meta;
+  }
+
+  function resolveWatchHybridMeta(product) {
+    const exact = watchHybridById[product.id];
+    if (exact && exact.url) return exact;
+
+    const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
+
+    const noPrice = stripTrailingPrice(product.id);
+    const candidates = noPrice ? watchHybridByIdNoPrice.get(noPrice) : null;
+    if (candidates?.length) return pickBestIphoneHybridCandidate(candidates, targetPrice);
+
+    const variantKey = buildWatchVariantKey(product.name, product.section);
+    const variantCandidates = variantKey ? watchHybridByVariantKey.get(variantKey) : null;
+    if (variantCandidates?.length) return pickBestIphoneHybridCandidate(variantCandidates, targetPrice);
+
+    return null;
+  }
+
+  function pickBestIphoneHybridCandidate(candidates, targetPrice) {
+    if (!candidates?.length) return null;
+    if (!targetPrice) return candidates[0].meta;
+    let best = candidates[0];
+    let bestDelta = Number.POSITIVE_INFINITY;
+    for (const candidate of candidates) {
+      const candidatePrice = candidate.price || 0;
+      const delta = Math.abs(candidatePrice - targetPrice);
+      if (delta < bestDelta) {
+        bestDelta = delta;
+        best = candidate;
+      }
+    }
+    return best.meta;
+  }
+
+  function normalizeIphoneNameKey(name, section) {
+    let source = String(name || "");
+    const sectionText = String(section || "");
+    if (!/\biphone\b/i.test(source) && /\biphone\b/i.test(sectionText)) {
+      source = `iPhone ${source}`;
+    }
+
+    return source
+      .toLowerCase()
+      .replace(/ё/g, "е")
+      .replace(/\([^)]*\)/g, " ")
+      .replace(/\b(sim\s*\+\s*esim|esim|sim)\b/gi, " ")
+      .replace(/\b(j\/a|hn\/a|za\/a|kh\/a|af\/a|be\/a|zd\/a|qn\/a|ll\/a|x\/a|ah\/a)\b/gi, " ")
+      .replace(/[^\wа-я\s]/gi, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function buildIphoneVariantKey(name, section) {
+    const normalized = normalizeIphoneNameKey(name, section);
+    if (!normalized) return "";
+    return normalized
+      .replace(/\b(128|256|512|1024)\s*(gb|tb)\b/gi, "$1$2")
+      .replace(/\bgb\b/gi, "")
+      .replace(/\btb\b/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function buildIphoneModelKey(name, section) {
+    const normalized = normalizeIphoneNameKey(name, section);
+    if (!normalized) return "";
+    const modelMatch = normalized.match(/\biphone\s+(air|1[4-9](?:\s+pro(?:\s+max)?|\s+plus|e)?)/i);
+    if (!modelMatch) return "";
+    return `iphone ${String(modelMatch[1] || "")
+      .toLowerCase()
+      .replace(/\s+/g, " ")
+      .trim()}`;
+  }
+
+  function normalizeWatchNameKey(name, section) {
+    let source = String(name || "");
+    const sectionText = String(section || "");
+    const watchHint = /apple\s*watch|series\s*(se|\d+|ultra)|\bultra\s*\d*\b/i;
+    if (!watchHint.test(source) && watchHint.test(sectionText)) {
+      source = `Apple Watch ${source}`;
+    }
+
+    return source
+      .toLowerCase()
+      .replace(/ё/g, "е")
+      .replace(/\([^)]*\)/g, " ")
+      .replace(/\b(gps\s*\+\s*cellular|gps|cellular|lte)\b/gi, " ")
+      .replace(/[^\wа-я\s]/gi, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function buildWatchVariantKey(name, section) {
+    const normalized = normalizeWatchNameKey(name, section);
+    if (!normalized) return "";
+    return normalized
+      .replace(/\b(\d{2})\s*mm\b/gi, "$1mm")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function isWatchLikeName(text) {
+    return /apple\s*watch|series\s*(se|\d+|ultra)|^ultra\s*\d+\b|⌚/iu.test(String(text || "").trim());
+  }
+
+  function isHybridIphoneCandidate(product) {
+    if (!product || product.category !== "iphone") return false;
+    if (isWatchLikeName(product.name) || isWatchLikeName(product.section)) return false;
+
+    const hasIphoneInName = /\biphone\b/i.test(String(product.name || ""));
+    const hasIphoneInSection = /\biphone\b/i.test(String(product.section || ""));
+    const shorthandIphoneName = /^\s*(1[4-9](?:\s+pro(?:\s+max)?|\s+plus|e)?|air)\b/i.test(
+      String(product.name || "")
+    );
+    return hasIphoneInName || hasIphoneInSection || shorthandIphoneName;
+  }
+
+  function isHybridMacbookCandidate(product) {
+    if (!product || product.category !== "macbook") return false;
+    const name = String(product.name || "");
+    const section = String(product.section || "");
+    return /\bmacbook\b/i.test(name) || /\bmacbook\b/i.test(section);
+  }
+
+  function isHybridWatchCandidate(product) {
+    if (!product || product.category !== "watch") return false;
+    const name = String(product.name || "");
+    const section = String(product.section || "");
+    if (/galaxy\s*watch|samsung/i.test(name) || /galaxy\s*watch|samsung/i.test(section)) return false;
+    return isWatchLikeName(name) || isWatchLikeName(section);
   }
 
   function stripTrailingPrice(id) {
@@ -353,7 +628,11 @@
       const price = parsePrice(priceRaw);
       if (!price || price < 100) continue;
 
-      const productCategory = detectCategory(name) || currentCategory;
+      const detectedCategory = detectCategory(name);
+      let productCategory = detectedCategory || currentCategory;
+      if (productCategory === "iphone" && isWatchLikeName(name)) {
+        productCategory = "watch";
+      }
       // For accessories items, assign section by product name so that
       // S1 and S2 items land in the same sub-section regardless of the
       // last category header seen (fixes "Meta Glasses" appearing for Pencil/AirTag).
@@ -1002,8 +1281,9 @@
 
   function renderProductCard(p) {
     const inCart = cart.some((c) => c.id === p.id);
-    const detailLink = p.category === "iphone" && p.hybridDetailUrl ? p.hybridDetailUrl : "";
-    const previewImage = p.category === "iphone" && p.hybridCoverUrl ? p.hybridCoverUrl : "";
+    const hasHybrid = (p.category === "iphone" || p.category === "macbook" || p.category === "watch") && p.hybridDetailUrl;
+    const detailLink = hasHybrid ? p.hybridDetailUrl : "";
+    const previewImage = hasHybrid && p.hybridCoverUrl ? p.hybridCoverUrl : "";
     const nameHtml = detailLink
       ? `<a href="${escapeHtml(detailLink)}" class="price-card__name-link">${escapeHtml(p.name)}</a>`
       : escapeHtml(p.name);
@@ -1022,7 +1302,6 @@
           ${p.country ? `<span class="price-card__country">${escapeHtml(p.country)}</span>` : ""}
         </div>
         <h3 class="price-card__name">${nameHtml}</h3>
-        ${detailLink ? `<p class="price-card__hybrid">Фото и описание</p>` : ""}
         ${p.warranty ? `<p class="price-card__warranty">${escapeHtml(p.warranty)}</p>` : ""}
         ${p.warehouse ? `<p class="price-card__qty">${escapeHtml(p.warehouse)}</p>` : ""}
         <div class="price-card__footer">
@@ -1174,6 +1453,24 @@
       priceSuffix
     );
     return byWarehouseAndPrice ? `hybrid-products/iphone/${byWarehouseAndPrice}.html` : "";
+  }
+
+  function buildMacbookDetailFallbackUrl(product) {
+    const priceSuffix = parsePrice(product.price) || parsePrice(product.priceLabel);
+    const byWarehouseAndPrice = slugifyWithSuffix(
+      `${product.name || ""}${product.warehouse || ""}`,
+      priceSuffix
+    );
+    return byWarehouseAndPrice ? `hybrid-products/macbook/${byWarehouseAndPrice}.html` : "";
+  }
+
+  function buildWatchDetailFallbackUrl(product) {
+    const priceSuffix = parsePrice(product.price) || parsePrice(product.priceLabel);
+    const byWarehouseAndPrice = slugifyWithSuffix(
+      `${product.name || ""}${product.warehouse || ""}`,
+      priceSuffix
+    );
+    return byWarehouseAndPrice ? `hybrid-products/watch/${byWarehouseAndPrice}.html` : "";
   }
 
   function escapeHtml(s) {
