@@ -71,7 +71,7 @@
       <section class="price-card">
         <h3 class="price-card__name">Характеристики</h3>
         <table><tr><td>Тип дисплея</td><td>OLED (Super Retina XDR)</td></tr><tr><td>Диагональ</td><td>6.3&quot;</td></tr><tr><td>Технология дисплея</td><td>Always-On display. ProMotion с адаптивной частотой обновления до 120 Гц</td></tr><tr><td>Разрешение</td><td>2622x1206 пикселей</td></tr><tr><td>Яркость</td><td>до 3000 кд/м²</td></tr><tr><td>Плотность пикселей</td><td>460 пикс/дюйм</td></tr><tr><td>Контрастность</td><td>2000000:1</td></tr><tr><td>Процессор</td><td>Apple A19 Pro</td></tr></table>
-        <div class="desc"><p>Оригинальный iPhone 17 Pro 256GB в цвете Cosmic Orange с eSIM. Мощный чип A19 Pro, титановый корпус, тройная камера 48 Мп. Официальная гарантия и доставка по России!</p></div>
+        <div class="desc"><p>Оригинальный iPhone 17 Pro 256GB в цвете Cosmic Orange с eSIM. Мощный чип A19 Pro, титановый корпус, тройная камера 48 Мп</p><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
       </section>
     </div>
   </main>
@@ -81,8 +81,6 @@
   </div>
   <script>
     const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-3-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-7-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-11-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-14-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-5-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-1-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/accessories/szu/MU7V2_GEO_EMEA-1200x1200.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/accessories/szu/MU7V2_AV1_GEO_EMEA-1200x1200.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/accessories/szu/MU7V2_AV2_GEO_EMEA-1200x1200.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/Блог/Frame 74-1020x1530.jpg", "https://sochi.dr-store.ru/image/cache/catalog/Блог/Frame 77 (1)-1020x1530.jpg"];
-    const CART_KEY = 'iron_cart';
-    const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
@@ -171,37 +169,8 @@
       if (e.key === 'ArrowLeft') nav(-1);
       if (e.key === 'ArrowRight') nav(1);
     });
-
-    function readCart() {
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
-    }
-    function writeCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
-    function syncPickBtn() {
-      if (!pickBtn) return;
-      const cart = readCart();
-      const inCart = cart.some((x) => x.id === pickBtn.dataset.id);
-      pickBtn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
-      pickBtn.classList.toggle('is-active', inCart);
-    }
-    if (pickBtn) {
-      pickBtn.addEventListener('click', () => {
-        const cart = readCart();
-        const id = pickBtn.dataset.id;
-        const i = cart.findIndex((x) => x.id === id);
-        if (i >= 0) cart.splice(i, 1);
-        else cart.push({
-          id,
-          name: pickBtn.dataset.name,
-          price: formatPrice(parsePrice(pickBtn.dataset.price)),
-          country: '',
-          warehouse: ''
-        });
-        writeCart(cart);
-        syncPickBtn();
-      });
-    }
     setImage(0);
-    syncPickBtn();
   </script>
+  <script src="../../js/hybrid-cart.js?v=2026-06-20-1"></script>
 </body>
 </html>

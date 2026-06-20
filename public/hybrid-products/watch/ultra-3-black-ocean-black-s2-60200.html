@@ -71,7 +71,7 @@
       <section class="price-card">
         <h3 class="price-card__name">Характеристики</h3>
         <table><tr><td>Тип дисплея</td><td>Always-On display OLED Wide-angle OLED LTPO3</td></tr><tr><td>Диагональ</td><td>1.9&quot;</td></tr><tr><td>Разрешение</td><td>422х514 пикселей</td></tr><tr><td>Яркость</td><td>3000 кд/﻿м²</td></tr><tr><td>Плотность пикселей</td><td>326 пикс/дюйм</td></tr><tr><td>Процессор</td><td>Apple S10</td></tr><tr><td>Встроенная память</td><td>64 ГБ</td></tr><tr><td>Сотовая и беспроводная сеть</td><td>5G, LTE и UMTS, Wi-Fi 4 (802.11n), спутниковая связь, Bluetooth 5.3</td></tr><tr><td>Спутниковая навигация</td><td>двухчастотный GPS, ГЛОНАСС, Galileo, QZSS, BeiDou</td></tr></table>
-        <div class="desc"><p>Весь модельный ряд. Кредит и доставка по Сочи. Гарантия.</p><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
+        <div class="desc"><p>Весь модельный ряд. Кредит и доставка по Сочи. Гарантия</p><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
       </section>
     </div>
   </main>
@@ -81,8 +81,6 @@
   </div>
   <script>
     const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-ultra-3/MYPD3-ocean-ultra3-8-dr-store-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-ultra-3/MYPD3-ocean-ultra3-9-dr-store-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-ultra-3/MYPD3-ocean-ultra3-7-dr-store-1200x1200.jpg"];
-    const CART_KEY = 'iron_cart';
-    const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
@@ -171,37 +169,8 @@
       if (e.key === 'ArrowLeft') nav(-1);
       if (e.key === 'ArrowRight') nav(1);
     });
-
-    function readCart() {
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
-    }
-    function writeCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
-    function syncPickBtn() {
-      if (!pickBtn) return;
-      const cart = readCart();
-      const inCart = cart.some((x) => x.id === pickBtn.dataset.id);
-      pickBtn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
-      pickBtn.classList.toggle('is-active', inCart);
-    }
-    if (pickBtn) {
-      pickBtn.addEventListener('click', () => {
-        const cart = readCart();
-        const id = pickBtn.dataset.id;
-        const i = cart.findIndex((x) => x.id === id);
-        if (i >= 0) cart.splice(i, 1);
-        else cart.push({
-          id,
-          name: pickBtn.dataset.name,
-          price: formatPrice(parsePrice(pickBtn.dataset.price)),
-          country: '',
-          warehouse: ''
-        });
-        writeCart(cart);
-        syncPickBtn();
-      });
-    }
     setImage(0);
-    syncPickBtn();
   </script>
+  <script src="../../js/hybrid-cart.js?v=2026-06-20-1"></script>
 </body>
 </html>

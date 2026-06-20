@@ -71,7 +71,7 @@
       <section class="price-card">
         <h3 class="price-card__name">Характеристики</h3>
         <table><tr><td>Тип устройства</td><td>Умные часы</td></tr><tr><td>Модель</td><td>Watch Series Ultra 2</td></tr><tr><td>Производитель</td><td>Apple</td></tr><tr><td>Материал ремешка</td><td>Нейлон</td></tr><tr><td>Размер</td><td>49 мм</td></tr><tr><td>Способ отображения времени</td><td>Цифровой</td></tr><tr><td>Тип стекла</td><td>Сапфировое</td></tr><tr><td>Функции</td><td>Воспроизведение аудио, Воспроизведение видео, Вывод аудио на Bluetooth-устройства</td></tr><tr><td>Регулировка длины браслета/ремешка</td><td>есть</td></tr></table>
-        <div class="desc"><p>Apple Watch Ultra 2 GPS 49mm: титан, ремешок Blue Alpine Loop. Экстремальная прочность, управление жестами, Siri.</p></div>
+        <div class="desc"><p>Apple Watch Ultra 2 GPS 49mm: титан, ремешок Blue Alpine Loop. Экстремальная прочность, управление жестами, Siri</p><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
       </section>
     </div>
   </main>
@@ -81,8 +81,6 @@
   </div>
   <script>
     const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_Watch_Ultra_2_GPS_49mm_Natural_Titanium_Blue_Alpine_Loop_Strap_Size_M/Apple_Watch_Ultra_2_GPS_49mm_Natural_Titanium_Blue_Alpine_Loop_Strap_Size_M-2-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_Watch_Ultra_2_GPS_49mm_Natural_Titanium_Blue_Alpine_Loop_Strap_Size_M/Apple_Watch_Ultra_2_GPS_49mm_Natural_Titanium_Blue_Alpine_Loop_Strap_Size_M-3-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_Watch_Ultra_2_GPS_49mm_Natural_Titanium_Blue_Alpine_Loop_Strap_Size_M/Apple_Watch_Ultra_2_GPS_49mm_Natural_Titanium_Blue_Alpine_Loop_Strap_Size_M-1200x1200.jpg"];
-    const CART_KEY = 'iron_cart';
-    const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
@@ -171,37 +169,8 @@
       if (e.key === 'ArrowLeft') nav(-1);
       if (e.key === 'ArrowRight') nav(1);
     });
-
-    function readCart() {
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
-    }
-    function writeCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
-    function syncPickBtn() {
-      if (!pickBtn) return;
-      const cart = readCart();
-      const inCart = cart.some((x) => x.id === pickBtn.dataset.id);
-      pickBtn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
-      pickBtn.classList.toggle('is-active', inCart);
-    }
-    if (pickBtn) {
-      pickBtn.addEventListener('click', () => {
-        const cart = readCart();
-        const id = pickBtn.dataset.id;
-        const i = cart.findIndex((x) => x.id === id);
-        if (i >= 0) cart.splice(i, 1);
-        else cart.push({
-          id,
-          name: pickBtn.dataset.name,
-          price: formatPrice(parsePrice(pickBtn.dataset.price)),
-          country: '',
-          warehouse: ''
-        });
-        writeCart(cart);
-        syncPickBtn();
-      });
-    }
     setImage(0);
-    syncPickBtn();
   </script>
+  <script src="../../js/hybrid-cart.js?v=2026-06-20-1"></script>
 </body>
 </html>

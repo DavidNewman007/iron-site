@@ -753,6 +753,12 @@
     }).observe(cartCount, { childList: true, characterData: true, subtree: true });
   }
 
+  function syncCartFromStorage() {
+    cart = loadCart();
+    renderCart();
+    renderGrid();
+  }
+
   function bindEvents() {
     els.search?.addEventListener("input", scheduleRenderGrid);
     els.category?.addEventListener("change", renderGrid);
@@ -768,6 +774,10 @@
     });
     els.cartClose?.addEventListener("click", () => {
       els.cartPanel?.classList.remove("is-open");
+    });
+    window.addEventListener("pageshow", syncCartFromStorage);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") syncCartFromStorage();
     });
   }
 
@@ -1559,7 +1569,7 @@
   }
 
   function toggleCart(id) {
-    const product = allProducts.find((p) => p.id === id);
+    const product = allProducts.find((p) => idsLookEqual(p.id, id));
     if (!product) return;
     const idx = getCartIndexByProductId(id);
     const added = idx < 0;
@@ -1679,12 +1689,13 @@
   }
 
   function dedupeCartById(items) {
-    const byId = new Map();
+    const out = [];
     for (const item of items || []) {
       if (!item?.id) continue;
-      byId.set(item.id, item);
+      if (out.some((existing) => idsLookEqual(existing.id, item.id))) continue;
+      out.push(item);
     }
-    return Array.from(byId.values());
+    return out;
   }
 
   function normalizeCartIdForCompare(id) {

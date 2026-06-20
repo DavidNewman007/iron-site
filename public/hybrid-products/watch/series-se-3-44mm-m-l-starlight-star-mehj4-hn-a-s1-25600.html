@@ -71,7 +71,7 @@
       <section class="price-card">
         <h3 class="price-card__name">Характеристики</h3>
         <table><tr><td>Тип устройства</td><td>Умные часы</td></tr><tr><td>Материал ремешка</td><td>Фторэластомер</td></tr><tr><td>Мониторинг</td><td>Бег, Женского здоровья, Плавание, По видам спорта, Пульс, Сон, Физическая активность, Шагомер</td></tr><tr><td>Уведомления</td><td>О входящем звонке, О нерегулярном ритме сердца, О разряде батареи, О слишком низком и высоком пульсе, От смартфона</td></tr><tr><td>Цвет ремешка</td><td>Сияющая звезда</td></tr><tr><td>Тип дисплея</td><td>Цветной</td></tr><tr><td>Разрешение</td><td>448 x 368</td></tr><tr><td>Яркость</td><td>1000 кд/м²</td></tr><tr><td>Тип матрицы</td><td>OLED LTPO</td></tr></table>
-        <div class="desc"><p>Apple Watch SE 3 (2025) 44mm Starlight — стиль, здоровье и фитнес в одном. Лёгкий корпус, ремешок Sport Band, функции Apple по доступной цене.</p></div>
+        <div class="desc"><p>Apple Watch SE 3 (2025) 44mm Starlight — стиль, здоровье и фитнес в одном. Лёгкий корпус, ремешок Sport Band, функции Apple по доступной цене</p><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
       </section>
     </div>
   </main>
@@ -81,8 +81,6 @@
   </div>
   <script>
     const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/new products/apple-watch-se-3-2025-44mm-starlight-remeshok-starlight-sport-band-razmer-m-l/apple-watch-se-3-2025-44mm-starlight-remeshok-starlight-sport-band-razmer-m-l-2-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/new products/apple-watch-se-3-2025-44mm-starlight-remeshok-starlight-sport-band-razmer-m-l/apple-watch-se-3-2025-44mm-starlight-remeshok-starlight-sport-band-razmer-m-l-3-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/new products/apple-watch-se-3-2025-44mm-starlight-remeshok-starlight-sport-band-razmer-m-l/apple-watch-se-3-2025-44mm-starlight-remeshok-starlight-sport-band-razmer-m-l-1200x1200.jpg"];
-    const CART_KEY = 'iron_cart';
-    const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
@@ -171,37 +169,8 @@
       if (e.key === 'ArrowLeft') nav(-1);
       if (e.key === 'ArrowRight') nav(1);
     });
-
-    function readCart() {
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
-    }
-    function writeCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
-    function syncPickBtn() {
-      if (!pickBtn) return;
-      const cart = readCart();
-      const inCart = cart.some((x) => x.id === pickBtn.dataset.id);
-      pickBtn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
-      pickBtn.classList.toggle('is-active', inCart);
-    }
-    if (pickBtn) {
-      pickBtn.addEventListener('click', () => {
-        const cart = readCart();
-        const id = pickBtn.dataset.id;
-        const i = cart.findIndex((x) => x.id === id);
-        if (i >= 0) cart.splice(i, 1);
-        else cart.push({
-          id,
-          name: pickBtn.dataset.name,
-          price: formatPrice(parsePrice(pickBtn.dataset.price)),
-          country: '',
-          warehouse: ''
-        });
-        writeCart(cart);
-        syncPickBtn();
-      });
-    }
     setImage(0);
-    syncPickBtn();
   </script>
+  <script src="../../js/hybrid-cart.js?v=2026-06-20-1"></script>
 </body>
 </html>

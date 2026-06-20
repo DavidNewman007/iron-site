@@ -71,7 +71,7 @@
       <section class="price-card">
         <h3 class="price-card__name">Характеристики</h3>
         <table><tr><td colspan="2">Характеристики не распознаны</td></tr></table>
-        <div class="desc"></div>
+        <div class="desc"><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
       </section>
     </div>
   </main>
@@ -81,8 +81,6 @@
   </div>
   <script>
     const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/logo/mailservice.png", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-3/airpods-pro-3-dr-store-3-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-3/airpods-pro-3-dr-store-1-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-3/airpods-pro-3-dr-store-2-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-3-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-2-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-12-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-15-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-14-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-13-1200x1200.jpg"];
-    const CART_KEY = 'iron_cart';
-    const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
@@ -171,37 +169,8 @@
       if (e.key === 'ArrowLeft') nav(-1);
       if (e.key === 'ArrowRight') nav(1);
     });
-
-    function readCart() {
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
-    }
-    function writeCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
-    function syncPickBtn() {
-      if (!pickBtn) return;
-      const cart = readCart();
-      const inCart = cart.some((x) => x.id === pickBtn.dataset.id);
-      pickBtn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
-      pickBtn.classList.toggle('is-active', inCart);
-    }
-    if (pickBtn) {
-      pickBtn.addEventListener('click', () => {
-        const cart = readCart();
-        const id = pickBtn.dataset.id;
-        const i = cart.findIndex((x) => x.id === id);
-        if (i >= 0) cart.splice(i, 1);
-        else cart.push({
-          id,
-          name: pickBtn.dataset.name,
-          price: formatPrice(parsePrice(pickBtn.dataset.price)),
-          country: '',
-          warehouse: ''
-        });
-        writeCart(cart);
-        syncPickBtn();
-      });
-    }
     setImage(0);
-    syncPickBtn();
   </script>
+  <script src="../../js/hybrid-cart.js?v=2026-06-20-1"></script>
 </body>
 </html>

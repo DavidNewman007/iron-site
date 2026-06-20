@@ -71,7 +71,7 @@
       <section class="price-card">
         <h3 class="price-card__name">Характеристики</h3>
         <table><tr><td>Процессор</td><td>Apple H1</td></tr><tr><td>Сотовая и беспроводная сеть</td><td>Bluetooth 5.0</td></tr><tr><td>Интерфейсы</td><td>USB-C</td></tr><tr><td>Время работы</td><td>до 20 часов</td></tr><tr><td>Ширина</td><td>168.6 мм</td></tr><tr><td>Высота</td><td>187.3 мм</td></tr><tr><td>Толщина</td><td>83.4 мм</td></tr><tr><td>Вес</td><td>386.2 г</td></tr><tr><td>Аудиотехнологии</td><td>восемь микрофонов для активного шумоподавления, три микрофона для передачи голоса (два общих с активным шумоподавлением и один дополнительный микрофон)</td></tr></table>
-        <div class="desc"><p>Apple AirPods Max (2024) Blue: наслаждайтесь превосходным звуком и комфортом! Активное шумоподавление, пространственное аудио и до 20 часов работы. Купите сейчас!</p></div>
+        <div class="desc"><p>Apple AirPods Max (2024) Blue: наслаждайтесь превосходным звуком и комфортом! Активное шумоподавление, пространственное аудио и до 20 часов работы</p><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
       </section>
     </div>
   </main>
@@ -81,8 +81,6 @@
   </div>
   <script>
     const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-17-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-1-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-7-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-22-1200x1200.jpg"];
-    const CART_KEY = 'iron_cart';
-    const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
@@ -171,37 +169,8 @@
       if (e.key === 'ArrowLeft') nav(-1);
       if (e.key === 'ArrowRight') nav(1);
     });
-
-    function readCart() {
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
-    }
-    function writeCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
-    function syncPickBtn() {
-      if (!pickBtn) return;
-      const cart = readCart();
-      const inCart = cart.some((x) => x.id === pickBtn.dataset.id);
-      pickBtn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
-      pickBtn.classList.toggle('is-active', inCart);
-    }
-    if (pickBtn) {
-      pickBtn.addEventListener('click', () => {
-        const cart = readCart();
-        const id = pickBtn.dataset.id;
-        const i = cart.findIndex((x) => x.id === id);
-        if (i >= 0) cart.splice(i, 1);
-        else cart.push({
-          id,
-          name: pickBtn.dataset.name,
-          price: formatPrice(parsePrice(pickBtn.dataset.price)),
-          country: '',
-          warehouse: ''
-        });
-        writeCart(cart);
-        syncPickBtn();
-      });
-    }
     setImage(0);
-    syncPickBtn();
   </script>
+  <script src="../../js/hybrid-cart.js?v=2026-06-20-1"></script>
 </body>
 </html>

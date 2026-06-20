@@ -71,7 +71,7 @@
       <section class="price-card">
         <h3 class="price-card__name">Характеристики</h3>
         <table><tr><td>В чем главные отличия от AirPods 3?</td><td>Это улучшение по сравнению с AirPods 3, где футляр был чуть менее эффективным и крупным. В новой версии реализовано более стабильное подключение, а наушники обеспечивают исключительную посадку и комфорт в течение всего дня.</td></tr><tr><td>Как обстоят дела со звуком и настройкой?</td><td>Новинка получила адаптивный эквалайзер, который подстраивает звук под форму вашего уха. Широким динамическим диапазоном и глубоким басом управляет обновленный динамик, превращая прослушивание в опыт виртуальной концертной площадки.</td></tr><tr><td>Насколько удобно использовать их как гарнитуру?</td><td>Это отличные гарнитуры для работы: встроенные микрофоны с распознаванием голоса четко отделяют вашу речь от шума во время разговора. Качественный акустический фильтр делает ваш голос естественным для собеседника.</td></tr><tr><td>Как осуществляется зарядка и подключение?</td><td>Современная зарядка и подключение через Type-C или MagSafe позволяют быстро восполнить энергию. При этом поддержка Bluetooth 5.3 обеспечивает стабильное соединение с устройствами Apple и другими устройствами без задержек.</td></tr><tr><td>Защищены ли наушники от внешних факторов?</td><td>Да, модель имеет защиту от влаги и пота, что позволяет использовать их на тренировках. Весь ваш любимый контент и вся аудиотехника Apple теперь защищены по стандарту IP54.</td></tr><tr><td>Как быстро подключить их к iPhone?</td><td>Как только вы открываете футляр, ваш айфон мгновенно видит устройство благодаря глубокой интеграции в iOS. Вы также можете управлять громкостью и треками через сенсорные датчики.</td></tr><tr><td>Какой тип у акустического оформления наушников?</td><td>Данный тип акустического оформления — вкладыши открытого типа. Благодаря обновленному дизайну ваш опыт использования не только становится более комфортным в течение всего дня, но и открывает совершенно новое звучание.</td></tr><tr><td>Есть ли у вас программа лояльности или обмена?</td><td>У нас действует выгодный trade-in (программа обмен): вы можете сдать свои старые поколения AirPods и получить существенную скидку на покупку четвертой серии.</td></tr><tr><td>Как работает доставка, например, в Сочи?</td><td>Мы доставляем заказы по всей России. Если ваш город — Сочи или любой другой регион, мы обеспечим быструю отправку, чтобы вы как можно скорее оценили удобство и звук новой модели.</td></tr></table>
-        <div class="desc"><p>Apple Airpods 4: наушники нового поколения с активным шумоподавлением. Купить AirPods 4 ANC ✅ | Персонализированный звук, до 30 часов музыки | Гарантия | Рассрочка | Быстрая доставка по всей России!</p></div>
+        <div class="desc"><p>Apple Airpods 4: наушники нового поколения с активным шумоподавлением. Купить AirPods 4 ANC ✅ | Персонализированный звук, до 30 часов музыки | Гарантия | Рассрочка | Быстрая доставка по всей России!</p><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
       </section>
     </div>
   </main>
@@ -81,8 +81,6 @@
   </div>
   <script>
     const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/logo/mailservice.png", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-4/airpods-4-dr-store-15-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-4/airpods-4-dr-store-16-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-4/airpods-4-dr-store-17-1200x1200.jpg"];
-    const CART_KEY = 'iron_cart';
-    const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
@@ -171,37 +169,8 @@
       if (e.key === 'ArrowLeft') nav(-1);
       if (e.key === 'ArrowRight') nav(1);
     });
-
-    function readCart() {
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
-    }
-    function writeCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
-    function syncPickBtn() {
-      if (!pickBtn) return;
-      const cart = readCart();
-      const inCart = cart.some((x) => x.id === pickBtn.dataset.id);
-      pickBtn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
-      pickBtn.classList.toggle('is-active', inCart);
-    }
-    if (pickBtn) {
-      pickBtn.addEventListener('click', () => {
-        const cart = readCart();
-        const id = pickBtn.dataset.id;
-        const i = cart.findIndex((x) => x.id === id);
-        if (i >= 0) cart.splice(i, 1);
-        else cart.push({
-          id,
-          name: pickBtn.dataset.name,
-          price: formatPrice(parsePrice(pickBtn.dataset.price)),
-          country: '',
-          warehouse: ''
-        });
-        writeCart(cart);
-        syncPickBtn();
-      });
-    }
     setImage(0);
-    syncPickBtn();
   </script>
+  <script src="../../js/hybrid-cart.js?v=2026-06-20-1"></script>
 </body>
 </html>

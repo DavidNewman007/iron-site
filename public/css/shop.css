@@ -546,6 +546,25 @@
   }
 }
 
+/* Hybrid detail pages: keep cards stable on hover */
+.detail-wrap .price-card {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.detail-wrap .price-card:hover {
+  transform: none;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+}
+
+.detail-wrap .price-card__btn {
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.detail-wrap .price-card__btn:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 @media (max-width: 380px) {
   .price-grid {
     grid-template-columns: 1fr;

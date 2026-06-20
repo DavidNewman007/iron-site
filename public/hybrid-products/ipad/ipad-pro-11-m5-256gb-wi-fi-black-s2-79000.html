@@ -71,7 +71,7 @@
       <section class="price-card">
         <h3 class="price-card__name">Характеристики</h3>
         <table><tr><td>Тип дисплея</td><td>Ultra Retina XDR Display, Tandem OLED</td></tr><tr><td>Диагональ</td><td>11&quot;</td></tr><tr><td>Технология дисплея</td><td>ProMotion Technology</td></tr><tr><td>Разрешение</td><td>2420x1668 пикселей</td></tr><tr><td>Плотность пикселей</td><td>264 пикс/дюйм</td></tr><tr><td>Процессор</td><td>Apple M5</td></tr><tr><td>Графический процессор</td><td>10 ядер</td></tr><tr><td>Оперативная память</td><td>12 ГБ</td></tr><tr><td>Встроенная память</td><td>256 ГБ</td></tr></table>
-        <div class="desc"><p>Новый iPad Pro 11&quot; M5. Идеален для работы и развлечений. Купите Apple iPad Pro сейчас!</p></div>
+        <div class="desc"><p>Новый iPad Pro 11&quot; M5. Идеален для работы и развлечений</p><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
       </section>
     </div>
   </main>
@@ -81,8 +81,6 @@
   </div>
   <script>
     const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-9-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-7-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-13-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-11-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/pencil-1-usb-c-dr-store-7-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/pencil-1-usb-c-dr-store-5-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/MX2D3-dr-store2-1200x1200.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/MX2D3-dr-store1-1200x1200.jpeg"];
-    const CART_KEY = 'iron_cart';
-    const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
@@ -171,37 +169,8 @@
       if (e.key === 'ArrowLeft') nav(-1);
       if (e.key === 'ArrowRight') nav(1);
     });
-
-    function readCart() {
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
-    }
-    function writeCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
-    function syncPickBtn() {
-      if (!pickBtn) return;
-      const cart = readCart();
-      const inCart = cart.some((x) => x.id === pickBtn.dataset.id);
-      pickBtn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
-      pickBtn.classList.toggle('is-active', inCart);
-    }
-    if (pickBtn) {
-      pickBtn.addEventListener('click', () => {
-        const cart = readCart();
-        const id = pickBtn.dataset.id;
-        const i = cart.findIndex((x) => x.id === id);
-        if (i >= 0) cart.splice(i, 1);
-        else cart.push({
-          id,
-          name: pickBtn.dataset.name,
-          price: formatPrice(parsePrice(pickBtn.dataset.price)),
-          country: '',
-          warehouse: ''
-        });
-        writeCart(cart);
-        syncPickBtn();
-      });
-    }
     setImage(0);
-    syncPickBtn();
   </script>
+  <script src="../../js/hybrid-cart.js?v=2026-06-20-1"></script>
 </body>
 </html>

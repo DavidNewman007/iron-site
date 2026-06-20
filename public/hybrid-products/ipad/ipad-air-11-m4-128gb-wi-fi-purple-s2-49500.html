@@ -71,7 +71,7 @@
       <section class="price-card">
         <h3 class="price-card__name">Характеристики</h3>
         <table><tr><td>Тип дисплея</td><td>Liquid Retina IPS LCD</td></tr><tr><td>Диагональ</td><td>11&quot;</td></tr><tr><td>Разрешение</td><td>2360x1640 пикселей</td></tr><tr><td>Плотность пикселей</td><td>264 пикс/дюйм</td></tr><tr><td>Процессор</td><td>Apple M4</td></tr><tr><td>Графический процессор</td><td>9 ядер</td></tr><tr><td>Оперативная память</td><td>12 ГБ</td></tr><tr><td>Разрешение основной камеры</td><td>12 Мп</td></tr><tr><td>Диафрагма основной камеры</td><td>ƒ/1.8</td></tr></table>
-        <div class="desc"><p>Актуальная цена, гарантия и доставка.</p><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
+        <div class="desc"><p>IRON SERVICE · Сочи, ул. Московская, 5</p></div>
       </section>
     </div>
   </main>
@@ -81,8 +81,6 @@
   </div>
   <script>
     const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-1-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-5-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-all-wf-dr-store-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-11-1200x1200.jpg"];
-    const CART_KEY = 'iron_cart';
-    const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
@@ -171,37 +169,8 @@
       if (e.key === 'ArrowLeft') nav(-1);
       if (e.key === 'ArrowRight') nav(1);
     });
-
-    function readCart() {
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
-    }
-    function writeCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
-    function syncPickBtn() {
-      if (!pickBtn) return;
-      const cart = readCart();
-      const inCart = cart.some((x) => x.id === pickBtn.dataset.id);
-      pickBtn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
-      pickBtn.classList.toggle('is-active', inCart);
-    }
-    if (pickBtn) {
-      pickBtn.addEventListener('click', () => {
-        const cart = readCart();
-        const id = pickBtn.dataset.id;
-        const i = cart.findIndex((x) => x.id === id);
-        if (i >= 0) cart.splice(i, 1);
-        else cart.push({
-          id,
-          name: pickBtn.dataset.name,
-          price: formatPrice(parsePrice(pickBtn.dataset.price)),
-          country: '',
-          warehouse: ''
-        });
-        writeCart(cart);
-        syncPickBtn();
-      });
-    }
     setImage(0);
-    syncPickBtn();
   </script>
+  <script src="../../js/hybrid-cart.js?v=2026-06-20-1"></script>
 </body>
 </html>
