@@ -9,10 +9,12 @@
   const HYBRID_IPAD_MANIFEST = "hybrid-products/ipad-cards.json";
   const HYBRID_MACBOOK_MANIFEST = "hybrid-products/macbook-cards.json";
   const HYBRID_WATCH_MANIFEST = "hybrid-products/watch-cards.json";
+  const HYBRID_AIRPODS_MANIFEST = "hybrid-products/airpods-cards.json";
   const HYBRID_IPHONE_MANIFEST_VERSION = "2026-06-20-3";
   const HYBRID_IPAD_MANIFEST_VERSION = "2026-06-20-1";
   const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-20-1";
   const HYBRID_WATCH_MANIFEST_VERSION = "2026-06-20-1";
+  const HYBRID_AIRPODS_MANIFEST_VERSION = "2026-06-20-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
   const CART_KEY = "iron_cart";
   const CART_PRODUCT_ID_QUERY_PARAM = "pid";
@@ -144,10 +146,13 @@
   let watchHybridById = {};
   let watchHybridByIdNoPrice = new Map();
   let watchHybridByVariantKey = new Map();
+  let airpodsHybridById = {};
+  let airpodsHybridByIdNoPrice = new Map();
   let iphoneHybridManifestLoaded = false;
   let ipadHybridManifestLoaded = false;
   let macbookHybridManifestLoaded = false;
   let watchHybridManifestLoaded = false;
+  let airpodsHybridManifestLoaded = false;
   let cart = loadCart();
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
@@ -161,6 +166,7 @@
       loadIpadHybridCards(),
       loadMacbookHybridCards(),
       loadWatchHybridCards(),
+      loadAirpodsHybridCards(),
     ]);
 
     if (!SHEET_ID) {
@@ -260,6 +266,24 @@
     }
   }
 
+  async function loadAirpodsHybridCards() {
+    try {
+      const manifestUrl = `${HYBRID_AIRPODS_MANIFEST}?v=${encodeURIComponent(
+        HYBRID_AIRPODS_MANIFEST_VERSION
+      )}`;
+      const res = await fetch(manifestUrl, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      airpodsHybridById = data && typeof data.byId === "object" ? data.byId : {};
+      buildAirpodsHybridIndex();
+      airpodsHybridManifestLoaded = true;
+    } catch (_) {
+      airpodsHybridById = {};
+      airpodsHybridByIdNoPrice = new Map();
+      airpodsHybridManifestLoaded = false;
+    }
+  }
+
   function applyHybridData() {
     if (!allProducts.length) return;
     for (const product of allProducts) {
@@ -311,6 +335,19 @@
           continue;
         }
         product.hybridDetailUrl = allowHeuristicFallback ? buildWatchDetailFallbackUrl(product) : "";
+        product.hybridCoverUrl = "";
+        continue;
+      }
+
+      if (isHybridAirpodsCandidate(product)) {
+        const allowHeuristicFallback = location.protocol === "file:" || !airpodsHybridManifestLoaded;
+        const meta = resolveAirpodsHybridMeta(product);
+        if (meta && meta.url) {
+          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridCoverUrl = meta.cover ? String(meta.cover) : "";
+          continue;
+        }
+        product.hybridDetailUrl = allowHeuristicFallback ? buildAirpodsDetailFallbackUrl(product) : "";
         product.hybridCoverUrl = "";
         continue;
       }
@@ -396,6 +433,16 @@
     }
   }
 
+  function buildAirpodsHybridIndex() {
+    airpodsHybridByIdNoPrice = new Map();
+    for (const [id, meta] of Object.entries(airpodsHybridById)) {
+      const noPrice = stripTrailingPrice(id);
+      if (!noPrice) continue;
+      if (!airpodsHybridByIdNoPrice.has(noPrice)) airpodsHybridByIdNoPrice.set(noPrice, []);
+      airpodsHybridByIdNoPrice.get(noPrice).push({ id, meta, price: extractTrailingPrice(id) });
+    }
+  }
+
   function resolveIphoneHybridMeta(product) {
     const exact = iphoneHybridById[product.id];
     if (exact && exact.url) return exact;
@@ -477,6 +524,19 @@
     if (variantCandidates?.length) return pickBestIphoneHybridCandidate(variantCandidates, targetPrice);
 
     return null;
+  }
+
+  function resolveAirpodsHybridMeta(product) {
+    const exact = airpodsHybridById[product.id];
+    if (exact && exact.url) return exact;
+
+    const noPrice = stripTrailingPrice(product.id);
+    const candidates = noPrice ? airpodsHybridByIdNoPrice.get(noPrice) : null;
+    if (!candidates || !candidates.length) return null;
+
+    const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
+    if (!targetPrice) return candidates[0].meta;
+    return pickBestIphoneHybridCandidate(candidates, targetPrice);
   }
 
   function pickBestIphoneHybridCandidate(candidates, targetPrice) {
@@ -636,6 +696,14 @@
     const section = String(product.section || "");
     if (/galaxy\s*watch|samsung/i.test(name) || /galaxy\s*watch|samsung/i.test(section)) return false;
     return isWatchLikeName(name) || isWatchLikeName(section);
+  }
+
+  function isHybridAirpodsCandidate(product) {
+    if (!product || product.category !== "airpods") return false;
+    const name = String(product.name || "");
+    const section = String(product.section || "");
+    if (/galaxy\s*buds|samsung/i.test(name) || /galaxy\s*buds|samsung/i.test(section)) return false;
+    return /\bairpods\b/i.test(name) || /\bairpods\b/i.test(section);
   }
 
   function stripTrailingPrice(id) {
@@ -1428,7 +1496,13 @@
 
   function renderProductCard(p) {
     const inCart = getCartIndexByProductId(p.id) >= 0;
-    const hasHybrid = (p.category === "iphone" || p.category === "ipad" || p.category === "macbook" || p.category === "watch") && p.hybridDetailUrl;
+    const hasHybrid =
+      (p.category === "iphone" ||
+        p.category === "ipad" ||
+        p.category === "macbook" ||
+        p.category === "watch" ||
+        p.category === "airpods") &&
+      p.hybridDetailUrl;
     const detailLink = hasHybrid ? withProductIdQueryParam(p.hybridDetailUrl, p.id) : "";
     const previewImage = hasHybrid && p.hybridCoverUrl ? p.hybridCoverUrl : "";
     const nameHtml = detailLink
@@ -1712,6 +1786,15 @@
       priceSuffix
     );
     return byWarehouseAndPrice ? `hybrid-products/watch/${byWarehouseAndPrice}.html` : "";
+  }
+
+  function buildAirpodsDetailFallbackUrl(product) {
+    const priceSuffix = parsePrice(product.price) || parsePrice(product.priceLabel);
+    const byWarehouseAndPrice = slugifyWithSuffix(
+      `${product.name || ""}${product.warehouse || ""}`,
+      priceSuffix
+    );
+    return byWarehouseAndPrice ? `hybrid-products/airpods/${byWarehouseAndPrice}.html` : "";
   }
 
   function escapeHtml(s) {
