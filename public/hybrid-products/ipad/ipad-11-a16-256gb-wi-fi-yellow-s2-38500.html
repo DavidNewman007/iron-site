@@ -82,6 +82,10 @@
   <script>
     const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/new%20products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow-2-1200x1200.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/new%20products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow-3-1200x1200.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/new%20products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow-1200x1200.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/new%20products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow-1000x1000.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/new%20products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow-2-1000x1000.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/new%20products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_256GB_Yellow-3-1000x1000.jpeg"];
     const CART_KEY = 'iron_cart';
+    const CART_PRODUCT_ID_QUERY_PARAM = 'pid';
+    const LEGACY_COUNTRY_TOKENS = new Set([
+      'япония', 'индия', 'европа', 'германия', 'сша', 'китай', 'корея', 'гонконг', 'сингапур', 'оаэ', 'тайвань', 'россия'
+    ]);
     const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
@@ -96,6 +100,66 @@
     }
     function formatPrice(n) {
       return n.toLocaleString('ru-RU') + ' ₽';
+    }
+    function normalizeCartIdForCompare(id) {
+      const raw = String(id || '')
+        .toLowerCase()
+        .replace(/ё/g, 'е')
+        .replace(/[^a-z0-9а-я]+/giu, '-')
+        .replace(/^-+|-+$/g, '');
+      if (!raw) return '';
+      return raw
+        .split('-')
+        .filter(Boolean)
+        .filter((token) => !LEGACY_COUNTRY_TOKENS.has(token))
+        .map((token) => {
+          const gbMatch = token.match(/^(\d{2,4})gb$/u);
+          if (gbMatch) return gbMatch[1];
+          if (token === '1tb') return '1024';
+          if (token === '2tb') return '2048';
+          return token;
+        })
+        .join('-');
+    }
+    function idsLookEqual(leftId, rightId) {
+      if (!leftId || !rightId) return false;
+      if (leftId === rightId) return true;
+      const leftNorm = normalizeCartIdForCompare(leftId);
+      const rightNorm = normalizeCartIdForCompare(rightId);
+      if (!leftNorm || !rightNorm) return false;
+      return leftNorm === rightNorm;
+    }
+    function getCanonicalProductId() {
+      const fallbackId = pickBtn?.dataset?.id || '';
+      const fromQuery = new URLSearchParams(window.location.search).get(CART_PRODUCT_ID_QUERY_PARAM);
+      const id = String(fromQuery || fallbackId || '').trim();
+      if (pickBtn && id) pickBtn.dataset.id = id;
+      return id;
+    }
+    function normalizeStoredCart(rawCart) {
+      const input = Array.isArray(rawCart) ? rawCart : rawCart?.items;
+      if (!Array.isArray(input)) return [];
+      const out = [];
+      for (const item of input) {
+        if (!item || typeof item !== 'object') continue;
+        const id = String(item.id || '').trim();
+        if (!id) continue;
+        const name = String(item.name || '').trim();
+        const country = String(item.country || '').trim();
+        const warehouse = String(item.warehouse || '').trim();
+        const price = parsePrice(item.price) || parsePrice(item.priceLabel);
+        out.push({
+          id,
+          name,
+          country,
+          warehouse,
+          price,
+          priceLabel: formatPrice(price)
+        });
+      }
+      const byId = new Map();
+      for (const item of out) byId.set(item.id, item);
+      return Array.from(byId.values());
     }
     function setImage(i) {
       if (!IMAGES.length || !mainImg) return;
@@ -168,31 +232,45 @@
       if (e.key === 'ArrowRight') nav(1);
     });
 
+    const canonicalProductId = getCanonicalProductId();
+
     function readCart() {
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
+      try {
+        const raw = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+        const normalized = normalizeStoredCart(raw);
+        localStorage.setItem(CART_KEY, JSON.stringify(normalized));
+        return normalized;
+      } catch (_) {
+        return [];
+      }
     }
-    function writeCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
+    function writeCart(items) {
+      localStorage.setItem(CART_KEY, JSON.stringify(normalizeStoredCart(items)));
+    }
     function syncPickBtn() {
-      if (!pickBtn) return;
+      if (!pickBtn || !canonicalProductId) return;
       const cart = readCart();
-      const inCart = cart.some((x) => x.id === pickBtn.dataset.id);
+      const inCart = cart.some((x) => idsLookEqual(x.id, canonicalProductId));
       pickBtn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
       pickBtn.classList.toggle('is-active', inCart);
     }
-    if (pickBtn) {
+    if (pickBtn && canonicalProductId) {
       pickBtn.addEventListener('click', () => {
         const cart = readCart();
-        const id = pickBtn.dataset.id;
-        const i = cart.findIndex((x) => x.id === id);
-        if (i >= 0) cart.splice(i, 1);
-        else cart.push({
-          id,
-          name: pickBtn.dataset.name,
-          price: formatPrice(parsePrice(pickBtn.dataset.price)),
-          country: '',
-          warehouse: ''
-        });
-        writeCart(cart);
+        const id = canonicalProductId;
+        const nextCart = cart.filter((x) => !idsLookEqual(x.id, id));
+        if (nextCart.length === cart.length) {
+          const price = parsePrice(pickBtn.dataset.price);
+          nextCart.push({
+            id,
+            name: pickBtn.dataset.name,
+            price,
+            priceLabel: formatPrice(price),
+            country: '',
+            warehouse: ''
+          });
+        }
+        writeCart(nextCart);
         syncPickBtn();
       });
     }

@@ -14,6 +14,22 @@
   const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-20-1";
   const HYBRID_WATCH_MANIFEST_VERSION = "2026-06-20-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
+  const CART_KEY = "iron_cart";
+  const CART_PRODUCT_ID_QUERY_PARAM = "pid";
+  const LEGACY_COUNTRY_TOKENS = new Set([
+    "япония",
+    "индия",
+    "европа",
+    "германия",
+    "сша",
+    "китай",
+    "корея",
+    "гонконг",
+    "сингапур",
+    "оаэ",
+    "тайвань",
+    "россия",
+  ]);
 
   const CATEGORY_RULES = [
     // Accessories must come before iPhone/Samsung so that items like
@@ -1411,9 +1427,9 @@
   }
 
   function renderProductCard(p) {
-    const inCart = cart.some((c) => c.id === p.id);
+    const inCart = getCartIndexByProductId(p.id) >= 0;
     const hasHybrid = (p.category === "iphone" || p.category === "ipad" || p.category === "macbook" || p.category === "watch") && p.hybridDetailUrl;
-    const detailLink = hasHybrid ? p.hybridDetailUrl : "";
+    const detailLink = hasHybrid ? withProductIdQueryParam(p.hybridDetailUrl, p.id) : "";
     const previewImage = hasHybrid && p.hybridCoverUrl ? p.hybridCoverUrl : "";
     const nameHtml = detailLink
       ? `<a href="${escapeHtml(detailLink)}" class="price-card__name-link">${escapeHtml(p.name)}</a>`
@@ -1471,10 +1487,10 @@
   function toggleCart(id) {
     const product = allProducts.find((p) => p.id === id);
     if (!product) return;
-    const idx = cart.findIndex((c) => c.id === id);
+    const idx = getCartIndexByProductId(id);
     const added = idx < 0;
     if (added) cart.push(product);
-    else cart.splice(idx, 1);
+    else removeCartByProductId(id);
     saveCart();
     renderCart();
     renderGrid();
@@ -1542,14 +1558,99 @@
 
   function loadCart() {
     try {
-      return JSON.parse(localStorage.getItem("iron_cart") || "[]");
+      const raw = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+      const normalized = normalizeStoredCart(raw);
+      localStorage.setItem(CART_KEY, JSON.stringify(normalized));
+      return normalized;
     } catch {
       return [];
     }
   }
 
   function saveCart() {
-    localStorage.setItem("iron_cart", JSON.stringify(cart));
+    const normalized = normalizeStoredCart(cart);
+    cart = normalized;
+    localStorage.setItem(CART_KEY, JSON.stringify(normalized));
+  }
+
+  function withProductIdQueryParam(url, productId) {
+    const safeUrl = String(url || "").trim();
+    const safeId = String(productId || "").trim();
+    if (!safeUrl || !safeId) return safeUrl;
+    return safeUrl + (safeUrl.includes("?") ? "&" : "?") + `${CART_PRODUCT_ID_QUERY_PARAM}=${encodeURIComponent(safeId)}`;
+  }
+
+  function normalizeStoredCart(rawCart) {
+    const input = Array.isArray(rawCart) ? rawCart : rawCart?.items;
+    if (!Array.isArray(input)) return [];
+    const out = [];
+    for (const item of input) {
+      if (!item || typeof item !== "object") continue;
+      const id = String(item.id || "").trim();
+      if (!id) continue;
+      const name = String(item.name || "").trim();
+      const country = String(item.country || "").trim();
+      const warehouse = String(item.warehouse || "").trim();
+      const price = parsePrice(item.price) || parsePrice(item.priceLabel);
+      out.push({
+        id,
+        name,
+        country,
+        warehouse,
+        price,
+        priceLabel: formatPrice(price),
+      });
+    }
+    return dedupeCartById(out);
+  }
+
+  function dedupeCartById(items) {
+    const byId = new Map();
+    for (const item of items || []) {
+      if (!item?.id) continue;
+      byId.set(item.id, item);
+    }
+    return Array.from(byId.values());
+  }
+
+  function normalizeCartIdForCompare(id) {
+    const raw = String(id || "")
+      .toLowerCase()
+      .replace(/ё/g, "е")
+      .replace(/[^a-z0-9а-я]+/giu, "-")
+      .replace(/^-+|-+$/g, "");
+    if (!raw) return "";
+    return raw
+      .split("-")
+      .filter(Boolean)
+      .filter((token) => !LEGACY_COUNTRY_TOKENS.has(token))
+      .map((token) => {
+        const gbMatch = token.match(/^(\d{2,4})gb$/u);
+        if (gbMatch) return gbMatch[1];
+        if (token === "1tb") return "1024";
+        if (token === "2tb") return "2048";
+        return token;
+      })
+      .join("-");
+  }
+
+  function idsLookEqual(leftId, rightId) {
+    if (!leftId || !rightId) return false;
+    if (leftId === rightId) return true;
+    const leftNorm = normalizeCartIdForCompare(leftId);
+    const rightNorm = normalizeCartIdForCompare(rightId);
+    if (!leftNorm || !rightNorm) return false;
+    return leftNorm === rightNorm;
+  }
+
+  function getCartIndexByProductId(productId) {
+    if (!productId) return -1;
+    return cart.findIndex((item) => idsLookEqual(item?.id, productId));
+  }
+
+  function removeCartByProductId(productId) {
+    if (!productId) return;
+    cart = cart.filter((item) => !idsLookEqual(item?.id, productId));
   }
 
   function slugify(s) {
