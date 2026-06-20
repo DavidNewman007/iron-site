@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hybrid Preview — IRON SERVICE</title>
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link rel="preconnect" href="https://sochi.dr-store.ru" crossorigin>
+  <link rel="dns-prefetch" href="//sochi.dr-store.ru">
+  <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/shop.css">
+  <style>
+    body {
+      background-color: #363636;
+      background-image:
+        linear-gradient(180deg, rgba(168, 36, 36, .22) 0%, rgba(70, 70, 70, .9) 48%, rgba(58, 58, 58, .98) 100%),
+        repeating-linear-gradient(15deg, rgba(255,255,255,.026) 0 2px, transparent 2px 7px),
+        repeating-linear-gradient(74deg, rgba(255,255,255,.018) 0 1px, transparent 1px 6px),
+        repeating-linear-gradient(127deg, rgba(0,0,0,.068) 0 2px, transparent 2px 8px),
+        repeating-linear-gradient(29deg, rgba(0,0,0,.042) 0 1px, transparent 1px 7px);
+      background-attachment: fixed;
+    }
+    .site-header {
+      background: rgba(38, 38, 38, .86);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .page-hero {
+      background: linear-gradient(180deg, rgba(185, 28, 28, .14), rgba(255,255,255,.02));
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .shop-section {
+      background: transparent;
+    }
+    .price-grid .price-card {
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 10px 24px rgba(0,0,0,.2);
+      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .price-grid .price-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(0,0,0,.24);
+      border-color: rgba(255,255,255,.2);
+    }
+    .price-grid .price-card__name a {
+      transition: color .18s ease;
+    }
+    .price-grid .price-card__name a:hover {
+      color: var(--gold);
+    }
+    .price-grid .price-card img {
+      border-radius:10px;
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .price-grid .price-card a:hover img {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(0,0,0,.24);
+    }
+    .price-grid .price-card__btn {
+      border-radius:10px;
+      transition: background .18s ease, border-color .18s ease, color .18s ease, transform .16s ease, box-shadow .16s ease;
+    }
+    .price-grid .price-card__btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0,0,0,.24);
+    }
+    .price-grid .price-card__btn.is-active {
+      background: #dce9b8;
+      border-color: #bfd488;
+      color: #263410;
+      box-shadow: 0 8px 18px rgba(20, 26, 12, .25);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link"><img src="assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img"></a>
+      <a href="magazin.html" class="header-phone">← Назад в Магазин</a>
+    </div>
+  </header>
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <h1>Hybrid Preview</h1>
+        <p>Локальные карточки товаров с фото и характеристиками</p>
+      </div>
+    </div>
+    <section class="shop-section">
+      <div class="container">
+        <p class="shop-intro">Чистый предпросмотр без служебных полей. Нажмите на название или фото товара, чтобы открыть полноценную локальную карточку.</p>
+        <div class="price-grid">
+          
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-15-256gb-black-hn-a.html" style="color:inherit;text-decoration:none;">iPhone 15 256Gb Black HN/A</a></h3>
+          <a href="hybrid-products/iphone-15-256gb-black-hn-a.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/15-15-plus/iphone-15-dr-store-36-1200x1200.jpg" alt="iPhone 15 256Gb Black HN/A" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">59100₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-15-256gb-black-hn-a-59100" data-name="iPhone 15 256Gb Black HN/A" data-price="59100₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-16-128gb-black-j-a.html" style="color:inherit;text-decoration:none;">iPhone 16 128Gb Black J/A</a></h3>
+          <a href="hybrid-products/iphone-16-128gb-black-j-a.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-21-1200x1200.jpg" alt="iPhone 16 128Gb Black J/A" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">56700₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-16-128gb-black-j-a-56700" data-name="iPhone 16 128Gb Black J/A" data-price="56700₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-16-128gb-pink-j-a.html" style="color:inherit;text-decoration:none;">iPhone 16 128Gb Pink J/A</a></h3>
+          <a href="hybrid-products/iphone-16-128gb-pink-j-a.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-17-1200x1200.jpg" alt="iPhone 16 128Gb Pink J/A" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">55500₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-16-128gb-pink-j-a-55500" data-name="iPhone 16 128Gb Pink J/A" data-price="55500₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-16-128gb-teal-hn-a.html" style="color:inherit;text-decoration:none;">iPhone 16 128Gb Teal HN/A</a></h3>
+          <a href="hybrid-products/iphone-16-128gb-teal-hn-a.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-18-1200x1200.jpg" alt="iPhone 16 128Gb Teal HN/A" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">53900₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-16-128gb-teal-hn-a-53900" data-name="iPhone 16 128Gb Teal HN/A" data-price="53900₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-16-128gb-ultramarine-j-a.html" style="color:inherit;text-decoration:none;">iPhone 16 128Gb Ultramarine J/A</a></h3>
+          <a href="hybrid-products/iphone-16-128gb-ultramarine-j-a.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-19-1200x1200.jpg" alt="iPhone 16 128Gb Ultramarine J/A" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">54000₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-16-128gb-ultramarine-j-a-54000" data-name="iPhone 16 128Gb Ultramarine J/A" data-price="54000₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-16-128gb-white-j-a.html" style="color:inherit;text-decoration:none;">iPhone 16 128Gb White J/A</a></h3>
+          <a href="hybrid-products/iphone-16-128gb-white-j-a.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-20-1200x1200.jpg" alt="iPhone 16 128Gb White J/A" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">54500₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-16-128gb-white-j-a-54500" data-name="iPhone 16 128Gb White J/A" data-price="54500₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-16-256gb-white-j-a.html" style="color:inherit;text-decoration:none;">iPhone 16 256Gb White J/A</a></h3>
+          <a href="hybrid-products/iphone-16-256gb-white-j-a.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-20-1200x1200.jpg" alt="iPhone 16 256Gb White J/A" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">67400₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-16-256gb-white-j-a-67400" data-name="iPhone 16 256Gb White J/A" data-price="67400₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17e-256gb-black-j-a-esim.html" style="color:inherit;text-decoration:none;">iPhone 17e 256Gb Black J/A (eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17e-256gb-black-j-a-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17e/iphone-17e-dr-store-6-1200x1200.jpg" alt="iPhone 17e 256Gb Black J/A (eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">51400₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17e-256gb-black-j-a-esim-51400" data-name="iPhone 17e 256Gb Black J/A (eSIM)" data-price="51400₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17e-256gb-white-j-a-esim.html" style="color:inherit;text-decoration:none;">iPhone 17e 256Gb White J/A (eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17e-256gb-white-j-a-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17e/iphone-17e-dr-store-2-1200x1200.jpg" alt="iPhone 17e 256Gb White J/A (eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">48800₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17e-256gb-white-j-a-esim-48800" data-name="iPhone 17e 256Gb White J/A (eSIM)" data-price="48800₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17e-256gb-soft-pink-j-a-esim.html" style="color:inherit;text-decoration:none;">iPhone 17e 256Gb Soft Pink J/A (eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17e-256gb-soft-pink-j-a-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17e/iphone-17e-dr-store-4-1200x1200.jpg" alt="iPhone 17e 256Gb Soft Pink J/A (eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">49100₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17e-256gb-soft-pink-j-a-esim-49100" data-name="iPhone 17e 256Gb Soft Pink J/A (eSIM)" data-price="49100₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17-256gb-black-j-a-esim.html" style="color:inherit;text-decoration:none;">iPhone 17 256Gb Black J/A (eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17-256gb-black-j-a-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-5-1200x1200.jpg" alt="iPhone 17 256Gb Black J/A (eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">67900₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17-256gb-black-j-a-esim-67900" data-name="iPhone 17 256Gb Black J/A (eSIM)" data-price="67900₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17-256gb-lavender-j-a-esim.html" style="color:inherit;text-decoration:none;">iPhone 17 256Gb Lavender J/A (eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17-256gb-lavender-j-a-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-2-1200x1200.jpg" alt="iPhone 17 256Gb Lavender J/A (eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">67700₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17-256gb-lavender-j-a-esim-67700" data-name="iPhone 17 256Gb Lavender J/A (eSIM)" data-price="67700₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17-256gb-sage-j-a-esim.html" style="color:inherit;text-decoration:none;">iPhone 17 256Gb Sage J/A (eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17-256gb-sage-j-a-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-3-1200x1200.jpg" alt="iPhone 17 256Gb Sage J/A (eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">66300₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17-256gb-sage-j-a-esim-66300" data-name="iPhone 17 256Gb Sage J/A (eSIM)" data-price="66300₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17-256gb-white-j-a-esim.html" style="color:inherit;text-decoration:none;">iPhone 17 256Gb White J/A (eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17-256gb-white-j-a-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-4-1200x1200.jpg" alt="iPhone 17 256Gb White J/A (eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">67900₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17-256gb-white-j-a-esim-67900" data-name="iPhone 17 256Gb White J/A (eSIM)" data-price="67900₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17-256gb-mist-blue-j-a-esim.html" style="color:inherit;text-decoration:none;">iPhone 17 256Gb Mist Blue J/A (eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17-256gb-mist-blue-j-a-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-1-1200x1200.jpg" alt="iPhone 17 256Gb Mist Blue J/A (eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">66300₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17-256gb-mist-blue-j-a-esim-66300" data-name="iPhone 17 256Gb Mist Blue J/A (eSIM)" data-price="66300₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17-256gb-black-af-a-sim-esim.html" style="color:inherit;text-decoration:none;">iPhone 17 256Gb Black AF/A (SIM + eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17-256gb-black-af-a-sim-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-5-1200x1200.jpg" alt="iPhone 17 256Gb Black AF/A (SIM + eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">70000₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17-256gb-black-af-a-sim-esim-70000" data-name="iPhone 17 256Gb Black AF/A (SIM + eSIM)" data-price="70000₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17-256gb-black-hn-a-sim-esim.html" style="color:inherit;text-decoration:none;">iPhone 17 256Gb Black HN/A (SIM + eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17-256gb-black-hn-a-sim-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-5-1200x1200.jpg" alt="iPhone 17 256Gb Black HN/A (SIM + eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">70000₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17-256gb-black-hn-a-sim-esim-70000" data-name="iPhone 17 256Gb Black HN/A (SIM + eSIM)" data-price="70000₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17-256gb-lavender-hn-a-sim-esim.html" style="color:inherit;text-decoration:none;">iPhone 17 256Gb Lavender HN/A (SIM + eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17-256gb-lavender-hn-a-sim-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-2-1200x1200.jpg" alt="iPhone 17 256Gb Lavender HN/A (SIM + eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">68900₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17-256gb-lavender-hn-a-sim-esim-68900" data-name="iPhone 17 256Gb Lavender HN/A (SIM + eSIM)" data-price="68900₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17-256gb-sage-hn-a-sim-esim.html" style="color:inherit;text-decoration:none;">iPhone 17 256Gb Sage HN/A (SIM + eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17-256gb-sage-hn-a-sim-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-3-1200x1200.jpg" alt="iPhone 17 256Gb Sage HN/A (SIM + eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">69200₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17-256gb-sage-hn-a-sim-esim-69200" data-name="iPhone 17 256Gb Sage HN/A (SIM + eSIM)" data-price="69200₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+
+        <article class="price-card">
+          <div class="price-card__meta">(S1)</div>
+          <h3 class="price-card__name"><a href="hybrid-products/iphone-17-256gb-white-hn-a-sim-esim.html" style="color:inherit;text-decoration:none;">iPhone 17 256Gb White HN/A (SIM + eSIM)</a></h3>
+          <a href="hybrid-products/iphone-17-256gb-white-hn-a-sim-esim.html" style="display:block;">
+            <img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-4-1200x1200.jpg" alt="iPhone 17 256Gb White HN/A (SIM + eSIM)" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:190px;object-fit:contain;border:1px solid rgba(255,255,255,.18);background:#2f2f2f">
+          </a>
+          <div class="price-card__footer">
+            <strong class="price-card__price">69400₽</strong>
+            <button type="button" class="price-card__btn js-pick" data-id="iphone-17-256gb-white-hn-a-sim-esim-69400" data-name="iPhone 17 256Gb White HN/A (SIM + eSIM)" data-price="69400₽">+ Выбрать</button>
+          </div>
+        </article>
+        
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const CART_KEY = 'hybrid_preview_cart_v1';
+    function readCart() {
+      try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch (_) { return []; }
+    }
+    function writeCart(items) {
+      localStorage.setItem(CART_KEY, JSON.stringify(items));
+    }
+    function syncButtons() {
+      const cart = readCart();
+      document.querySelectorAll('.js-pick').forEach((btn) => {
+        const inCart = cart.some((x) => x.id === btn.dataset.id);
+        btn.textContent = inCart ? '✓ В корзине' : '+ Выбрать';
+        btn.classList.toggle('is-active', inCart);
+      });
+    }
+    document.querySelectorAll('.js-pick').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const cart = readCart();
+        const id = btn.dataset.id;
+        const i = cart.findIndex((x) => x.id === id);
+        if (i >= 0) cart.splice(i, 1);
+        else cart.push({ id, name: btn.dataset.name, price: btn.dataset.price });
+        writeCart(cart);
+        syncButtons();
+      });
+    });
+    syncButtons();
+  </script>
+</body>
+</html>
