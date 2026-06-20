@@ -6,9 +6,11 @@
   const SHEET_ID = cfg.googleSheetId || "";
   const SHEET_TABS = ["Prices", "Prices-2"];
   const HYBRID_IPHONE_MANIFEST = "hybrid-products/iphone-cards.json";
+  const HYBRID_IPAD_MANIFEST = "hybrid-products/ipad-cards.json";
   const HYBRID_MACBOOK_MANIFEST = "hybrid-products/macbook-cards.json";
   const HYBRID_WATCH_MANIFEST = "hybrid-products/watch-cards.json";
   const HYBRID_IPHONE_MANIFEST_VERSION = "2026-06-20-3";
+  const HYBRID_IPAD_MANIFEST_VERSION = "2026-06-20-1";
   const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-20-1";
   const HYBRID_WATCH_MANIFEST_VERSION = "2026-06-20-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
@@ -117,12 +119,17 @@
   let iphoneHybridByIdNoPrice = new Map();
   let iphoneHybridByVariantKey = new Map();
   let iphoneHybridByModelKey = new Map();
+  let ipadHybridById = {};
+  let ipadHybridByIdNoPrice = new Map();
+  let ipadHybridByVariantKey = new Map();
+  let ipadHybridByModelKey = new Map();
   let macbookHybridById = {};
   let macbookHybridByIdNoPrice = new Map();
   let watchHybridById = {};
   let watchHybridByIdNoPrice = new Map();
   let watchHybridByVariantKey = new Map();
   let iphoneHybridManifestLoaded = false;
+  let ipadHybridManifestLoaded = false;
   let macbookHybridManifestLoaded = false;
   let watchHybridManifestLoaded = false;
   let cart = loadCart();
@@ -135,6 +142,7 @@
     renderCart();
     const hybridLoadPromise = Promise.all([
       loadIphoneHybridCards(),
+      loadIpadHybridCards(),
       loadMacbookHybridCards(),
       loadWatchHybridCards(),
     ]);
@@ -197,6 +205,26 @@
     }
   }
 
+  async function loadIpadHybridCards() {
+    try {
+      const manifestUrl = `${HYBRID_IPAD_MANIFEST}?v=${encodeURIComponent(
+        HYBRID_IPAD_MANIFEST_VERSION
+      )}`;
+      const res = await fetch(manifestUrl, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      ipadHybridById = data && typeof data.byId === "object" ? data.byId : {};
+      buildIpadHybridIndex();
+      ipadHybridManifestLoaded = true;
+    } catch (_) {
+      ipadHybridById = {};
+      ipadHybridByIdNoPrice = new Map();
+      ipadHybridByVariantKey = new Map();
+      ipadHybridByModelKey = new Map();
+      ipadHybridManifestLoaded = false;
+    }
+  }
+
   async function loadWatchHybridCards() {
     try {
       const manifestUrl = `${HYBRID_WATCH_MANIFEST}?v=${encodeURIComponent(
@@ -241,6 +269,19 @@
           continue;
         }
         product.hybridDetailUrl = allowHeuristicFallback ? buildMacbookDetailFallbackUrl(product) : "";
+        product.hybridCoverUrl = "";
+        continue;
+      }
+
+      if (isHybridIpadCandidate(product)) {
+        const allowHeuristicFallback = location.protocol === "file:" || !ipadHybridManifestLoaded;
+        const meta = resolveIpadHybridMeta(product);
+        if (meta && meta.url) {
+          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridCoverUrl = meta.cover ? String(meta.cover) : "";
+          continue;
+        }
+        product.hybridDetailUrl = allowHeuristicFallback ? buildIpadDetailFallbackUrl(product) : "";
         product.hybridCoverUrl = "";
         continue;
       }
@@ -294,6 +335,30 @@
       if (!noPrice) continue;
       if (!macbookHybridByIdNoPrice.has(noPrice)) macbookHybridByIdNoPrice.set(noPrice, []);
       macbookHybridByIdNoPrice.get(noPrice).push({ id, meta, price: extractTrailingPrice(id) });
+    }
+  }
+
+  function buildIpadHybridIndex() {
+    ipadHybridByIdNoPrice = new Map();
+    ipadHybridByVariantKey = new Map();
+    ipadHybridByModelKey = new Map();
+    for (const [id, meta] of Object.entries(ipadHybridById)) {
+      const noPrice = stripTrailingPrice(id);
+      if (!noPrice) continue;
+      if (!ipadHybridByIdNoPrice.has(noPrice)) ipadHybridByIdNoPrice.set(noPrice, []);
+      ipadHybridByIdNoPrice.get(noPrice).push({ id, meta, price: extractTrailingPrice(id) });
+
+      const variantKey = buildIpadVariantKey(meta?.name || "");
+      if (variantKey) {
+        if (!ipadHybridByVariantKey.has(variantKey)) ipadHybridByVariantKey.set(variantKey, []);
+        ipadHybridByVariantKey.get(variantKey).push({ id, meta, price: extractTrailingPrice(id) });
+      }
+
+      const modelKey = buildIpadModelKey(meta?.name || "");
+      if (modelKey) {
+        if (!ipadHybridByModelKey.has(modelKey)) ipadHybridByModelKey.set(modelKey, []);
+        ipadHybridByModelKey.get(modelKey).push({ id, meta, price: extractTrailingPrice(id) });
+      }
     }
   }
 
@@ -358,6 +423,27 @@
       }
     }
     return best.meta;
+  }
+
+  function resolveIpadHybridMeta(product) {
+    const exact = ipadHybridById[product.id];
+    if (exact && exact.url) return exact;
+
+    const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
+
+    const noPrice = stripTrailingPrice(product.id);
+    const candidates = noPrice ? ipadHybridByIdNoPrice.get(noPrice) : null;
+    if (candidates?.length) return pickBestIphoneHybridCandidate(candidates, targetPrice);
+
+    const variantKey = buildIpadVariantKey(product.name, product.section);
+    const variantCandidates = variantKey ? ipadHybridByVariantKey.get(variantKey) : null;
+    if (variantCandidates?.length) return pickBestIphoneHybridCandidate(variantCandidates, targetPrice);
+
+    const modelKey = buildIpadModelKey(product.name, product.section);
+    const modelCandidates = modelKey ? ipadHybridByModelKey.get(modelKey) : null;
+    if (modelCandidates?.length) return pickBestIphoneHybridCandidate(modelCandidates, targetPrice);
+
+    return null;
   }
 
   function resolveWatchHybridMeta(product) {
@@ -433,6 +519,44 @@
       .trim()}`;
   }
 
+  function normalizeIpadNameKey(name, section) {
+    let source = String(name || "");
+    const sectionText = String(section || "");
+    if (!/\bipad\b/i.test(source) && /\bipad\b/i.test(sectionText)) {
+      source = `iPad ${source}`;
+    }
+
+    return source
+      .toLowerCase()
+      .replace(/ё/g, "е")
+      .replace(/\([^)]*\)/g, " ")
+      .replace(/\b(wi[\s-]*fi|wifi|cellular|sim\s*\+\s*esim|esim|sim|lte)\b/gi, " ")
+      .replace(/\b(j\/a|hn\/a|za\/a|kh\/a|af\/a|be\/a|zd\/a|qn\/a|ll\/a|x\/a|ah\/a)\b/gi, " ")
+      .replace(/[^\wа-я.\s]/gi, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function buildIpadVariantKey(name, section) {
+    const normalized = normalizeIpadNameKey(name, section);
+    if (!normalized) return "";
+    return normalized
+      .replace(/\b(64|128|256|512|1024|2048)\s*(gb|tb)\b/gi, "$1$2")
+      .replace(/\bgb\b/gi, "")
+      .replace(/\btb\b/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function buildIpadModelKey(name, section) {
+    const normalized = normalizeIpadNameKey(name, section);
+    if (!normalized) return "";
+    const modelMatch = normalized.match(/\bipad\s+(air|pro|mini)\b/i) || normalized.match(/\bipad\b/i);
+    if (!modelMatch) return "";
+    const model = modelMatch[1] ? String(modelMatch[1]).toLowerCase() : "";
+    return model ? `ipad ${model}` : "ipad";
+  }
+
   function normalizeWatchNameKey(name, section) {
     let source = String(name || "");
     const sectionText = String(section || "");
@@ -481,6 +605,13 @@
     const name = String(product.name || "");
     const section = String(product.section || "");
     return /\bmacbook\b/i.test(name) || /\bmacbook\b/i.test(section);
+  }
+
+  function isHybridIpadCandidate(product) {
+    if (!product || product.category !== "ipad") return false;
+    const name = String(product.name || "");
+    const section = String(product.section || "");
+    return /\bipad\b/i.test(name) || /\bipad\b/i.test(section);
   }
 
   function isHybridWatchCandidate(product) {
@@ -1281,7 +1412,7 @@
 
   function renderProductCard(p) {
     const inCart = cart.some((c) => c.id === p.id);
-    const hasHybrid = (p.category === "iphone" || p.category === "macbook" || p.category === "watch") && p.hybridDetailUrl;
+    const hasHybrid = (p.category === "iphone" || p.category === "ipad" || p.category === "macbook" || p.category === "watch") && p.hybridDetailUrl;
     const detailLink = hasHybrid ? p.hybridDetailUrl : "";
     const previewImage = hasHybrid && p.hybridCoverUrl ? p.hybridCoverUrl : "";
     const nameHtml = detailLink
@@ -1462,6 +1593,15 @@
       priceSuffix
     );
     return byWarehouseAndPrice ? `hybrid-products/macbook/${byWarehouseAndPrice}.html` : "";
+  }
+
+  function buildIpadDetailFallbackUrl(product) {
+    const priceSuffix = parsePrice(product.price) || parsePrice(product.priceLabel);
+    const byWarehouseAndPrice = slugifyWithSuffix(
+      `${product.name || ""}${product.warehouse || ""}`,
+      priceSuffix
+    );
+    return byWarehouseAndPrice ? `hybrid-products/ipad/${byWarehouseAndPrice}.html` : "";
   }
 
   function buildWatchDetailFallbackUrl(product) {
