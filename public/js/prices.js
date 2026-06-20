@@ -6,6 +6,7 @@
   const SHEET_ID = cfg.googleSheetId || "";
   const SHEET_TABS = ["Prices", "Prices-2"];
   const HYBRID_IPHONE_MANIFEST = "hybrid-products/iphone-cards.json";
+  const HYBRID_IPHONE_MANIFEST_VERSION = "2026-06-20-2";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
 
   const CATEGORY_RULES = [
@@ -109,6 +110,8 @@
 
   let allProducts = [];
   let iphoneHybridById = {};
+  let iphoneHybridByIdNoPrice = new Map();
+  let iphoneHybridManifestLoaded = false;
   let cart = loadCart();
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
@@ -143,25 +146,83 @@
 
   async function loadIphoneHybridCards() {
     try {
-      const res = await fetch(HYBRID_IPHONE_MANIFEST, { cache: "no-store" });
+      const manifestUrl = `${HYBRID_IPHONE_MANIFEST}?v=${encodeURIComponent(
+        HYBRID_IPHONE_MANIFEST_VERSION
+      )}`;
+      const res = await fetch(manifestUrl, { cache: "no-store" });
       if (!res.ok) return;
       const data = await res.json();
       iphoneHybridById = data && typeof data.byId === "object" ? data.byId : {};
+      buildIphoneHybridIndex();
+      iphoneHybridManifestLoaded = true;
     } catch (_) {
       iphoneHybridById = {};
+      iphoneHybridByIdNoPrice = new Map();
+      iphoneHybridManifestLoaded = false;
     }
   }
 
   function applyIphoneHybridData() {
     if (!allProducts.length) return;
+    const allowHeuristicFallback = location.protocol === "file:" || !iphoneHybridManifestLoaded;
     for (const product of allProducts) {
       if (product.category !== "iphone") {
         product.hybridDetailUrl = "";
+        product.hybridCoverUrl = "";
         continue;
       }
-      const meta = iphoneHybridById[product.id];
-      product.hybridDetailUrl = meta && meta.url ? String(meta.url) : "";
+      const meta = resolveIphoneHybridMeta(product);
+      if (meta && meta.url) {
+        product.hybridDetailUrl = encodeURI(String(meta.url));
+        product.hybridCoverUrl = meta.cover ? String(meta.cover) : "";
+        continue;
+      }
+      product.hybridDetailUrl = allowHeuristicFallback ? buildIphoneDetailFallbackUrl(product) : "";
+      product.hybridCoverUrl = "";
     }
+  }
+
+  function buildIphoneHybridIndex() {
+    iphoneHybridByIdNoPrice = new Map();
+    for (const [id, meta] of Object.entries(iphoneHybridById)) {
+      const noPrice = stripTrailingPrice(id);
+      if (!noPrice) continue;
+      if (!iphoneHybridByIdNoPrice.has(noPrice)) iphoneHybridByIdNoPrice.set(noPrice, []);
+      iphoneHybridByIdNoPrice.get(noPrice).push({ id, meta, price: extractTrailingPrice(id) });
+    }
+  }
+
+  function resolveIphoneHybridMeta(product) {
+    const exact = iphoneHybridById[product.id];
+    if (exact && exact.url) return exact;
+
+    const noPrice = stripTrailingPrice(product.id);
+    const candidates = noPrice ? iphoneHybridByIdNoPrice.get(noPrice) : null;
+    if (!candidates || !candidates.length) return null;
+
+    const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
+    if (!targetPrice) return candidates[0].meta;
+
+    let best = candidates[0];
+    let bestDelta = Number.POSITIVE_INFINITY;
+    for (const candidate of candidates) {
+      const candidatePrice = candidate.price || 0;
+      const delta = Math.abs(candidatePrice - targetPrice);
+      if (delta < bestDelta) {
+        bestDelta = delta;
+        best = candidate;
+      }
+    }
+    return best.meta;
+  }
+
+  function stripTrailingPrice(id) {
+    return String(id || "").replace(/-\d{3,}$/u, "");
+  }
+
+  function extractTrailingPrice(id) {
+    const match = String(id || "").match(/-(\d{3,})$/u);
+    return match ? parseInt(match[1], 10) : 0;
   }
 
   function tryShowCachedProducts(allowExpired) {
@@ -942,11 +1003,21 @@
   function renderProductCard(p) {
     const inCart = cart.some((c) => c.id === p.id);
     const detailLink = p.category === "iphone" && p.hybridDetailUrl ? p.hybridDetailUrl : "";
+    const previewImage = p.category === "iphone" && p.hybridCoverUrl ? p.hybridCoverUrl : "";
     const nameHtml = detailLink
       ? `<a href="${escapeHtml(detailLink)}" class="price-card__name-link">${escapeHtml(p.name)}</a>`
       : escapeHtml(p.name);
     return `
       <article class="price-card ${inCart ? "is-selected" : ""}" data-id="${p.id}">
+        ${
+          previewImage
+            ? `<a class="price-card__media" href="${escapeHtml(detailLink)}" aria-label="${escapeHtml(
+                p.name
+              )}"><img src="${escapeHtml(previewImage)}" alt="${escapeHtml(
+                p.name
+              )}" loading="lazy" decoding="async"></a>`
+            : ""
+        }
         <div class="price-card__meta">
           ${p.country ? `<span class="price-card__country">${escapeHtml(p.country)}</span>` : ""}
         </div>
@@ -1073,6 +1144,36 @@
 
   function slugify(s) {
     return s.toLowerCase().replace(/[^a-z0-9а-яё]+/gi, "-").slice(0, 80);
+  }
+
+  function slugifyWithSuffix(prefix, suffix) {
+    const normalize = (value) =>
+      String(value || "")
+        .toLowerCase()
+        .replace(/[^a-z0-9а-яё]+/gi, "-")
+        .replace(/^-+|-+$/g, "");
+
+    const safePrefix = normalize(prefix);
+    const safeSuffix = normalize(suffix);
+    if (!safeSuffix) return safePrefix.slice(0, 80);
+
+    const maxPrefixLen = 80 - safeSuffix.length - 1;
+    if (maxPrefixLen <= 0) return safeSuffix.slice(-80);
+
+    const trimmedPrefix = safePrefix.slice(0, maxPrefixLen).replace(/-+$/g, "");
+    return trimmedPrefix ? `${trimmedPrefix}-${safeSuffix}` : safeSuffix;
+  }
+
+  function buildIphoneDetailFallbackUrl(product) {
+    const byName = slugify(product.name || "");
+    if (byName) return `hybrid-products/${byName}.html`;
+
+    const priceSuffix = parsePrice(product.price) || parsePrice(product.priceLabel);
+    const byWarehouseAndPrice = slugifyWithSuffix(
+      `${product.name || ""}${product.warehouse || ""}`,
+      priceSuffix
+    );
+    return byWarehouseAndPrice ? `hybrid-products/iphone/${byWarehouseAndPrice}.html` : "";
   }
 
   function escapeHtml(s) {
