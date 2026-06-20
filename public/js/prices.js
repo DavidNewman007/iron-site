@@ -5,6 +5,7 @@
   const cfg = window.IRON_CONFIG || {};
   const SHEET_ID = cfg.googleSheetId || "";
   const SHEET_TABS = ["Prices", "Prices-2"];
+  const HYBRID_IPHONE_MANIFEST = "hybrid-products/iphone-cards.json";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
 
   const CATEGORY_RULES = [
@@ -107,6 +108,7 @@
   if (!els.root) return;
 
   let allProducts = [];
+  let iphoneHybridById = {};
   let cart = loadCart();
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
@@ -115,6 +117,7 @@
     bindEvents();
     bindMobileCartCountSync();
     renderCart();
+    const hybridLoadPromise = loadIphoneHybridCards();
 
     if (!SHEET_ID) {
       showError(
@@ -127,11 +130,37 @@
 
     try {
       applyProducts(await fetchProducts());
+      await hybridLoadPromise;
+      applyIphoneHybridData();
+      renderGrid();
     } catch (e) {
       console.error(e);
       if (!allProducts.length && !tryShowCachedProducts(true)) {
         showError(USER_LOAD_ERROR);
       }
+    }
+  }
+
+  async function loadIphoneHybridCards() {
+    try {
+      const res = await fetch(HYBRID_IPHONE_MANIFEST, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      iphoneHybridById = data && typeof data.byId === "object" ? data.byId : {};
+    } catch (_) {
+      iphoneHybridById = {};
+    }
+  }
+
+  function applyIphoneHybridData() {
+    if (!allProducts.length) return;
+    for (const product of allProducts) {
+      if (product.category !== "iphone") {
+        product.hybridDetailUrl = "";
+        continue;
+      }
+      const meta = iphoneHybridById[product.id];
+      product.hybridDetailUrl = meta && meta.url ? String(meta.url) : "";
     }
   }
 
@@ -912,12 +941,17 @@
 
   function renderProductCard(p) {
     const inCart = cart.some((c) => c.id === p.id);
+    const detailLink = p.category === "iphone" && p.hybridDetailUrl ? p.hybridDetailUrl : "";
+    const nameHtml = detailLink
+      ? `<a href="${escapeHtml(detailLink)}" class="price-card__name-link">${escapeHtml(p.name)}</a>`
+      : escapeHtml(p.name);
     return `
       <article class="price-card ${inCart ? "is-selected" : ""}" data-id="${p.id}">
         <div class="price-card__meta">
           ${p.country ? `<span class="price-card__country">${escapeHtml(p.country)}</span>` : ""}
         </div>
-        <h3 class="price-card__name">${escapeHtml(p.name)}</h3>
+        <h3 class="price-card__name">${nameHtml}</h3>
+        ${detailLink ? `<p class="price-card__hybrid">Фото и описание</p>` : ""}
         ${p.warranty ? `<p class="price-card__warranty">${escapeHtml(p.warranty)}</p>` : ""}
         ${p.warehouse ? `<p class="price-card__qty">${escapeHtml(p.warehouse)}</p>` : ""}
         <div class="price-card__footer">
