@@ -473,6 +473,8 @@ section {
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .card::before {
@@ -490,8 +492,9 @@ section {
   font-size: 1.25rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.8rem;
   color: var(--gold);
+  text-align: center;
 }
 
 .card p {
@@ -543,9 +546,29 @@ section {
 }
 
 .card-icon {
-  font-size: 2rem;
-  margin-bottom: 0.75rem;
-  opacity: 0.9;
+  width: 3.15rem;
+  height: 3.15rem;
+  margin: 0 auto 1rem;
+  border: 1px solid rgba(212, 160, 18, 0.55);
+  border-radius: 11px;
+  background:
+    linear-gradient(180deg, rgba(194, 44, 44, 0.18), rgba(25, 25, 25, 0.35)),
+    rgba(36, 36, 36, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(245, 230, 200, 0.14),
+    0 4px 12px rgba(0, 0, 0, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  font-size: 2.15rem;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(194, 44, 44, 0.36);
+  opacity: 0.96;
+}
+
+.card p {
+  text-wrap: pretty;
 }
 
 /* ——— Poster strip ——— */
@@ -1085,6 +1108,13 @@ section {
 
   .card {
     padding: 1rem 1.1rem;
+  }
+
+  .card-icon {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.85rem;
+    font-size: 2.05rem;
   }
 
   .loft-note {
