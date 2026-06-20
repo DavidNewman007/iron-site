@@ -2,6 +2,7 @@
 
 .shop-section {
   margin-top: 1rem;
+  --shop-toolbar-sticky-offset: 5.4rem;
 }
 
 .shop-intro {
@@ -246,7 +247,7 @@
 /* Корзина */
 .cart-panel {
   position: sticky;
-  top: calc(var(--header-h) + 1rem);
+  top: calc(var(--header-h) + var(--shop-toolbar-sticky-offset));
   background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(38, 38, 38, 0.97));
   border: 1px solid rgba(194, 44, 44, 0.52);
   border-radius: 14px;
