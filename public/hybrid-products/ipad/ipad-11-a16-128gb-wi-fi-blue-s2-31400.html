@@ -58,11 +58,11 @@
           <p class="meta-note">Цена за наличный расчет</p>
         </div>
         <div class="gallery-main">
-          <img id="mainImg" src="https://sochi.dr-store.ru/image/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-2-1200x1200.jpeg" alt="Планшет Apple iPad 11 (2025) Wi-Fi + Cellular 128GB, Blue" loading="eager" decoding="async" fetchpriority="high">
+          <img id="mainImg" src="https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-2-1200x1200.jpeg" alt="Планшет Apple iPad 11 (2025) Wi-Fi + Cellular 128GB, Blue" loading="eager" decoding="async" fetchpriority="high">
           <button type="button" class="gallery-nav gallery-prev" id="galleryPrev">‹</button>
           <button type="button" class="gallery-nav gallery-next" id="galleryNext">›</button>
         </div>
-        <div class="thumbs" id="thumbs"><button type="button" class="thumb" data-idx="0"><img src="https://sochi.dr-store.ru/image/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-2-300x300.jpeg" alt="" loading="lazy" decoding="async"></button><button type="button" class="thumb" data-idx="1"><img src="https://sochi.dr-store.ru/image/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-3-300x300.jpeg" alt="" loading="lazy" decoding="async"></button><button type="button" class="thumb" data-idx="2"><img src="https://sochi.dr-store.ru/image/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-300x300.jpeg" alt="" loading="lazy" decoding="async"></button></div>
+        <div class="thumbs" id="thumbs"><button type="button" class="thumb" data-idx="0"><img src="https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-2-300x300.jpeg" alt="" loading="lazy" decoding="async"></button><button type="button" class="thumb" data-idx="1"><img src="https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-3-300x300.jpeg" alt="" loading="lazy" decoding="async"></button><button type="button" class="thumb" data-idx="2"><img src="https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-300x300.jpeg" alt="" loading="lazy" decoding="async"></button></div>
         <div class="price-card__footer" style="margin-top:.8rem;">
           <strong class="price-card__price">31 400 ₽</strong>
           <button type="button" class="price-card__btn" id="pickBtn" data-id="ipad-11-a16-128gb-wi-fi-blue-сша-s2-31400" data-name="iPad 11&quot; A16 128GB Wi-Fi Blue" data-price="31 400 ₽">+ Выбрать</button>
@@ -80,7 +80,7 @@
     <button class="lightbox-close" id="lbClose">✕</button>
   </div>
   <script>
-    const IMAGES = ["https://sochi.dr-store.ru/image/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-2-1200x1200.jpeg", "https://sochi.dr-store.ru/image/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-3-1200x1200.jpeg", "https://sochi.dr-store.ru/image/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-1200x1200.jpeg"];
+    const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-2-1200x1200.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-3-1200x1200.jpeg", "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Blue-1200x1200.jpeg"];
     const CART_KEY = 'iron_cart';
     const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
@@ -107,6 +107,10 @@
       pre.onload = () => {
         mainImg.src = nextSrc;
         if (lbImg) lbImg.src = nextSrc;
+      };
+      pre.onerror = () => {
+        mainImg.classList.remove('is-fading');
+        if (lbImg) lbImg.classList.remove('is-fading');
       };
       pre.src = nextSrc;
       thumbs.forEach((t, ti) => t.classList.toggle('is-active', ti === idx));

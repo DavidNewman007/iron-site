@@ -58,11 +58,11 @@
           <p class="meta-note">Цена за наличный расчет</p>
         </div>
         <div class="gallery-main">
-          <img id="mainImg" src="https://sochi.dr-store.ru/image/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-1-1200x1200.jpg" alt="Планшет Apple iPad Air 11&#x27;&#x27; M4 (2026) Wi-Fi 128GB, Purple" loading="eager" decoding="async" fetchpriority="high">
+          <img id="mainImg" src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-1-1200x1200.jpg" alt="Планшет Apple iPad Air 11&#x27;&#x27; M4 (2026) Wi-Fi 128GB, Purple" loading="eager" decoding="async" fetchpriority="high">
           <button type="button" class="gallery-nav gallery-prev" id="galleryPrev">‹</button>
           <button type="button" class="gallery-nav gallery-next" id="galleryNext">›</button>
         </div>
-        <div class="thumbs" id="thumbs"><button type="button" class="thumb" data-idx="0"><img src="https://sochi.dr-store.ru/image/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-1-300x300.jpg" alt="" loading="lazy" decoding="async"></button><button type="button" class="thumb" data-idx="1"><img src="https://sochi.dr-store.ru/image/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-5-300x300.jpg" alt="" loading="lazy" decoding="async"></button><button type="button" class="thumb" data-idx="2"><img src="https://sochi.dr-store.ru/image/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-all-wf-dr-store-300x300.jpg" alt="" loading="lazy" decoding="async"></button><button type="button" class="thumb" data-idx="3"><img src="https://sochi.dr-store.ru/image/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-11-300x300.jpg" alt="" loading="lazy" decoding="async"></button></div>
+        <div class="thumbs" id="thumbs"><button type="button" class="thumb" data-idx="0"><img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-1-300x300.jpg" alt="" loading="lazy" decoding="async"></button><button type="button" class="thumb" data-idx="1"><img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-5-300x300.jpg" alt="" loading="lazy" decoding="async"></button><button type="button" class="thumb" data-idx="2"><img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-all-wf-dr-store-300x300.jpg" alt="" loading="lazy" decoding="async"></button><button type="button" class="thumb" data-idx="3"><img src="https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-11-300x300.jpg" alt="" loading="lazy" decoding="async"></button></div>
         <div class="price-card__footer" style="margin-top:.8rem;">
           <strong class="price-card__price">49 500 ₽</strong>
           <button type="button" class="price-card__btn" id="pickBtn" data-id="ipad-air-11-m4-128gb-wi-fi-purple-сша-s2-49500" data-name="iPad Air 11&quot; M4 128GB Wi-Fi Purple" data-price="49 500 ₽">+ Выбрать</button>
@@ -80,7 +80,7 @@
     <button class="lightbox-close" id="lbClose">✕</button>
   </div>
   <script>
-    const IMAGES = ["https://sochi.dr-store.ru/image/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-1-1200x1200.jpg", "https://sochi.dr-store.ru/image/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-5-1200x1200.jpg", "https://sochi.dr-store.ru/image/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-all-wf-dr-store-1200x1200.jpg", "https://sochi.dr-store.ru/image/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-11-1200x1200.jpg"];
+    const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-1-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-5-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-all-wf-dr-store-1200x1200.jpg", "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-11-1200x1200.jpg"];
     const CART_KEY = 'iron_cart';
     const pickBtn = document.getElementById('pickBtn');
     const mainImg = document.getElementById('mainImg');
@@ -107,6 +107,10 @@
       pre.onload = () => {
         mainImg.src = nextSrc;
         if (lbImg) lbImg.src = nextSrc;
+      };
+      pre.onerror = () => {
+        mainImg.classList.remove('is-fading');
+        if (lbImg) lbImg.classList.remove('is-fading');
       };
       pre.src = nextSrc;
       thumbs.forEach((t, ti) => t.classList.toggle('is-active', ti === idx));
