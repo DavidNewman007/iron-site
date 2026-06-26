@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-26T09:07:01.571103Z",
-  "count": 27,
+  "generated_at": "2026-06-26T09:29:48.682675Z",
+  "count": 47,
   "byId": {
     "series-se-3-40mm-s-m-midnight-mid-meh94-j-a-япония-s1-21900": {
       "url": "hybrid-products/watch/series-se-3-40mm-s-m-midnight-mid-meh94-j-a-s1-21900.html",
@@ -155,6 +155,146 @@
       "name": "Series Ultra 3 49mm M/L Natural Blue TL GPS + Cellular MEWU4 AF/A",
       "warehouse": "(S1)",
       "price": 63100
+    },
+    "se3-40mm-starlight-s-m-сша-s2-22000": {
+      "url": "hybrid-products/watch/se3-40mm-starlight-s-m-s2-22000.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-se2023/watch_se2_2023-8-dr-store-1200x1200.jpg",
+      "name": "SE3 40mm Starlight S/M",
+      "warehouse": "(S2)",
+      "price": 22000
+    },
+    "se3-40mm-starlight-m-l-сша-s2-22500": {
+      "url": "hybrid-products/watch/se3-40mm-starlight-m-l-s2-22500.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/new products/apple-watch-se-40mm-starlight-remeshok-starlight-sport-band-razmer-m-l/apple-watch-se-40mm-starlight-remeshok-starlight-sport-band-razmer-m-l-1200x1200.jpg",
+      "name": "SE3 40mm Starlight M/L",
+      "warehouse": "(S2)",
+      "price": 22500
+    },
+    "se3-44mm-midnight-m-l-сша-s2-25200": {
+      "url": "hybrid-products/watch/se3-44mm-midnight-m-l-s2-25200.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/new products/apple-watch-se-3-2025-44mm-midnight-remeshok-midnight-sport-band-razmer-m-l/apple-watch-se-3-2025-44mm-midnight-remeshok-midnight-sport-band-razmer-m-l-1200x1200.png",
+      "name": "SE3 44mm Midnight M/L",
+      "warehouse": "(S2)",
+      "price": 25200
+    },
+    "se3-44mm-starlight-m-l-сша-s2-25200": {
+      "url": "hybrid-products/watch/se3-44mm-starlight-m-l-s2-25200.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/new products/apple-watch-se-44mm-starlight-remeshok-starlight-sport-band-razmer-m-l/apple-watch-se-44mm-starlight-remeshok-starlight-sport-band-razmer-m-l-1200x1200.jpg",
+      "name": "SE3 44mm Starlight M/L",
+      "warehouse": "(S2)",
+      "price": 25200
+    },
+    "se3-44mm-starlight-s-m-сша-s2-25700": {
+      "url": "hybrid-products/watch/se3-44mm-starlight-s-m-s2-25700.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-se2023/watch_se2_2023-8-dr-store-1200x1200.jpg",
+      "name": "SE3 44mm Starlight S/M",
+      "warehouse": "(S2)",
+      "price": 25700
+    },
+    "s11-42mm-black-m-l-сша-s2-30900": {
+      "url": "hybrid-products/watch/s11-42mm-black-m-l-s2-30900.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM23-black-watch11-2-dr-store-1200x1200.jpg",
+      "name": "S11 42mm Black M/L",
+      "warehouse": "(S2)",
+      "price": 30900
+    },
+    "s11-42mm-black-s-m-сша-s2-30900": {
+      "url": "hybrid-products/watch/s11-42mm-black-s-m-s2-30900.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM23-black-watch11-2-dr-store-1200x1200.jpg",
+      "name": "S11 42mm Black S/M",
+      "warehouse": "(S2)",
+      "price": 30900
+    },
+    "s11-42mm-gray-m-l-сша-s2-30900": {
+      "url": "hybrid-products/watch/s11-42mm-gray-m-l-s2-30900.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM23-space-gray-watch11-1-dr-store-1200x1200.jpg",
+      "name": "S11 42mm Gray M/L",
+      "warehouse": "(S2)",
+      "price": 30900
+    },
+    "s11-42mm-gray-s-m-сша-s2-32000": {
+      "url": "hybrid-products/watch/s11-42mm-gray-s-m-s2-32000.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM23-space-gray-watch11-1-dr-store-1200x1200.jpg",
+      "name": "S11 42mm Gray S/M",
+      "warehouse": "(S2)",
+      "price": 32000
+    },
+    "s11-42mm-rose-gold-m-l-сша-s2-30400": {
+      "url": "hybrid-products/watch/s11-42mm-rose-gold-m-l-s2-30400.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM83-rose-watch11-2-dr-store-1200x1200.jpg",
+      "name": "S11 42mm Rose Gold M/L",
+      "warehouse": "(S2)",
+      "price": 30400
+    },
+    "s11-42mm-rose-gold-s-m-сша-s2-30400": {
+      "url": "hybrid-products/watch/s11-42mm-rose-gold-s-m-s2-30400.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM83-rose-watch11-2-dr-store-1200x1200.jpg",
+      "name": "S11 42mm Rose Gold S/M",
+      "warehouse": "(S2)",
+      "price": 30400
+    },
+    "s11-42mm-silver-s-m-сша-s2-31400": {
+      "url": "hybrid-products/watch/s11-42mm-silver-s-m-s2-31400.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MFH04-silver-watch11-1-dr-store-1200x1200.jpg",
+      "name": "S11 42mm Silver S/M",
+      "warehouse": "(S2)",
+      "price": 31400
+    },
+    "s11-42mm-silver-m-l-сша-s2-31400": {
+      "url": "hybrid-products/watch/s11-42mm-silver-m-l-s2-31400.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MFH04-silver-watch11-1-dr-store-1200x1200.jpg",
+      "name": "S11 42mm Silver M/L",
+      "warehouse": "(S2)",
+      "price": 31400
+    },
+    "s11-46mm-gray-m-l-сша-s2-32000": {
+      "url": "hybrid-products/watch/s11-46mm-gray-m-l-s2-32000.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM23-space-gray-watch11-1-dr-store-1200x1200.jpg",
+      "name": "S11 46mm Gray M/L",
+      "warehouse": "(S2)",
+      "price": 32000
+    },
+    "s11-46mm-gray-s-m-сша-s2-32000": {
+      "url": "hybrid-products/watch/s11-46mm-gray-s-m-s2-32000.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM23-space-gray-watch11-1-dr-store-1200x1200.jpg",
+      "name": "S11 46mm Gray S/M",
+      "warehouse": "(S2)",
+      "price": 32000
+    },
+    "s11-46mm-silver-m-l-сша-s2-32500": {
+      "url": "hybrid-products/watch/s11-46mm-silver-m-l-s2-32500.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MFH04-silver-watch11-1-dr-store-1200x1200.jpg",
+      "name": "S11 46mm Silver M/L",
+      "warehouse": "(S2)",
+      "price": 32500
+    },
+    "s11-46mm-silver-s-m-сша-s2-34000": {
+      "url": "hybrid-products/watch/s11-46mm-silver-s-m-s2-34000.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MFH04-silver-watch11-1-dr-store-1200x1200.jpg",
+      "name": "S11 46mm Silver S/M",
+      "warehouse": "(S2)",
+      "price": 34000
+    },
+    "s11-46mm-rose-gold-m-l-сша-s2-32500": {
+      "url": "hybrid-products/watch/s11-46mm-rose-gold-m-l-s2-32500.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM83-rose-watch11-2-dr-store-1200x1200.jpg",
+      "name": "S11 46mm Rose Gold M/L",
+      "warehouse": "(S2)",
+      "price": 32500
+    },
+    "s11-46mm-rose-gold-s-m-сша-s2-34000": {
+      "url": "hybrid-products/watch/s11-46mm-rose-gold-s-m-s2-34000.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM83-rose-watch11-2-dr-store-1200x1200.jpg",
+      "name": "S11 46mm Rose Gold S/M",
+      "warehouse": "(S2)",
+      "price": 34000
+    },
+    "s11-46mm-black-m-l-сша-s2-33500": {
+      "url": "hybrid-products/watch/s11-46mm-black-m-l-s2-33500.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-11/MXM23-black-watch11-2-dr-store-1200x1200.jpg",
+      "name": "S11 46mm Black M/L",
+      "warehouse": "(S2)",
+      "price": 33500
     },
     "ultra-2-natural-alpine-tan-m-сша-s2-58700": {
       "url": "hybrid-products/watch/ultra-2-natural-alpine-tan-m-s2-58700.html",
