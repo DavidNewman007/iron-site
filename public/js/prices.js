@@ -172,37 +172,83 @@
   let queryPlanCache = { raw: "", plan: null };
   let filtersLayoutMode = null;
   const categoryFilterState = {};
+  /** idle | loading | partial | ready */
+  let catalogLoadState = "loading";
 
   async function init() {
     bindEvents();
     bindMobileCartCountSync();
     renderCart();
-    const hybridLoadPromise = Promise.all([
-      loadIphoneHybridCards(),
-      loadIpadHybridCards(),
-      loadMacbookHybridCards(),
-      loadWatchHybridCards(),
-      loadAirpodsHybridCards()]);
 
     if (!SHEET_ID) {
+      catalogLoadState = "ready";
       showError(
         "Укажите ID публичной таблицы в js/config.js → googleSheetId (отдельный файл, только прайс для сайта)."
       );
       return;
     }
 
-    tryShowCachedProducts();
+    const iphoneHybridPromise = loadIphoneHybridCards();
+    const otherHybridPromise = Promise.all([
+      loadIpadHybridCards(),
+      loadMacbookHybridCards(),
+      loadWatchHybridCards(),
+      loadAirpodsHybridCards(),
+    ]);
 
-    try {
-      applyProducts(await fetchProducts());
-      await hybridLoadPromise;
+    const hadFreshCache = tryShowCachedProducts();
+    if (hadFreshCache) {
+      catalogLoadState = "ready";
+      await Promise.all([iphoneHybridPromise, otherHybridPromise]);
       applyHybridData();
       renderGrid();
+      refreshProductsInBackground(iphoneHybridPromise, otherHybridPromise);
+      return;
+    }
+
+    catalogLoadState = "loading";
+    renderGrid();
+
+    try {
+      await fetchProductsProgressive({
+        async onPartial(result) {
+          if (!result.products.length) return;
+          catalogLoadState = "partial";
+          applyProducts(result, { partial: true });
+          await iphoneHybridPromise;
+          applyHybridData();
+          renderGrid();
+        },
+        async onComplete(result) {
+          catalogLoadState = "ready";
+          applyProducts(result, { partial: false });
+          await otherHybridPromise;
+          applyHybridData();
+          renderGrid();
+        },
+      });
     } catch (e) {
       console.error(e);
       if (!allProducts.length && !tryShowCachedProducts(true)) {
+        catalogLoadState = "ready";
         showError(USER_LOAD_ERROR);
+        renderGrid();
       }
+    }
+  }
+
+  async function refreshProductsInBackground(iphoneHybridPromise, otherHybridPromise) {
+    try {
+      await fetchProductsProgressive({
+        async onComplete(result) {
+          applyProducts(result, { partial: false, silent: false });
+          await otherHybridPromise;
+          applyHybridData();
+          renderGrid();
+        },
+      });
+    } catch (e) {
+      console.warn("Фоновое обновление прайса не удалось:", e);
     }
   }
 
@@ -934,10 +980,27 @@
   }
 
   function tryShowCachedProducts(allowExpired) {
+    try {
+      const catalogRaw = sessionStorage.getItem(CATALOG_CACHE_KEY);
+      if (catalogRaw) {
+        const products = JSON.parse(catalogRaw);
+        if (Array.isArray(products) && products.length) {
+          catalogLoadState = "ready";
+          return applyProducts(
+            { products, updatedAt: formatNow() },
+            { partial: false, fromCache: true }
+          );
+        }
+      }
+    } catch (e) {
+      console.warn("Кэш каталога повреждён:", e);
+    }
+
     const cached = readPriceCache(allowExpired);
     if (!cached) return false;
     try {
-      return applyProducts(parseSheetJson(cached.json));
+      catalogLoadState = "ready";
+      return applyProducts(parseSheetJson(cached.json), { partial: false, fromCache: true });
     } catch (e) {
       console.warn("Кэш прайса повреждён, очищаем:", e);
       clearPriceCache();
@@ -945,22 +1008,40 @@
     }
   }
 
-  function applyProducts(result) {
+  function applyProducts(result, options) {
+    const opts = options || {};
+    const partial = Boolean(opts.partial);
+    const fromCache = Boolean(opts.fromCache);
+    const silent = Boolean(opts.silent);
+
     allProducts = result.products || [];
     if (!allProducts.length) {
-      showError(USER_LOAD_ERROR);
+      if (!partial) showError(USER_LOAD_ERROR);
       return false;
     }
-    try {
-      sessionStorage.setItem(CATALOG_CACHE_KEY, JSON.stringify(allProducts));
-    } catch {
-      /* sessionStorage может быть недоступен */
+
+    if (!partial) {
+      try {
+        sessionStorage.setItem(CATALOG_CACHE_KEY, JSON.stringify(allProducts));
+      } catch {
+        /* sessionStorage может быть недоступен */
+      }
     }
-    els.loading.hidden = true;
+
+    if (els.loading) {
+      if (partial) {
+        els.loading.hidden = false;
+        els.loading.textContent = "Загружаем остальные позиции…";
+      } else {
+        els.loading.hidden = true;
+        els.loading.textContent = "Загрузка прайса…";
+      }
+    }
     if (els.error) els.error.hidden = true;
-    if (els.updated) {
+    if (els.updated && !silent) {
       const when = result.updatedAt || formatNow();
-      els.updated.textContent = `Обновлено: ${when} · ${allProducts.length} позиций`;
+      const suffix = partial ? " · загрузка продолжается" : fromCache ? " · из кэша" : "";
+      els.updated.textContent = `Обновлено: ${when} · ${allProducts.length} позиций${suffix}`;
     }
     renderGrid();
     return true;
@@ -1028,16 +1109,26 @@
   }
 
   async function fetchProducts() {
-    const base = getSheetUrl();
+    let result = { products: [], updatedAt: "" };
+    await fetchProductsProgressive({
+      onPartial(parsed) {
+        result = parsed;
+      },
+      onComplete(parsed) {
+        result = parsed;
+      },
+    });
+    return result;
+  }
+
+  function mergeSheetResults(tabResults) {
     const merged = { products: [], updatedAt: "" };
     const seenIds = new Set();
 
     for (const tab of SHEET_TABS) {
-      const url = `${base}?tqx=out:json&sheet=${encodeURIComponent(tab)}&range=${encodeURIComponent("A1:F1200")}`;
-      const json = await loadSheetJson(url);
-      const parsed = parseSheetJson(json);
+      const parsed = tabResults.get(tab);
+      if (!parsed) continue;
       if (!merged.updatedAt && parsed.updatedAt) merged.updatedAt = parsed.updatedAt;
-
       for (const product of parsed.products || []) {
         if (seenIds.has(product.id)) continue;
         seenIds.add(product.id);
@@ -1046,6 +1137,35 @@
     }
 
     return merged;
+  }
+
+  async function fetchProductsProgressive(handlers) {
+    const base = getSheetUrl();
+    const tabResults = new Map();
+
+    const fetchTab = async (tab) => {
+      const url = `${base}?tqx=out:json&sheet=${encodeURIComponent(tab)}&range=${encodeURIComponent("A1:F1200")}`;
+      const json = await loadSheetJson(url, { cache: false });
+      return { tab, parsed: parseSheetJson(json) };
+    };
+
+    const firstTab = SHEET_TABS[0];
+    const otherTabs = SHEET_TABS.slice(1);
+    const otherPromises = otherTabs.map((tab) =>
+      fetchTab(tab).then((result) => {
+        tabResults.set(result.tab, result.parsed);
+      })
+    );
+
+    const first = await fetchTab(firstTab);
+    tabResults.set(first.tab, first.parsed);
+    const partial = mergeSheetResults(tabResults);
+    if (handlers?.onPartial) await handlers.onPartial(partial);
+
+    await Promise.all(otherPromises);
+    const complete = mergeSheetResults(tabResults);
+    if (handlers?.onComplete) await handlers.onComplete(complete);
+    return complete;
   }
 
   function parseSheetJson(json) {
@@ -1191,12 +1311,13 @@
     return loadSheetJsonp(sheetUrl);
   }
 
-  async function loadSheetJson(sheetUrl) {
+  async function loadSheetJson(sheetUrl, options) {
+    const opts = options || {};
     let lastError = null;
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const json = await loadSheetJsonOnce(sheetUrl);
-        writePriceCache(json);
+        if (opts.cache !== false) writePriceCache(json);
         return json;
       } catch (e) {
         lastError = e;
@@ -2030,6 +2151,23 @@
       </article>`;
   }
 
+  function hasActiveShopQuery() {
+    const q = (els.search?.value || "").trim();
+    if (q) return true;
+    const cat = els.category?.value || "all";
+    if (cat !== "all") return true;
+    const active = categoryFilterState[cat];
+    return Boolean(active && Object.values(active).some(Boolean));
+  }
+
+  function renderGridLoadingHtml() {
+    return `
+      <div class="price-grid-loading" aria-busy="true">
+        <p class="price-grid-loading__title">Загрузка прайса…</p>
+        <p class="price-grid-loading__hint">Сначала показываем iPhone и основной ассортимент</p>
+      </div>`;
+  }
+
   function renderGrid() {
     if (!els.grid) return;
     renderCategoryFilters();
@@ -2037,11 +2175,15 @@
     const groups = sortGroups(groupBySection(getFiltered()), selectedCategory);
 
     if (!groups.length) {
+      if (catalogLoadState !== "ready" && !hasActiveShopQuery()) {
+        els.grid.innerHTML = renderGridLoadingHtml();
+        return;
+      }
       els.grid.innerHTML = '<p class="price-grid-empty">Ничего не найдено. Попробуйте другой запрос.</p>';
       return;
     }
 
-    els.grid.innerHTML = groups
+    const cardsHtml = groups
       .map(({ section, items }) => {
         const header = section
           ? `<header class="price-section-head"><h2 class="price-section-title">${escapeHtml(section)}</h2></header>`
@@ -2049,6 +2191,13 @@
         return header + items.map(renderProductCard).join("");
       })
       .join("");
+
+    const tailHtml =
+      catalogLoadState === "partial"
+        ? '<p class="price-grid-more" aria-live="polite">Загружаем остальные позиции…</p>'
+        : "";
+
+    els.grid.innerHTML = cardsHtml + tailHtml;
 
     els.grid.querySelectorAll("[data-action=toggle]").forEach((btn) => {
       btn.addEventListener("click", () => toggleCart(btn.dataset.id));
