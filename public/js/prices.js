@@ -118,6 +118,7 @@
     updated: document.getElementById("price-updated"),
     search: document.getElementById("price-search"),
     category: document.getElementById("price-category"),
+    filtersRoot: document.getElementById("shop-filters"),
     cartList: document.getElementById("cart-list"),
     cartCount: document.getElementById("cart-count"),
     cartTotal: document.getElementById("cart-total"),
@@ -156,6 +157,7 @@
   let cart = loadCart();
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
+  const categoryFilterState = {};
 
   async function init() {
     bindEvents();
@@ -1434,6 +1436,114 @@
     return true;
   }
 
+  function getCategoryFilterRegistry() {
+    const cat = els.category?.value || "all";
+    if (cat === "all") return null;
+    return window.IRON_SHOP_FILTERS?.[cat] || null;
+  }
+
+  function getActiveCategoryFilters() {
+    const cat = els.category?.value || "all";
+    if (cat === "all") return {};
+    if (!categoryFilterState[cat]) categoryFilterState[cat] = {};
+    return categoryFilterState[cat];
+  }
+
+  function resetCategoryFiltersForSelection() {
+    const cat = els.category?.value || "all";
+    if (cat !== "all" && categoryFilterState[cat]) {
+      for (const key of Object.keys(categoryFilterState[cat])) {
+        categoryFilterState[cat][key] = "";
+      }
+    }
+  }
+
+  function getCategoryProducts(cat) {
+    return allProducts.filter((p) => p.category === cat);
+  }
+
+  function matchesCategoryFilters(product) {
+    const registry = getCategoryFilterRegistry();
+    if (!registry) return true;
+    return registry.matches(product, getActiveCategoryFilters());
+  }
+
+  function renderCategoryFilters() {
+    const root = els.filtersRoot;
+    if (!root) return;
+
+    const cat = els.category?.value || "all";
+    const registry = getCategoryFilterRegistry();
+    if (!registry) {
+      root.hidden = true;
+      root.innerHTML = "";
+      return;
+    }
+
+    const products = getCategoryProducts(cat);
+    const active = getActiveCategoryFilters();
+    const hasActive = Object.values(active).some(Boolean);
+
+    const groupsHtml = registry.facets
+      .map((facet) => {
+        const options = registry.collectOptions(products, facet.id, active);
+        if (!options.length) return "";
+
+        const chips = [
+          `<button type="button" class="shop-filter-chip${active[facet.id] ? "" : " is-active"}" data-facet="${escapeHtml(
+            facet.id
+          )}" data-value="">Все</button>`,
+          ...options.map((value) => {
+            const isActive = active[facet.id] === value;
+            return `<button type="button" class="shop-filter-chip${isActive ? " is-active" : ""}" data-facet="${escapeHtml(
+              facet.id
+            )}" data-value="${escapeHtml(value)}">${escapeHtml(registry.formatValue(facet.id, value))}</button>`;
+          }),
+        ].join("");
+
+        return `
+          <div class="shop-filter-group">
+            <span class="shop-filter-group__label">${escapeHtml(facet.label)}</span>
+            <div class="shop-filter-group__chips">${chips}</div>
+          </div>`;
+      })
+      .filter(Boolean)
+      .join("");
+
+    if (!groupsHtml) {
+      root.hidden = true;
+      root.innerHTML = "";
+      return;
+    }
+
+    root.hidden = false;
+    root.innerHTML = `
+      <div class="shop-filters__head">
+        <strong class="shop-filters__title">Подбор ${escapeHtml(registry.label || cat)}</strong>
+        ${
+          hasActive
+            ? '<button type="button" class="shop-filters__reset" data-action="reset-filters">Сбросить</button>'
+            : ""
+        }
+      </div>
+      <div class="shop-filters__groups">${groupsHtml}</div>`;
+
+    root.querySelectorAll(".shop-filter-chip").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const facetId = btn.dataset.facet || "";
+        const value = btn.dataset.value || "";
+        if (!facetId) return;
+        active[facetId] = value;
+        renderGrid();
+      });
+    });
+
+    root.querySelector('[data-action="reset-filters"]')?.addEventListener("click", () => {
+      resetCategoryFiltersForSelection();
+      renderGrid();
+    });
+  }
+
   function getFiltered() {
     const q = (els.search?.value || "").trim();
     const cat = els.category?.value || "all";
@@ -1441,6 +1551,7 @@
 
     return allProducts.filter((p) => {
       if (cat !== "all" && p.category !== cat) return false;
+      if (!matchesCategoryFilters(p)) return false;
       return matchesSearch(p, plan);
     });
   }
@@ -1546,6 +1657,7 @@
 
   function renderGrid() {
     if (!els.grid) return;
+    renderCategoryFilters();
     const selectedCategory = els.category?.value || "all";
     const groups = sortGroups(groupBySection(getFiltered()), selectedCategory);
 

@@ -46,6 +46,90 @@
   border-color: var(--gold);
 }
 
+.shop-filters {
+  margin: -0.5rem 0 1.25rem;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid rgba(212, 160, 18, 0.28);
+  border-radius: 12px;
+  background: rgba(18, 18, 18, 0.72);
+}
+
+.shop-filters__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.shop-filters__title {
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.shop-filters__reset {
+  border: none;
+  background: transparent;
+  color: var(--gold);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.15rem 0;
+}
+
+.shop-filters__reset:hover {
+  text-decoration: underline;
+}
+
+.shop-filters__groups {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.shop-filter-group {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.shop-filter-group__label {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.shop-filter-group__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.shop-filter-chip {
+  border: 1px solid rgba(212, 160, 18, 0.34);
+  background: rgba(28, 28, 28, 0.84);
+  color: var(--cream);
+  border-radius: 999px;
+  padding: 0.38rem 0.8rem;
+  font: inherit;
+  font-size: 0.86rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.shop-filter-chip:hover {
+  border-color: rgba(212, 160, 18, 0.65);
+}
+
+.shop-filter-chip.is-active {
+  border-color: var(--gold);
+  background: rgba(212, 160, 18, 0.18);
+  color: #fff6df;
+}
+
 .shop-layout {
   display: grid;
   grid-template-columns: 1fr 320px;
