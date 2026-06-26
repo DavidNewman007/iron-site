@@ -1479,7 +1479,7 @@
     return window.matchMedia("(max-width: 900px)").matches;
   }
 
-  function buildFilterGroupHtml(registry, products, active, facet, includeAllChip) {
+  function buildFilterGroupHtml(registry, products, active, facet, includeAllChip, hideLabel) {
     const options = registry.collectOptions(products, facet.id, { ...active, [facet.id]: "" });
     if (!options.length) return "";
 
@@ -1500,10 +1500,37 @@
       );
     }
 
+    const labelHtml = hideLabel
+      ? ""
+      : `<span class="shop-filter-group__label">${escapeHtml(facet.label)}</span>`;
+
     return `
       <div class="shop-filter-group">
-        <span class="shop-filter-group__label">${escapeHtml(facet.label)}</span>
+        ${labelHtml}
         <div class="shop-filter-group__chips">${chips.join("")}</div>
+      </div>`;
+  }
+
+  function buildMobileSelectionTrailHtml(registry, active) {
+    const items = registry.facets
+      .filter((facet) => active[facet.id])
+      .map((facet) => ({
+        facetId: facet.id,
+        label: registry.formatValue(facet.id, active[facet.id]),
+      }));
+
+    if (!items.length) return "";
+
+    return `
+      <div class="shop-filters-trail" aria-label="Выбранные параметры">
+        ${items
+          .map(
+            (item) =>
+              `<button type="button" class="shop-filters-trail__chip" data-action="wizard-edit-step" data-facet="${escapeHtml(
+                item.facetId
+              )}">${escapeHtml(item.label)}</button>`
+          )
+          .join("")}
       </div>`;
   }
 
@@ -1526,17 +1553,21 @@
     root.querySelector('[data-action="wizard-back"]')?.addEventListener("click", () => {
       const registry = getCategoryFilterRegistry();
       const stepId = root.querySelector(".shop-filters-wizard")?.dataset.step || "";
-      if (registry?.clearMobileWizardFromStep && stepId) {
-        registry.clearMobileWizardFromStep(active, stepId);
-      } else {
-        resetCategoryFiltersForSelection();
+      if (registry?.goBackMobileWizardStep && stepId) {
+        registry.goBackMobileWizardStep(active, stepId);
       }
       rerender();
     });
 
-    root.querySelector('[data-action="wizard-edit"]')?.addEventListener("click", () => {
-      resetCategoryFiltersForSelection();
-      rerender();
+    root.querySelectorAll('[data-action="wizard-edit-step"]').forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const registry = getCategoryFilterRegistry();
+        const facetId = btn.dataset.facet || "";
+        if (registry?.clearMobileWizardFromStep && facetId) {
+          registry.clearMobileWizardFromStep(active, facetId);
+        }
+        rerender();
+      });
     });
   }
 
@@ -1573,19 +1604,17 @@
   function renderMobileCategoryFilters(root, registry, products, active, cat) {
     const step = registry.getMobileWizardStep?.(products, active) || "series";
     const hasActive = Object.values(active).some(Boolean);
+    const trailHtml = buildMobileSelectionTrailHtml(registry, active);
 
     if (step === "done") {
-      const summary = registry.getSelectionSummary?.(active) || [];
       root.hidden = false;
       root.innerHTML = `
         <div class="shop-filters shop-filters--mobile">
           <div class="shop-filters__head">
             <strong class="shop-filters__title">Подбор ${escapeHtml(registry.label || cat)}</strong>
-            <button type="button" class="shop-filters__reset" data-action="wizard-edit">Изменить</button>
+            <button type="button" class="shop-filters__reset" data-action="reset-filters">Сбросить</button>
           </div>
-          <div class="shop-filters-summary">
-            <span class="shop-filters-summary__text">${escapeHtml(summary.join(" · "))}</span>
-          </div>
+          ${trailHtml}
         </div>`;
       bindFilterChipHandlers(root, active, renderGrid);
       return;
@@ -1598,12 +1627,8 @@
       return;
     }
 
-    const progress = registry.getMobileWizardProgress?.(products, active, step) || {
-      current: 1,
-      total: registry.facets.length,
-      label: facet.label,
-    };
-    const groupHtml = buildFilterGroupHtml(registry, products, active, facet, false);
+    const prompt = registry.getMobileWizardPrompt?.(step) || facet.label;
+    const groupHtml = buildFilterGroupHtml(registry, products, active, facet, false, true);
     if (!groupHtml) {
       root.hidden = true;
       root.innerHTML = "";
@@ -1613,21 +1638,23 @@
     root.hidden = false;
     root.innerHTML = `
       <div class="shop-filters shop-filters--mobile">
+        <div class="shop-filters__head">
+          <strong class="shop-filters__title">Подбор ${escapeHtml(registry.label || cat)}</strong>
+          ${
+            hasActive
+              ? '<button type="button" class="shop-filters__reset" data-action="reset-filters">Сброс</button>'
+              : ""
+          }
+        </div>
+        ${trailHtml}
         <div class="shop-filters-wizard" data-step="${escapeHtml(step)}">
           <div class="shop-filters-wizard__head">
             ${
               step !== "series"
                 ? '<button type="button" class="shop-filters-wizard__back" data-action="wizard-back">← Назад</button>'
-                : '<span class="shop-filters-wizard__back shop-filters-wizard__back--placeholder"></span>'
+                : ""
             }
-            <span class="shop-filters-wizard__progress">Шаг ${progress.current} из ${progress.total} · ${escapeHtml(
-              progress.label
-            )}</span>
-            ${
-              hasActive
-                ? '<button type="button" class="shop-filters__reset" data-action="reset-filters">Сброс</button>'
-                : '<span class="shop-filters-wizard__reset-placeholder"></span>'
-            }
+            <p class="shop-filters-wizard__prompt">${escapeHtml(prompt)}</p>
           </div>
           <div class="shop-filters-wizard__body">${groupHtml}</div>
         </div>

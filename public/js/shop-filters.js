@@ -229,6 +229,19 @@
     }
   }
 
+  function goBackMobileWizardStep(activeFilters, currentStepId) {
+    const idx = iphoneFacets.findIndex((facet) => facet.id === currentStepId);
+    if (idx <= 0) return;
+    clearMobileWizardFromStep(activeFilters, iphoneFacets[idx - 1].id);
+  }
+
+  const IPHONE_WIZARD_PROMPTS = {
+    series: "Выберите серию",
+    storage: "Выберите объём памяти",
+    sim: "Выберите тип SIM",
+    color: "Выберите цвет",
+  };
+
   const iphoneFacets = [
     { id: "series", label: "Серия" },
     { id: "storage", label: "Память" },
@@ -262,6 +275,12 @@
       },
       clearMobileWizardFromStep(activeFilters, stepId) {
         clearMobileWizardFromStep(activeFilters, stepId);
+      },
+      goBackMobileWizardStep(activeFilters, currentStepId) {
+        goBackMobileWizardStep(activeFilters, currentStepId);
+      },
+      getMobileWizardPrompt(stepId) {
+        return IPHONE_WIZARD_PROMPTS[stepId] || "";
       },
       getSelectionSummary(activeFilters) {
         return iphoneFacets
