@@ -113,6 +113,7 @@
 
   const SEARCH_DICT = window.IRON_SEARCH_DICT || { translit: {}, translate: [] };
   const PRICE_CACHE_KEY = `iron_prices_sheet_${SHEET_TABS.join("_")}_v5`;
+  const CATALOG_CACHE_KEY = "iron_catalog_products_v1";
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   const USER_LOAD_ERROR = "Не удалось загрузить товары. Идут технические работы. Скоро все починим";
 
@@ -949,6 +950,11 @@
     if (!allProducts.length) {
       showError(USER_LOAD_ERROR);
       return false;
+    }
+    try {
+      sessionStorage.setItem(CATALOG_CACHE_KEY, JSON.stringify(allProducts));
+    } catch {
+      /* sessionStorage может быть недоступен */
     }
     els.loading.hidden = true;
     if (els.error) els.error.hidden = true;
