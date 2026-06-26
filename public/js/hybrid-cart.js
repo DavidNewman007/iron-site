@@ -23,7 +23,7 @@
   const DEFAULT_COL_MAP = { name: 0, warranty: 1, country: 2, qty: 3, price: 4, warehouse: 5 };
 
   function parsePrice(value) {
-    const digits = String(value || "").replace(/[^\d]/g, "");
+    const digits = String(value || "").replace(/[^\d]/g,"");
     return digits ? parseInt(digits, 10) : 0;
   }
 
@@ -51,7 +51,7 @@
       .toLowerCase()
       .replace(/ё/g, "е")
       .replace(/[^a-z0-9а-я]+/giu, "-")
-      .replace(/^-+|-+$/g, "");
+      .replace(/^-+|-+$/g,"");
     if (!raw) return "";
     return raw
       .split("-")
@@ -78,7 +78,7 @@
 
   function getScriptBase() {
     const script = document.currentScript;
-    if (script?.src) return script.src.replace(/[^/]+$/, "");
+    if (script?.src) return script.src.replace(/[^/]+$/,"");
     return "../../js/";
   }
 
@@ -204,6 +204,15 @@
     return JSON.parse(match[1]);
   }
 
+  function writeCatalogCache(products) {
+    if (!Array.isArray(products) || !products.length) return;
+    try {
+      sessionStorage.setItem(CATALOG_CACHE_KEY, JSON.stringify(products));
+    } catch {
+      /* sessionStorage может быть недоступен */
+    }
+  }
+
   function readCatalogCache() {
     try {
       const raw = sessionStorage.getItem(CATALOG_CACHE_KEY);
@@ -215,17 +224,33 @@
     }
   }
 
-  function readPriceSheetCache() {
+  function readPriceSheetCache(allowExpired) {
     try {
       const raw = sessionStorage.getItem(PRICE_CACHE_KEY);
       if (!raw) return null;
       const parsed = JSON.parse(raw);
       if (!parsed?.json) return null;
-      if (Date.now() - parsed.ts > PRICE_CACHE_TTL_MS) return null;
+      if (!allowExpired && Date.now() - parsed.ts > PRICE_CACHE_TTL_MS) return null;
       return parsed.json;
     } catch {
       return null;
     }
+  }
+
+  function getCatalogSync() {
+    const cached = readCatalogCache();
+    if (cached?.length) return cached;
+
+    const sheetJson = readPriceSheetCache(false);
+    if (sheetJson) {
+      const products = parseCatalogFromGviz(sheetJson);
+      if (products.length) {
+        writeCatalogCache(products);
+        return products;
+      }
+    }
+
+    return null;
   }
 
   async function fetchSheetJson(sheetUrl) {
@@ -238,7 +263,7 @@
     const sheetId = cfg.googleSheetId;
     if (!sheetId) return [];
 
-    const apiBase = String(cfg.apiUrl || "").replace(/\/$/, "");
+    const apiBase = String(cfg.apiUrl || "").replace(/\/$/,"");
     if (apiBase) {
       const res = await fetch(`${apiBase}/api/prices`);
       if (!res.ok) throw new Error("HTTP " + res.status);
@@ -264,23 +289,36 @@
   }
 
   async function loadCatalog() {
-    const cached = readCatalogCache();
-    if (cached) return cached;
+    const sync = getCatalogSync();
+    if (sync?.length) return sync;
 
     const cfg = await ensureConfig();
     try {
-      return await fetchCatalogFromSheet(cfg);
+      const products = await fetchCatalogFromSheet(cfg);
+      if (products.length) writeCatalogCache(products);
+      return products;
     } catch (err) {
-      const sheetJson = readPriceSheetCache();
-      if (sheetJson) return parseCatalogFromGviz(sheetJson);
+      const sheetJson = readPriceSheetCache(true);
+      if (sheetJson) {
+        const products = parseCatalogFromGviz(sheetJson);
+        if (products.length) {
+          writeCatalogCache(products);
+          return products;
+        }
+      }
       throw err;
     }
+  }
+
+  function hasCanonicalPidInUrl() {
+    return Boolean(String(new URLSearchParams(window.location.search).get(PID_PARAM) || "").trim());
   }
 
   function findCatalogProduct(catalog, pickBtn, productId) {
     if (productId) {
       const byId = catalog.find((item) => idsLookEqual(item.id, productId));
       if (byId) return byId;
+      if (hasCanonicalPidInUrl()) return null;
     }
 
     const name = pickBtn?.dataset?.name;
@@ -292,26 +330,40 @@
     const nCountry = normalizeText(country);
     const nWarehouse = normalizeText(warehouse);
 
-    return catalog.find(
+    const matches = catalog.filter(
       (item) =>
         normalizeText(item.name) === nName &&
         normalizeText(item.country) === nCountry &&
         normalizeText(item.warehouse) === nWarehouse
     );
+
+    if (matches.length === 1) return matches[0];
+    return null;
+  }
+
+  function getDetailWrap() {
+    return document.querySelector(".detail-wrap");
+  }
+
+  function setPriceState(state) {
+    const wrap = getDetailWrap();
+    if (wrap) wrap.dataset.priceState = state;
   }
 
   function applyLivePrice(pickBtn, product) {
     const label = product.priceLabel || formatPrice(product.price);
+
     document.querySelectorAll(".price-card__price").forEach((el) => {
       el.textContent = label;
     });
-    document.querySelectorAll(".meta p").forEach((p) => {
-      if (/Цена:/i.test(p.textContent)) {
-        p.innerHTML = `<b>Цена:</b> ${label}`;
-      }
-    });
+
     pickBtn.dataset.price = label;
     pickBtn.dataset.id = product.id;
+    setPriceState("ready");
+  }
+
+  function markPriceError() {
+    setPriceState("error");
   }
 
   function readCart() {
@@ -365,25 +417,58 @@
 
   function syncPickBtn(pickBtn) {
     if (!pickBtn) return;
+    const wrap = getDetailWrap();
+    if (wrap?.dataset.priceState !== "ready") {
+      pickBtn.textContent = "+ Выбрать";
+      pickBtn.classList.remove("is-active");
+      return;
+    }
+
     const productId = resolveProductId(pickBtn);
     const inCart = getCartIndex(readCart(), productId) >= 0;
     pickBtn.textContent = inCart ? "✓ В корзине" : "+ Выбрать";
     pickBtn.classList.toggle("is-active", inCart);
   }
 
+  function tryApplyCatalogPrice(pickBtn, catalog) {
+    if (!catalog?.length) return false;
+
+    const productId = resolveProductId(pickBtn);
+    const product = findCatalogProduct(catalog, pickBtn, productId);
+    if (!product) return false;
+
+    applyLivePrice(pickBtn, product);
+    syncPickBtn(pickBtn);
+    return true;
+  }
+
   async function syncLivePrice(pickBtn) {
+    setPriceState("pending");
+
+    const syncCatalog = getCatalogSync();
+    if (tryApplyCatalogPrice(pickBtn, syncCatalog)) {
+      /* показали цену из того же кэша, что и листинг */
+    }
+
     try {
       const catalog = await loadCatalog();
-      if (!catalog.length) return;
+      if (!catalog.length) {
+        if (getDetailWrap()?.dataset.priceState !== "ready") markPriceError();
+        return;
+      }
 
       const productId = resolveProductId(pickBtn);
       const product = findCatalogProduct(catalog, pickBtn, productId);
-      if (!product) return;
+      if (!product) {
+        if (getDetailWrap()?.dataset.priceState !== "ready") markPriceError();
+        return;
+      }
 
       applyLivePrice(pickBtn, product);
       syncPickBtn(pickBtn);
     } catch (err) {
       console.warn("[hybrid-cart] price sync failed:", err);
+      if (getDetailWrap()?.dataset.priceState !== "ready") markPriceError();
     }
   }
 
@@ -393,6 +478,8 @@
     pickBtn.dataset.cartBound = "1";
 
     pickBtn.addEventListener("click", () => {
+      if (getDetailWrap()?.dataset.priceState !== "ready") return;
+
       const productId = resolveProductId(pickBtn);
       if (!productId) return;
 

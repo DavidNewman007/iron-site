@@ -400,10 +400,10 @@
     let color = "";
     if (line && storage) {
       const tail = productName
-        .replace(/^MacBook\s+(?:Neo\s+13\s+A18\s+Pro|Air\s+\d+\s+M\d+|Pro\s+\d+\s+M\d+)\s+/i, "")
-        .replace(/^\d+\+\s*/i, "")
-        .replace(/^(\d+)\s*(?:Tb|TB|Gb|GB)?\s+/i, "")
-        .replace(/\s+[A-Z0-9]{4,5}(?:\s+[A-Z]{1,2}\/[A-Z]\/?A?)?\s*$/i, "")
+        .replace(/^MacBook\s+(?:Neo\s+13\s+A18\s+Pro|Air\s+\d+\s+M\d+|Pro\s+\d+\s+M\d+)\s+/i,"")
+        .replace(/^\d+\+\s*/i,"")
+        .replace(/^(\d+)\s*(?:Tb|TB|Gb|GB)?\s+/i,"")
+        .replace(/\s+[A-Z0-9]{4,5}(?:\s+[A-Z]{1,2}\/[A-Z]\/?A?)?\s*$/i,"")
         .trim();
       color = normalizeMacbookColor(line, tail);
     }
@@ -513,10 +513,10 @@
     let color = "";
     if (model && storage) {
       const tail = productName
-        .replace(/^iPad\s+(?:Pro\s+11"?\s*M\d+|Air\s+11"?\s*M\d+|11"?\s*A16)\s*/i, "")
+        .replace(/^iPad\s+(?:Pro\s+11"?\s*M\d+|Air\s+11"?\s*M\d+|11"?\s*A16)\s*/i,"")
         .replace(/\b(?:Wi-Fi|WiFi|Cellular|LTE)\b/gi, " ")
         .replace(new RegExp(`\\b${escapeRegExp(storage)}\\s*(?:Gb|GB|Tb|TB)?\\b`, "i"), " ")
-        .replace(/\s+[A-Z]{1,2}\/[A-Z]\/?A?\s*$/i, "")
+        .replace(/\s+[A-Z]{1,2}\/[A-Z]\/?A?\s*$/i,"")
         .replace(/\s+/g, " ")
         .trim();
       color = normalizeIpadColor(tail);

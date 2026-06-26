@@ -723,6 +723,54 @@
   }
 }
 
+/* Hybrid detail pages: price comes only from the public sheet (hybrid-cart.js) */
+.detail-wrap:not([data-price-state="ready"]) .price-card__price {
+  visibility: hidden;
+  position: relative;
+  min-height: 1.35em;
+}
+
+.detail-wrap:not([data-price-state="ready"]) .price-card__price::after {
+  content: "Загрузка цены…";
+  visibility: visible;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 600;
+  color: var(--gold, #d4a012);
+}
+
+.detail-wrap:not([data-price-state="ready"]) .meta .price-line {
+  font-size: 0;
+  line-height: 0;
+}
+
+.detail-wrap:not([data-price-state="ready"]) .meta .price-line::before {
+  content: "Цена: Загрузка…";
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.detail-wrap:not([data-price-state="ready"]) .meta .price-line b,
+.detail-wrap:not([data-price-state="ready"]) .meta .price-line .price-card__price {
+  display: none;
+}
+
+.detail-wrap:not([data-price-state="ready"]) #pickBtn {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.detail-wrap[data-price-state="error"] .price-card__price::after {
+  content: "Цена временно недоступна";
+  color: var(--text-muted);
+}
+
+.detail-wrap[data-price-state="error"] .meta .price-line::before {
+  content: "Цена: временно недоступна";
+}
+
 /* Hybrid detail pages: keep cards stable on hover */
 .detail-wrap .price-card {
   transition: border-color 0.2s, box-shadow 0.2s;
