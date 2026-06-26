@@ -12,9 +12,9 @@
   const HYBRID_AIRPODS_MANIFEST = "hybrid-products/airpods-cards.json";
   const HYBRID_IPHONE_MANIFEST_VERSION = "2026-06-20-3";
   const HYBRID_IPAD_MANIFEST_VERSION = "2026-06-20-1";
-  const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-20-2";
-  const HYBRID_WATCH_MANIFEST_VERSION = "2026-06-26-1";
-  const HYBRID_AIRPODS_MANIFEST_VERSION = "2026-06-20-1";
+  const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-26-2";
+  const HYBRID_WATCH_MANIFEST_VERSION = "2026-06-26-2";
+  const HYBRID_AIRPODS_MANIFEST_VERSION = "2026-06-26-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
   const CART_KEY = "iron_cart";
   const CART_PRODUCT_ID_QUERY_PARAM = "pid";
@@ -153,11 +153,16 @@
   let macbookHybridById = {};
   let macbookHybridByIdNoPrice = new Map();
   let macbookHybridByVariantKey = new Map();
+  let macbookHybridByCatalogKey = new Map();
+  let macbookHybridByModelCodeKey = new Map();
   let watchHybridById = {};
   let watchHybridByIdNoPrice = new Map();
   let watchHybridByVariantKey = new Map();
+  let watchHybridByCatalogKey = new Map();
   let airpodsHybridById = {};
   let airpodsHybridByIdNoPrice = new Map();
+  let airpodsHybridByCatalogKey = new Map();
+  let airpodsHybridByVariantKey = new Map();
   let iphoneHybridManifestLoaded = false;
   let ipadHybridManifestLoaded = false;
   let macbookHybridManifestLoaded = false;
@@ -236,6 +241,8 @@
       macbookHybridById = {};
       macbookHybridByIdNoPrice = new Map();
       macbookHybridByVariantKey = new Map();
+      macbookHybridByCatalogKey = new Map();
+      macbookHybridByModelCodeKey = new Map();
       macbookHybridManifestLoaded = false;
     }
   }
@@ -275,6 +282,7 @@
       watchHybridById = {};
       watchHybridByIdNoPrice = new Map();
       watchHybridByVariantKey = new Map();
+      watchHybridByCatalogKey = new Map();
       watchHybridManifestLoaded = false;
     }
   }
@@ -293,6 +301,8 @@
     } catch (_) {
       airpodsHybridById = {};
       airpodsHybridByIdNoPrice = new Map();
+      airpodsHybridByCatalogKey = new Map();
+      airpodsHybridByVariantKey = new Map();
       airpodsHybridManifestLoaded = false;
     }
   }
@@ -397,17 +407,31 @@
   function buildMacbookHybridIndex() {
     macbookHybridByIdNoPrice = new Map();
     macbookHybridByVariantKey = new Map();
+    macbookHybridByCatalogKey = new Map();
+    macbookHybridByModelCodeKey = new Map();
     for (const [id, meta] of Object.entries(macbookHybridById)) {
+      const price = extractTrailingPrice(id) || parsePrice(meta?.price);
       const noPrice = stripTrailingPrice(id);
-      if (!noPrice) continue;
-      if (!macbookHybridByIdNoPrice.has(noPrice)) macbookHybridByIdNoPrice.set(noPrice, []);
-      macbookHybridByIdNoPrice.get(noPrice).push({ id, meta, price: extractTrailingPrice(id) });
-
-      const variantKey = buildMacbookVariantKey(meta?.name || "");
-      if (variantKey) {
-        if (!macbookHybridByVariantKey.has(variantKey)) macbookHybridByVariantKey.set(variantKey, []);
-        macbookHybridByVariantKey.get(variantKey).push({ id, meta, price: extractTrailingPrice(id) });
+      if (noPrice) {
+        if (!macbookHybridByIdNoPrice.has(noPrice)) macbookHybridByIdNoPrice.set(noPrice, []);
+        macbookHybridByIdNoPrice.get(noPrice).push({ id, meta, price });
       }
+
+      pushHybridCandidate(macbookHybridByVariantKey, buildMacbookVariantKey(meta?.name || ""), id, meta, price);
+      pushHybridCandidate(
+        macbookHybridByCatalogKey,
+        buildHybridCatalogKey(meta?.name || "", meta?.warehouse || "", price),
+        id,
+        meta,
+        price
+      );
+      pushHybridCandidate(
+        macbookHybridByModelCodeKey,
+        buildMacbookModelCodeKey(meta?.name || "", meta?.warehouse || "", price),
+        id,
+        meta,
+        price
+      );
     }
   }
 
@@ -438,29 +462,91 @@
   function buildWatchHybridIndex() {
     watchHybridByIdNoPrice = new Map();
     watchHybridByVariantKey = new Map();
+    watchHybridByCatalogKey = new Map();
     for (const [id, meta] of Object.entries(watchHybridById)) {
+      const price = extractTrailingPrice(id) || parsePrice(meta?.price);
       const noPrice = stripTrailingPrice(id);
       if (noPrice) {
         if (!watchHybridByIdNoPrice.has(noPrice)) watchHybridByIdNoPrice.set(noPrice, []);
-        watchHybridByIdNoPrice.get(noPrice).push({ id, meta, price: extractTrailingPrice(id) });
+        watchHybridByIdNoPrice.get(noPrice).push({ id, meta, price });
       }
 
-      const variantKey = buildWatchVariantKey(meta?.name || "");
-      if (variantKey) {
-        if (!watchHybridByVariantKey.has(variantKey)) watchHybridByVariantKey.set(variantKey, []);
-        watchHybridByVariantKey.get(variantKey).push({ id, meta, price: extractTrailingPrice(id) });
-      }
+      pushHybridCandidate(watchHybridByVariantKey, buildWatchVariantKey(meta?.name || ""), id, meta, price);
+      pushHybridCandidate(
+        watchHybridByCatalogKey,
+        buildHybridCatalogKey(meta?.name || "", meta?.warehouse || "", price),
+        id,
+        meta,
+        price
+      );
     }
   }
 
   function buildAirpodsHybridIndex() {
     airpodsHybridByIdNoPrice = new Map();
+    airpodsHybridByCatalogKey = new Map();
+    airpodsHybridByVariantKey = new Map();
     for (const [id, meta] of Object.entries(airpodsHybridById)) {
+      const price = extractTrailingPrice(id) || parsePrice(meta?.price);
       const noPrice = stripTrailingPrice(id);
-      if (!noPrice) continue;
-      if (!airpodsHybridByIdNoPrice.has(noPrice)) airpodsHybridByIdNoPrice.set(noPrice, []);
-      airpodsHybridByIdNoPrice.get(noPrice).push({ id, meta, price: extractTrailingPrice(id) });
+      if (noPrice) {
+        if (!airpodsHybridByIdNoPrice.has(noPrice)) airpodsHybridByIdNoPrice.set(noPrice, []);
+        airpodsHybridByIdNoPrice.get(noPrice).push({ id, meta, price });
+      }
+
+      pushHybridCandidate(airpodsHybridByVariantKey, buildAirpodsVariantKey(meta?.name || ""), id, meta, price);
+      pushHybridCandidate(
+        airpodsHybridByCatalogKey,
+        buildHybridCatalogKey(meta?.name || "", meta?.warehouse || "", price),
+        id,
+        meta,
+        price
+      );
     }
+  }
+
+  function pushHybridCandidate(map, key, id, meta, price) {
+    if (!key) return;
+    if (!map.has(key)) map.set(key, []);
+    map.get(key).push({ id, meta, price });
+  }
+
+  function buildHybridCatalogKey(name, warehouse, price) {
+    const priceInt = parsePrice(price);
+    if (!priceInt) return "";
+    return slugify(String(name || "") + String(warehouse || "") + priceInt);
+  }
+
+  function buildAirpodsVariantKey(name) {
+    return normalizeAirpodsNameKey(name);
+  }
+
+  function normalizeAirpodsNameKey(name) {
+    return String(name || "")
+      .toLowerCase()
+      .replace(/[^\wа-я\s]/gi, " ")
+      .replace(/ё/g, "е")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function extractAppleModelCode(name) {
+    const matches = String(name || "").match(/\b[A-Z][A-Z0-9]{3,4}\b/g);
+    return matches?.length ? matches[matches.length - 1].toLowerCase() : "";
+  }
+
+  function buildMacbookModelCodeKey(name, warehouse, price) {
+    const code = extractAppleModelCode(name);
+    const priceInt = parsePrice(price);
+    if (!code || !priceInt) return "";
+    return `${code}|${String(warehouse || "").toLowerCase()}|${priceInt}`;
+  }
+
+  function pickHybridMetaFromMap(map, key, targetPrice) {
+    if (!key) return null;
+    const candidates = map.get(key);
+    if (!candidates?.length) return null;
+    return pickBestIphoneHybridCandidate(candidates, targetPrice);
   }
 
   function resolveIphoneHybridMeta(product) {
@@ -489,6 +575,14 @@
     if (exact && exact.url) return exact;
 
     const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
+
+    const catalogKey = buildHybridCatalogKey(product.name, product.warehouse, targetPrice);
+    const catalogMatch = pickHybridMetaFromMap(macbookHybridByCatalogKey, catalogKey, targetPrice);
+    if (catalogMatch) return catalogMatch;
+
+    const modelCodeKey = buildMacbookModelCodeKey(product.name, product.warehouse, targetPrice);
+    const modelCodeMatch = pickHybridMetaFromMap(macbookHybridByModelCodeKey, modelCodeKey, targetPrice);
+    if (modelCodeMatch) return modelCodeMatch;
 
     const noPrice = stripTrailingPrice(product.id);
     const candidates = noPrice ? macbookHybridByIdNoPrice.get(noPrice) : null;
@@ -528,6 +622,10 @@
 
     const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
 
+    const catalogKey = buildHybridCatalogKey(product.name, product.warehouse, targetPrice);
+    const catalogMatch = pickHybridMetaFromMap(watchHybridByCatalogKey, catalogKey, targetPrice);
+    if (catalogMatch) return catalogMatch;
+
     const noPrice = stripTrailingPrice(product.id);
     const candidates = noPrice ? watchHybridByIdNoPrice.get(noPrice) : null;
     if (candidates?.length) return pickBestIphoneHybridCandidate(candidates, targetPrice);
@@ -543,11 +641,20 @@
     const exact = airpodsHybridById[product.id];
     if (exact && exact.url) return exact;
 
+    const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
+
+    const catalogKey = buildHybridCatalogKey(product.name, product.warehouse, targetPrice);
+    const catalogMatch = pickHybridMetaFromMap(airpodsHybridByCatalogKey, catalogKey, targetPrice);
+    if (catalogMatch) return catalogMatch;
+
+    const variantKey = buildAirpodsVariantKey(product.name);
+    const variantMatch = pickHybridMetaFromMap(airpodsHybridByVariantKey, variantKey, targetPrice);
+    if (variantMatch) return variantMatch;
+
     const noPrice = stripTrailingPrice(product.id);
     const candidates = noPrice ? airpodsHybridByIdNoPrice.get(noPrice) : null;
-    if (!candidates || !candidates.length) return null;
+    if (!candidates?.length) return null;
 
-    const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
     if (!targetPrice) return candidates[0].meta;
     return pickBestIphoneHybridCandidate(candidates, targetPrice);
   }
@@ -686,8 +793,11 @@
   }
 
   function buildMacbookVariantKey(name) {
-    const normalized = normalizeMacbookNameKey(name);
+    let normalized = normalizeMacbookNameKey(name);
     if (!normalized) return "";
+    if (/\bmdhh4\b/.test(normalized) && /\b512\b/.test(normalized) && /\bblue\b/.test(normalized)) {
+      normalized = normalized.replace(/\bblue\b/, "sky blue");
+    }
     return normalized
       .replace(/\b(\d+)\s*\+\s*(\d+)\b/g, "$1plus$2")
       .replace(/\b(\d+)\s*(gb|tb)\b/gi, "$1$2")

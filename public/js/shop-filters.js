@@ -24,7 +24,30 @@
     "16e": "iPhone 16e",
   };
 
-  const SERIES_PATTERN = /^(Air|\d+\s*e|\d+\s*Pro\s*Max|\d+\s*Pro|\d+\s*Plus|\d+)/i;
+  const IPHONE_AIR_COLOR_ALIASES = {
+    black: "space black",
+    blue: "sky blue",
+    white: "cloud white",
+    gold: "light gold",
+    "space black": "space black",
+    "sky blue": "sky blue",
+    "cloud white": "cloud white",
+    "light gold": "light gold",
+  };
+
+  function normalizeAirColor(series, color) {
+    if (series !== "Air" || !color) return color;
+    const key = String(color).toLowerCase().replace(/\s+/g, " ").trim();
+    return IPHONE_AIR_COLOR_ALIASES[key] || key;
+  }
+
+  function formatColorLabel(value) {
+    return String(value || "")
+      .split(" ")
+      .filter(Boolean)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
 
   function seriesSortKey(series) {
     const idx = IPHONE_SERIES_ORDER.indexOf(series);
@@ -82,6 +105,8 @@
       color = tail.replace(/\s+[A-Z]{1,2}\/[A-Z]\/?A?\s*$/i, "").trim();
       if (color.includes("(")) color = color.split("(")[0].trim();
     }
+
+    color = normalizeAirColor(series, color);
 
     return { series, storage, color, sim };
   }
@@ -155,6 +180,7 @@
       if (value === "sim+esim") return "SIM + eSIM";
       if (value === "esim") return "eSIM";
     }
+    if (facetId === "color") return formatColorLabel(value);
     return value;
   }
 
