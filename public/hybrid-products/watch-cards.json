@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-20T13:40:56.805281Z",
-  "count": 23,
+  "generated_at": "2026-06-26T09:07:01.571103Z",
+  "count": 27,
   "byId": {
     "series-se-3-40mm-s-m-midnight-mid-meh94-j-a-япония-s1-21900": {
       "url": "hybrid-products/watch/series-se-3-40mm-s-m-midnight-mid-meh94-j-a-s1-21900.html",
@@ -127,6 +127,34 @@
       "name": "Series 11 46mm M/L Silver Pur Fog MEVA4 LW/A",
       "warehouse": "(S1)",
       "price": 33500
+    },
+    "series-ultra-3-49mm-l-natural-light-blue-alpine-gps-cellular-mewp4-af-a-франция-": {
+      "url": "hybrid-products/watch/series-ultra-3-49mm-l-natural-light-blue-alpine-gps-cellular-mewp4-af-a-s1-64900.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-ultra-3/MFTH4-alpine-ultra3-4-dr-store-1200x1200.jpg",
+      "name": "Series Ultra 3 49mm L Natural Light Blue Alpine GPS + Cellular MEWP4 AF/A",
+      "warehouse": "(S1)",
+      "price": 64900
+    },
+    "series-ultra-3-49mm-black-black-ocean-gps-cellular-mf0j4-af-a-франция-s1-61100": {
+      "url": "hybrid-products/watch/series-ultra-3-49mm-black-black-ocean-gps-cellular-mf0j4-af-a-s1-61100.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-ultra-3/MYPD3-ocean-ultra3-7-dr-store-1200x1200.jpg",
+      "name": "Series Ultra 3 49mm Black Black Ocean GPS + Cellular MF0J4 AF/A",
+      "warehouse": "(S1)",
+      "price": 61100
+    },
+    "series-ultra-3-49mm-natural-blue-ocean-gps-cellular-mewh4-af-a-франция-s1-64700": {
+      "url": "hybrid-products/watch/series-ultra-3-49mm-natural-blue-ocean-gps-cellular-mewh4-af-a-s1-64700.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-ultra-3/MGCC4-ocean-ultra3-11-dr-store-1200x1200.jpg",
+      "name": "Series Ultra 3 49mm Natural Blue Ocean GPS + Cellular MEWH4 AF/A",
+      "warehouse": "(S1)",
+      "price": 64700
+    },
+    "series-ultra-3-49mm-m-l-natural-blue-tl-gps-cellular-mewu4-af-a-франция-s1-63100": {
+      "url": "hybrid-products/watch/series-ultra-3-49mm-m-l-natural-blue-tl-gps-cellular-mewu4-af-a-s1-63100.html",
+      "cover": "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/watch/watch-ultra-3/MFT64-trail-ultra3-7-dr-store-1200x1200.jpg",
+      "name": "Series Ultra 3 49mm M/L Natural Blue TL GPS + Cellular MEWU4 AF/A",
+      "warehouse": "(S1)",
+      "price": 63100
     },
     "ultra-2-natural-alpine-tan-m-сша-s2-58700": {
       "url": "hybrid-products/watch/ultra-2-natural-alpine-tan-m-s2-58700.html",
