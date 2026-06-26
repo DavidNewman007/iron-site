@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self'; frame-src 'none'">
   <title>SE3 40mm Starlight M/L — IRON SERVICE</title>
   <link rel="preconnect" href="https://fonts.bunny.net">
-  <link rel="preconnect" href="https://sochi.dr-store.ru" crossorigin>
-  <link rel="dns-prefetch" href="//sochi.dr-store.ru">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="../../css/styles.css">
   <link rel="stylesheet" href="../../css/shop.css">
@@ -58,11 +57,11 @@
           <p class="meta-note">Цена за наличный расчет</p>
         </div>
         <div class="gallery-main">
-          <img id="mainImg" src="https://sochi.dr-store.ru/image/cache/catalog/new products/apple-watch-se-40mm-starlight-remeshok-starlight-sport-band-razmer-m-l/apple-watch-se-40mm-starlight-remeshok-starlight-sport-band-razmer-m-l-1200x1200.jpg" alt="Apple Watch SE 40mm, Starlight, Ремешок Starlight Sport Band, размер M/L" loading="eager" decoding="async" fetchpriority="high">
+          <img id="mainImg" src="../../assets/product-images/e32f21df7e14b69a91d7a3cb.jpg" alt="Apple Watch SE 40mm, Starlight, Ремешок Starlight Sport Band, размер M/L" loading="eager" decoding="async" fetchpriority="high">
           <button type="button" class="gallery-nav gallery-prev" id="galleryPrev">‹</button>
           <button type="button" class="gallery-nav gallery-next" id="galleryNext">›</button>
         </div>
-        <div class="thumbs" id="thumbs"><button type="button" class="thumb" data-idx="0"><img src="https://sochi.dr-store.ru/image/cache/catalog/new products/apple-watch-se-40mm-starlight-remeshok-starlight-sport-band-razmer-m-l/apple-watch-se-40mm-starlight-remeshok-starlight-sport-band-razmer-m-l-300x300.jpg" alt="" loading="lazy" decoding="async"></button></div>
+        <div class="thumbs" id="thumbs"><button type="button" class="thumb" data-idx="0"><img src="../../assets/product-images/1ab86c06d80cc96f06001fcd.jpg" alt="" loading="lazy" decoding="async"></button></div>
         <div class="price-card__footer" style="margin-top:.8rem;">
           <strong class="price-card__price">22 500 ₽</strong>
           <button type="button" class="price-card__btn" id="pickBtn" data-id="se3-40mm-starlight-m-l-сша-s2-22500" data-name="SE3 40mm Starlight M/L" data-price="22 500 ₽" data-country="🇺🇸 США" data-warehouse="(S2)">+ Выбрать</button>
@@ -71,16 +70,26 @@
       <section class="price-card">
         <h3 class="price-card__name">Характеристики</h3>
         <table><tr><td>Тип устройства</td><td>Умные часы</td></tr><tr><td>Модель</td><td>Watch SE (2024)</td></tr><tr><td>Совместимость</td><td>iOS 11 и выше</td></tr><tr><td>Материал ремешка</td><td>фторэластомер</td></tr><tr><td>Размер</td><td>40 мм</td></tr><tr><td>Функции</td><td>Ответ на звонок, Ответ на уведомления, Пульсометр, Шагомер, Проигрывание аудио, отслеживание шума, поиск часов, расписание приема лекарств, смена дизайна циферблата, функции для бега, функции для велоспорта, функции для плавания, функция SOS, функция обнаружения падения</td></tr><tr><td>Измерения</td><td>ЭКГ, продолжительность и качество сна, пульс, уровень кислорода в крови</td></tr><tr><td>Модификация</td><td>GPS</td></tr><tr><td>Кнопки</td><td>колесико Digital Crown</td></tr></table>
-        <div class="desc"><p>Apple Watch SE 40mm Starlight — стильные умные часы с ярким Retina-дисплеем, GPS, мониторингом здоровья и ремешком Sport Band M/L.</p></div>
+        <div class="desc">
+          <p><strong>IRON SERVICE</strong> — магазин и сервис Apple в Сочи, ул. Московская, 5.</p>
+          <p>Заказ: <a href="tel:+79288509404">+7 928 850-94-04</a> · <a href="https://t.me/ironsochi" target="_blank" rel="noopener">Telegram</a> · <a href="https://yandex.ru/profile/1716684342" target="_blank" rel="noopener">Яндекс.Карты</a></p>
+        </div>
       </section>
     </div>
   </main>
+  <footer class="site-footer hybrid-detail-footer">
+    <div class="container footer-bottom">
+      <p>© IRON SERVICE · Сочи · <a href="tel:+79288509404">+7 928 850-94-04</a></p>
+      <p class="footer-legal">Независимый сервис Apple в Сочи. Не является официальным сайтом Apple Inc.</p>
+    </div>
+  </footer>
+
   <div class="lightbox" id="lightbox">
     <img id="lbImg" src="" alt="">
     <button class="lightbox-close" id="lbClose">✕</button>
   </div>
   <script>
-    const IMAGES = ["https://sochi.dr-store.ru/image/cache/catalog/new products/apple-watch-se-40mm-starlight-remeshok-starlight-sport-band-razmer-m-l/apple-watch-se-40mm-starlight-remeshok-starlight-sport-band-razmer-m-l-1200x1200.jpg"];
+    const IMAGES = ["../../assets/product-images/e32f21df7e14b69a91d7a3cb.jpg"];
     const mainImg = document.getElementById('mainImg');
     const galleryMain = document.querySelector('.gallery-main');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));

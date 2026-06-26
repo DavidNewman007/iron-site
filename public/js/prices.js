@@ -30,8 +30,7 @@
     "сингапур",
     "оаэ",
     "тайвань",
-    "россия",
-  ]);
+    "россия"]);
 
   const CATEGORY_RULES = [
     // Accessories must come before iPhone/Samsung so that items like
@@ -110,8 +109,7 @@
           t
         ) && !/galaxy\s*watch|samsung|whoop/i.test(t),
     },
-    { id: "other", label: "Прочее", icon: "◆", test: () => true },
-  ];
+    { id: "other", label: "Прочее", icon: "◆", test: () => true }];
 
   const SEARCH_DICT = window.IRON_SEARCH_DICT || { translit: {}, translate: [] };
   const PRICE_CACHE_KEY = `iron_prices_sheet_${SHEET_TABS.join("_")}_v5`;
@@ -183,8 +181,7 @@
       loadIpadHybridCards(),
       loadMacbookHybridCards(),
       loadWatchHybridCards(),
-      loadAirpodsHybridCards(),
-    ]);
+      loadAirpodsHybridCards()]);
 
     if (!SHEET_ID) {
       showError(
@@ -698,8 +695,8 @@
     if (!normalized) return "";
     return normalized
       .replace(/\b(128|256|512|1024)\s*(gb|tb)\b/gi, "$1$2")
-      .replace(/\bgb\b/gi, "")
-      .replace(/\btb\b/gi, "")
+      .replace(/\bgb\b/gi,"")
+      .replace(/\btb\b/gi,"")
       .replace(/\s+/g, " ")
       .trim();
   }
@@ -738,8 +735,8 @@
     if (!normalized) return "";
     return normalized
       .replace(/\b(64|128|256|512|1024|2048)\s*(gb|tb)\b/gi, "$1$2")
-      .replace(/\bgb\b/gi, "")
-      .replace(/\btb\b/gi, "")
+      .replace(/\bgb\b/gi,"")
+      .replace(/\btb\b/gi,"")
       .replace(/\s+/g, " ")
       .trim();
   }
@@ -801,7 +798,7 @@
     return normalized
       .replace(/\b(\d+)\s*\+\s*(\d+)\b/g, "$1plus$2")
       .replace(/\b(\d+)\s*(gb|tb)\b/gi, "$1$2")
-      .replace(/\bgb\b/gi, "")
+      .replace(/\bgb\b/gi,"")
       .replace(/\s+/g, " ")
       .trim();
   }
@@ -927,7 +924,7 @@
   }
 
   function stripTrailingPrice(id) {
-    return String(id || "").replace(/-\d{3,}$/u, "");
+    return String(id || "").replace(/-\d{3,}$/u,"");
   }
 
   function extractTrailingPrice(id) {
@@ -1067,7 +1064,7 @@
       if (isCategoryRow(name, warranty, country, qty, priceRaw)) {
         // Strip trailing 🆕 so that S1 sections ("📱 iPhone 17 Pro eSIM 🆕")
         // and S2 sections ("📱 iPhone 17 Pro eSIM") group together on the website.
-        currentSection = normalizeSectionLabel(name.replace(/\s*🆕\s*$/u, "").trim());
+        currentSection = normalizeSectionLabel(name.replace(/\s*🆕\s*$/u,"").trim());
         const cat = detectCategory(currentSection);
         if (cat) {
           currentCategory = cat;
@@ -1169,7 +1166,7 @@
 
   /** fetch на http(s); JSONP через <script> при file:// (иначе CORS блокирует Google Sheets). */
   async function loadSheetJsonOnce(sheetUrl) {
-    const apiBase = (cfg.apiUrl || "").replace(/\/$/, "");
+    const apiBase = (cfg.apiUrl || "").replace(/\/$/,"");
     if (apiBase) {
       const res = await fetch(`${apiBase}/api/prices`);
       if (!res.ok) throw new Error("HTTP " + res.status);
@@ -1339,7 +1336,7 @@
 
   function parsePrice(v) {
     if (typeof v === "number") return Math.round(v);
-    const n = String(v).replace(/[^\d]/g, "");
+    const n = String(v).replace(/[^\d]/g,"");
     return n ? parseInt(n, 10) : 0;
   }
 
@@ -1475,7 +1472,7 @@
   }
 
   function compactToken(s) {
-    return normalizeSearch(s).replace(/\s+/g, "");
+    return normalizeSearch(s).replace(/\s+/g,"");
   }
 
   /** Строгое совпадение формы слова (с учётом мн. ч. и пробелов). */
@@ -1953,7 +1950,7 @@
 
   function getIphoneSectionSortKey(section) {
     const s = String(section || "")
-      .replace(/^📱\s*/u, "")
+      .replace(/^📱\s*/u,"")
       .replace(/\s+/g, " ")
       .trim()
       .toLowerCase();
@@ -2112,12 +2109,9 @@
     );
     const text = [
       "Заявка с сайта IRON SERVICE",
-      "Хочу купить / забронировать:",
-      "",
-      ...lines,
-      "",
-      `Итого ориентир: ${formatPrice(cart.reduce((s, p) => s + p.price, 0))}`,
-    ].join("\n");
+      "Хочу купить / забронировать:","",
+      ...lines,"",
+      `Итого ориентир: ${formatPrice(cart.reduce((s, p) => s + p.price, 0))}`].join("\n");
 
     const url = `https://t.me/${TG_USER}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
@@ -2186,7 +2180,7 @@
       .toLowerCase()
       .replace(/ё/g, "е")
       .replace(/[^a-z0-9а-я]+/giu, "-")
-      .replace(/^-+|-+$/g, "");
+      .replace(/^-+|-+$/g,"");
     if (!raw) return "";
     return raw
       .split("-")
@@ -2230,7 +2224,7 @@
       String(value || "")
         .toLowerCase()
         .replace(/[^a-z0-9а-яё]+/gi, "-")
-        .replace(/^-+|-+$/g, "");
+        .replace(/^-+|-+$/g,"");
 
     const safePrefix = normalize(prefix);
     const safeSuffix = normalize(suffix);
@@ -2239,7 +2233,7 @@
     const maxPrefixLen = 80 - safeSuffix.length - 1;
     if (maxPrefixLen <= 0) return safeSuffix.slice(-80);
 
-    const trimmedPrefix = safePrefix.slice(0, maxPrefixLen).replace(/-+$/g, "");
+    const trimmedPrefix = safePrefix.slice(0, maxPrefixLen).replace(/-+$/g,"");
     return trimmedPrefix ? `${trimmedPrefix}-${safeSuffix}` : safeSuffix;
   }
 

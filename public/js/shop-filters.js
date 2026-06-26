@@ -15,8 +15,7 @@
     "15 Plus",
     "15",
     "14 Plus",
-    "14",
-  ];
+    "14"];
 
   const IPHONE_SERIES_LABEL = {
     Air: "iPhone Air",
@@ -97,12 +96,12 @@
     if (series && storage) {
       const seriesRe = new RegExp(`^${escapeRegExp(series).replace(/\s+/g, "\\s+")}\\s+`, "i");
       const tail = productName
-        .replace(/^iPhone\s+/i, "")
-        .replace(seriesRe, "")
-        .replace(/^(\d+)\s*(?:Tb|TB|Gb|GB|G)?\s+/i, "")
-        .replace(/\s*\([^)]*\)\s*$/g, "")
+        .replace(/^iPhone\s+/i,"")
+        .replace(seriesRe,"")
+        .replace(/^(\d+)\s*(?:Tb|TB|Gb|GB|G)?\s+/i,"")
+        .replace(/\s*\([^)]*\)\s*$/g,"")
         .trim();
-      color = tail.replace(/\s+[A-Z]{1,2}\/[A-Z]\/?A?\s*$/i, "").trim();
+      color = tail.replace(/\s+[A-Z]{1,2}\/[A-Z]\/?A?\s*$/i,"").trim();
       if (color.includes("(")) color = color.split("(")[0].trim();
     }
 
@@ -272,8 +271,7 @@
     { id: "series", label: "Серия" },
     { id: "storage", label: "Память" },
     { id: "sim", label: "SIM" },
-    { id: "color", label: "Цвет" },
-  ];
+    { id: "color", label: "Цвет" }];
 
   window.IRON_SHOP_FILTERS = {
     iphone: {

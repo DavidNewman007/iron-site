@@ -1234,3 +1234,21 @@ section {
     font-size: 0.72rem;
   }
 }
+
+.footer-legal {
+  margin-top: 0.55rem;
+  max-width: 52rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.footer-legal a {
+  color: var(--gold);
+}
+
+.hybrid-detail-footer {
+  margin-top: 2rem;
+  padding: 1.25rem 0 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}

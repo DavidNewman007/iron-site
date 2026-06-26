@@ -13,11 +13,10 @@
     "сингапур",
     "оаэ",
     "тайвань",
-    "россия",
-  ]);
+    "россия"]);
 
   function parsePrice(value) {
-    const digits = String(value || "").replace(/[^\d]/g, "");
+    const digits = String(value || "").replace(/[^\d]/g,"");
     return digits ? parseInt(digits, 10) : 0;
   }
 
@@ -31,7 +30,7 @@
       .toLowerCase()
       .replace(/ё/g, "е")
       .replace(/[^a-z0-9а-я]+/giu, "-")
-      .replace(/^-+|-+$/g, "");
+      .replace(/^-+|-+$/g,"");
     if (!raw) return "";
     return raw
       .split("-")
