@@ -130,6 +130,64 @@
   color: #fff6df;
 }
 
+.shop-filters-summary {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(212, 160, 18, 0.22);
+  border-radius: 10px;
+  background: rgba(28, 28, 28, 0.72);
+}
+
+.shop-filters-summary__text {
+  font-size: 0.9rem;
+  color: var(--cream);
+  line-height: 1.35;
+}
+
+.shop-filters-wizard__head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.shop-filters-wizard__back {
+  border: none;
+  background: transparent;
+  color: var(--gold);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.15rem 0;
+  white-space: nowrap;
+}
+
+.shop-filters-wizard__back--placeholder,
+.shop-filters-wizard__reset-placeholder {
+  min-width: 3.5rem;
+}
+
+.shop-filters-wizard__progress {
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.shop-filters-wizard__body .shop-filter-group__chips {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.shop-filters-wizard__body .shop-filter-chip {
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  padding: 0.65rem 0.55rem;
+}
+
 .shop-layout {
   display: grid;
   grid-template-columns: 1fr 320px;

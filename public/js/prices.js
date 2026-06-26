@@ -157,6 +157,7 @@
   let cart = loadCart();
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
+  let filtersLayoutMode = null;
   const categoryFilterState = {};
 
   async function init() {
@@ -781,6 +782,12 @@
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "visible") syncCartFromStorage();
     });
+    window.addEventListener("resize", () => {
+      const nextMode = isMobileFiltersView() ? "mobile" : "desktop";
+      if (filtersLayoutMode && filtersLayoutMode !== nextMode) renderGrid();
+      filtersLayoutMode = nextMode;
+    });
+    filtersLayoutMode = isMobileFiltersView() ? "mobile" : "desktop";
   }
 
   function isMobileShop() {
@@ -1468,6 +1475,167 @@
     return registry.matches(product, getActiveCategoryFilters());
   }
 
+  function isMobileFiltersView() {
+    return window.matchMedia("(max-width: 900px)").matches;
+  }
+
+  function buildFilterGroupHtml(registry, products, active, facet, includeAllChip) {
+    const options = registry.collectOptions(products, facet.id, { ...active, [facet.id]: "" });
+    if (!options.length) return "";
+
+    const chips = [];
+    if (includeAllChip) {
+      chips.push(
+        `<button type="button" class="shop-filter-chip${active[facet.id] ? "" : " is-active"}" data-facet="${escapeHtml(
+          facet.id
+        )}" data-value="">Все</button>`
+      );
+    }
+    for (const value of options) {
+      const isActive = active[facet.id] === value;
+      chips.push(
+        `<button type="button" class="shop-filter-chip${isActive ? " is-active" : ""}" data-facet="${escapeHtml(
+          facet.id
+        )}" data-value="${escapeHtml(value)}">${escapeHtml(registry.formatValue(facet.id, value))}</button>`
+      );
+    }
+
+    return `
+      <div class="shop-filter-group">
+        <span class="shop-filter-group__label">${escapeHtml(facet.label)}</span>
+        <div class="shop-filter-group__chips">${chips.join("")}</div>
+      </div>`;
+  }
+
+  function bindFilterChipHandlers(root, active, rerender) {
+    root.querySelectorAll(".shop-filter-chip").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const facetId = btn.dataset.facet || "";
+        const value = btn.dataset.value || "";
+        if (!facetId) return;
+        active[facetId] = value;
+        rerender();
+      });
+    });
+
+    root.querySelector('[data-action="reset-filters"]')?.addEventListener("click", () => {
+      resetCategoryFiltersForSelection();
+      rerender();
+    });
+
+    root.querySelector('[data-action="wizard-back"]')?.addEventListener("click", () => {
+      const registry = getCategoryFilterRegistry();
+      const stepId = root.querySelector(".shop-filters-wizard")?.dataset.step || "";
+      if (registry?.clearMobileWizardFromStep && stepId) {
+        registry.clearMobileWizardFromStep(active, stepId);
+      } else {
+        resetCategoryFiltersForSelection();
+      }
+      rerender();
+    });
+
+    root.querySelector('[data-action="wizard-edit"]')?.addEventListener("click", () => {
+      resetCategoryFiltersForSelection();
+      rerender();
+    });
+  }
+
+  function renderDesktopCategoryFilters(root, registry, products, active, cat) {
+    const hasActive = Object.values(active).some(Boolean);
+    const groupsHtml = registry.facets
+      .map((facet) => buildFilterGroupHtml(registry, products, active, facet, true))
+      .filter(Boolean)
+      .join("");
+
+    if (!groupsHtml) {
+      root.hidden = true;
+      root.innerHTML = "";
+      return;
+    }
+
+    root.hidden = false;
+    root.innerHTML = `
+      <div class="shop-filters shop-filters--desktop">
+        <div class="shop-filters__head">
+          <strong class="shop-filters__title">Подбор ${escapeHtml(registry.label || cat)}</strong>
+          ${
+            hasActive
+              ? '<button type="button" class="shop-filters__reset" data-action="reset-filters">Сбросить</button>'
+              : ""
+          }
+        </div>
+        <div class="shop-filters__groups">${groupsHtml}</div>
+      </div>`;
+
+    bindFilterChipHandlers(root, active, renderGrid);
+  }
+
+  function renderMobileCategoryFilters(root, registry, products, active, cat) {
+    const step = registry.getMobileWizardStep?.(products, active) || "series";
+    const hasActive = Object.values(active).some(Boolean);
+
+    if (step === "done") {
+      const summary = registry.getSelectionSummary?.(active) || [];
+      root.hidden = false;
+      root.innerHTML = `
+        <div class="shop-filters shop-filters--mobile">
+          <div class="shop-filters__head">
+            <strong class="shop-filters__title">Подбор ${escapeHtml(registry.label || cat)}</strong>
+            <button type="button" class="shop-filters__reset" data-action="wizard-edit">Изменить</button>
+          </div>
+          <div class="shop-filters-summary">
+            <span class="shop-filters-summary__text">${escapeHtml(summary.join(" · "))}</span>
+          </div>
+        </div>`;
+      bindFilterChipHandlers(root, active, renderGrid);
+      return;
+    }
+
+    const facet = registry.facets.find((item) => item.id === step);
+    if (!facet) {
+      root.hidden = true;
+      root.innerHTML = "";
+      return;
+    }
+
+    const progress = registry.getMobileWizardProgress?.(products, active, step) || {
+      current: 1,
+      total: registry.facets.length,
+      label: facet.label,
+    };
+    const groupHtml = buildFilterGroupHtml(registry, products, active, facet, false);
+    if (!groupHtml) {
+      root.hidden = true;
+      root.innerHTML = "";
+      return;
+    }
+
+    root.hidden = false;
+    root.innerHTML = `
+      <div class="shop-filters shop-filters--mobile">
+        <div class="shop-filters-wizard" data-step="${escapeHtml(step)}">
+          <div class="shop-filters-wizard__head">
+            ${
+              step !== "series"
+                ? '<button type="button" class="shop-filters-wizard__back" data-action="wizard-back">← Назад</button>'
+                : '<span class="shop-filters-wizard__back shop-filters-wizard__back--placeholder"></span>'
+            }
+            <span class="shop-filters-wizard__progress">Шаг ${progress.current} из ${progress.total} · ${escapeHtml(
+              progress.label
+            )}</span>
+            ${
+              hasActive
+                ? '<button type="button" class="shop-filters__reset" data-action="reset-filters">Сброс</button>'
+                : '<span class="shop-filters-wizard__reset-placeholder"></span>'
+            }
+          </div>
+          <div class="shop-filters-wizard__body">${groupHtml}</div>
+        </div>
+      </div>`;
+
+    bindFilterChipHandlers(root, active, renderGrid);
+  }
+
   function renderCategoryFilters() {
     const root = els.filtersRoot;
     if (!root) return;
@@ -1482,66 +1650,12 @@
 
     const products = getCategoryProducts(cat);
     const active = getActiveCategoryFilters();
-    const hasActive = Object.values(active).some(Boolean);
 
-    const groupsHtml = registry.facets
-      .map((facet) => {
-        const options = registry.collectOptions(products, facet.id, active);
-        if (!options.length) return "";
-
-        const chips = [
-          `<button type="button" class="shop-filter-chip${active[facet.id] ? "" : " is-active"}" data-facet="${escapeHtml(
-            facet.id
-          )}" data-value="">Все</button>`,
-          ...options.map((value) => {
-            const isActive = active[facet.id] === value;
-            return `<button type="button" class="shop-filter-chip${isActive ? " is-active" : ""}" data-facet="${escapeHtml(
-              facet.id
-            )}" data-value="${escapeHtml(value)}">${escapeHtml(registry.formatValue(facet.id, value))}</button>`;
-          }),
-        ].join("");
-
-        return `
-          <div class="shop-filter-group">
-            <span class="shop-filter-group__label">${escapeHtml(facet.label)}</span>
-            <div class="shop-filter-group__chips">${chips}</div>
-          </div>`;
-      })
-      .filter(Boolean)
-      .join("");
-
-    if (!groupsHtml) {
-      root.hidden = true;
-      root.innerHTML = "";
-      return;
+    if (isMobileFiltersView()) {
+      renderMobileCategoryFilters(root, registry, products, active, cat);
+    } else {
+      renderDesktopCategoryFilters(root, registry, products, active, cat);
     }
-
-    root.hidden = false;
-    root.innerHTML = `
-      <div class="shop-filters__head">
-        <strong class="shop-filters__title">Подбор ${escapeHtml(registry.label || cat)}</strong>
-        ${
-          hasActive
-            ? '<button type="button" class="shop-filters__reset" data-action="reset-filters">Сбросить</button>'
-            : ""
-        }
-      </div>
-      <div class="shop-filters__groups">${groupsHtml}</div>`;
-
-    root.querySelectorAll(".shop-filter-chip").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const facetId = btn.dataset.facet || "";
-        const value = btn.dataset.value || "";
-        if (!facetId) return;
-        active[facetId] = value;
-        renderGrid();
-      });
-    });
-
-    root.querySelector('[data-action="reset-filters"]')?.addEventListener("click", () => {
-      resetCategoryFiltersForSelection();
-      renderGrid();
-    });
   }
 
   function getFiltered() {
