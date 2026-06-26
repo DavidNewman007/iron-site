@@ -1835,7 +1835,8 @@
   }
 
   function renderMobileCategoryFilters(root, registry, products, active, cat) {
-    const step = registry.getMobileWizardStep?.(products, active) || "series";
+    const firstFacetId = registry.facets?.[0]?.id || "series";
+    const step = registry.getMobileWizardStep?.(products, active) || firstFacetId;
     const hasActive = Object.values(active).some(Boolean);
     const trailHtml = buildMobileSelectionTrailHtml(registry, active);
 
@@ -1883,7 +1884,7 @@
         <div class="shop-filters-wizard" data-step="${escapeHtml(step)}">
           <div class="shop-filters-wizard__head">
             ${
-              step !== "series"
+              step !== firstFacetId
                 ? '<button type="button" class="shop-filters-wizard__back" data-action="wizard-back">← Назад</button>'
                 : ""
             }
