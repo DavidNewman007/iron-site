@@ -11,12 +11,14 @@
   const HYBRID_WATCH_MANIFEST = "hybrid-products/watch-cards.json";
   const HYBRID_AIRPODS_MANIFEST = "hybrid-products/airpods-cards.json";
   const HYBRID_SAMSUNG_MANIFEST = "hybrid-products/samsung-cards.json";
+  const HYBRID_ACCESSORIES_MANIFEST = "hybrid-products/accessories-cards.json";
   const HYBRID_IPHONE_MANIFEST_VERSION = "2026-06-20-3";
   const HYBRID_IPAD_MANIFEST_VERSION = "2026-06-20-1";
   const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-26-3";
   const HYBRID_WATCH_MANIFEST_VERSION = "2026-06-26-2";
   const HYBRID_AIRPODS_MANIFEST_VERSION = "2026-06-26-2";
   const HYBRID_SAMSUNG_MANIFEST_VERSION = "2026-06-27-3";
+  const HYBRID_ACCESSORIES_MANIFEST_VERSION = "2026-06-27-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
   const CART_KEY = "iron_cart";
   const CART_PRODUCT_ID_QUERY_PARAM = "pid";
@@ -172,12 +174,18 @@
   let samsungHybridByCatalogKey = new Map();
   let samsungHybridByVariantKey = new Map();
   let samsungHybridByModelKey = new Map();
+  let accessoriesHybridById = {};
+  let accessoriesHybridByIdNoPrice = new Map();
+  let accessoriesHybridByCatalogKey = new Map();
+  let accessoriesHybridByVariantKey = new Map();
+  let accessoriesHybridByModelKey = new Map();
   let iphoneHybridManifestLoaded = false;
   let ipadHybridManifestLoaded = false;
   let macbookHybridManifestLoaded = false;
   let watchHybridManifestLoaded = false;
   let airpodsHybridManifestLoaded = false;
   let samsungHybridManifestLoaded = false;
+  let accessoriesHybridManifestLoaded = false;
   let cart = loadCart();
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
@@ -205,7 +213,8 @@
       loadMacbookHybridCards(),
       loadWatchHybridCards(),
       loadAirpodsHybridCards(),
-      loadSamsungHybridCards()]);
+      loadSamsungHybridCards(),
+      loadAccessoriesHybridCards()]);
 
     const hadFreshCache = tryShowCachedProducts();
     if (hadFreshCache) {
@@ -383,6 +392,27 @@
     }
   }
 
+  async function loadAccessoriesHybridCards() {
+    try {
+      const manifestUrl = `${HYBRID_ACCESSORIES_MANIFEST}?v=${encodeURIComponent(
+        HYBRID_ACCESSORIES_MANIFEST_VERSION
+      )}`;
+      const res = await fetch(manifestUrl, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      accessoriesHybridById = data && typeof data.byId === "object" ? data.byId : {};
+      buildAccessoriesHybridIndex();
+      accessoriesHybridManifestLoaded = true;
+    } catch (_) {
+      accessoriesHybridById = {};
+      accessoriesHybridByIdNoPrice = new Map();
+      accessoriesHybridByCatalogKey = new Map();
+      accessoriesHybridByVariantKey = new Map();
+      accessoriesHybridByModelKey = new Map();
+      accessoriesHybridManifestLoaded = false;
+    }
+  }
+
   function applyHybridData() {
     if (!allProducts.length) return;
     for (const product of allProducts) {
@@ -453,6 +483,18 @@
 
       if (isHybridSamsungCandidate(product)) {
         const meta = resolveSamsungHybridMeta(product);
+        if (meta && meta.url) {
+          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
+          continue;
+        }
+        product.hybridDetailUrl = "";
+        product.hybridCoverUrl = "";
+        continue;
+      }
+
+      if (isHybridAccessoriesCandidate(product)) {
+        const meta = resolveAccessoriesHybridMeta(product);
         if (meta && meta.url) {
           product.hybridDetailUrl = encodeURI(String(meta.url));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
@@ -618,6 +660,43 @@
     }
   }
 
+  function buildAccessoriesHybridIndex() {
+    accessoriesHybridByIdNoPrice = new Map();
+    accessoriesHybridByCatalogKey = new Map();
+    accessoriesHybridByVariantKey = new Map();
+    accessoriesHybridByModelKey = new Map();
+    for (const [id, meta] of Object.entries(accessoriesHybridById)) {
+      const price = extractTrailingPrice(id) || parsePrice(meta?.price);
+      const noPrice = stripTrailingPrice(id);
+      if (noPrice) {
+        if (!accessoriesHybridByIdNoPrice.has(noPrice)) accessoriesHybridByIdNoPrice.set(noPrice, []);
+        accessoriesHybridByIdNoPrice.get(noPrice).push({ id, meta, price });
+      }
+
+      pushHybridCandidate(
+        accessoriesHybridByVariantKey,
+        buildAccessoriesVariantKey(meta?.name || ""),
+        id,
+        meta,
+        price
+      );
+      pushHybridCandidate(
+        accessoriesHybridByModelKey,
+        buildAccessoriesModelKey(meta?.name || ""),
+        id,
+        meta,
+        price
+      );
+      pushHybridCandidate(
+        accessoriesHybridByCatalogKey,
+        buildHybridCatalogKey(meta?.name || "", meta?.warehouse || "", price),
+        id,
+        meta,
+        price
+      );
+    }
+  }
+
   function pushHybridCandidate(map, key, id, meta, price) {
     if (!key) return;
     if (!map.has(key)) map.set(key, []);
@@ -725,6 +804,66 @@
     const traits = normalizeSamsungHybridTraits(name);
     if (!traits.line) return "";
     return `${traits.line}|${traits.storage}|${traits.color}`;
+  }
+
+  function buildAccessoriesVariantKey(name) {
+    return normalizeAccessoriesNameKey(name);
+  }
+
+  function normalizeAccessoriesNameKey(name) {
+    return String(name || "")
+      .toLowerCase()
+      .replace(/[^\wа-я\s]/gi, " ")
+      .replace(/ё/g, "е")
+      .replace(/\bmuwa3\b|\bmx2d3\b|\bmhje3\b/gi, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function buildAccessoriesModelKey(name) {
+    const n = normalizeAccessoriesNameKey(name);
+    if (!n) return "";
+
+    if (/pencil/.test(n)) {
+      if (/pro/.test(n)) return "pencil|pro";
+      if (/usb c|\b2\b/.test(n)) return "pencil|usb-c";
+      return "pencil|standard";
+    }
+    if (/airtag/.test(n)) {
+      const pack = n.match(/\b(\d+)\s*pack\b/);
+      const gen = /2026/.test(n) ? "2026" : /\bairtag 2\b/.test(n) ? "v2" : "v1";
+      return `airtag|${gen}|${pack ? pack[1] : "1"}`;
+    }
+    if (/smarttag/.test(n)) {
+      const pack = n.match(/\b(\d+)\s*pack\b/);
+      return `smarttag|${pack ? pack[1] : "1"}`;
+    }
+    if (/magic mouse/.test(n)) {
+      const color = (n.match(/\b(black|white|silver)\b/) || [])[1] || "";
+      const gen = (n.match(/\b(\d+)\b/) || [])[1] || "";
+      return `magic-mouse|${gen}|${color}`;
+    }
+    if (/pitaka/.test(n)) {
+      const tail = String(name || "").split(",").pop()?.trim().toLowerCase().replace(/\s+/g,"") || "";
+      const iphone = n.match(/iphone\s*(\d+\s*pro(?:\s*max)?|\d+\s*plus|\d+)/);
+      const watch = n.match(/galaxy watch\s*(\w+)/);
+      const samsung = n.match(/samsung\s*(s\d+(?:\s*ultra)?)/);
+      if (/wallet|бумажник/.test(n)) return `pitaka-wallet|${tail}`;
+      if (watch) return `pitaka-watch|${watch[1]}|${tail}`;
+      if (samsung) return `pitaka-case|${samsung[1].replace(/\s+/g,"")}|${tail}`;
+      if (iphone) return `pitaka-case|${iphone[1].replace(/\s+/g,"")}|${tail}`;
+      return `pitaka|${tail}`;
+    }
+    if (/remax|стекл/.test(n)) {
+      const iphone = n.match(/iphone\s*(\d+\s*pro(?:\s*max)?|\d+\s*plus|\d+)/);
+      const privacy = /антишпион/.test(n) ? "privacy" : "standard";
+      return `remax|${privacy}|${iphone ? iphone[1].replace(/\s+/g,"") : "generic"}`;
+    }
+    if (/сзу|charger|заряд/.test(n)) {
+      const watts = (n.match(/\b(20|35|67|140)\s*w\b/i) || [])[1] || "";
+      return `charger|${watts || "generic"}`;
+    }
+    return n.slice(0, 80);
   }
 
   function extractAppleModelCode(name) {
@@ -876,6 +1015,32 @@
 
     const noPrice = stripTrailingPrice(product.id);
     const candidates = noPrice ? samsungHybridByIdNoPrice.get(noPrice) : null;
+    if (!candidates?.length) return null;
+
+    if (!targetPrice) return candidates[0].meta;
+    return pickBestIphoneHybridCandidate(candidates, targetPrice);
+  }
+
+  function resolveAccessoriesHybridMeta(product) {
+    const exact = accessoriesHybridById[product.id];
+    if (exact && exact.url) return exact;
+
+    const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
+
+    const catalogKey = buildHybridCatalogKey(product.name, product.warehouse, targetPrice);
+    const catalogMatch = pickHybridMetaFromMap(accessoriesHybridByCatalogKey, catalogKey, targetPrice);
+    if (catalogMatch) return catalogMatch;
+
+    const variantKey = buildAccessoriesVariantKey(product.name);
+    const variantMatch = pickHybridMetaFromMap(accessoriesHybridByVariantKey, variantKey, targetPrice);
+    if (variantMatch) return variantMatch;
+
+    const modelKey = buildAccessoriesModelKey(product.name);
+    const modelMatch = pickHybridMetaFromMap(accessoriesHybridByModelKey, modelKey, targetPrice);
+    if (modelMatch) return modelMatch;
+
+    const noPrice = stripTrailingPrice(product.id);
+    const candidates = noPrice ? accessoriesHybridByIdNoPrice.get(noPrice) : null;
     if (!candidates?.length) return null;
 
     if (!targetPrice) return candidates[0].meta;
@@ -1145,6 +1310,10 @@
       return false;
     }
     return /\bsamsung\b/i.test(name) || /^s\d/i.test(name) || /\bsamsung\b/i.test(section);
+  }
+
+  function isHybridAccessoriesCandidate(product) {
+    return Boolean(product && product.category === "accessories");
   }
 
   function normalizeHybridCoverUrl(cover) {
@@ -2312,7 +2481,8 @@
         p.category === "macbook" ||
         p.category === "watch" ||
         p.category === "airpods" ||
-        p.category === "samsung") &&
+        p.category === "samsung" ||
+        p.category === "accessories") &&
       p.hybridDetailUrl;
     const detailLink = hasHybrid ? withProductIdQueryParam(p.hybridDetailUrl, p.id) : "";
     const previewImage = hasHybrid && p.hybridCoverUrl ? p.hybridCoverUrl : "";

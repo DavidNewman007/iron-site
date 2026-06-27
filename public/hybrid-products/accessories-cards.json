@@ -1,0 +1,174 @@
+{
+  "generated_at": "2026-06-27T11:49:07.596059Z",
+  "count": 24,
+  "byId": {
+    "-pencil-usb-c-muwa3-s1-9200": {
+      "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "🖊 Pencil (USB-C) MUWA3",
+      "warehouse": "(S1)",
+      "price": 9200
+    },
+    "-pencil-pro-mx2d3-s1-11700": {
+      "url": "hybrid-products/accessories/pencil-pro-mx2d3-s1-11700.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "🖊 Pencil Pro MX2D3",
+      "warehouse": "(S1)",
+      "price": 11700
+    },
+    "apple-pencil-usb-c-s2-8500": {
+      "url": "hybrid-products/accessories/apple-pencil-usb-c-s2-8500.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "Apple Pencil USB-C",
+      "warehouse": "(S2)",
+      "price": 8500
+    },
+    "apple-pencil-2-s2-8800": {
+      "url": "hybrid-products/accessories/apple-pencil-2-s2-8800.html",
+      "cover": "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+      "name": "Apple Pencil 2",
+      "warehouse": "(S2)",
+      "price": 8800
+    },
+    "apple-pencil-pro-s2-10800": {
+      "url": "hybrid-products/accessories/apple-pencil-pro-s2-10800.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "Apple Pencil Pro",
+      "warehouse": "(S2)",
+      "price": 10800
+    },
+    "-magic-mouse-3-black-s2-10500": {
+      "url": "hybrid-products/accessories/magic-mouse-3-black-s2-10500.html",
+      "cover": "assets/product-images/082f86c05a019b81f5ea66e2.jpg",
+      "name": "🖱Magic Mouse 3 Black",
+      "warehouse": "(S2)",
+      "price": 10500
+    },
+    "-airtag-1pack-s2-4100": {
+      "url": "hybrid-products/accessories/airtag-1pack-s2-4100.html",
+      "cover": "",
+      "name": "📍AirTag 1pack",
+      "warehouse": "(S2)",
+      "price": 4100
+    },
+    "-airtag-4pack-s2-10200": {
+      "url": "hybrid-products/accessories/airtag-4pack-s2-10200.html",
+      "cover": "",
+      "name": "📍AirTag 4pack",
+      "warehouse": "(S2)",
+      "price": 10200
+    },
+    "-airtag-2-2026-4pack-s2-12200": {
+      "url": "hybrid-products/accessories/airtag-2-2026-4pack-s2-12200.html",
+      "cover": "",
+      "name": "📍AirTag 2 (2026) 4pack",
+      "warehouse": "(S2)",
+      "price": 12200
+    },
+    "-сзу-apple-20w-mhje3zm-a-s2-2300": {
+      "url": "hybrid-products/accessories/сзу-apple-20w-mhje3zm-a-s2-2300.html",
+      "cover": "assets/product-images/2e1a647953c17e26c312ee2c.jpg",
+      "name": "🔌 СЗУ Apple 20W (MHJE3ZM/A)",
+      "warehouse": "(S2)",
+      "price": 2300
+    },
+    "защитное-стекло-3d-remax-для-iphone-14-pro-max-s2-400": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-для-iphone-14-pro-max-s2-400.html",
+      "cover": "assets/product-images/ac1824084e6fd9c0f387e640.jpg",
+      "name": "Защитное стекло 3D Remax для iPhone 14 Pro Max",
+      "warehouse": "(S2)",
+      "price": 400
+    },
+    "защитное-стекло-3d-remax-для-iphone-15-plus-s2-400": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-для-iphone-15-plus-s2-400.html",
+      "cover": "assets/product-images/27d6436cd1c3f691746f7fd7.jpg",
+      "name": "Защитное стекло 3D Remax для iPhone 15 Plus",
+      "warehouse": "(S2)",
+      "price": 400
+    },
+    "защитное-стекло-3d-remax-для-iphone-15-pro-s2-400": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-для-iphone-15-pro-s2-400.html",
+      "cover": "assets/product-images/e5bb224d98ac42e6801211a6.jpg",
+      "name": "Защитное стекло 3D Remax для iPhone 15 Pro",
+      "warehouse": "(S2)",
+      "price": 400
+    },
+    "защитное-стекло-3d-remax-для-iphone-16-plus-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-для-iphone-16-plus-s2-500.html",
+      "cover": "assets/product-images/27d6436cd1c3f691746f7fd7.jpg",
+      "name": "Защитное стекло 3D Remax для iPhone 16 Plus",
+      "warehouse": "(S2)",
+      "price": 500
+    },
+    "защитное-стекло-3d-remax-для-iphone-16-pro-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-для-iphone-16-pro-s2-500.html",
+      "cover": "assets/product-images/e5bb224d98ac42e6801211a6.jpg",
+      "name": "Защитное стекло 3D Remax для iPhone 16 Pro",
+      "warehouse": "(S2)",
+      "price": 500
+    },
+    "защитное-стекло-3d-remax-антишпион-для-iphone-14-pro-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-антишпион-для-iphone-14-pro-s2-500.html",
+      "cover": "assets/product-images/e5bb224d98ac42e6801211a6.jpg",
+      "name": "Защитное стекло 3D Remax Антишпион для iPhone 14 Pro",
+      "warehouse": "(S2)",
+      "price": 500
+    },
+    "защитное-стекло-3d-remax-антишпион-для-iphone-14-pro-max-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-антишпион-для-iphone-14-pro-max-s2-500.html",
+      "cover": "assets/product-images/ac1824084e6fd9c0f387e640.jpg",
+      "name": "Защитное стекло 3D Remax Антишпион для iPhone 14 Pro Max",
+      "warehouse": "(S2)",
+      "price": 500
+    },
+    "защитное-стекло-3d-remax-антишпион-для-iphone-15-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-антишпион-для-iphone-15-s2-500.html",
+      "cover": "assets/product-images/27d6436cd1c3f691746f7fd7.jpg",
+      "name": "Защитное стекло 3D Remax Антишпион для iPhone 15",
+      "warehouse": "(S2)",
+      "price": 500
+    },
+    "защитное-стекло-3d-remax-антишпион-для-iphone-15-plus-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-антишпион-для-iphone-15-plus-s2-500.html",
+      "cover": "assets/product-images/3d640d645f036883603233c0.jpg",
+      "name": "Защитное стекло 3D Remax Антишпион для iPhone 15 Plus",
+      "warehouse": "(S2)",
+      "price": 500
+    },
+    "защитное-стекло-3d-remax-антишпион-для-iphone-15-pro-max-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-антишпион-для-iphone-15-pro-max-s2-500.html",
+      "cover": "assets/product-images/ac1824084e6fd9c0f387e640.jpg",
+      "name": "Защитное стекло 3D Remax Антишпион для iPhone 15 Pro Max",
+      "warehouse": "(S2)",
+      "price": 500
+    },
+    "защитное-стекло-3d-remax-антишпион-для-iphone-16-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-антишпион-для-iphone-16-s2-500.html",
+      "cover": "assets/product-images/27d6436cd1c3f691746f7fd7.jpg",
+      "name": "Защитное стекло 3D Remax Антишпион для iPhone 16",
+      "warehouse": "(S2)",
+      "price": 500
+    },
+    "защитное-стекло-3d-remax-антишпион-для-iphone-16-plus-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-антишпион-для-iphone-16-plus-s2-500.html",
+      "cover": "assets/product-images/3d640d645f036883603233c0.jpg",
+      "name": "Защитное стекло 3D Remax Антишпион для iPhone 16 Plus",
+      "warehouse": "(S2)",
+      "price": 500
+    },
+    "защитное-стекло-3d-remax-антишпион-для-iphone-16-pro-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-антишпион-для-iphone-16-pro-s2-500.html",
+      "cover": "assets/product-images/e5bb224d98ac42e6801211a6.jpg",
+      "name": "Защитное стекло 3D Remax Антишпион для iPhone 16 Pro",
+      "warehouse": "(S2)",
+      "price": 500
+    },
+    "защитное-стекло-3d-remax-антишпион-для-iphone-16-pro-max-s2-500": {
+      "url": "hybrid-products/accessories/защитное-стекло-3d-remax-антишпион-для-iphone-16-pro-max-s2-500.html",
+      "cover": "assets/product-images/ac1824084e6fd9c0f387e640.jpg",
+      "name": "Защитное стекло 3D Remax Антишпион для iPhone 16 Pro Max",
+      "warehouse": "(S2)",
+      "price": 500
+    }
+  }
+}
