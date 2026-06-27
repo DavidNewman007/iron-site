@@ -590,6 +590,273 @@
     formatIpadFacetValue
   );
 
+  const AIRPODS_MODEL_ORDER = ["4", "Pro 2", "Pro 3", "Max 2024", "Max 2026", "Max"];
+
+  function normalizeAirpodsColor(color) {
+    return String(color || "")
+      .toLowerCase()
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function parseAirpodsTraits(name) {
+    const productName = String(name || "").trim();
+
+    let model = "";
+    if (/airpods\s+max/i.test(productName)) {
+      const yearMatch = productName.match(/\bmax\s+(20\d{2})\b/i);
+      model = yearMatch ? `Max ${yearMatch[1]}` : "Max";
+    } else if (/airpods\s+pro\s*3\b/i.test(productName)) {
+      model = "Pro 3";
+    } else if (/airpods\s+pro\s*2\b/i.test(productName)) {
+      model = "Pro 2";
+    } else if (/airpods\s+4\b/i.test(productName)) {
+      model = "4";
+    }
+
+    let anc = "";
+    if (model === "4") {
+      anc = /\banc\b|with\s+anc/i.test(productName) ? "anc" : "standard";
+    }
+
+    let color = "";
+    if (/^max/i.test(model)) {
+      const tail = productName
+        .replace(/^.*?max\s+(?:20\d{2}\s+)?/i, "")
+        .replace(/\s+[A-Z0-9]{4,5}(?:\s+[A-Z]{1,2}\/[A-Z]\/?A?)?\s*$/i, "")
+        .trim();
+      color = normalizeAirpodsColor(tail);
+    }
+
+    return { model, anc, color };
+  }
+
+  function getAirpodsTraits(product) {
+    if (!product._shopTraits) {
+      product._shopTraits = parseAirpodsTraits(product.name);
+    }
+    return product._shopTraits;
+  }
+
+  function isAirpodsFilterable(product) {
+    const traits = getAirpodsTraits(product);
+    return Boolean(traits.model);
+  }
+
+  function airpodsModelSortKey(model) {
+    const idx = AIRPODS_MODEL_ORDER.indexOf(model);
+    return idx >= 0 ? idx : 999;
+  }
+
+  function airpodsModelLabel(model) {
+    if (!model) return "";
+    if (model === "4") return "AirPods 4";
+    if (/^pro/i.test(model)) return `AirPods ${model}`;
+    if (/^max/i.test(model)) return `AirPods ${model}`;
+    return `AirPods ${model}`;
+  }
+
+  function sortAirpodsFacetValues(facetId, values) {
+    if (facetId === "model") {
+      return [...values].sort(
+        (a, b) => airpodsModelSortKey(a) - airpodsModelSortKey(b) || a.localeCompare(b, "ru")
+      );
+    }
+    if (facetId === "anc") {
+      const order = { standard: 1, anc: 2 };
+      return [...values].sort((a, b) => (order[a] || 99) - (order[b] || 99));
+    }
+    return [...values].sort((a, b) => a.localeCompare(b, "ru"));
+  }
+
+  function formatAirpodsFacetValue(facetId, value) {
+    if (facetId === "model") return airpodsModelLabel(value);
+    if (facetId === "anc") {
+      if (value === "anc") return "С ANC";
+      if (value === "standard") return "Без ANC";
+    }
+    if (facetId === "color") return formatColorLabel(value);
+    return value;
+  }
+
+  const airpodsFacets = [
+    { id: "model", label: "Модель" },
+    { id: "anc", label: "ANC" },
+    { id: "color", label: "Цвет" }];
+
+  const AIRPODS_WIZARD_PROMPTS = {
+    model: "Выберите модель AirPods",
+    anc: "Выберите версию AirPods 4",
+    color: "Выберите цвет",
+  };
+
+  const airpodsWizard = createLinearWizardHelpers(
+    airpodsFacets,
+    getAirpodsTraits,
+    isAirpodsFilterable,
+    AIRPODS_WIZARD_PROMPTS,
+    formatAirpodsFacetValue
+  );
+
+  const SAMSUNG_LINE_ORDER = [
+    "A37",
+    "A56",
+    "A57",
+    "S25 FE",
+    "S25 Ultra",
+    "S26",
+    "S26 Plus",
+    "S26 Ultra",
+    "Buds Core",
+    "Buds 3",
+    "Buds 3 Pro",
+    "Buds 4",
+    "Buds 4 Pro",
+  ];
+
+  const SAMSUNG_COLOR_ALIASES = {
+    graygreen: "gray green",
+    lightgray: "light gray",
+    icyblue: "icy blue",
+    jetblack: "jet black",
+    silvershadow: "silver shadow",
+    skyblue: "sky blue",
+  };
+
+  function normalizeSamsungColor(color) {
+    const key = String(color || "")
+      .toLowerCase()
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!key) return "";
+    if (SAMSUNG_COLOR_ALIASES[key]) return SAMSUNG_COLOR_ALIASES[key];
+    return key;
+  }
+
+  function isSamsungBudsLine(line) {
+    return /^buds\b/i.test(String(line || ""));
+  }
+
+  function parseSamsungLine(name) {
+    const productName = String(name || "").trim();
+    const budsMatch = productName.match(/^Samsung\s+Galaxy\s+Buds(?:\s+(Core|\d+(?:\s+Pro)?))?\b/i);
+    if (budsMatch) {
+      if (budsMatch[1] && /^core$/i.test(budsMatch[1])) return "Buds Core";
+      if (budsMatch[1]) return `Buds ${budsMatch[1].replace(/\s+/g, " ").trim()}`;
+      return "Buds";
+    }
+    const samsungMatch = productName.match(/^Samsung\s+((?:A\d+|S\d+(?:\s+(?:Ultra|Plus|FE))?))\b/i);
+    if (samsungMatch) return samsungMatch[1].replace(/\s+/g, " ").trim();
+    const shortMatch = productName.match(/^S(\d+(?:\s+(?:Ultra|Plus|FE))?)\b/i);
+    if (shortMatch) return `S${shortMatch[1]}`.replace(/\s+/g, " ").trim();
+    return "";
+  }
+
+  function parseSamsungStorage(name, line) {
+    if (isSamsungBudsLine(line)) return "";
+    const productName = String(name || "");
+    const slashMatch = productName.match(/\b\d+\/(\d+)\b/);
+    if (slashMatch) return slashMatch[1];
+    const plusMatch = productName.match(/\b\d+\+\s*(\d+)\s*(?:Gb|GB|Tb|TB)?\b/i);
+    if (plusMatch) return plusMatch[1];
+    const capMatch = productName.match(/\b(\d+)\s*(?:Gb|GB|Tb|TB)\b/i);
+    if (capMatch) return capMatch[1];
+    return "";
+  }
+
+  function parseSamsungTraits(name) {
+    const productName = String(name || "").trim();
+    const line = parseSamsungLine(productName);
+    const storage = parseSamsungStorage(productName, line);
+
+    let color = "";
+    if (line && (storage || isSamsungBudsLine(line))) {
+      let tail = productName
+        .replace(/^Samsung\s+/i, "")
+        .replace(/^S\d+(?:\s+(?:Ultra|Plus|FE))?\s+/i, "")
+        .replace(/^Galaxy\s+Buds(?:\s+(?:Core|\d+(?:\s+Pro)?))?\s+/i, "")
+        .replace(/^(?:A\d+|S\d+(?:\s+(?:Ultra|Plus|FE))?)\s+/i, "")
+        .replace(/\bSM-[A-Z0-9]+\b/gi, " ")
+        .replace(/\bB\/DS\b/gi, " ")
+        .replace(/\b\d+\/\d+\b/g, " ")
+        .replace(/\b\d+\+\s*\d+\s*(?:Gb|GB|Tb|TB)?\b/gi, " ")
+        .replace(/\b\d+\s*(?:Gb|GB|Tb|TB)\b/gi, " ")
+        .replace(/\b[A-Z]{2,4}\b(?=\s*$)/i, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+      color = normalizeSamsungColor(tail);
+    }
+
+    return { line, storage, color };
+  }
+
+  function getSamsungTraits(product) {
+    if (!product._shopTraits) {
+      product._shopTraits = parseSamsungTraits(product.name);
+    }
+    return product._shopTraits;
+  }
+
+  function isSamsungFilterable(product) {
+    const traits = getSamsungTraits(product);
+    if (!traits.line) return false;
+    if (isSamsungBudsLine(traits.line)) return true;
+    return Boolean(traits.storage);
+  }
+
+  function samsungLineSortKey(line) {
+    const idx = SAMSUNG_LINE_ORDER.indexOf(line);
+    return idx >= 0 ? idx : 999;
+  }
+
+  function samsungLineLabel(line) {
+    if (!line) return "";
+    if (/^buds\b/i.test(line)) return `Galaxy ${line}`;
+    return `Samsung ${line}`;
+  }
+
+  function sortSamsungFacetValues(facetId, values) {
+    if (facetId === "line") {
+      return [...values].sort(
+        (a, b) => samsungLineSortKey(a) - samsungLineSortKey(b) || a.localeCompare(b, "ru")
+      );
+    }
+    if (facetId === "storage") {
+      return [...values].sort((a, b) => storageSortKey(a) - storageSortKey(b));
+    }
+    return [...values].sort((a, b) => a.localeCompare(b, "ru"));
+  }
+
+  function formatSamsungFacetValue(facetId, value) {
+    if (facetId === "line") return samsungLineLabel(value);
+    if (facetId === "storage") {
+      const tb = String(value || "").match(/^(\d+)tb$/i);
+      if (tb) return `${tb[1]} ТБ`;
+      return `${value} ГБ`;
+    }
+    if (facetId === "color") return formatColorLabel(value);
+    return value;
+  }
+
+  const samsungFacets = [
+    { id: "line", label: "Модель" },
+    { id: "storage", label: "Память" },
+    { id: "color", label: "Цвет" }];
+
+  const SAMSUNG_WIZARD_PROMPTS = {
+    line: "Выберите модель Samsung",
+    storage: "Выберите объём памяти",
+    color: "Выберите цвет",
+  };
+
+  const samsungWizard = createLinearWizardHelpers(
+    samsungFacets,
+    getSamsungTraits,
+    isSamsungFilterable,
+    SAMSUNG_WIZARD_PROMPTS,
+    formatSamsungFacetValue
+  );
+
   window.IRON_SHOP_FILTERS = {
     iphone: {
       label: "iPhone",
@@ -666,6 +933,44 @@
       },
       formatValue: formatIpadFacetValue,
       ...ipadWizard,
+    },
+    airpods: {
+      label: "AirPods",
+      facets: airpodsFacets,
+      getTraits: getAirpodsTraits,
+      isFilterable: isAirpodsFilterable,
+      matches(product, filters) {
+        if (!isAirpodsFilterable(product)) return false;
+        const traits = getAirpodsTraits(product);
+        return Object.entries(filters || {}).every(([facetId, value]) => traitMatchesFilter(traits, facetId, value));
+      },
+      collectOptions(products, facetId, activeFilters) {
+        return sortAirpodsFacetValues(
+          facetId,
+          collectFacetOptions(products, facetId, activeFilters, getAirpodsTraits, isAirpodsFilterable)
+        );
+      },
+      formatValue: formatAirpodsFacetValue,
+      ...airpodsWizard,
+    },
+    samsung: {
+      label: "Samsung",
+      facets: samsungFacets,
+      getTraits: getSamsungTraits,
+      isFilterable: isSamsungFilterable,
+      matches(product, filters) {
+        if (!isSamsungFilterable(product)) return false;
+        const traits = getSamsungTraits(product);
+        return Object.entries(filters || {}).every(([facetId, value]) => traitMatchesFilter(traits, facetId, value));
+      },
+      collectOptions(products, facetId, activeFilters) {
+        return sortSamsungFacetValues(
+          facetId,
+          collectFacetOptions(products, facetId, activeFilters, getSamsungTraits, isSamsungFilterable)
+        );
+      },
+      formatValue: formatSamsungFacetValue,
+      ...samsungWizard,
     },
   };
 })();
