@@ -1894,7 +1894,11 @@
         const facetId = btn.dataset.facet || "";
         const value = btn.dataset.value || "";
         if (!facetId) return;
-        active[facetId] = value;
+        if (value && active[facetId] === value) {
+          active[facetId] = "";
+        } else {
+          active[facetId] = value;
+        }
         rerender();
       });
     });
