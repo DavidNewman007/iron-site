@@ -10,11 +10,13 @@
   const HYBRID_MACBOOK_MANIFEST = "hybrid-products/macbook-cards.json";
   const HYBRID_WATCH_MANIFEST = "hybrid-products/watch-cards.json";
   const HYBRID_AIRPODS_MANIFEST = "hybrid-products/airpods-cards.json";
+  const HYBRID_SAMSUNG_MANIFEST = "hybrid-products/samsung-cards.json";
   const HYBRID_IPHONE_MANIFEST_VERSION = "2026-06-20-3";
   const HYBRID_IPAD_MANIFEST_VERSION = "2026-06-20-1";
   const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-26-3";
   const HYBRID_WATCH_MANIFEST_VERSION = "2026-06-26-2";
   const HYBRID_AIRPODS_MANIFEST_VERSION = "2026-06-26-2";
+  const HYBRID_SAMSUNG_MANIFEST_VERSION = "2026-06-27-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
   const CART_KEY = "iron_cart";
   const CART_PRODUCT_ID_QUERY_PARAM = "pid";
@@ -60,7 +62,10 @@
       id: "audio",
       label: "Audio",
       icon: "🎵",
-      test: (t) => /jbl|marshall|акустик|колонк|станци|speaker|street|дуо max|midi|max zigbee/i.test(t),
+      test: (t) =>
+        /galaxy\s*buds|jbl|marshall|акустик|колонк|станци|speaker|street|дуо max|midi|max zigbee/i.test(
+          t
+        ),
     },
     {
       id: "dyson",
@@ -85,7 +90,7 @@
       id: "samsung",
       label: "Samsung",
       icon: "📱",
-      test: (t) => /samsung|galaxy buds/i.test(t),
+      test: (t) => /samsung/i.test(t) && !/galaxy\s*buds/i.test(t),
     },
     {
       id: "galaxy_watch",
@@ -162,11 +167,16 @@
   let airpodsHybridByIdNoPrice = new Map();
   let airpodsHybridByCatalogKey = new Map();
   let airpodsHybridByVariantKey = new Map();
+  let samsungHybridById = {};
+  let samsungHybridByIdNoPrice = new Map();
+  let samsungHybridByCatalogKey = new Map();
+  let samsungHybridByVariantKey = new Map();
   let iphoneHybridManifestLoaded = false;
   let ipadHybridManifestLoaded = false;
   let macbookHybridManifestLoaded = false;
   let watchHybridManifestLoaded = false;
   let airpodsHybridManifestLoaded = false;
+  let samsungHybridManifestLoaded = false;
   let cart = loadCart();
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
@@ -194,7 +204,7 @@
       loadMacbookHybridCards(),
       loadWatchHybridCards(),
       loadAirpodsHybridCards(),
-    ]);
+      loadSamsungHybridCards()]);
 
     const hadFreshCache = tryShowCachedProducts();
     if (hadFreshCache) {
@@ -351,6 +361,26 @@
     }
   }
 
+  async function loadSamsungHybridCards() {
+    try {
+      const manifestUrl = `${HYBRID_SAMSUNG_MANIFEST}?v=${encodeURIComponent(
+        HYBRID_SAMSUNG_MANIFEST_VERSION
+      )}`;
+      const res = await fetch(manifestUrl, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      samsungHybridById = data && typeof data.byId === "object" ? data.byId : {};
+      buildSamsungHybridIndex();
+      samsungHybridManifestLoaded = true;
+    } catch (_) {
+      samsungHybridById = {};
+      samsungHybridByIdNoPrice = new Map();
+      samsungHybridByCatalogKey = new Map();
+      samsungHybridByVariantKey = new Map();
+      samsungHybridManifestLoaded = false;
+    }
+  }
+
   function applyHybridData() {
     if (!allProducts.length) return;
     for (const product of allProducts) {
@@ -415,6 +445,18 @@
           continue;
         }
         product.hybridDetailUrl = allowHeuristicFallback ? buildAirpodsDetailFallbackUrl(product) : "";
+        product.hybridCoverUrl = "";
+        continue;
+      }
+
+      if (isHybridSamsungCandidate(product)) {
+        const meta = resolveSamsungHybridMeta(product);
+        if (meta && meta.url) {
+          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
+          continue;
+        }
+        product.hybridDetailUrl = "";
         product.hybridCoverUrl = "";
         continue;
       }
@@ -549,6 +591,29 @@
     }
   }
 
+  function buildSamsungHybridIndex() {
+    samsungHybridByIdNoPrice = new Map();
+    samsungHybridByCatalogKey = new Map();
+    samsungHybridByVariantKey = new Map();
+    for (const [id, meta] of Object.entries(samsungHybridById)) {
+      const price = extractTrailingPrice(id) || parsePrice(meta?.price);
+      const noPrice = stripTrailingPrice(id);
+      if (noPrice) {
+        if (!samsungHybridByIdNoPrice.has(noPrice)) samsungHybridByIdNoPrice.set(noPrice, []);
+        samsungHybridByIdNoPrice.get(noPrice).push({ id, meta, price });
+      }
+
+      pushHybridCandidate(samsungHybridByVariantKey, buildSamsungVariantKey(meta?.name || ""), id, meta, price);
+      pushHybridCandidate(
+        samsungHybridByCatalogKey,
+        buildHybridCatalogKey(meta?.name || "", meta?.warehouse || "", price),
+        id,
+        meta,
+        price
+      );
+    }
+  }
+
   function pushHybridCandidate(map, key, id, meta, price) {
     if (!key) return;
     if (!map.has(key)) map.set(key, []);
@@ -565,7 +630,20 @@
     return normalizeAirpodsNameKey(name);
   }
 
+  function buildSamsungVariantKey(name) {
+    return normalizeSamsungNameKey(name);
+  }
+
   function normalizeAirpodsNameKey(name) {
+    return String(name || "")
+      .toLowerCase()
+      .replace(/[^\wа-я\s]/gi, " ")
+      .replace(/ё/g, "е")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function normalizeSamsungNameKey(name) {
     return String(name || "")
       .toLowerCase()
       .replace(/[^\wа-я\s]/gi, " ")
@@ -697,6 +775,28 @@
 
     const noPrice = stripTrailingPrice(product.id);
     const candidates = noPrice ? airpodsHybridByIdNoPrice.get(noPrice) : null;
+    if (!candidates?.length) return null;
+
+    if (!targetPrice) return candidates[0].meta;
+    return pickBestIphoneHybridCandidate(candidates, targetPrice);
+  }
+
+  function resolveSamsungHybridMeta(product) {
+    const exact = samsungHybridById[product.id];
+    if (exact && exact.url) return exact;
+
+    const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
+
+    const catalogKey = buildHybridCatalogKey(product.name, product.warehouse, targetPrice);
+    const catalogMatch = pickHybridMetaFromMap(samsungHybridByCatalogKey, catalogKey, targetPrice);
+    if (catalogMatch) return catalogMatch;
+
+    const variantKey = buildSamsungVariantKey(product.name);
+    const variantMatch = pickHybridMetaFromMap(samsungHybridByVariantKey, variantKey, targetPrice);
+    if (variantMatch) return variantMatch;
+
+    const noPrice = stripTrailingPrice(product.id);
+    const candidates = noPrice ? samsungHybridByIdNoPrice.get(noPrice) : null;
     if (!candidates?.length) return null;
 
     if (!targetPrice) return candidates[0].meta;
@@ -956,6 +1056,16 @@
     const section = String(product.section || "");
     if (/galaxy\s*buds|samsung/i.test(name) || /galaxy\s*buds|samsung/i.test(section)) return false;
     return /\bairpods\b/i.test(name) || /\bairpods\b/i.test(section);
+  }
+
+  function isHybridSamsungCandidate(product) {
+    if (!product || product.category !== "samsung") return false;
+    const name = String(product.name || "");
+    const section = String(product.section || "");
+    if (/galaxy\s*buds|galaxy\s*watch/i.test(name) || /galaxy\s*buds|galaxy\s*watch/i.test(section)) {
+      return false;
+    }
+    return /\bsamsung\b/i.test(name) || /^s\d/i.test(name) || /\bsamsung\b/i.test(section);
   }
 
   function normalizeHybridCoverUrl(cover) {

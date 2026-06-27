@@ -622,8 +622,8 @@
     let color = "";
     if (/^max/i.test(model)) {
       const tail = productName
-        .replace(/^.*?max\s+(?:20\d{2}\s+)?/i, "")
-        .replace(/\s+[A-Z0-9]{4,5}(?:\s+[A-Z]{1,2}\/[A-Z]\/?A?)?\s*$/i, "")
+        .replace(/^.*?max\s+(?:20\d{2}\s+)?/i,"")
+        .replace(/\s+[A-Z0-9]{4,5}(?:\s+[A-Z]{1,2}\/[A-Z]\/?A?)?\s*$/i,"")
         .trim();
       color = normalizeAirpodsColor(tail);
     }
@@ -706,13 +706,7 @@
     "S25 Ultra",
     "S26",
     "S26 Plus",
-    "S26 Ultra",
-    "Buds Core",
-    "Buds 3",
-    "Buds 3 Pro",
-    "Buds 4",
-    "Buds 4 Pro",
-  ];
+    "S26 Ultra"];
 
   const SAMSUNG_COLOR_ALIASES = {
     graygreen: "gray green",
@@ -733,18 +727,8 @@
     return key;
   }
 
-  function isSamsungBudsLine(line) {
-    return /^buds\b/i.test(String(line || ""));
-  }
-
   function parseSamsungLine(name) {
     const productName = String(name || "").trim();
-    const budsMatch = productName.match(/^Samsung\s+Galaxy\s+Buds(?:\s+(Core|\d+(?:\s+Pro)?))?\b/i);
-    if (budsMatch) {
-      if (budsMatch[1] && /^core$/i.test(budsMatch[1])) return "Buds Core";
-      if (budsMatch[1]) return `Buds ${budsMatch[1].replace(/\s+/g, " ").trim()}`;
-      return "Buds";
-    }
     const samsungMatch = productName.match(/^Samsung\s+((?:A\d+|S\d+(?:\s+(?:Ultra|Plus|FE))?))\b/i);
     if (samsungMatch) return samsungMatch[1].replace(/\s+/g, " ").trim();
     const shortMatch = productName.match(/^S(\d+(?:\s+(?:Ultra|Plus|FE))?)\b/i);
@@ -752,8 +736,7 @@
     return "";
   }
 
-  function parseSamsungStorage(name, line) {
-    if (isSamsungBudsLine(line)) return "";
+  function parseSamsungStorage(name) {
     const productName = String(name || "");
     const slashMatch = productName.match(/\b\d+\/(\d+)\b/);
     if (slashMatch) return slashMatch[1];
@@ -767,15 +750,14 @@
   function parseSamsungTraits(name) {
     const productName = String(name || "").trim();
     const line = parseSamsungLine(productName);
-    const storage = parseSamsungStorage(productName, line);
+    const storage = parseSamsungStorage(productName);
 
     let color = "";
-    if (line && (storage || isSamsungBudsLine(line))) {
+    if (line && storage) {
       let tail = productName
-        .replace(/^Samsung\s+/i, "")
-        .replace(/^S\d+(?:\s+(?:Ultra|Plus|FE))?\s+/i, "")
-        .replace(/^Galaxy\s+Buds(?:\s+(?:Core|\d+(?:\s+Pro)?))?\s+/i, "")
-        .replace(/^(?:A\d+|S\d+(?:\s+(?:Ultra|Plus|FE))?)\s+/i, "")
+        .replace(/^Samsung\s+/i,"")
+        .replace(/^S\d+(?:\s+(?:Ultra|Plus|FE))?\s+/i,"")
+        .replace(/^(?:A\d+|S\d+(?:\s+(?:Ultra|Plus|FE))?)\s+/i,"")
         .replace(/\bSM-[A-Z0-9]+\b/gi, " ")
         .replace(/\bB\/DS\b/gi, " ")
         .replace(/\b\d+\/\d+\b/g, " ")
@@ -799,9 +781,7 @@
 
   function isSamsungFilterable(product) {
     const traits = getSamsungTraits(product);
-    if (!traits.line) return false;
-    if (isSamsungBudsLine(traits.line)) return true;
-    return Boolean(traits.storage);
+    return Boolean(traits.line && traits.storage);
   }
 
   function samsungLineSortKey(line) {
@@ -811,7 +791,6 @@
 
   function samsungLineLabel(line) {
     if (!line) return "";
-    if (/^buds\b/i.test(line)) return `Galaxy ${line}`;
     return `Samsung ${line}`;
   }
 
