@@ -2232,7 +2232,8 @@
         p.category === "ipad" ||
         p.category === "macbook" ||
         p.category === "watch" ||
-        p.category === "airpods") &&
+        p.category === "airpods" ||
+        p.category === "samsung") &&
       p.hybridDetailUrl;
     const detailLink = hasHybrid ? withProductIdQueryParam(p.hybridDetailUrl, p.id) : "";
     const previewImage = hasHybrid && p.hybridCoverUrl ? p.hybridCoverUrl : "";
