@@ -1,7 +1,28 @@
 {
-  "generated_at": "2026-06-27T08:29:13.489878Z",
-  "count": 43,
+  "generated_at": "2026-06-27T09:17:53.261279Z",
+  "count": 46,
   "byId": {
+    "s26-ultra-sm-s948-b-ds-12-256gb-black-zaf-южная-африка-s1-75000": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-256gb-black-zaf-s1-75000.html",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 256Gb Black ZAF",
+      "warehouse": "(S1)",
+      "price": 75000
+    },
+    "s26-ultra-sm-s948-b-ds-12-256gb-white-kz-казахстан-s1-79100": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-256gb-white-kz-s1-79100.html",
+      "cover": "assets/product-images/14c630d31d07eaa515c7dccf.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 256Gb White KZ",
+      "warehouse": "(S1)",
+      "price": 79100
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-южная-африка-s1-92400": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-s1-92400.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Sky Blue ZAF",
+      "warehouse": "(S1)",
+      "price": 92400
+    },
     "samsung-a37-8-128-charcoal-оаэ-s2-26700": {
       "url": "hybrid-products/samsung/samsung-a37-8-128-charcoal-s2-26700.html",
       "cover": "assets/product-images/944f196d4400814d6202f1d5.jpg",
@@ -116,21 +137,21 @@
     },
     "samsung-s25-fe-12-256-white-оаэ-s2-41700": {
       "url": "hybrid-products/samsung/samsung-s25-fe-12-256-white-s2-41700.html",
-      "cover": "assets/product-images/944f196d4400814d6202f1d5.jpg",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.png",
       "name": "Samsung S25 FE 12/256 White",
       "warehouse": "(S2)",
       "price": 41700
     },
     "samsung-s25-fe-12-256-jetblack-оаэ-s2-41700": {
       "url": "hybrid-products/samsung/samsung-s25-fe-12-256-jetblack-s2-41700.html",
-      "cover": "assets/product-images/944f196d4400814d6202f1d5.jpg",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.png",
       "name": "Samsung S25 FE 12/256 JetBlack",
       "warehouse": "(S2)",
       "price": 41700
     },
     "samsung-s25-fe-12-256-navy-оаэ-s2-41700": {
       "url": "hybrid-products/samsung/samsung-s25-fe-12-256-navy-s2-41700.html",
-      "cover": "assets/product-images/944f196d4400814d6202f1d5.jpg",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.png",
       "name": "Samsung S25 FE 12/256 Navy",
       "warehouse": "(S2)",
       "price": 41700
