@@ -16,7 +16,7 @@
   const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-26-3";
   const HYBRID_WATCH_MANIFEST_VERSION = "2026-06-26-2";
   const HYBRID_AIRPODS_MANIFEST_VERSION = "2026-06-26-2";
-  const HYBRID_SAMSUNG_MANIFEST_VERSION = "2026-06-27-2";
+  const HYBRID_SAMSUNG_MANIFEST_VERSION = "2026-06-27-3";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
   const CART_KEY = "iron_cart";
   const CART_PRODUCT_ID_QUERY_PARAM = "pid";
@@ -171,6 +171,7 @@
   let samsungHybridByIdNoPrice = new Map();
   let samsungHybridByCatalogKey = new Map();
   let samsungHybridByVariantKey = new Map();
+  let samsungHybridByModelKey = new Map();
   let iphoneHybridManifestLoaded = false;
   let ipadHybridManifestLoaded = false;
   let macbookHybridManifestLoaded = false;
@@ -377,6 +378,7 @@
       samsungHybridByIdNoPrice = new Map();
       samsungHybridByCatalogKey = new Map();
       samsungHybridByVariantKey = new Map();
+      samsungHybridByModelKey = new Map();
       samsungHybridManifestLoaded = false;
     }
   }
@@ -595,6 +597,7 @@
     samsungHybridByIdNoPrice = new Map();
     samsungHybridByCatalogKey = new Map();
     samsungHybridByVariantKey = new Map();
+    samsungHybridByModelKey = new Map();
     for (const [id, meta] of Object.entries(samsungHybridById)) {
       const price = extractTrailingPrice(id) || parsePrice(meta?.price);
       const noPrice = stripTrailingPrice(id);
@@ -604,6 +607,7 @@
       }
 
       pushHybridCandidate(samsungHybridByVariantKey, buildSamsungVariantKey(meta?.name || ""), id, meta, price);
+      pushHybridCandidate(samsungHybridByModelKey, buildSamsungModelKey(meta?.name || ""), id, meta, price);
       pushHybridCandidate(
         samsungHybridByCatalogKey,
         buildHybridCatalogKey(meta?.name || "", meta?.warehouse || "", price),
@@ -644,12 +648,83 @@
   }
 
   function normalizeSamsungNameKey(name) {
-    return String(name || "")
+    return normalizeSamsungHybridTraits(name).normalizedName;
+  }
+
+  const SAMSUNG_COLOR_ALIASES = {
+    graygreen: "graygreen",
+    lightgray: "lightgray",
+    icyblue: "iceblue",
+    iceblue: "iceblue",
+    jetblack: "jetblack",
+    silvershadow: "silvershadow",
+    silverblue: "silverblue",
+    pinkgold: "pinkgold",
+    skyblue: "skyblue",
+  };
+
+  function normalizeSamsungColorToken(color) {
+    const key = String(color || "")
+      .toLowerCase()
+      .replace(/\s+/g,"")
+      .trim();
+    if (!key) return "";
+    return SAMSUNG_COLOR_ALIASES[key] || key;
+  }
+
+  function normalizeSamsungHybridTraits(name) {
+    const productName = String(name || "").trim();
+    let line = "";
+    const samsungMatch = productName.match(/^Samsung\s+((?:A\d+|S\d+(?:\s+(?:Ultra|Plus|FE))?))\b/i);
+    if (samsungMatch) line = samsungMatch[1].replace(/\s+/g, " ").trim().toLowerCase();
+    const shortMatch = productName.match(/^S(\d+(?:\s+(?:Ultra|Plus|FE))?)\b/i);
+    if (!line && shortMatch) line = `s${shortMatch[1]}`.replace(/\s+/g, " ").trim().toLowerCase();
+
+    let storage = "";
+    const slashMatch = productName.match(/\b\d+\/(\d+)\b/);
+    if (slashMatch) storage = slashMatch[1];
+    if (!storage) {
+      const plusMatch = productName.match(/\b\d+\+\s*(\d+)\s*(?:Gb|GB|Tb|TB)?\b/i);
+      if (plusMatch) storage = plusMatch[1];
+    }
+    if (!storage) {
+      const capMatch = productName.match(/\b(\d+)\s*(?:Gb|GB|Tb|TB)\b/i);
+      if (capMatch) storage = capMatch[1];
+    }
+
+    let color = "";
+    if (line) {
+      let tail = productName
+        .replace(/^Samsung\s+/i,"")
+        .replace(/^S\d+(?:\s+(?:Ultra|Plus|FE))?\s+/i,"")
+        .replace(/^(?:A\d+|S\d+(?:\s+(?:Ultra|Plus|FE))?)\s+/i,"")
+        .replace(/\bSM-[A-Z0-9]+\b/gi, " ")
+        .replace(/\bB\/DS\b/gi, " ")
+        .replace(/\b\d+\/\d+\b/g, " ")
+        .replace(/\b\d+\+\s*\d+\s*(?:Gb|GB|Tb|TB)?\b/gi, " ")
+        .replace(/\b\d+\s*(?:Gb|GB|Tb|TB)\b/gi, " ")
+        .replace(/\b[A-Z]{2,4}\b(?=\s*$)/i, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+      color = normalizeSamsungColorToken(tail.replace(/\s+/g,""));
+    }
+
+    const normalizedName = String(name || "")
       .toLowerCase()
       .replace(/[^\wа-я\s]/gi, " ")
       .replace(/ё/g, "е")
+      .replace(/\bicyblue\b/g, "iceblue")
       .replace(/\s+/g, " ")
       .trim();
+
+    return { line, storage, color, normalizedName };
+  }
+
+  function buildSamsungModelKey(name) {
+    const traits = normalizeSamsungHybridTraits(name);
+    if (!traits.line) return "";
+    return `${traits.line}|${traits.storage}|${traits.color}`;
   }
 
   function extractAppleModelCode(name) {
@@ -794,6 +869,10 @@
     const variantKey = buildSamsungVariantKey(product.name);
     const variantMatch = pickHybridMetaFromMap(samsungHybridByVariantKey, variantKey, targetPrice);
     if (variantMatch) return variantMatch;
+
+    const modelKey = buildSamsungModelKey(product.name);
+    const modelMatch = pickHybridMetaFromMap(samsungHybridByModelKey, modelKey, targetPrice);
+    if (modelMatch) return modelMatch;
 
     const noPrice = stripTrailingPrice(product.id);
     const candidates = noPrice ? samsungHybridByIdNoPrice.get(noPrice) : null;
