@@ -1,0 +1,42 @@
+# Ежедневная проверка hybrid-карточек: audit → match → build → deploy.
+# Расписание: 10:00 по Москве (07:00 UTC). Ручной запуск: Actions → Daily hybrid cards refresh.
+name: Daily hybrid cards refresh
+
+on:
+  schedule:
+    # 10:00 MSK (UTC+3)
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hybrid-cards-daily
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Sync, audit, build missing cards and push
+        env:
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: python3 scripts/refresh_hybrid_cards.py --all --push
+
+      # push в main автоматически запускает Deploy site (pages.yml)

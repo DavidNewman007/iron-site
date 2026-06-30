@@ -52,20 +52,30 @@ def build_from_probe(category: str, product_ids: list[str], *, refresh_match: bo
         probe = load_probe(category)
 
     built: list[dict] = []
+    failed: list[dict] = []
     for product_id in product_ids:
-        existing = load_source(category, product_id)
-        if existing and not refresh_match:
-            if existing.get("images_remote") and not existing.get("images_local"):
-                existing["images_local"] = mirror_images(existing["images_remote"])
-            built.append(build_card_from_source(existing))
-            continue
+        try:
+            existing = load_source(category, product_id)
+            if existing and not refresh_match:
+                if existing.get("images_remote") and not existing.get("images_local"):
+                    existing["images_local"] = mirror_images(existing["images_remote"])
+                built.append(build_card_from_source(existing))
+                continue
 
-        match = probe.get("matches", {}).get(product_id)
-        if not match or match.get("status") != "matched":
-            raise RuntimeError(f"No matched catalog entry for {product_id}")
-        source = build_source_from_match(match)
-        built.append(build_card_from_source(source))
-    return built
+            match = probe.get("matches", {}).get(product_id)
+            if not match or match.get("status") != "matched":
+                failed.append(
+                    {
+                        "product_id": product_id,
+                        "error": f"catalog match status: {match.get('status') if match else 'missing'}",
+                    }
+                )
+                continue
+            source = build_source_from_match(match)
+            built.append(build_card_from_source(source))
+        except Exception as exc:  # noqa: BLE001
+            failed.append({"product_id": product_id, "error": str(exc)})
+    return built, failed
 
 
 def main() -> int:
@@ -115,11 +125,20 @@ def main() -> int:
         grouped.setdefault(product.category, []).append(pid)
 
     results: list[dict] = []
+    failures: list[dict] = []
     for category, ids in grouped.items():
-        results.extend(build_from_probe(category, ids, refresh_match=args.refresh_match))
+        built, failed = build_from_probe(category, ids, refresh_match=args.refresh_match)
+        results.extend(built)
+        failures.extend(failed)
 
-    print(json.dumps({"built": results, "count": len(results)}, ensure_ascii=False, indent=2))
-    return 0
+    print(
+        json.dumps(
+            {"built": results, "count": len(results), "failed": failures, "failed_count": len(failures)},
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+    return 1 if failures and not results else 0
 
 
 if __name__ == "__main__":
