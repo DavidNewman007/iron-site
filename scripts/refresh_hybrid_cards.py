@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -23,6 +24,13 @@ def run(cmd: list[str], *, cwd: Path | None = None) -> None:
 
 
 def git_publish(message: str, *, push: bool) -> dict:
+    name = os.environ.get("GIT_AUTHOR_NAME", "github-actions[bot]")
+    email = os.environ.get(
+        "GIT_AUTHOR_EMAIL",
+        "41898282+github-actions[bot]@users.noreply.github.com",
+    )
+    subprocess.run(["git", "config", "user.name", name], cwd=ROOT, check=True)
+    subprocess.run(["git", "config", "user.email", email], cwd=ROOT, check=True)
     run(["git", "add", "public/hybrid-products", "product-image-map.json"])
     status = subprocess.run(
         ["git", "status", "--porcelain"],
@@ -109,6 +117,7 @@ def main() -> int:
         return 0
 
     if not args.skip_build:
+        build_failures: list[dict] = []
         for category in categories:
             cmd = [sys.executable, "scripts/build_hybrid_card.py", "--category", category]
             if args.full_category:
@@ -117,8 +126,22 @@ def main() -> int:
                     cmd.append("--refresh-match")
             else:
                 cmd.append("--missing-only")
-            run(cmd)
+            result = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+            print(result.stdout, end="")
+            if result.stderr:
+                print(result.stderr, file=sys.stderr, end="")
+            if result.returncode != 0 and result.stdout.strip():
+                try:
+                    payload = json.loads(result.stdout)
+                    build_failures.extend(payload.get("failed", []))
+                except json.JSONDecodeError:
+                    result.check_returncode()
+            elif result.returncode != 0:
+                result.check_returncode()
         report["steps"]["build"] = "ok"
+        if build_failures:
+            report["build_failures"] = build_failures
+            report["build_failed_count"] = len(build_failures)
 
         audit_report = audit_all(load_products_from_sheet()[0])
         save_audit_report(audit_report)
