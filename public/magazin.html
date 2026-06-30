@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/shop.css">
+  <link rel="stylesheet" href="css/shop.css?v=2026-06-30-1">
 </head>
 <body>
   <header class="site-header">
@@ -56,7 +56,20 @@
 
         <div class="shop-toolbar">
           <input type="search" id="price-search" placeholder="Поиск: iPhone 16, MacBook Air…" autocomplete="off">
-          <select id="price-category" aria-label="Категория">
+          <div class="shop-category-picker" id="price-category-picker">
+            <button
+              type="button"
+              class="shop-category-picker__trigger"
+              id="price-category-trigger"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+              aria-controls="price-category-menu"
+            >
+              <span class="shop-category-picker__label">Все категории</span>
+              <span class="shop-category-picker__chevron" aria-hidden="true">▾</span>
+            </button>
+            <ul class="shop-category-picker__menu" id="price-category-menu" role="listbox" hidden></ul>
+            <select id="price-category" class="shop-category-picker__native" aria-label="Категория" tabindex="-1">
             <option value="all">Все категории</option>
             <option value="iphone">iPhone</option>
             <option value="ipad">iPad</option>
@@ -73,6 +86,7 @@
             <option value="accessories">Accessories</option>
             <option value="other">Прочее</option>
           </select>
+          </div>
         </div>
 
         <div class="shop-filters" id="shop-filters" hidden aria-label="Фильтры по характеристикам"></div>
@@ -146,6 +160,6 @@
   <script src="js/search-dictionary.js?v=2026-06-26-1"></script>
   <script src="js/main.js"></script>
   <script src="js/shop-filters.js?v=2026-06-27-2"></script>
-  <script src="js/prices.js?v=2026-06-27-6"></script>
+  <script src="js/prices.js?v=2026-06-30-1"></script>
 </body>
 </html>

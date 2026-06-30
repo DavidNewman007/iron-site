@@ -1422,6 +1422,7 @@
   }
 
   function bindEvents() {
+    initCategoryPicker();
     els.search?.addEventListener("input", scheduleRenderGrid);
     els.category?.addEventListener("change", renderGrid);
     els.cartClear?.addEventListener("click", () => {
@@ -1447,6 +1448,71 @@
       filtersLayoutMode = nextMode;
     });
     filtersLayoutMode = isMobileFiltersView() ? "mobile" : "desktop";
+  }
+
+  function initCategoryPicker() {
+    const select = els.category;
+    const picker = document.getElementById("price-category-picker");
+    const trigger = document.getElementById("price-category-trigger");
+    const menu = document.getElementById("price-category-menu");
+    const label = trigger?.querySelector(".shop-category-picker__label");
+    if (!select || !picker || !trigger || !menu || !label || picker.dataset.ready === "1") return;
+
+    menu.innerHTML = "";
+    for (const option of select.options) {
+      const item = document.createElement("li");
+      item.className = "shop-category-picker__option";
+      item.setAttribute("role", "option");
+      item.dataset.value = option.value;
+      item.textContent = option.textContent;
+      item.setAttribute("aria-selected", option.selected ? "true" : "false");
+      if (option.selected) {
+        item.classList.add("is-active");
+        label.textContent = option.textContent;
+      }
+      item.addEventListener("click", () => setCategoryValue(option.value));
+      menu.appendChild(item);
+    }
+
+    function setCategoryValue(value) {
+      if (select.value !== value) select.value = value;
+      label.textContent =
+        select.options[select.selectedIndex]?.textContent || select.options[0]?.textContent || "Все категории";
+      menu.querySelectorAll(".shop-category-picker__option").forEach((node) => {
+        const active = node.dataset.value === value;
+        node.classList.toggle("is-active", active);
+        node.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      closeCategoryMenu();
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    function openCategoryMenu() {
+      menu.hidden = false;
+      trigger.setAttribute("aria-expanded", "true");
+      picker.classList.add("is-open");
+    }
+
+    function closeCategoryMenu() {
+      menu.hidden = true;
+      trigger.setAttribute("aria-expanded", "false");
+      picker.classList.remove("is-open");
+    }
+
+    trigger.addEventListener("click", () => {
+      if (picker.classList.contains("is-open")) closeCategoryMenu();
+      else openCategoryMenu();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!picker.contains(event.target)) closeCategoryMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeCategoryMenu();
+    });
+
+    picker.dataset.ready = "1";
   }
 
   function isMobileShop() {
