@@ -3,3 +3,8 @@ server/.env
 public/js/config.js
 .DS_Store
 *.md
+__pycache__/
+*.pyc
+public-sheet-snapshots/
+catalog-match-probe/
+public/hybrid-products/audit-report.json

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-26T14:08:33.861831Z",
-  "count": 119,
+  "generated_at": "2026-06-30T10:55:43.444Z",
+  "count": 120,
   "byId": {
     "iphone-15-256gb-black-hn-a-индия-s1-59100": {
       "url": "hybrid-products/iphone/iphone-15-256gb-black-hn-a-s1-59100.html",
@@ -834,6 +834,13 @@
       "name": "iPhone 17 Pro Max 1TB Silver (eSIM)",
       "warehouse": "(S2)",
       "price": 133400
+    },
+    "iphone-15-128gb-black-hn-a-индия-s1-54600": {
+      "url": "hybrid-products/iphone/iphone-15-128gb-black-hn-a-s1-54600.html",
+      "cover": "assets/product-images/e6dd5f06a816d0bc679b88e2.jpg",
+      "name": "iPhone 15 128Gb Black HN/A",
+      "warehouse": "(S1)",
+      "price": 54600
     }
   }
 }
