@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import json
-from dataclasses import asdict
 from pathlib import Path
 
 from .config import HYBRID_CATEGORIES, HYBRID_ROOT, PUBLIC
+from .eligibility import hybrid_skip_reason
 from .manifest import load_manifest
 from .price_parser import Product, load_products_from_sheet
 from .slug import build_file_slug
@@ -17,9 +17,21 @@ def audit_category(products: list[Product], category: str) -> dict:
 
     missing_meta: list[dict] = []
     broken_file: list[dict] = []
+    skipped: list[dict] = []
     ok: list[dict] = []
 
     for product in category_products:
+        skip = hybrid_skip_reason(product)
+        if skip:
+            skipped.append(
+                {
+                    "product_id": product.id,
+                    "name": product.name,
+                    "reason": skip,
+                }
+            )
+            continue
+
         meta = by_id.get(product.id)
         file_slug = build_file_slug(product.name, product.warehouse, product.price)
         html_rel = f"hybrid-products/{category}/{file_slug}.html"
@@ -56,8 +68,10 @@ def audit_category(products: list[Product], category: str) -> dict:
     return {
         "category": category,
         "price_rows": len(category_products),
+        "eligible_rows": len(category_products) - len(skipped),
         "manifest_rows": len(by_id),
         "ok": len(ok),
+        "skipped": skipped,
         "missing_meta": missing_meta,
         "broken_file": broken_file,
     }
@@ -75,6 +89,7 @@ def audit_all(products: list[Product] | None = None) -> dict:
         "summary": {
             "missing_meta": 0,
             "broken_file": 0,
+            "skipped": 0,
             "ok": 0,
         },
     }
@@ -84,6 +99,7 @@ def audit_all(products: list[Product] | None = None) -> dict:
         report["categories"][category] = cat_report
         report["summary"]["missing_meta"] += len(cat_report["missing_meta"])
         report["summary"]["broken_file"] += len(cat_report["broken_file"])
+        report["summary"]["skipped"] += len(cat_report.get("skipped", []))
         report["summary"]["ok"] += cat_report["ok"]
 
     return report

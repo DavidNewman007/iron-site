@@ -14,8 +14,43 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from hybrid.audit import audit_all, missing_product_ids, save_audit_report  # noqa: E402
-from hybrid.config import HYBRID_CATEGORIES  # noqa: E402
+from hybrid.config import HYBRID_CATEGORIES, PROBE_DIR  # noqa: E402
+from hybrid.eligibility import hybrid_skip_reason  # noqa: E402
 from hybrid.price_parser import load_products_from_sheet  # noqa: E402
+
+
+def write_probe_ids_file(category: str, product_ids: list[str]) -> Path:
+    PROBE_DIR.mkdir(parents=True, exist_ok=True)
+    path = PROBE_DIR / f".probe-ids-{category}.txt"
+    path.write_text("\n".join(product_ids) + ("\n" if product_ids else ""), encoding="utf-8")
+    return path
+
+
+def run_match_category(category: str, product_ids: list[str], *, refresh_sitemap: bool) -> dict:
+    if not product_ids:
+        return {"category": category, "skipped": True, "reason": "nothing_missing"}
+    ids_file = write_probe_ids_file(category, product_ids)
+    cmd = [
+        sys.executable,
+        "scripts/catalog_match_probe.py",
+        "--category",
+        category,
+        "--ids-file",
+        str(ids_file),
+    ]
+    if refresh_sitemap:
+        cmd.append("--refresh-sitemap")
+    print("$", " ".join(cmd))
+    result = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    print(result.stdout, end="")
+    if result.stderr:
+        print(result.stderr, file=sys.stderr, end="")
+    if result.returncode != 0:
+        return {"category": category, "error": result.stderr or result.stdout, "exit_code": result.returncode}
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return {"category": category, "ok": True}
 
 
 def run(cmd: list[str], *, cwd: Path | None = None) -> None:
@@ -93,20 +128,21 @@ def main() -> int:
     report["price_updated_at"] = updated_at
 
     if not args.skip_match:
+        match_results: list[dict] = []
         for category in categories:
-            cmd = [sys.executable, "scripts/catalog_match_probe.py", "--category", category]
-            if not args.full_category:
+            if args.full_category:
+                product_ids = [
+                    p.id
+                    for p in products
+                    if p.category == category and hybrid_skip_reason(p) is None
+                ]
+            else:
                 audit_pre = audit_all(products)
-                missing = missing_product_ids(audit_pre, category)
-                if not missing:
-                    report.setdefault("match_skipped", []).append(category)
-                    continue
-                for product_id in missing:
-                    cmd.extend(["--product-id", product_id])
-            if args.refresh_sitemap:
-                cmd.append("--refresh-sitemap")
-            run(cmd)
+                product_ids = missing_product_ids(audit_pre, category)
+            result = run_match_category(category, product_ids, refresh_sitemap=args.refresh_sitemap)
+            match_results.append(result)
         report["steps"]["match"] = "ok"
+        report["match_results"] = match_results
 
     audit_report = audit_all(products)
     save_audit_report(audit_report)
