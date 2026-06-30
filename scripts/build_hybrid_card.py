@@ -14,6 +14,7 @@ from hybrid.audit import audit_all, missing_product_ids  # noqa: E402
 from hybrid.card_builder import build_card_from_source, build_source_from_match  # noqa: E402
 from hybrid.catalog_match import probe_category_products, save_probe_result  # noqa: E402
 from hybrid.config import HYBRID_CATEGORIES, PROBE_DIR  # noqa: E402
+from hybrid.eligibility import hybrid_skip_reason  # noqa: E402
 from hybrid.images import mirror_images  # noqa: E402
 from hybrid.manifest import load_source, save_source  # noqa: E402
 from hybrid.price_parser import load_products_from_sheet  # noqa: E402
@@ -39,12 +40,13 @@ def refresh_source_from_catalog(source: dict) -> dict:
     return source
 
 
-def build_from_probe(category: str, product_ids: list[str], *, refresh_match: bool = False) -> list[dict]:
+def build_from_probe(category: str, product_ids: list[str], *, refresh_match: bool = False) -> tuple[list[dict], list[dict]]:
     products, _ = load_products_from_sheet()
-    by_id = {p.id: p for p in products if p.category == category}
+    all_by_id = {p.id: p for p in products}
+    category_by_id = {p.id: p for p in products if p.category == category}
 
     if refresh_match or not (PROBE_DIR / f"catalog-match-probe-{category}.json").exists():
-        subset = [by_id[pid] for pid in product_ids if pid in by_id]
+        subset = [category_by_id[pid] for pid in product_ids if pid in category_by_id]
         payload = probe_category_products(subset, fetch_details=True)
         save_probe_result(category, payload)
         probe = payload
@@ -54,7 +56,9 @@ def build_from_probe(category: str, product_ids: list[str], *, refresh_match: bo
     built: list[dict] = []
     failed: list[dict] = []
     for product_id in product_ids:
-        try:
+        product = all_by_id.get(product_id)
+        if product and hybrid_skip_reason(product):
+            continue
             existing = load_source(category, product_id)
             if existing and not refresh_match:
                 if existing.get("images_remote") and not existing.get("images_local"):
@@ -102,6 +106,7 @@ def main() -> int:
         return 0
 
     products, _ = load_products_from_sheet()
+    by_id = {p.id: p for p in products}
     product_ids = list(args.product_id)
 
     if args.missing_only:
@@ -110,14 +115,23 @@ def main() -> int:
     elif args.all_in_category:
         if not args.category:
             raise SystemExit("--all-in-category requires --category")
-        product_ids = [p.id for p in products if p.category == args.category]
+        product_ids = [
+            p.id
+            for p in products
+            if p.category == args.category and hybrid_skip_reason(p) is None
+        ]
+
+    product_ids = [
+        pid
+        for pid in product_ids
+        if pid not in by_id or hybrid_skip_reason(by_id[pid]) is None
+    ]
 
     if not product_ids:
         print(json.dumps({"built": [], "message": "Nothing to build"}, ensure_ascii=False, indent=2))
         return 0
 
     grouped: dict[str, list[str]] = {}
-    by_id = {p.id: p for p in products}
     for pid in product_ids:
         product = by_id.get(pid)
         if not product:

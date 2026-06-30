@@ -7,4 +7,5 @@ __pycache__/
 *.pyc
 public-sheet-snapshots/
 catalog-match-probe/
+catalog-match-probe/.probe-ids-*.txt
 public/hybrid-products/audit-report.json
