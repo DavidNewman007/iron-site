@@ -1,0 +1,66 @@
+{
+  "product_id": "-airpods-max-2024-purple-s2-42200",
+  "category": "airpods",
+  "file_slug": "airpods-max-2024-purple-s2-42200",
+  "name": "🔈AirPods Max 2024 Purple",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 42200,
+  "catalog_url": "https://sochi.dr-store.ru/apple/airpods/airpods-max/airpods-max-2024-purple",
+  "catalog_title": "Купить беспроводные наушники Apple AirPods Max (2024),…",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Apple H1"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Bluetooth 5.0"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-C"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 20 часов"
+    },
+    {
+      "key": "Ширина",
+      "value": "168.6 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "187.3 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "83.4 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "386.2 г"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "восемь микрофонов для активного шумоподавления, три микрофона для передачи голоса (два общих с активным шумоподавлением и один дополнительный микрофон)"
+    },
+    {
+      "key": "Датчики",
+      "value": "оптический датчик, датчик положения, датчик обнаружения корпуса, акселерометр, гироскоп (левая амбушюра)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-3-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-9-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-15-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-20-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/b3001a5e91091fc6422afe86.jpg",
+    "assets/product-images/a8342a091e0b511192d7a484.jpg",
+    "assets/product-images/1a6e5871801ec5aabb277aac.jpg",
+    "assets/product-images/ed05f9e1384c6ce6df3cef52.jpg"
+  ],
+  "updated_at": "2026-07-01T08:11:49.177673Z"
+}

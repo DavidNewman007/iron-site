@@ -1,0 +1,112 @@
+{
+  "product_id": "macbook-air-13-m5-16-512gb-midnight-mdhe4-ll-a-сша-s1-114600",
+  "category": "macbook",
+  "file_slug": "macbook-air-13-m5-16-512gb-midnight-mdhe4-ll-a-s1-114600",
+  "name": "MacBook Air 13 M5 16+ 512Gb Midnight MDHE4 LL/A",
+  "country": "🇺🇸 США",
+  "warehouse": "(S1)",
+  "price": 114600,
+  "catalog_url": "https://sochi.dr-store.ru/apple/macbook/macbook-air/macbook-air-13-m5/macbook-air-13-m5-2026-16-512gb-midnight",
+  "catalog_title": "ноутбук Apple MacBook Air 13\" (2026) M5 16/512GB, Midnight (MDHE4)",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "TFT IPS Retina"
+    },
+    {
+      "key": "Диагональ",
+      "value": "13.6\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2560x1664 пикселей"
+    },
+    {
+      "key": "Яркость",
+      "value": "500 кд/м²"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "224 пикс/дюйм"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple M5 (10 ядер)"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "8 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12MP, Full HD 1080p"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Wi-Fi 7 (802.11be), Bluetooth 6"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "2 x Thunderbolt 3"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Pol"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 18 часов"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий"
+    },
+    {
+      "key": "Ширина",
+      "value": "30.41 см"
+    },
+    {
+      "key": "Высота",
+      "value": "21.5 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "1.13 см"
+    },
+    {
+      "key": "Вес",
+      "value": "1230 г"
+    },
+    {
+      "key": "Операционная система",
+      "value": "macOS"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "встроенные динамики с поддержкой Dolby Atmos, поддержка системы многоканального звука, широкое стерео, система направленных микрофонов, выход 3,5 мм для наушников (расширенная поддержка наушников с высоким импедансом), функция голосовой изоляции и микрофон с широким спектром действия Улучшенная четкость голоса при аудио- и видеозвонках."
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-13-15-m3-2024/mba13-m3-midnight-dr-store2-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-13-15-m4-2025/mba13-m4-midnight1-dr-store-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-13-15-m4-2025/mba13-m4-midnight4-dr-store-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-2022/macbook-air-2022-21-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-2022/macbook-air-2022-24-1000x1000.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/e6fd48ead26e93d18094a4d0.jpeg",
+    "assets/product-images/d175b8d82f4f397e8d14991f.jpeg",
+    "assets/product-images/a50042016b07520f3f89353d.jpeg",
+    "assets/product-images/006b6ded58e6cde961c9d024.jpeg",
+    "assets/product-images/013090f3984f196747f0ca5b.jpeg"
+  ],
+  "updated_at": "2026-07-01T08:11:27.068858Z"
+}

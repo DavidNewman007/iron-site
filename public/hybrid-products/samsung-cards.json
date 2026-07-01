@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-27T09:42:55.821120Z",
-  "count": 33,
+  "generated_at": "2026-07-01T08:12:23.997Z",
+  "count": 54,
   "byId": {
     "s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-южная-африка-s1-99300": {
       "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-s1-99300.html",
@@ -232,6 +232,153 @@
       "name": "Samsung S26 Ultra 12/512 Violet",
       "warehouse": "(S2)",
       "price": 92600
+    },
+    "s26-ultra-sm-s948-b-ds-12-256gb-black-uae-оаэ-s1-77500": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-256gb-black-uae-s1-77500.html",
+      "cover": "assets/product-images/18bbebb8286579ea8872c013.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 256Gb Black UAE",
+      "warehouse": "(S1)",
+      "price": 77500
+    },
+    "s26-ultra-sm-s948-b-ds-12-256gb-black-uae-оаэ-s1-78300": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-256gb-black-uae-s1-78300.html",
+      "cover": "assets/product-images/18bbebb8286579ea8872c013.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 256Gb Black UAE",
+      "warehouse": "(S1)",
+      "price": 78300
+    },
+    "s26-ultra-sm-s948-b-ds-12-256gb-sky-blue-uae-оаэ-s1-77500": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-256gb-sky-blue-uae-s1-77500.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 256Gb Sky Blue UAE",
+      "warehouse": "(S1)",
+      "price": 77500
+    },
+    "s26-ultra-sm-s948-b-ds-12-256gb-sky-blue-sg-сингапур-s1-78300": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-256gb-sky-blue-sg-s1-78300.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 256Gb Sky Blue SG",
+      "warehouse": "(S1)",
+      "price": 78300
+    },
+    "s26-ultra-sm-s948-b-ds-12-256gb-violet-uae-оаэ-s1-77100": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-256gb-violet-uae-s1-77100.html",
+      "cover": "assets/product-images/c17451a7debc4f88556e468c.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 256Gb Violet UAE",
+      "warehouse": "(S1)",
+      "price": 77100
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-black-py-парагвай-s1-98300": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-black-py-s1-98300.html",
+      "cover": "assets/product-images/18bbebb8286579ea8872c013.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Black PY",
+      "warehouse": "(S1)",
+      "price": 98300
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-black-py-парагвай-s1-99300": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-black-py-s1-99300.html",
+      "cover": "assets/product-images/18bbebb8286579ea8872c013.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Black PY",
+      "warehouse": "(S1)",
+      "price": 99300
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-py-парагвай-s1-96000": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-py-s1-96000.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Sky Blue PY",
+      "warehouse": "(S1)",
+      "price": 96000
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-южная-африка-s1-97000": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-s1-97000.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Sky Blue ZAF",
+      "warehouse": "(S1)",
+      "price": 97000
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-violet-py-парагвай-s1-96000": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-violet-py-s1-96000.html",
+      "cover": "assets/product-images/c17451a7debc4f88556e468c.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Violet PY",
+      "warehouse": "(S1)",
+      "price": 96000
+    },
+    "samsung-a57-8-128-gray-оаэ-s2-28800": {
+      "url": "hybrid-products/samsung/samsung-a57-8-128-gray-s2-28800.html",
+      "cover": "assets/product-images/f9a4548b426962c600ae8c8d.png",
+      "name": "Samsung A57 8/128 Gray",
+      "warehouse": "(S2)",
+      "price": 28800
+    },
+    "samsung-s25-ultra-12-256-gray-оаэ-s2-70300": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-256-gray-s2-70300.html",
+      "cover": "assets/product-images/b04210b4dced7ce68939bf5a.jpg",
+      "name": "Samsung S25 Ultra 12/256 Gray",
+      "warehouse": "(S2)",
+      "price": 70300
+    },
+    "samsung-s25-ultra-12-256-black-оаэ-s2-69300": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-256-black-s2-69300.html",
+      "cover": "assets/product-images/981f870a87fb9a9bc0d95d31.jpg",
+      "name": "Samsung S25 Ultra 12/256 Black",
+      "warehouse": "(S2)",
+      "price": 69300
+    },
+    "samsung-s26-12-256-pink-оаэ-s2-56100": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-pink-s2-56100.html",
+      "cover": "assets/product-images/58c9ef77c2efe5ca08e08197.jpg",
+      "name": "Samsung S26 12/256 Pink",
+      "warehouse": "(S2)",
+      "price": 56100
+    },
+    "samsung-s26-12-256-white-оаэ-s2-57100": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-white-s2-57100.html",
+      "cover": "assets/product-images/2c7d6ab59241f84167f2be77.png",
+      "name": "Samsung S26 12/256 White",
+      "warehouse": "(S2)",
+      "price": 57100
+    },
+    "samsung-s26-12-256-violet-оаэ-s2-57100": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-violet-s2-57100.html",
+      "cover": "assets/product-images/30334e619c056cadf270fa69.png",
+      "name": "Samsung S26 12/256 Violet",
+      "warehouse": "(S2)",
+      "price": 57100
+    },
+    "samsung-s26-ultra-12-256-blue-оаэ-s2-76400": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-256-blue-s2-76400.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.png",
+      "name": "Samsung S26 Ultra 12/256 Blue",
+      "warehouse": "(S2)",
+      "price": 76400
+    },
+    "samsung-s26-ultra-12-256-violet-оаэ-s2-77400": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-256-violet-s2-77400.html",
+      "cover": "assets/product-images/c17451a7debc4f88556e468c.png",
+      "name": "Samsung S26 Ultra 12/256 Violet",
+      "warehouse": "(S2)",
+      "price": 77400
+    },
+    "samsung-s26-ultra-12-256-pink-оаэ-s2-77400": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-256-pink-s2-77400.html",
+      "cover": "assets/product-images/1ada5fac2387408bc5717e47.png",
+      "name": "Samsung S26 Ultra 12/256 Pink",
+      "warehouse": "(S2)",
+      "price": 77400
+    },
+    "samsung-s26-ultra-12-256-black-оаэ-s2-77400": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-256-black-s2-77400.html",
+      "cover": "assets/product-images/18bbebb8286579ea8872c013.png",
+      "name": "Samsung S26 Ultra 12/256 Black",
+      "warehouse": "(S2)",
+      "price": 77400
+    },
+    "samsung-s26-ultra-12-512-violet-оаэ-s2-93700": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-512-violet-s2-93700.html",
+      "cover": "assets/product-images/c17451a7debc4f88556e468c.png",
+      "name": "Samsung S26 Ultra 12/512 Violet",
+      "warehouse": "(S2)",
+      "price": 93700
     }
   }
 }

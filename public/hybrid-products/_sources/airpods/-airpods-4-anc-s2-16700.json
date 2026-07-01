@@ -1,0 +1,68 @@
+{
+  "product_id": "-airpods-4-anc-s2-16700",
+  "category": "airpods",
+  "file_slug": "airpods-4-anc-s2-16700",
+  "name": "🔈AirPods 4 ANC",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 16700,
+  "catalog_url": "https://sochi.dr-store.ru/apple/airpods/airpods-4/airpods-4-mxp63",
+  "catalog_title": "Купить беспроводные наушники Apple AirPods 4 (MXP63) в Сочи",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Apple H2"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Bluetooth 5.3"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-C"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 30 часов прослушивания, до 20 часов работы в режиме разговора"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "Нет"
+    },
+    {
+      "key": "Ширина",
+      "value": "Наушник: 18.3 мм; Кейс: 50.1 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "Наушник: 30.2 мм; Кейс: 46.2 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "Наушник: 18.1 мм; Кейс: 21.2 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "Наушник: 4.3 г; Кейс: 32.3 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP54"
+    },
+    {
+      "key": "Датчики",
+      "value": "микрофоны с двойным формированием луча, микрофон, обращенный внутрь, оптический датчик в ухе, акселерометр для определения движения, акселерометр для распознавания речи, датчик усилия"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-4/airpods-4-dr-store-15-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-4/airpods-4-dr-store-16-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-4/airpods-4-dr-store-17-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+    "assets/product-images/944bb2a0c9756fdbafcf9736.jpg",
+    "assets/product-images/add0aeaa2613827aa24fc787.jpg"
+  ],
+  "updated_at": "2026-07-01T08:11:49.151716Z"
+}

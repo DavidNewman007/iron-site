@@ -1,0 +1,66 @@
+{
+  "product_id": "-airpods-max-2024-starlight-s2-43300",
+  "category": "airpods",
+  "file_slug": "airpods-max-2024-starlight-s2-43300",
+  "name": "🔈AirPods Max 2024 Starlight",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 43300,
+  "catalog_url": "https://sochi.dr-store.ru/apple/airpods/airpods-max/airpods-max-2024-starlight",
+  "catalog_title": "беспроводные наушники Apple AirPods Max (2024), Starlight",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Apple H1"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Bluetooth 5.0"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-C"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 20 часов"
+    },
+    {
+      "key": "Ширина",
+      "value": "168.6 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "187.3 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "83.4 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "386.2 г"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "восемь микрофонов для активного шумоподавления, три микрофона для передачи голоса (два общих с активным шумоподавлением и один дополнительный микрофон)"
+    },
+    {
+      "key": "Датчики",
+      "value": "оптический датчик, датчик положения, датчик обнаружения корпуса, акселерометр, гироскоп (левая амбушюра)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-4-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-10-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-14-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-19-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/5b9560d4acd146b701d5f78a.jpg",
+    "assets/product-images/92b34078ddd5b6c9dfad63ae.jpg",
+    "assets/product-images/ad5bf53835bb04b0b2c3053e.jpg",
+    "assets/product-images/3fc3b26680f7e3f1f7024395.jpg"
+  ],
+  "updated_at": "2026-07-01T08:11:49.173480Z"
+}
