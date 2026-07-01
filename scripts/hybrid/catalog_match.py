@@ -148,7 +148,7 @@ def find_best_catalog_url(product: Product, sitemap_urls: list[str]) -> tuple[st
 def probe_category_products(
     products: list[Product],
     *,
-    min_score: float = 0.45,
+    min_score: float = 0.40,
     force_refresh_sitemap: bool = False,
     fetch_details: bool = True,
 ) -> dict:

@@ -45,7 +45,7 @@ def main() -> int:
         help="File with product IDs to probe, one per line (preferred for orchestrator)",
     )
     parser.add_argument("--refresh-sitemap", action="store_true")
-    parser.add_argument("--min-score", type=float, default=0.45)
+    parser.add_argument("--min-score", type=float, default=0.40)
     parser.add_argument("--dry-run", action="store_true", help="Score only, do not scrape product pages")
     args = parser.parse_args()
 

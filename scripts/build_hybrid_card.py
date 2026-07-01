@@ -16,6 +16,7 @@ from hybrid.catalog_match import probe_category_products, save_probe_result  # n
 from hybrid.config import HYBRID_CATEGORIES, PROBE_DIR  # noqa: E402
 from hybrid.eligibility import hybrid_skip_reason  # noqa: E402
 from hybrid.images import mirror_images  # noqa: E402
+from hybrid.existing import card_already_published  # noqa: E402
 from hybrid.manifest import load_source, save_source  # noqa: E402
 from hybrid.price_parser import load_products_from_sheet  # noqa: E402
 from hybrid.scraper import scrape_catalog_product  # noqa: E402
@@ -59,6 +60,9 @@ def build_from_probe(category: str, product_ids: list[str], *, refresh_match: bo
         product = all_by_id.get(product_id)
         if product and hybrid_skip_reason(product):
             continue
+        if card_already_published(category, product_id):
+            continue
+        try:
             existing = load_source(category, product_id)
             if existing and not refresh_match:
                 if existing.get("images_remote") and not existing.get("images_local"):
@@ -152,7 +156,7 @@ def main() -> int:
             indent=2,
         )
     )
-    return 1 if failures and not results else 0
+    return 0 if results or not failures else 1
 
 
 if __name__ == "__main__":

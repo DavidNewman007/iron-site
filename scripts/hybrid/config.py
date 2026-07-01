@@ -38,9 +38,9 @@ CATEGORY_URL_PREFIXES: dict[str, list[str]] = {
     "iphone": ["/apple/iphone/"],
     "ipad": ["/apple/ipad/"],
     "macbook": ["/apple/macbook/"],
-    "watch": ["/apple/watch/"],
+    "watch": ["/apple/apple-watch/", "/apple/watch/"],
     "airpods": ["/apple/airpods/"],
-    "samsung": ["/samsung/"],
+    "samsung": ["/smartfony/samsung/", "/samsung/"],
     "accessories": ["/apple/accessories/", "/accessories/"],
 }
 
