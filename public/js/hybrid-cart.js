@@ -314,11 +314,16 @@
     return Boolean(String(new URLSearchParams(window.location.search).get(PID_PARAM) || "").trim());
   }
 
+  function extractModelCode(name) {
+    const appleSku = String(name || "").match(/\b(M[A-Z]{2,3}\d{1,4})\b/i);
+    if (appleSku) return appleSku[1].toUpperCase();
+    return "";
+  }
+
   function findCatalogProduct(catalog, pickBtn, productId) {
     if (productId) {
       const byId = catalog.find((item) => idsLookEqual(item.id, productId));
       if (byId) return byId;
-      if (hasCanonicalPidInUrl()) return null;
     }
 
     const name = pickBtn?.dataset?.name;
@@ -330,14 +335,32 @@
     const nCountry = normalizeText(country);
     const nWarehouse = normalizeText(warehouse);
 
-    const matches = catalog.filter(
+    const exactMatches = catalog.filter(
       (item) =>
         normalizeText(item.name) === nName &&
         normalizeText(item.country) === nCountry &&
         normalizeText(item.warehouse) === nWarehouse
     );
+    if (exactMatches.length === 1) return exactMatches[0];
+    if (exactMatches.length > 1) {
+      exactMatches.sort((a, b) => (b.price || 0) - (a.price || 0));
+      return exactMatches[0];
+    }
 
-    if (matches.length === 1) return matches[0];
+    const modelCode = extractModelCode(name);
+    if (modelCode) {
+      const byModel = catalog.filter((item) => {
+        if (normalizeText(item.name) !== nName) return false;
+        if (nWarehouse && normalizeText(item.warehouse) !== nWarehouse) return false;
+        return extractModelCode(item.name) === modelCode;
+      });
+      if (byModel.length === 1) return byModel[0];
+      if (byModel.length > 1) {
+        byModel.sort((a, b) => (b.price || 0) - (a.price || 0));
+        return byModel[0];
+      }
+    }
+
     return null;
   }
 
@@ -510,29 +533,6 @@
     return true;
   }
 
-  function parsePriceHintFromPagePath() {
-    const match = window.location.pathname.match(/-s\d+-(\d{4,})\.html$/i);
-    return match ? parseInt(match[1], 10) : 0;
-  }
-
-  function tryFallbackPriceFromPagePath(pickBtn) {
-    const hint = parsePriceHintFromPagePath();
-    if (!hint || hint < 1000) return false;
-    const productId = resolveProductId(pickBtn) || slugify(
-      `${pickBtn.dataset.name || ""}${pickBtn.dataset.country || ""}${pickBtn.dataset.warehouse || ""}${hint}`
-    );
-    applyLivePrice(pickBtn, {
-      id: productId,
-      name: String(pickBtn.dataset.name || "").trim(),
-      country: String(pickBtn.dataset.country || "").trim(),
-      warehouse: String(pickBtn.dataset.warehouse || "").trim(),
-      price: hint,
-      priceLabel: formatPrice(hint),
-    });
-    syncPickBtn(pickBtn);
-    return true;
-  }
-
   async function syncLivePrice(pickBtn) {
     setPriceState("pending");
 
@@ -544,7 +544,6 @@
     try {
       const catalog = await loadCatalog();
       if (!catalog.length) {
-        if (getDetailWrap()?.dataset.priceState !== "ready" && tryFallbackPriceFromPagePath(pickBtn)) return;
         if (getDetailWrap()?.dataset.priceState !== "ready") markPriceError();
         return;
       }
@@ -552,7 +551,6 @@
       const productId = resolveProductId(pickBtn);
       const product = findCatalogProduct(catalog, pickBtn, productId);
       if (!product) {
-        if (getDetailWrap()?.dataset.priceState !== "ready" && tryFallbackPriceFromPagePath(pickBtn)) return;
         if (getDetailWrap()?.dataset.priceState !== "ready") markPriceError();
         return;
       }
@@ -561,7 +559,6 @@
       syncPickBtn(pickBtn);
     } catch (err) {
       console.warn("[hybrid-cart] price sync failed:", err);
-      if (getDetailWrap()?.dataset.priceState !== "ready" && tryFallbackPriceFromPagePath(pickBtn)) return;
       if (getDetailWrap()?.dataset.priceState !== "ready") markPriceError();
     }
   }
