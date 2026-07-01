@@ -404,6 +404,13 @@
       .replace(/"/g, "&quot;");
   }
 
+  function clearCart() {
+    localStorage.setItem(CART_KEY, JSON.stringify([]));
+    renderMobileCartBar();
+    const pickBtn = document.getElementById("pickBtn");
+    if (pickBtn) syncPickBtn(pickBtn);
+  }
+
   function openTelegramOrder() {
     const cart = readCart();
     if (!cart.length) {
@@ -425,6 +432,7 @@
     ].join("\n");
     const url = `https://t.me/${getTelegramUser()}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
+    clearCart();
   }
 
   function ensureMobileCartBar() {
@@ -502,6 +510,29 @@
     return true;
   }
 
+  function parsePriceHintFromPagePath() {
+    const match = window.location.pathname.match(/-s\d+-(\d{4,})\.html$/i);
+    return match ? parseInt(match[1], 10) : 0;
+  }
+
+  function tryFallbackPriceFromPagePath(pickBtn) {
+    const hint = parsePriceHintFromPagePath();
+    if (!hint || hint < 1000) return false;
+    const productId = resolveProductId(pickBtn) || slugify(
+      `${pickBtn.dataset.name || ""}${pickBtn.dataset.country || ""}${pickBtn.dataset.warehouse || ""}${hint}`
+    );
+    applyLivePrice(pickBtn, {
+      id: productId,
+      name: String(pickBtn.dataset.name || "").trim(),
+      country: String(pickBtn.dataset.country || "").trim(),
+      warehouse: String(pickBtn.dataset.warehouse || "").trim(),
+      price: hint,
+      priceLabel: formatPrice(hint),
+    });
+    syncPickBtn(pickBtn);
+    return true;
+  }
+
   async function syncLivePrice(pickBtn) {
     setPriceState("pending");
 
@@ -513,6 +544,7 @@
     try {
       const catalog = await loadCatalog();
       if (!catalog.length) {
+        if (getDetailWrap()?.dataset.priceState !== "ready" && tryFallbackPriceFromPagePath(pickBtn)) return;
         if (getDetailWrap()?.dataset.priceState !== "ready") markPriceError();
         return;
       }
@@ -520,6 +552,7 @@
       const productId = resolveProductId(pickBtn);
       const product = findCatalogProduct(catalog, pickBtn, productId);
       if (!product) {
+        if (getDetailWrap()?.dataset.priceState !== "ready" && tryFallbackPriceFromPagePath(pickBtn)) return;
         if (getDetailWrap()?.dataset.priceState !== "ready") markPriceError();
         return;
       }
@@ -528,6 +561,7 @@
       syncPickBtn(pickBtn);
     } catch (err) {
       console.warn("[hybrid-cart] price sync failed:", err);
+      if (getDetailWrap()?.dataset.priceState !== "ready" && tryFallbackPriceFromPagePath(pickBtn)) return;
       if (getDetailWrap()?.dataset.priceState !== "ready") markPriceError();
     }
   }

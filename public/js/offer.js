@@ -41,6 +41,11 @@
     renderCartBar();
   }
 
+  function clearCart() {
+    writeCart([]);
+    if (els.addCart) els.addCart.textContent = "+ В корзину по спеццене";
+  }
+
   function getTelegramUser() {
     return String(window.IRON_CONFIG?.telegramOrderUser || "ironsochi").replace(/^@/, "");
   }
@@ -75,6 +80,7 @@
       "_blank",
       "noopener,noreferrer"
     );
+    clearCart();
   }
 
   function setOgMeta(offer) {
@@ -141,34 +147,75 @@
     if (els.addCart) els.addCart.textContent = "✓ В корзине";
   }
 
+  function parseOfferFromQueryParams() {
+    const retail = parseInt(String(params.get("retail") || "").replace(/[^\d]/g, ""), 10);
+    const offer = parseInt(String(params.get("offer") || "").replace(/[^\d]/g, ""), 10);
+    const name = String(params.get("name") || "").trim();
+    if (!retail || !offer || !name) return null;
+
+    const exp = String(params.get("exp") || "").trim();
+    if (exp) {
+      const expMs = new Date(exp).getTime();
+      if (expMs && expMs < Date.now()) {
+        return { expired: true };
+      }
+    }
+
+    return {
+      token: token,
+      productName: name,
+      retailPrice: retail,
+      offerPrice: offer,
+      coverUrl: String(params.get("img") || "").trim(),
+      baseUrl: String(params.get("page") || "").trim(),
+      basePid: String(params.get("pid") || "").trim(),
+      expiresAt: exp || "",
+    };
+  }
+
+  async function fetchOfferFromApi() {
+    const apiBase = String(window.IRON_CONFIG?.personalOfferApiUrl || "").trim();
+    if (!apiBase || !token) return null;
+    const url = apiBase + (apiBase.indexOf("?") >= 0 ? "&" : "?") + "token=" + encodeURIComponent(token);
+    const res = await fetch(url, { cache: "no-store" });
+    const data = await res.json();
+    if (!res.ok || data.status !== "ok") {
+      return { error: data.error || "not_found" };
+    }
+    return data;
+  }
+
   async function loadOffer() {
+    const fromUrl = parseOfferFromQueryParams();
+    if (fromUrl?.expired) {
+      showError("Срок действия предложения истёк. Актуальные цены — в каталоге.", true);
+      return;
+    }
+    if (fromUrl) {
+      renderOffer(fromUrl);
+      return;
+    }
+
     if (!token) {
       showError("Ссылка на предложение не найдена.");
       return;
     }
-    const apiBase = String(window.IRON_CONFIG?.personalOfferApiUrl || "").trim();
-    if (!apiBase) {
-      showError("API персональных предложений не настроен. Обратитесь в сервис.");
-      return;
-    }
-    const url = apiBase + (apiBase.indexOf("?") >= 0 ? "&" : "?") + "token=" + encodeURIComponent(token);
+
     try {
-      const res = await fetch(url, { cache: "no-store" });
-      const data = await res.json();
-      if (!res.ok || data.status !== "ok") {
-        showError(
-          data.error === "expired"
-            ? "Срок действия предложения истёк. Актуальные цены — в каталоге."
-            : "Предложение не найдено или недоступно.",
-          data.error === "expired"
-        );
+      const data = await fetchOfferFromApi();
+      if (data?.error === "expired") {
+        showError("Срок действия предложения истёк. Актуальные цены — в каталоге.", true);
         return;
       }
-      renderOffer(data);
+      if (data && data.status === "ok") {
+        renderOffer(data);
+        return;
+      }
     } catch (err) {
-      console.warn("[offer]", err);
-      showError("Не удалось загрузить предложение. Попробуйте позже.");
+      console.warn("[offer] API fallback failed:", err);
     }
+
+    showError("Предложение не найдено или недоступно.");
   }
 
   if (els.addCart) els.addCart.addEventListener("click", addOfferToCart);
