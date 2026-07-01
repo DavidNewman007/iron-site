@@ -2701,6 +2701,9 @@
 
     const url = `https://t.me/${TG_USER}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
+    cart = [];
+    saveCart();
+    renderCart();
   }
 
   function loadCart() {
