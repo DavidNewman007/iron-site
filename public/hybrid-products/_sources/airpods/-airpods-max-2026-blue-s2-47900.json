@@ -1,0 +1,66 @@
+{
+  "product_id": "-airpods-max-2026-blue-s2-47900",
+  "category": "airpods",
+  "file_slug": "airpods-max-2026-blue-s2-47900",
+  "name": "🎧AirPods Max 2026 Blue",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 47900,
+  "catalog_url": "https://sochi.dr-store.ru/apple/airpods/airpods-max/airpods-max-2024-blue",
+  "catalog_title": "Купить беспроводные наушники Apple AirPods Max (2024), Blue…",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Apple H1"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Bluetooth 5.0"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-C"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 20 часов"
+    },
+    {
+      "key": "Ширина",
+      "value": "168.6 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "187.3 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "83.4 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "386.2 г"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "восемь микрофонов для активного шумоподавления, три микрофона для передачи голоса (два общих с активным шумоподавлением и один дополнительный микрофон)"
+    },
+    {
+      "key": "Датчики",
+      "value": "оптический датчик, датчик положения, датчик обнаружения корпуса, акселерометр, гироскоп (левая амбушюра)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-1-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-7-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-17-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-22-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/4fe5576ede1a3dae2ad42930.jpg",
+    "assets/product-images/381ed222530cac471c86b437.jpg",
+    "assets/product-images/77bfe4b3d6e3841f83825b0d.jpg",
+    "assets/product-images/026927b2495d8f4ba255f6b2.jpg"
+  ],
+  "updated_at": "2026-07-01T08:11:49.187309Z"
+}

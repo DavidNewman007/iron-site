@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-27T11:49:07.596059Z",
-  "count": 24,
+  "generated_at": "2026-07-01T08:12:23.999Z",
+  "count": 34,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -169,6 +169,76 @@
       "name": "Защитное стекло 3D Remax Антишпион для iPhone 16 Pro Max",
       "warehouse": "(S2)",
       "price": 500
+    },
+    "чехол-pitaka-для-iphone-16-pro-moonrise-s2-5800": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-16-pro-moonrise-s2-5800.html",
+      "cover": "assets/product-images/f68709cd8201af4ba2e42cb0.jpg",
+      "name": "Чехол PITAKA для iPhone 16 Pro, Moonrise",
+      "warehouse": "(S2)",
+      "price": 5800
+    },
+    "чехол-pitaka-для-iphone-17-pro-milky-way-s2-7700": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-milky-way-s2-7700.html",
+      "cover": "assets/product-images/ed70e3e220295eba139b478c.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro, Milky Way",
+      "warehouse": "(S2)",
+      "price": 7700
+    },
+    "чехол-pitaka-для-iphone-17-pro-sunset-s2-7700": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-sunset-s2-7700.html",
+      "cover": "assets/product-images/184be08993665396530f3c87.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro, Sunset",
+      "warehouse": "(S2)",
+      "price": 7700
+    },
+    "чехол-pitaka-для-iphone-17-pro-moonrise-s2-7700": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-moonrise-s2-7700.html",
+      "cover": "assets/product-images/184be08993665396530f3c87.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro, Moonrise",
+      "warehouse": "(S2)",
+      "price": 7700
+    },
+    "чехол-pitaka-для-iphone-17-pro-black-gray-s2-5500": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-black-gray-s2-5500.html",
+      "cover": "assets/product-images/184be08993665396530f3c87.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro, Black/Gray",
+      "warehouse": "(S2)",
+      "price": 5500
+    },
+    "чехол-pitaka-для-iphone-17-pro-max-golden-glint-s2-6600": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-max-golden-glint-s2-6600.html",
+      "cover": "assets/product-images/184be08993665396530f3c87.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro Max, Golden Glint",
+      "warehouse": "(S2)",
+      "price": 6600
+    },
+    "чехол-pitaka-для-iphone-17-pro-max-moonrise-s2-7700": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-max-moonrise-s2-7700.html",
+      "cover": "assets/product-images/184be08993665396530f3c87.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro Max, Moonrise",
+      "warehouse": "(S2)",
+      "price": 7700
+    },
+    "чехол-pitaka-для-iphone-17-pro-max-sunset-s2-7700": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-max-sunset-s2-7700.html",
+      "cover": "assets/product-images/184be08993665396530f3c87.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro Max, Sunset",
+      "warehouse": "(S2)",
+      "price": 7700
+    },
+    "чехол-pitaka-для-iphone-17-pro-max-lucid-blue-s2-6600": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-max-lucid-blue-s2-6600.html",
+      "cover": "assets/product-images/9d6d9d8a01f23e06e623b8b4.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro Max, Lucid Blue",
+      "warehouse": "(S2)",
+      "price": 6600
+    },
+    "чехол-бумажник-pitaka-samsung-s26-ultra-moonrise-s2-6400": {
+      "url": "hybrid-products/accessories/чехол-бумажник-pitaka-samsung-s26-ultra-moonrise-s2-6400.html",
+      "cover": "assets/product-images/c47fa8561bd534a3ac4cc42f.jpg",
+      "name": "Чехол-бумажник PITAKA Samsung S26 Ultra, Moonrise",
+      "warehouse": "(S2)",
+      "price": 6400
     }
   }
 }
