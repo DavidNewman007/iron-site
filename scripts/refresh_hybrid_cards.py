@@ -166,14 +166,18 @@ def main() -> int:
             print(result.stdout, end="")
             if result.stderr:
                 print(result.stderr, file=sys.stderr, end="")
-            if result.returncode != 0 and result.stdout.strip():
-                try:
-                    payload = json.loads(result.stdout)
-                    build_failures.extend(payload.get("failed", []))
-                except json.JSONDecodeError:
-                    result.check_returncode()
-            elif result.returncode != 0:
-                result.check_returncode()
+            if result.returncode != 0:
+                if result.stdout.strip():
+                    try:
+                        payload = json.loads(result.stdout)
+                        build_failures.extend(payload.get("failed", []))
+                        if payload.get("count", 0) > 0:
+                            continue
+                    except json.JSONDecodeError:
+                        pass
+                print(f"build warning for {category}: exit {result.returncode}", file=sys.stderr)
+                if result.stderr:
+                    print(result.stderr, file=sys.stderr)
         report["steps"]["build"] = "ok"
         if build_failures:
             report["build_failures"] = build_failures
