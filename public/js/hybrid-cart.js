@@ -389,6 +389,66 @@
 
   function writeCart(items) {
     localStorage.setItem(CART_KEY, JSON.stringify(dedupeCartById(items)));
+    renderMobileCartBar();
+  }
+
+  function getTelegramUser() {
+    return String(window.IRON_CONFIG?.telegramOrderUser || "ironsochi").replace(/^@/, "");
+  }
+
+  function escapeHtml(text) {
+    return String(text || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function openTelegramOrder() {
+    const cart = readCart();
+    if (!cart.length) {
+      window.location.href = "../../magazin.html";
+      return;
+    }
+    const lines = cart.map(
+      (p, i) =>
+        `${i + 1}. ${p.name}${p.country ? " " + p.country : ""}${p.warehouse ? " " + p.warehouse : ""} — ${p.priceLabel || formatPrice(p.price)}`
+    );
+    const total = cart.reduce((s, p) => s + (p.price || 0), 0);
+    const text = [
+      "Заявка с сайта IRON SERVICE",
+      "Хочу купить / забронировать:",
+      "",
+      ...lines,
+      "",
+      `Итого ориентир: ${formatPrice(total)}`,
+    ].join("\n");
+    const url = `https://t.me/${getTelegramUser()}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  function ensureMobileCartBar() {
+    if (document.querySelector(".hybrid-detail-cart-bar")) return;
+    const bar = document.createElement("div");
+    bar.className = "cart-mobile-bar hybrid-detail-cart-bar";
+    bar.innerHTML =
+      '<span class="cart-mobile-bar__info">' +
+      '<strong id="hybrid-cart-count-mobile">0</strong> шт. · <strong id="hybrid-cart-total-mobile">—</strong>' +
+      "</span>" +
+      '<button type="button" class="btn btn-primary" id="hybrid-cart-toggle">Корзина</button>';
+    document.body.appendChild(bar);
+    bar.querySelector("#hybrid-cart-toggle")?.addEventListener("click", openTelegramOrder);
+  }
+
+  function renderMobileCartBar() {
+    ensureMobileCartBar();
+    const cart = readCart();
+    const count = cart.length;
+    const total = cart.reduce((s, p) => s + (p.price || 0), 0);
+    const countEl = document.getElementById("hybrid-cart-count-mobile");
+    const totalEl = document.getElementById("hybrid-cart-total-mobile");
+    if (countEl) countEl.textContent = String(count);
+    if (totalEl) totalEl.textContent = count ? formatPrice(total) : "—";
   }
 
   function getCartIndex(cart, productId) {
@@ -492,10 +552,12 @@
       }
       writeCart(cart);
       syncPickBtn(pickBtn);
+      renderMobileCartBar();
     });
 
     syncPickBtn(pickBtn);
     syncLivePrice(pickBtn);
+    renderMobileCartBar();
   }
 
   if (document.readyState === "loading") {

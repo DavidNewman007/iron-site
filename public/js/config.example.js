@@ -14,6 +14,9 @@ window.IRON_CONFIG = {
   telegramOrderUser: "ironsochi",
   siteUrl: "https://1iron.ru",
 
+  // URL Web App PersonalOffer.js (Deploy → Web app, Anyone)
+  personalOfferApiUrl: "https://script.google.com/macros/s/AKfycbylyHTrL3Wj3533w4ZbKeFoE1x5aHaSLCiucWaRMRI/exec",
+
   map: {
     lat: 43.5854,
     lon: 39.724,

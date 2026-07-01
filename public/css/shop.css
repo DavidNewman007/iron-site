@@ -688,6 +688,10 @@
   display: none;
 }
 
+.cart-mobile-bar {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .shop-layout {
     grid-template-columns: 1fr;
@@ -866,6 +870,14 @@
 
   main {
     padding-bottom: 3.5rem;
+  }
+
+  body:has(.detail-wrap) {
+    padding-bottom: 3.5rem;
+  }
+
+  .hybrid-detail-cart-bar {
+    display: flex;
   }
 }
 
