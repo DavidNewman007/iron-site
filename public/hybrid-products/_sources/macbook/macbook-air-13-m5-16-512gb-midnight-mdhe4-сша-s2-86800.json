@@ -1,12 +1,12 @@
 {
-  "product_id": "macbook-air-13-m5-16-512gb-starlight-mdha4-ll-a-сша-s1-88100",
+  "product_id": "macbook-air-13-m5-16-512gb-midnight-mdhe4-сша-s2-86800",
   "category": "macbook",
-  "name": "MacBook Air 13 M5 16+ 512Gb Starlight MDHA4 LL/A",
+  "name": "MacBook Air 13 M5 16+ 512Gb Midnight MDHE4",
   "country": "",
-  "warehouse": "(S1)",
-  "price": 88100,
-  "catalog_url": "https://sochi.dr-store.ru/apple/macbook/macbook-air/macbook-air-13-m5/macbook-air-13-m5-2026-16-512gb-starlight",
-  "catalog_title": "ноутбук Apple MacBook Air 13\" (2026) M5 16/512GB, Starlight (MDHA4)",
+  "warehouse": "(S2)",
+  "price": 86800,
+  "catalog_url": "https://sochi.dr-store.ru/apple/macbook/macbook-air/macbook-air-13-m5/macbook-air-13-m5-2026-16-512gb-midnight",
+  "catalog_title": "ноутбук Apple MacBook Air 13\" (2026) M5 16/512GB, Midnight (MDHE4)",
   "specs": [
     {
       "key": "Тип дисплея",
@@ -94,19 +94,19 @@
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-13-15-m3-2024/mba13-m3-starlight-dr-store2-1000x1000.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-13-15-m4-2025/mba13-m4-starlight1-dr-store-1000x1000.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-13-15-m4-2025/mba13-m4-starlight4-dr-store-1000x1000.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-15-2023/mba15-starlight-4-1000x1000.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-15-2023/mba15-starlight-7-1000x1000.jpeg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-13-15-m3-2024/mba13-m3-midnight-dr-store2-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-13-15-m4-2025/mba13-m4-midnight1-dr-store-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-13-15-m4-2025/mba13-m4-midnight4-dr-store-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-2022/macbook-air-2022-21-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/air-2022/macbook-air-2022-24-1000x1000.jpeg"
   ],
   "images_local": [
-    "assets/product-images/d524db0423ef8b59ef9dbd93.jpeg",
-    "assets/product-images/2da7cd968db93fbdf25633c8.jpeg",
-    "assets/product-images/4a8af83a0c81581e376d98b3.jpeg",
-    "assets/product-images/2aeab3bfd6d232b97c31782a.jpeg",
-    "assets/product-images/1cd76a35829985055a9788fb.jpeg"
+    "assets/product-images/e6fd48ead26e93d18094a4d0.jpeg",
+    "assets/product-images/d175b8d82f4f397e8d14991f.jpeg",
+    "assets/product-images/a50042016b07520f3f89353d.jpeg",
+    "assets/product-images/006b6ded58e6cde961c9d024.jpeg",
+    "assets/product-images/013090f3984f196747f0ca5b.jpeg"
   ],
-  "file_slug": "macbook-air-13-m5-16-512gb-starlight-mdha4-ll-a-s1-88100",
-  "updated_at": "2026-07-03T09:51:07.206857Z"
+  "updated_at": "2026-07-03T09:51:07.210750Z",
+  "file_slug": "macbook-air-13-m5-16-512gb-midnight-mdhe4-s2-86800"
 }
