@@ -10,6 +10,9 @@ from .manifest import html_path, save_source, upsert_manifest_entry
 from .slug import build_file_slug
 
 
+SITE_ORIGIN = "https://1iron.ru"
+MAX_GALLERY_IMAGES = 8
+
 GALLERY_SCRIPT = r"""
     const IMAGES = __IMAGES__;
     const mainImg = document.getElementById('mainImg');
@@ -112,20 +115,41 @@ def _esc(value: str) -> str:
 def _gallery_block(images_rel: list[str], catalog_title: str) -> tuple[str, str]:
     if not images_rel:
         return ("<p>Изображения не найдены</p>", "")
-    main = f"../../{images_rel[0]}"
+    gallery = images_rel[:MAX_GALLERY_IMAGES]
+    main = f"../../{gallery[0]}"
     main_img = (
         f'<img id="mainImg" src="{_esc(main)}" alt="{_esc(catalog_title)}" '
         f'loading="eager" decoding="async" fetchpriority="high">'
     )
     thumbs = []
-    for idx, rel in enumerate(images_rel[1:6], start=0):
+    for idx, rel in enumerate(gallery):
         src = f"../../{rel}"
+        active = " is-active" if idx == 0 else ""
         thumbs.append(
-            f'<button type="button" class="thumb" data-idx="{idx + 1}">'
+            f'<button type="button" class="thumb{active}" data-idx="{idx}">'
             f'<img src="{_esc(src)}" alt="" loading="lazy" decoding="async"></button>'
         )
     return main_img, "".join(thumbs)
 
+
+def _og_block(source: dict[str, Any], images_rel: list[str]) -> str:
+    if not images_rel:
+        return ""
+    name = source["name"]
+    file_slug = source.get("file_slug") or build_file_slug(
+        source["name"], source.get("warehouse") or "", source["price"]
+    )
+    category = source["category"]
+    cover_rel = images_rel[0]
+    page_url = f"{SITE_ORIGIN}/hybrid-products/{category}/{file_slug}.html"
+    cover_url = f"{SITE_ORIGIN}/{cover_rel}"
+    return f"""  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="IRON SERVICE">
+  <meta property="og:title" content="{_esc(name)}">
+  <meta property="og:description" content="{_esc(name)} — актуальная цена в IRON SERVICE">
+  <meta property="og:url" content="{_esc(page_url)}">
+  <meta property="og:image" content="{_esc(cover_url)}">
+  <meta name="twitter:card" content="summary_large_image">"""
 
 def build_source_from_match(match_entry: dict[str, Any]) -> dict[str, Any]:
     product = match_entry["product"]
@@ -159,14 +183,16 @@ def render_html(source: dict[str, Any]) -> str:
         for item in specs
     )
     gallery_main, thumbs_html = _gallery_block(images_rel, catalog_title)
-    images_literal = json.dumps(images_js, ensure_ascii=False)
+    images_literal = json.dumps(images_js[:MAX_GALLERY_IMAGES], ensure_ascii=False)
     gallery_script = GALLERY_SCRIPT.replace("__IMAGES__", images_literal)
+    og_block = _og_block(source, images_rel)
 
     return f"""<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+{og_block}
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self' https://docs.google.com; frame-src 'none'">
   <title>{_esc(name)} — IRON SERVICE</title>
   <link rel="preconnect" href="https://fonts.bunny.net">

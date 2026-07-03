@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from hybrid.audit import audit_all, missing_product_ids, save_audit_report  # noqa: E402
+from hybrid.audit_images import audit_all_categories, find_cards_needing_repair  # noqa: E402
 from hybrid.config import HYBRID_CATEGORIES, PROBE_DIR  # noqa: E402
 from hybrid.eligibility import hybrid_skip_reason  # noqa: E402
 from hybrid.price_parser import load_products_from_sheet  # noqa: E402
@@ -139,8 +140,14 @@ def main() -> int:
     products, updated_at = load_products_from_sheet()
     report["price_updated_at"] = updated_at
 
+    image_audit_before = audit_all_categories(categories)
+    report["image_audit_before"] = [
+        item["summary"] for item in image_audit_before if item.get("summary")
+    ]
+
     if not args.skip_match:
         match_results: list[dict] = []
+        audit_pre = audit_all(products)
         for category in categories:
             if args.full_category:
                 product_ids = [
@@ -149,8 +156,12 @@ def main() -> int:
                     if p.category == category and hybrid_skip_reason(p) is None
                 ]
             else:
-                audit_pre = audit_all(products)
-                product_ids = missing_product_ids(audit_pre, category)
+                product_ids = list(
+                    dict.fromkeys(
+                        missing_product_ids(audit_pre, category)
+                        + find_cards_needing_repair(category)
+                    )
+                )
             result = run_match_category(category, product_ids, refresh_sitemap=args.refresh_sitemap)
             match_results.append(result)
         report["steps"]["match"] = "ok"
@@ -170,10 +181,12 @@ def main() -> int:
             cmd = [sys.executable, "scripts/build_hybrid_card.py", "--category", category]
             if args.full_category:
                 cmd.append("--all-in-category")
+                cmd.append("--force-rebuild")
                 if not args.skip_match:
                     cmd.append("--refresh-match")
             else:
                 cmd.append("--missing-only")
+                cmd.append("--repair-images")
             result = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
             print(result.stdout, end="")
             if result.stderr:
@@ -199,6 +212,11 @@ def main() -> int:
         save_audit_report(audit_report)
         report["audit_after_build"] = audit_report["summary"]
 
+        image_audit_after = audit_all_categories(categories)
+        report["image_audit_after"] = [
+            item["summary"] for item in image_audit_after if item.get("summary")
+        ]
+
     if not args.skip_patch:
         run(["node", "scripts/patch_hybrid_covers.js"])
         report["steps"]["patch"] = "ok"
@@ -206,7 +224,19 @@ def main() -> int:
     if not args.no_push:
         stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         missing = report.get("audit_after_build", report["audit"]).get("missing_meta", 0)
-        msg = f"Обновить hybrid-карточки ({stamp}). Осталось без meta: {missing}."
+        image_after = report.get("image_audit_after", report.get("image_audit_before", []))
+        repair_total = sum(
+            row.get("lineup_cover", 0)
+            + row.get("shared_cover_across_colors", 0)
+            + row.get("no_cover", 0)
+            + row.get("empty_gallery", 0)
+            + row.get("cover_main_mismatch", 0)
+            for row in image_after
+        )
+        msg = (
+            f"Инкрементальный ремонт hybrid-карточек ({stamp}). "
+            f"Осталось проблем с изображениями: {repair_total}, без meta: {missing}."
+        )
         report["publish"] = git_publish(msg, push=True)
     else:
         report["publish"] = {"committed": False, "pushed": False, "skipped": True}

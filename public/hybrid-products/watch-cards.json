@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-02T13:33:16.020Z",
-  "count": 94,
+  "generated_at": "2026-07-03T07:33:07.069Z",
+  "count": 95,
   "byId": {
     "series-se-3-40mm-s-m-midnight-mid-meh94-j-a-япония-s1-21900": {
       "url": "hybrid-products/watch/series-se-3-40mm-s-m-midnight-mid-meh94-j-a-s1-21900.html",
@@ -659,6 +659,13 @@
       "name": "Ultra 3 Natural Ocean Anchor Blue",
       "warehouse": "(S2)",
       "price": 65300
+    },
+    "ultra-3-black-ocean-black-сша-s2-63700": {
+      "url": "hybrid-products/watch/ultra-3-black-ocean-black-s2-63700.html",
+      "cover": "assets/product-images/f9a4baf490188ff1e662423d.jpg",
+      "name": "Ultra 3 Black Ocean Black",
+      "warehouse": "(S2)",
+      "price": 63700
     }
   }
 }

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -11,13 +12,14 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from hybrid.audit import audit_all, missing_product_ids  # noqa: E402
+from hybrid.audit_images import find_cards_needing_repair  # noqa: E402
 from hybrid.card_builder import build_card_from_source, build_source_from_match  # noqa: E402
 from hybrid.catalog_match import probe_category_products, save_probe_result  # noqa: E402
 from hybrid.config import HYBRID_CATEGORIES, PROBE_DIR  # noqa: E402
 from hybrid.eligibility import hybrid_skip_reason  # noqa: E402
 from hybrid.images import mirror_images  # noqa: E402
 from hybrid.existing import card_already_published  # noqa: E402
-from hybrid.manifest import load_source, save_source  # noqa: E402
+from hybrid.manifest import load_manifest, load_source, save_source  # noqa: E402
 from hybrid.price_parser import load_products_from_sheet  # noqa: E402
 from hybrid.scraper import scrape_catalog_product  # noqa: E402
 
@@ -33,7 +35,11 @@ def refresh_source_from_catalog(source: dict) -> dict:
     url = source.get("catalog_url")
     if not url:
         raise RuntimeError(f"No catalog_url in source for {source.get('product_id')}")
-    catalog = scrape_catalog_product(url)
+    catalog = scrape_catalog_product(
+        url,
+        category=str(source.get("category") or ""),
+        product_name=str(source.get("name") or ""),
+    )
     source["catalog_title"] = catalog.title
     source["specs"] = [{"key": k, "value": v} for k, v in catalog.specs]
     source["images_remote"] = catalog.images_remote
@@ -41,12 +47,36 @@ def refresh_source_from_catalog(source: dict) -> dict:
     return source
 
 
+def find_catalog_url_fallback(category: str, product_id: str, product_name: str) -> str:
+    """Reuse catalog URL from another card with the same product name."""
+    from hybrid.config import SOURCES_ROOT
+
+    target = re.sub(r"\s+", " ", str(product_name or "").strip().lower())
+    if not target:
+        return ""
+    sources_dir = SOURCES_ROOT / category
+    if not sources_dir.is_dir():
+        return ""
+    for path in sources_dir.glob("*.json"):
+        if path.stem == product_id:
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        name = re.sub(r"\s+", " ", str(data.get("name") or "").strip().lower())
+        url = str(data.get("catalog_url") or "").strip()
+        if name == target and url:
+            return url
+    return ""
+
+
 def build_from_probe(
     category: str,
     product_ids: list[str],
     *,
     refresh_match: bool = False,
-    force: bool = False,
+    force_rebuild: bool = False,
 ) -> tuple[list[dict], list[dict]]:
     products, _ = load_products_from_sheet()
     all_by_id = {p.id: p for p in products}
@@ -66,18 +96,48 @@ def build_from_probe(
         product = all_by_id.get(product_id)
         if product and hybrid_skip_reason(product):
             continue
-        if card_already_published(category, product_id) and not force:
+        if card_already_published(category, product_id) and not force_rebuild:
             continue
         try:
-            existing = load_source(category, product_id)
-            if existing and not refresh_match and not force:
-                if existing.get("images_remote") and not existing.get("images_local"):
-                    existing["images_local"] = mirror_images(existing["images_remote"])
-                built.append(build_card_from_source(existing))
+            if force_rebuild:
+                existing = load_source(category, product_id)
+                match = probe.get("matches", {}).get(product_id)
+                if match and match.get("status") == "matched":
+                    source = build_source_from_match(match)
+                    if existing and existing.get("catalog_url"):
+                        source["catalog_url"] = existing["catalog_url"]
+                elif existing and existing.get("catalog_url"):
+                    source = existing
+                else:
+                    manifest = load_manifest(category)
+                    meta = manifest.get("byId", {}).get(product_id, {})
+                    catalog_url = find_catalog_url_fallback(category, product_id, meta.get("name") or "")
+                    if catalog_url:
+                        source = {
+                            "product_id": product_id,
+                            "category": category,
+                            "name": meta.get("name") or product_id,
+                            "country": "",
+                            "warehouse": meta.get("warehouse") or "",
+                            "price": meta.get("price") or 0,
+                            "catalog_url": catalog_url,
+                        }
+                    else:
+                        failed.append(
+                            {
+                                "product_id": product_id,
+                                "error": f"catalog match status: {match.get('status') if match else 'missing'}",
+                            }
+                        )
+                        continue
+                source = refresh_source_from_catalog(source)
+                built.append(build_card_from_source(source))
                 continue
 
-            if force and existing and existing.get("catalog_url") and not refresh_match:
-                existing = refresh_source_from_catalog(existing)
+            existing = load_source(category, product_id)
+            if existing and not refresh_match:
+                if existing.get("images_remote") and not existing.get("images_local"):
+                    existing["images_local"] = mirror_images(existing["images_remote"])
                 built.append(build_card_from_source(existing))
                 continue
 
@@ -104,13 +164,17 @@ def main() -> int:
     parser.add_argument("--missing-only", action="store_true", help="Build only cards missing from manifests/files")
     parser.add_argument("--all-in-category", action="store_true", help="Rebuild every card in category from probe/source")
     parser.add_argument("--refresh-match", action="store_true", help="Re-run catalog match before build")
+    parser.add_argument("--force-rebuild", action="store_true", help="Rebuild existing cards from catalog (re-scrape images)")
     parser.add_argument(
-        "--force",
+        "--repair-images",
         action="store_true",
-        help="Rebuild even if card already published; refresh images from catalog_url",
+        help="Audit images and rebuild only flagged cards (re-scrape from catalog)",
     )
     parser.add_argument("--from-source", action="store_true", help="Rebuild HTML from existing _sources JSON only")
     args = parser.parse_args()
+
+    if args.repair_images:
+        args.force_rebuild = True
 
     if args.from_source:
         if not args.product_id:
@@ -131,15 +195,23 @@ def main() -> int:
 
     if args.missing_only:
         report = audit_all(products)
-        product_ids = missing_product_ids(report, args.category)
-    elif args.all_in_category:
+        product_ids.extend(missing_product_ids(report, args.category))
+
+    if args.repair_images:
+        if not args.category:
+            raise SystemExit("--repair-images requires --category")
+        product_ids.extend(find_cards_needing_repair(args.category))
+
+    if args.all_in_category:
         if not args.category:
             raise SystemExit("--all-in-category requires --category")
-        product_ids = [
+        product_ids.extend(
             p.id
             for p in products
             if p.category == args.category and hybrid_skip_reason(p) is None
-        ]
+        )
+
+    product_ids = list(dict.fromkeys(product_ids))
 
     product_ids = [
         pid
@@ -161,7 +233,12 @@ def main() -> int:
     results: list[dict] = []
     failures: list[dict] = []
     for category, ids in grouped.items():
-        built, failed = build_from_probe(category, ids, refresh_match=args.refresh_match, force=args.force)
+        built, failed = build_from_probe(
+            category,
+            ids,
+            refresh_match=args.refresh_match,
+            force_rebuild=args.force_rebuild,
+        )
         results.extend(built)
         failures.extend(failed)
 

@@ -179,7 +179,11 @@ def probe_category_products(
         }
         if fetch_details and url and score >= min_score:
             try:
-                catalog = scrape_catalog_product(url)
+                catalog = scrape_catalog_product(
+                    url,
+                    category=product.category,
+                    product_name=product.name,
+                )
                 entry["catalog_title"] = catalog.title
                 entry["specs"] = [{"key": k, "value": v} for k, v in catalog.specs]
                 entry["images_remote"] = catalog.images_remote
