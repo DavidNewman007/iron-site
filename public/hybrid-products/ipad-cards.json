@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-03T09:38:58.836Z",
-  "count": 36,
+  "generated_at": "2026-07-03T13:34:36.832Z",
+  "count": 39,
   "byId": {
     "ipad-11-a16-wi-fi-128gb-blue-j-a-япония-s1-31600": {
       "url": "hybrid-products/ipad/ipad-11-a16-wi-fi-128gb-blue-j-a-s1-31600.html",
@@ -253,6 +253,27 @@
       "name": "iPad Air 11\" M4 128GB Wi-Fi Blue",
       "warehouse": "(S2)",
       "price": 60200
+    },
+    "ipad-11-a16-128gb-wi-fi-pink-сша-s2-36500": {
+      "url": "hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-pink-s2-36500.html",
+      "cover": "assets/product-images/106bcc4b2cba9216a4ff8d4b.jpg",
+      "name": "iPad 11\" A16 128GB Wi-Fi Pink",
+      "warehouse": "(S2)",
+      "price": 36500
+    },
+    "ipad-11-a16-256gb-wi-fi-silver-сша-s2-43800": {
+      "url": "hybrid-products/ipad/ipad-11-a16-256gb-wi-fi-silver-s2-43800.html",
+      "cover": "assets/product-images/583a2d3c9183b1410db105a8.jpg",
+      "name": "iPad 11\" A16 256GB Wi-Fi Silver",
+      "warehouse": "(S2)",
+      "price": 43800
+    },
+    "ipad-11-a16-256gb-wi-fi-pink-сша-s2-42700": {
+      "url": "hybrid-products/ipad/ipad-11-a16-256gb-wi-fi-pink-s2-42700.html",
+      "cover": "assets/product-images/106bcc4b2cba9216a4ff8d4b.jpg",
+      "name": "iPad 11\" A16 256GB Wi-Fi Pink",
+      "warehouse": "(S2)",
+      "price": 42700
     }
   }
 }

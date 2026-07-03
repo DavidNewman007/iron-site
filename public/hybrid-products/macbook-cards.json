@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-03T09:51:19.414Z",
-  "count": 53,
+  "generated_at": "2026-07-03T13:34:36.837Z",
+  "count": 57,
   "byId": {
     "macbook-neo-13-a18-pro-8-256gb-indigo-mhff4-hn-a-индия-s1-54500": {
       "url": "hybrid-products/macbook/macbook-neo-13-a18-pro-8-256gb-indigo-mhff4-hn-a-s1-54500.html",
@@ -372,6 +372,34 @@
       "name": "MacBook Air 15 M5 16+ 512Gb Sky Blue MDVQ4",
       "warehouse": "(S2)",
       "price": 118200
+    },
+    "macbook-neo-13-a18-pro-8-256gb-indigo-mhff4-сша-s2-66300": {
+      "url": "hybrid-products/macbook/macbook-neo-13-a18-pro-8-256gb-indigo-mhff4-s2-66300.html",
+      "cover": "assets/product-images/093ebe2c24f53305a43f4ae8.jpg",
+      "name": "MacBook Neo 13 A18 Pro 8+ 256Gb Indigo MHFF4 ✈️",
+      "warehouse": "(S2)",
+      "price": 66300
+    },
+    "macbook-neo-13-a18-pro-8-256gb-blush-mhfh4-сша-s2-66300": {
+      "url": "hybrid-products/macbook/macbook-neo-13-a18-pro-8-256gb-blush-mhfh4-s2-66300.html",
+      "cover": "assets/product-images/5a5562c5b7ed180fe80ad0c1.jpg",
+      "name": "MacBook Neo 13 A18 Pro 8+ 256Gb Blush MHFH4 ✈️",
+      "warehouse": "(S2)",
+      "price": 66300
+    },
+    "macbook-air-13-m5-16-512gb-midnight-mdhe4-сша-s2-102500": {
+      "url": "hybrid-products/macbook/macbook-air-13-m5-16-512gb-midnight-mdhe4-s2-102500.html",
+      "cover": "assets/product-images/d175b8d82f4f397e8d14991f.jpeg",
+      "name": "MacBook Air 13 M5 16+ 512Gb Midnight MDHE4",
+      "warehouse": "(S2)",
+      "price": 102500
+    },
+    "macbook-air-13-m5-16-512gb-blue-mdhh4-сша-s2-102500": {
+      "url": "hybrid-products/macbook/macbook-air-13-m5-16-512gb-blue-mdhh4-s2-102500.html",
+      "cover": "assets/product-images/261a8c0931ffe90beac7053f.jpeg",
+      "name": "MacBook Air 13 M5 16+ 512Gb Blue MDHH4",
+      "warehouse": "(S2)",
+      "price": 102500
     }
   }
 }

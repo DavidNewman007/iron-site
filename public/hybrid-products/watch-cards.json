@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-03T09:51:19.404Z",
-  "count": 95,
+  "generated_at": "2026-07-03T13:34:36.847Z",
+  "count": 98,
   "byId": {
     "series-se-3-40mm-s-m-midnight-mid-meh94-j-a-япония-s1-21900": {
       "url": "hybrid-products/watch/series-se-3-40mm-s-m-midnight-mid-meh94-j-a-s1-21900.html",
@@ -666,6 +666,27 @@
       "name": "Ultra 3 Black Ocean Black",
       "warehouse": "(S2)",
       "price": 63700
+    },
+    "series-se-3-40mm-s-m-starlight-star-meh34-lw-a-сша-s1-24100": {
+      "url": "hybrid-products/watch/series-se-3-40mm-s-m-starlight-star-meh34-lw-a-s1-24100.html",
+      "cover": "assets/product-images/4b90a0cd78d4967a1be409cc.jpg",
+      "name": "Series SE 3 40mm S/M Starlight Star MEH34 LW/A",
+      "warehouse": "(S1)",
+      "price": 24100
+    },
+    "series-11-46mm-m-l-rose-gold-light-blush-mev74-lw-a-сша-s1-33400": {
+      "url": "hybrid-products/watch/series-11-46mm-m-l-rose-gold-light-blush-mev74-lw-a-s1-33400.html",
+      "cover": "assets/product-images/17ce71b4b66cf5cc09050825.jpg",
+      "name": "Series 11 46mm M/L Rose Gold Light Blush MEV74 LW/A",
+      "warehouse": "(S1)",
+      "price": 33400
+    },
+    "series-11-46mm-m-l-rose-gold-light-blush-mev74-x-a-австралия-s1-33700": {
+      "url": "hybrid-products/watch/series-11-46mm-m-l-rose-gold-light-blush-mev74-x-a-s1-33700.html",
+      "cover": "assets/product-images/17ce71b4b66cf5cc09050825.jpg",
+      "name": "Series 11 46mm M/L Rose Gold Light Blush MEV74 X/A",
+      "warehouse": "(S1)",
+      "price": 33700
     }
   }
 }
