@@ -49,39 +49,73 @@ def parse_specs(page_html: str) -> list[tuple[str, str]]:
     return specs
 
 
-def parse_gallery_images(page_html: str) -> list[str]:
-    candidates: dict[str, tuple[str, int]] = {}
+def parse_og_image(page_html: str) -> str | None:
+    match = re.search(r'property="og:image"\s+content="([^"]+)"', page_html, re.I)
+    if not match:
+        return None
+    url = match.group(1).strip()
+    if not url.startswith("http"):
+        url = DR_STORE_BASE + ("" if url.startswith("/") else "/") + url
+    return url
 
-    def add(url: str) -> None:
-        if not url.startswith("http"):
-            url = DR_STORE_BASE + ("" if url.startswith("/") else "/") + url
+
+def _product_gallery_prefix(page_url: str) -> str | None:
+    path = page_url.replace(DR_STORE_BASE, "").strip("/")
+    parts = path.split("/")
+    if len(parts) < 2:
+        return None
+    return f"/{'/'.join(parts[:-1])}/"
+
+
+def _image_base(url: str) -> str:
+    return re.sub(r"-\d+x\d+\.", ".", url)
+
+
+def _image_size(url: str) -> int:
+    size_match = re.search(r"-(\d+)x(\d+)\.", url)
+    return int(size_match.group(1)) if size_match else 0
+
+
+def _normalize_cache_url(url: str) -> str:
+    if not url.startswith("http"):
+        url = DR_STORE_BASE + ("" if url.startswith("/") else "/") + url
+    return url
+
+
+def parse_gallery_images(page_html: str, *, page_url: str = "") -> list[str]:
+    gallery_prefix = _product_gallery_prefix(page_url) if page_url else None
+    ordered_bases: list[str] = []
+    best_by_base: dict[str, tuple[str, int]] = {}
+
+    def consider(url: str) -> None:
+        url = _normalize_cache_url(url)
         if "/image/cache/" not in url:
             return
         if any(x in url.lower() for x in ("logo", "favicon", "mailservice", "/szu/", "remax")):
             return
-        size_match = re.search(r"-(\d+)x(\d+)\.", url)
-        size = int(size_match.group(1)) if size_match else 0
-        base = re.sub(r"-\d+x\d+\.", ".", url)
-        prev_size = candidates.get(base, ("", 0))[1]
-        if size >= prev_size:
-            candidates[base] = (url, size)
+        path_part = url.replace(DR_STORE_BASE, "")
+        if gallery_prefix and gallery_prefix not in path_part:
+            return
+        base = _image_base(url)
+        size = _image_size(url)
+        if base not in best_by_base:
+            ordered_bases.append(base)
+            best_by_base[base] = (url, size)
+        elif size > best_by_base[base][1]:
+            best_by_base[base] = (url, size)
 
-    for match in re.finditer(r'https://sochi\.dr-store\.ru/image/cache/[^"\']+', page_html):
-        add(match.group(0))
+    for match in re.finditer(r"https://sochi\.dr-store\.ru/image/cache/[^\"'\s<>]+", page_html):
+        consider(match.group(0))
 
-    ordered: list[str] = []
-    seen_urls: set[str] = set()
-    for url, _size in candidates.values():
-        if url in seen_urls:
-            continue
-        seen_urls.add(url)
-        ordered.append(url)
+    ordered = [best_by_base[base][0] for base in ordered_bases]
 
-    def sort_key(url: str) -> tuple[int, str]:
-        num = re.search(r"-dr-store-(\d+)-", url)
-        return (int(num.group(1)) if num else 999, url)
+    og_image = parse_og_image(page_html)
+    if og_image:
+        og_base = _image_base(og_image)
+        cover = best_by_base.get(og_base, (og_image, 0))[0]
+        ordered = [cover] + [url for url in ordered if _image_base(url) != og_base]
 
-    return sorted(ordered, key=sort_key)
+    return ordered
 
 
 def clean_catalog_title(title: str) -> str:
@@ -142,5 +176,5 @@ def scrape_catalog_product(url: str) -> CatalogProduct:
         if og_title and len(og_title) > len(title):
             title = og_title
     specs = sanitize_specs(parse_specs(page_html))
-    images = parse_gallery_images(page_html)
+    images = parse_gallery_images(page_html, page_url=url)
     return CatalogProduct(url=url, title=title, specs=specs, images_remote=images)
