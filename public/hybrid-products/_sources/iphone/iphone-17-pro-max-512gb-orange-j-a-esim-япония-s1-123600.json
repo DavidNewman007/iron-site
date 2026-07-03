@@ -139,10 +139,20 @@
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-1-1000x1000.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-7-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-14-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17-pro/iphone-17-pro-dr-store-1-1200x1200.jpg"
   ],
   "images_local": [
+    "assets/product-images/cf809c2211ee1e098b0c2e86.jpg",
+    "assets/product-images/1bd04f76fb0bf03852b4062f.jpg",
+    "assets/product-images/59b19297831b657a75551e24.jpg",
+    "assets/product-images/8304dd68c9990feba8e332b9.jpg",
+    "assets/product-images/2e65904c0285f8a2a56d1879.jpg",
     "assets/product-images/184be08993665396530f3c87.jpg"
   ],
-  "updated_at": "2026-07-03T06:51:53.168624Z"
+  "updated_at": "2026-07-03T08:42:40.338904Z"
 }

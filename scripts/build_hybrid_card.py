@@ -104,10 +104,14 @@ def build_from_probe(
                 match = probe.get("matches", {}).get(product_id)
                 if match and match.get("status") == "matched":
                     source = build_source_from_match(match)
-                    if existing and existing.get("catalog_url"):
-                        source["catalog_url"] = existing["catalog_url"]
+                    if existing:
+                        for key in ("catalog_url", "country"):
+                            if existing.get(key):
+                                source[key] = existing[key]
                 elif existing and existing.get("catalog_url"):
-                    source = existing
+                    source = dict(existing)
+                    source.setdefault("product_id", product_id)
+                    source.setdefault("category", category)
                 else:
                     manifest = load_manifest(category)
                     meta = manifest.get("byId", {}).get(product_id, {})
@@ -226,9 +230,10 @@ def main() -> int:
     grouped: dict[str, list[str]] = {}
     for pid in product_ids:
         product = by_id.get(pid)
-        if not product:
+        category = product.category if product else (args.category or pid.split("-", 1)[0])
+        if category not in HYBRID_CATEGORIES:
             continue
-        grouped.setdefault(product.category, []).append(pid)
+        grouped.setdefault(category, []).append(pid)
 
     results: list[dict] = []
     failures: list[dict] = []
