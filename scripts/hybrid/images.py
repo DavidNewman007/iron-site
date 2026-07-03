@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import hashlib
 import re
-import urllib.request
 from pathlib import Path
 
 from .config import PUBLIC, load_image_map, save_image_map
+from .http_utils import fetch_bytes
 
 
 def _local_name(url: str) -> str:
@@ -48,12 +48,7 @@ def mirror_images(
             rel_path = f"assets/product-images/{filename}"
             abs_path = PUBLIC / rel_path
             if not abs_path.exists():
-                req = urllib.request.Request(
-                    candidate,
-                    headers={"User-Agent": "iron-hybrid-pipeline/1.0"},
-                )
-                with urllib.request.urlopen(req, timeout=60) as resp:
-                    abs_path.write_bytes(resp.read())
+                abs_path.write_bytes(fetch_bytes(candidate, timeout=60))
             image_map[candidate] = rel_path
             if large != candidate:
                 image_map[large] = rel_path

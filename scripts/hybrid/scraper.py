@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import html as html_lib
 import re
-import urllib.request
 from dataclasses import dataclass
 
 from .config import COMPETITOR_PATTERNS, DR_STORE_BASE, SPEC_DROP_KEYS
+from .http_utils import fetch_text
 
 
 @dataclass
@@ -17,9 +17,7 @@ class CatalogProduct:
 
 
 def fetch_url(url: str, timeout: int = 45) -> str:
-    req = urllib.request.Request(url, headers={"User-Agent": "iron-hybrid-pipeline/1.0"})
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        return resp.read().decode("utf-8", errors="replace")
+    return fetch_text(url, timeout=timeout)
 
 
 def _clean_text(value: str) -> str:

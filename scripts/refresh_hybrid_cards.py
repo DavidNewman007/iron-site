@@ -66,7 +66,15 @@ def git_publish(message: str, *, push: bool) -> dict:
     )
     subprocess.run(["git", "config", "user.name", name], cwd=ROOT, check=True)
     subprocess.run(["git", "config", "user.email", email], cwd=ROOT, check=True)
-    run(["git", "add", "public/hybrid-products", "product-image-map.json"])
+    run(
+        [
+            "git",
+            "add",
+            "public/hybrid-products",
+            "public/assets/product-images",
+            "product-image-map.json",
+        ]
+    )
     status = subprocess.run(
         ["git", "status", "--porcelain"],
         cwd=ROOT,
@@ -105,7 +113,11 @@ def main() -> int:
     parser.add_argument("--skip-build", action="store_true")
     parser.add_argument("--skip-patch", action="store_true")
     parser.add_argument("--refresh-sitemap", action="store_true")
-    parser.add_argument("--push", action="store_true", help="Commit and push site changes")
+    parser.add_argument(
+        "--no-push",
+        action="store_true",
+        help="Build and patch only; do not commit or push (default: publish after build)",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Audit only, do not build or publish")
     args = parser.parse_args()
 
@@ -191,13 +203,13 @@ def main() -> int:
         run(["node", "scripts/patch_hybrid_covers.js"])
         report["steps"]["patch"] = "ok"
 
-    if args.push:
+    if not args.no_push:
         stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         missing = report.get("audit_after_build", report["audit"]).get("missing_meta", 0)
         msg = f"Обновить hybrid-карточки ({stamp}). Осталось без meta: {missing}."
         report["publish"] = git_publish(msg, push=True)
     else:
-        report["publish"] = {"committed": False, "pushed": False}
+        report["publish"] = {"committed": False, "pushed": False, "skipped": True}
 
     report["finished_at"] = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     print(json.dumps(report, ensure_ascii=False, indent=2))
