@@ -9,6 +9,7 @@ from pathlib import Path
 
 from .config import CATEGORY_URL_PREFIXES, DR_STORE_BASE, PROBE_DIR, SITEMAP_URL
 from .price_parser import Product
+from .product_match import iphone_match_penalty
 from .scraper import scrape_catalog_product
 
 
@@ -114,8 +115,13 @@ def score_product_url(product: Product, url: str) -> float:
         if pair.replace("-", "") not in slug_norm.replace(" ", ""):
             score *= 0.85
     gb = re.search(r"(\d+)\s*gb", product.name, re.I)
-    if gb and gb.group(1) not in slug:
-        score *= 0.75
+    if gb:
+        storage = gb.group(1)
+        if storage not in slug and f"{storage}gb" not in slug:
+            score *= 0.75
+
+    if product.category == "iphone":
+        score *= iphone_match_penalty(product.name, url)
 
     return score
 

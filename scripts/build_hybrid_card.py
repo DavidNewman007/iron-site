@@ -41,7 +41,13 @@ def refresh_source_from_catalog(source: dict) -> dict:
     return source
 
 
-def build_from_probe(category: str, product_ids: list[str], *, refresh_match: bool = False) -> tuple[list[dict], list[dict]]:
+def build_from_probe(
+    category: str,
+    product_ids: list[str],
+    *,
+    refresh_match: bool = False,
+    force: bool = False,
+) -> tuple[list[dict], list[dict]]:
     products, _ = load_products_from_sheet()
     all_by_id = {p.id: p for p in products}
     category_by_id = {p.id: p for p in products if p.category == category}
@@ -60,13 +66,18 @@ def build_from_probe(category: str, product_ids: list[str], *, refresh_match: bo
         product = all_by_id.get(product_id)
         if product and hybrid_skip_reason(product):
             continue
-        if card_already_published(category, product_id):
+        if card_already_published(category, product_id) and not force:
             continue
         try:
             existing = load_source(category, product_id)
-            if existing and not refresh_match:
+            if existing and not refresh_match and not force:
                 if existing.get("images_remote") and not existing.get("images_local"):
                     existing["images_local"] = mirror_images(existing["images_remote"])
+                built.append(build_card_from_source(existing))
+                continue
+
+            if force and existing and existing.get("catalog_url") and not refresh_match:
+                existing = refresh_source_from_catalog(existing)
                 built.append(build_card_from_source(existing))
                 continue
 
@@ -93,6 +104,11 @@ def main() -> int:
     parser.add_argument("--missing-only", action="store_true", help="Build only cards missing from manifests/files")
     parser.add_argument("--all-in-category", action="store_true", help="Rebuild every card in category from probe/source")
     parser.add_argument("--refresh-match", action="store_true", help="Re-run catalog match before build")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Rebuild even if card already published; refresh images from catalog_url",
+    )
     parser.add_argument("--from-source", action="store_true", help="Rebuild HTML from existing _sources JSON only")
     args = parser.parse_args()
 
@@ -145,7 +161,7 @@ def main() -> int:
     results: list[dict] = []
     failures: list[dict] = []
     for category, ids in grouped.items():
-        built, failed = build_from_probe(category, ids, refresh_match=args.refresh_match)
+        built, failed = build_from_probe(category, ids, refresh_match=args.refresh_match, force=args.force)
         results.extend(built)
         failures.extend(failed)
 

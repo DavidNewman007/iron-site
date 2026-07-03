@@ -6,8 +6,8 @@
   "country": "🇯🇵 Япония",
   "warehouse": "(S2)",
   "price": 76900,
-  "catalog_url": "https://sochi.dr-store.ru/apple/iphone/iphone-17/iphone-17-256gb-black-esim",
-  "catalog_title": "Купить смартфон Apple iPhone 17 256GB, Black (eSIM) в…",
+  "catalog_url": "https://sochi.dr-store.ru/apple/iphone/iphone-air/iphone-air-256gb-space-black",
+  "catalog_title": "Apple iPhone Air 256GB, Space Black (eSIM) в Сочи - Dr.Store",
   "specs": [
     {
       "key": "Недостаток",
@@ -19,7 +19,7 @@
     },
     {
       "key": "Диагональ",
-      "value": "6.3\""
+      "value": "6.5\""
     },
     {
       "key": "Технология дисплея",
@@ -27,7 +27,7 @@
     },
     {
       "key": "Разрешение",
-      "value": "2622x1206 пикселей"
+      "value": "2736x1260 пикселей"
     },
     {
       "key": "Яркость",
@@ -43,7 +43,7 @@
     },
     {
       "key": "Процессор",
-      "value": "Apple A19"
+      "value": "Apple A19 Pro"
     },
     {
       "key": "Графический процессор",
@@ -51,15 +51,15 @@
     },
     {
       "key": "Оперативная память",
-      "value": "8 ГБ"
+      "value": "12 ГБ"
     },
     {
       "key": "Разрешение основной камеры",
-      "value": "48 Мп, 48 Мп"
+      "value": "48 Мп"
     },
     {
       "key": "Диафрагма основной камеры",
-      "value": "основная: ƒ/1.6, сверхширокоугольная: ƒ/2.2, телефото: ƒ/1.6"
+      "value": "основная: ƒ/1.6, телефото: ƒ/1.6"
     },
     {
       "key": "Разрешение фронтальной камеры",
@@ -91,31 +91,31 @@
     },
     {
       "key": "Ёмкость аккумулятора",
-      "value": "3692 мАч"
+      "value": "3149 мАч"
     },
     {
       "key": "Беспроводная зарядка",
-      "value": "Есть, до 25W"
+      "value": "Есть, до 20W"
     },
     {
       "key": "Материал",
-      "value": "алюминий, Ceramic Shield 2"
+      "value": "титановый корпус, Ceramic Shield 2"
     },
     {
       "key": "Ширина",
-      "value": "71.5 мм"
+      "value": "74.7 мм"
     },
     {
       "key": "Высота",
-      "value": "149.6 мм"
+      "value": "156.2 мм"
     },
     {
       "key": "Толщина",
-      "value": "7.95 мм"
+      "value": "5.64 мм"
     },
     {
       "key": "Вес",
-      "value": "177 г"
+      "value": "165 г"
     },
     {
       "key": "Стандарт влагозащиты",
@@ -127,7 +127,7 @@
     },
     {
       "key": "Аудиотехнологии",
-      "value": "поддержка Dolby Atmos, 3 микрофона"
+      "value": "моно динамик"
     },
     {
       "key": "Датчики",
@@ -139,20 +139,20 @@
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-5-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-6-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-11-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-14-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-21-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-17/iphone-17-dr-store-26-1000x1000.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-5-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-9-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-3-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-11-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-21-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-1-1000x1000.jpg"
   ],
   "images_local": [
-    "assets/product-images/2ec20a040ecc13d1bcae2173.jpg",
-    "assets/product-images/44856e4f8d0c46ea3c823687.jpg",
-    "assets/product-images/688ad0288a5c191b01cbf08a.jpg",
-    "assets/product-images/9234447fcec80b6b72febe39.jpg",
-    "assets/product-images/d18efd96697b0000fa51e74c.jpg",
-    "assets/product-images/476f94f83ff240222881b75a.jpg"
+    "assets/product-images/dd2897be3a60b0b41e2dec8c.jpg",
+    "assets/product-images/18db00edaa6a421074780103.jpg",
+    "assets/product-images/af7af5e1e44286f79d8785e1.jpg",
+    "assets/product-images/8d733436484735f4239f8be8.jpg",
+    "assets/product-images/d5e1627e610ed5855a2f4d2d.jpg",
+    "assets/product-images/916967409ba274d685be4185.jpg"
   ],
-  "updated_at": "2026-07-02T13:31:41.626531Z"
+  "updated_at": "2026-07-03T06:51:53.347796Z"
 }

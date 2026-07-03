@@ -139,20 +139,20 @@
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-1-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-6-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-8-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-13-1000x1000.jpg",
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-15-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-19-1000x1000.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-8-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-6-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-13-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-19-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/iphone-air/iphone-air-dr-store-1-1000x1000.jpg"
   ],
   "images_local": [
-    "assets/product-images/916967409ba274d685be4185.jpg",
-    "assets/product-images/e5399ea61354ead5e3309f00.jpg",
-    "assets/product-images/cf70cfcca35a3bf3bf834306.jpg",
-    "assets/product-images/c0bf5116b340cda88157b385.jpg",
     "assets/product-images/d56da74fe780909246a3937d.jpg",
-    "assets/product-images/51123e3d5f8e528178f2f16d.jpg"
+    "assets/product-images/cf70cfcca35a3bf3bf834306.jpg",
+    "assets/product-images/e5399ea61354ead5e3309f00.jpg",
+    "assets/product-images/c0bf5116b340cda88157b385.jpg",
+    "assets/product-images/51123e3d5f8e528178f2f16d.jpg",
+    "assets/product-images/916967409ba274d685be4185.jpg"
   ],
-  "updated_at": "2026-07-02T13:31:04.520197Z"
+  "updated_at": "2026-07-03T06:51:52.985589Z"
 }
