@@ -1424,7 +1424,10 @@
   function bindEvents() {
     initCategoryPicker();
     els.search?.addEventListener("input", scheduleRenderGrid);
-    els.category?.addEventListener("change", renderGrid);
+    els.category?.addEventListener("change", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      renderGrid();
+    });
     els.cartClear?.addEventListener("click", () => {
       cart = [];
       saveCart();
@@ -1475,7 +1478,8 @@
     }
 
     function setCategoryValue(value) {
-      if (select.value !== value) select.value = value;
+      const changed = select.value !== value;
+      if (changed) select.value = value;
       label.textContent =
         select.options[select.selectedIndex]?.textContent || select.options[0]?.textContent || "Все категории";
       menu.querySelectorAll(".shop-category-picker__option").forEach((node) => {
@@ -1484,7 +1488,7 @@
         node.setAttribute("aria-selected", active ? "true" : "false");
       });
       closeCategoryMenu();
-      select.dispatchEvent(new Event("change", { bubbles: true }));
+      if (changed) select.dispatchEvent(new Event("change", { bubbles: true }));
     }
 
     function openCategoryMenu() {
