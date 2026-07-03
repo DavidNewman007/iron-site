@@ -139,10 +139,18 @@
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-18-1000x1000.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-18-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-14-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-9-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/16-16-plus/iphone-16-dr-store-1-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/3828dadd9c644d43df11358c.jpg"
+    "assets/product-images/3828dadd9c644d43df11358c.jpg",
+    "assets/product-images/88c64dcb1b47328a508e955a.jpg",
+    "assets/product-images/80c1e7565d5a0ba889137f72.jpg",
+    "assets/product-images/935de02fb7bf7d182344c945.jpg",
+    "assets/product-images/4a2f66df0a650f2bb3f32270.jpg"
   ],
-  "updated_at": "2026-07-03T06:51:52.833012Z"
+  "updated_at": "2026-07-03T09:35:30.458289Z"
 }

@@ -13,10 +13,22 @@ IMAGE_ISSUE_KEYS = (
     "no_cover",
     "missing_html",
     "empty_gallery",
+    "thin_gallery",
     "lineup_cover",
     "shared_cover_across_colors",
     "cover_main_mismatch",
 )
+
+# Minimum in-card gallery size; below this we re-scrape dr-store.
+MIN_GALLERY_IMAGES: dict[str, int] = {
+    "iphone": 3,
+    "samsung": 3,
+    "macbook": 2,
+    "ipad": 2,
+    "watch": 2,
+    "airpods": 2,
+    "accessories": 1,
+}
 
 
 def model_key(name: str) -> str:
@@ -54,10 +66,13 @@ def audit_category(category: str) -> dict:
     image_map = load_image_map()
     local_to_remote = {v: k for k, v in image_map.items()}
 
+    min_gallery = MIN_GALLERY_IMAGES.get(category, 2)
+
     issues: dict = {
         "no_cover": [],
         "missing_html": [],
         "empty_gallery": [],
+        "thin_gallery": [],
         "lineup_cover": [],
         "shared_cover_across_colors": [],
         "cover_main_mismatch": [],
@@ -88,6 +103,11 @@ def audit_category(category: str) -> dict:
         if not images:
             issues["empty_gallery"].append(product_id)
             continue
+
+        if len(images) < min_gallery:
+            issues["thin_gallery"].append(
+                {"product_id": product_id, "name": name, "count": len(images)}
+            )
 
         main_match = re.search(r'id="mainImg" src="\.\./\.\./([^"]+)"', html)
         if main_match and main_match.group(1) != cover:
@@ -123,6 +143,7 @@ def audit_category(category: str) -> dict:
         "no_cover": len(issues["no_cover"]),
         "missing_html": len(issues["missing_html"]),
         "empty_gallery": len(issues["empty_gallery"]),
+        "thin_gallery": len(issues["thin_gallery"]),
         "lineup_cover": len(issues["lineup_cover"]),
         "shared_cover_across_colors": len(issues["shared_cover_across_colors"]),
         "cover_main_mismatch": len(issues["cover_main_mismatch"]),
@@ -141,6 +162,12 @@ def find_cards_needing_repair(category: str) -> list[str]:
 
     for key in ("no_cover", "missing_html", "empty_gallery", "cover_main_mismatch"):
         ids.update(issues.get(key, []))
+
+    for item in issues.get("thin_gallery", []):
+        if isinstance(item, dict):
+            pid = item.get("product_id")
+            if pid:
+                ids.add(str(pid))
 
     for item in issues.get("lineup_cover", []):
         if isinstance(item, dict):

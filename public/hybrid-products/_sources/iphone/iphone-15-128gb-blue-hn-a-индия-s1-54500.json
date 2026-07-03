@@ -139,10 +139,16 @@
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/15-15-plus/iphone-15-dr-store-32-1000x1000.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/15-15-plus/iphone-15-dr-store-32-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/15-15-plus/iphone-15-dr-store-27-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/15-15-plus/iphone-15-dr-store-17-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/15-15-plus/iphone-15-dr-store-13-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/f93a451f9d5660eea5c8955c.jpg"
+    "assets/product-images/f93a451f9d5660eea5c8955c.jpg",
+    "assets/product-images/56cf9208a62177a0f3d1b47a.jpg",
+    "assets/product-images/d31daa7f16eca194f190a4a1.jpg",
+    "assets/product-images/e6dd5f06a816d0bc679b88e2.jpg"
   ],
-  "updated_at": "2026-07-03T06:51:52.801099Z"
+  "updated_at": "2026-07-03T09:35:13.401121Z"
 }

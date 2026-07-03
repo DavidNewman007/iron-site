@@ -127,10 +127,16 @@
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/14-14-plus/iphone_14_midnight-1000x1000.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/14-14-plus/iphone_14_midnight-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/14-14-plus/iphone_14_midnight_111-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/14-14-plus/iphone_14_midnight_11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/14-14-plus/Avito_iPhone_14_all-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/36143c648e79ff8ee123331b.jpg"
+    "assets/product-images/36143c648e79ff8ee123331b.jpg",
+    "assets/product-images/e7c12d6472d013821f03d2df.jpg",
+    "assets/product-images/33fb141514646020d00052f1.jpg",
+    "assets/product-images/a43011b0577134d1f6c3ee59.jpg"
   ],
-  "updated_at": "2026-07-03T06:51:53.258035Z"
+  "updated_at": "2026-07-03T09:34:53.303208Z"
 }

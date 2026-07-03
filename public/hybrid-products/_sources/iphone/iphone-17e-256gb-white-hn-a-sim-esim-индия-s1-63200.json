@@ -139,10 +139,16 @@
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17e/iphone-17e-dr-store-2-1000x1000.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17e/iphone-17e-dr-store-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17e/iphone-17e-dr-store-7-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17e/iphone-17e-dr-store-10-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/17e/iphone-17e-dr-store-1-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/179e3e63d752269783f99fc0.jpg"
+    "assets/product-images/179e3e63d752269783f99fc0.jpg",
+    "assets/product-images/a25864228254411ac703a92e.jpg",
+    "assets/product-images/a39149a40d11412e09eefdd9.jpg",
+    "assets/product-images/d39edaec9f4de107fa9164e2.jpg"
   ],
-  "updated_at": "2026-07-03T06:51:52.861131Z"
+  "updated_at": "2026-07-03T09:38:10.187895Z"
 }
