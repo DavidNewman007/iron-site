@@ -281,6 +281,33 @@ def _append_unique(result: list[str], seen: set[str], url: str, hints: dict[str,
         return
 
 
+def is_macbook_keyboard_shot(url: str) -> bool:
+    value = urllib.parse.unquote(str(url or "")).lower()
+    if re.search(r"-dr-store2(?:[\-\.]|$)", value):
+        return True
+    if re.search(r"(?:starlight|silver|midnight|skyblue|spacegray)4-dr-store", value):
+        return True
+    if re.search(r"mba15-[^/]+-(?:4|7)-", value):
+        return True
+    return False
+
+
+def fix_macbook_cover_order(urls: list[str], hints: dict[str, str]) -> list[str]:
+    if hints.get("category") != "macbook" or len(urls) < 2:
+        return urls
+    size = hints.get("size") or hints.get("href_size") or ""
+    heroes = [url for url in urls if not is_macbook_keyboard_shot(url)]
+    keyboards = [url for url in urls if is_macbook_keyboard_shot(url)]
+    if not heroes:
+        return urls
+    if size == "13":
+        on_size = [url for url in heroes if "mba15" not in url.lower() and "/air-15" not in url.lower()]
+        other_size = [url for url in heroes if url not in on_size]
+        if on_size:
+            heroes = on_size + other_size
+    return heroes + keyboards
+
+
 def fix_iphone_lineup_cover(urls: list[str]) -> list[str]:
     """When dr-store uses a low-index lineup hero, prefer the next color-specific shot."""
     if len(urls) < 2:
@@ -334,6 +361,9 @@ def select_product_images(
     if category == "iphone":
         result = fix_iphone_lineup_cover(result)
         result = demote_shared_lineup_tail(result)
+
+    if category == "macbook":
+        result = fix_macbook_cover_order(result, hints)
 
     if category == "accessories":
         result = filter_accessory_images(result, product_name, catalog_url)

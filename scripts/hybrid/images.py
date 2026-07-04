@@ -41,8 +41,11 @@ def mirror_images(
         large = prefer_large_image_url(remote)
         for candidate in (large, remote):
             if candidate in image_map:
-                local_paths.append(image_map[candidate])
-                break
+                rel_path = image_map[candidate]
+                abs_path = PUBLIC / rel_path
+                if abs_path.exists():
+                    local_paths.append(rel_path)
+                    break
         else:
             filename = _local_name(candidate)
             rel_path = f"assets/product-images/{filename}"

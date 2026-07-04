@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -237,6 +238,7 @@ def main() -> int:
 
     results: list[dict] = []
     failures: list[dict] = []
+    patched_categories: list[str] = []
     for category, ids in grouped.items():
         built, failed = build_from_probe(
             category,
@@ -246,6 +248,15 @@ def main() -> int:
         )
         results.extend(built)
         failures.extend(failed)
+        if built:
+            patched_categories.append(category)
+
+    for category in patched_categories:
+        subprocess.run(
+            ["node", str(ROOT / "scripts" / "patch_hybrid_covers.js"), "--category", category],
+            cwd=ROOT,
+            check=False,
+        )
 
     print(
         json.dumps(

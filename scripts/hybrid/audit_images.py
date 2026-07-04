@@ -17,6 +17,7 @@ IMAGE_ISSUE_KEYS = (
     "lineup_cover",
     "shared_cover_across_colors",
     "cover_main_mismatch",
+    "missing_cover_file",
 )
 
 # Minimum in-card gallery size; below this we re-scrape dr-store.
@@ -76,6 +77,7 @@ def audit_category(category: str) -> dict:
         "lineup_cover": [],
         "shared_cover_across_colors": [],
         "cover_main_mismatch": [],
+        "missing_cover_file": [],
     }
 
     model_covers: dict[str, dict[str, list[str]]] = defaultdict(lambda: defaultdict(list))
@@ -107,6 +109,12 @@ def audit_category(category: str) -> dict:
         if len(images) < min_gallery:
             issues["thin_gallery"].append(
                 {"product_id": product_id, "name": name, "count": len(images)}
+            )
+
+        cover_path = ROOT / "public" / cover if cover else None
+        if cover and (cover_path is None or not cover_path.exists()):
+            issues.setdefault("missing_cover_file", []).append(
+                {"product_id": product_id, "name": name, "cover": cover}
             )
 
         main_match = re.search(r'id="mainImg" src="\.\./\.\./([^"]+)"', html)
@@ -147,6 +155,7 @@ def audit_category(category: str) -> dict:
         "lineup_cover": len(issues["lineup_cover"]),
         "shared_cover_across_colors": len(issues["shared_cover_across_colors"]),
         "cover_main_mismatch": len(issues["cover_main_mismatch"]),
+        "missing_cover_file": len(issues.get("missing_cover_file", [])),
     }
     return {"summary": summary, "issues": issues}
 
@@ -164,6 +173,12 @@ def find_cards_needing_repair(category: str) -> list[str]:
         ids.update(issues.get(key, []))
 
     for item in issues.get("thin_gallery", []):
+        if isinstance(item, dict):
+            pid = item.get("product_id")
+            if pid:
+                ids.add(str(pid))
+
+    for item in issues.get("missing_cover_file", []):
         if isinstance(item, dict):
             pid = item.get("product_id")
             if pid:
