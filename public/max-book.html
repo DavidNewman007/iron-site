@@ -5,29 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Бронирование в MAX — IRON SERVICE</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
   <script src="js/config.js"></script>
   <style>
-    body {
-      font-family: system-ui, sans-serif;
-      max-width: 28rem;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      line-height: 1.5;
-      color: #111;
+    .book-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 1rem 1rem 3rem;
     }
-    .muted { color: #666; font-size: 0.95rem; }
+    .book-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    .book-preview {
+      white-space: pre-wrap;
+      font-family: inherit;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      padding: 0.85rem;
+      margin: 0.75rem 0 1rem;
+      max-height: 40vh;
+      overflow: auto;
+    }
+    .book-steps {
+      color: var(--text-muted, #aaa);
+      font-size: 0.92rem;
+      margin: 0.75rem 0 1rem;
+      padding-left: 1.1rem;
+    }
+    .book-steps li { margin: 0.35rem 0; }
+    .book-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .book-actions .btn { width: 100%; text-align: center; }
+    .book-error { color: #ffb4b4; }
   </style>
 </head>
 <body>
-  <p id="status">Открываем MAX с вашей заявкой…</p>
-  <p class="muted" id="hint" hidden>Если MAX не открылся — нажмите кнопку ниже.</p>
-  <p id="actions" hidden></p>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img" width="180" height="48">
+      </a>
+    </div>
+  </header>
+
+  <main class="book-wrap">
+    <h1 class="section-title">Заявка в MAX</h1>
+    <div class="book-card" id="bookContent" hidden>
+      <p>Текст заявки сформирован. Нажмите кнопку — откроется MAX с <strong>уже набранным сообщением</strong>.</p>
+      <pre class="book-preview" id="bookPreview"></pre>
+      <ol class="book-steps">
+        <li>Нажмите «Открыть в MAX».</li>
+        <li>Выберите чат с ботом <strong>IRON SERVICE</strong>.</li>
+        <li>Нажмите «Отправить» — заявка уйдёт в сервис.</li>
+      </ol>
+      <div class="book-actions">
+        <a class="btn btn-primary" id="bookOpenMax" href="#">Открыть в MAX</a>
+        <a class="btn btn-secondary" id="bookBack" href="magazin.html">Вернуться в магазин</a>
+      </div>
+    </div>
+    <p class="book-error" id="bookError" hidden></p>
+  </main>
+
   <script>
     (function () {
       var cfg = window.IRON_CONFIG || {};
-      var statusEl = document.getElementById("status");
-      var hintEl = document.getElementById("hint");
-      var actionsEl = document.getElementById("actions");
+      var contentEl = document.getElementById("bookContent");
+      var previewEl = document.getElementById("bookPreview");
+      var openEl = document.getElementById("bookOpenMax");
+      var errorEl = document.getElementById("bookError");
+      var backEl = document.getElementById("bookBack");
 
       function readOrderText() {
         try {
@@ -42,46 +99,21 @@
         return base + "?text=" + encodeURIComponent(text);
       }
 
-      function getBotUrl() {
-        return String(cfg.maxBotUrl || "https://max.ru/id231708534609_bot").trim();
-      }
-
-      function getFunctionUrl() {
-        return String(cfg.maxFunctionUrl || "").replace(/\/$/, "");
-      }
-
-      function showFallback(text) {
-        statusEl.textContent = "Не удалось автоматически открыть MAX.";
-        hintEl.hidden = false;
-        actionsEl.hidden = false;
-        var share = getShareUrl(text);
-        var bot = getBotUrl();
-        actionsEl.innerHTML =
-          '<p><a href="' + share + '">Открыть с готовым текстом заявки</a></p>' +
-          '<p class="muted">Выберите чат с ботом IRON SERVICE и отправьте сообщение.</p>' +
-          '<p><a href="' + bot + '">Открыть бота IRON SERVICE</a></p>';
-      }
-
       var text = readOrderText();
       if (!text.trim()) {
-        statusEl.textContent = "Заявка не найдена. Вернитесь на сайт и нажмите «Забронировать в MAX» ещё раз.";
+        errorEl.hidden = false;
+        errorEl.textContent =
+          "Заявка не найдена. Вернитесь на сайт, добавьте товар в корзину и нажмите «Забронировать в MAX» ещё раз.";
         return;
       }
 
-      var funcUrl = getFunctionUrl();
-      if (funcUrl) {
-        var redirectUrl =
-          funcUrl +
-          "?action=prepare_booking_redirect&text=" +
-          encodeURIComponent(text);
-        window.setTimeout(function () {
-          showFallback(text);
-        }, 4000);
-        window.location.replace(redirectUrl);
-        return;
+      if (document.referrer && document.referrer.indexOf("offer.html") !== -1) {
+        backEl.href = document.referrer.split("?")[0] || "offer.html";
       }
 
-      window.location.replace(getShareUrl(text));
+      previewEl.textContent = text;
+      openEl.href = getShareUrl(text);
+      contentEl.hidden = false;
     })();
   </script>
 </body>
