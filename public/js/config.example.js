@@ -16,7 +16,7 @@ window.IRON_CONFIG = {
    * Личный чат IRON SERVICE в MAX (не бот).
    * Получить: MAX на рабочем телефоне → Настройки → QR профиля → Поделиться → max.ru/u/…
    */
-  maxOrderChatUrl: "",
+  maxOrderChatUrl: "https://max.ru/u/f9LHodD0cOKlZ_elHjnvsmd373HrpTVtuoGG97clDc4Pd9YoT_9wa7HEQtU",
   /** Запасной :share — экран «выбрать контакт», без фиксированного получателя */
   maxShareUrl: "https://max.ru/:share",
   maxBotUrl: "https://max.ru/id231708534609_bot",
