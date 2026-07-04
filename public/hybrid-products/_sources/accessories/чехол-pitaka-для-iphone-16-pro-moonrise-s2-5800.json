@@ -6,8 +6,8 @@
   "country": "",
   "warehouse": "(S2)",
   "price": 5800,
-  "catalog_url": "https://sochi.dr-store.ru/accessories/chekhly-nakladki/smartphone-cases/chexol-acecase-crystal-shield-dlya-iphone-16-pro-max-desert-titanium",
-  "catalog_title": "Чехол AceCase CRYSTAL SHIELD для iPhone 16 Pro Max, Desert Titanium",
+  "catalog_url": "https://sochi.dr-store.ru/accessories/chekhly-nakladki/smartphone-cases/chexol-acecase-crystal-shield-dlya-iphone-16-pro-desert-titanium",
+  "catalog_title": "Чехол AceCase CRYSTAL SHIELD для iPhone 16 Pro, Desert Titanium",
   "specs": [
     {
       "key": "Материал",
@@ -15,7 +15,7 @@
     },
     {
       "key": "Совместимость",
-      "value": "iPhone 16 Pro Max"
+      "value": "iPhone 16 Pro"
     },
     {
       "key": "Цвет",
@@ -23,10 +23,10 @@
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/chexol-acecase-crystal-shield-dlya-iphone-16-pro-max-desert-titanium/chexol-acecase-crystal-shield-dlya-iphone-16-pro-max-desert-titanium-1000x1000.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/chexol-acecase-crystal-shield-dlya-iphone-16-pro-max-desert-titanium/chexol-acecase-crystal-shield-dlya-iphone-16-pro-max-desert-titanium-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/f68709cd8201af4ba2e42cb0.jpg"
+    "assets/product-images/54144211cd961d1f041e1d8b.jpg"
   ],
-  "updated_at": "2026-07-02T13:33:03.521967Z"
+  "updated_at": "2026-07-04T08:00:31.366473Z"
 }

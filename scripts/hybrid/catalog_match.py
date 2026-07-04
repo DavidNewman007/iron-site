@@ -79,6 +79,96 @@ def token_set(text: str) -> set[str]:
     return {t for t in tokens if len(t) > 1 and t not in stop}
 
 
+def accessory_kind(name_norm: str) -> str | None:
+    if "pitaka" in name_norm or "питака" in name_norm:
+        return "pitaka"
+    if "pencil" in name_norm or "пенсил" in name_norm:
+        return "pencil"
+    if "airtag" in name_norm:
+        return "airtag"
+    if "remax" in name_norm or "стекло" in name_norm:
+        return "remax"
+    if "mouse" in name_norm or "мыш" in name_norm:
+        return "mouse"
+    if "сзu" in name_norm or "сзу" in name_norm or "charger" in name_norm:
+        return "charger"
+    return None
+
+
+def iphone_model_in_text(text: str) -> str | None:
+    value = str(text or "").lower().replace("ё", "е")
+    for model in ("17-pro-max", "17-pro", "16-pro-max", "16-pro", "15-pro-max", "15-pro"):
+        if model in value or model.replace("-", " ") in value:
+            return model
+    if "s26 ultra" in value or "s26-ultra" in value:
+        return "s26-ultra"
+    return None
+
+
+def model_matches_slug(model: str, slug: str) -> bool:
+    if model == "17-pro":
+        return "17-pro" in slug and "17-pro-max" not in slug
+    if model == "16-pro":
+        return "16-pro" in slug and "16-pro-max" not in slug
+    if model == "15-pro":
+        return "15-pro" in slug and "15-pro-max" not in slug
+    return model in slug
+
+
+def score_accessory_url(name_norm: str, slug: str, url: str, score: float) -> float:
+    kind = accessory_kind(name_norm)
+    model = iphone_model_in_text(name_norm)
+
+    if kind == "pencil":
+        if "pencil" in slug:
+            score *= 3.0
+        if "chexol" in slug or "smartphone-cases" in slug:
+            score *= 0.02
+        if "accessories-ipad" in url or "apple-gadgets" in url:
+            score *= 1.4
+        if "pro" in name_norm and "pro" in slug:
+            score *= 1.2
+        if "usb" in name_norm and "usb" in slug:
+            score *= 1.3
+        return score
+
+    if kind == "pitaka" or ("чехол" in name_norm and model):
+        if "chexol" not in slug:
+            score *= 0.05
+        if model:
+            if model_matches_slug(model, slug):
+                score *= 2.0
+            elif any(token in slug for token in ("17-pro-max", "17-pro", "16-pro-max", "16-pro", "s26-ultra")):
+                score *= 0.1
+        for token, hints in (
+            ("black-gray", ("black", "chernyj")),
+            ("black gray", ("black", "chernyj")),
+            ("lucid-blue", ("deep-blue", "sinij")),
+            ("lucid blue", ("deep-blue", "sinij")),
+        ):
+            if token in name_norm and any(hint in slug for hint in hints):
+                score *= 1.4
+        return score
+
+    if kind == "airtag":
+        if "airtag" in slug:
+            score *= 2.5
+        if "chexol" in slug and "airtag" not in slug:
+            score *= 0.1
+        return score
+
+    if kind in ("mouse", "charger") and any(token in slug for token in ("iphone", "chexol", "smartphone-cases")):
+        score *= 0.05
+
+    if any(token in slug for token in ("iphone", "ipad", "macbook", "watch", "galaxy")):
+        if kind is None and "чехол" not in name_norm and "стекло" not in name_norm:
+            score *= 0.15
+        elif kind == "pencil":
+            score *= 0.02
+
+    return score
+
+
 def score_product_url(product: Product, url: str) -> float:
     slug = url.rsplit("/", 1)[-1].lower()
     name_norm = normalize_match_text(product.name)
@@ -103,10 +193,7 @@ def score_product_url(product: Product, url: str) -> float:
     if product.category == "airpods" and "airpods" not in slug:
         score *= 0.2
     if product.category == "accessories":
-        if any(x in slug for x in ("iphone", "ipad", "macbook", "watch")) and not any(
-            x in name_norm for x in ("remax", "pitaka", "pencil", "airtag", "mouse", "сзu", "сзу", "стекло")
-        ):
-            score *= 0.15
+        score = score_accessory_url(name_norm, slug, url, score)
 
     # Storage / color hints from slug
     storage = re.search(r"(\d+)\s*/\s*(\d+)", product.name)
@@ -128,12 +215,13 @@ def score_product_url(product: Product, url: str) -> float:
 
 def candidate_urls(category: str, sitemap_urls: list[str]) -> list[str]:
     prefixes = CATEGORY_URL_PREFIXES.get(category, [])
+    min_slashes = 3 if category == "accessories" else 4
     urls = []
     for url in sitemap_urls:
         path = url.replace(DR_STORE_BASE, "")
         if not any(path.startswith(prefix) for prefix in prefixes):
             continue
-        if path.count("/") < 4:
+        if path.count("/") < min_slashes:
             continue
         urls.append(url)
     return urls

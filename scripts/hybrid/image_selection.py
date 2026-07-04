@@ -45,6 +45,11 @@ ACCESSORY_IMAGE_PATTERNS = (
 
 GENERIC_JUNK_IN_URL = ("logo", "favicon", "mailservice", "/szu/", "remax")
 
+DEVICE_LINEUP_RE = re.compile(
+    r"/demo-prostore/products/(?:apple/)?(?:iphone|ipad|macbook|watch|airpods)/.+?-dr-store-\d+",
+    re.I,
+)
+
 MAX_IMAGES = 8
 
 
@@ -138,14 +143,59 @@ def parse_product_image_hints(category: str, product_name: str, catalog_url: str
     return hints
 
 
+def is_device_lineup_image(url: str) -> bool:
+    return bool(DEVICE_LINEUP_RE.search(urllib.parse.unquote(str(url or ""))))
+
+
+def catalog_slug_from_url(catalog_url: str) -> str:
+    return str(catalog_url or "").rstrip("/").rsplit("/", 1)[-1].lower()
+
+
+def is_catalog_product_image(url: str, catalog_url: str) -> bool:
+    slug = catalog_slug_from_url(catalog_url)
+    if not slug:
+        return False
+    decoded = urllib.parse.unquote(str(url or "")).lower()
+    compact = decoded.replace("-", "")
+    return slug in decoded or slug.replace("-", "") in compact
+
+
+def filter_accessory_images(urls: list[str], product_name: str, catalog_url: str) -> list[str]:
+    filtered = [url for url in urls if not is_device_lineup_image(url)]
+    if not filtered:
+        return []
+
+    name = str(product_name or "").lower()
+    if "чехол" not in name and "case" not in name:
+        return filtered[:MAX_IMAGES]
+
+    slug_matches = [url for url in filtered if is_catalog_product_image(url, catalog_url)]
+    if slug_matches:
+        return slug_matches[:MAX_IMAGES]
+
+    new_products = [
+        url
+        for url in filtered
+        if "/new%20products/" in url.lower() or "/new products/" in url.lower()
+    ]
+    if new_products:
+        return new_products[:MAX_IMAGES]
+
+    return filtered[:MAX_IMAGES]
+
+
 def should_exclude_image_url(url: str, hints: dict[str, str], *, strict_gen: bool = True) -> bool:
     value = urllib.parse.unquote(str(url or "")).lower()
     if any(token in value for token in GENERIC_JUNK_IN_URL):
         return True
-    if any(token in value for token in ACCESSORY_IMAGE_PATTERNS):
+    category = hints.get("category") or ""
+    if category != "accessories":
+        if any(token in value for token in ACCESSORY_IMAGE_PATTERNS):
+            return True
+    if category == "accessories" and is_device_lineup_image(url):
         return True
 
-    if hints.get("category") != "macbook":
+    if category != "macbook":
         return False
 
     size = hints.get("size") or hints.get("href_size") or ""
@@ -284,5 +334,8 @@ def select_product_images(
     if category == "iphone":
         result = fix_iphone_lineup_cover(result)
         result = demote_shared_lineup_tail(result)
+
+    if category == "accessories":
+        result = filter_accessory_images(result, product_name, catalog_url)
 
     return result[:MAX_IMAGES]

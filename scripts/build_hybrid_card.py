@@ -104,7 +104,7 @@ def build_from_probe(
                 match = probe.get("matches", {}).get(product_id)
                 if match and match.get("status") == "matched":
                     source = build_source_from_match(match)
-                    if existing:
+                    if existing and not refresh_match:
                         for key in ("catalog_url", "country"):
                             if existing.get(key):
                                 source[key] = existing[key]
