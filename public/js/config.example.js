@@ -15,6 +15,9 @@ window.IRON_CONFIG = {
   /** Диплинк MAX — подставляет текст заявки (работает внутри MAX без VPN) */
   maxShareUrl: "https://max.ru/:share",
   maxBotUrl: "https://max.ru/id231708534609_bot",
+  maxFunctionUrl: "https://functions.yandexcloud.net/d4etdogrrq9ersodqqpl",
+  /** Тот же секрет, что MAX_BOOKING_PUBLIC_TOKEN в Yandex (max-bot). Можно оставить пустым. */
+  maxBookingPublicToken: "",
   siteUrl: "https://1iron.ru",
 
   // URL Web App PersonalOffer.js (Deploy → Web app, Anyone)

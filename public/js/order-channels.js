@@ -1,5 +1,5 @@
 /**
- * Оформление заявки из корзины: Telegram (@ironsochi) или MAX (share deeplink).
+ * Оформление заявки: Telegram (@ironsochi) или MAX (бот → рабочий аккаунт IRON SERVICE).
  */
 (function (global) {
   function cfg() {
@@ -46,13 +46,58 @@
     return "https://t.me/" + getTelegramUser() + "?text=" + encodeURIComponent(text);
   }
 
-  function getMaxShareOrderUrl(text) {
-    const base = String(cfg().maxShareUrl || "https://max.ru/:share").replace(/\/$/, "");
-    return base + "?text=" + encodeURIComponent(text);
-  }
-
   function getMaxBotUrl() {
     return String(cfg().maxBotUrl || "https://max.ru/id231708534609_bot").trim();
+  }
+
+  function parseFunctionResponse(raw) {
+    if (!raw) return null;
+    if (typeof raw === "string") {
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+    if (raw.body && typeof raw.body === "string") {
+      try {
+        return JSON.parse(raw.body);
+      } catch (e) {
+        return raw;
+      }
+    }
+    return raw;
+  }
+
+  function prepareMaxBooking(text) {
+    const funcUrl = String(cfg().maxFunctionUrl || "").replace(/\/$/, "");
+    const botUrl = getMaxBotUrl();
+    if (!funcUrl) {
+      return Promise.resolve(botUrl);
+    }
+
+    const headers = { "Content-Type": "application/json" };
+    const token = String(cfg().maxBookingPublicToken || "").trim();
+    if (token) {
+      headers["X-Booking-Token"] = token;
+    }
+
+    return fetch(funcUrl, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({ action: "prepare_booking", text: text }),
+    })
+      .then(function (res) {
+        return res.text().then(function (bodyText) {
+          const data = parseFunctionResponse(bodyText);
+          if (data && data.bot_url) return data.bot_url;
+          return botUrl;
+        });
+      })
+      .catch(function (err) {
+        console.warn("[IRON_ORDER] prepareMaxBooking failed:", err);
+        return botUrl;
+      });
   }
 
   function openExternal(url) {
@@ -72,14 +117,15 @@
 
   function openMaxOrder(cart, options) {
     const text = buildOrderText(cart, options);
-    openExternal(getMaxShareOrderUrl(text));
+    prepareMaxBooking(text).then(function (url) {
+      openExternal(url || getMaxBotUrl());
+    });
   }
 
   global.IRON_ORDER = {
     buildOrderText: buildOrderText,
     formatPrice: formatPrice,
     getTelegramOrderUrl: getTelegramOrderUrl,
-    getMaxShareOrderUrl: getMaxShareOrderUrl,
     getMaxBotUrl: getMaxBotUrl,
     openTelegramOrder: openTelegramOrder,
     openMaxOrder: openMaxOrder,
