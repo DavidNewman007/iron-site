@@ -47,11 +47,6 @@
       gap: 0.6rem;
     }
     .book-actions .btn { width: 100%; text-align: center; }
-    .book-note {
-      color: var(--text-muted, #aaa);
-      font-size: 0.88rem;
-      margin-top: 0.75rem;
-    }
     .book-error { color: #ffb4b4; }
     .book-status {
       color: #8fd48f;
@@ -86,10 +81,6 @@
         <a class="btn btn-secondary" id="bookBack" href="magazin.html">Вернуться в магазин</a>
       </div>
       <p class="book-status" id="bookStatus" aria-live="polite"></p>
-      <p class="book-note" id="bookSetupNote" hidden>
-        На сайте не указана ссылка на профиль IRON SERVICE в MAX. Получите её в приложении MAX на рабочем телефоне:
-        Настройки → QR-код профиля → Поделиться → скопируйте ссылку вида <code>max.ru/u/…</code> и добавьте в config.js как <code>maxOrderChatUrl</code>.
-      </p>
     </div>
     <p class="book-error" id="bookError" hidden></p>
   </main>
@@ -102,7 +93,6 @@
       var openEl = document.getElementById("bookOpenMax");
       var copyEl = document.getElementById("bookCopyText");
       var statusEl = document.getElementById("bookStatus");
-      var setupEl = document.getElementById("bookSetupNote");
       var errorEl = document.getElementById("bookError");
       var backEl = document.getElementById("bookBack");
 
@@ -162,8 +152,7 @@
       var chatUrl = getChatUrl();
       if (!chatUrl) {
         openEl.disabled = true;
-        setupEl.hidden = false;
-        setStatus("Нужна ссылка max.ru/u/… на профиль IRON SERVICE в config.js");
+        setStatus("Чат MAX временно недоступен.");
       }
 
       copyEl.addEventListener("click", function () {
@@ -178,7 +167,7 @@
 
       openEl.addEventListener("click", function () {
         if (!chatUrl) {
-          setStatus("Добавьте maxOrderChatUrl в config.js (ссылка из MAX → QR профиля).");
+          setStatus("Чат MAX временно недоступен.");
           return;
         }
         copyText(text)
