@@ -141,6 +141,7 @@
     cartClose: document.getElementById("cart-close"),
     cartClear: document.getElementById("cart-clear"),
     cartTelegram: document.getElementById("cart-telegram"),
+    cartMax: document.getElementById("cart-max"),
     cartMobileBar: document.querySelector(".cart-mobile-bar"),
     cartTotalMobile: document.getElementById("cart-total-mobile"),
   };
@@ -1435,6 +1436,7 @@
       renderGrid();
     });
     els.cartTelegram?.addEventListener("click", openTelegramOrder);
+    els.cartMax?.addEventListener("click", openMaxOrder);
     els.cartToggle?.addEventListener("click", () => {
       els.cartPanel?.classList.toggle("is-open");
     });
@@ -2665,6 +2667,7 @@
     if (els.cartTotal) els.cartTotal.textContent = totalLabel;
     if (els.cartTotalMobile) els.cartTotalMobile.textContent = totalLabel;
     if (els.cartTelegram) els.cartTelegram.disabled = count === 0;
+    if (els.cartMax) els.cartMax.disabled = count === 0;
 
     if (!els.cartList) return;
     if (!count) {
@@ -2692,19 +2695,16 @@
   }
 
   function openTelegramOrder() {
-    if (!cart.length) return;
-    const lines = cart.map(
-      (p, i) =>
-        `${i + 1}. ${p.name}${p.country ? " " + p.country : ""}${p.warehouse ? " " + p.warehouse : ""} — ${p.priceLabel}`
-    );
-    const text = [
-      "Заявка с сайта IRON SERVICE",
-      "Хочу купить / забронировать:","",
-      ...lines,"",
-      `Итого ориентир: ${formatPrice(cart.reduce((s, p) => s + p.price, 0))}`].join("\n");
+    if (!cart.length || !window.IRON_ORDER) return;
+    window.IRON_ORDER.openTelegramOrder(cart);
+    cart = [];
+    saveCart();
+    renderCart();
+  }
 
-    const url = `https://t.me/${TG_USER}?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+  function openMaxOrder() {
+    if (!cart.length || !window.IRON_ORDER) return;
+    window.IRON_ORDER.openMaxOrder(cart);
     cart = [];
     saveCart();
     renderCart();

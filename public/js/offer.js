@@ -16,7 +16,10 @@
     cartBar: document.getElementById("offerCartBar"),
     cartCount: document.getElementById("offer-cart-count"),
     cartTotal: document.getElementById("offer-cart-total"),
-    cartToggle: document.getElementById("offer-cart-toggle"),
+    cartTelegram: document.getElementById("offer-cart-telegram"),
+    cartMax: document.getElementById("offer-cart-max"),
+    checkoutTelegram: document.getElementById("offerCheckoutTelegram"),
+    checkoutMax: document.getElementById("offerCheckoutMax"),
   };
 
   let currentOffer = null;
@@ -46,8 +49,32 @@
     if (els.addCart) els.addCart.textContent = "+ В корзину по спеццене";
   }
 
-  function getTelegramUser() {
-    return String(window.IRON_CONFIG?.telegramOrderUser || "ironsochi").replace(/^@/, "");
+  function getOrderOptions() {
+    return {
+      title: "Заявка с сайта IRON SERVICE",
+      subtitle: "Персональное предложение",
+    };
+  }
+
+  function updateCheckoutButtons() {
+    const cart = readCart();
+    const enabled = cart.length > 0;
+    if (els.checkoutTelegram) els.checkoutTelegram.disabled = !enabled;
+    if (els.checkoutMax) els.checkoutMax.disabled = !enabled;
+  }
+
+  function checkoutTelegramOrder() {
+    const cart = readCart();
+    if (!cart.length || !window.IRON_ORDER) return;
+    window.IRON_ORDER.openTelegramOrder(cart, getOrderOptions());
+    clearCart();
+  }
+
+  function checkoutMaxOrder() {
+    const cart = readCart();
+    if (!cart.length || !window.IRON_ORDER) return;
+    window.IRON_ORDER.openMaxOrder(cart, getOrderOptions());
+    clearCart();
   }
 
   function renderCartBar() {
@@ -57,30 +84,7 @@
     if (els.cartCount) els.cartCount.textContent = String(count);
     if (els.cartTotal) els.cartTotal.textContent = count ? formatPrice(total) : "—";
     if (els.cartBar) els.cartBar.hidden = false;
-  }
-
-  function openTelegramOrder() {
-    const cart = readCart();
-    if (!cart.length) return;
-    const lines = cart.map(
-      (p, i) =>
-        `${i + 1}. ${p.name}${p.country ? " " + p.country : ""}${p.warehouse ? " " + p.warehouse : ""} — ${p.priceLabel || formatPrice(p.price)}`
-    );
-    const total = cart.reduce((s, p) => s + (p.price || 0), 0);
-    const text = [
-      "Заявка с сайта IRON SERVICE",
-      "Персональное предложение",
-      "",
-      ...lines,
-      "",
-      `Итого ориентир: ${formatPrice(total)}`,
-    ].join("\n");
-    window.open(
-      `https://t.me/${getTelegramUser()}?text=${encodeURIComponent(text)}`,
-      "_blank",
-      "noopener,noreferrer"
-    );
-    clearCart();
+    updateCheckoutButtons();
   }
 
   function setOgMeta(offer) {
@@ -219,7 +223,10 @@
   }
 
   if (els.addCart) els.addCart.addEventListener("click", addOfferToCart);
-  if (els.cartToggle) els.cartToggle.addEventListener("click", openTelegramOrder);
+  if (els.cartTelegram) els.cartTelegram.addEventListener("click", checkoutTelegramOrder);
+  if (els.cartMax) els.cartMax.addEventListener("click", checkoutMaxOrder);
+  if (els.checkoutTelegram) els.checkoutTelegram.addEventListener("click", checkoutTelegramOrder);
+  if (els.checkoutMax) els.checkoutMax.addEventListener("click", checkoutMaxOrder);
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", loadOffer);

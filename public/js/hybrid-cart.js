@@ -415,6 +415,17 @@
     renderMobileCartBar();
   }
 
+  function ensureOrderChannels() {
+    if (window.IRON_ORDER) return Promise.resolve(window.IRON_ORDER);
+    return new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = getScriptBase() + "order-channels.js?v=2026-07-04-1";
+      s.onload = () => resolve(window.IRON_ORDER);
+      s.onerror = () => reject(new Error("Не удалось загрузить order-channels.js"));
+      document.head.appendChild(s);
+    });
+  }
+
   function getTelegramUser() {
     return String(window.IRON_CONFIG?.telegramOrderUser || "ironsochi").replace(/^@/, "");
   }
@@ -440,22 +451,23 @@
       window.location.href = "../../magazin.html";
       return;
     }
-    const lines = cart.map(
-      (p, i) =>
-        `${i + 1}. ${p.name}${p.country ? " " + p.country : ""}${p.warehouse ? " " + p.warehouse : ""} — ${p.priceLabel || formatPrice(p.price)}`
-    );
-    const total = cart.reduce((s, p) => s + (p.price || 0), 0);
-    const text = [
-      "Заявка с сайта IRON SERVICE",
-      "Хочу купить / забронировать:",
-      "",
-      ...lines,
-      "",
-      `Итого ориентир: ${formatPrice(total)}`,
-    ].join("\n");
-    const url = `https://t.me/${getTelegramUser()}?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-    clearCart();
+    ensureOrderChannels()
+      .then((order) => {
+        order.openTelegramOrder(cart);
+        clearCart();
+      })
+      .catch((err) => console.warn("[hybrid-cart]", err));
+  }
+
+  function openMaxOrder() {
+    const cart = readCart();
+    if (!cart.length) return;
+    ensureOrderChannels()
+      .then((order) => {
+        order.openMaxOrder(cart);
+        clearCart();
+      })
+      .catch((err) => console.warn("[hybrid-cart]", err));
   }
 
   function ensureMobileCartBar() {
@@ -466,9 +478,13 @@
       '<span class="cart-mobile-bar__info">' +
       '<strong id="hybrid-cart-count-mobile">0</strong> шт. · <strong id="hybrid-cart-total-mobile">—</strong>' +
       "</span>" +
-      '<button type="button" class="btn btn-primary" id="hybrid-cart-toggle">Корзина</button>';
+      '<div class="cart-mobile-bar__actions">' +
+      '<button type="button" class="btn btn-primary" id="hybrid-cart-telegram">Telegram</button>' +
+      '<button type="button" class="btn btn-primary" id="hybrid-cart-max">MAX</button>' +
+      "</div>";
     document.body.appendChild(bar);
-    bar.querySelector("#hybrid-cart-toggle")?.addEventListener("click", openTelegramOrder);
+    bar.querySelector("#hybrid-cart-telegram")?.addEventListener("click", openTelegramOrder);
+    bar.querySelector("#hybrid-cart-max")?.addEventListener("click", openMaxOrder);
   }
 
   function renderMobileCartBar() {

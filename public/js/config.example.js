@@ -12,6 +12,9 @@ window.IRON_CONFIG = {
   googleSheetId: "11xhKh4rPN5XfZA7y8D14_rVxzT1dfvOjs_nv1HMSols",
   googleSheetTab: "Prices",
   telegramOrderUser: "ironsochi",
+  /** Диплинк MAX — подставляет текст заявки (работает внутри MAX без VPN) */
+  maxShareUrl: "https://max.ru/:share",
+  maxBotUrl: "https://max.ru/id231708534609_bot",
   siteUrl: "https://1iron.ru",
 
   // URL Web App PersonalOffer.js (Deploy → Web app, Anyone)

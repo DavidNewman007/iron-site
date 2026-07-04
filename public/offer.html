@@ -71,6 +71,8 @@
             </div>
             <div class="offer-actions">
               <button type="button" class="btn btn-primary" id="offerAddCart">+ В корзину по спеццене</button>
+              <button type="button" class="btn btn-primary" id="offerCheckoutTelegram" disabled>Забронировать в Telegram</button>
+              <button type="button" class="btn btn-primary" id="offerCheckoutMax" disabled>Забронировать в MAX</button>
               <a class="btn" id="offerCatalogLink" href="magazin.html">Полная карточка товара</a>
             </div>
           </div>
@@ -83,7 +85,10 @@
     <span class="cart-mobile-bar__info">
       <strong id="offer-cart-count">0</strong> шт. · <strong id="offer-cart-total">—</strong>
     </span>
-    <button type="button" class="btn btn-primary" id="offer-cart-toggle">Корзина</button>
+    <div class="cart-mobile-bar__actions">
+      <button type="button" class="btn btn-primary" id="offer-cart-telegram">Telegram</button>
+      <button type="button" class="btn btn-primary" id="offer-cart-max">MAX</button>
+    </div>
   </div>
 
   <footer class="site-footer hybrid-detail-footer">
@@ -94,6 +99,7 @@
 
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/offer.js?v=2026-07-01-2"></script>
+  <script src="js/order-channels.js?v=2026-07-04-1"></script>
+  <script src="js/offer.js?v=2026-07-04-1"></script>
 </body>
 </html>

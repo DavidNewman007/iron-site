@@ -861,10 +861,16 @@
     color: var(--gold);
   }
 
+  .cart-mobile-bar__actions {
+    display: flex;
+    gap: 0.35rem;
+    flex: 0 0 auto;
+  }
+
   .cart-mobile-bar button {
     flex: 0 0 auto;
-    min-width: 7.5rem;
-    padding: 0.5rem 0.75rem;
+    min-width: 5.5rem;
+    padding: 0.5rem 0.55rem;
     font-size: 0.72rem;
   }
 
