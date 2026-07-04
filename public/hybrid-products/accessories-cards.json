@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-04T11:28:49.510Z",
-  "count": 35,
+  "generated_at": "2026-07-04T12:08:09.081Z",
+  "count": 40,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -60,7 +60,7 @@
     },
     "-airtag-2-2026-4pack-s2-12200": {
       "url": "hybrid-products/accessories/airtag-2-2026-4pack-s2-12200.html",
-      "cover": "",
+      "cover": "assets/product-images/9f6a3d424aab377b46efd19b.jpg",
       "name": "📍AirTag 2 (2026) 4pack",
       "warehouse": "(S2)",
       "price": 12200
@@ -246,6 +246,41 @@
       "name": "Чехол-бумажник PITAKA Samsung S26 Ultra, Moonrise",
       "warehouse": "(S2)",
       "price": 6400
+    },
+    "-pencil-usb-c-muwa3-s1-8600": {
+      "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-8600.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "🖊 Pencil (USB-C) MUWA3",
+      "warehouse": "(S1)",
+      "price": 8600
+    },
+    "-pencil-pro-mx2d3-s1-11600": {
+      "url": "hybrid-products/accessories/pencil-pro-mx2d3-s1-11600.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "🖊 Pencil Pro MX2D3",
+      "warehouse": "(S1)",
+      "price": 11600
+    },
+    "apple-pencil-usb-c-s2-8800": {
+      "url": "hybrid-products/accessories/apple-pencil-usb-c-s2-8800.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "Apple Pencil USB-C",
+      "warehouse": "(S2)",
+      "price": 8800
+    },
+    "apple-pencil-2-s2-7700": {
+      "url": "hybrid-products/accessories/apple-pencil-2-s2-7700.html",
+      "cover": "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+      "name": "Apple Pencil 2",
+      "warehouse": "(S2)",
+      "price": 7700
+    },
+    "чехол-pitaka-для-iphone-16-pro-milky-way-s2-5800": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-16-pro-milky-way-s2-5800.html",
+      "cover": "assets/product-images/54144211cd961d1f041e1d8b.jpg",
+      "name": "Чехол PITAKA для iPhone 16 Pro, Milky Way",
+      "warehouse": "(S2)",
+      "price": 5800
     }
   }
 }

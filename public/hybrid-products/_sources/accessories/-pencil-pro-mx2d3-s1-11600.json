@@ -1,0 +1,46 @@
+{
+  "product_id": "-pencil-pro-mx2d3-s1-11600",
+  "category": "accessories",
+  "file_slug": "pencil-pro-mx2d3-s1-11600",
+  "name": "🖊 Pencil Pro MX2D3",
+  "country": "",
+  "warehouse": "(S1)",
+  "price": 11600,
+  "catalog_url": "https://sochi.dr-store.ru/accessories/accessories-ipad/apple-pencil-pro",
+  "catalog_title": "Купить стилус Apple Pencil Pro в Сочи",
+  "specs": [
+    {
+      "key": "Интерфейсы",
+      "value": "Bluetooth"
+    },
+    {
+      "key": "Диаметр",
+      "value": "8.9 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "166 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "19.15 г"
+    },
+    {
+      "key": "Технологии",
+      "value": "магнитное крепление, сопряжение и зарядка"
+    },
+    {
+      "key": "Поддержка",
+      "value": "iPad Pro 13-inch (M4), iPad Pro 11-inch (M4), iPad Air 13-inch (M2), iPad Air 11-inch (M2)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/MX2D3-dr-store2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/MX2D3-dr-store1-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+    "assets/product-images/9fe3b9d44c0c38b2e8df8cb1.jpeg"
+  ],
+  "updated_at": "2026-07-04T12:07:48.819075Z"
+}
