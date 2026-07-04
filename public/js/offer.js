@@ -67,14 +67,12 @@
     const cart = readCart();
     if (!cart.length || !window.IRON_ORDER) return;
     window.IRON_ORDER.openTelegramOrder(cart, getOrderOptions());
-    clearCart();
   }
 
   function checkoutMaxOrder() {
     const cart = readCart();
     if (!cart.length || !window.IRON_ORDER) return;
     window.IRON_ORDER.openMaxOrder(cart, getOrderOptions());
-    clearCart();
   }
 
   function renderCartBar() {

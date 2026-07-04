@@ -33,11 +33,7 @@
     var total = items.reduce(function (s, p) {
       return s + (p.price || 0);
     }, 0);
-    var title = options.title || "Заявка с сайта IRON SERVICE";
-    var subtitle = options.subtitle || "Хочу купить / забронировать:";
-    return [title, subtitle, "", lines.join("\n"), "", "Итого ориентир: " + formatPrice(total)].join(
-      "\n"
-    );
+    return [lines.join("\n"), "", "Итого ориентир: " + formatPrice(total)].join("\n");
   }
 
   function getTelegramUser() {

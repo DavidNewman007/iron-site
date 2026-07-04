@@ -454,7 +454,6 @@
     ensureOrderChannels()
       .then((order) => {
         order.openTelegramOrder(cart);
-        clearCart();
       })
       .catch((err) => console.warn("[hybrid-cart]", err));
   }
@@ -465,7 +464,6 @@
     ensureOrderChannels()
       .then((order) => {
         order.openMaxOrder(cart);
-        clearCart();
       })
       .catch((err) => console.warn("[hybrid-cart]", err));
   }

@@ -2697,17 +2697,11 @@
   function openTelegramOrder() {
     if (!cart.length || !window.IRON_ORDER) return;
     window.IRON_ORDER.openTelegramOrder(cart);
-    cart = [];
-    saveCart();
-    renderCart();
   }
 
   function openMaxOrder() {
     if (!cart.length || !window.IRON_ORDER) return;
     window.IRON_ORDER.openMaxOrder(cart);
-    cart = [];
-    saveCart();
-    renderCart();
   }
 
   function loadCart() {
