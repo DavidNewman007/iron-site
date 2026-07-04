@@ -50,54 +50,8 @@
     return String(cfg().maxBotUrl || "https://max.ru/id231708534609_bot").trim();
   }
 
-  function parseFunctionResponse(raw) {
-    if (!raw) return null;
-    if (typeof raw === "string") {
-      try {
-        return JSON.parse(raw);
-      } catch (e) {
-        return null;
-      }
-    }
-    if (raw.body && typeof raw.body === "string") {
-      try {
-        return JSON.parse(raw.body);
-      } catch (e) {
-        return raw;
-      }
-    }
-    return raw;
-  }
-
-  function prepareMaxBooking(text) {
-    const funcUrl = String(cfg().maxFunctionUrl || "").replace(/\/$/, "");
-    const botUrl = getMaxBotUrl();
-    if (!funcUrl) {
-      return Promise.resolve(botUrl);
-    }
-
-    const headers = { "Content-Type": "application/json" };
-    const token = String(cfg().maxBookingPublicToken || "").trim();
-    if (token) {
-      headers["X-Booking-Token"] = token;
-    }
-
-    return fetch(funcUrl, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify({ action: "prepare_booking", text: text }),
-    })
-      .then(function (res) {
-        return res.text().then(function (bodyText) {
-          const data = parseFunctionResponse(bodyText);
-          if (data && data.bot_url) return data.bot_url;
-          return botUrl;
-        });
-      })
-      .catch(function (err) {
-        console.warn("[IRON_ORDER] prepareMaxBooking failed:", err);
-        return botUrl;
-      });
+  function getMaxFunctionUrl() {
+    return String(cfg().maxFunctionUrl || "").replace(/\/$/, "");
   }
 
   function openExternal(url) {
@@ -110,6 +64,51 @@
     global.open(url, "_blank", "noopener,noreferrer");
   }
 
+  function submitBookingForm(funcUrl, text) {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = funcUrl;
+    form.acceptCharset = "UTF-8";
+
+    function addField(name, value) {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    }
+
+    addField("action", "prepare_booking_redirect");
+    addField("text", text);
+    const token = String(cfg().maxBookingPublicToken || "").trim();
+    if (token) {
+      addField("booking_token", token);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+  function openMaxBookingRedirect(text) {
+    const funcUrl = getMaxFunctionUrl();
+    if (!funcUrl) {
+      openExternal(getMaxBotUrl());
+      return;
+    }
+
+    // Redirect через Yandex Function — без fetch/CORS, работает с телефона.
+    if (text.length <= 1500) {
+      openExternal(
+        funcUrl +
+          "?action=prepare_booking_redirect&text=" +
+          encodeURIComponent(text)
+      );
+      return;
+    }
+
+    submitBookingForm(funcUrl, text);
+  }
+
   function openTelegramOrder(cart, options) {
     const text = buildOrderText(cart, options);
     openExternal(getTelegramOrderUrl(text));
@@ -117,9 +116,7 @@
 
   function openMaxOrder(cart, options) {
     const text = buildOrderText(cart, options);
-    prepareMaxBooking(text).then(function (url) {
-      openExternal(url || getMaxBotUrl());
-    });
+    openMaxBookingRedirect(text);
   }
 
   global.IRON_ORDER = {
