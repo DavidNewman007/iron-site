@@ -68,15 +68,15 @@
   <main class="book-wrap">
     <h1 class="section-title">Заявка в MAX</h1>
     <div class="book-card" id="bookContent" hidden>
-      <p>Нажмите кнопку — откроется <strong>личный чат IRON SERVICE</strong> (не бот, не выбор контактов).</p>
+      <p>Нажмите кнопку ниже — откроется <strong>бот IRON SERVICE</strong>, который сам передаст заявку на рабочий MAX.</p>
       <pre class="book-preview" id="bookPreview"></pre>
       <ol class="book-steps">
-        <li>Нажмите «Написать в IRON SERVICE».</li>
-        <li>Текст заявки скопируется — вставьте его в поле сообщения (долгое нажатие → «Вставить»).</li>
-        <li>Отправьте.</li>
+        <li>Нажмите «Отправить через бота MAX».</li>
+        <li>Если MAX попросит открыть бота или нажать «Начать» — подтвердите.</li>
+        <li>Бот сам отправит заявку в IRON SERVICE.</li>
       </ol>
       <div class="book-actions">
-        <button type="button" class="btn btn-primary" id="bookOpenMax">Написать в IRON SERVICE</button>
+        <button type="button" class="btn btn-primary" id="bookOpenMax">Отправить через бота MAX</button>
         <button type="button" class="btn btn-secondary" id="bookCopyText">Скопировать текст заявки</button>
         <a class="btn btn-secondary" id="bookBack" href="magazin.html">Вернуться в магазин</a>
       </div>
@@ -104,8 +104,12 @@
         return new URLSearchParams(window.location.search).get("text") || "";
       }
 
-      function getChatUrl() {
-        return String(cfg.maxOrderChatUrl || "").trim();
+      function getFunctionUrl() {
+        return String(cfg.maxFunctionUrl || "").replace(/\/$/, "");
+      }
+
+      function getBookingToken() {
+        return String(cfg.maxBookingPublicToken || "").trim();
       }
 
       function copyText(text) {
@@ -134,6 +138,35 @@
         statusEl.textContent = msg || "";
       }
 
+      function submitBookingRedirect(text) {
+        var funcUrl = getFunctionUrl();
+        if (!funcUrl) {
+          setStatus("MAX-бот временно недоступен.");
+          return;
+        }
+
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = funcUrl;
+        form.acceptCharset = "UTF-8";
+
+        function addField(name, value) {
+          var input = document.createElement("input");
+          input.type = "hidden";
+          input.name = name;
+          input.value = value;
+          form.appendChild(input);
+        }
+
+        addField("action", "prepare_booking_redirect");
+        addField("text", text);
+        var token = getBookingToken();
+        if (token) addField("booking_token", token);
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+
       var text = readOrderText();
       if (!text.trim()) {
         errorEl.hidden = false;
@@ -149,10 +182,10 @@
       previewEl.textContent = text;
       contentEl.hidden = false;
 
-      var chatUrl = getChatUrl();
-      if (!chatUrl) {
+      var funcUrl = getFunctionUrl();
+      if (!funcUrl) {
         openEl.disabled = true;
-        setStatus("Чат MAX временно недоступен.");
+        setStatus("MAX-бот временно недоступен.");
       }
 
       copyEl.addEventListener("click", function () {
@@ -166,19 +199,12 @@
       });
 
       openEl.addEventListener("click", function () {
-        if (!chatUrl) {
-          setStatus("Чат MAX временно недоступен.");
+        if (!funcUrl) {
+          setStatus("MAX-бот временно недоступен.");
           return;
         }
-        copyText(text)
-          .then(function () {
-            setStatus("Текст скопирован. Открываем чат IRON SERVICE…");
-            window.location.href = chatUrl;
-          })
-          .catch(function () {
-            setStatus("Открываем чат — текст скопируйте вручную с экрана выше.");
-            window.location.href = chatUrl;
-          });
+        setStatus("Открываем бота IRON SERVICE…");
+        submitBookingRedirect(text);
       });
     })();
   </script>
