@@ -12,7 +12,12 @@ window.IRON_CONFIG = {
   googleSheetId: "11xhKh4rPN5XfZA7y8D14_rVxzT1dfvOjs_nv1HMSols",
   googleSheetTab: "Prices",
   telegramOrderUser: "ironsochi",
-  /** Диплинк MAX — подставляет текст заявки (работает внутри MAX без VPN) */
+  /**
+   * Личный чат IRON SERVICE в MAX (не бот).
+   * Получить: MAX на рабочем телефоне → Настройки → QR профиля → Поделиться → max.ru/u/…
+   */
+  maxOrderChatUrl: "",
+  /** Запасной :share — экран «выбрать контакт», без фиксированного получателя */
   maxShareUrl: "https://max.ru/:share",
   maxBotUrl: "https://max.ru/id231708534609_bot",
   maxFunctionUrl: "https://functions.yandexcloud.net/d4etdogrrq9ersodqqpl",

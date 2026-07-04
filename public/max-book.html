@@ -47,7 +47,18 @@
       gap: 0.6rem;
     }
     .book-actions .btn { width: 100%; text-align: center; }
+    .book-note {
+      color: var(--text-muted, #aaa);
+      font-size: 0.88rem;
+      margin-top: 0.75rem;
+    }
     .book-error { color: #ffb4b4; }
+    .book-status {
+      color: #8fd48f;
+      font-size: 0.92rem;
+      margin-top: 0.5rem;
+      min-height: 1.25rem;
+    }
   </style>
 </head>
 <body>
@@ -62,17 +73,23 @@
   <main class="book-wrap">
     <h1 class="section-title">Заявка в MAX</h1>
     <div class="book-card" id="bookContent" hidden>
-      <p>Текст заявки сформирован. Нажмите кнопку — откроется MAX с <strong>уже набранным сообщением</strong>.</p>
+      <p>Нажмите кнопку — откроется <strong>личный чат IRON SERVICE</strong> (не бот, не выбор контактов).</p>
       <pre class="book-preview" id="bookPreview"></pre>
       <ol class="book-steps">
-        <li>Нажмите «Открыть в MAX».</li>
-        <li>Выберите чат с ботом <strong>IRON SERVICE</strong>.</li>
-        <li>Нажмите «Отправить» — заявка уйдёт в сервис.</li>
+        <li>Нажмите «Написать в IRON SERVICE».</li>
+        <li>Текст заявки скопируется — вставьте его в поле сообщения (долгое нажатие → «Вставить»).</li>
+        <li>Отправьте.</li>
       </ol>
       <div class="book-actions">
-        <a class="btn btn-primary" id="bookOpenMax" href="#">Открыть в MAX</a>
+        <button type="button" class="btn btn-primary" id="bookOpenMax">Написать в IRON SERVICE</button>
+        <button type="button" class="btn btn-secondary" id="bookCopyText">Скопировать текст заявки</button>
         <a class="btn btn-secondary" id="bookBack" href="magazin.html">Вернуться в магазин</a>
       </div>
+      <p class="book-status" id="bookStatus" aria-live="polite"></p>
+      <p class="book-note" id="bookSetupNote" hidden>
+        На сайте не указана ссылка на профиль IRON SERVICE в MAX. Получите её в приложении MAX на рабочем телефоне:
+        Настройки → QR-код профиля → Поделиться → скопируйте ссылку вида <code>max.ru/u/…</code> и добавьте в config.js как <code>maxOrderChatUrl</code>.
+      </p>
     </div>
     <p class="book-error" id="bookError" hidden></p>
   </main>
@@ -83,6 +100,9 @@
       var contentEl = document.getElementById("bookContent");
       var previewEl = document.getElementById("bookPreview");
       var openEl = document.getElementById("bookOpenMax");
+      var copyEl = document.getElementById("bookCopyText");
+      var statusEl = document.getElementById("bookStatus");
+      var setupEl = document.getElementById("bookSetupNote");
       var errorEl = document.getElementById("bookError");
       var backEl = document.getElementById("bookBack");
 
@@ -94,9 +114,34 @@
         return new URLSearchParams(window.location.search).get("text") || "";
       }
 
-      function getShareUrl(text) {
-        var base = String(cfg.maxShareUrl || "https://max.ru/:share").replace(/\/$/, "");
-        return base + "?text=" + encodeURIComponent(text);
+      function getChatUrl() {
+        return String(cfg.maxOrderChatUrl || "").trim();
+      }
+
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(text);
+        }
+        return new Promise(function (resolve, reject) {
+          try {
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = document.execCommand("copy");
+            document.body.removeChild(ta);
+            ok ? resolve() : reject(new Error("copy failed"));
+          } catch (err) {
+            reject(err);
+          }
+        });
+      }
+
+      function setStatus(msg) {
+        statusEl.textContent = msg || "";
       }
 
       var text = readOrderText();
@@ -112,8 +157,40 @@
       }
 
       previewEl.textContent = text;
-      openEl.href = getShareUrl(text);
       contentEl.hidden = false;
+
+      var chatUrl = getChatUrl();
+      if (!chatUrl) {
+        openEl.disabled = true;
+        setupEl.hidden = false;
+        setStatus("Нужна ссылка max.ru/u/… на профиль IRON SERVICE в config.js");
+      }
+
+      copyEl.addEventListener("click", function () {
+        copyText(text)
+          .then(function () {
+            setStatus("Текст скопирован.");
+          })
+          .catch(function () {
+            setStatus("Не удалось скопировать — выделите текст выше вручную.");
+          });
+      });
+
+      openEl.addEventListener("click", function () {
+        if (!chatUrl) {
+          setStatus("Добавьте maxOrderChatUrl в config.js (ссылка из MAX → QR профиля).");
+          return;
+        }
+        copyText(text)
+          .then(function () {
+            setStatus("Текст скопирован. Открываем чат IRON SERVICE…");
+            window.location.href = chatUrl;
+          })
+          .catch(function () {
+            setStatus("Открываем чат — текст скопируйте вручную с экрана выше.");
+            window.location.href = chatUrl;
+          });
+      });
     })();
   </script>
 </body>
