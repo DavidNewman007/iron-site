@@ -419,7 +419,7 @@
     if (window.IRON_ORDER) return Promise.resolve(window.IRON_ORDER);
     return new Promise((resolve, reject) => {
       const s = document.createElement("script");
-      s.src = getScriptBase() + "order-channels.js?v=2026-07-04-3";
+      s.src = getScriptBase() + "order-channels.js?v=2026-07-04-4";
       s.onload = () => resolve(window.IRON_ORDER);
       s.onerror = () => reject(new Error("Не удалось загрузить order-channels.js"));
       document.head.appendChild(s);

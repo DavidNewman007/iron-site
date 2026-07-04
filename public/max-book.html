@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Бронирование в MAX — IRON SERVICE</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <script src="js/config.js"></script>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 28rem;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.5;
+      color: #111;
+    }
+    .muted { color: #666; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <p id="status">Открываем MAX с вашей заявкой…</p>
+  <p class="muted" id="hint" hidden>Если MAX не открылся — нажмите кнопку ниже.</p>
+  <p id="actions" hidden></p>
+  <script>
+    (function () {
+      var cfg = window.IRON_CONFIG || {};
+      var statusEl = document.getElementById("status");
+      var hintEl = document.getElementById("hint");
+      var actionsEl = document.getElementById("actions");
+
+      function readOrderText() {
+        try {
+          var stored = sessionStorage.getItem("iron_max_order");
+          if (stored) return stored;
+        } catch (e) {}
+        return new URLSearchParams(window.location.search).get("text") || "";
+      }
+
+      function getShareUrl(text) {
+        var base = String(cfg.maxShareUrl || "https://max.ru/:share").replace(/\/$/, "");
+        return base + "?text=" + encodeURIComponent(text);
+      }
+
+      function getBotUrl() {
+        return String(cfg.maxBotUrl || "https://max.ru/id231708534609_bot").trim();
+      }
+
+      function getFunctionUrl() {
+        return String(cfg.maxFunctionUrl || "").replace(/\/$/, "");
+      }
+
+      function showFallback(text) {
+        statusEl.textContent = "Не удалось автоматически открыть MAX.";
+        hintEl.hidden = false;
+        actionsEl.hidden = false;
+        var share = getShareUrl(text);
+        var bot = getBotUrl();
+        actionsEl.innerHTML =
+          '<p><a href="' + share + '">Открыть с готовым текстом заявки</a></p>' +
+          '<p class="muted">Выберите чат с ботом IRON SERVICE и отправьте сообщение.</p>' +
+          '<p><a href="' + bot + '">Открыть бота IRON SERVICE</a></p>';
+      }
+
+      var text = readOrderText();
+      if (!text.trim()) {
+        statusEl.textContent = "Заявка не найдена. Вернитесь на сайт и нажмите «Забронировать в MAX» ещё раз.";
+        return;
+      }
+
+      var funcUrl = getFunctionUrl();
+      if (funcUrl) {
+        var redirectUrl =
+          funcUrl +
+          "?action=prepare_booking_redirect&text=" +
+          encodeURIComponent(text);
+        window.setTimeout(function () {
+          showFallback(text);
+        }, 4000);
+        window.location.replace(redirectUrl);
+        return;
+      }
+
+      window.location.replace(getShareUrl(text));
+    })();
+  </script>
+</body>
+</html>

@@ -2,12 +2,14 @@
  * Оформление заявки: Telegram (@ironsochi) или MAX (бот → рабочий аккаунт IRON SERVICE).
  */
 (function (global) {
+  var BOOKING_STORAGE_KEY = "iron_max_order";
+
   function cfg() {
     return global.IRON_CONFIG || {};
   }
 
   function formatPrice(value) {
-    const price =
+    var price =
       typeof value === "number"
         ? value
         : parseInt(String(value || "").replace(/[^\d]/g, ""), 10) || 0;
@@ -16,8 +18,8 @@
 
   function buildOrderText(cart, options) {
     options = options || {};
-    const items = Array.isArray(cart) ? cart : [];
-    const lines = items.map(function (p, i) {
+    var items = Array.isArray(cart) ? cart : [];
+    var lines = items.map(function (p, i) {
       return (
         (i + 1) +
         ". " +
@@ -28,11 +30,11 @@
         (p.priceLabel || formatPrice(p.price))
       );
     });
-    const total = items.reduce(function (s, p) {
+    var total = items.reduce(function (s, p) {
       return s + (p.price || 0);
     }, 0);
-    const title = options.title || "Заявка с сайта IRON SERVICE";
-    const subtitle = options.subtitle || "Хочу купить / забронировать:";
+    var title = options.title || "Заявка с сайта IRON SERVICE";
+    var subtitle = options.subtitle || "Хочу купить / забронировать:";
     return [title, subtitle, "", lines.join("\n"), "", "Итого ориентир: " + formatPrice(total)].join(
       "\n"
     );
@@ -50,8 +52,17 @@
     return String(cfg().maxBotUrl || "https://max.ru/id231708534609_bot").trim();
   }
 
-  function getMaxFunctionUrl() {
-    return String(cfg().maxFunctionUrl || "").replace(/\/$/, "");
+  function getMaxShareOrderUrl(text) {
+    var base = String(cfg().maxShareUrl || "https://max.ru/:share").replace(/\/$/, "");
+    return base + "?text=" + encodeURIComponent(text);
+  }
+
+  function getBookingBridgeUrl() {
+    var siteUrl = String(cfg().siteUrl || global.location.origin || "").replace(/\/$/, "");
+    if (siteUrl) {
+      return siteUrl + "/max-book.html";
+    }
+    return "max-book.html";
   }
 
   function openExternal(url) {
@@ -64,65 +75,27 @@
     global.open(url, "_blank", "noopener,noreferrer");
   }
 
-  function submitBookingForm(funcUrl, text) {
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = funcUrl;
-    form.acceptCharset = "UTF-8";
-
-    function addField(name, value) {
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = name;
-      input.value = value;
-      form.appendChild(input);
-    }
-
-    addField("action", "prepare_booking_redirect");
-    addField("text", text);
-    const token = String(cfg().maxBookingPublicToken || "").trim();
-    if (token) {
-      addField("booking_token", token);
-    }
-
-    document.body.appendChild(form);
-    form.submit();
-  }
-
-  function openMaxBookingRedirect(text) {
-    const funcUrl = getMaxFunctionUrl();
-    if (!funcUrl) {
-      openExternal(getMaxBotUrl());
-      return;
-    }
-
-    // Redirect через Yandex Function — без fetch/CORS, работает с телефона.
-    if (text.length <= 1500) {
-      openExternal(
-        funcUrl +
-          "?action=prepare_booking_redirect&text=" +
-          encodeURIComponent(text)
-      );
-      return;
-    }
-
-    submitBookingForm(funcUrl, text);
-  }
-
   function openTelegramOrder(cart, options) {
-    const text = buildOrderText(cart, options);
+    var text = buildOrderText(cart, options);
     openExternal(getTelegramOrderUrl(text));
   }
 
   function openMaxOrder(cart, options) {
-    const text = buildOrderText(cart, options);
-    openMaxBookingRedirect(text);
+    var text = buildOrderText(cart, options);
+    try {
+      sessionStorage.setItem(BOOKING_STORAGE_KEY, text);
+    } catch (e) {
+      openExternal(getMaxShareOrderUrl(text));
+      return;
+    }
+    openExternal(getBookingBridgeUrl());
   }
 
   global.IRON_ORDER = {
     buildOrderText: buildOrderText,
     formatPrice: formatPrice,
     getTelegramOrderUrl: getTelegramOrderUrl,
+    getMaxShareOrderUrl: getMaxShareOrderUrl,
     getMaxBotUrl: getMaxBotUrl,
     openTelegramOrder: openTelegramOrder,
     openMaxOrder: openMaxOrder,
