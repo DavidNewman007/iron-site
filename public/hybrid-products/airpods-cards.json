@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-04T12:08:09.071Z",
-  "count": 43,
+  "generated_at": "2026-07-05T12:15:29.591Z",
+  "count": 45,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -302,6 +302,20 @@
       "name": "🔈AirPods Pro 3",
       "warehouse": "(S2)",
       "price": 19300
+    },
+    "-airpods-4-with-anc-mxp93-s1-16600": {
+      "url": "hybrid-products/airpods/airpods-4-with-anc-mxp93-s1-16600.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "🎧 AirPods 4 with ANC MXP93",
+      "warehouse": "(S1)",
+      "price": 16600
+    },
+    "-airpods-pro-2-s2-15900": {
+      "url": "hybrid-products/airpods/airpods-pro-2-s2-15900.html",
+      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
+      "name": "🔈AirPods Pro 2",
+      "warehouse": "(S2)",
+      "price": 15900
     }
   }
 }
