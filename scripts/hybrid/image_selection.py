@@ -143,6 +143,24 @@ def parse_product_image_hints(category: str, product_name: str, catalog_url: str
     return hints
 
 
+CROSS_SELL_IMAGE_RE = re.compile(
+    r"chexol-|chekhol-|bumazhnik|cardholder|card-holder|/accessories/|smartphone-cases|"
+    r"pitaka|/new[\s%20]+products/chexol",
+    re.I,
+)
+
+
+def is_cross_sell_accessory_image(url: str) -> bool:
+    return bool(CROSS_SELL_IMAGE_RE.search(urllib.parse.unquote(str(url or ""))))
+
+
+def filter_phone_product_images(urls: list[str], category: str) -> list[str]:
+    if category not in ("iphone", "samsung"):
+        return urls
+    filtered = [url for url in urls if not is_cross_sell_accessory_image(url)]
+    return filtered or urls
+
+
 def is_device_lineup_image(url: str) -> bool:
     return bool(DEVICE_LINEUP_RE.search(urllib.parse.unquote(str(url or ""))))
 
@@ -361,6 +379,10 @@ def select_product_images(
     if category == "iphone":
         result = fix_iphone_lineup_cover(result)
         result = demote_shared_lineup_tail(result)
+        result = filter_phone_product_images(result, category)
+
+    if category == "samsung":
+        result = filter_phone_product_images(result, category)
 
     if category == "macbook":
         result = fix_macbook_cover_order(result, hints)

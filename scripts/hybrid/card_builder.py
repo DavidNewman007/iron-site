@@ -5,6 +5,7 @@ import json
 from typing import Any
 
 from .config import HYBRID_CART_VERSION
+from .scraper import clean_catalog_title
 from .images import mirror_images
 from .manifest import html_path, save_source, upsert_manifest_entry
 from .slug import build_file_slug
@@ -112,13 +113,13 @@ def _esc(value: str) -> str:
     return html.escape(str(value or ""), quote=True)
 
 
-def _gallery_block(images_rel: list[str], catalog_title: str) -> tuple[str, str]:
+def _gallery_block(images_rel: list[str], alt_text: str) -> tuple[str, str]:
     if not images_rel:
         return ("<p>Изображения не найдены</p>", "")
     gallery = images_rel[:MAX_GALLERY_IMAGES]
     main = f"../../{gallery[0]}"
     main_img = (
-        f'<img id="mainImg" src="{_esc(main)}" alt="{_esc(catalog_title)}" '
+        f'<img id="mainImg" src="{_esc(main)}" alt="{_esc(alt_text)}" '
         f'loading="eager" decoding="async" fetchpriority="high">'
     )
     thumbs = []
@@ -164,7 +165,7 @@ def build_source_from_match(match_entry: dict[str, Any]) -> dict[str, Any]:
         "warehouse": product.get("warehouse") or "",
         "price": product["price"],
         "catalog_url": match_entry.get("catalog_url") or "",
-        "catalog_title": match_entry.get("catalog_title") or product["name"],
+        "catalog_title": clean_catalog_title(match_entry.get("catalog_title") or product["name"]),
         "specs": match_entry.get("specs") or [],
         "images_remote": match_entry.get("images_remote") or [],
         "images_local": images_local,
@@ -173,16 +174,16 @@ def build_source_from_match(match_entry: dict[str, Any]) -> dict[str, Any]:
 
 def render_html(source: dict[str, Any]) -> str:
     name = source["name"]
-    catalog_title = source.get("catalog_title") or name
     specs = source.get("specs") or []
     images_rel = source.get("images_local") or []
     images_js = [f"../../{rel}" for rel in images_rel]
+    meta_description = f"{name} — актуальная цена и характеристики в IRON SERVICE, Сочи."
 
     spec_rows = "".join(
         f"<tr><td>{_esc(item['key'])}</td><td>{_esc(item['value'])}</td></tr>"
         for item in specs
     )
-    gallery_main, thumbs_html = _gallery_block(images_rel, catalog_title)
+    gallery_main, thumbs_html = _gallery_block(images_rel, name)
     images_literal = json.dumps(images_js[:MAX_GALLERY_IMAGES], ensure_ascii=False)
     gallery_script = GALLERY_SCRIPT.replace("__IMAGES__", images_literal)
     og_block = _og_block(source, images_rel)
@@ -192,6 +193,7 @@ def render_html(source: dict[str, Any]) -> str:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{_esc(meta_description)}">
 {og_block}
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self' https://docs.google.com; frame-src 'none'">
   <title>{_esc(name)} — IRON SERVICE</title>
@@ -241,7 +243,7 @@ def render_html(source: dict[str, Any]) -> str:
     <h1>{_esc(name)}</h1>
     <div class="detail-grid">
       <section class="price-card">
-        <h3 class="price-card__name">{_esc(catalog_title)}</h3>
+        <h3 class="price-card__name">{_esc(name)}</h3>
         <div class="meta">
           <p class="price-line"><b>Цена:</b> <span class="price-card__price" aria-live="polite"></span></p>
           <p class="meta-note">Цена за наличный расчет · из актуального прайса IRON SERVICE</p>

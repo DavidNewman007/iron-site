@@ -69,6 +69,7 @@ def scrape_catalog_product(
         og_title = _clean_text(og_match.group(1))
         if og_title and len(og_title) > len(title):
             title = og_title
+    title = clean_catalog_title(title)
     specs = sanitize_specs(parse_specs(page_html))
     images = select_product_images(category, product_name, page_html, url, seed_images)
     return CatalogProduct(url=url, title=title, specs=specs, images_remote=images)
@@ -76,11 +77,17 @@ def scrape_catalog_product(
 
 def clean_catalog_title(title: str) -> str:
     text = _clean_text(title)
-    text = re.sub(r"\s*—\s*Dr\.?Store\s*$", "", text, flags=re.I)
-    text = re.sub(r"\s*в\s+Сочи\s*$", "", text, flags=re.I)
-    text = re.sub(r"^Купить\s+", "", text, flags=re.I)
+    text = re.sub(r"Dr\.?-?Store", "", text, flags=re.I)
+    text = re.sub(r"\s*\|\s*", " — ", text)
+    text = re.sub(r"\s*—\s*(?:цена|цены|характеристик|доставк|интернет-магазин)[^—]*$", "", text, flags=re.I)
+    text = re.sub(r"\s*—\s*[^—]+$", "", text)  # trailing SEO clause after em dash
+    text = re.sub(r"\s+в\s+(?:Сочи|Краснодар(?:е)?|Москве|СПб|Санкт-Петербурге)\s*", " ", text, flags=re.I)
+    text = re.sub(r"\s+в\s+(?:Сочи|Краснодар(?:е)?|Москве)\s*$", "", text, flags=re.I)
+    text = re.sub(r"^Купить\s+(?:смартфон\s+)?", "", text, flags=re.I)
     text = re.sub(r"^Смартфон\s+", "", text, flags=re.I)
-    return text.strip()
+    text = re.sub(r"\s+в\s*$", "", text)
+    text = re.sub(r"\s+в\s*…\s*$", "", text)
+    return re.sub(r"\s+", " ", text).strip(" -—|")
 
 
 def parse_page_title(page_html: str) -> str:
