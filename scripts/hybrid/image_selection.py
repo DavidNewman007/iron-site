@@ -331,10 +331,12 @@ def fix_iphone_lineup_cover(urls: list[str]) -> list[str]:
     if len(urls) < 2:
         return urls
     first_idx = dr_store_index(urls[0])
-    second_idx = dr_store_index(urls[1])
-    if first_idx is not None and second_idx is not None and first_idx <= 5 and second_idx >= 15:
-        lineup = urls[0]
-        return urls[1:] + [lineup]
+    if first_idx != 1:
+        return urls
+    for i, url in enumerate(urls[1:], start=1):
+        idx = dr_store_index(url)
+        if idx is not None and idx > 1:
+            return urls[i:] + urls[:i]
     return urls
 
 
@@ -348,9 +350,7 @@ def demote_shared_lineup_tail(urls: list[str]) -> list[str]:
     specific = [url for url in urls if dr_store_index(url) not in (None, 1)]
     if not specific:
         return urls
-    if any((dr_store_index(url) or 0) >= 10 for url in specific):
-        return specific + lineup
-    return urls
+    return specific + lineup
 
 
 def select_product_images(

@@ -23,6 +23,7 @@ from hybrid.existing import card_already_published  # noqa: E402
 from hybrid.manifest import load_manifest, load_source, save_source  # noqa: E402
 from hybrid.price_parser import load_products_from_sheet  # noqa: E402
 from hybrid.scraper import scrape_catalog_product  # noqa: E402
+from hybrid.source_repair import repair_or_bootstrap_source  # noqa: E402
 
 
 def load_probe(category: str) -> dict:
@@ -101,6 +102,11 @@ def build_from_probe(
             continue
         try:
             if force_rebuild:
+                repaired = repair_or_bootstrap_source(category, product_id)
+                if repaired:
+                    built.append(build_card_from_source(repaired))
+                    continue
+
                 existing = load_source(category, product_id)
                 match = probe.get("matches", {}).get(product_id)
                 if match and match.get("status") == "matched":

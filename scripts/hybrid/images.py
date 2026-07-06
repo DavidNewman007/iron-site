@@ -39,25 +39,48 @@ def mirror_images(
         if not remote:
             continue
         large = prefer_large_image_url(remote)
+        candidates: list[str] = []
         for candidate in (large, remote):
-            if candidate in image_map:
-                rel_path = image_map[candidate]
-                abs_path = PUBLIC / rel_path
-                if abs_path.exists():
-                    local_paths.append(rel_path)
-                    break
-        else:
-            filename = _local_name(candidate)
-            rel_path = f"assets/product-images/{filename}"
+            if candidate and candidate not in candidates:
+                candidates.append(candidate)
+
+        resolved = False
+        for candidate in candidates:
+            if candidate not in image_map:
+                continue
+            rel_path = image_map[candidate]
             abs_path = PUBLIC / rel_path
             if not abs_path.exists():
-                abs_path.write_bytes(fetch_bytes(candidate, timeout=60))
-            image_map[candidate] = rel_path
-            if large != candidate:
-                image_map[large] = rel_path
-            if remote != candidate:
-                image_map[remote] = rel_path
+                try:
+                    abs_path.write_bytes(fetch_bytes(candidate, timeout=60))
+                except Exception:
+                    continue
             local_paths.append(rel_path)
+            resolved = True
+            break
+
+        if resolved:
+            continue
+
+        last_error: Exception | None = None
+        for candidate in candidates:
+            rel_path = image_map.get(candidate) or f"assets/product-images/{_local_name(candidate)}"
+            abs_path = PUBLIC / rel_path
+            try:
+                if not abs_path.exists():
+                    abs_path.write_bytes(fetch_bytes(candidate, timeout=60))
+                image_map[candidate] = rel_path
+                if large != candidate and large in candidates:
+                    image_map[large] = rel_path
+                if remote != candidate:
+                    image_map[remote] = rel_path
+                local_paths.append(rel_path)
+                resolved = True
+                break
+            except Exception as exc:  # noqa: BLE001
+                last_error = exc
+        if not resolved:
+            continue
 
     deduped: list[str] = []
     seen: set[str] = set()
