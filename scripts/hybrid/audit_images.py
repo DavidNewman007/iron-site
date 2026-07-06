@@ -7,7 +7,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from .config import HYBRID_CATEGORIES, ROOT, load_image_map
-from .image_selection import dr_store_index
+from .image_selection import dr_store_index, is_watch_strap_only_image
 
 IMAGE_ISSUE_KEYS = (
     "no_cover",
@@ -15,9 +15,11 @@ IMAGE_ISSUE_KEYS = (
     "empty_gallery",
     "thin_gallery",
     "lineup_cover",
+    "strap_cover",
     "shared_cover_across_colors",
     "cover_main_mismatch",
     "missing_cover_file",
+    "missing_gallery_file",
 )
 
 # Minimum in-card gallery size; below this we re-scrape dr-store.
@@ -75,9 +77,11 @@ def audit_category(category: str) -> dict:
         "empty_gallery": [],
         "thin_gallery": [],
         "lineup_cover": [],
+        "strap_cover": [],
         "shared_cover_across_colors": [],
         "cover_main_mismatch": [],
         "missing_cover_file": [],
+        "missing_gallery_file": [],
     }
 
     model_covers: dict[str, dict[str, list[str]]] = defaultdict(lambda: defaultdict(list))
@@ -117,6 +121,23 @@ def audit_category(category: str) -> dict:
                 {"product_id": product_id, "name": name, "cover": cover}
             )
 
+        missing_gallery: list[str] = []
+        for img_ref in images:
+            if not img_ref or not str(img_ref).strip():
+                continue
+            rel = str(img_ref).replace("../../", "")
+            if not (ROOT / "public" / rel).exists():
+                missing_gallery.append(rel)
+        if missing_gallery:
+            issues["missing_gallery_file"].append(
+                {
+                    "product_id": product_id,
+                    "name": name,
+                    "missing": missing_gallery[:5],
+                    "count": len(missing_gallery),
+                }
+            )
+
         main_match = re.search(r'id="mainImg" src="\.\./\.\./([^"]+)"', html)
         if main_match and main_match.group(1) != cover:
             issues["cover_main_mismatch"].append(product_id)
@@ -125,6 +146,9 @@ def audit_category(category: str) -> dict:
         idx = dr_store_index(remote)
         if idx == 1 and category == "iphone":
             issues["lineup_cover"].append({"product_id": product_id, "name": name, "cover": cover})
+
+        if category == "watch" and remote and is_watch_strap_only_image(remote):
+            issues["strap_cover"].append({"product_id": product_id, "name": name, "cover": cover})
 
         mk = model_key(name)
         ck = color_key(name)
@@ -153,9 +177,11 @@ def audit_category(category: str) -> dict:
         "empty_gallery": len(issues["empty_gallery"]),
         "thin_gallery": len(issues["thin_gallery"]),
         "lineup_cover": len(issues["lineup_cover"]),
+        "strap_cover": len(issues["strap_cover"]),
         "shared_cover_across_colors": len(issues["shared_cover_across_colors"]),
         "cover_main_mismatch": len(issues["cover_main_mismatch"]),
         "missing_cover_file": len(issues.get("missing_cover_file", [])),
+        "missing_gallery_file": len(issues.get("missing_gallery_file", [])),
     }
     return {"summary": summary, "issues": issues}
 
@@ -191,6 +217,18 @@ def find_cards_needing_repair(category: str) -> list[str]:
                 ids.add(str(pid))
         elif item:
             ids.add(str(item))
+
+    for item in issues.get("strap_cover", []):
+        if isinstance(item, dict):
+            pid = item.get("product_id")
+            if pid:
+                ids.add(str(pid))
+
+    for item in issues.get("missing_gallery_file", []):
+        if isinstance(item, dict):
+            pid = item.get("product_id")
+            if pid:
+                ids.add(str(pid))
 
     for item in issues.get("shared_cover_across_colors", []):
         ids.update(item.get("product_ids", []))

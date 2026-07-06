@@ -340,6 +340,37 @@ def fix_iphone_lineup_cover(urls: list[str]) -> list[str]:
     return urls
 
 
+def watch_gallery_index(url: str) -> int:
+    """Dr-store watch gallery slot; unindexed hero files are strap close-ups."""
+    value = urllib.parse.unquote(str(url or "")).lower()
+    match = re.search(r"-(\d+)-(?:1000|1200)x(?:1000|1200)\.(?:png|jpe?g)$", value)
+    if match:
+        return int(match.group(1))
+    return 1
+
+
+def is_watch_strap_only_image(url: str) -> bool:
+    value = urllib.parse.unquote(str(url or "")).lower()
+    if "demo-prostore" in value and "/watch/" in value:
+        return False
+    if "remeshok" in value or ("alpine" in value and "loop" in value and "strap" in value):
+        return watch_gallery_index(url) < 2
+    return False
+
+
+def fix_watch_cover_order(urls: list[str]) -> list[str]:
+    if len(urls) < 2:
+        return urls
+    demo = [url for url in urls if "demo-prostore" in url.lower() and "/watch/" in url.lower()]
+    heroes = [url for url in urls if url not in demo and not is_watch_strap_only_image(url)]
+    straps = [url for url in urls if url not in demo and is_watch_strap_only_image(url)]
+    if demo:
+        return demo + heroes + straps
+    if heroes:
+        return heroes + straps
+    return urls
+
+
 def demote_shared_lineup_tail(urls: list[str]) -> list[str]:
     """Move generic dr-store-1 lineup shots to the end when color-specific images exist."""
     if len(urls) <= 1:
@@ -389,5 +420,8 @@ def select_product_images(
 
     if category == "accessories":
         result = filter_accessory_images(result, product_name, catalog_url)
+
+    if category == "watch":
+        result = fix_watch_cover_order(result)
 
     return result[:MAX_IMAGES]

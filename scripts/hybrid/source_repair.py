@@ -12,6 +12,7 @@ from .image_selection import (
     filter_phone_product_images,
     fix_iphone_lineup_cover,
     fix_macbook_cover_order,
+    fix_watch_cover_order,
     parse_product_image_hints,
 )
 from .images import mirror_images
@@ -89,6 +90,8 @@ def reorder_remote_urls(category: str, name: str, catalog_url: str, remote_urls:
         return fix_macbook_cover_order(list(remote_urls), hints)
     if category == "accessories":
         return filter_accessory_images(list(remote_urls), name, catalog_url)
+    if category == "watch":
+        return fix_watch_cover_order(list(remote_urls))
     return list(remote_urls)
 
 

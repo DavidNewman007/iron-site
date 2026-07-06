@@ -50,6 +50,8 @@ def main() -> int:
             f"[{summary['category']}] total={summary['total']} "
             f"thin_gallery={summary['thin_gallery']} "
             f"lineup_cover={summary['lineup_cover']} "
+            f"strap_cover={summary.get('strap_cover', 0)} "
+            f"missing_gallery={summary.get('missing_gallery_file', 0)} "
             f"shared_colors={summary['shared_cover_across_colors']} "
             f"no_cover={summary['no_cover']} empty_gallery={summary['empty_gallery']}"
         )
