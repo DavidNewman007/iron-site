@@ -12,6 +12,7 @@
   const HYBRID_AIRPODS_MANIFEST = "hybrid-products/airpods-cards.json";
   const HYBRID_SAMSUNG_MANIFEST = "hybrid-products/samsung-cards.json";
   const HYBRID_ACCESSORIES_MANIFEST = "hybrid-products/accessories-cards.json";
+  const HYBRID_FITBIT_MANIFEST = "hybrid-products/fitbit-cards.json";
   const HYBRID_IPHONE_MANIFEST_VERSION = "2026-06-20-3";
   const HYBRID_IPAD_MANIFEST_VERSION = "2026-06-20-1";
   const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-26-3";
@@ -19,6 +20,7 @@
   const HYBRID_AIRPODS_MANIFEST_VERSION = "2026-06-26-2";
   const HYBRID_SAMSUNG_MANIFEST_VERSION = "2026-06-27-3";
   const HYBRID_ACCESSORIES_MANIFEST_VERSION = "2026-06-27-1";
+  const HYBRID_FITBIT_MANIFEST_VERSION = "2026-07-07-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
   const CART_KEY = "iron_cart";
   const CART_PRODUCT_ID_QUERY_PARAM = "pid";
@@ -106,6 +108,12 @@
       icon: "👓",
       test: (t) => /meta|oakley|wayfarer|skyler/i.test(t),
     },
+    {
+      id: "fitbit",
+      label: "Google Fitbit",
+      icon: "⌚",
+      test: (t) => /fitbit|google\s*fitbit/i.test(t),
+    },
     // Apple Watch only (Galaxy Watch handled by galaxy_watch rule above).
     {
       id: "watch",
@@ -114,7 +122,7 @@
       test: (t) =>
         /apple\s*watch|series\s*(?:se\s*\d*|\d+|ultra(?:\s*\d+)?)|^series\s+ultra|^\s*ultra\s*\d+\b|^\s*se\d+\s+\d{2}mm\b|^\s*s\d{1,2}\s+\d{2}mm\b|⌚/iu.test(
           t
-        ) && !/galaxy\s*watch|samsung|whoop/i.test(t),
+        ) && !/galaxy\s*watch|samsung|whoop|fitbit|google\s*fitbit/i.test(t),
     },
     { id: "other", label: "Прочее", icon: "◆", test: () => true }];
 
@@ -187,6 +195,8 @@
   let airpodsHybridManifestLoaded = false;
   let samsungHybridManifestLoaded = false;
   let accessoriesHybridManifestLoaded = false;
+  let fitbitHybridById = {};
+  let fitbitHybridManifestLoaded = false;
   let cart = loadCart();
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
@@ -215,7 +225,8 @@
       loadWatchHybridCards(),
       loadAirpodsHybridCards(),
       loadSamsungHybridCards(),
-      loadAccessoriesHybridCards()]);
+      loadAccessoriesHybridCards(),
+      loadFitbitHybridCards()]);
 
     const hadFreshCache = tryShowCachedProducts();
     if (hadFreshCache) {
@@ -414,6 +425,22 @@
     }
   }
 
+  async function loadFitbitHybridCards() {
+    try {
+      const manifestUrl = `${HYBRID_FITBIT_MANIFEST}?v=${encodeURIComponent(
+        HYBRID_FITBIT_MANIFEST_VERSION
+      )}`;
+      const res = await fetch(manifestUrl, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      fitbitHybridById = data && typeof data.byId === "object" ? data.byId : {};
+      fitbitHybridManifestLoaded = true;
+    } catch (_) {
+      fitbitHybridById = {};
+      fitbitHybridManifestLoaded = false;
+    }
+  }
+
   function applyHybridData() {
     if (!allProducts.length) return;
     for (const product of allProducts) {
@@ -465,6 +492,18 @@
           continue;
         }
         product.hybridDetailUrl = allowHeuristicFallback ? buildWatchDetailFallbackUrl(product) : "";
+        product.hybridCoverUrl = "";
+        continue;
+      }
+
+      if (isHybridFitbitCandidate(product)) {
+        const meta = resolveFitbitHybridMeta(product);
+        if (meta && meta.url) {
+          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
+          continue;
+        }
+        product.hybridDetailUrl = "";
         product.hybridCoverUrl = "";
         continue;
       }
@@ -953,6 +992,11 @@
     return null;
   }
 
+  function resolveFitbitHybridMeta(product) {
+    const exact = fitbitHybridById[product.id];
+    return exact && exact.url ? exact : null;
+  }
+
   function resolveWatchHybridMeta(product) {
     const exact = watchHybridById[product.id];
     if (exact && exact.url) return exact;
@@ -1223,10 +1267,6 @@
     const n = String(name || "").trim();
     const s = String(currentSection || "").trim();
 
-    if (isWatchSectionLabel(s) && !isIphoneSectionLabel(s)) {
-      return normalizeSectionLabel(s);
-    }
-
     const seriesUltra = n.match(/^Series\s+Ultra\s+(\d+)\s+(\d{2})mm/i);
     if (seriesUltra) return `⌚ Ultra ${seriesUltra[1]} ${seriesUltra[2]}mm`;
 
@@ -1245,7 +1285,15 @@
     const ultraShort = n.match(/^Ultra\s+(\d+)\b/i);
     if (ultraShort) return `⌚ Ultra ${ultraShort[1]}`;
 
+    if (isWatchSectionLabel(s) && !isIphoneSectionLabel(s)) {
+      return normalizeSectionLabel(s);
+    }
+
     return "⌚ Apple Watch";
+  }
+
+  function resolveFitbitSection(name) {
+    return "⌚ Google Fitbit Air";
   }
 
   function resolveMacbookSection(name, currentSection) {
@@ -1291,8 +1339,12 @@
     if (!product || product.category !== "watch") return false;
     const name = String(product.name || "");
     const section = String(product.section || "");
-    if (/galaxy\s*watch|samsung/i.test(name) || /galaxy\s*watch|samsung/i.test(section)) return false;
+    if (/galaxy\s*watch|samsung|fitbit|google\s*fitbit/i.test(name) || /galaxy\s*watch|samsung|fitbit/i.test(section)) return false;
     return isWatchLikeName(name) || isWatchLikeName(section);
+  }
+
+  function isHybridFitbitCandidate(product) {
+    return Boolean(product && product.category === "fitbit");
   }
 
   function isHybridAirpodsCandidate(product) {
@@ -1652,6 +1704,8 @@
       let productSection = currentSection;
       if (productCategory === "accessories") {
         productSection = resolveAccessorySection(name);
+      } else if (productCategory === "fitbit") {
+        productSection = resolveFitbitSection(name);
       } else if (productCategory === "watch") {
         productSection = resolveWatchSection(name, currentSection);
       } else if (productCategory === "macbook") {

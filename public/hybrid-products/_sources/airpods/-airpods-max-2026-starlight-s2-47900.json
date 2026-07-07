@@ -6,16 +6,16 @@
   "country": "",
   "warehouse": "(S2)",
   "price": 47900,
-  "catalog_url": "https://sochi.dr-store.ru/apple/airpods/airpods-max/airpods-max-2024-starlight",
-  "catalog_title": "беспроводные наушники Apple AirPods Max (2024), Starlight",
+  "catalog_url": "https://sochi.dr-store.ru/apple/airpods/airpods-max-2/airpods-max-2-starlight",
+  "catalog_title": "беспроводные наушники Apple AirPods Max 2, Starlight…",
   "specs": [
     {
       "key": "Процессор",
-      "value": "Apple H1"
+      "value": "Apple H2"
     },
     {
       "key": "Сотовая и беспроводная сеть",
-      "value": "Bluetooth 5.0"
+      "value": "Bluetooth 5.3"
     },
     {
       "key": "Интерфейсы",
@@ -43,7 +43,7 @@
     },
     {
       "key": "Аудиотехнологии",
-      "value": "восемь микрофонов для активного шумоподавления, три микрофона для передачи голоса (два общих с активным шумоподавлением и один дополнительный микрофон)"
+      "value": "9 микрофонов (8 микрофонов для активного шумоподавления), 3 микрофона для передачи голоса (два общих с активным шумоподавлением и один дополнительный микрофон). Адаптивный звук, изоляция голоса"
     },
     {
       "key": "Датчики",
@@ -51,16 +51,16 @@
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-4-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-10-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-14-1000x1000.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-19-1000x1000.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-19-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-14-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-10-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/5b9560d4acd146b701d5f78a.jpg",
-    "assets/product-images/92b34078ddd5b6c9dfad63ae.jpg",
+    "assets/product-images/3fc3b26680f7e3f1f7024395.jpg",
     "assets/product-images/ad5bf53835bb04b0b2c3053e.jpg",
-    "assets/product-images/3fc3b26680f7e3f1f7024395.jpg"
+    "assets/product-images/5b9560d4acd146b701d5f78a.jpg",
+    "assets/product-images/92b34078ddd5b6c9dfad63ae.jpg"
   ],
-  "updated_at": "2026-07-06T10:55:31.914334Z"
+  "updated_at": "2026-07-07T06:56:27.441354Z"
 }

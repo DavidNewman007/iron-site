@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-06T17:37:29.946Z",
-  "count": 132,
+  "generated_at": "2026-07-07T06:55:00.682Z",
+  "count": 133,
   "byId": {
     "series-se-3-40mm-s-m-midnight-mid-meh94-j-a-япония-s1-21900": {
       "url": "hybrid-products/watch/series-se-3-40mm-s-m-midnight-mid-meh94-j-a-s1-21900.html",
@@ -925,6 +925,13 @@
       "name": "S11 46mm Rose Gold M/L",
       "warehouse": "(S2)",
       "price": 35500
+    },
+    "series-ultra-3-49mm-l-black-black-alpine-gps-cellular-mf0x4-lw-a-сша-s1-64300": {
+      "url": "hybrid-products/watch/series-ultra-3-49mm-l-black-black-alpine-gps-cellular-mf0x4-lw-a-s1-64300.html",
+      "cover": "assets/product-images/66392d6c545802d6404cab3d.jpg",
+      "name": "Series Ultra 3 49mm L Black Black Alpine GPS + Cellular MF0X4 LW/A",
+      "warehouse": "(S1)",
+      "price": 64300
     }
   }
 }

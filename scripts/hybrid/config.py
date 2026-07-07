@@ -21,6 +21,7 @@ HYBRID_CATEGORIES = [
     "ipad",
     "macbook",
     "watch",
+    "fitbit",
     "airpods",
     "samsung",
     "accessories",
@@ -39,9 +40,14 @@ CATEGORY_URL_PREFIXES: dict[str, list[str]] = {
     "ipad": ["/apple/ipad/"],
     "macbook": ["/apple/macbook/"],
     "watch": ["/apple/apple-watch/", "/apple/watch/"],
+    "fitbit": ["/smart-watches/fitness-bracelets/fitnes-braslet-google-fitbit"],
     "airpods": ["/apple/airpods/"],
     "samsung": ["/smartfony/samsung/", "/samsung/"],
-    "accessories": ["/apple/accessories/", "/accessories/"],
+    "accessories": [
+        "/apple/accessories/",
+        "/accessories/",
+        "/apple/apple-gadgets/apple-mouse/",
+    ],
 }
 
 LEGACY_COUNTRY_TOKENS = {

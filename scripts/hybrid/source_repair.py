@@ -25,6 +25,7 @@ MIN_GALLERY_IMAGES: dict[str, int] = {
     "macbook": 2,
     "ipad": 2,
     "watch": 2,
+    "fitbit": 2,
     "airpods": 2,
     "accessories": 1,
 }
@@ -50,6 +51,11 @@ KNOWN_ACCESSORY_IMAGES: dict[str, list[str]] = {
         "Apple_Magic_Mouse_3_Wireless_Mouse_USB-C_Black/"
         "Apple_Magic_Mouse_3_Wireless_Mouse_USB-C_Black-1200x1200.jpg"
     ],
+    "-magic-mouse-3-white-s2-9400": [
+        "https://sochi.dr-store.ru/image/cache/catalog/new%20products/"
+        "Apple_Magic_Mouse_3_Wireless_Mouse_USB-C_White/"
+        "Apple_Magic_Mouse_3_Wireless_Mouse_USB-C_White-1200x1200.jpg"
+    ],
     "-сзу-apple-20w-mhje3zm-a-s2-2300": [
         "https://sochi.dr-store.ru/image/cache/catalog/new%20products/"
         "Apple_USB-C_Power_Adapter_20W_white/"
@@ -58,6 +64,8 @@ KNOWN_ACCESSORY_IMAGES: dict[str, list[str]] = {
 }
 
 KNOWN_ACCESSORY_CATALOG_URLS: dict[str, str] = {
+    "-magic-mouse-3-black-s2-10500": "https://sochi.dr-store.ru/apple/apple-gadgets/apple-mouse/Apple_Magic_Mouse_3_Wireless_Mouse_USB-C_Black",
+    "-magic-mouse-3-white-s2-9400": "https://sochi.dr-store.ru/apple/apple-gadgets/apple-mouse/Apple_Magic_Mouse_3_Wireless_Mouse_USB-C_White",
     "-сзу-apple-20w-mhje3zm-a-s2-2300": "https://sochi.dr-store.ru/accessories/apple-usb-c-power-adapter-20w",
 }
 
@@ -90,6 +98,8 @@ def reorder_remote_urls(category: str, name: str, catalog_url: str, remote_urls:
         return fix_macbook_cover_order(list(remote_urls), hints)
     if category == "accessories":
         return filter_accessory_images(list(remote_urls), name, catalog_url)
+    if category == "airpods":
+        return demote_shared_lineup_tail(list(remote_urls))
     if category == "watch":
         return fix_watch_cover_order(list(remote_urls))
     return list(remote_urls)

@@ -29,6 +29,7 @@ MIN_GALLERY_IMAGES: dict[str, int] = {
     "macbook": 2,
     "ipad": 2,
     "watch": 2,
+    "fitbit": 2,
     "airpods": 2,
     "accessories": 1,
 }

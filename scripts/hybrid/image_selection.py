@@ -421,6 +421,9 @@ def select_product_images(
     if category == "accessories":
         result = filter_accessory_images(result, product_name, catalog_url)
 
+    if category == "airpods":
+        result = demote_shared_lineup_tail(result)
+
     if category == "watch":
         result = fix_watch_cover_order(result)
 

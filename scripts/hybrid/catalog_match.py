@@ -9,7 +9,7 @@ from pathlib import Path
 
 from .config import CATEGORY_URL_PREFIXES, DR_STORE_BASE, PROBE_DIR, SITEMAP_URL
 from .price_parser import Product
-from .product_match import iphone_match_penalty
+from .product_match import airpods_match_penalty, iphone_match_penalty, watch_match_penalty
 from .scraper import scrape_catalog_product
 
 
@@ -160,6 +160,12 @@ def score_accessory_url(name_norm: str, slug: str, url: str, score: float) -> fl
     if kind in ("mouse", "charger") and any(token in slug for token in ("iphone", "chexol", "smartphone-cases")):
         score *= 0.05
 
+    if kind == "mouse":
+        if "magic-mouse" in slug or "magic_mouse" in slug or "apple-mouse" in slug:
+            score *= 3.0
+        elif "magic mouse" in name_norm or "мыш" in name_norm:
+            score *= 0.05
+
     if any(token in slug for token in ("iphone", "ipad", "macbook", "watch", "galaxy")):
         if kind is None and "чехол" not in name_norm and "стекло" not in name_norm:
             score *= 0.15
@@ -192,6 +198,8 @@ def score_product_url(product: Product, url: str) -> float:
         score *= 0.3
     if product.category == "airpods" and "airpods" not in slug:
         score *= 0.2
+    if product.category == "fitbit" and "fitbit" not in slug and "fitnes-braslet" not in url:
+        score *= 0.2
     if product.category == "accessories":
         score = score_accessory_url(name_norm, slug, url, score)
 
@@ -210,12 +218,18 @@ def score_product_url(product: Product, url: str) -> float:
     if product.category == "iphone":
         score *= iphone_match_penalty(product.name, url)
 
+    if product.category == "airpods":
+        score *= airpods_match_penalty(product.name, url)
+
+    if product.category in ("watch", "fitbit"):
+        score *= watch_match_penalty(product.name, url)
+
     return score
 
 
 def candidate_urls(category: str, sitemap_urls: list[str]) -> list[str]:
     prefixes = CATEGORY_URL_PREFIXES.get(category, [])
-    min_slashes = 3 if category == "accessories" else 4
+    min_slashes = 3 if category in ("accessories", "fitbit") else 4
     urls = []
     for url in sitemap_urls:
         path = url.replace(DR_STORE_BASE, "")
