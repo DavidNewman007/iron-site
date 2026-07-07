@@ -19,6 +19,7 @@ const categories = [
   "ipad",
   "macbook",
   "watch",
+  "fitbit",
   "airpods",
   "samsung",
   "accessories",

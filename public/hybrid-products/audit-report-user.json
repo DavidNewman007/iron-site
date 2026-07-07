@@ -1,0 +1,165 @@
+{
+  "generated_at": "2026-07-07",
+  "meta_audit": {
+    "missing_meta": 7,
+    "broken_file": 0,
+    "skipped": 2,
+    "ok": 274
+  },
+  "missing_by_category": {
+    "accessories": [
+      {
+        "id": "-galaxy-smarttag2-4-pack-s2-6600",
+        "name": "📍Galaxy SmartTag2 (4 Pack)"
+      },
+      {
+        "id": "-galaxy-smarttag2-s2-2800",
+        "name": "📍Galaxy SmartTag2"
+      },
+      {
+        "id": "-сзу-apple-35w-s2-3000",
+        "name": "🔌 СЗУ Apple 35W"
+      },
+      {
+        "id": "чехол-бумажник-pitaka-magnetic-woven-wallet-black-s2-5400",
+        "name": "Чехол-бумажник PITAKA Magnetic Woven Wallet, Black"
+      },
+      {
+        "id": "чехол-бумажник-pitaka-magnetic-woven-wallet-moonrise-s2-5400",
+        "name": "Чехол-бумажник PITAKA Magnetic Woven Wallet, Moonrise"
+      },
+      {
+        "id": "чехол-бумажник-pitaka-magnetic-woven-wallet-sunset-s2-5400",
+        "name": "Чехол-бумажник PITAKA Magnetic Woven Wallet, Sunset"
+      },
+      {
+        "id": "pitaka-galaxy-watch-ultra-black-gray-carbon-s2-6000",
+        "name": "Pitaka Galaxy Watch Ultra Black/Gray Carbon"
+      }
+    ]
+  },
+  "image_audit": [
+    {
+      "category": "iphone",
+      "total": 554,
+      "no_cover": 0,
+      "missing_html": 0,
+      "empty_gallery": 0,
+      "thin_gallery": 0,
+      "lineup_cover": 0,
+      "strap_cover": 0,
+      "shared_cover_across_colors": 0,
+      "cover_main_mismatch": 0,
+      "missing_cover_file": 0,
+      "missing_gallery_file": 0
+    },
+    {
+      "category": "ipad",
+      "total": 51,
+      "no_cover": 0,
+      "missing_html": 0,
+      "empty_gallery": 0,
+      "thin_gallery": 5,
+      "lineup_cover": 0,
+      "strap_cover": 0,
+      "shared_cover_across_colors": 0,
+      "cover_main_mismatch": 0,
+      "missing_cover_file": 0,
+      "missing_gallery_file": 0
+    },
+    {
+      "category": "macbook",
+      "total": 84,
+      "no_cover": 0,
+      "missing_html": 0,
+      "empty_gallery": 0,
+      "thin_gallery": 23,
+      "lineup_cover": 0,
+      "strap_cover": 0,
+      "shared_cover_across_colors": 0,
+      "cover_main_mismatch": 0,
+      "missing_cover_file": 0,
+      "missing_gallery_file": 0
+    },
+    {
+      "category": "watch",
+      "total": 133,
+      "no_cover": 0,
+      "missing_html": 0,
+      "empty_gallery": 0,
+      "thin_gallery": 0,
+      "lineup_cover": 0,
+      "strap_cover": 0,
+      "shared_cover_across_colors": 0,
+      "cover_main_mismatch": 0,
+      "missing_cover_file": 0,
+      "missing_gallery_file": 0
+    },
+    {
+      "category": "fitbit",
+      "total": 3,
+      "no_cover": 0,
+      "missing_html": 0,
+      "empty_gallery": 0,
+      "thin_gallery": 0,
+      "lineup_cover": 0,
+      "strap_cover": 0,
+      "shared_cover_across_colors": 0,
+      "cover_main_mismatch": 0,
+      "missing_cover_file": 0,
+      "missing_gallery_file": 0
+    },
+    {
+      "category": "airpods",
+      "total": 45,
+      "no_cover": 0,
+      "missing_html": 0,
+      "empty_gallery": 0,
+      "thin_gallery": 0,
+      "lineup_cover": 0,
+      "strap_cover": 0,
+      "shared_cover_across_colors": 0,
+      "cover_main_mismatch": 0,
+      "missing_cover_file": 0,
+      "missing_gallery_file": 0
+    },
+    {
+      "category": "samsung",
+      "total": 89,
+      "no_cover": 0,
+      "missing_html": 0,
+      "empty_gallery": 0,
+      "thin_gallery": 0,
+      "lineup_cover": 0,
+      "strap_cover": 0,
+      "shared_cover_across_colors": 0,
+      "cover_main_mismatch": 0,
+      "missing_cover_file": 0,
+      "missing_gallery_file": 0
+    },
+    {
+      "category": "accessories",
+      "total": 42,
+      "no_cover": 0,
+      "missing_html": 0,
+      "empty_gallery": 0,
+      "thin_gallery": 0,
+      "lineup_cover": 0,
+      "strap_cover": 0,
+      "shared_cover_across_colors": 0,
+      "cover_main_mismatch": 0,
+      "missing_cover_file": 0,
+      "missing_gallery_file": 0
+    }
+  ],
+  "image_issues": {
+    "iphone": {},
+    "ipad": {},
+    "macbook": {},
+    "watch": {},
+    "fitbit": {},
+    "airpods": {},
+    "samsung": {},
+    "accessories": {}
+  }
+}

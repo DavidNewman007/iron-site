@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-06T17:37:29.960Z",
-  "count": 41,
+  "generated_at": "2026-07-07T06:54:35.354Z",
+  "count": 42,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -288,6 +288,13 @@
       "name": "🖊 Pencil (USB-C) MUWA3",
       "warehouse": "(S1)",
       "price": 8400
+    },
+    "-magic-mouse-3-white-s2-9400": {
+      "url": "hybrid-products/accessories/magic-mouse-3-white-s2-9400.html",
+      "cover": "assets/product-images/edc0e0973e1b23e76acb20d6.jpg",
+      "name": "🖱Magic Mouse 3 White",
+      "warehouse": "(S2)",
+      "price": 9400
     }
   }
 }

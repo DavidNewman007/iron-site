@@ -36,6 +36,7 @@ CATEGORY_RULES = [
     {"id": "iphone", "test": re.compile(r"iphone", re.I)},
     {"id": "ipad", "test": re.compile(r"ipad", re.I)},
     {"id": "airpods", "test": re.compile(r"airpods", re.I)},
+    {"id": "fitbit", "test": re.compile(r"fitbit|google\s*fitbit", re.I)},
     {
         "id": "gaming",
         "test": re.compile(r"playstation|ps5|ps vr|vr2|gamepad|pulse|xbox|nintendo", re.I),
@@ -69,7 +70,7 @@ CATEGORY_RULES = [
             r"apple\s*watch|series\s*(?:se\s*\d*|\d+|ultra(?:\s*\d+)?)|^series\s+ultra|^\s*ultra\s*\d+\b|^\s*se\d+\s+\d{2}mm\b|^\s*s\d{1,2}\s+\d{2}mm\b|⌚",
             re.I,
         ),
-        "exclude": re.compile(r"galaxy\s*watch|samsung|whoop", re.I),
+        "exclude": re.compile(r"galaxy\s*watch|samsung|whoop|fitbit|google\s*fitbit", re.I),
     },
     {"id": "other", "test": re.compile(r".", re.I)},
 ]
@@ -124,7 +125,17 @@ def normalize_section_label(section: str) -> str:
     return s
 
 
+def is_fitbit_like_name(text: str) -> bool:
+    return bool(re.search(r"fitbit|google\s*fitbit", str(text or ""), re.I))
+
+
+def resolve_fitbit_section(name: str) -> str:
+    return "⌚ Google Fitbit Air"
+
+
 def is_watch_like_name(text: str) -> bool:
+    if is_fitbit_like_name(text):
+        return False
     t = str(text or "").strip()
     if re.search(r"galaxy\s*watch|samsung|whoop", t, re.I):
         return False
@@ -177,8 +188,6 @@ def resolve_accessory_section(name: str) -> str:
 def resolve_watch_section(name: str, current_section: str) -> str:
     n = str(name or "").strip()
     s = str(current_section or "").strip()
-    if is_watch_section_label(s) and not re.match(r"^📱\s*iPhone\b", s, re.I):
-        return normalize_section_label(s)
     for pattern, fmt in [
         (r"^Series\s+Ultra\s+(\d+)\s+(\d{2})mm", "⌚ Ultra {} {}mm"),
         (r"^Series\s+SE\s+(\d+)\s+(\d{2})mm", "⌚ Series SE {} {}mm"),
@@ -190,6 +199,8 @@ def resolve_watch_section(name: str, current_section: str) -> str:
         m = re.match(pattern, n, re.I)
         if m:
             return fmt.format(*m.groups())
+    if is_watch_section_label(s) and not re.match(r"^📱\s*iPhone\b", s, re.I):
+        return normalize_section_label(s)
     return normalize_section_label(s or "⌚ Apple Watch")
 
 
@@ -337,6 +348,8 @@ def parse_sheet_json(json_data: dict[str, Any]) -> tuple[list[Product], str]:
         product_section = current_section
         if product_category == "accessories":
             product_section = resolve_accessory_section(name)
+        elif product_category == "fitbit":
+            product_section = resolve_fitbit_section(name)
         elif product_category == "watch":
             product_section = resolve_watch_section(name, current_section)
         elif product_category == "macbook":
