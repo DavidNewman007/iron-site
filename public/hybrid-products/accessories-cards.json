@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-06T17:37:29.960Z",
-  "count": 41,
+  "generated_at": "2026-07-07T16:23:52.828Z",
+  "count": 43,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -288,6 +288,20 @@
       "name": "🖊 Pencil (USB-C) MUWA3",
       "warehouse": "(S1)",
       "price": 8400
+    },
+    "-pencil-usb-c-muwa3-s1-8300": {
+      "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-8300.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "🖊 Pencil (USB-C) MUWA3",
+      "warehouse": "(S1)",
+      "price": 8300
+    },
+    "-pencil-pro-mx2d3-s1-11500": {
+      "url": "hybrid-products/accessories/pencil-pro-mx2d3-s1-11500.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "🖊 Pencil Pro MX2D3",
+      "warehouse": "(S1)",
+      "price": 11500
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-06T17:37:29.949Z",
-  "count": 45,
+  "generated_at": "2026-07-07T16:23:52.817Z",
+  "count": 50,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -316,6 +316,41 @@
       "name": "🔈AirPods Pro 2",
       "warehouse": "(S2)",
       "price": 15900
+    },
+    "-airpods-4-mxp63-s1-11300": {
+      "url": "hybrid-products/airpods/airpods-4-mxp63-s1-11300.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "🎧 AirPods 4 MXP63",
+      "warehouse": "(S1)",
+      "price": 11300
+    },
+    "-airpods-4-s2-12000": {
+      "url": "hybrid-products/airpods/airpods-4-s2-12000.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "🔈Airpods 4",
+      "warehouse": "(S2)",
+      "price": 12000
+    },
+    "-airpods-4-anc-s2-16200": {
+      "url": "hybrid-products/airpods/airpods-4-anc-s2-16200.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "🔈AirPods 4 ANC",
+      "warehouse": "(S2)",
+      "price": 16200
+    },
+    "-airpods-pro-3-s2-19200": {
+      "url": "hybrid-products/airpods/airpods-pro-3-s2-19200.html",
+      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
+      "name": "🔈AirPods Pro 3",
+      "warehouse": "(S2)",
+      "price": 19200
+    },
+    "-airpods-max-2026-midnight-s2-45300": {
+      "url": "hybrid-products/airpods/airpods-max-2026-midnight-s2-45300.html",
+      "cover": "assets/product-images/1611732bf1dd6c4e9030627a.jpg",
+      "name": "🎧AirPods Max 2026 Midnight",
+      "warehouse": "(S2)",
+      "price": 45300
     }
   }
 }
