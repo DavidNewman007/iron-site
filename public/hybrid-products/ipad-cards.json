@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-07T16:23:52.791Z",
-  "count": 57,
+  "generated_at": "2026-07-08T12:18:43.521Z",
+  "count": 64,
   "byId": {
     "ipad-11-a16-wi-fi-128gb-blue-j-a-япония-s1-31600": {
       "url": "hybrid-products/ipad/ipad-11-a16-wi-fi-128gb-blue-j-a-s1-31600.html",
@@ -400,6 +400,55 @@
       "name": "iPad 11 A16 Wi-Fi 256Gb Silver LL/A",
       "warehouse": "(S1)",
       "price": 47000
+    },
+    "ipad-11-a16-128gb-wi-fi-yellow-сша-s2-35500": {
+      "url": "hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-yellow-s2-35500.html",
+      "cover": "assets/product-images/12ab0e68554cce9cf2f0341c.jpg",
+      "name": "iPad 11\" A16 128GB Wi-Fi Yellow",
+      "warehouse": "(S2)",
+      "price": 35500
+    },
+    "ipad-11-a16-128gb-wi-fi-silver-сша-s2-36500": {
+      "url": "hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-silver-s2-36500.html",
+      "cover": "assets/product-images/583a2d3c9183b1410db105a8.jpg",
+      "name": "iPad 11\" A16 128GB Wi-Fi Silver",
+      "warehouse": "(S2)",
+      "price": 36500
+    },
+    "ipad-11-a16-256gb-wi-fi-silver-сша-s2-43300": {
+      "url": "hybrid-products/ipad/ipad-11-a16-256gb-wi-fi-silver-s2-43300.html",
+      "cover": "assets/product-images/583a2d3c9183b1410db105a8.jpg",
+      "name": "iPad 11\" A16 256GB Wi-Fi Silver",
+      "warehouse": "(S2)",
+      "price": 43300
+    },
+    "ipad-air-11-m4-128gb-wi-fi-purple-сша-s2-59200": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-128gb-wi-fi-purple-s2-59200.html",
+      "cover": "assets/product-images/cd54a774d5e25785d840ad96.jpg",
+      "name": "iPad Air 11\" M4 128GB Wi-Fi Purple",
+      "warehouse": "(S2)",
+      "price": 59200
+    },
+    "ipad-air-11-m4-128gb-wi-fi-starlight-сша-s2-59700": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-128gb-wi-fi-starlight-s2-59700.html",
+      "cover": "assets/product-images/fb7630407a8aee1ab9ffee57.jpg",
+      "name": "iPad Air 11\" M4 128GB Wi-Fi Starlight",
+      "warehouse": "(S2)",
+      "price": 59700
+    },
+    "ipad-air-11-m4-128gb-wi-fi-blue-сша-s2-59700": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-128gb-wi-fi-blue-s2-59700.html",
+      "cover": "assets/product-images/25b0e6302ffb3858b2cd86cf.jpg",
+      "name": "iPad Air 11\" M4 128GB Wi-Fi Blue",
+      "warehouse": "(S2)",
+      "price": 59700
+    },
+    "ipad-air-11-m4-128gb-wi-fi-gray-сша-s2-58700": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-128gb-wi-fi-gray-s2-58700.html",
+      "cover": "assets/product-images/a09349f30c0b837086196cfc.jpg",
+      "name": "iPad Air 11\" M4 128GB Wi-Fi Gray",
+      "warehouse": "(S2)",
+      "price": 58700
     }
   }
 }

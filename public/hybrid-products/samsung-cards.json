@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-07T16:23:52.825Z",
-  "count": 97,
+  "generated_at": "2026-07-08T12:18:43.558Z",
+  "count": 98,
   "byId": {
     "s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-южная-африка-s1-99300": {
       "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-s1-99300.html",
@@ -680,6 +680,13 @@
       "name": "Samsung S26 Ultra 12/256 Blue",
       "warehouse": "(S2)",
       "price": 75800
+    },
+    "samsung-s26-12-256-black-оаэ-s2-57600": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-black-s2-57600.html",
+      "cover": "assets/product-images/da449c403606df9e035e4287.png",
+      "name": "Samsung S26 12/256 Black",
+      "warehouse": "(S2)",
+      "price": 57600
     }
   }
 }
