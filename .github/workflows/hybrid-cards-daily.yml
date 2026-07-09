@@ -1,11 +1,8 @@
-# Ежедневная проверка hybrid-карточек: audit → match → build → deploy.
-# Расписание: 10:00 по Москве (07:00 UTC). Ручной запуск: Actions → Daily hybrid cards refresh.
+# Проверка hybrid-карточек: audit → match → build → deploy.
+# Автозапуск по cron отключён (2026-07-09). Ручной запуск: Actions → Daily hybrid cards refresh.
 name: Daily hybrid cards refresh
 
 on:
-  schedule:
-    # 10:00 MSK (UTC+3)
-    - cron: "0 7 * * *"
   workflow_dispatch:
 
 permissions:
