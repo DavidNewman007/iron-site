@@ -919,6 +919,14 @@ section {
   display: block;
 }
 
+.contact-legal-ip {
+  margin: 0.65rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+  opacity: 0.72;
+}
+
 /* ——— Page header (inner pages) ——— */
 .page-hero {
   padding: 3rem 0 2rem;
