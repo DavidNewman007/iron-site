@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' 'unsafe-inline'; frame-src 'none'; connect-src 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex">
+  <title>Оплата не завершена — IRON SERVICE</title>
+  <link rel="icon" href="assets/logo-icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img" width="180" height="48">
+      </a>
+      <a href="tel:+79288509404" class="header-phone">+7 928 850-94-04</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <h1>Оплата не завершена</h1>
+        <p>Платёж не прошёл или был отменён. Деньги не списаны — можно попробовать снова или оформить заказ через мессенджер.</p>
+      </div>
+    </div>
+    <div class="container" style="padding:2rem 0">
+      <p id="reason-note" style="color:#a33"></p>
+      <p style="margin-top:1.5rem">
+        <a href="magazin.html" class="btn btn-primary">Вернуться в магазин</a>
+        <a href="tel:+79288509404" class="btn">Позвонить нам</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <p style="margin-top:1.5rem">© IRON SERVICE · Сочи 2013-2026</p>
+      <p class="footer-tagline">· Запчасти • Аксессуары • Сервис •</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var notes = {
+        config: "Онлайн-оплата ещё настраивается. Оформите заказ через Telegram или MAX.",
+        catalog: "Не удалось загрузить прайс. Попробуйте позже.",
+        not_found: "Товары из корзины не найдены в актуальном прайсе. Обновите магазин.",
+        api: "Сервис оплаты временно недоступен. Попробуйте позже.",
+        no_url: "Не удалось создать заказ. Попробуйте ещё раз."
+      };
+      var reason = new URLSearchParams(location.search).get("reason");
+      if (reason && notes[reason]) {
+        document.getElementById("reason-note").textContent = notes[reason];
+      }
+    })();
+  </script>
+</body>
+</html>

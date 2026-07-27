@@ -23,6 +23,11 @@ window.IRON_CONFIG = {
   maxFunctionUrl: "https://functions.yandexcloud.net/d4etdogrrq9ersodqqpl",
   /** Тот же секрет, что MAX_BOOKING_PUBLIC_TOKEN в Yandex (max-bot). Можно оставить пустым. */
   maxBookingPublicToken: "",
+  /**
+   * URL функции yandex-pay (создание заказа Яндекс Пэй). Пусто = кнопка «Оплатить онлайн» скрыта.
+   * Пример: https://functions.yandexcloud.net/<id-функции-yandex-pay>
+   */
+  yandexPayApiUrl: "",
   siteUrl: "https://1iron.ru",
 
   // URL Web App PersonalOffer.js (Deploy → Web app, Anyone)

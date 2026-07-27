@@ -142,6 +142,7 @@
     cartClear: document.getElementById("cart-clear"),
     cartTelegram: document.getElementById("cart-telegram"),
     cartMax: document.getElementById("cart-max"),
+    cartPay: document.getElementById("cart-pay"),
     cartMobileBar: document.querySelector(".cart-mobile-bar"),
     cartTotalMobile: document.getElementById("cart-total-mobile"),
   };
@@ -1437,6 +1438,8 @@
     });
     els.cartTelegram?.addEventListener("click", openTelegramOrder);
     els.cartMax?.addEventListener("click", openMaxOrder);
+    els.cartPay?.addEventListener("click", openYandexPay);
+    revealYandexPayButton();
     els.cartToggle?.addEventListener("click", () => {
       els.cartPanel?.classList.toggle("is-open");
     });
@@ -2668,6 +2671,7 @@
     if (els.cartTotalMobile) els.cartTotalMobile.textContent = totalLabel;
     if (els.cartTelegram) els.cartTelegram.disabled = count === 0;
     if (els.cartMax) els.cartMax.disabled = count === 0;
+    if (els.cartPay) els.cartPay.disabled = count === 0;
 
     if (!els.cartList) return;
     if (!count) {
@@ -2702,6 +2706,24 @@
   function openMaxOrder() {
     if (!cart.length || !window.IRON_ORDER) return;
     window.IRON_ORDER.openMaxOrder(cart);
+  }
+
+  function yandexPayBase() {
+    return String((window.IRON_CONFIG || {}).yandexPayApiUrl || "").trim();
+  }
+
+  function revealYandexPayButton() {
+    if (!els.cartPay) return;
+    if (yandexPayBase()) els.cartPay.hidden = false;
+  }
+
+  function openYandexPay() {
+    const base = yandexPayBase();
+    if (!base || !cart.length) return;
+    const ids = cart.map((p) => p.id).filter(Boolean).join(",");
+    if (!ids) return;
+    const url = base + (base.includes("?") ? "&" : "?") + "ids=" + encodeURIComponent(ids);
+    window.location.assign(url);
   }
 
   function loadCart() {

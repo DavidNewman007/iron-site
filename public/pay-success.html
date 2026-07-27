@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' 'unsafe-inline'; frame-src 'none'; connect-src 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex">
+  <title>Оплата прошла — IRON SERVICE</title>
+  <link rel="icon" href="assets/logo-icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img" width="180" height="48">
+      </a>
+      <a href="tel:+79288509404" class="header-phone">+7 928 850-94-04</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <h1>Спасибо! Оплата прошла успешно</h1>
+        <p>Мы получили ваш платёж и уже готовим заказ. Менеджер свяжется с вами для подтверждения деталей.</p>
+      </div>
+    </div>
+    <div class="container" style="padding:2rem 0">
+      <p id="order-number" style="font-size:1.1rem"></p>
+      <p id="manager-note" style="font-size:1.15rem;font-weight:600;margin-top:.75rem">
+        Наш менеджер свяжется с вами в ближайшее время.
+      </p>
+      <p style="margin-top:1.5rem">
+        <a href="magazin.html" class="btn btn-primary">Вернуться в магазин</a>
+        <a href="tel:+79288509404" class="btn">Позвонить нам</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <p style="margin-top:1.5rem">© IRON SERVICE · Сочи 2013-2026</p>
+      <p class="footer-tagline">· Запчасти • Аксессуары • Сервис •</p>
+    </div>
+  </footer>
+
+  <script>
+    try {
+      localStorage.setItem("iron_cart", "[]");
+      var order = new URLSearchParams(location.search).get("order");
+      if (order) {
+        document.getElementById("order-number").textContent = "Номер заказа: " + order;
+      }
+    } catch (e) {}
+  </script>
+</body>
+</html>

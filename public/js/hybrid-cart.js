@@ -480,6 +480,35 @@
       .catch((err) => console.warn("[hybrid-cart]", err));
   }
 
+  function openYandexPay() {
+    const cart = readCart();
+    if (!cart.length) {
+      window.location.href = "../../magazin.html";
+      return;
+    }
+    ensureConfig()
+      .then((cfg) => {
+        const base = String(cfg?.yandexPayApiUrl || "").trim();
+        if (!base) return;
+        // Отправляем только id товаров — цену функция берёт из прайса (защита от подмены).
+        const ids = cart.map((p) => p.id).filter(Boolean).join(",");
+        window.location.href =
+          base + (base.indexOf("?") >= 0 ? "&" : "?") + "ids=" + encodeURIComponent(ids);
+      })
+      .catch((err) => console.warn("[hybrid-cart]", err));
+  }
+
+  function revealYandexPayButton() {
+    ensureConfig()
+      .then((cfg) => {
+        if (!String(cfg?.yandexPayApiUrl || "").trim()) return;
+        document.querySelectorAll("#hybrid-cart-pay").forEach((el) => {
+          el.hidden = false;
+        });
+      })
+      .catch(() => {});
+  }
+
   function ensureMobileCartBar() {
     if (document.querySelector(".hybrid-detail-cart-bar")) return;
     const bar = document.createElement("div");
@@ -489,12 +518,15 @@
       '<strong id="hybrid-cart-count-mobile">0</strong> шт. · <strong id="hybrid-cart-total-mobile">—</strong>' +
       "</span>" +
       '<div class="cart-mobile-bar__actions">' +
+      '<button type="button" class="btn btn-primary" id="hybrid-cart-pay" hidden>Оплатить онлайн</button>' +
       '<button type="button" class="btn btn-primary" id="hybrid-cart-telegram">Telegram</button>' +
       '<button type="button" class="btn btn-primary" id="hybrid-cart-max">MAX</button>' +
       "</div>";
     document.body.appendChild(bar);
+    bar.querySelector("#hybrid-cart-pay")?.addEventListener("click", openYandexPay);
     bar.querySelector("#hybrid-cart-telegram")?.addEventListener("click", openTelegramOrder);
     bar.querySelector("#hybrid-cart-max")?.addEventListener("click", openMaxOrder);
+    revealYandexPayButton();
   }
 
   function renderMobileCartBar() {
