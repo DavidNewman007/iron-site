@@ -142,18 +142,52 @@
     }
   }
 
+  // Куда мини-апп шлёт заказ, когда открыт через СИНЮЮ КНОПКУ МЕНЮ бота: в
+  // этом режиме Telegram не доставляет sendData боту вообще (sendData работает
+  // только при запуске с reply-клавиатуры), зато даёт подписанный initData —
+  // бот-воркер проверит подпись и узнает, кому слать подтверждение.
+  function getOrderBotApiUrl() {
+    return String(cfg().orderBotApiUrl || "https://order-bot.4489530.workers.dev/webapp-order").trim();
+  }
+
+  function finishTelegramOrder(twa) {
+    clearCartStorage();
+    try {
+      twa.close();
+    } catch (e) {
+      /* не критично */
+    }
+  }
+
   function openTelegramOrder(cart, options) {
     ensureTelegramWebApp()
       .then(function (twa) {
         debugAlertOrderState(twa);
         if (isRealTelegramWebApp(twa)) {
-          twa.sendData(JSON.stringify({ type: "order", items: cart }));
-          clearCartStorage();
-          try {
-            twa.close();
-          } catch (e) {
-            /* не критично */
+          if (twa.initData) {
+            // Запуск через кнопку меню/ссылку: sendData не сработает — HTTP.
+            fetch(getOrderBotApiUrl(), {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ initData: twa.initData, items: cart }),
+            })
+              .then(function (r) {
+                if (!r.ok) throw new Error("HTTP " + r.status);
+                finishTelegramOrder(twa);
+              })
+              .catch(function (err) {
+                console.warn("[order-channels] webapp-order failed:", err);
+                // Запасной путь — старая ссылка-заготовка, заказ не теряем.
+                var text = buildOrderText(cart, options);
+                clearCartStorage();
+                openExternal(getTelegramOrderUrl(text));
+              });
+            return;
           }
+          // Запуск с reply-клавиатуры: штатный sendData (боту придёт
+          // web_app_data, мини-апп закроется сам).
+          twa.sendData(JSON.stringify({ type: "order", items: cart }));
+          finishTelegramOrder(twa);
           return;
         }
         var text = buildOrderText(cart, options);

@@ -37,9 +37,9 @@
   }
 
   // На карточке товара перехватываем клик ДО обработчика hybrid-cart.js
-  // (capture-фаза срабатывает раньше) — вместо мгновенного чекаута просто
-  // ведём в корзину на magazin.html, товар при этом уже добавлен кнопкой
-  // «+ Выбрать» на самой карточке.
+  // (capture-фаза срабатывает раньше) — вместо мгновенного чекаута ведём в
+  // корзину на magazin.html; #tgopencart говорит листингу сразу РАСКРЫТЬ
+  // панель корзины (см. autoOpenCartFromHash), а не просто показать список.
   function setupDetailCartButtonNav() {
     if (!isDetailPage()) return;
     document.addEventListener(
@@ -49,10 +49,29 @@
         if (!btn) return;
         e.preventDefault();
         e.stopPropagation();
-        window.location.href = "../../magazin.html";
+        window.location.href = "../../magazin.html#tgopencart";
       },
       true
     );
+  }
+
+  // Пришли с карточки товара по «Корзина» — раскрываем панель корзины сразу,
+  // как только листинг полностью загрузился (обработчик #cart-toggle вешает
+  // prices.js, ждём window.load + небольшой запас).
+  function autoOpenCartFromHash() {
+    if (isDetailPage()) return;
+    if (window.location.hash.indexOf("tgopencart") === -1) return;
+    var open = function () {
+      var toggle = document.getElementById("cart-toggle");
+      if (toggle) toggle.click();
+    };
+    if (document.readyState === "complete") {
+      setTimeout(open, 150);
+    } else {
+      window.addEventListener("load", function () {
+        setTimeout(open, 150);
+      });
+    }
   }
 
   // Полоса корзины внизу — кликабельна целиком, не только сама кнопка внутри
@@ -113,6 +132,7 @@
       relabelOrderButton();
       setupDetailCartButtonNav();
       makeCartBarFullyClickable();
+      autoOpenCartFromHash();
     }
     if (twa) setupBackButton(twa);
   }
