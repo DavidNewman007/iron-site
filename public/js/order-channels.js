@@ -3,6 +3,17 @@
  */
 (function (global) {
   var BOOKING_STORAGE_KEY = "iron_max_order";
+  var CART_KEY = "iron_cart";
+
+  // Очистка корзины после оформления — везде (мини-апп/десктоп/мобильный),
+  // иначе при следующем заходе в корзине снова лежат уже заказанные товары.
+  function clearCartStorage() {
+    try {
+      localStorage.setItem(CART_KEY, JSON.stringify([]));
+    } catch (e) {
+      /* localStorage может быть недоступен — не критично */
+    }
+  }
 
   function cfg() {
     return global.IRON_CONFIG || {};
@@ -94,9 +105,14 @@
   }
 
   function isRealTelegramWebApp(twa) {
-    // initData пустой в обычном браузере даже если скрипт как-то загрузился —
-    // непустой бывает только когда страницу реально открыл клиент Telegram.
-    return Boolean(twa && twa.initData);
+    // Не полагаемся на одно только initData (неясно, всегда ли оно заполняется
+    // для web_app-кнопки reply-клавиатуры/кнопки меню) — берём любой из
+    // достоверных признаков (то же самое, что в telegram-miniapp.js).
+    if (!twa) return false;
+    if (twa.initData) return true;
+    if (twa.platform && twa.platform !== "unknown") return true;
+    if (twa.initDataUnsafe && Object.keys(twa.initDataUnsafe).length) return true;
+    return false;
   }
 
   function openTelegramOrder(cart, options) {
@@ -104,6 +120,7 @@
       .then(function (twa) {
         if (isRealTelegramWebApp(twa)) {
           twa.sendData(JSON.stringify({ type: "order", items: cart }));
+          clearCartStorage();
           try {
             twa.close();
           } catch (e) {
@@ -112,16 +129,19 @@
           return;
         }
         var text = buildOrderText(cart, options);
+        clearCartStorage();
         openExternal(getTelegramOrderUrl(text));
       })
       .catch(function () {
         var text = buildOrderText(cart, options);
+        clearCartStorage();
         openExternal(getTelegramOrderUrl(text));
       });
   }
 
   function openMaxOrder(cart, options) {
     var text = buildOrderText(cart, options);
+    clearCartStorage();
     try {
       sessionStorage.setItem(BOOKING_STORAGE_KEY, text);
     } catch (e) {

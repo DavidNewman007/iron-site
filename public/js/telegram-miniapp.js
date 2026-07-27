@@ -24,10 +24,28 @@
     }
   }
 
+  // Telegram Mini App не даёt штатной кнопки «назад» между страницами (это
+  // не браузерная вкладка — «Закрыть» закрывает весь мини-апп целиком). Раз
+  // добавить товар в корзину можно прямо из списка на magazin.html, просто не
+  // пускаем на отдельные страницы карточек — там и стрипинг ещё не работает
+  // (CSP не пускает Telegram SDK, см. ARCHITECTURE/план), и деваться некуда.
+  function blockDetailPageNavigation() {
+    document.addEventListener(
+      "click",
+      function (e) {
+        if (!document.documentElement.classList.contains("tg-miniapp")) return;
+        var link = e.target.closest && e.target.closest("a.price-card__name-link, a.price-card__media");
+        if (link) e.preventDefault();
+      },
+      true
+    );
+  }
+
   function markMiniApp() {
     if (document.documentElement.classList.contains("tg-miniapp")) return;
     document.documentElement.classList.add("tg-miniapp");
     relabelOrderButton();
+    blockDetailPageNavigation();
   }
 
   // Не полагаемся на одно только initData (неясно, всегда ли оно заполняется

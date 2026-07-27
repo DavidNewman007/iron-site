@@ -862,11 +862,12 @@
     z-index: 89;
     background: rgba(39, 39, 39, 0.95);
     border-top: 2px solid var(--gold);
-    padding: 0.55rem 0.75rem;
-    gap: 0.5rem;
+    padding: 0.85rem 1rem;
+    gap: 0.6rem;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.82rem;
+    font-size: 0.95rem;
+    min-height: 3.6rem;
     transition: background 0.25s, border-color 0.25s;
   }
 
@@ -892,9 +893,9 @@
 
   .cart-mobile-bar button {
     flex: 0 0 auto;
-    min-width: 5.5rem;
-    padding: 0.5rem 0.55rem;
-    font-size: 0.72rem;
+    min-width: 6.5rem;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.85rem;
   }
 
   main {
