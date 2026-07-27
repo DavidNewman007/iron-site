@@ -5,6 +5,29 @@
   --shop-toolbar-sticky-offset: 5.4rem;
 }
 
+/* Telegram Mini App (бот @IRON_SERVICE_ORDER_bot) — только каталог/фильтры/
+   корзина, без шапки/подвала/крупного заголовка/промо/запасных способов
+   брони. Класс ставит telegram-miniapp.js, только когда открытие внутри
+   Telegram подтверждено — на обычный сайт в браузере не влияет. */
+.tg-miniapp .site-header,
+.tg-miniapp .site-footer,
+.tg-miniapp .page-hero,
+.tg-miniapp #promo-cards-section,
+.tg-miniapp #cart-max,
+.tg-miniapp #hybrid-cart-max,
+.tg-miniapp #cart-pay,
+.tg-miniapp #hybrid-cart-pay {
+  display: none !important;
+}
+
+.tg-miniapp .shop-section {
+  margin-top: 0.5rem;
+}
+
+.tg-miniapp .shop-intro {
+  margin-bottom: 0.75rem;
+}
+
 .shop-intro {
   color: #d4c8b4;
   max-width: 65ch;
