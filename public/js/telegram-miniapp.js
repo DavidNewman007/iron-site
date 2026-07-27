@@ -1,15 +1,18 @@
 /**
  * Определяет, открыта ли страница как Telegram Mini App (кнопка бота
- * @IRON_SERVICE_ORDER_bot — «Каталог» в меню или инлайн-кнопка «🌐 Каталог
- * на сайте»), и если да — ставит класс "tg-miniapp" на <html>. Вся визуальная
- * зачистка (шапка/подвал/крупный заголовок/промо/запасные способы брони) —
- * в css/shop.css по этому классу; здесь только детект + переименование
- * кнопки заказа (текст нужно менять через JS, CSS тут не поможет).
+ * @IRON_SERVICE_ORDER_bot), и если да — ставит класс "tg-miniapp" на <html>.
+ * Визуальная зачистка (шапка/подвал/крупный заголовок/промо/запасные способы
+ * брони) — в css/shop.css по этому классу; здесь: детект, переименование
+ * кнопки заказа и штатная кнопка «назад» на страницах карточек товара —
+ * Telegram Mini App не даёт браузерного «назад», нужно явно включать через
+ * Telegram.WebApp.BackButton.
+ *
+ * Подключается с двух сторон: <script> в <head> у magazin.html, и динамически
+ * из hybrid-cart.js на страницах карточек товара (их ~1200, редактировать
+ * каждую нет смысла).
  *
  * НЕ подключается при обычном заходе в браузере — класс появляется только
- * когда открытие внутри Telegram подтверждено (по hash сразу при заходе,
- * либо позже через сам SDK). Подтверждено логами: hash содержит
- * tgWebAppData/tgWebAppPlatform уже на входе, детект отрабатывает надёжно.
+ * когда открытие внутри Telegram подтверждено.
  */
 (function () {
   function relabelOrderButton() {
@@ -24,33 +27,45 @@
     }
   }
 
-  // Telegram Mini App не даёt штатной кнопки «назад» между страницами (это
-  // не браузерная вкладка — «Закрыть» закрывает весь мини-апп целиком). Раз
-  // добавить товар в корзину можно прямо из списка на magazin.html, просто не
-  // пускаем на отдельные страницы карточек — там и стрипинг ещё не работает
-  // (CSP не пускает Telegram SDK, см. ARCHITECTURE/план), и деваться некуда.
-  function blockDetailPageNavigation() {
-    document.addEventListener(
-      "click",
-      function (e) {
-        if (!document.documentElement.classList.contains("tg-miniapp")) return;
-        var link = e.target.closest && e.target.closest("a.price-card__name-link, a.price-card__media");
-        if (link) e.preventDefault();
-      },
-      true
-    );
+  // На странице карточки товара (есть #pickBtn) — показываем кнопку «назад»,
+  // на magazin.html (списке) — прячем (это «домашний» экран мини-аппа).
+  function setupBackButton(twa) {
+    if (!twa || !twa.BackButton) return;
+    var run = function () {
+      var isDetailPage = !!document.getElementById("pickBtn");
+      if (!isDetailPage) {
+        twa.BackButton.hide();
+        return;
+      }
+      twa.BackButton.show();
+      twa.BackButton.onClick(function () {
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          // Прямой заход на карточку (без истории) — тот же запасной путь,
+          // что уже использует hybrid-cart.js для пустой корзины.
+          window.location.href = "../../magazin.html";
+        }
+      });
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", run);
+    } else {
+      run();
+    }
   }
 
-  function markMiniApp() {
-    if (document.documentElement.classList.contains("tg-miniapp")) return;
-    document.documentElement.classList.add("tg-miniapp");
-    relabelOrderButton();
-    blockDetailPageNavigation();
+  function markMiniApp(twa) {
+    if (!document.documentElement.classList.contains("tg-miniapp")) {
+      document.documentElement.classList.add("tg-miniapp");
+      relabelOrderButton();
+    }
+    if (twa) setupBackButton(twa);
   }
 
   // Не полагаемся на одно только initData (неясно, всегда ли оно заполняется
-  // для web_app-кнопки/кнопки меню, а не только для полноценных Mini Apps
-  // через t.me/bot/app) — берём любой из достоверных признаков.
+  // для web_app-кнопки reply-клавиатуры/кнопки меню) — берём любой из
+  // достоверных признаков.
   function isRealTelegramContext(twa) {
     if (!twa) return false;
     if (twa.initData) return true;
@@ -60,15 +75,16 @@
   }
 
   // Быстрая синхронная догадка по hash — не ждём загрузки SDK, чтобы меньше
-  // мигало на первой странице (там, где реально открыл бот).
+  // мигало (класс/текст кнопки можно проставить сразу; BackButton — только
+  // когда появится реальный twa ниже).
   var hash = window.location.hash || "";
   if (/tgWebAppData|tgWebAppPlatform/.test(hash)) {
-    markMiniApp();
+    markMiniApp(null);
   }
 
   if (window.Telegram && window.Telegram.WebApp && isRealTelegramContext(window.Telegram.WebApp)) {
     window.IRON_TG_WEBAPP = window.Telegram.WebApp;
-    markMiniApp();
+    markMiniApp(window.Telegram.WebApp);
     return;
   }
 
@@ -88,7 +104,7 @@
       } catch (e) {
         /* не критично */
       }
-      markMiniApp();
+      markMiniApp(twa);
     }
   };
   document.head.appendChild(s);

@@ -82,6 +82,18 @@
     return "../../js/";
   }
 
+  // Страницы карточек товара генерируются пачкой (~1200 файлов) — проще
+  // подключить мини-апп детект отсюда (уже грузится на каждой карточке), чем
+  // редактировать <head> у всех файлов. Определяет мини-апп + прячет
+  // шапку/подвал/MAX/оплату + показывает кнопку «назад» (см. telegram-miniapp.js).
+  (function ensureTelegramMiniApp() {
+    if (window.IRON_TG_MINIAPP_LOADED) return;
+    window.IRON_TG_MINIAPP_LOADED = true;
+    const s = document.createElement("script");
+    s.src = getScriptBase() + "telegram-miniapp.js";
+    document.head.appendChild(s);
+  })();
+
   function ensureConfig() {
     if (window.IRON_CONFIG?.googleSheetId) return Promise.resolve(window.IRON_CONFIG);
     return new Promise((resolve, reject) => {
