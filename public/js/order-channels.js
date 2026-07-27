@@ -71,9 +71,53 @@
     global.open(url, "_blank", "noopener,noreferrer");
   }
 
+  // Если страница открыта как мини-приложение бота @IRON_SERVICE_ORDER_bot
+  // (кнопка «Каталог на сайте» / синяя кнопка меню) — грузим SDK Telegram Web
+  // App и отдаём заказ через sendData прямо боту (тот шлёт оператору строку
+  // каталога + закупочную цену). Обычный визит в браузере — без изменений,
+  // старая ссылка-заготовка в @ironsochi как и раньше.
+  function ensureTelegramWebApp() {
+    if (global.Telegram && global.Telegram.WebApp) {
+      return Promise.resolve(global.Telegram.WebApp);
+    }
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement("script");
+      s.src = "https://telegram.org/js/telegram-web-app.js";
+      s.onload = function () {
+        resolve(global.Telegram && global.Telegram.WebApp);
+      };
+      s.onerror = function () {
+        reject(new Error("Telegram WebApp SDK не загрузился"));
+      };
+      document.head.appendChild(s);
+    });
+  }
+
+  function isRealTelegramWebApp(twa) {
+    // initData пустой в обычном браузере даже если скрипт как-то загрузился —
+    // непустой бывает только когда страницу реально открыл клиент Telegram.
+    return Boolean(twa && twa.initData);
+  }
+
   function openTelegramOrder(cart, options) {
-    var text = buildOrderText(cart, options);
-    openExternal(getTelegramOrderUrl(text));
+    ensureTelegramWebApp()
+      .then(function (twa) {
+        if (isRealTelegramWebApp(twa)) {
+          twa.sendData(JSON.stringify({ type: "order", items: cart }));
+          try {
+            twa.close();
+          } catch (e) {
+            /* не критично */
+          }
+          return;
+        }
+        var text = buildOrderText(cart, options);
+        openExternal(getTelegramOrderUrl(text));
+      })
+      .catch(function () {
+        var text = buildOrderText(cart, options);
+        openExternal(getTelegramOrderUrl(text));
+      });
   }
 
   function openMaxOrder(cart, options) {
