@@ -15,10 +15,62 @@
  * когда открытие внутри Telegram подтверждено.
  */
 (function () {
+  function isDetailPage() {
+    return !!document.getElementById("pickBtn");
+  }
+
+  // На листинге (magazin.html) кнопка — это уже финальный чекаут (корзина и
+  // так видна на той же странице) — «Оформить заказ». На карточке товара это
+  // должен быть переход В корзину (посмотреть все товары, оформить там), а
+  // не мгновенный чекаут текущего товара — поэтому текст и клик там другие.
   function relabelOrderButton() {
     var run = function () {
       var tgBtn = document.getElementById("cart-telegram") || document.getElementById("hybrid-cart-telegram");
-      if (tgBtn) tgBtn.textContent = "✅ Оформить заказ";
+      if (!tgBtn) return;
+      tgBtn.textContent = isDetailPage() ? "🛒 Корзина" : "✅ Оформить заказ";
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", run);
+    } else {
+      run();
+    }
+  }
+
+  // На карточке товара перехватываем клик ДО обработчика hybrid-cart.js
+  // (capture-фаза срабатывает раньше) — вместо мгновенного чекаута просто
+  // ведём в корзину на magazin.html, товар при этом уже добавлен кнопкой
+  // «+ Выбрать» на самой карточке.
+  function setupDetailCartButtonNav() {
+    if (!isDetailPage()) return;
+    document.addEventListener(
+      "click",
+      function (e) {
+        var btn = e.target.closest && e.target.closest("#hybrid-cart-telegram, #cart-telegram");
+        if (!btn) return;
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = "../../magazin.html";
+      },
+      true
+    );
+  }
+
+  // Полоса корзины внизу — кликабельна целиком, не только сама кнопка внутри
+  // (легче попасть пальцем). Клик по остальной части полосы делегируем на
+  // главную кнопку (переключатель корзины на листинге, «Корзина»/«Оформить
+  // заказ» на карточке).
+  function makeCartBarFullyClickable() {
+    var run = function () {
+      document.querySelectorAll(".cart-mobile-bar").forEach(function (bar) {
+        bar.addEventListener("click", function (e) {
+          if (e.target.closest("button")) return;
+          var primary =
+            bar.querySelector("#cart-toggle") ||
+            bar.querySelector("#hybrid-cart-telegram") ||
+            bar.querySelector("#cart-telegram");
+          if (primary) primary.click();
+        });
+      });
     };
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", run);
@@ -59,6 +111,8 @@
     if (!document.documentElement.classList.contains("tg-miniapp")) {
       document.documentElement.classList.add("tg-miniapp");
       relabelOrderButton();
+      setupDetailCartButtonNav();
+      makeCartBarFullyClickable();
     }
     if (twa) setupBackButton(twa);
   }

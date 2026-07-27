@@ -28,24 +28,12 @@
   margin-bottom: 0.75rem;
 }
 
-/* Внутри мини-аппа из трёх кнопок остаётся одна («Оформить заказ») — без
-   этого она жмётся к краю, а рядом пусто. Растягиваем на всю ширину полосы
-   и полосу делаем крупнее (легче попасть пальцем). */
+/* Полоса корзины внизу в мини-аппе — только выше (+30% от обычной высоты),
+   кнопки те же по размеру, что и раньше (не растягиваем текст/паддинги).
+   Кликабельна целиком (см. telegram-miniapp.js) — не только сама кнопка. */
 .tg-miniapp .cart-mobile-bar {
-  padding: 1rem 1.1rem;
-}
-
-.tg-miniapp .cart-mobile-bar__actions {
-  flex: 1 1 auto;
-}
-
-.tg-miniapp .cart-mobile-bar button,
-.tg-miniapp .cart-actions .btn {
-  flex: 1 1 auto;
-  min-width: 0;
-  width: 100%;
-  font-size: 1rem;
-  padding: 0.8rem 1rem;
+  min-height: 2.8rem;
+  cursor: pointer;
 }
 
 .shop-intro {
