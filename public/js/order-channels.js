@@ -115,33 +115,6 @@
     return false;
   }
 
-  // ВРЕМЕННО (?tgdebug=1): показывает alert с состоянием Telegram.WebApp прямо
-  // в момент нажатия «Оформить заказ» — нужно понять, почему sendData не
-  // срабатывает при заходе через кнопку клавиатуры. Убрать после диагностики.
-  var TG_DEBUG = /[?&]tgdebug=1\b/.test(global.location.search);
-  function debugAlertOrderState(twa) {
-    if (!TG_DEBUG) return;
-    try {
-      global.alert(
-        "TG DEBUG (openTelegramOrder):\n" +
-          JSON.stringify(
-            {
-              hasTelegramObj: !!(global.Telegram && global.Telegram.WebApp),
-              initData: twa ? String(twa.initData || "").slice(0, 50) : null,
-              platform: twa ? twa.platform : null,
-              version: twa ? twa.version : null,
-              sendDataType: twa ? typeof twa.sendData : null,
-              isRealContext: isRealTelegramWebApp(twa),
-            },
-            null,
-            2
-          )
-      );
-    } catch (e) {
-      /* не критично */
-    }
-  }
-
   // Куда мини-апп шлёт заказ, когда открыт через СИНЮЮ КНОПКУ МЕНЮ бота: в
   // этом режиме Telegram не доставляет sendData боту вообще (sendData работает
   // только при запуске с reply-клавиатуры), зато даёт подписанный initData —
@@ -162,7 +135,6 @@
   function openTelegramOrder(cart, options) {
     ensureTelegramWebApp()
       .then(function (twa) {
-        debugAlertOrderState(twa);
         if (isRealTelegramWebApp(twa)) {
           if (twa.initData) {
             // Запуск через кнопку меню/ссылку: sendData не сработает — HTTP.
