@@ -1,5 +1,8 @@
 /**
- * Оформление заявки: Telegram (@ironsochi) или MAX (бот → рабочий аккаунт IRON SERVICE).
+ * Оформление заявки: Telegram (@IRON_SERVICE_ORDER_bot) или MAX (бот →
+ * рабочий аккаунт IRON SERVICE). Оба канала — только через бота: клиент
+ * никогда не видит и не может отредактировать финальный текст, уходящий
+ * оператору (см. docs/ORDER-BOT.md §13).
  */
 (function (global) {
   var BOOKING_STORAGE_KEY = "iron_max_order";
@@ -47,12 +50,13 @@
     return [lines.join("\n"), "", "Итого ориентир: " + formatPrice(total)].join("\n");
   }
 
-  function getTelegramUser() {
-    return String(cfg().telegramOrderUser || "ironsochi").replace(/^@/, "");
-  }
-
-  function getTelegramOrderUrl(text) {
-    return "https://t.me/" + getTelegramUser() + "?text=" + encodeURIComponent(text);
+  // Публичный эндпоинт cloudflare-order-bot: кладёт корзину в KV по токену и
+  // отдаёт диплинк на /start у бота. Так заказ уходит оператору полностью
+  // собранным сервером (с закупочной ценой), а не редактируемым текстом —
+  // раньше здесь была ссылка t.me/ironsochi?text=…, которую клиент мог
+  // изменить перед отправкой (см. докстринг openTelegramOrder ниже).
+  function getSiteOrderApiUrl() {
+    return String(cfg().siteOrderApiUrl || "https://order-bot.4489530.workers.dev/site-order").trim();
   }
 
   function getMaxBotUrl() {
@@ -85,8 +89,8 @@
   // Если страница открыта как мини-приложение бота @IRON_SERVICE_ORDER_bot
   // (кнопка «Каталог на сайте» / синяя кнопка меню) — грузим SDK Telegram Web
   // App и отдаём заказ через sendData прямо боту (тот шлёт оператору строку
-  // каталога + закупочную цену). Обычный визит в браузере — без изменений,
-  // старая ссылка-заготовка в @ironsochi как и раньше.
+  // каталога + закупочную цену). Обычный визит в браузере — тот же принцип
+  // через /site-order, см. openTelegramOrderViaBot ниже.
   function ensureTelegramWebApp() {
     if (global.Telegram && global.Telegram.WebApp) {
       return Promise.resolve(global.Telegram.WebApp);
@@ -132,6 +136,45 @@
     }
   }
 
+  // Обычный визит на сайт (не открыт как Telegram Mini App) — initData нет и
+  // взять неоткуда. Раньше отсюда открывался t.me/ironsochi?text=… с готовым
+  // текстом заказа в поле ввода, который клиент мог свободно отредактировать
+  // (текст, цену) перед отправкой — оператору в этот момент ничего не уходило
+  // автоматически. Вместо этого сохраняем корзину на сервере (см. /site-order
+  // в cloudflare-order-bot/src/worker.js) и открываем диплинк на /start у
+  // бота: сообщение оператору собирается сервером из каталога с закупочной
+  // ценой, клиент его не видит и не может отредактировать ни один символ.
+  function submitCartToOrderBot(cart) {
+    return fetch(getSiteOrderApiUrl(), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: cart }),
+    }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (data) {
+      if (!data || !data.ok || !data.botUrl) throw new Error("bad response");
+      return data.botUrl;
+    });
+  }
+
+  function openTelegramOrderViaBot(cart) {
+    submitCartToOrderBot(cart)
+      .then(function (botUrl) {
+        clearCartStorage();
+        openExternal(botUrl);
+      })
+      .catch(function (err) {
+        console.warn("[order-channels] site-order failed:", err);
+        // Не открываем никакой fallback-ссылки с редактируемым текстом —
+        // корзину не чистим, чтобы клиент мог просто попробовать ещё раз.
+        global.alert(
+          "Не удалось отправить заявку. Проверьте соединение и попробуйте ещё раз, " +
+            "либо позвоните: " + String(cfg().notifyPhone || "+7 928 850-94-04")
+        );
+      });
+  }
+
   function openTelegramOrder(cart, options) {
     ensureTelegramWebApp()
       .then(function (twa) {
@@ -149,10 +192,7 @@
               })
               .catch(function (err) {
                 console.warn("[order-channels] webapp-order failed:", err);
-                // Запасной путь — старая ссылка-заготовка, заказ не теряем.
-                var text = buildOrderText(cart, options);
-                clearCartStorage();
-                openExternal(getTelegramOrderUrl(text));
+                openTelegramOrderViaBot(cart);
               });
             return;
           }
@@ -162,33 +202,34 @@
           finishTelegramOrder(twa);
           return;
         }
-        var text = buildOrderText(cart, options);
-        clearCartStorage();
-        openExternal(getTelegramOrderUrl(text));
+        openTelegramOrderViaBot(cart);
       })
       .catch(function () {
-        var text = buildOrderText(cart, options);
-        clearCartStorage();
-        openExternal(getTelegramOrderUrl(text));
+        openTelegramOrderViaBot(cart);
       });
   }
 
   function openMaxOrder(cart, options) {
-    var text = buildOrderText(cart, options);
-    clearCartStorage();
+    // Раньше здесь строился готовый текст заказа и клиент видел на
+    // max-book.html кнопку «Скопировать текст заявки» — убрана: она давала
+    // ровно ту же лазейку (лифтить текст и отправлять с любыми правками).
+    // Теперь на бридж-странице лежит сама корзина, а закупочную цену и
+    // финальный текст персоналу собирает max-bot из каталога.
     try {
-      sessionStorage.setItem(BOOKING_STORAGE_KEY, text);
+      sessionStorage.setItem(BOOKING_STORAGE_KEY, JSON.stringify(cart));
     } catch (e) {
+      var text = buildOrderText(cart, options);
+      clearCartStorage();
       openExternal(getMaxShareOrderUrl(text));
       return;
     }
+    clearCartStorage();
     openExternal(getBookingBridgeUrl());
   }
 
   global.IRON_ORDER = {
     buildOrderText: buildOrderText,
     formatPrice: formatPrice,
-    getTelegramOrderUrl: getTelegramOrderUrl,
     getMaxShareOrderUrl: getMaxShareOrderUrl,
     getMaxBotUrl: getMaxBotUrl,
     openTelegramOrder: openTelegramOrder,

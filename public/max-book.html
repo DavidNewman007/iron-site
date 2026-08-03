@@ -9,6 +9,7 @@
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/config.js"></script>
+  <script src="js/order-channels.js"></script>
   <style>
     .book-wrap {
       max-width: 640px;
@@ -77,7 +78,6 @@
       </ol>
       <div class="book-actions">
         <button type="button" class="btn btn-primary" id="bookOpenMax">Отправить через бота MAX</button>
-        <button type="button" class="btn btn-secondary" id="bookCopyText">Скопировать текст заявки</button>
         <a class="btn btn-secondary" id="bookBack" href="magazin.html">Вернуться в магазин</a>
       </div>
       <p class="book-status" id="bookStatus" aria-live="polite"></p>
@@ -91,17 +91,30 @@
       var contentEl = document.getElementById("bookContent");
       var previewEl = document.getElementById("bookPreview");
       var openEl = document.getElementById("bookOpenMax");
-      var copyEl = document.getElementById("bookCopyText");
       var statusEl = document.getElementById("bookStatus");
       var errorEl = document.getElementById("bookError");
       var backEl = document.getElementById("bookBack");
 
-      function readOrderText() {
+      // Корзина, не готовый текст: раньше здесь читался/показывался готовый
+      // текст заявки и была кнопка «Скопировать текст заявки» — клиент мог
+      // снять текст в буфер и отправить откуда угодно с любыми правками.
+      // Убрано целиком: клиент видит только read-only превью (розница, как в
+      // корзине на сайте), а закупочную цену и финальный текст персоналу
+      // собирает max-bot из каталога по позициям (см. docs/ORDER-BOT.md).
+      function readCart() {
         try {
           var stored = sessionStorage.getItem("iron_max_order");
-          if (stored) return stored;
+          if (stored) {
+            var parsed = JSON.parse(stored);
+            if (Array.isArray(parsed)) return parsed;
+          }
         } catch (e) {}
-        return new URLSearchParams(window.location.search).get("text") || "";
+        try {
+          var fromQuery = new URLSearchParams(window.location.search).get("items");
+          var parsedQuery = fromQuery ? JSON.parse(fromQuery) : null;
+          if (Array.isArray(parsedQuery)) return parsedQuery;
+        } catch (e) {}
+        return [];
       }
 
       function getFunctionUrl() {
@@ -112,33 +125,11 @@
         return String(cfg.maxBookingPublicToken || "").trim();
       }
 
-      function copyText(text) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          return navigator.clipboard.writeText(text);
-        }
-        return new Promise(function (resolve, reject) {
-          try {
-            var ta = document.createElement("textarea");
-            ta.value = text;
-            ta.setAttribute("readonly", "");
-            ta.style.position = "fixed";
-            ta.style.left = "-9999px";
-            document.body.appendChild(ta);
-            ta.select();
-            var ok = document.execCommand("copy");
-            document.body.removeChild(ta);
-            ok ? resolve() : reject(new Error("copy failed"));
-          } catch (err) {
-            reject(err);
-          }
-        });
-      }
-
       function setStatus(msg) {
         statusEl.textContent = msg || "";
       }
 
-      function submitBookingRedirect(text) {
+      function submitBookingRedirect(cart) {
         var funcUrl = getFunctionUrl();
         if (!funcUrl) {
           setStatus("MAX-бот временно недоступен.");
@@ -159,7 +150,7 @@
         }
 
         addField("action", "prepare_booking_redirect");
-        addField("text", text);
+        addField("items", JSON.stringify(cart));
         var token = getBookingToken();
         if (token) addField("booking_token", token);
 
@@ -167,8 +158,8 @@
         form.submit();
       }
 
-      var text = readOrderText();
-      if (!text.trim()) {
+      var cart = readCart();
+      if (!cart.length) {
         errorEl.hidden = false;
         errorEl.textContent =
           "Заявка не найдена. Вернитесь на сайт, добавьте товар в корзину и нажмите «Забронировать в MAX» ещё раз.";
@@ -179,7 +170,7 @@
         backEl.href = document.referrer.split("?")[0] || "offer.html";
       }
 
-      previewEl.textContent = text;
+      previewEl.textContent = window.IRON_ORDER ? window.IRON_ORDER.buildOrderText(cart) : "";
       contentEl.hidden = false;
 
       var funcUrl = getFunctionUrl();
@@ -188,22 +179,12 @@
         setStatus("MAX-бот временно недоступен.");
       }
 
-      copyEl.addEventListener("click", function () {
-        copyText(text)
-          .then(function () {
-            setStatus("Текст скопирован.");
-          })
-          .catch(function () {
-            setStatus("Не удалось скопировать — выделите текст выше вручную.");
-          });
-      });
-
       openEl.addEventListener("click", function () {
         if (!funcUrl) {
           setStatus("MAX-бот временно недоступен.");
           return;
         }
-        submitBookingRedirect(text);
+        submitBookingRedirect(cart);
       });
     })();
   </script>
