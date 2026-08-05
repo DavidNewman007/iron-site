@@ -144,6 +144,10 @@
       price: currentOffer.offerPrice,
       priceLabel: formatPrice(currentOffer.offerPrice),
       offerToken: currentOffer.token,
+      // Розница нужна бэкенду (order-bot/max-bot), чтобы найти позицию в
+      // каталоге по имени, когда неоднозначно (несколько стран/складов с тем
+      // же названием) — у офферов нет country/warehouse, только имя+розница.
+      retailPrice: currentOffer.retailPrice,
     });
     writeCart(filtered);
     if (els.addCart) els.addCart.textContent = "✓ В корзине";
