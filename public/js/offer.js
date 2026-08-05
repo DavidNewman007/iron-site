@@ -136,9 +136,15 @@
     const cart = readCart();
     const cartId = `${currentOffer.basePid || "offer"}-personal-${currentOffer.token}`;
     const filtered = cart.filter((item) => item.id !== cartId);
+    // Товар дня (канал-бот, buildDailyOfferUrl) не кладёт pid в ссылку —
+    // только персональные предложения после ремонта (buildOfferPageUrl в
+    // Google Script/PersonalOffer.js) всегда несут basePid. По просьбе
+    // пользователя (05.08.2026) текст в корзине для товара дня отличается —
+    // для персональных предложений после ремонта оставлен как был.
+    const offerKindLabel = currentOffer.basePid ? "персональное предложение" : "товар дня";
     filtered.push({
       id: cartId,
-      name: `${currentOffer.productName} (персональное предложение)`,
+      name: `${currentOffer.productName} (${offerKindLabel})`,
       country: "",
       warehouse: "",
       price: currentOffer.offerPrice,
