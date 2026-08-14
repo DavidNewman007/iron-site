@@ -1,5 +1,13 @@
 [
   {
+    "slug": "rubrika-pravda-ili-mif",
+    "title": "Рубрика «Правда или миф»",
+    "excerpt": "Миф: «Нет картинки на iPhone — значит, умер экран». На деле всё хитрее. К нам приехал iPhone 13 с чёрным дисплеем, которому в другом сервисе честно замени…",
+    "image": "assets/articles/rubrika-pravda-ili-mif.jpg",
+    "date": "2026-08-14",
+    "url": "articles/rubrika-pravda-ili-mif.html"
+  },
+  {
     "slug": "teplyy-iphone-v-karmane-pochti-vsegda-spisyvayut-na-plohuyu-",
     "title": "Тёплый iPhone в кармане почти всегда списывают на плохую прошивку или фоновую синхронизацию",
     "excerpt": "Отчасти это правда: невидимые задачи вроде индексации медиатеки или обновления системных баз действительно нагружают процессор сильнее, чем кажется. Но ес…",
