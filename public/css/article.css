@@ -1,0 +1,81 @@
+/* Стили статей (public/articles/*.html) и страницы списка (articles.html).
+   Подключается ДОПОЛНИТЕЛЬНО к styles.css, ничего в нём не переопределяет. */
+
+.article-back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+}
+
+.article-back:hover {
+  color: var(--gold);
+}
+
+.article {
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+.article h1 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  margin: 0 0 0.5rem;
+}
+
+.article-meta {
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  margin: 0 0 1.5rem;
+}
+
+.article-cover {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 0 0 1.5rem;
+  display: block;
+}
+
+.article-body p {
+  margin: 0 0 1.2em;
+  line-height: 1.7;
+  font-size: clamp(16px, 1.1vw + 14px, 19px);
+  color: var(--cream-dim);
+}
+
+.article .btn {
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .article {
+    padding: 1.25rem 0 2rem;
+  }
+}
+
+/* Карточки статей на articles.html — переиспользуют .cards/.card из styles.css */
+.article-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.article-card-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 400 / 260;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.9rem;
+}
+
+.article-card .article-meta {
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
