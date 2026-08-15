@@ -43,6 +43,26 @@
       </div>
     </div>
 
+    <section id="ceny">
+      <div class="container">
+        <h2>Сколько стоит ремонт</h2>
+        <p class="rs-lead">Напишите модель и что случилось — например «разбил экран на 13 про» или «залил макбук эйр». Цена указана вместе с работой.</p>
+
+        <div id="repair-search" class="rs">
+          <label class="rs-field">
+            <span class="visually-hidden">Поиск по услугам ремонта</span>
+            <input type="search" class="rs-input" placeholder="Модель и поломка — «экран 13 про», «батарея 11», «чистка макбук»" autocomplete="off">
+          </label>
+          <div class="rs-chips">
+            <button type="button" data-family="iphone">iPhone</button>
+            <button type="button" data-family="mac">MacBook</button>
+          </div>
+          <p class="rs-status" role="status"></p>
+          <div class="rs-results"></div>
+        </div>
+      </div>
+    </section>
+
     <section>
       <div class="container">
         <div class="cards">
@@ -119,5 +139,6 @@
 
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/repair-search.js"></script>
 </body>
 </html>

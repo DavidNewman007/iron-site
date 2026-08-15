@@ -1260,3 +1260,43 @@ section {
   padding: 1.25rem 0 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+/* ——— Поиск стоимости ремонта на uslugi.html (план 22) ——— */
+/* Данные — data/services.json, тот же файл, что читает бот. */
+.rs-lead { max-width: 46rem; }
+.rs { margin-top: 1.5rem; }
+.rs-field { display: block; }
+.rs-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  font-size: 1.05rem;
+  font-family: inherit;
+  border: 2px solid var(--red, #c0392b);
+  background: #fff;
+  color: #111;
+}
+.rs-input:focus { outline: 3px solid rgba(192, 57, 43, 0.35); outline-offset: 2px; }
+.rs-chips { display: flex; gap: 0.5rem; margin: 0.75rem 0; flex-wrap: wrap; }
+.rs-chips button {
+  padding: 0.45rem 1.1rem;
+  border: 2px solid var(--red, #c0392b);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.rs-chips button.is-active { background: var(--red, #c0392b); color: #fff; }
+.rs-status { margin: 0.5rem 0 1rem; opacity: 0.75; }
+.rs-results { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)); }
+.rs-card { border: 1px solid rgba(128, 128, 128, 0.35); padding: 1rem 1.15rem; }
+.rs-card h3 { margin: 0 0 0.15rem; font-size: 1.1rem; }
+.rs-device { margin: 0 0 0.6rem; opacity: 0.75; font-size: 0.95rem; }
+.rs-variants { list-style: none; margin: 0; padding: 0; }
+.rs-variants li { padding: 0.2rem 0; border-bottom: 1px dashed rgba(128, 128, 128, 0.25); }
+.rs-variants li:last-child { border-bottom: 0; }
+.rs-variants .rs-option { padding-left: 1.2rem; font-size: 0.92rem; opacity: 0.85; }
+.rs-note { margin: 0.6rem 0 0; font-size: 0.9rem; opacity: 0.8; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
