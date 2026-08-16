@@ -1300,3 +1300,8 @@ section {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
 }
+
+/* Кнопки видов работ — их полтора десятка, поэтому мельче основных фильтров */
+.rs-chips--ops { gap: 0.4rem; }
+.rs-chips--ops button { padding: 0.3rem 0.75rem; font-size: 0.88rem; opacity: 0.9; }
+.rs-chips--ops button.is-active { opacity: 1; }

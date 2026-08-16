@@ -15,12 +15,14 @@
   if (!root) return;
 
   var input = root.querySelector(".rs-input");
-  var chips = root.querySelector(".rs-chips");
+  var chips = root.querySelector('[data-group="family"]');
+  var opChips = root.querySelector('[data-group="operation"]');
   var results = root.querySelector(".rs-results");
   var status = root.querySelector(".rs-status");
 
   var services = [];
   var activeFamily = "";
+  var activeOperation = "";
 
   function money(n) {
     return Number(n).toLocaleString("ru-RU") + " ₽";
@@ -55,6 +57,32 @@
     return s.replace(/\s+/g, " ").trim();
   }
 
+  // Короткие подписи кнопок: по-русски «замена дисплея» без слова «замена» даёт
+  // родительный падеж, автоматически это не выкрутить.
+  var OPERATION_LABELS = {
+    "замена аккумулятора": "аккумулятор",
+    "замена дисплея": "дисплей",
+    "замена камеры": "камера",
+    "замена стекла камеры": "стекло камеры",
+    "замена заднего стекла": "заднее стекло",
+    "замена сенсора": "сенсор",
+    "замена шлейфа": "шлейф",
+    "замена нижнего шлейфа": "нижний шлейф",
+    "замена корпуса": "корпус",
+    "замена клавиатуры": "клавиатура",
+    "замена тачпада": "тачпад",
+    "замена материнской платы": "материнская плата",
+    "замена матрицы без крышки": "матрица",
+    "переклейка стекла дисплея": "переклейка стекла",
+    "профилактика (чистка, термопаста)": "профилактика",
+    "ремонт после залития": "залитие"
+  };
+
+  // Варианты, которые на самом деле не варианты, а название раздела прайса —
+  // показывать их клиенту как «— Камеры» бессмысленно.
+  var GENERIC_VARIANTS = ["камеры", "шлейфы кнопок и вспышки", "задние стёкла", "корпуса",
+    "кабели и блоки питания", "стёкла камер", "нижние шлейфа"];
+
   // Синонимы поломок: человек пишет «разбил экран», а в прайсе «замена дисплея».
   var FAULT_SYNONYMS = [
     [/разбил|треснул|трещин|скол|экран|дисплей|матриц/, "дисплея"],
@@ -68,6 +96,7 @@
 
   function matches(service, query) {
     if (activeFamily && service.family !== activeFamily) return false;
+    if (activeOperation && service.operation !== activeOperation) return false;
     if (!query) return true;
 
     var haystack = normalize(service.device + " " + service.operation + " " + (service.variant || "") + " " + (service.models || ""));
@@ -130,9 +159,10 @@
         var price = document.createElement("b");
         price.textContent = priceText(s);
         li.appendChild(price);
-        if (s.variant) {
+        var variantText = String(s.variant || "").replace(/^АКБ\s*/i, "").replace(/статус\s*/i, "").trim();
+        if (variantText && GENERIC_VARIANTS.indexOf(variantText.toLowerCase()) === -1) {
           var v = document.createElement("span");
-          v.textContent = " — " + s.variant.replace(/^АКБ\s*/i, "").replace(/статус\s*/i, "");
+          v.textContent = " — " + variantText;
           li.appendChild(v);
         }
         ul.appendChild(li);
@@ -181,8 +211,45 @@
     Array.prototype.forEach.call(chips.querySelectorAll("button"), function (b) {
       b.classList.toggle("is-active", b.getAttribute("data-family") === activeFamily);
     });
+    // Виды работ у iPhone и MacBook разные — пересобираем список под выбранное
+    // семейство, иначе половина кнопок ведёт в пустую выдачу.
+    renderOperationChips();
     apply();
   });
+
+  opChips.addEventListener("click", function (e) {
+    var btn = e.target.closest("button[data-operation]");
+    if (!btn) return;
+    var operation = btn.getAttribute("data-operation");
+    activeOperation = activeOperation === operation ? "" : operation;
+    Array.prototype.forEach.call(opChips.querySelectorAll("button"), function (b) {
+      b.classList.toggle("is-active", b.getAttribute("data-operation") === activeOperation);
+    });
+    apply();
+  });
+
+  /** Кнопки видов работ — только те, что реально есть у выбранного семейства. */
+  function renderOperationChips() {
+    var pool = services.filter(function (s) { return !activeFamily || s.family === activeFamily; });
+    var seen = {};
+    var list = [];
+    pool.forEach(function (s) {
+      if (!seen[s.operation]) { seen[s.operation] = true; list.push(s.operation); }
+    });
+    list.sort();
+    if (activeOperation && list.indexOf(activeOperation) === -1) activeOperation = "";
+    opChips.innerHTML = "";
+    list.forEach(function (operation) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("data-operation", operation);
+      // «замена дисплея» → «дисплей». Через отсечение слова «замена» получается
+      // родительный падеж («аккумулятора»), поэтому подписи заданы явно.
+      b.textContent = OPERATION_LABELS[operation] || operation.replace(/\s*\(.*\)$/, "");
+      if (operation === activeOperation) b.classList.add("is-active");
+      opChips.appendChild(b);
+    });
+  }
 
   var timer = null;
   input.addEventListener("input", function () {
@@ -195,6 +262,7 @@
     .then(function (r) { return r.json(); })
     .then(function (data) {
       services = data.services || [];
+      renderOperationChips();
       status.textContent = "Прайс на " + services.length + " услуг. Начните вводить модель или что случилось.";
       apply();
     })
