@@ -106,6 +106,10 @@
     for (var i = 0; i < words.length; i++) {
       var word = words[i];
       if (haystack.indexOf(word) !== -1) continue;
+      // Русские окончания: клиент пишет «камера», в прайсе «замена камерЫ».
+      // Точное совпадение таких слов не находит, поэтому пробуем основу.
+      if (word.length >= 5 &&
+          (haystack.indexOf(word.slice(0, -1)) !== -1 || haystack.indexOf(word.slice(0, -2)) !== -1)) continue;
       // Слово могло быть названием поломки — переводим в термин прайса.
       var mapped = null;
       for (var j = 0; j < FAULT_SYNONYMS.length; j++) {
