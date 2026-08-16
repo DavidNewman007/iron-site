@@ -34,6 +34,10 @@
     options = options || {};
     var items = Array.isArray(cart) ? cart : [];
     var lines = items.map(function (p, i) {
+      // Склад S3 — поставка под заказ (Dr.Store МСК). Признак берём из метки
+      // склада: корзина может прийти из localStorage, записанного версией
+      // сайта без поля preorder.
+      var isPreorder = p.preorder === true || /S3/i.test(String(p.warehouse || ""));
       return (
         (i + 1) +
         ". " +
@@ -41,7 +45,8 @@
         (p.country ? " " + p.country : "") +
         (p.warehouse ? " " + p.warehouse : "") +
         " — " +
-        (p.priceLabel || formatPrice(p.price))
+        (p.priceLabel || formatPrice(p.price)) +
+        (isPreorder ? " (под заказ, 1–2 дня)" : "")
       );
     });
     var total = items.reduce(function (s, p) {

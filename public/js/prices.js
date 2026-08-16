@@ -4,7 +4,15 @@
 (function () {
   const cfg = window.IRON_CONFIG || {};
   const SHEET_ID = cfg.googleSheetId || "";
-  const SHEET_TABS = ["Prices", "Prices-2"];
+  // Prices/Prices-2 — наличие (склады S1/S2), Prices-3 — поставка под заказ
+  // (склад S3, Dr.Store МСК, добавлен 16.08.2026). Порядок важен: товары
+  // складываются в том же порядке, что и листы, поэтому «под заказ» встаёт
+  // хвостом каждой секции, а не оттесняет наличие.
+  const SHEET_TABS = ["Prices", "Prices-2", "Prices-3"];
+  const PREORDER_SHEET_TAB = "Prices-3";
+  const PREORDER_WAREHOUSE_RE = /\(?\s*S3\s*\)?/i;
+  const PREORDER_ETA_TEXT = "1–2 дня";
+  const PREORDER_BADGE_TEXT = "🛩️ под заказ, 1–2 дня";
   const HYBRID_IPHONE_MANIFEST = "hybrid-products/iphone-cards.json";
   const HYBRID_IPAD_MANIFEST = "hybrid-products/ipad-cards.json";
   const HYBRID_MACBOOK_MANIFEST = "hybrid-products/macbook-cards.json";
@@ -76,6 +84,15 @@
       test: (t) => /dyson|\bhs\d{2}\b|\bhd\d{2}\b|\bht\d{2}\b/i.test(t),
     },
     {
+      id: "xiaomi",
+      label: "Xiaomi / POCO / Redmi",
+      icon: "🤖",
+      // Только у склада «под заказ» (S3). Правило стоит до samsung: у Xiaomi и
+      // Samsung пересечений в названиях нет, но раздел не должен утечь в
+      // «Прочее», если поставщик напишет модель без бренда в строке.
+      test: (t) => /xiaomi|\bpoco\b|\bredmi\b/i.test(t),
+    },
+    {
       id: "gadgets",
       label: "Gadgets",
       icon: "🖱",
@@ -120,7 +137,10 @@
 
   const SEARCH_DICT = window.IRON_SEARCH_DICT || { translit: {}, translate: [] };
   const PRICE_CACHE_KEY = `iron_prices_sheet_${SHEET_TABS.join("_")}_v5`;
-  const CATALOG_CACHE_KEY = "iron_catalog_products_v1";
+  // v2 (16.08.2026): у товара появились поля preorder/eta. Без смены ключа
+  // вкладка, открытая до деплоя, продолжила бы отдавать из sessionStorage
+  // товары без признака «под заказ» — то есть без пометки в карточке.
+  const CATALOG_CACHE_KEY = "iron_catalog_products_v2";
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   const USER_LOAD_ERROR = "Не удалось загрузить товары. Идут технические работы. Скоро все починим";
 
@@ -1579,15 +1599,24 @@
     const fetchTab = async (tab) => {
       const url = `${base}?tqx=out:json&sheet=${encodeURIComponent(tab)}&range=${encodeURIComponent("A1:F1200")}`;
       const json = await loadSheetJson(url, { cache: false });
-      return { tab, parsed: parseSheetJson(json) };
+      return { tab, parsed: parseSheetJson(json, tab) };
     };
 
     const firstTab = SHEET_TABS[0];
     const otherTabs = SHEET_TABS.slice(1);
+    // Падение ОДНОГО дополнительного листа не должно ронять весь каталог.
+    // Раньше Promise.all отклонялся целиком, и отсутствующий лист (например
+    // Prices-3, пока Apps Script его ещё не создал) оставлял магазин вообще без
+    // товаров. Первый лист по-прежнему обязателен: если не читается он, это не
+    // «нет одного склада», а «прайс не загрузился» — такую ошибку прячут зря.
     const otherPromises = otherTabs.map((tab) =>
-      fetchTab(tab).then((result) => {
-        tabResults.set(result.tab, result.parsed);
-      })
+      fetchTab(tab)
+        .then((result) => {
+          tabResults.set(result.tab, result.parsed);
+        })
+        .catch((e) => {
+          console.warn(`Лист «${tab}» не загрузился, показываю каталог без него:`, e);
+        })
     );
 
     const first = await fetchTab(firstTab);
@@ -1601,7 +1630,18 @@
     return complete;
   }
 
-  function parseSheetJson(json) {
+  /**
+   * @param {string} tab имя листа, из которого пришли строки
+   *
+   * Про tab: gviz при НЕСУЩЕСТВУЮЩЕМ имени листа не отдаёт ошибку — он молча
+   * возвращает ПЕРВЫЙ лист книги (проверено 16.08.2026: запрос sheet=Prices-3
+   * до создания листа вернул 208 строк листа Prices со status:"ok"). Значит
+   * «листа нет» неотличимо от «лист есть», и обычная обработка ошибок тут не
+   * срабатывает вовсе. Поэтому строки листа под заказ дополнительно
+   * проверяются по метке склада — чужие в него не попадут.
+   */
+  function parseSheetJson(json, tab) {
+    const requirePreorder = tab === PREORDER_SHEET_TAB;
     const rows = json.table?.rows || [];
     const { colMap, dataRows } = resolveSheetLayout(rows);
 
@@ -1662,6 +1702,13 @@
       }
 
       const id = slugify(name + country + warehouse + price);
+      // «Под заказ» определяем по метке склада (S3), а не по колонке
+      // количества: колонок у листов разное число, а метка склада есть всегда
+      // и приходит из одного места — Apps Script.
+      const preorder = PREORDER_WAREHOUSE_RE.test(warehouse || "");
+      // Лист под заказ отдал строку не своего склада — это подмена листа
+      // самим gviz (см. докстринг), а не товар. Молча пропускаем.
+      if (requirePreorder && !preorder) continue;
       products.push({
         id,
         name,
@@ -1674,7 +1721,12 @@
         category: productCategory,
         section: productSection,
         searchText: buildSearchText(name, country, productSection, warranty),
-        inStock: !/0\s*шт/i.test(qty),
+        // inStock сейчас нигде не читается, но поле есть в модели товара —
+        // держим его честным, чтобы будущий фильтр «только наличие» не начал
+        // с молчаливой лжи про позиции под заказ.
+        inStock: preorder ? false : !/0\s*шт/i.test(qty),
+        preorder,
+        eta: preorder ? PREORDER_ETA_TEXT : "",
       });
     }
 
@@ -2579,6 +2631,7 @@
           ${p.country ? `<span class="price-card__country">${escapeHtml(p.country)}</span>` : ""}
         </div>
         <h3 class="price-card__name">${nameHtml}</h3>
+        ${p.preorder ? `<p class="price-card__preorder">${escapeHtml(PREORDER_BADGE_TEXT)}</p>` : ""}
         ${p.warranty ? `<p class="price-card__warranty">${escapeHtml(p.warranty)}</p>` : ""}
         ${p.warehouse ? `<p class="price-card__qty">${escapeHtml(p.warehouse)}</p>` : ""}
         <div class="price-card__footer">
@@ -2686,7 +2739,7 @@
         <span class="cart-item__num">${i + 1}</span>
         <div class="cart-item__body">
           <strong>${escapeHtml(p.name)}</strong>
-          <span>${escapeHtml(p.priceLabel)}${p.country ? " · " + escapeHtml(p.country) : ""}${p.warehouse ? " · " + escapeHtml(p.warehouse) : ""}</span>
+          <span>${escapeHtml(p.priceLabel)}${p.country ? " · " + escapeHtml(p.country) : ""}${p.warehouse ? " · " + escapeHtml(p.warehouse) : ""}${p.preorder ? " · " + escapeHtml(PREORDER_BADGE_TEXT) : ""}</span>
         </div>
         <button type="button" class="cart-item__remove" data-id="${p.id}" aria-label="Убрать">×</button>
       </li>`
@@ -2769,6 +2822,10 @@
         warehouse,
         price,
         priceLabel: formatPrice(price),
+        // Признак «под заказ» восстанавливаем из метки склада, а не из
+        // сохранённого поля: корзина живёт в localStorage и могла быть
+        // записана версией сайта, которая про него ещё не знала.
+        preorder: PREORDER_WAREHOUSE_RE.test(warehouse),
       });
     }
     return dedupeCartById(out);

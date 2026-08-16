@@ -533,6 +533,21 @@
   color: #bfd488;
 }
 
+/* Позиция не в наличии, а под заказ (склад S3, Dr.Store МСК).
+   Золотой, а не красный: это не предупреждение об ошибке, а свойство товара —
+   и золото уже означает «особое предложение» в остальном оформлении магазина. */
+.price-card__preorder {
+  margin: 0.15rem 0 0;
+  align-self: flex-start;
+  padding: 0.16rem 0.5rem;
+  border: 1px solid rgba(212, 160, 18, 0.55);
+  border-radius: 999px;
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+  background: rgba(212, 160, 18, 0.1);
+}
+
 .price-card__warranty {
   margin: 0.15rem 0 0;
   font-size: 0.82rem;

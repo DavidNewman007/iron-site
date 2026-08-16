@@ -2,7 +2,9 @@
   const CART_KEY = "iron_cart";
   const PID_PARAM = "pid";
   const SHEET_TABS = ["Prices", "Prices-2"];
-  const CATALOG_CACHE_KEY = "iron_catalog_products_v1";
+  // Ключ обязан совпадать с prices.js — там же он и записывается (v2 с
+  // 16.08.2026, после добавления полей preorder/eta).
+  const CATALOG_CACHE_KEY = "iron_catalog_products_v2";
   const PRICE_CACHE_KEY = "iron_prices_sheet_Prices_Prices-2_v5";
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   const LEGACY_COUNTRY_TOKENS = new Set([
