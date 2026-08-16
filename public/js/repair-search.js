@@ -227,6 +227,21 @@
       });
       return html + "</dl>";
     };
+    // Условия переклейки — отдельным блоком: клиент видит цену дешевле замены
+    // дисплея и должен сразу понимать, когда она не подойдёт.
+    var reglue = "";
+    if (quality["переклейка"]) {
+      reglue = "<h3>" + escape(quality["переклейка"]["заголовок"]) + "</h3>";
+      (quality["переклейка"]["условия"] || []).forEach(function (c) {
+        reglue += "<p class='rs-note'><b>" + escape(c["тема"]) + ".</b> " + escape(c["текст"]) + "</p>";
+      });
+      var contact = quality["переклейка"]["контакт"];
+      if (contact) {
+        reglue += "<p class='rs-note'><a href='" + escape(contact["url"]) +
+          "' target='_blank' rel='noopener'>" + escape(contact["подпись"]) + "</a></p>";
+      }
+    }
+
     var notes = (quality["важно_знать"] || []).map(function (n) {
       return "<p class='rs-note'><b>" + escape(n["тема"]) + ".</b> " + escape(n["текст"]) + "</p>";
     }).join("");
@@ -235,6 +250,7 @@
       "<details class='rs-details'><summary>Чем отличаются запчасти и от чего зависит гарантия</summary>" +
       block("Дисплеи", quality["дисплеи"]) +
       block("Аккумуляторы", quality["акб"]) +
+      reglue +
       notes +
       "</details>";
   }
