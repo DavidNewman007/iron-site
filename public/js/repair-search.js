@@ -21,6 +21,7 @@
   var status = root.querySelector(".rs-status");
 
   var services = [];
+  var quality = null;
   var activeFamily = "";
   var activeOperation = "";
 
@@ -165,6 +166,14 @@
           v.textContent = " — " + variantText;
           li.appendChild(v);
         }
+        // Гарантия зависит от класса запчасти — показываем рядом с ценой,
+        // иначе клиент выбирает вслепую по одной цифре.
+        if (s.warranty_days) {
+          var w = document.createElement("i");
+          w.className = "rs-warranty";
+          w.textContent = " · гарантия " + s.warranty_days + " дн.";
+          li.appendChild(w);
+        }
         ul.appendChild(li);
         (s.options || []).forEach(function (o) {
           var sub = document.createElement("li");
@@ -182,6 +191,49 @@
       }
       results.appendChild(card);
     });
+  }
+
+  /** Разбор качеств запчастей — под поиском, свёрнутый. */
+  function renderQualityGuide() {
+    var host = document.getElementById("rs-quality");
+    if (!host || !quality) return;
+    var warrantyOf = function (cls) {
+      var found = null;
+      Object.keys(quality["гарантия"] || {}).forEach(function (level) {
+        var spec = quality["гарантия"][level];
+        if (spec && spec["классы"] && spec["классы"].indexOf(cls) !== -1) found = spec["дней"];
+      });
+      return found;
+    };
+    var block = function (title, items) {
+      if (!items || !items.length) return "";
+      var html = "<h3>" + title + "</h3><dl class='rs-quality-list'>";
+      items.forEach(function (it) {
+        var days = warrantyOf(it["класс"]);
+        html += "<dt>" + escape(it["имя"]) + (days ? " <span class='rs-warranty'>гарантия " + days + " дн.</span>" : "") + "</dt>";
+        html += "<dd>" + escape(it["описание"]);
+        if (it["минусы"] && it["минусы"].length) {
+          html += "<br><i>Минусы: " + escape(it["минусы"].join(", ")) + "</i>";
+        }
+        html += "</dd>";
+      });
+      return html + "</dl>";
+    };
+    var notes = (quality["важно_знать"] || []).map(function (n) {
+      return "<p class='rs-note'><b>" + escape(n["тема"]) + ".</b> " + escape(n["текст"]) + "</p>";
+    }).join("");
+
+    host.innerHTML =
+      "<details class='rs-details'><summary>Чем отличаются запчасти и от чего зависит гарантия</summary>" +
+      block("Дисплеи", quality["дисплеи"]) +
+      block("Аккумуляторы", quality["акб"]) +
+      notes +
+      "</details>";
+  }
+
+  function escape(text) {
+    return String(text == null ? "" : text)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
   function note(text) {
@@ -262,6 +314,8 @@
     .then(function (r) { return r.json(); })
     .then(function (data) {
       services = data.services || [];
+      quality = data.quality || null;
+      renderQualityGuide();
       renderOperationChips();
       status.textContent = "Прайс на " + services.length + " услуг. Начните вводить модель или что случилось.";
       apply();

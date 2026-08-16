@@ -1305,3 +1305,14 @@ section {
 .rs-chips--ops { gap: 0.4rem; }
 .rs-chips--ops button { padding: 0.3rem 0.75rem; font-size: 0.88rem; opacity: 0.9; }
 .rs-chips--ops button.is-active { opacity: 1; }
+
+/* Разбор качества запчастей — свёрнутый блок под выдачей */
+.rs-quality { margin-top: 2rem; }
+.rs-details > summary {
+  cursor: pointer; padding: 0.75rem 0; font-weight: 700;
+  border-top: 1px solid rgba(128,128,128,0.35);
+}
+.rs-quality-list { margin: 0 0 1.5rem; }
+.rs-quality-list dt { font-weight: 700; margin-top: 0.9rem; }
+.rs-quality-list dd { margin: 0.2rem 0 0; opacity: 0.9; }
+.rs-warranty { opacity: 0.7; font-size: 0.88em; font-style: italic; }
