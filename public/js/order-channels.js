@@ -30,6 +30,9 @@
     return price.toLocaleString("ru-RU") + " ₽";
   }
 
+  // Должна совпадать с EXTRA_WARRANTY_PRICE в prices.js и в боте.
+  var EXTRA_WARRANTY_PRICE = 2000;
+
   function buildOrderText(cart, options) {
     options = options || {};
     var items = Array.isArray(cart) ? cart : [];
@@ -46,11 +49,14 @@
         (p.warehouse ? " " + p.warehouse : "") +
         " — " +
         (p.priceLabel || formatPrice(p.price)) +
-        (isPreorder ? " (под заказ, 1–2 дня)" : "")
+        (isPreorder ? " (под заказ, 1–2 дня)" : "") +
+        // Допгарантия — отдельная услуга поверх товара; в заказ она обязана
+        // попасть строкой, иначе оператор не узнает, что клиент за неё заплатил.
+        (p.extraWarranty ? "\n    + допгарантия 1 год — " + formatPrice(EXTRA_WARRANTY_PRICE) : "")
       );
     });
     var total = items.reduce(function (s, p) {
-      return s + (p.price || 0);
+      return s + (p.price || 0) + (p.extraWarranty ? EXTRA_WARRANTY_PRICE : 0);
     }, 0);
     return [lines.join("\n"), "", "Итого ориентир: " + formatPrice(total)].join("\n");
   }

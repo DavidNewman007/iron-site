@@ -555,6 +555,133 @@
   line-height: 1.3;
 }
 
+/* «подробнее» рядом со строкой гарантии — ссылка по виду, кнопка по сути */
+.price-card__warranty-link {
+  margin-left: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--gold);
+  text-decoration: underline dotted;
+  cursor: pointer;
+}
+
+.price-card__warranty-add {
+  align-self: flex-start;
+  margin-top: 0.3rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px dashed rgba(212, 160, 18, 0.6);
+  border-radius: 10px;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--gold);
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.price-card__warranty-add:hover {
+  background: rgba(212, 160, 18, 0.12);
+}
+
+.price-card__warranty-add.is-active {
+  border-style: solid;
+  background: rgba(212, 160, 18, 0.18);
+}
+
+.cart-item__warranty {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--gold);
+}
+
+/* ——— Окно с условиями гарантии ——— */
+
+.warranty-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.warranty-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.warranty-modal__box {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: min(80vh, 720px);
+  overflow-y: auto;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 14px;
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.warranty-modal__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.7rem;
+  border: 0;
+  background: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.warranty-modal__body h3 {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--cream);
+}
+
+.warranty-modal__body h4 {
+  margin: 1rem 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--gold);
+}
+
+.warranty-modal__body p,
+.warranty-modal__body li {
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.warranty-modal__body ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.warranty-modal__ask {
+  display: inline-block;
+  margin-top: 1.1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  background: rgba(212, 160, 18, 0.16);
+  border: 1px solid rgba(212, 160, 18, 0.6);
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.warranty-modal__hint {
+  margin-top: 1.1rem;
+  padding: 0.7rem 0.9rem;
+  border-left: 3px solid rgba(212, 160, 18, 0.6);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+}
+
 .price-card__qty {
   margin: 0;
   font-size: 0.85rem;

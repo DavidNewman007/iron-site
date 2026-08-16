@@ -13,6 +13,146 @@
   const PREORDER_WAREHOUSE_RE = /\(?\s*S3\s*\)?/i;
   const PREORDER_ETA_TEXT = "1–2 дня";
   const PREORDER_BADGE_TEXT = "🛩️ под заказ, 1–2 дня";
+
+  // ——— Гарантии (те же правила, что в боте: cloudflare-order-bot/src/worker.js) ———
+  //
+  // Видов три, и они отличаются не только сроком, но и тем, КТО принимает
+  // решение по обращению:
+  //   included — только склад S1 и только у части позиций: обслуживаем мы,
+  //              1–2 недели, при невозможности ремонта деньги или аналог;
+  //   extra    — платная 2000₽ у обоих Dr.Store (S2/S3): устройство уезжает в
+  //              сервис Apple за границу, решение за Apple, 1–2 месяца;
+  //   basic    — всё остальное: 7 дней либо до активации.
+  //
+  // Правила продублированы, а не вынесены в общий модуль: сайт и бот — разные
+  // репозитории и разные среды выполнения. При правке менять В ОБОИХ местах.
+  const EXTRA_WARRANTY_PRICE = 2000;
+  const WARRANTY_INCLUDED_MARK = "Гарантия 1 год включена";
+  const EXTRA_WARRANTY_DR_STORE_RE = /\(?\s*S[23]\s*\)?/i;
+  const EXTRA_WARRANTY_EXCLUDED_CATEGORIES = ["accessories", "airpods"];
+  const EXTRA_WARRANTY_EXCLUDED_NAME_RE = /galaxy\s*buds/i;
+  const WARRANTY_CONTACT_USERNAME = "ironsochi";
+
+  function hasIncludedWarranty(product) {
+    return String(product?.warranty || "").includes(WARRANTY_INCLUDED_MARK);
+  }
+
+  function isExtraWarrantyEligible(product) {
+    if (!product) return false;
+    if (!EXTRA_WARRANTY_DR_STORE_RE.test(product.warehouse || "")) return false;
+    if (hasIncludedWarranty(product)) return false;
+    if (String(product.warranty || "").trim()) return false;
+    if (EXTRA_WARRANTY_EXCLUDED_CATEGORIES.includes(product.category)) return false;
+    if (EXTRA_WARRANTY_EXCLUDED_NAME_RE.test(product.name || "")) return false;
+    return true;
+  }
+
+  /** "included" | "extra" | "basic" — как и в боте, extra значит «можно купить». */
+  function warrantyKindFor(product) {
+    if (hasIncludedWarranty(product)) return "included";
+    if (isExtraWarrantyEligible(product)) return "extra";
+    return "basic";
+  }
+
+  const WARRANTY_SHORT_LABEL = {
+    included: "🛡️ Гарантия 1 год включена",
+    extra: "🛡 Базовая 7 дней · можно продлить до года",
+    basic: "🛡 Базовая гарантия — 7 дней либо до активации",
+  };
+
+  // Вступление одно на все три вида: гарантия — страховка, а не ожидание
+  // поломки. Формулировка владельца (16.08.2026).
+  const WARRANTY_INTRO_HTML =
+    "<p>Гарантия — это, по сути, страховка. Пользуются ей единицы: техника Apple " +
+    "надёжная, и на тысячи проданных устройств приходятся единичные обращения. " +
+    "Но если случай окажется вашим — вот что будет.</p>";
+
+  const WARRANTY_EXCLUSIONS_HTML =
+    "<h4>Что не покрывает</h4><ul>" +
+    "<li>Механические повреждения: удары, трещины, сколы, попадание влаги.</li>" +
+    "<li>Последствия самостоятельного или стороннего ремонта.</li>" +
+    "<li>Естественный износ, в том числе снижение ёмкости батареи.</li>" +
+    "</ul>";
+
+  const WARRANTY_INFO_HTML = {
+    included:
+      "<h3>🛡️ Гарантия 1 год — уже включена в цену</h3>" + WARRANTY_INTRO_HTML +
+      "<h4>Как обслуживаем</h4><ul>" +
+      "<li>Разбираемся сами, за свой счёт — везти никуда не нужно.</li>" +
+      "<li>Срок — обычно <strong>1–2 недели</strong>, часто быстрее.</li>" +
+      "<li>Если ремонт невозможен — вернём деньги в размере стоимости покупки " +
+      "или заменим на аналогичное устройство.</li>" +
+      "</ul>" + WARRANTY_EXCLUSIONS_HTML,
+    extra:
+      "<h3>🛡 Дополнительная гарантия на 1 год</h3>" + WARRANTY_INTRO_HTML +
+      `<p>Стоимость — <strong>${formatPrice(EXTRA_WARRANTY_PRICE)}</strong> за устройство, ` +
+      "оформляется в момент покупки.</p>" +
+      "<h4>Как обслуживаем</h4><ul>" +
+      "<li>Устройство отправляется в авторизованный сервис Apple за границей — " +
+      "решение по гарантийному случаю принимает <strong>Apple</strong>, не мы.</li>" +
+      "<li>Срок обслуживания — <strong>от 1 до 2 месяцев</strong>, включая дорогу.</li>" +
+      "<li>Все расходы по отправке и обслуживанию берём на себя.</li>" +
+      "</ul>" + WARRANTY_EXCLUSIONS_HTML +
+      "<h4>Без допгарантии</h4><p>Действует только базовая — 7 дней с покупки " +
+      "либо до активации, дальше обслуживание платное.</p>",
+    basic:
+      "<h3>🛡 Базовая гарантия</h3>" + WARRANTY_INTRO_HTML +
+      "<p>На это устройство действует базовая гарантия: <strong>7 дней с момента " +
+      "покупки</strong> либо <strong>до активации</strong> — зависит от позиции.</p>" +
+      "<p>Перед выдачей мы проверяем устройство при вас: внешний вид, комплект и работу.</p>" +
+      "<p>Точные условия по конкретной позиции лучше уточнить — ответим сразу.</p>",
+  };
+
+  /**
+   * Ссылка на переписку с нами с уже набранным вопросом про гарантию.
+   * Товары берутся ИЗ КОРЗИНЫ: вопрос «а какая тут гарантия?» без названия
+   * устройства бесполезен, оператор всё равно переспросит.
+   * Пустая корзина — возвращаем null, вызывающий скажет об этом словами.
+   */
+  function warrantyAskUrl() {
+    const names = cart.map((i) => i.name).filter(Boolean);
+    if (!names.length) return null;
+    const list = names.length === 1 ? names[0] : names.map((n) => `• ${n}`).join("\n");
+    const text = `Здравствуйте! Хочу уточнить гарантию по товару:\n${list}`;
+    return `https://t.me/${WARRANTY_CONTACT_USERNAME}?text=${encodeURIComponent(text)}`;
+  }
+
+  /** Показывает условия гарантии для конкретного товара отдельным окном. */
+  function showWarrantyInfo(id) {
+    const product = allProducts.find((p) => idsLookEqual(p.id, id));
+    if (!product) return;
+    const askUrl = warrantyAskUrl();
+    const footer = askUrl
+      ? `<a class="warranty-modal__ask" href="${escapeHtml(askUrl)}" target="_blank" rel="noopener">✍️ Уточнить гарантию у IRON SERVICE</a>`
+      : "<p class=\"warranty-modal__hint\">Чтобы уточнить условия по конкретному устройству, " +
+        "сначала добавьте его в корзину — тогда вопрос уйдёт нам вместе с названием товара.</p>";
+
+    openWarrantyModal(WARRANTY_INFO_HTML[warrantyKindFor(product)] + footer);
+  }
+
+  /**
+   * Простое модальное окно под условия гарантии. Своё, а не готовый компонент:
+   * в магазине других модалок нет, тянуть ради одной библиотеку незачем.
+   */
+  function openWarrantyModal(innerHtml) {
+    document.querySelector(".warranty-modal")?.remove();
+    const el = document.createElement("div");
+    el.className = "warranty-modal";
+    el.innerHTML =
+      '<div class="warranty-modal__backdrop" data-close="1"></div>' +
+      '<div class="warranty-modal__box" role="dialog" aria-modal="true" aria-label="Условия гарантии">' +
+      '<button type="button" class="warranty-modal__close" data-close="1" aria-label="Закрыть">×</button>' +
+      `<div class="warranty-modal__body">${innerHtml}</div></div>`;
+    el.addEventListener("click", (e) => {
+      if (e.target.dataset.close) el.remove();
+    });
+    document.addEventListener("keydown", function onEsc(e) {
+      if (e.key !== "Escape") return;
+      el.remove();
+      document.removeEventListener("keydown", onEsc);
+    });
+    document.body.appendChild(el);
+  }
   const HYBRID_IPHONE_MANIFEST = "hybrid-products/iphone-cards.json";
   const HYBRID_IPAD_MANIFEST = "hybrid-products/ipad-cards.json";
   const HYBRID_MACBOOK_MANIFEST = "hybrid-products/macbook-cards.json";
@@ -2632,8 +2772,12 @@
         </div>
         <h3 class="price-card__name">${nameHtml}</h3>
         ${p.preorder ? `<p class="price-card__preorder">${escapeHtml(PREORDER_BADGE_TEXT)}</p>` : ""}
-        ${p.warranty ? `<p class="price-card__warranty">${escapeHtml(p.warranty)}</p>` : ""}
+        <p class="price-card__warranty">
+          ${escapeHtml(WARRANTY_SHORT_LABEL[warrantyKindFor(p)])}
+          <button type="button" class="price-card__warranty-link" data-action="warranty" data-id="${p.id}">подробнее</button>
+        </p>
         ${p.warehouse ? `<p class="price-card__qty">${escapeHtml(p.warehouse)}</p>` : ""}
+        ${extraWarrantyRowHtml(p, inCart)}
         <div class="price-card__footer">
           <strong class="price-card__price">${escapeHtml(p.priceLabel)}</strong>
           <button type="button" class="price-card__btn ${inCart ? "is-active" : ""}" data-action="toggle" data-id="${p.id}">
@@ -2641,6 +2785,23 @@
           </button>
         </div>
       </article>`;
+  }
+
+  /**
+   * Кнопка допгарантии — только у товара, УЖЕ добавленного в корзину.
+   * Та же логика, что в боте: пока человек выбирает, предложение доплатить
+   * мешает сравнивать цены, а после выбора оно уместно.
+   */
+  function extraWarrantyRowHtml(p, inCart) {
+    if (!inCart || !isExtraWarrantyEligible(p)) return "";
+    const entry = cart.find((c) => idsLookEqual(c.id, p.id));
+    const on = Boolean(entry && entry.extraWarranty);
+    return `
+        <button type="button"
+          class="price-card__warranty-add ${on ? "is-active" : ""}"
+          data-action="extra-warranty" data-id="${p.id}">
+          ${on ? "✓ Гарантия 1 год добавлена" : `+ Гарантия 1 год — ${formatPrice(EXTRA_WARRANTY_PRICE)}`}
+        </button>`;
   }
 
   function hasActiveShopQuery() {
@@ -2694,6 +2855,22 @@
     els.grid.querySelectorAll("[data-action=toggle]").forEach((btn) => {
       btn.addEventListener("click", () => toggleCart(btn.dataset.id));
     });
+    els.grid.querySelectorAll("[data-action=extra-warranty]").forEach((btn) => {
+      btn.addEventListener("click", () => toggleExtraWarranty(btn.dataset.id));
+    });
+    els.grid.querySelectorAll("[data-action=warranty]").forEach((btn) => {
+      btn.addEventListener("click", () => showWarrantyInfo(btn.dataset.id));
+    });
+  }
+
+  /** Включает/выключает допгарантию у позиции, уже лежащей в корзине. */
+  function toggleExtraWarranty(id) {
+    const entry = cart.find((c) => idsLookEqual(c.id, id));
+    if (!entry) return;
+    entry.extraWarranty = !entry.extraWarranty;
+    saveCart();
+    renderCart();
+    renderGrid();
   }
 
   function toggleCart(id) {
@@ -2716,7 +2893,9 @@
 
   function renderCart() {
     const count = cart.length;
-    const total = cart.reduce((s, p) => s + p.price, 0);
+    // Допгарантия — отдельная услуга, но платит клиент одной суммой, поэтому
+    // в итог входит наравне с товарами.
+    const total = cart.reduce((s, p) => s + p.price + (p.extraWarranty ? EXTRA_WARRANTY_PRICE : 0), 0);
 
     const totalLabel = count ? formatPrice(total) : "—";
     if (els.cartCount) els.cartCount.textContent = String(count);
@@ -2740,6 +2919,7 @@
         <div class="cart-item__body">
           <strong>${escapeHtml(p.name)}</strong>
           <span>${escapeHtml(p.priceLabel)}${p.country ? " · " + escapeHtml(p.country) : ""}${p.warehouse ? " · " + escapeHtml(p.warehouse) : ""}${p.preorder ? " · " + escapeHtml(PREORDER_BADGE_TEXT) : ""}</span>
+          ${p.extraWarranty ? `<span class="cart-item__warranty">🛡 + гарантия 1 год — ${escapeHtml(formatPrice(EXTRA_WARRANTY_PRICE))}</span>` : ""}
         </div>
         <button type="button" class="cart-item__remove" data-id="${p.id}" aria-label="Убрать">×</button>
       </li>`
@@ -2826,6 +3006,9 @@
         // сохранённого поля: корзина живёт в localStorage и могла быть
         // записана версией сайта, которая про него ещё не знала.
         preorder: PREORDER_WAREHOUSE_RE.test(warehouse),
+        // А вот допгарантию восстановить неоткуда — это выбор человека,
+        // поэтому читаем сохранённый флаг как есть.
+        extraWarranty: item.extraWarranty === true,
       });
     }
     return dedupeCartById(out);
