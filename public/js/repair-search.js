@@ -166,7 +166,7 @@
       card.appendChild(title);
 
       var device = document.createElement("p");
-      device.className = "rs-device";
+      device.className = "rs-device-name";
       device.textContent = head.device;
       card.appendChild(device);
 
@@ -180,7 +180,8 @@
         var variantText = String(s.variant || "").replace(/^АКБ\s*/i, "").replace(/статус\s*/i, "").trim();
         if (variantText && GENERIC_VARIANTS.indexOf(variantText.toLowerCase()) === -1) {
           var v = document.createElement("span");
-          v.textContent = " — " + variantText;
+          v.className = "rs-variant-name";
+          v.textContent = variantText;
           li.appendChild(v);
         }
         // Гарантия зависит от класса запчасти — показываем рядом с ценой,
@@ -188,7 +189,7 @@
         if (s.warranty_days) {
           var w = document.createElement("i");
           w.className = "rs-warranty";
-          w.textContent = " · гарантия " + s.warranty_days + " дн.";
+          w.textContent = "гарантия " + s.warranty_days + " дн.";
           li.appendChild(w);
         }
         if (!s.options || !s.options.length) li.appendChild(addButton(s, null));
@@ -351,6 +352,7 @@
   }
 
   function apply() {
+    syncReset();
     render(services.filter(function (s) { return matches(s, input.value.trim()); }));
   }
 
@@ -402,6 +404,25 @@
       if (operation === activeOperation) b.classList.add("is-active");
       opChips.appendChild(b);
     });
+  }
+
+  var resetBtn = root.querySelector(".rs-reset");
+  resetBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    activeFamily = "";
+    activeOperation = "";
+    activeDevice = "";
+    input.value = "";
+    Array.prototype.forEach.call(root.querySelectorAll(".rs-chips button"), function (b) {
+      b.classList.remove("is-active");
+    });
+    renderOperationChips();
+    renderDeviceOptions();
+    apply();
+  });
+
+  function syncReset() {
+    resetBtn.hidden = !(activeFamily || activeOperation || activeDevice || input.value.trim());
   }
 
   deviceSelect.addEventListener("change", function () {

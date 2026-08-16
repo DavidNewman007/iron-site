@@ -53,17 +53,27 @@
             <span class="visually-hidden">Поиск по услугам ремонта</span>
             <input type="search" class="rs-input" placeholder="Модель и поломка — «экран 13 про», «батарея 11», «чистка макбук»" autocomplete="off">
           </label>
-          <div class="rs-chips" data-group="family">
-            <button type="button" data-family="iphone">iPhone</button>
-            <button type="button" data-family="mac">MacBook</button>
+
+          <div class="rs-group">
+            <span class="rs-label">Устройство</span>
+            <div class="rs-chips" data-group="family">
+              <button type="button" data-family="iphone">iPhone</button>
+              <button type="button" data-family="mac">MacBook</button>
+            </div>
           </div>
-          <div class="rs-chips rs-chips--ops" data-group="operation"></div>
-          <label class="rs-device-pick">
-            <span>Модель:</span>
-            <select class="rs-device" aria-label="Модель устройства">
+
+          <div class="rs-group">
+            <span class="rs-label">Что нужно сделать</span>
+            <div class="rs-chips rs-chips--ops" data-group="operation"></div>
+          </div>
+
+          <div class="rs-group">
+            <label class="rs-label" for="rs-device">Модель <button type="button" class="rs-reset" hidden>сбросить фильтры</button></label>
+            <select class="rs-device" id="rs-device" aria-label="Модель устройства">
               <option value="">все модели</option>
             </select>
-          </label>
+          </div>
+
           <p class="rs-status" role="status"></p>
           <div class="rs-results"></div>
           <div class="rs-cart" hidden>

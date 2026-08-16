@@ -1261,79 +1261,242 @@ section {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* ——— Поиск стоимости ремонта на uslugi.html (план 22) ——— */
-/* Данные — data/services.json, тот же файл, что читает бот. */
-.rs-lead { max-width: 46rem; }
-.rs { margin-top: 1.5rem; }
-.rs-field { display: block; }
+/* ═══ Подбор ремонта на uslugi.html (план 22) ═══
+   Данные — data/services.json, тот же файл, что читает бот, поэтому цена на
+   сайте и в боте не расходится. Оформление держим в общем языке страницы:
+   скруглённые панели, Oswald на подписях, золотой акцент на цене. */
+
+.rs-lead { max-width: 46rem; color: var(--text-muted); }
+
+.rs {
+  margin-top: 1.75rem;
+  background: linear-gradient(180deg, rgba(47, 47, 47, 0.86), rgba(39, 39, 39, 0.92));
+  border: 1px solid var(--surface-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* — поиск — */
+.rs-field { display: block; position: relative; }
 .rs-input {
   width: 100%;
-  padding: 0.9rem 1rem;
+  padding: 0.95rem 1.1rem;
+  font-family: var(--font-body);
   font-size: 1.05rem;
-  font-family: inherit;
-  border: 2px solid var(--red, #c0392b);
-  background: #fff;
-  color: #111;
+  color: var(--text);
+  background: rgba(20, 20, 20, 0.55);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.rs-input:focus { outline: 3px solid rgba(192, 57, 43, 0.35); outline-offset: 2px; }
-.rs-chips { display: flex; gap: 0.5rem; margin: 0.75rem 0; flex-wrap: wrap; }
+.rs-input::placeholder { color: var(--text-muted); opacity: 0.75; }
+.rs-input:focus {
+  outline: none;
+  border-color: var(--red-bright);
+  box-shadow: 0 0 0 3px rgba(219, 58, 58, 0.18);
+}
+
+/* — группы фильтров — */
+.rs-group { margin-top: 1.15rem; }
+.rs-group > .rs-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.rs-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .rs-chips button {
-  padding: 0.45rem 1.1rem;
-  border: 2px solid var(--red, #c0392b);
-  background: transparent;
-  color: inherit;
+  padding: 0.42rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text);
+  background: rgba(20, 20, 20, 0.4);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.rs-chips button:hover { border-color: var(--red-bright); }
+.rs-chips button.is-active {
+  background: linear-gradient(180deg, var(--red-bright), var(--red));
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--cream);
+}
+.rs-chips--ops button { font-size: 0.88rem; padding: 0.34rem 0.85rem; }
+
+.rs-device {
+  width: 100%;
+  max-width: 26rem;
+  padding: 0.6rem 0.8rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text);
+  background: rgba(20, 20, 20, 0.55);
+  border: 1px solid var(--surface-border);
+  border-radius: 10px;
+}
+.rs-device:focus { outline: none; border-color: var(--red-bright); }
+
+.rs-reset {
+  margin-left: 0.6rem;
+  background: none;
+  border: 0;
+  color: var(--text-muted);
   font: inherit;
   cursor: pointer;
+  text-decoration: underline;
 }
-.rs-chips button.is-active { background: var(--red, #c0392b); color: #fff; }
-.rs-status { margin: 0.5rem 0 1rem; opacity: 0.75; }
-.rs-results { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)); }
-.rs-card { border: 1px solid rgba(128, 128, 128, 0.35); padding: 1rem 1.15rem; }
-.rs-card h3 { margin: 0 0 0.15rem; font-size: 1.1rem; }
-.rs-device { margin: 0 0 0.6rem; opacity: 0.75; font-size: 0.95rem; }
+.rs-reset:hover { color: var(--red-bright); }
+
+.rs-status {
+  margin: 1.15rem 0 0.9rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* — выдача — */
+.rs-results {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+}
+.rs-card {
+  /* min-width: 0 обязателен: без него grid-дорожка растягивается по самому
+     длинному неразрывному содержимому карточки, и на телефоне страница
+     уезжала горизонтально (документ 499px при экране 375px). */
+  min-width: 0;
+  overflow-wrap: anywhere;
+  background: rgba(20, 20, 20, 0.32);
+  border: 1px solid var(--surface-border);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+}
+.rs-card h3 {
+  margin: 0 0 0.1rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+.rs-device-name { margin: 0 0 0.8rem; color: var(--text-muted); font-size: 0.95rem; }
+
 .rs-variants { list-style: none; margin: 0; padding: 0; }
-.rs-variants li { padding: 0.2rem 0; border-bottom: 1px dashed rgba(128, 128, 128, 0.25); }
+.rs-variants li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding: 0.42rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+/* Название варианта — единственное, что можно сжимать: цена и кнопка «выбрать»
+   должны остаться на одной строке, иначе кнопка съезжает вниз и список рвётся. */
+.rs-variant-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rs-variants b, .rs-warranty, .rs-add { flex: 0 0 auto; }
 .rs-variants li:last-child { border-bottom: 0; }
-.rs-variants .rs-option { padding-left: 1.2rem; font-size: 0.92rem; opacity: 0.85; }
-.rs-note { margin: 0.6rem 0 0; font-size: 0.9rem; opacity: 0.8; }
+.rs-variants b { font-family: var(--font-display); font-size: 1.12rem; color: var(--gold); }
+.rs-variants .rs-option { padding-left: 1rem; }
+.rs-variant-name { color: var(--text-muted); font-size: 0.95rem; }
+.rs-warranty {
+  font-size: 0.78rem;
+  font-style: normal;
+  color: var(--text-muted);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+}
+.rs-note { margin: 0.7rem 0 0; font-size: 0.9rem; color: var(--text-muted); }
+
+.rs-add {
+  margin-left: auto;
+  padding: 0.24rem 0.8rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.rs-add:hover { border-color: var(--red-bright); }
+.rs-add.is-added {
+  background: linear-gradient(180deg, var(--red-bright), var(--red));
+  border-color: transparent;
+  color: var(--cream);
+}
+
+/* — корзина — */
+.rs-cart {
+  margin-top: 1.5rem;
+  padding: 1.15rem 1.25rem;
+  background: rgba(20, 20, 20, 0.45);
+  border: 1px solid var(--red-soft);
+  border-radius: 14px;
+}
+.rs-cart h3 { margin: 0 0 0.7rem; font-size: 1.05rem; }
+.rs-cart-list { list-style: none; margin: 0 0 0.6rem; padding: 0; }
+.rs-cart-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.rs-cart-list li:last-child { border-bottom: 0; }
+.rs-cart-list button {
+  background: none; border: 0; color: var(--text-muted);
+  cursor: pointer; font: inherit; text-decoration: underline;
+}
+.rs-cart-list button:hover { color: var(--red-bright); }
+.rs-cart-total {
+  margin: 0.7rem 0 1rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--gold);
+}
+.rs-cart-clear {
+  margin-left: 0.9rem; background: none; border: 0;
+  color: var(--text-muted); cursor: pointer; font: inherit; text-decoration: underline;
+}
+.rs-cart-note { margin: 0.8rem 0 0; font-size: 0.92rem; color: var(--text-muted); }
+
+/* — разбор качества — */
+.rs-quality { margin-top: 2rem; }
+.rs-details > summary {
+  cursor: pointer;
+  padding: 0.9rem 0;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--surface-border);
+}
+.rs-details > summary:hover { color: var(--red-bright); }
+.rs-quality-list { margin: 0 0 1.5rem; }
+.rs-quality-list dt { font-family: var(--font-display); margin-top: 1rem; letter-spacing: 0.03em; }
+.rs-quality-list dd { margin: 0.25rem 0 0; color: var(--text-muted); }
+
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
 }
 
-/* Кнопки видов работ — их полтора десятка, поэтому мельче основных фильтров */
-.rs-chips--ops { gap: 0.4rem; }
-.rs-chips--ops button { padding: 0.3rem 0.75rem; font-size: 0.88rem; opacity: 0.9; }
-.rs-chips--ops button.is-active { opacity: 1; }
-
-/* Разбор качества запчастей — свёрнутый блок под выдачей */
-.rs-quality { margin-top: 2rem; }
-.rs-details > summary {
-  cursor: pointer; padding: 0.75rem 0; font-weight: 700;
-  border-top: 1px solid rgba(128,128,128,0.35);
+@media (max-width: 600px) {
+  .rs { padding: 1.1rem; }
+  .rs-results { grid-template-columns: 1fr; }
+  .rs-add { margin-left: 0; }
 }
-.rs-quality-list { margin: 0 0 1.5rem; }
-.rs-quality-list dt { font-weight: 700; margin-top: 0.9rem; }
-.rs-quality-list dd { margin: 0.2rem 0 0; opacity: 0.9; }
-.rs-warranty { opacity: 0.7; font-size: 0.88em; font-style: italic; }
-
-/* Выбор модели и корзина услуг */
-.rs-device-pick { display: flex; align-items: center; gap: 0.6rem; margin: 0.75rem 0; flex-wrap: wrap; }
-.rs-device {
-  padding: 0.45rem 0.7rem; font: inherit; background: #fff; color: #111;
-  border: 2px solid var(--red, #c0392b); max-width: 100%;
-}
-.rs-add {
-  margin-left: 0.6rem; padding: 0.1rem 0.55rem; font: inherit; font-size: 0.85rem;
-  cursor: pointer; background: transparent; color: inherit;
-  border: 1px solid rgba(128,128,128,0.5);
-}
-.rs-add:hover, .rs-add.is-added { background: var(--red, #c0392b); color: #fff; border-color: var(--red, #c0392b); }
-.rs-cart { margin-top: 1.5rem; padding: 1rem 1.15rem; border: 2px solid var(--red, #c0392b); }
-.rs-cart h3 { margin: 0 0 0.6rem; }
-.rs-cart-list { list-style: none; margin: 0 0 0.6rem; padding: 0; }
-.rs-cart-list li { padding: 0.25rem 0; display: flex; justify-content: space-between; gap: 1rem; }
-.rs-cart-list button { background: none; border: 0; color: inherit; cursor: pointer; opacity: 0.6; font: inherit; }
-.rs-cart-total { font-weight: 700; margin: 0.5rem 0 1rem; }
-.rs-cart-clear { margin-left: 0.75rem; background: none; border: 0; color: inherit; opacity: 0.7; cursor: pointer; font: inherit; }
-.rs-cart-note { margin: 0.75rem 0 0; font-size: 0.9rem; opacity: 0.85; }
