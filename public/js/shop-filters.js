@@ -86,7 +86,12 @@
     }
 
     let sim = "";
-    if (/\(SIM\s*\+\s*eSIM\)/i.test(productName) || /sim\s*\+\s*esim/i.test(productSection)) {
+    // «2 SIM» — две ФИЗИЧЕСКИЕ карты без eSIM (Гонконг/Китай до 17-й серии).
+    // Проверяется первым: в остальных ветках есть подстрока «sim», и без этого
+    // порядка «(2 SIM)» опозналось бы как обычная SIM + eSIM.
+    if (/\(2\s*SIM\)/i.test(productName)) {
+      sim = "2sim";
+    } else if (/\(SIM\s*\+\s*eSIM\)/i.test(productName) || /sim\s*\+\s*esim/i.test(productSection)) {
       sim = "sim+esim";
     } else if (/\(eSIM\)/i.test(productName) || /\besim\b/i.test(productSection)) {
       sim = "esim";
@@ -178,6 +183,7 @@
     if (facetId === "sim") {
       if (value === "sim+esim") return "SIM + eSIM";
       if (value === "esim") return "eSIM";
+      if (value === "2sim") return "2 SIM";
     }
     if (facetId === "color") return formatColorLabel(value);
     return value;
