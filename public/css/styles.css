@@ -1316,3 +1316,24 @@ section {
 .rs-quality-list dt { font-weight: 700; margin-top: 0.9rem; }
 .rs-quality-list dd { margin: 0.2rem 0 0; opacity: 0.9; }
 .rs-warranty { opacity: 0.7; font-size: 0.88em; font-style: italic; }
+
+/* Выбор модели и корзина услуг */
+.rs-device-pick { display: flex; align-items: center; gap: 0.6rem; margin: 0.75rem 0; flex-wrap: wrap; }
+.rs-device {
+  padding: 0.45rem 0.7rem; font: inherit; background: #fff; color: #111;
+  border: 2px solid var(--red, #c0392b); max-width: 100%;
+}
+.rs-add {
+  margin-left: 0.6rem; padding: 0.1rem 0.55rem; font: inherit; font-size: 0.85rem;
+  cursor: pointer; background: transparent; color: inherit;
+  border: 1px solid rgba(128,128,128,0.5);
+}
+.rs-add:hover, .rs-add.is-added { background: var(--red, #c0392b); color: #fff; border-color: var(--red, #c0392b); }
+.rs-cart { margin-top: 1.5rem; padding: 1rem 1.15rem; border: 2px solid var(--red, #c0392b); }
+.rs-cart h3 { margin: 0 0 0.6rem; }
+.rs-cart-list { list-style: none; margin: 0 0 0.6rem; padding: 0; }
+.rs-cart-list li { padding: 0.25rem 0; display: flex; justify-content: space-between; gap: 1rem; }
+.rs-cart-list button { background: none; border: 0; color: inherit; cursor: pointer; opacity: 0.6; font: inherit; }
+.rs-cart-total { font-weight: 700; margin: 0.5rem 0 1rem; }
+.rs-cart-clear { margin-left: 0.75rem; background: none; border: 0; color: inherit; opacity: 0.7; cursor: pointer; font: inherit; }
+.rs-cart-note { margin: 0.75rem 0 0; font-size: 0.9rem; opacity: 0.85; }

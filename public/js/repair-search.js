@@ -20,10 +20,18 @@
   var results = root.querySelector(".rs-results");
   var status = root.querySelector(".rs-status");
 
+  var deviceSelect = root.querySelector(".rs-device");
+  var cartBox = root.querySelector(".rs-cart");
+  var cartList = root.querySelector(".rs-cart-list");
+  var cartTotal = root.querySelector(".rs-cart-total");
+  var cartNote = root.querySelector(".rs-cart-note");
+
   var services = [];
   var quality = null;
   var activeFamily = "";
   var activeOperation = "";
+  var activeDevice = "";
+  var cart = [];
 
   function money(n) {
     return Number(n).toLocaleString("ru-RU") + " ₽";
@@ -102,6 +110,7 @@
   function matches(service, query) {
     if (activeFamily && service.family !== activeFamily) return false;
     if (activeOperation && service.operation !== activeOperation) return false;
+    if (activeDevice && service.device !== activeDevice) return false;
     if (!query) return true;
 
     var haystack = normalize(service.device + " " + service.operation + " " + (service.variant || "") + " " + (service.models || ""));
@@ -182,11 +191,13 @@
           w.textContent = " · гарантия " + s.warranty_days + " дн.";
           li.appendChild(w);
         }
+        if (!s.options || !s.options.length) li.appendChild(addButton(s, null));
         ul.appendChild(li);
         (s.options || []).forEach(function (o) {
           var sub = document.createElement("li");
           sub.className = "rs-option";
-          sub.textContent = (o.warranty ? "с гарантией" : "без гарантии") + " — " + money(o.price);
+          sub.appendChild(document.createTextNode(o.label + " — " + money(o.price) + " "));
+          sub.appendChild(addButton(s, o));
           ul.appendChild(sub);
         });
       });
@@ -260,6 +271,70 @@
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
+  /** Кнопка «в корзину» у конкретной цены — варианта или исполнения. */
+  function addButton(service, option) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "rs-add";
+    var key = cartKey(service, option);
+    var inCart = cart.some(function (c) { return c.key === key; });
+    b.textContent = inCart ? "✓ выбрано" : "＋ выбрать";
+    if (inCart) b.classList.add("is-added");
+    b.addEventListener("click", function () {
+      toggleCart(service, option);
+      apply();
+    });
+    return b;
+  }
+
+  function cartKey(service, option) {
+    return service.device + "|" + service.operation + "|" + (option ? option.label : service.variant || "");
+  }
+
+  function toggleCart(service, option) {
+    var key = cartKey(service, option);
+    var at = cart.findIndex(function (c) { return c.key === key; });
+    if (at >= 0) { cart.splice(at, 1); }
+    else {
+      cart.push({
+        key: key,
+        kind: "service",
+        device: service.device,
+        operation: service.operation,
+        variant: option ? option.label : service.variant || "",
+        price: option ? option.price : service.price,
+        priceFrom: Boolean(service.price_is_from)
+      });
+    }
+    renderCart();
+  }
+
+  function renderCart() {
+    cartBox.hidden = cart.length === 0;
+    cartList.innerHTML = "";
+    var total = 0;
+    var anyFrom = false;
+    cart.forEach(function (c, i) {
+      total += Number(c.price) || 0;
+      if (c.priceFrom) anyFrom = true;
+      var li = document.createElement("li");
+      var left = document.createElement("span");
+      left.textContent = c.operation + (c.variant ? ", " + c.variant : "") + " — " + c.device;
+      var right = document.createElement("span");
+      right.textContent = (c.priceFrom ? "от " : "") + money(c.price) + " ";
+      var rm = document.createElement("button");
+      rm.type = "button";
+      rm.textContent = "убрать";
+      rm.addEventListener("click", function () { cart.splice(i, 1); renderCart(); apply(); });
+      right.appendChild(rm);
+      li.appendChild(left);
+      li.appendChild(right);
+      cartList.appendChild(li);
+    });
+    cartTotal.textContent = "Итого: " + (anyFrom ? "от " : "") + money(total);
+    cartNote.textContent = "";
+  }
+
   function note(text) {
     var p = document.createElement("p");
     p.className = "rs-note";
@@ -290,6 +365,7 @@
     // Виды работ у iPhone и MacBook разные — пересобираем список под выбранное
     // семейство, иначе половина кнопок ведёт в пустую выдачу.
     renderOperationChips();
+    renderDeviceOptions();
     apply();
   });
 
@@ -301,6 +377,7 @@
     Array.prototype.forEach.call(opChips.querySelectorAll("button"), function (b) {
       b.classList.toggle("is-active", b.getAttribute("data-operation") === activeOperation);
     });
+    renderDeviceOptions();
     apply();
   });
 
@@ -327,6 +404,72 @@
     });
   }
 
+  deviceSelect.addEventListener("change", function () {
+    activeDevice = deviceSelect.value;
+    apply();
+  });
+
+  root.querySelector(".rs-cart-clear").addEventListener("click", function () {
+    cart = [];
+    renderCart();
+    apply();
+  });
+
+  // Заявка уходит тем же путём, что и корзина товаров: сохраняем её на стороне
+  // бота и открываем диплинк. Клиент по дороге не может отредактировать ни цену,
+  // ни состав — бот собирает заявку заново из своего прайса.
+  root.querySelector(".rs-cart-send").addEventListener("click", function () {
+    if (!cart.length) return;
+    cartNote.textContent = "Отправляем…";
+    var api = (window.IRON_CONFIG && window.IRON_CONFIG.siteOrderApiUrl) ||
+      "https://order-bot.4489530.workers.dev/site-order";
+    fetch(api, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items: cart.map(function (c) {
+          return { kind: "service", device: c.device, operation: c.operation, variant: c.variant, price: c.price };
+        })
+      })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data && data.ok && data.botUrl) {
+          cartNote.textContent = "Открываем Telegram…";
+          window.open(data.botUrl, "_blank", "noopener");
+        } else {
+          cartNote.textContent = "Не получилось отправить. Позвоните нам — оформим вручную.";
+        }
+      })
+      .catch(function () {
+        cartNote.textContent = "Не получилось отправить. Позвоните нам — оформим вручную.";
+      });
+  });
+
+  /** Список моделей — только те, что подходят под остальные фильтры. */
+  function renderDeviceOptions() {
+    var pool = services.filter(function (s) {
+      return (!activeFamily || s.family === activeFamily) &&
+             (!activeOperation || s.operation === activeOperation);
+    });
+    var seen = {};
+    var list = [];
+    pool.forEach(function (s) { if (!seen[s.device]) { seen[s.device] = true; list.push(s.device); } });
+    if (activeDevice && list.indexOf(activeDevice) === -1) activeDevice = "";
+    deviceSelect.innerHTML = "";
+    var all = document.createElement("option");
+    all.value = "";
+    all.textContent = "все модели (" + list.length + ")";
+    deviceSelect.appendChild(all);
+    list.forEach(function (d) {
+      var o = document.createElement("option");
+      o.value = d;
+      o.textContent = d;
+      if (d === activeDevice) o.selected = true;
+      deviceSelect.appendChild(o);
+    });
+  }
+
   var timer = null;
   input.addEventListener("input", function () {
     clearTimeout(timer);
@@ -341,6 +484,7 @@
       quality = data.quality || null;
       renderQualityGuide();
       renderOperationChips();
+      renderDeviceOptions();
       status.textContent = "Прайс на " + services.length + " услуг. Начните вводить модель или что случилось.";
       apply();
     })

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com https://order-bot.4489530.workers.dev">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Ремонт iPhone, MacBook, iPad в Сочи — услуги IRON SERVICE</title>
   <meta name="description" content="Ремонт iPhone, iPad, MacBook, Apple Watch в Сочи. Замена дисплея, батареи, восстановление после влаги. Специализированный сервис Apple.">
@@ -58,8 +58,22 @@
             <button type="button" data-family="mac">MacBook</button>
           </div>
           <div class="rs-chips rs-chips--ops" data-group="operation"></div>
+          <label class="rs-device-pick">
+            <span>Модель:</span>
+            <select class="rs-device" aria-label="Модель устройства">
+              <option value="">все модели</option>
+            </select>
+          </label>
           <p class="rs-status" role="status"></p>
           <div class="rs-results"></div>
+          <div class="rs-cart" hidden>
+            <h3>Выбранные услуги</h3>
+            <ul class="rs-cart-list"></ul>
+            <p class="rs-cart-total"></p>
+            <button type="button" class="btn btn-primary rs-cart-send">Отправить заявку в Telegram</button>
+            <button type="button" class="rs-cart-clear">Очистить</button>
+            <p class="rs-cart-note"></p>
+          </div>
           <div id="rs-quality" class="rs-quality"></div>
         </div>
       </div>
