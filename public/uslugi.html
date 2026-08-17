@@ -9,10 +9,14 @@
   <meta name="description" content="Ремонт iPhone, iPad, MacBook, Apple Watch в Сочи. Замена дисплея, батареи, восстановление после влаги. Специализированный сервис Apple.">
   <meta name="keywords" content="ремонт айфон, ремонт iphone, ремонт macbook, ремонт apple, ремонт эпл, ремонт ipad, сервис apple сочи">
   <link rel="canonical" href="https://1iron.ru/uslugi.html">
+  <link rel="alternate" hreflang="ru" href="https://1iron.ru/uslugi.html">
+  <link rel="alternate" hreflang="en" href="https://1iron.ru/en/services.html">
+  <link rel="alternate" hreflang="x-default" href="https://1iron.ru/uslugi.html">
   <link rel="icon" href="assets/logo-icon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/repair-extra.css">
 </head>
 <body>
   <header class="site-header">
@@ -32,6 +36,11 @@
           <li><a href="kontakty.html">Контакты</a></li>
         </ul>
       </nav>
+      <div class="lang-switch">
+        <a href="uslugi.html" hreflang="ru" aria-current="true">RU</a>
+        <span class="lang-sep" aria-hidden="true">/</span>
+        <a href="en/services.html" hreflang="en">EN</a>
+      </div>
     </div>
   </header>
 
@@ -47,6 +56,16 @@
       <div class="container">
         <h2>Сколько стоит ремонт</h2>
         <p class="rs-lead">Напишите модель и что случилось — например «разбил экран на 13 про» или «залил макбук эйр». Цена указана вместе с работой.</p>
+        <!--
+          Подсказка про остальную технику стоит ЗДЕСЬ, а не только внизу: сам
+          раздел лежит после трёхсот с лишним карточек услуг, то есть примерно
+          на седьмой тысяче пикселей — туда не доскроллит никто. Человеку с
+          iPad или часами нужно понять в первом экране, что он вообще по адресу.
+        -->
+        <p class="rs-lead rs-lead--extra">
+          Ремонтируем не только их: <a href="#repair-extra">iPad, Apple Watch, iMac, ноутбуки других марок и системные блоки</a>.
+          <a href="#rx-water">Залили технику?</a>
+        </p>
 
         <div id="repair-search" class="rs">
           <label class="rs-field">
@@ -86,6 +105,30 @@
           </div>
           <div id="rs-quality" class="rs-quality"></div>
         </div>
+      </div>
+    </section>
+
+    <!--
+      Техника вне основного прайса и первая помощь при залитии.
+      Данные — public/data/repair-extra.json, он ГЕНЕРИРУЕТСЯ из базы знаний
+      бота (scripts/build_repair_extra.mjs). Правки руками затрутся: цены и
+      условия должны совпадать с тем, что говорит бот, иначе клиент увидит
+      разные цифры в двух местах.
+    -->
+    <section id="repair-extra">
+      <div class="container">
+        <h2>Не только iPhone и MacBook</h2>
+        <p class="rs-lead">
+          Подбор выше — по iPhone и MacBook, на них у нас точный прайс.
+          Остальную технику тоже ремонтируем: часть цен ниже, остальное скажем после осмотра.
+        </p>
+        <div id="rx-families" class="rx-chips"></div>
+        <div id="rx-prices" class="rx-prices"></div>
+
+        <details id="rx-water" class="rx-water">
+          <summary>💧 Залили технику — что делать прямо сейчас</summary>
+          <div class="rx-water-body"></div>
+        </details>
       </div>
     </section>
 
@@ -166,5 +209,6 @@
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
   <script src="js/repair-search.js"></script>
+  <script src="js/repair-extra.js"></script>
 </body>
 </html>

@@ -1,0 +1,104 @@
+/* Стили блока «не только iPhone и MacBook» на странице услуг.
+
+   ОТДЕЛЬНЫМ ФАЙЛОМ, а не в styles.css: над сайтом часто идёт параллельная
+   работа, и общий styles.css оказывается изменён с двух сторон одновременно.
+   Тогда любой коммит сгребает чужие правки вместе со своими — так уже вышло
+   17.08.2026 с worker.js. Свой файл разводит это без договорённостей.
+*/
+
+/* ─── Техника вне основного прайса + залития (uslugi.html, repair-extra.js) ───
+   Данные генерируются из базы знаний бота, поэтому оформление держим в том же
+   ключе, что и подбор выше: те же чипы, та же типографика. */
+
+.rx-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0 1.4rem; }
+.rx-chip {
+  padding: 0.42rem 1rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: rgba(20, 20, 20, 0.4);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+}
+
+.rx-prices {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: 0.75rem;
+}
+
+.rx-price {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  background: var(--surface-1);
+}
+
+.rx-price__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.rx-price__device { font-family: var(--font-display); color: var(--cream); }
+.rx-price__sum { font-family: var(--font-display); color: var(--gold); white-space: nowrap; }
+.rx-price__work { margin-top: 0.15rem; font-size: 0.92rem; color: var(--text); }
+.rx-price__note { margin-top: 0.35rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.35; }
+
+/* Залитие спрятано под спойлер: текста много, а нужен он далеко не каждому,
+   кто открыл страницу услуг. */
+.rx-water {
+  margin-top: 1.6rem;
+  border: 1px solid rgba(212, 160, 18, 0.45);
+  border-radius: 12px;
+  background: rgba(212, 160, 18, 0.06);
+}
+
+.rx-water > summary {
+  padding: 0.85rem 1rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--gold);
+  cursor: pointer;
+}
+
+.rx-water-body { padding: 0 1rem 1rem; }
+.rx-water-block {
+  margin-top: 0.9rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+.rx-water-block:first-child { margin-top: 0; }
+
+.rx-arm-note {
+  margin-top: 1.4rem;
+  padding: 0.8rem 1rem;
+  border-left: 3px solid rgba(212, 160, 18, 0.6);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Примечание под кнопками на английской главной: честная оговорка про язык
+   общения. Намеренно приглушено — это важная информация, но не заголовок. */
+.hero-note {
+  margin-top: 1.1rem;
+  max-width: 46ch;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  border-left: 2px solid var(--surface-border);
+  padding-left: 0.85rem;
+}
+
+/* Подсказка про технику вне основного прайса — ссылками, чтобы не листать
+   вручную семь тысяч пикселей карточек до самого раздела. */
+.rs-lead--extra { margin-top: 0.4rem; font-size: 0.95rem; }
+.rs-lead--extra a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.rs-lead--extra a:hover { color: var(--cream); }
