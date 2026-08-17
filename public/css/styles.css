@@ -1500,3 +1500,60 @@ section {
   .rs-results { grid-template-columns: 1fr; }
   .rs-add { margin-left: 0; }
 }
+
+/* ——— Переключатель языка (17.08.2026) ———
+   Английская версия сайта: /en/. Переключатель намеренно маленький и
+   неброский — русскоязычный посетитель составляет подавляющее большинство,
+   и ему эта пара букв не должна мешать. Иностранцу же достаточно увидеть
+   «EN» в шапке, чтобы понять, что версия есть. */
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.lang-switch a {
+  color: var(--text-muted);
+  padding: 0.15rem 0.35rem;
+  border: 1px solid transparent;
+}
+
+.lang-switch a:hover {
+  color: var(--cream);
+  border-color: var(--surface-border);
+}
+
+.lang-switch a[aria-current="true"] {
+  color: var(--black);
+  background: var(--gold);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+
+.lang-switch .lang-sep {
+  color: var(--surface-border);
+}
+
+@media (max-width: 900px) {
+  /* На мобильной шапке телефон скрыт, а сетка двухколоночная. Проверка в
+     браузере 17.08.2026 показала: без явного указания строки переключатель
+     уезжает ПОД меню и добавляет шапке третью строку — она становится заметно
+     выше и съедает первый экран. Поэтому раскладываем явно: первая строка —
+     логотип и RU/EN по краям, вторая — меню во всю ширину. */
+  .lang-switch {
+    grid-row: 1;
+    grid-column: 2;
+    justify-self: end;
+    align-self: center;
+    font-size: 0.75rem;
+  }
+
+  .main-nav {
+    grid-row: 2;
+    grid-column: 1 / -1;
+  }
+}

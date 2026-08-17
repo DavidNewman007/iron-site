@@ -38,6 +38,13 @@
   const form = document.getElementById("contact-form");
   if (!form) return;
 
+  // Подписи формы берутся из data-атрибутов, если они заданы (17.08.2026,
+  // английская версия сайта в /en/). Русская форма их не задаёт и получает те
+  // же строки, что и раньше, — поэтому на неё эта правка никак не влияет.
+  // Через data-атрибуты, а не через отдельный main.en.js: логика формы одна,
+  // разъезжаться двум копиям здесь незачем.
+  const t = (key, ru) => form.dataset[key] || ru;
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const status = document.getElementById("form-status");
@@ -47,13 +54,19 @@
     if (!config.apiUrl) {
       const tel = data.phone || "";
       const text = encodeURIComponent(
-        `Заявка с сайта IRON SERVICE\nИмя: ${data.name}\nТел: ${tel}\nУстройство: ${data.device}\nПроблема: ${data.message}`
+        `${t("lead", "Заявка с сайта IRON SERVICE")}\n` +
+          `${t("fName", "Имя")}: ${data.name}\n` +
+          `${t("fPhone", "Тел")}: ${tel}\n` +
+          `${t("fDevice", "Устройство")}: ${data.device}\n` +
+          `${t("fProblem", "Проблема")}: ${data.message}`
       );
       window.open(`https://t.me/ironsochi?text=${text}`, "_blank");
       if (status) {
         status.className = "form-status success";
-        status.textContent =
-          "Backend не настроен — открыли Telegram. После деплоя укажите apiUrl в config.js.";
+        status.textContent = t(
+          "sentNoBackend",
+          "Backend не настроен — открыли Telegram. После деплоя укажите apiUrl в config.js."
+        );
       }
       return;
     }
@@ -78,14 +91,16 @@
 
       if (status) {
         status.className = "form-status success";
-        status.textContent = "Заявка отправлена. Мы свяжемся с вами в ближайшее время.";
+        status.textContent = t("sentOk", "Заявка отправлена. Мы свяжемся с вами в ближайшее время.");
       }
       form.reset();
     } catch (err) {
       if (status) {
         status.className = "form-status error";
-        status.textContent =
-          "Не удалось отправить заявку. Позвоните: +7 928 850-94-04";
+        status.textContent = t(
+          "sentFail",
+          "Не удалось отправить заявку. Позвоните: +7 928 850-94-04"
+        );
       }
       console.error(err);
     } finally {

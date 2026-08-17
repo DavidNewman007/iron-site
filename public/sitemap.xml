@@ -1,11 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://1iron.ru/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://1iron.ru/uslugi.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://1iron.ru/garantiya.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://1iron.ru/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://1iron.ru/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://1iron.ru/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://1iron.ru/"/>
+    <changefreq>weekly</changefreq><priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://1iron.ru/uslugi.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://1iron.ru/uslugi.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://1iron.ru/en/services.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://1iron.ru/uslugi.html"/>
+    <changefreq>monthly</changefreq><priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://1iron.ru/garantiya.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://1iron.ru/garantiya.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://1iron.ru/en/warranty.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://1iron.ru/garantiya.html"/>
+    <changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
   <url><loc>https://1iron.ru/magazin.html</loc><changefreq>daily</changefreq><priority>0.95</priority></url>
-  <url><loc>https://1iron.ru/kontakty.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url>
+    <loc>https://1iron.ru/kontakty.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://1iron.ru/kontakty.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://1iron.ru/en/contacts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://1iron.ru/kontakty.html"/>
+    <changefreq>monthly</changefreq><priority>0.85</priority>
+  </url>
   <url><loc>https://1iron.ru/articles.html</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+
+  <url>
+    <loc>https://1iron.ru/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://1iron.ru/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://1iron.ru/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://1iron.ru/"/>
+    <changefreq>weekly</changefreq><priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://1iron.ru/en/services.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://1iron.ru/uslugi.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://1iron.ru/en/services.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://1iron.ru/uslugi.html"/>
+    <changefreq>monthly</changefreq><priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://1iron.ru/en/warranty.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://1iron.ru/garantiya.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://1iron.ru/en/warranty.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://1iron.ru/garantiya.html"/>
+    <changefreq>monthly</changefreq><priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://1iron.ru/en/contacts.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://1iron.ru/kontakty.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://1iron.ru/en/contacts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://1iron.ru/kontakty.html"/>
+    <changefreq>monthly</changefreq><priority>0.8</priority>
+  </url>
+
   <url><loc>https://1iron.ru/articles/iphone-umeet-derzhatsya-do-poslednego-i-terpet-poka-odni-pol.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://1iron.ru/articles/prodazha-macbook-eto-moment-kogda-tehnika-dolzhna-vyglyadet-.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://1iron.ru/articles/pyl-tihiy-ubiyca-noutbukov-ona-ne-bet-po-korpusu-ne-prolivae.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>

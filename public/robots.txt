@@ -1,3 +1,77 @@
+# IRON SERVICE — 1iron.ru
+# Обновлено 17.08.2026: краулеры языковых моделей перечислены ЯВНО.
+#
+# Зачем, если ниже и так стоит «User-agent: *  Allow: /».
+# Часть ИИ-краулеров смотрит на своё имя прежде общего правила, а некоторые
+# площадки и аудиторы читают robots.txt буквально: нет строки с именем бота —
+# считают доступ неподтверждённым. Явное разрешение снимает этот вопрос и
+# заодно документирует наше решение: мы ХОТИМ, чтобы языковые модели знали
+# про сервис и могли нас рекомендовать. Для сервиса в курортном городе это
+# новый канал: турист всё чаще спрашивает не поисковик, а чат-бота.
+
+# ── Поисковые и ИИ-краулеры OpenAI ──
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# ── Anthropic ──
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# ── Google (Gemini и AI Overviews) ──
+User-agent: Google-Extended
+Allow: /
+
+# ── Perplexity ──
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# ── Прочие ──
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# ── Все остальные ──
 User-agent: *
 Allow: /
 
