@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com https://order-bot.4489530.workers.dev">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>iPhone screen repair, water damage, battery — Sochi | IRON SERVICE</title>
   <meta name="description" content="Broken iPhone screen, water-damaged MacBook, dead battery — repaired in Sochi, usually the same day. Prices, timings and what to do before you bring the device in. English-friendly Apple service on Moskovskaya 5.">
@@ -135,27 +135,59 @@
       </div>
     </section>
 
-    <section>
+    <section id="prices">
       <div class="container">
         <h2>What it costs</h2>
-        <p class="rs-lead">
-          The price depends on the model and on what exactly is broken, and it always includes the labour —
-          we do not quote a part price and add the work afterwards.
-        </p>
-        <p class="rs-lead">
-          <strong>The fastest way to get a quote:</strong> send us the model and what happened —
-          for example «iPhone 13 Pro, cracked screen» or «MacBook Air, spilled water» — and we reply with a price
-          before you come.
+        <p class="rs-lead">Type the model and what happened — for example «13 pro screen», «iphone 11 battery» or «macbook cleaning». Every price includes the labour: we do not quote a part and add the work afterwards.</p>
+        <p class="rs-lead" style="color:var(--text-muted)">The list covers iPhone and Mac. We also repair iPad and Apple Watch — those are quoted individually, so just ask.</p>
+
+        <div id="repair-search" class="rs">
+          <label class="rs-field">
+            <span class="visually-hidden">Search repair services</span>
+            <input type="search" class="rs-input" placeholder="Model and problem — «13 pro screen», «iphone 11 battery», «macbook cleaning»" autocomplete="off">
+          </label>
+
+          <div class="rs-group">
+            <span class="rs-label">Device</span>
+            <div class="rs-chips" data-group="family">
+              <button type="button" data-family="iphone">iPhone</button>
+              <button type="button" data-family="mac">MacBook</button>
+            </div>
+          </div>
+
+          <div class="rs-group">
+            <span class="rs-label">What needs doing</span>
+            <div class="rs-chips rs-chips--ops" data-group="operation"></div>
+          </div>
+
+          <div class="rs-group">
+            <label class="rs-label" for="rs-device">Model <button type="button" class="rs-reset" hidden>reset filters</button></label>
+            <select class="rs-device" id="rs-device" aria-label="Device model">
+              <option value="">all models</option>
+            </select>
+          </div>
+
+          <p class="rs-status" role="status"></p>
+          <div class="rs-results"></div>
+          <div class="rs-cart" hidden>
+            <h3>Selected services</h3>
+            <ul class="rs-cart-list"></ul>
+            <p class="rs-cart-total"></p>
+            <button type="button" class="btn btn-primary rs-cart-send">Send request via Telegram</button>
+            <button type="button" class="rs-cart-clear">Clear</button>
+            <p class="rs-cart-note"></p>
+          </div>
+          <div id="rs-quality" class="rs-quality"></div>
+        </div>
+
+        <p class="hero-note">
+          Prices come from the same live list our workshop uses, so they follow our actual stock.
+          If your model or fault is not listed, just ask — we will quote it.
         </p>
         <div class="hero-actions">
           <a href="https://wa.me/79288509404" class="btn btn-primary" target="_blank" rel="noopener">Ask on WhatsApp</a>
           <a href="https://t.me/ironsochi" class="btn btn-secondary" target="_blank" rel="noopener">Ask on Telegram</a>
         </div>
-        <p class="hero-note">
-          Our full live price list is on the Russian version of this page — it is generated from our stock,
-          so it is always current. Your browser will translate it, or just ask us directly.
-          <a href="../uslugi.html#ceny">Open the price list</a>
-        </p>
       </div>
     </section>
 
@@ -218,5 +250,6 @@
 
   <script src="../js/config.js"></script>
   <script src="../js/main.js"></script>
+  <script src="../js/repair-search.js"></script>
 </body>
 </html>

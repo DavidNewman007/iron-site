@@ -14,6 +14,56 @@
   var root = document.getElementById("repair-search");
   if (!root) return;
 
+  // ── Язык (добавлено 17.08.2026) ───────────────────────────────────────────
+  // Английская версия страницы услуг показывает ТОТ ЖЕ прайс: цены, модели и
+  // наличие берутся из общего services.json, переводятся только термины —
+  // словарём из data/i18n/services.en.json. Второй копии данных нет намеренно:
+  // прайс перезаписывается генератором при каждом обновлении цен, и копия
+  // разъехалась бы с оригиналом в первый же день.
+  //
+  // Если в прайсе появится операция, которой нет в словаре, показывается её
+  // русское название — выдача не ломается, просто одна подпись остаётся
+  // русской. Это осознанный компромисс: молчаливо пропасть строка не должна.
+  var EN = (document.documentElement.lang || "ru").slice(0, 2) === "en";
+  var DICT = null; // словарь подгружается вместе с прайсом
+
+  /** UI-строка: t("loading") → «Загружаем прайс…» либо перевод. */
+  function t(key, ru, params) {
+    var s = (EN && DICT && DICT.ui && DICT.ui[key]) || ru;
+    if (params) {
+      Object.keys(params).forEach(function (p) {
+        s = s.replace(new RegExp("\\{" + p + "\\}", "g"), params[p]);
+      });
+    }
+    return s;
+  }
+
+  /**
+   * Подпись варианта запчасти. В прайсе это свободная строка, часто с русскими
+   * пояснениями («с привязкой, без ошибки»). Сначала пробуем перевести строку
+   * целиком, потом — по кускам; не вышло ни то ни другое, показываем как есть.
+   * Русская версия проходит по тому же пути и получает прежнюю чистку префиксов.
+   */
+  function variantLabel(raw) {
+    var text = String(raw || "").replace(/^АКБ\s*/i, "").replace(/статус\s*/i, "").trim();
+    if (!EN || !DICT || !DICT.variants) return text;
+    var full = String(raw || "").trim();
+    if (DICT.variants.exact && DICT.variants.exact[full]) return DICT.variants.exact[full];
+    if (DICT.variants.exact && DICT.variants.exact[text]) return DICT.variants.exact[text];
+    var frags = DICT.variants.fragments || {};
+    var out = text;
+    Object.keys(frags).forEach(function (ru) {
+      out = out.replace(new RegExp(ru.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"), frags[ru]);
+    });
+    return out.replace(/\s*,\s*/g, ", ").replace(/\s{2,}/g, " ").trim();
+  }
+
+  /** Полное название операции для заголовка карточки. */
+  function opName(operation) {
+    if (EN && DICT && DICT.operations && DICT.operations[operation]) return DICT.operations[operation];
+    return operation;
+  }
+
   var input = root.querySelector(".rs-input");
   var chips = root.querySelector('[data-group="family"]');
   var opChips = root.querySelector('[data-group="operation"]');
@@ -34,11 +84,13 @@
   var cart = [];
 
   function money(n) {
-    return Number(n).toLocaleString("ru-RU") + " ₽";
+    // Валюта одна — рубли: платят на месте. Меняется только разделитель
+    // разрядов, чтобы «4 100 ₽» не выглядело для иностранца опечаткой.
+    return Number(n).toLocaleString(EN ? "en-US" : "ru-RU") + " \u20BD";
   }
 
   function priceText(s) {
-    if (s.price_is_from) return "от " + money(s.price);
+    if (s.price_is_from) return t("from", "от ") + money(s.price);
     if (s.price_to && s.price_to !== s.price) return money(s.price) + " — " + money(s.price_to);
     return money(s.price);
   }
@@ -58,7 +110,9 @@
       [/ (?:эйр|эир|air) /g, " air "],
       [/ (?:про|pro) /g, " pro "],
       [/ (?:макс|max) /g, " max "],
-      [/ м([1-5]) /g, " m$1 "]
+      [/ м([1-5]) /g, " m$1 "],
+      // «iphone15» и «13pro» англичанин пишет слитно так же, как русский.
+      [/ mac book /g, " macbook "]
     ];
     for (var pass = 0; pass < 2; pass++) {
       for (var i = 0; i < map.length; i++) s = s.replace(map[i][0], map[i][1]);
@@ -104,7 +158,25 @@
     [/шумит|греется|перегрев|кулер|пыль|чистк|профилакт/, "профилактика"],
     [/клавиш|клавиатур|залипа/, "клавиатуры"],
     [/тачпад|трекпад/, "тачпада"],
-    [/только стекло/, "переклейка"]
+    [/только стекло/, "переклейка"],
+    // Английские синонимы (17.08.2026): на /en/ человек ищет «cracked screen»,
+    // «water damage», «battery» — в прайсе этих слов нет вообще, он на русском.
+    // Без этой таблицы английский поиск возвращал бы пустоту на любой запрос
+    // кроме названия модели.
+    // «back glass» — это заднее стекло, а не дисплей: проверяем ДО экрана,
+    // иначе слово glass уводит запрос в замену дисплея и выдача пустеет.
+    [/^back$|^rear$/, "заднего"],
+    // glass отдельно от screen: «стекл» есть и в заднем стекле, и в переклейке,
+    // и в стекле камеры — пусть решают остальные слова запроса.
+    [/^glass$/, "стекл"],
+    [/crack|broke|broken|shatter|smash|screen|display/, "дисплея"],
+    [/batter|charge|charging|drain|dying|power/, "аккумулятора"],
+    [/water|liquid|wet|spill|drown|sea|pool|damage|flood/, "залития"],
+    [/clean|dust|overheat|hot|fan|noisy|thermal/, "профилактика"],
+    [/keyboard|key|sticky/, "клавиатуры"],
+    [/trackpad|touchpad/, "тачпада"],
+    [/camera|lens/, "камеры"],
+    [/refurb|reglue|glass only/, "переклейка"]
   ];
 
   function matches(service, query) {
@@ -131,6 +203,8 @@
       if (mapped && haystack.indexOf(mapped) !== -1) continue;
       // Служебные слова запроса не должны убивать выдачу.
       if (/^(на|для|в|и|с|у|мне|нужно|сколько|стоит|цена|ремонт|замена|поменять)$/.test(word)) continue;
+      // Те же служебные слова по-английски — «how much to fix my screen».
+      if (/^(a|an|the|my|for|of|to|is|it|in|on|only|just|how|much|cost|price|repair|replace|replacement|fix|fixed|need|please|service|new|old|got|has|have)$/.test(word)) continue;
       return false;
     }
     return true;
@@ -139,7 +213,7 @@
   function render(list) {
     results.innerHTML = "";
     if (!list.length) {
-      status.textContent = "Ничего не нашли. Напишите нам — подскажем по вашей модели.";
+      status.textContent = t("nothing_found", "Ничего не нашли. Напишите нам — подскажем по вашей модели.");
       return;
     }
 
@@ -153,7 +227,9 @@
       groups[key].push(s);
     });
 
-    status.textContent = "Нашли " + order.length + " " + plural(order.length, "услугу", "услуги", "услуг");
+    status.textContent = EN
+      ? t("found", "", { n: order.length, services: order.length === 1 ? t("service_one", "") : t("service_many", "") })
+      : "Нашли " + order.length + " " + plural(order.length, "услугу", "услуги", "услуг");
 
     order.slice(0, 40).forEach(function (key) {
       var items = groups[key].slice().sort(function (a, b) { return a.price - b.price; });
@@ -162,7 +238,7 @@
       card.className = "rs-card";
 
       var title = document.createElement("h3");
-      title.textContent = head.operation;
+      title.textContent = opName(head.operation);
       card.appendChild(title);
 
       var device = document.createElement("p");
@@ -177,7 +253,7 @@
         var price = document.createElement("b");
         price.textContent = priceText(s);
         li.appendChild(price);
-        var variantText = String(s.variant || "").replace(/^АКБ\s*/i, "").replace(/статус\s*/i, "").trim();
+        var variantText = variantLabel(s.variant);
         if (variantText && GENERIC_VARIANTS.indexOf(variantText.toLowerCase()) === -1) {
           var v = document.createElement("span");
           v.className = "rs-variant-name";
@@ -189,7 +265,8 @@
         if (s.warranty_days) {
           var w = document.createElement("i");
           w.className = "rs-warranty";
-          w.textContent = "гарантия " + s.warranty_days + " дн.";
+          w.textContent = EN ? t("warranty", "", { n: s.warranty_days })
+            : "гарантия " + s.warranty_days + " дн.";
           li.appendChild(w);
         }
         if (!s.options || !s.options.length) li.appendChild(addButton(s, null));
@@ -204,10 +281,10 @@
       });
       card.appendChild(ul);
 
-      if (head.work_only) card.appendChild(note("Указана работа — запчасть считается отдельно."));
+      if (head.work_only) card.appendChild(note(t("work_only", "Указана работа — запчасть считается отдельно.")));
       if (head.note) card.appendChild(note(head.note));
       if (head.requires_diagnostics) {
-        card.appendChild(note("Точную цену назовём после диагностики — залития непредсказуемы."));
+        card.appendChild(note(t("liquid_note", "Точную цену назовём после диагностики — залития непредсказуемы.")));
       }
       results.appendChild(card);
     });
@@ -225,15 +302,29 @@
       });
       return found;
     };
+    // Тексты про качество запчастей лежат в самом прайсе и написаны по-русски.
+    // Для английской версии берём перевод по КЛАССУ запчасти (дисплей_oled и
+    // т.п.) — класс машинный и не меняется при обновлении цен, в отличие от
+    // самих текстов. Нет перевода для класса — показываем русский текст.
+    var loc = function (it) {
+      var cls = EN && DICT && DICT.quality && DICT.quality.classes && DICT.quality.classes[it["класс"]];
+      if (!cls) return { name: it["имя"], desc: it["описание"], cons: it["минусы"] || [] };
+      return { name: cls.name, desc: cls.desc, cons: cls.cons || [] };
+    };
+    var warrantyLabel = function (days) {
+      return EN ? t("warranty", "", { n: days }) : "гарантия " + days + " дн.";
+    };
     var block = function (title, items) {
       if (!items || !items.length) return "";
-      var html = "<h3>" + title + "</h3><dl class='rs-quality-list'>";
+      var html = "<h3>" + escape(title) + "</h3><dl class='rs-quality-list'>";
       items.forEach(function (it) {
         var days = warrantyOf(it["класс"]);
-        html += "<dt>" + escape(it["имя"]) + (days ? " <span class='rs-warranty'>гарантия " + days + " дн.</span>" : "") + "</dt>";
-        html += "<dd>" + escape(it["описание"]);
-        if (it["минусы"] && it["минусы"].length) {
-          html += "<br><i>Минусы: " + escape(it["минусы"].join(", ")) + "</i>";
+        var L = loc(it);
+        html += "<dt>" + escape(L.name) + (days ? " <span class='rs-warranty'>" + escape(warrantyLabel(days)) + "</span>" : "") + "</dt>";
+        html += "<dd>" + escape(L.desc);
+        if (L.cons && L.cons.length) {
+          var consLabel = (EN && DICT && DICT.quality && DICT.quality.cons_label) || "Минусы";
+          html += "<br><i>" + escape(consLabel) + ": " + escape(L.cons.join(", ")) + "</i>";
         }
         html += "</dd>";
       });
@@ -241,29 +332,50 @@
     };
     // Условия переклейки — отдельным блоком: клиент видит цену дешевле замены
     // дисплея и должен сразу понимать, когда она не подойдёт.
+    var Q = (EN && DICT && DICT.quality) || null;
+
     var reglue = "";
+    var reglueSrc = Q && Q.reglue ? Q.reglue : null;
     if (quality["переклейка"]) {
-      reglue = "<h3>" + escape(quality["переклейка"]["заголовок"]) + "</h3>";
-      (quality["переклейка"]["условия"] || []).forEach(function (c) {
-        reglue += "<p class='rs-note'><b>" + escape(c["тема"]) + ".</b> " + escape(c["текст"]) + "</p>";
+      var rTitle = reglueSrc ? reglueSrc.title : quality["переклейка"]["заголовок"];
+      reglue = "<h3>" + escape(rTitle) + "</h3>";
+      var conds = reglueSrc && reglueSrc.conditions
+        ? reglueSrc.conditions.map(function (c) { return { t: c.topic, x: c.text }; })
+        : (quality["переклейка"]["условия"] || []).map(function (c) { return { t: c["тема"], x: c["текст"] }; });
+      conds.forEach(function (c) {
+        reglue += "<p class='rs-note'><b>" + escape(c.t) + ".</b> " + escape(c.x) + "</p>";
       });
       var contact = quality["переклейка"]["контакт"];
       if (contact) {
+        var label = reglueSrc && reglueSrc.contact_label ? reglueSrc.contact_label : contact["подпись"];
         reglue += "<p class='rs-note'><a href='" + escape(contact["url"]) +
-          "' target='_blank' rel='noopener'>" + escape(contact["подпись"]) + "</a></p>";
+          "' target='_blank' rel='noopener'>" + escape(label) + "</a></p>";
       }
     }
 
-    var notes = (quality["важно_знать"] || []).map(function (n) {
-      return "<p class='rs-note'><b>" + escape(n["тема"]) + ".</b> " + escape(n["текст"]) + "</p>";
+    var importantSrc = Q && Q.important
+      ? Q.important.map(function (n) { return { t: n.topic, x: n.text }; })
+      : (quality["важно_знать"] || []).map(function (n) { return { t: n["тема"], x: n["текст"] }; });
+    var notes = importantSrc.map(function (n) {
+      return "<p class='rs-note'><b>" + escape(n.t) + ".</b> " + escape(n.x) + "</p>";
     }).join("");
 
+    // На английской версии добавляем строку про оплату: рубли и неработающие
+    // иностранные карты — то, чего русский посетитель и так знает, а приезжий
+    // узнаёт уже у кассы, если ему не сказать заранее.
+    var payNote = EN && DICT && DICT.ui && DICT.ui.price_note
+      ? "<p class='rs-note'>" + escape(DICT.ui.price_note) + "</p>"
+      : "";
+
     host.innerHTML =
-      "<details class='rs-details'><summary>Чем отличаются запчасти и от чего зависит гарантия</summary>" +
-      block("Дисплеи", quality["дисплеи"]) +
-      block("Аккумуляторы", quality["акб"]) +
+      "<details class='rs-details'><summary>" +
+      escape(Q && Q.title ? Q.title : "Чем отличаются запчасти и от чего зависит гарантия") +
+      "</summary>" +
+      block(Q && Q.displays_title ? Q.displays_title : "Дисплеи", quality["дисплеи"]) +
+      block(Q && Q.batteries_title ? Q.batteries_title : "Аккумуляторы", quality["акб"]) +
       reglue +
       notes +
+      payNote +
       "</details>";
   }
 
@@ -279,7 +391,7 @@
     b.className = "rs-add";
     var key = cartKey(service, option);
     var inCart = cart.some(function (c) { return c.key === key; });
-    b.textContent = inCart ? "✓ выбрано" : "＋ выбрать";
+    b.textContent = inCart ? t("chosen", "✓ выбрано") : t("choose", "＋ выбрать");
     if (inCart) b.classList.add("is-added");
     b.addEventListener("click", function () {
       toggleCart(service, option);
@@ -320,19 +432,24 @@
       if (c.priceFrom) anyFrom = true;
       var li = document.createElement("li");
       var left = document.createElement("span");
-      left.textContent = c.operation + (c.variant ? ", " + c.variant : "") + " — " + c.device;
+      // В корзине ХРАНЯТСЯ русские названия — заявку читают мастера, и она
+      // должна прийти им на русском. Клиенту же показываем перевод: турист
+      // выбирает услугу по-английски, мастерская получает её по-русски.
+      var shownOp = opName(c.operation);
+      var shownVariant = c.variant ? variantLabel(c.variant) : "";
+      left.textContent = shownOp + (shownVariant ? ", " + shownVariant : "") + " — " + c.device;
       var right = document.createElement("span");
-      right.textContent = (c.priceFrom ? "от " : "") + money(c.price) + " ";
+      right.textContent = (c.priceFrom ? t("from", "от ") : "") + money(c.price) + " ";
       var rm = document.createElement("button");
       rm.type = "button";
-      rm.textContent = "убрать";
+      rm.textContent = t("remove", "убрать");
       rm.addEventListener("click", function () { cart.splice(i, 1); renderCart(); apply(); });
       right.appendChild(rm);
       li.appendChild(left);
       li.appendChild(right);
       cartList.appendChild(li);
     });
-    cartTotal.textContent = "Итого: " + (anyFrom ? "от " : "") + money(total);
+    cartTotal.textContent = t("cart_total", "Итого: ") + (anyFrom ? t("from", "от ") : "") + money(total);
     cartNote.textContent = "";
   }
 
@@ -400,7 +517,9 @@
       b.setAttribute("data-operation", operation);
       // «замена дисплея» → «дисплей». Через отсечение слова «замена» получается
       // родительный падеж («аккумулятора»), поэтому подписи заданы явно.
-      b.textContent = OPERATION_LABELS[operation] || operation.replace(/\s*\(.*\)$/, "");
+      b.textContent = (EN && DICT && DICT.op_labels && DICT.op_labels[operation])
+        || OPERATION_LABELS[operation]
+        || operation.replace(/\s*\(.*\)$/, "");
       if (operation === activeOperation) b.classList.add("is-active");
       opChips.appendChild(b);
     });
@@ -441,7 +560,7 @@
   // ни состав — бот собирает заявку заново из своего прайса.
   root.querySelector(".rs-cart-send").addEventListener("click", function () {
     if (!cart.length) return;
-    cartNote.textContent = "Отправляем…";
+    cartNote.textContent = t("sending", "Отправляем…");
     var api = (window.IRON_CONFIG && window.IRON_CONFIG.siteOrderApiUrl) ||
       "https://order-bot.4489530.workers.dev/site-order";
     fetch(api, {
@@ -456,7 +575,7 @@
       .then(function (r) { return r.json(); })
       .then(function (data) {
         if (data && data.ok && data.botUrl) {
-          cartNote.textContent = "Открываем Telegram…";
+          cartNote.textContent = t("opening_telegram", "Открываем Telegram…");
           window.open(data.botUrl, "_blank", "noopener");
         } else {
           cartNote.textContent = "Не получилось отправить. Позвоните нам — оформим вручную.";
@@ -480,7 +599,8 @@
     deviceSelect.innerHTML = "";
     var all = document.createElement("option");
     all.value = "";
-    all.textContent = "все модели (" + list.length + ")";
+    all.textContent = EN ? t("all_models_count", "", { n: list.length })
+      : "все модели (" + list.length + ")";
     deviceSelect.appendChild(all);
     list.forEach(function (d) {
       var o = document.createElement("option");
@@ -497,19 +617,37 @@
     timer = setTimeout(apply, 150);
   });
 
-  status.textContent = "Загружаем прайс…";
-  fetch("data/services.json")
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
+  // Путь к данным — от корня сайта, а НЕ относительный. Английская страница
+  // лежит в /en/, и "data/services.json" превратился бы там в
+  // "/en/data/services.json" — 404 и пустой прайс (найдено при проверке
+  // 17.08.2026, до того как страница попала в бой).
+  var DATA = "/data/services.json";
+  var DICT_URL = "/data/i18n/services.en.json";
+
+  status.textContent = t("loading", "Загружаем прайс…");
+
+  // Словарь грузится параллельно прайсу и только на английской версии.
+  // Если он не подтянулся — работаем с русскими подписями: пустой прайс хуже,
+  // чем прайс с непереведёнными названиями операций.
+  Promise.all([
+    fetch(DATA).then(function (r) { return r.json(); }),
+    EN ? fetch(DICT_URL).then(function (r) { return r.json(); }).catch(function () { return null; })
+       : Promise.resolve(null)
+  ])
+    .then(function (both) {
+      var data = both[0];
+      DICT = both[1];
       services = data.services || [];
       quality = data.quality || null;
       renderQualityGuide();
       renderOperationChips();
       renderDeviceOptions();
-      status.textContent = "Прайс на " + services.length + " услуг. Начните вводить модель или что случилось.";
+      status.textContent = EN
+        ? t("loaded", "", { n: services.length })
+        : "Прайс на " + services.length + " услуг. Начните вводить модель или что случилось.";
       apply();
     })
     .catch(function () {
-      status.textContent = "Не удалось загрузить прайс. Позвоните нам — подскажем цену.";
+      status.textContent = t("load_failed", "Не удалось загрузить прайс. Позвоните нам — подскажем цену.");
     });
 })();

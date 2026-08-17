@@ -1,0 +1,217 @@
+{
+  "_комментарий": "Английские подписи для интерактивного прайса (repair-search.js). ЗАЧЕМ ОТДЕЛЬНЫМ ФАЙЛОМ, а не вторым services.json: сам прайс генерируется автоматически скриптом build_services.py и перезаписывается при каждом обновлении цен — вторая копия данных неизбежно разъехалась бы с первой. Здесь только переводы ТЕРМИНОВ; цены, модели и наличие всегда берутся из основного services.json. Если в прайсе появится операция или класс запчасти, которых тут нет, скрипт покажет русское название — выдача не сломается, просто одна подпись будет по-русски. Добавлено 17.08.2026.",
+  "operations": {
+    "замена аккумулятора": "Battery replacement",
+    "замена дисплея": "Screen replacement",
+    "замена заднего стекла": "Back glass replacement",
+    "замена камеры": "Camera replacement",
+    "замена клавиатуры": "Keyboard replacement",
+    "замена корпуса": "Housing replacement",
+    "замена материнской платы": "Logic board replacement",
+    "замена матрицы без крышки": "Display panel replacement (no lid)",
+    "замена нижнего шлейфа": "Charging port flex replacement",
+    "замена сенсора": "Digitiser replacement",
+    "замена стекла камеры": "Camera glass replacement",
+    "замена тачпада": "Trackpad replacement",
+    "замена шлейфа": "Flex cable replacement",
+    "переклейка стекла дисплея": "Glass-only refurbishment",
+    "профилактика (чистка, термопаста)": "Cleaning and thermal service",
+    "ремонт после залития": "Liquid damage repair"
+  },
+  "op_labels": {
+    "замена аккумулятора": "Battery",
+    "замена дисплея": "Screen",
+    "замена камеры": "Camera",
+    "замена стекла камеры": "Camera glass",
+    "замена заднего стекла": "Back glass",
+    "замена сенсора": "Digitiser",
+    "замена шлейфа": "Flex cable",
+    "замена нижнего шлейфа": "Charging flex",
+    "замена корпуса": "Housing",
+    "замена клавиатуры": "Keyboard",
+    "замена тачпада": "Trackpad",
+    "замена материнской платы": "Logic board",
+    "замена матрицы без крышки": "Display panel",
+    "переклейка стекла дисплея": "Glass only",
+    "профилактика (чистка, термопаста)": "Cleaning",
+    "ремонт после залития": "Liquid damage"
+  },
+  "quality": {
+    "title": "Which part is which, and how the warranty depends on it",
+    "displays_title": "Screens",
+    "batteries_title": "Batteries",
+    "cons_label": "Trade-offs",
+    "warranty_days": "{n}-day warranty",
+    "classes": {
+      "дисплей_original_100": {
+        "name": "100% Original",
+        "short": "Genuine Apple module",
+        "desc": "An original display pulled from a brand-new device. Colour, brightness, sunlight legibility, True Tone and the feel of the glass are exactly as they left the factory. The most expensive option — and the only one you genuinely cannot tell from a new phone.",
+        "cons": [
+          "highest price"
+        ]
+      },
+      "дисплей_orig_lcd": {
+        "name": "Orig LCD (commonly called FOG)",
+        "short": "Original panel with new glass",
+        "desc": "A factory refurbishment: an original-grade panel bonded to new glass and a new digitiser. In everyday use it is practically indistinguishable from the original — you would need lab equipment to tell. A sensible middle ground when the original is too expensive but you do not want to lose quality.",
+        "cons": [
+          "the origin of the panel cannot be guaranteed"
+        ]
+      },
+      "дисплей_oled": {
+        "name": "Soft OLED / Hard OLED",
+        "short": "Good OLED copy",
+        "desc": "An aftermarket OLED panel. Deep blacks and proper viewing angles; in daily use the difference from the original is hard to spot. Soft OLED sits on a flexible backing — closer to the original in thickness and better at surviving a drop. Hard OLED is rigid and cheaper.",
+        "cons": [
+          "lower peak brightness than the original",
+          "colours may differ slightly"
+        ]
+      },
+      "дисплей_копия": {
+        "name": "In-Cell TFT",
+        "short": "Budget LCD copy",
+        "desc": "The most affordable option. The screen works and looks tidy, but it is an LCD: black looks closer to dark grey, viewing angles are worse, and it is harder to read in bright sunlight. Usually chosen when price matters most, or when preparing a device for sale.",
+        "cons": [
+          "harder to read in sunlight",
+          "blacks are not as deep",
+          "True Tone usually stops working"
+        ]
+      },
+      "акб_привязка_подлинный": {
+        "name": "Paired, shows as «Genuine»",
+        "short": "The system recognises the battery as genuine",
+        "desc": "After fitting, the iPhone still reports battery health and does not complain about a non-genuine part. The best option for iPhone 12 and newer.",
+        "cons": [
+          "costs more than a standard replacement"
+        ]
+      },
+      "акб_ориг_чип": {
+        "name": "Original controller",
+        "short": "Honest capacity, original controller",
+        "desc": "A new battery with an original controller chip. Real capacity matches the rating and charging behaves normally. The standard choice for models older than iPhone 12.",
+        "cons": [
+          "on iPhone 12 and newer a part warning may appear"
+        ]
+      },
+      "акб_привязка_бу": {
+        "name": "Paired, shows as «Used»",
+        "short": "Pairs correctly, but is flagged as used",
+        "desc": "The battery fits as if it were factory-installed, but the system marks it as previously used. A compromise between price and how the system behaves.",
+        "cons": [
+          "battery information shows a «used» flag"
+        ]
+      },
+      "акб_копия": {
+        "name": "Copy controller",
+        "short": "Budget battery",
+        "desc": "The cheapest option. The phone works, but the system will show a non-genuine part warning and battery health may not be displayed at all. Real capacity is usually below the original.",
+        "cons": [
+          "non-genuine part warning",
+          "battery health may not display",
+          "lower capacity"
+        ]
+      }
+    },
+    "important": [
+      {
+        "topic": "Part pairing",
+        "text": "From iPhone 12 onwards Apple pairs the display and the battery to the device. If a part is not paired, the iPhone will say it cannot verify that the part is genuine, and battery health may stop being displayed. It does not affect how the phone works, but it is worth knowing before you choose."
+      },
+      {
+        "topic": "True Tone",
+        "text": "True Tone does not survive every type of screen replacement. On originals and good refurbished panels it usually does; on budget copies it usually does not."
+      },
+      {
+        "topic": "Face ID",
+        "text": "Face ID does not depend on the screen — it lives in a separate module and keeps working after a careful replacement. It fails when that module itself is damaged, not because of which screen you choose."
+      }
+    ],
+    "reglue": {
+      "title": "When glass-only refurbishment is possible",
+      "conditions": [
+        {
+          "topic": "The panel must be intact",
+          "text": "Glass-only work replaces just the outer glass; the panel that actually produces the image stays original. So it fits when the glass is cracked but the image is fine. If there are stripes, dead spots or blackout areas, the whole module has to be replaced."
+        },
+        {
+          "topic": "The digitiser usually stays original",
+          "text": "The digitiser is the thin film under the glass that registers your touch. If it works fully and without glitches, in most cases it survives the process and stays original."
+        },
+        {
+          "topic": "On some models the digitiser is at risk",
+          "text": "On certain models the digitiser can fail while the glass is being removed. It is then replaced with a new one — good quality, but no longer original. On a few models it cannot be replaced at all. Ask us which group your model falls into."
+        }
+      ],
+      "contact_label": "Ask the team"
+    }
+  },
+  "ui": {
+    "search_label": "Search repair services",
+    "search_placeholder": "Model and problem — «13 pro screen», «iphone 11 battery», «macbook cleaning»",
+    "device_group": "Device",
+    "operation_group": "What needs doing",
+    "model_group": "Model",
+    "reset": "reset filters",
+    "all_models": "all models",
+    "all_models_count": "all models ({n})",
+    "loading": "Loading the price list…",
+    "loaded": "{n} services in the price list. Start typing a model or what happened.",
+    "load_failed": "Could not load the price list. Message us and we will quote for you.",
+    "nothing_found": "Nothing found. Message us — we will check your model.",
+    "found": "Found {n} {services}",
+    "service_one": "service",
+    "service_many": "services",
+    "from": "from ",
+    "warranty": "{n}-day warranty",
+    "work_only": "Labour only — the part is quoted separately.",
+    "liquid_note": "The exact price is set after diagnostics — liquid damage is unpredictable.",
+    "choose": "＋ select",
+    "chosen": "✓ selected",
+    "remove": "remove",
+    "cart_title": "Selected services",
+    "cart_total": "Total: ",
+    "cart_send": "Send request via Telegram",
+    "cart_clear": "Clear",
+    "sending": "Sending…",
+    "opening_telegram": "Opening Telegram…",
+    "send_failed": "Could not send. Call us and we will take the order by phone.",
+    "price_note": "Prices are in Russian roubles and include the labour. Foreign-issued Visa and Mastercard do not work in Russia — please bring cash if your cards were issued abroad."
+  },
+  "variants": {
+    "_комментарий": "Тексты вариантов запчастей приходят из прайса свободной строкой. Здесь перевод целых строк (точное совпадение) и, ниже, кусочков (fragments) — на случай если генератор соберёт новую комбинацию. Не найдено ни там, ни там — показывается исходная русская строка.",
+    "exact": {
+      "100% Original, без ошибки": "100% Original, no warning",
+      "100% Original, без ошики": "100% Original, no warning",
+      "Soft OLED 120 Hz,с привязкой, без ошибки": "Soft OLED 120 Hz, paired, no warning",
+      "АКБ копия контроллер": "Copy controller battery",
+      "АКБ под привязку статус \"Б/У\"": "Paired battery, shows as «Used»",
+      "АКБ под привязку статус \"Подлинный\"": "Paired battery, shows as «Genuine»",
+      "Без памяти": "No storage",
+      "Большой вырез": "Large notch",
+      "В сборе": "Full assembly",
+      "Камеры": "Cameras",
+      "Корпуса": "Housings",
+      "Микрофон и барометр": "Microphone and barometer",
+      "Нижние шлейфа": "Charging flex cables",
+      "Средняя часть": "Mid-frame",
+      "Стёкла камер": "Camera glass",
+      "Шлейф с датчиком приближения и микрофоном": "Flex with proximity sensor and microphone",
+      "Шлейфы кнопок и вспышки": "Button and flash flex cables",
+      "переклей": "glass refurbishment"
+    },
+    "fragments": {
+      "с привязкой": "paired",
+      "без ошибки": "no warning",
+      "без ошики": "no warning",
+      "под привязку": "paired",
+      "статус": "shows as",
+      "Подлинный": "«Genuine»",
+      "Б/У": "«Used»",
+      "копия": "copy",
+      "контроллер": "controller",
+      "переклей": "refurbished glass",
+      "АКБ": "Battery"
+    }
+  }
+}
