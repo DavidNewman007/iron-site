@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com https://telegram.org 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com https://order-bot.4489530.workers.dev">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Как можно раньше: определяет открытие как Telegram Mini App (бот
+       @IRON_SERVICE_ORDER_bot) и прячет лишнее для мини-приложения. Не
+       влияет на обычный визит в браузере. -->
+  <script src="../js/telegram-miniapp.js"></script>
+  <title>Buy iPhone, MacBook and Apple Watch in Sochi — IRON SERVICE shop</title>
+  <meta name="description" content="New and pre-owned Apple devices in Sochi: iPhone, iPad, MacBook, Apple Watch, AirPods. Live stock updated daily, prices in roubles. Independent shop on Moskovskaya 5. We reply in English.">
+    <link rel="canonical" href="https://1iron.ru/en/shop.html">
+  <link rel="alternate" hreflang="ru" href="https://1iron.ru/magazin.html">
+  <link rel="alternate" hreflang="en" href="https://1iron.ru/en/shop.html">
+  <link rel="alternate" hreflang="x-default" href="https://1iron.ru/magazin.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Apple shop — IRON SERVICE Sochi">
+  <meta property="og:description" content="Live stock of iPhone, MacBook and iPad in Sochi. Pick and reserve via Telegram.">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:image" content="https://1iron.ru/assets/logo-horizontal.png">
+  <link rel="icon" href="../assets/logo-icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/shop.css?v=2026-06-30-1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="../assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img" width="180" height="48">
+      </a>
+      <a href="tel:+79288509404" class="header-phone">+7 928 850-94-04</a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-label="Menu">Menu</button>
+      <nav class="main-nav" aria-label="Main menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Repairs</a></li>
+          <li><a href="warranty.html">Warranty</a></li>
+          <li><a href="shop.html" class="active">Shop</a></li>
+          <li><a href="contacts.html">Contacts</a></li>
+        </ul>
+      </nav>
+      <div class="lang-switch">
+        <a href="../magazin.html" hreflang="ru">RU</a>
+        <span class="lang-sep" aria-hidden="true">/</span>
+        <a href="shop.html" hreflang="en" aria-current="true">EN</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <h1>Shop</h1>
+        <p>Live stock — pick a device and reserve it</p>
+      </div>
+    </div>
+
+    <section class="shop-section" id="shop-prices">
+      <div class="container">
+        <p class="shop-intro">
+          The price list is updated every day. Tick one or more devices and press «Reserve» — a chat opens with your list ready to send.
+          IRON SERVICE is an independent Apple shop in Sochi, Moskovskaya 5. Phone <a href="tel:+79288509404">+7 928 850-94-04</a>.
+          <br><span style="color:var(--text-muted)">Prices are in roubles. Foreign-issued Visa and Mastercard do not work in Russia — please bring cash or pay by a Russian card.</span>
+        </p>
+
+        <div class="shop-toolbar">
+          <input type="search" id="price-search" placeholder="Search: iPhone 16, MacBook Air…" autocomplete="off">
+          <div class="shop-category-picker" id="price-category-picker">
+            <button
+              type="button"
+              class="shop-category-picker__trigger"
+              id="price-category-trigger"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+              aria-controls="price-category-menu"
+            >
+              <span class="shop-category-picker__label">All categories</span>
+              <span class="shop-category-picker__chevron" aria-hidden="true">▾</span>
+            </button>
+            <ul class="shop-category-picker__menu" id="price-category-menu" role="listbox" hidden></ul>
+            <select id="price-category" class="shop-category-picker__native" aria-label="Category" tabindex="-1">
+            <option value="all">All categories</option>
+            <option value="iphone">iPhone</option>
+            <option value="ipad">iPad</option>
+            <option value="airpods">AirPods</option>
+            <option value="gaming">Gaming · Console</option>
+            <option value="audio">Audio</option>
+            <option value="dyson">Dyson</option>
+            <option value="gadgets">Gadgets</option>
+            <option value="macbook">MacBook</option>
+            <option value="watch">Apple Watch</option>
+            <option value="galaxy_watch">Samsung Galaxy Watch</option>
+            <option value="samsung">Samsung</option>
+            <option value="meta">Meta</option>
+            <option value="accessories">Accessories</option>
+            <option value="other">Other</option>
+          </select>
+          </div>
+        </div>
+
+        <div class="shop-filters" id="shop-filters" hidden aria-label="Filter by specification"></div>
+
+        <p class="price-status" id="price-updated"></p>
+        <p class="price-status" id="price-loading">Loading the price list…</p>
+        <p class="price-status price-status--error" id="price-error" hidden></p>
+
+        <div class="shop-layout">
+          <div id="price-grid" class="price-grid" aria-live="polite"></div>
+
+          <aside class="cart-panel" id="cart-panel">
+            <div class="cart-panel__head">
+              <h3>Cart <span id="cart-count">0</span></h3>
+              <button type="button" class="cart-close" id="cart-close" aria-label="Close cart">×</button>
+            </div>
+            <ul class="cart-list" id="cart-list">
+              <li class="cart-empty">Pick devices from the list</li>
+            </ul>
+            <div class="cart-summary">
+              <span>Estimate</span>
+              <strong id="cart-total">—</strong>
+            </div>
+            <div class="cart-actions">
+              <button type="button" class="btn btn-primary" id="cart-telegram" disabled>
+                Reserve via Telegram
+              </button>
+              <button type="button" class="btn btn-primary" id="cart-max" disabled>
+                Reserve via MAX
+              </button>
+              <button type="button" class="btn btn-primary" id="cart-pay" hidden disabled>
+                Pay online
+              </button>
+              <button type="button" class="btn btn-secondary" id="cart-clear">Clear</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:0" id="promo-cards-section">
+      <div class="container">
+        <div class="cards">
+          <article class="card">
+            <h3>Trade-in</h3>
+            <p>Trade in your old iPhone — we count it towards the new one.</p>
+          </article>
+          <article class="card">
+            <h3>Checked pre-owned</h3>
+            <p>Tested devices with their condition stated plainly.</p>
+          </article>
+          <article class="card">
+            <h3>Parts</h3>
+            <p>Screens, batteries and accessories — in stock or ordered in.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="cart-mobile-bar">
+    <span class="cart-mobile-bar__info">
+      <strong id="cart-count-mobile">0</strong> items · <strong id="cart-total-mobile">—</strong>
+    </span>
+    <button type="button" class="btn btn-primary" id="cart-toggle">Cart</button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <p>© IRON SERVICE · Sochi 2013-2026</p>
+      <p class="footer-tagline">· Parts • Accessories • Service •</p>
+      <p class="footer-legal">IRON SERVICE is an independent repair service in Sochi. Not affiliated with Apple Inc. · <a href="../privacy.html">Privacy policy</a> · <a href="../terms.html">Terms</a> · <a href="../magazin.html">Русская версия</a></p>
+    </div>
+  </footer>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/search-dictionary.js?v=2026-06-26-1"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/shop-filters.js?v=2026-06-27-2"></script>
+  <script src="../js/order-channels.js?v=2026-07-04-5"></script>
+  <script src="../js/prices.js?v=2026-07-15-1"></script>
+</body>
+</html>

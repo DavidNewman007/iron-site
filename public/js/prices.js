@@ -3,6 +3,25 @@
  */
 (function () {
   const cfg = window.IRON_CONFIG || {};
+
+  // Локализация подписей (17.08.2026). Данные — товары, цены, наличие — берутся
+  // из той же Google Таблицы, что и на русской версии, поэтому новая позиция
+  // появляется на /en/ сама. Переводятся только подписи и служебные значения.
+  // Фолбэк обязан повторять ВЕСЬ интерфейс модуля. 17.08.2026 в нём не хватало
+  // productName — и русская страница магазина, где i18n.js тогда ещё не был
+  // подключён, падала с TypeError и не показывала ни одного товара. Проверка в
+  // браузере поймала это до деплоя.
+  const I18N = window.IRON_I18N || {
+    isEn: false,
+    t: (key, ru) => ru,
+    value: (section, v) => v,
+    country: (v) => v,
+    quantity: (v) => v,
+    productName: (v) => v,
+    ready: (fn) => fn(),
+    load: () => Promise.resolve(null),
+  };
+  const T = (key, ru, params) => I18N.t(key, ru, params);
   const SHEET_ID = cfg.googleSheetId || "";
   // Prices/Prices-2 — наличие (склады S1/S2), Prices-3 — поставка под заказ
   // (склад S3, Dr.Store МСК, добавлен 16.08.2026). Порядок важен: товары
@@ -11,8 +30,8 @@
   const SHEET_TABS = ["Prices", "Prices-2", "Prices-3"];
   const PREORDER_SHEET_TAB = "Prices-3";
   const PREORDER_WAREHOUSE_RE = /\(?\s*S3\s*\)?/i;
-  const PREORDER_ETA_TEXT = "1–2 дня";
-  const PREORDER_BADGE_TEXT = "🛩️ под заказ, 1–2 дня";
+  const PREORDER_ETA_TEXT = I18N.isEn ? "1–2 days" : "1–2 дня";
+  const PREORDER_BADGE_TEXT = I18N.isEn ? "🛩️ to order, 1–2 days" : "🛩️ под заказ, 1–2 дня";
 
   // ——— Гарантии (те же правила, что в боте: cloudflare-order-bot/src/worker.js) ———
   //
@@ -54,11 +73,17 @@
     return "basic";
   }
 
-  const WARRANTY_SHORT_LABEL = {
-    included: "🛡️ Гарантия 1 год включена",
-    extra: "🛡 Базовая 7 дней · можно продлить до года",
-    basic: "🛡 Базовая гарантия — 7 дней либо до активации",
-  };
+  const WARRANTY_SHORT_LABEL = I18N.isEn
+    ? {
+        included: "🛡️ 1-year warranty included",
+        extra: "🛡 7 days basic · can be extended to a year",
+        basic: "🛡 Basic warranty — 7 days or until activation",
+      }
+    : {
+        included: "🛡️ Гарантия 1 год включена",
+        extra: "🛡 Базовая 7 дней · можно продлить до года",
+        basic: "🛡 Базовая гарантия — 7 дней либо до активации",
+      };
 
   // Вступление одно на все три вида: гарантия — страховка, а не ожидание
   // поломки. Формулировка владельца (16.08.2026).
@@ -1551,17 +1576,20 @@
     if (els.loading) {
       if (partial) {
         els.loading.hidden = false;
-        els.loading.textContent = "Загружаем остальные позиции…";
+        els.loading.textContent = T("shop.loading_more", "Загружаем остальные позиции…");
       } else {
         els.loading.hidden = true;
-        els.loading.textContent = "Загрузка прайса…";
+        els.loading.textContent = T("shop.loading", "Загрузка прайса…");
       }
     }
     if (els.error) els.error.hidden = true;
     if (els.updated && !silent) {
       const when = result.updatedAt || formatNow();
-      const suffix = partial ? " · загрузка продолжается" : fromCache ? " · из кэша" : "";
-      els.updated.textContent = `Обновлено: ${when} · ${allProducts.length} позиций${suffix}`;
+      const suffix = partial ? T("shop.still_loading", " · загрузка продолжается")
+        : fromCache ? T("shop.from_cache", " · из кэша") : "";
+      els.updated.textContent = I18N.isEn
+        ? T("shop.updated", "", { when: when, count: allProducts.length, suffix: suffix })
+        : `Обновлено: ${when} · ${allProducts.length} позиций${suffix}`;
     }
     renderGrid();
     return true;
@@ -2366,6 +2394,13 @@
     const base = normalizeSearch([name, country, section, warranty].filter(Boolean).join(" "));
     const parts = new Set([base, translitRuToLat(base)]);
     appendProductSynonyms(base, parts);
+    // На английской версии в индекс добавляется ПЕРЕВЕДЁННОЕ название и
+    // английская страна. Иначе получается разрыв: посетитель видит «Protective
+    // glass», ищет «glass» — и не находит ничего, потому что в индексе лежит
+    // «Защитное стекло». Найдено проверкой 17.08.2026.
+    if (I18N.isEn) {
+      parts.add(normalizeSearch([I18N.productName(name), I18N.country(country)].filter(Boolean).join(" ")));
+    }
     [...parts].forEach((p) => parts.add(translitRuToLat(p)));
     return [...parts].join(" ");
   }
@@ -2754,8 +2789,8 @@
     const detailLink = hasHybrid ? withProductIdQueryParam(p.hybridDetailUrl, p.id) : "";
     const previewImage = hasHybrid && p.hybridCoverUrl ? p.hybridCoverUrl : "";
     const nameHtml = detailLink
-      ? `<a href="${escapeHtml(detailLink)}" class="price-card__name-link">${escapeHtml(p.name)}</a>`
-      : escapeHtml(p.name);
+      ? `<a href="${escapeHtml(detailLink)}" class="price-card__name-link">${escapeHtml(I18N.productName(p.name))}</a>`
+      : escapeHtml(I18N.productName(p.name));
     return `
       <article class="price-card ${inCart ? "is-selected" : ""}" data-id="${p.id}">
         ${
@@ -2768,20 +2803,20 @@
             : ""
         }
         <div class="price-card__meta">
-          ${p.country ? `<span class="price-card__country">${escapeHtml(p.country)}</span>` : ""}
+          ${p.country ? `<span class="price-card__country">${escapeHtml(I18N.country(p.country))}</span>` : ""}
         </div>
         <h3 class="price-card__name">${nameHtml}</h3>
         ${p.preorder ? `<p class="price-card__preorder">${escapeHtml(PREORDER_BADGE_TEXT)}</p>` : ""}
         <p class="price-card__warranty">
           ${escapeHtml(WARRANTY_SHORT_LABEL[warrantyKindFor(p)])}
-          <button type="button" class="price-card__warranty-link" data-action="warranty" data-id="${p.id}">подробнее</button>
+          <button type="button" class="price-card__warranty-link" data-action="warranty" data-id="${p.id}">${T("shop.details", "подробнее")}</button>
         </p>
-        ${p.warehouse ? `<p class="price-card__qty">${escapeHtml(p.warehouse)}</p>` : ""}
+        ${p.warehouse ? `<p class="price-card__qty">${escapeHtml(I18N.quantity(p.warehouse))}</p>` : ""}
         ${extraWarrantyRowHtml(p, inCart)}
         <div class="price-card__footer">
           <strong class="price-card__price">${escapeHtml(p.priceLabel)}</strong>
           <button type="button" class="price-card__btn ${inCart ? "is-active" : ""}" data-action="toggle" data-id="${p.id}">
-            ${inCart ? "✓ В корзине" : "+ Выбрать"}
+            ${inCart ? T("shop.selected", "✓ В корзине") : T("shop.select", "+ Выбрать")}
           </button>
         </div>
       </article>`;
@@ -2800,7 +2835,8 @@
         <button type="button"
           class="price-card__warranty-add ${on ? "is-active" : ""}"
           data-action="extra-warranty" data-id="${p.id}">
-          ${on ? "✓ Гарантия 1 год добавлена" : `+ Гарантия 1 год — ${formatPrice(EXTRA_WARRANTY_PRICE)}`}
+          ${on ? T("cart.extra_warranty_on", "✓ Гарантия 1 год добавлена")
+            : T("cart.extra_warranty_add", `+ Гарантия 1 год — ${formatPrice(EXTRA_WARRANTY_PRICE)}`, { price: formatPrice(EXTRA_WARRANTY_PRICE) })}
         </button>`;
   }
 
@@ -2907,7 +2943,7 @@
 
     if (!els.cartList) return;
     if (!count) {
-      els.cartList.innerHTML = '<li class="cart-empty">Выберите устройства в прайсе</li>';
+      els.cartList.innerHTML = `<li class="cart-empty">${T("cart.empty", "Выберите устройства в прайсе")}</li>`;
       return;
     }
 
@@ -2917,9 +2953,9 @@
       <li class="cart-item">
         <span class="cart-item__num">${i + 1}</span>
         <div class="cart-item__body">
-          <strong>${escapeHtml(p.name)}</strong>
-          <span>${escapeHtml(p.priceLabel)}${p.country ? " · " + escapeHtml(p.country) : ""}${p.warehouse ? " · " + escapeHtml(p.warehouse) : ""}${p.preorder ? " · " + escapeHtml(PREORDER_BADGE_TEXT) : ""}</span>
-          ${p.extraWarranty ? `<span class="cart-item__warranty">🛡 + гарантия 1 год — ${escapeHtml(formatPrice(EXTRA_WARRANTY_PRICE))}</span>` : ""}
+          <strong>${escapeHtml(I18N.productName(p.name))}</strong>
+          <span>${escapeHtml(p.priceLabel)}${p.country ? " · " + escapeHtml(I18N.country(p.country)) : ""}${p.warehouse ? " · " + escapeHtml(I18N.quantity(p.warehouse)) : ""}${p.preorder ? " · " + escapeHtml(PREORDER_BADGE_TEXT) : ""}</span>
+          ${p.extraWarranty ? `<span class="cart-item__warranty">${escapeHtml(T("cart.extra_warranty_item", `🛡 + гарантия 1 год — ${formatPrice(EXTRA_WARRANTY_PRICE)}`, { price: formatPrice(EXTRA_WARRANTY_PRICE) }))}</span>` : ""}
         </div>
         <button type="button" class="cart-item__remove" data-id="${p.id}" aria-label="Убрать">×</button>
       </li>`
@@ -3142,5 +3178,8 @@
       .replace(/"/g, "&quot;");
   }
 
-  init();
+  // Сначала словарь, потом каталог: подписи нужны уже при первой отрисовке.
+  // На русской версии load() не делает ни одного запроса и резолвится сразу,
+  // поэтому лишней задержки там не появляется.
+  I18N.load("/data/i18n/shop.en.json").then(init);
 })();
