@@ -9,3 +9,8 @@ public-sheet-snapshots/
 catalog-match-probe/
 catalog-match-probe/.probe-ids-*.txt
 public/hybrid-products/audit-report.json
+
+# Исходники видео: попадали в репозиторий случайно (74 МБ одним файлом,
+# 18.08.2026). Готовые ролики публикуются не через сайт.
+*.mov
+*.mp4
