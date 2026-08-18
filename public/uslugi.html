@@ -75,10 +75,10 @@
 
           <div class="rs-group">
             <span class="rs-label">Устройство</span>
-            <div class="rs-chips" data-group="family">
-              <button type="button" data-family="iphone">iPhone</button>
-              <button type="button" data-family="mac">MacBook</button>
-            </div>
+            <!-- Кнопки техники строит repair-search.js из data/services.json.
+                 До 18.08.2026 они были вписаны сюда руками — ровно две, — и новая
+                 техника в прайсе появлялась, а отфильтровать по ней было нечем. -->
+            <div class="rs-chips" data-group="family"></div>
           </div>
 
           <div class="rs-group">
@@ -117,10 +117,17 @@
     -->
     <section id="repair-extra">
       <div class="container">
-        <h2>Не только iPhone и MacBook</h2>
+        <!-- Текст правлен 18.08.2026: до этого он говорил «не только iPhone и
+             MacBook» и «подбор выше — по iPhone и MacBook». С появлением прайса
+             по iMac, iPad, часам, ноутбукам и Android это стало неправдой прямо
+             на странице: техника была в подборе выше, а текст отсылал за ценой
+             к осмотру. Перечислять семьи в тексте больше не пробуем — они
+             приходят из данных и меняются. -->
+        <h2>Ремонтируем и остальную технику</h2>
         <p class="rs-lead">
-          Подбор выше — по iPhone и MacBook, на них у нас точный прайс.
-          Остальную технику тоже ремонтируем: часть цен ниже, остальное скажем после осмотра.
+          Подбор выше — по всей технике, на которую у нас есть точный прайс.
+          Что не попало в список, тоже ремонтируем: цену скажем после осмотра,
+          диагностика бесплатная.
         </p>
         <div id="rx-families" class="rx-chips"></div>
         <div id="rx-prices" class="rx-prices"></div>
@@ -206,10 +213,10 @@
     </div>
   </footer>
 
-  <script src="js/i18n.js?v=2026-08-18-6"></script>
+  <script src="js/i18n.js?v=2026-08-18-8"></script>
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/repair-search.js?v=2026-08-18-6"></script>
+  <script src="js/repair-search.js?v=2026-08-18-8"></script>
   <script src="js/repair-extra.js"></script>
 </body>
 </html>

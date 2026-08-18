@@ -1,0 +1,132 @@
+{
+  "product_id": "samsung-a57-8-256-icyblue-оаэ-s2-32000",
+  "category": "samsung",
+  "file_slug": "samsung-a57-8-256-icyblue-s2-32000",
+  "name": "Samsung A57 8/256 IcyBlue",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 32000,
+  "catalog_url": "",
+  "catalog_title": "Samsung A57 8/256 IcyBlue",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "Super AMOLED+"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6.7\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2340x1080"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "385 пикселей/дюйм"
+    },
+    {
+      "key": "Максимальная яркость",
+      "value": "1900 кд/м²"
+    },
+    {
+      "key": "Процессор",
+      "value": "Exynos"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50 МП"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "f/1.8"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "Nano SIM + Nano SIM | Nano SIM + eSIM | eSIM + eSIM"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "GSM / HSPA / LTE / 5G, Wi-Fi 802.11 a/b/g/n/ac/6e, Bluetooth 6.0, NFC"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, GALILEO, GLONASS, BDS, QZSS"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "5000 мАч"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "Нет"
+    },
+    {
+      "key": "Материал",
+      "value": "Алюминий"
+    },
+    {
+      "key": "Ширина",
+      "value": "16,15 см"
+    },
+    {
+      "key": "Высота",
+      "value": "7,68 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "0,69 см"
+    },
+    {
+      "key": "Вес",
+      "value": "179 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Голубой"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android"
+    },
+    {
+      "key": "Датчики",
+      "value": "Акселерометр, гироскоп, датчик приближения, компас"
+    },
+    {
+      "key": "Комплектация",
+      "value": "Смартфон, Кабель USB Type-C, Инструмент для извлечения SIM, Документация"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "1 год"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/bc788c784e382313eacce90f.png",
+    "assets/product-images/90da0c8c270cb406fe323822.png",
+    "assets/product-images/c7cd734cfd060ef00b576007.png",
+    "assets/product-images/5fd87f5a28f70e58256a898c.png",
+    "assets/product-images/e5559f911cf10cad4cc7f4e3.png",
+    "assets/product-images/950fcb52feeffc3fd9e0745c.png"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:15.657306Z"
+}

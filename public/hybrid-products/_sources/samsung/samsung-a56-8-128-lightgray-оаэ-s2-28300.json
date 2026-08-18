@@ -1,0 +1,132 @@
+{
+  "product_id": "samsung-a56-8-128-lightgray-оаэ-s2-28300",
+  "category": "samsung",
+  "file_slug": "samsung-a56-8-128-lightgray-s2-28300",
+  "name": "Samsung A56 8/128 Lightgray",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 28300,
+  "catalog_url": "",
+  "catalog_title": "Samsung A56 8/128 Lightgray",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "Super AMOLED 120 Гц"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6.7\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2340x1080 пикселей (FHD+)"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "385 пикс/дюйм"
+    },
+    {
+      "key": "Процессор",
+      "value": "Exynos 1580"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "Samsung Xclipse 540"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Поддержка MicroSD",
+      "value": "нет"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50 Мп, 12 Мп, 5 Мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "ƒ/1.8, ƒ/2.2, ƒ/2.4"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12 Мп"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "ƒ/2.2"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "SIM 1 + SIM 2"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "5G, LTE, Wi-Fi 6E, Wi-Fi Direct, Bluetooth 5.3"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, ГЛОНАСС, Beidou, Galileo, QZSS"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Ion"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "5000 мАч"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминиевая рамка, Corning Gorilla Glass"
+    },
+    {
+      "key": "Ширина",
+      "value": "77.5 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "162.2 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "7.4 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "198 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP67"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15, One UI 7"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "стерео динамики"
+    },
+    {
+      "key": "Датчики",
+      "value": "акселерометр, сканер отпечатка пальца, гироскопический датчик, геомагнитный датчик, датчик Холла, датчик освещенности, виртуальный датчик приближения"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/c5c04f06555832b1475801c8.jpg",
+    "assets/product-images/36520219e1487f195f8a157b.jpg",
+    "assets/product-images/0e5a200fe003c0895ffed40f.jpg",
+    "assets/product-images/785e1bc6ebba622008e59d32.jpg",
+    "assets/product-images/f9f15f6d2d2630ccadc909f6.jpg",
+    "assets/product-images/64ff6a2e4bd1a2d9cf5d9914.jpg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:15.626782Z"
+}

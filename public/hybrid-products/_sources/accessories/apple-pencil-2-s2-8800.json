@@ -1,0 +1,44 @@
+{
+  "product_id": "apple-pencil-2-s2-8800",
+  "category": "accessories",
+  "file_slug": "apple-pencil-2-s2-8800",
+  "name": "Apple Pencil 2",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 8800,
+  "catalog_url": "",
+  "catalog_title": "Apple Pencil 2",
+  "specs": [
+    {
+      "key": "Интерфейсы",
+      "value": "Bluetooth"
+    },
+    {
+      "key": "Диаметр",
+      "value": "8,9 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "166 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "18.2 г"
+    },
+    {
+      "key": "Технологии",
+      "value": "магнитное крепление и сопряжение"
+    },
+    {
+      "key": "Поддержка",
+      "value": "iPad Pro 12.9\" (6th, 5th, 4th, 3rd generation), iPad Pro 11\" (4th, 3rd, 2nd, 1st generation), iPad Air (5th, 4th generation), iPad mini (6th generation)"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+    "assets/product-images/964434aa527850862a63deda.jpg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:09.020835Z"
+}

@@ -1,0 +1,144 @@
+{
+  "product_id": "macbook-air-15-m5-16-512gb-sky-blue-mdvq4-ll-a-сша-s1-109800",
+  "category": "macbook",
+  "file_slug": "macbook-air-15-m5-16-512gb-sky-blue-mdvq4-ll-a-s1-109800",
+  "name": "MacBook Air 15 M5 16+ 512Gb Sky Blue MDVQ4 LL/A",
+  "country": "",
+  "warehouse": "(S1)",
+  "price": 109800,
+  "catalog_url": "",
+  "catalog_title": "MacBook Air 15 M5 16+ 512Gb Sky Blue MDVQ4 LL/A",
+  "specs": [
+    {
+      "key": "Покрытие экрана",
+      "value": "Глянцевый, антибликовый"
+    },
+    {
+      "key": "Тип дисплея",
+      "value": "Liquid Retina"
+    },
+    {
+      "key": "Диагональ",
+      "value": "15,3\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2880x1864"
+    },
+    {
+      "key": "Яркость",
+      "value": "500 кд/м2"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "224 пикселей/дюйм"
+    },
+    {
+      "key": "Поддержка гаммы P3",
+      "value": "Расширенный"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple M5"
+    },
+    {
+      "key": "Количество ядер процессора",
+      "value": "10 ядер"
+    },
+    {
+      "key": "Количество графических ядер",
+      "value": "10 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ"
+    },
+    {
+      "key": "Встроенный динамик",
+      "value": "Стереодинамики"
+    },
+    {
+      "key": "Встроенный микрофон",
+      "value": "Есть"
+    },
+    {
+      "key": "Клавиатура",
+      "value": "Встроенная, без цифрового блока"
+    },
+    {
+      "key": "Подсветка клавиш",
+      "value": "Есть"
+    },
+    {
+      "key": "Трекпад",
+      "value": "Встроенный, с поддержкой Force Touch и Multitouch"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "Thunderbolt 4 (USB 4), 2 порта, DisplayPort Type-C / VGA, HDMI, DVI (через адаптер, продается отдельно), Аудиовыход 3.5 мм"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "66,5 Вт/ч"
+    },
+    {
+      "key": "Время работы",
+      "value": "18 ч"
+    },
+    {
+      "key": "Материал",
+      "value": "Алюминий"
+    },
+    {
+      "key": "Ширина",
+      "value": "34,4 см"
+    },
+    {
+      "key": "Высота",
+      "value": "23,7 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "1,15 см"
+    },
+    {
+      "key": "Вес",
+      "value": "1510 г"
+    },
+    {
+      "key": "Операционная система",
+      "value": "MacOS"
+    },
+    {
+      "key": "Веб-камера",
+      "value": "12-мегапиксельная камера Center Stage с поддержкой записи видео высокой четкости Desk View 1080p"
+    },
+    {
+      "key": "Технологии",
+      "value": "Wi-Fi 7 (802.11be), Bluetooth 6"
+    },
+    {
+      "key": "Датчики",
+      "value": "Датчик отпечатка пальца, Датчик освещенности"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/cdf34ab9c0c175dfc2a85fc6.jpg",
+    "assets/product-images/28900af63a65b3b169a5389b.jpg",
+    "assets/product-images/ec65465d8fde192b585f8bd0.jpg",
+    "assets/product-images/27d895e2f5d5030ee2f1dce8.jpg",
+    "assets/product-images/5298c034b9cc41db3bcd749b.jpg",
+    "assets/product-images/9d44e0b598acfe6805ee95d6.jpg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:15.141912Z"
+}

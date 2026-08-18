@@ -1,0 +1,140 @@
+{
+  "product_id": "samsung-a37-8-128-lavender-оаэ-s2-25700",
+  "category": "samsung",
+  "file_slug": "samsung-a37-8-128-lavender-s2-25700",
+  "name": "Samsung A37 8/128 Lavender",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 25700,
+  "catalog_url": "",
+  "catalog_title": "Samsung A37 8/128 Lavender",
+  "specs": [
+    {
+      "key": "Разрешение видеосъемки",
+      "value": "UHD 4K (3840 x 2160) для 30 кадр./с"
+    },
+    {
+      "key": "Вес",
+      "value": "196 г"
+    },
+    {
+      "key": "Тип дисплея",
+      "value": "Super AMOLED 120 Гц"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6,7\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "1080 x 2340 (FHD+)"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "385 пикс/дюйм"
+    },
+    {
+      "key": "Процессор",
+      "value": "Samsung Exynos 1480"
+    },
+    {
+      "key": "Частота процессора",
+      "value": "2,75 ГГц, 2 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50,0 MП + 8,0 MП + 5,0 MП"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "ƒ/1.8, ƒ/2.2, ƒ/2.4"
+    },
+    {
+      "key": "Оптическая стабилизация",
+      "value": "Да"
+    },
+    {
+      "key": "Замедленная видеосъемка",
+      "value": "240 кадр./с с HD разрешением"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12,0 MП"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "ƒ/2.2"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "5G, LTE, 3G, 2G, Wi-Fi 6, Wi-Fi Direct, Bluetooth v5.3"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, ГЛОНАСС, Beidou, Galileo, QZSS"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Po"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "5000 мАч"
+    },
+    {
+      "key": "Материал",
+      "value": "Металл, стекло"
+    },
+    {
+      "key": "Ширина",
+      "value": "78.2 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "162.9 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "7.4 мм"
+    },
+    {
+      "key": "Влагозащищенный корпус",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android"
+    },
+    {
+      "key": "Датчики",
+      "value": "Акселерометр, сканер отпечатка пальца, гироскопический датчик, геомагнитный датчик, датчик освещенности, виртуальный датчик приближения"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/d4d75f7097a2ad3365db9556.jpg",
+    "assets/product-images/aa1244c98498f39dec3f3db9.jpg",
+    "assets/product-images/705d6da725e56562581b464a.jpg",
+    "assets/product-images/649735259d15022b58a83c38.jpg",
+    "assets/product-images/3eecad0f202b7c04bb79b251.jpg",
+    "assets/product-images/0acab214e9017d899f522e4f.jpg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:15.594683Z"
+}

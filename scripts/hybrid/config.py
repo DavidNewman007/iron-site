@@ -7,6 +7,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 PUBLIC = ROOT / "public"
 HYBRID_ROOT = PUBLIC / "hybrid-products"
+# Английские копии карточек. Отдельные файлы, а не перевод на клиенте: иначе
+# поисковику достаётся русская страница с пометкой lang="en" (18.08.2026).
+HYBRID_ROOT_EN = PUBLIC / "en" / "hybrid-products"
 SOURCES_ROOT = HYBRID_ROOT / "_sources"
 SNAPSHOTS_DIR = ROOT / "public-sheet-snapshots"
 PROBE_DIR = ROOT / "catalog-match-probe"
@@ -32,7 +35,7 @@ CATEGORY_DIR = {cat: HYBRID_ROOT / cat for cat in HYBRID_CATEGORIES}
 DR_STORE_BASE = "https://sochi.dr-store.ru"
 SITEMAP_URL = f"{DR_STORE_BASE}/sitemap.xml"
 
-HYBRID_CART_VERSION = "2026-06-30-1"
+HYBRID_CART_VERSION = "2026-08-18-8"
 
 CATEGORY_URL_PREFIXES: dict[str, list[str]] = {
     "iphone": ["/apple/iphone/"],

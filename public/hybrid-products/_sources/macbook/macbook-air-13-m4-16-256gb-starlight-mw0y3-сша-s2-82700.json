@@ -1,0 +1,105 @@
+{
+  "product_id": "macbook-air-13-m4-16-256gb-starlight-mw0y3-сша-s2-82700",
+  "category": "macbook",
+  "file_slug": "macbook-air-13-m4-16-256gb-starlight-mw0y3-s2-82700",
+  "name": "MacBook Air 13 M4 16+ 256Gb Starlight MW0Y3",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 82700,
+  "catalog_url": "",
+  "catalog_title": "MacBook Air 13 M4 16+ 256Gb Starlight MW0Y3",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "TFT IPS Retina"
+    },
+    {
+      "key": "Диагональ",
+      "value": "13.6\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2560x1664 пикселей"
+    },
+    {
+      "key": "Яркость",
+      "value": "500 кд/м²"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "224 пикс/дюйм"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple M4 (10 ядер)"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "8 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12MP, Full HD 1080p"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Wi-Fi (802.11ac), Wi-Fi 6E (802.11ax), Bluetooth 5.3"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "2 x Thunderbolt 3"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Pol"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 18 часов"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий"
+    },
+    {
+      "key": "Ширина",
+      "value": "30.41 см"
+    },
+    {
+      "key": "Высота",
+      "value": "21.5 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "1.13 см"
+    },
+    {
+      "key": "Вес",
+      "value": "1240 г"
+    },
+    {
+      "key": "Операционная система",
+      "value": "macOS"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "встроенные динамики с поддержкой Dolby Atmos, поддержка системы многоканального звука, широкое стерео, система направленных микрофонов, выход 3,5 мм для наушников (расширенная поддержка наушников с высоким импедансом), функция голосовой изоляции и микрофон с широким спектром действия Улучшенная четкость голоса при аудио- и видеозвонках."
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/2da7cd968db93fbdf25633c8.jpeg",
+    "assets/product-images/d524db0423ef8b59ef9dbd93.jpeg",
+    "assets/product-images/4a8af83a0c81581e376d98b3.jpeg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:14.905037Z"
+}

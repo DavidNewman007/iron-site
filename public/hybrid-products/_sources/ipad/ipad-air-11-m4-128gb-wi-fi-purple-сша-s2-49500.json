@@ -1,0 +1,130 @@
+{
+  "product_id": "ipad-air-11-m4-128gb-wi-fi-purple-сша-s2-49500",
+  "category": "ipad",
+  "file_slug": "ipad-air-11-m4-128gb-wi-fi-purple-s2-49500",
+  "name": "iPad Air 11\" M4 128GB Wi-Fi Purple",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 49500,
+  "catalog_url": "",
+  "catalog_title": "iPad Air 11\" M4 128GB Wi-Fi Purple",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "Liquid Retina IPS LCD"
+    },
+    {
+      "key": "Диагональ",
+      "value": "11\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2360x1640 пикселей"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "264 пикс/дюйм"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple M4"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "9 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "12 Мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "ƒ/1.8"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12 Мп"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "ƒ/2.4"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Wi-Fi 7 (802.11a/​b/​g/​n/​ac 2,4 ГГц и 5 ГГц), MIMO, Bluetooth 6"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB‑C"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Pol"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "7606 мАч"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 10 часов"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий"
+    },
+    {
+      "key": "Ширина",
+      "value": "178.5 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "247.6 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "6.1 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "464 г"
+    },
+    {
+      "key": "Операционная система",
+      "value": "iPadOS"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "стерео динамики"
+    },
+    {
+      "key": "Поддержка",
+      "value": "стилус Apple Pencil Pro, стилус Apple Pencil (USB-C), клавиатура Magic Keyboard"
+    },
+    {
+      "key": "Датчики",
+      "value": "Touch ID, трёхосевой гироскоп, акселерометр, барометр, датчик внешней освещённости"
+    },
+    {
+      "key": "Комплектация",
+      "value": "кабель USB‑C/USB‑C"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/7d16c56cca0192a21b02abfb.jpg",
+    "assets/product-images/12ecff5a5b984c7c348c2b68.jpg",
+    "assets/product-images/57e34dc246594a488798d8e8.jpg",
+    "assets/product-images/dc43fccd78af8c74d2f38d05.jpg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:09.375936Z"
+}

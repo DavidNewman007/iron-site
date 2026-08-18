@@ -1,0 +1,131 @@
+{
+  "product_id": "samsung-s26-12-256-black-оаэ-s2-57100",
+  "category": "samsung",
+  "file_slug": "samsung-s26-12-256-black-s2-57100",
+  "name": "Samsung S26 12/256 Black",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 57100,
+  "catalog_url": "",
+  "catalog_title": "Samsung S26 12/256 Black",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "Dynamic AMOLED 2X 120 Гц"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6.3\""
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "Always-on display"
+    },
+    {
+      "key": "Разрешение",
+      "value": "2340x1080 пикселей (FHD+)"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "411 пикс/дюйм"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Elite Gen 5 (США/Китай), Samsung Exynos 2600 (Глобал)"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "Qualcomm Adreno 840 (США/Китай), Samsung Xclipse 960 (Глобал)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50 Мп, 10 Мп, 12 Мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "ƒ/1.8, ƒ/2.4, ƒ/2.2"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12 Мп"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "ƒ/2.2"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 nano‑SIM, eSIM"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "5G, LTE, Wi-Fi 6E, Wi-Fi Direct, Bluetooth v5.4"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, ГЛОНАСС, Beidou, Galileo, QZSS"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB 3.2 Gen 1"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Ion"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "4300 мАч"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминиевая рамка Armor Aluminum, Gorilla Glass Victus 2"
+    },
+    {
+      "key": "Ширина",
+      "value": "71.7 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "149.6 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "7.2 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "167 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 16, One UI 8.5"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "стерео динамики Tuned by AKG"
+    },
+    {
+      "key": "Датчики",
+      "value": "акселерометр, барометр, сканер отпечатка пальца, гироскопический датчик, геомагнитный датчик, датчик Холла, датчик освещенности, датчик приближения"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/07ce1e95a73e093ae20100a1.jpg",
+    "assets/product-images/adf4aa2f74665ae4212c2b07.jpg",
+    "assets/product-images/b85e9e9b0564d119e51b0b9c.jpg",
+    "assets/product-images/e4c65755fb35afa0ae656fff.jpg",
+    "assets/product-images/47b5b19edef3f1687bf17886.jpg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:15.730444Z"
+}

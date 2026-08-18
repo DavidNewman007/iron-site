@@ -77,6 +77,7 @@
   var cartNote = root.querySelector(".rs-cart-note");
 
   var services = [];
+  var families = [];
   var quality = null;
   var activeFamily = "";
   var activeOperation = "";
@@ -477,6 +478,35 @@
     render(services.filter(function (s) { return matches(s, input.value.trim()); }));
   }
 
+  /**
+   * Кнопки выбора техники — из прайса, а не из разметки.
+   *
+   * Изменено 18.08.2026. В uslugi.html лежали ровно два <button> — iPhone и
+   * MacBook. Когда в прайс добавились iPad, часы, iMac, ноутбуки и Android,
+   * страница о них знала (услуги приходили в services.json и находились поиском),
+   * но отфильтровать по технике было нельзя: кнопки для них никто не написал.
+   * Теперь список строится из data.families, и новая техника появляется на сайте
+   * сама — ровно как в боте.
+   */
+  function renderFamilyChips() {
+    if (!families.length) return;
+    chips.innerHTML = "";
+    families.forEach(function (f) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.setAttribute("data-family", f.key);
+      btn.textContent = famName(f);
+      if (f.key === activeFamily) btn.classList.add("is-active");
+      chips.appendChild(btn);
+    });
+  }
+
+  /** Подпись семьи: на английской версии — из словаря, если он её знает. */
+  function famName(f) {
+    if (EN && DICT && DICT.families && DICT.families[f.key]) return DICT.families[f.key];
+    return f.label;
+  }
+
   chips.addEventListener("click", function (e) {
     var btn = e.target.closest("button[data-family]");
     if (!btn) return;
@@ -645,7 +675,21 @@
       var data = both[0];
       DICT = both[1];
       services = data.services || [];
+      // Запасной вариант — собрать семьи из самих услуг. Нужен, если на сайт
+      // попадёт services.json, собранный старой версией build_services.py:
+      // страница не должна остаться совсем без кнопок выбора техники.
+      families = data.families || [];
+      if (!families.length) {
+        var seen = {};
+        services.forEach(function (s) {
+          if (s.family && !seen[s.family]) {
+            seen[s.family] = true;
+            families.push({ key: s.family, label: s.family });
+          }
+        });
+      }
       quality = data.quality || null;
+      renderFamilyChips();
       renderQualityGuide();
       renderOperationChips();
       renderDeviceOptions();

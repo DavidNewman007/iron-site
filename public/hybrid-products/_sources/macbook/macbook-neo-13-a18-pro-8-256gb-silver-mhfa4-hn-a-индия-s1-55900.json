@@ -1,0 +1,107 @@
+{
+  "product_id": "macbook-neo-13-a18-pro-8-256gb-silver-mhfa4-hn-a-индия-s1-55900",
+  "category": "macbook",
+  "file_slug": "macbook-neo-13-a18-pro-8-256gb-silver-mhfa4-hn-a-s1-55900",
+  "name": "MacBook Neo 13 A18 Pro 8+ 256Gb Silver MHFA4 HN/A",
+  "country": "",
+  "warehouse": "(S1)",
+  "price": 55900,
+  "catalog_url": "",
+  "catalog_title": "MacBook Neo 13 A18 Pro 8+ 256Gb Silver MHFA4 HN/A",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "TFT IPS Retina"
+    },
+    {
+      "key": "Диагональ",
+      "value": "13\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2408x1506 пикселей"
+    },
+    {
+      "key": "Яркость",
+      "value": "500 кд/м²"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "219 пикс/дюйм"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple A18 Pro (6 ядер)"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "5 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "1080p FaceTime HD"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Wi-Fi (802.11ac), Wi-Fi 6E (802.11ax), Bluetooth 6"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB 3 (USB-C); USB 2 (USB-C)"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Pol"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 16 часов"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий"
+    },
+    {
+      "key": "Ширина",
+      "value": "29.75 см"
+    },
+    {
+      "key": "Высота",
+      "value": "20.64 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "1.27 см"
+    },
+    {
+      "key": "Вес",
+      "value": "1230 г"
+    },
+    {
+      "key": "Операционная система",
+      "value": "macOS"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "звуковая система с двумя динамиками, поддержка пространственного звука при воспроизведении музыки или видео с Dolby Atmos на встроенных динамиках, два микрофона с направленным формированием луча, режимы изоляции голоса и широкополосного микрофона для повышения четкости звука при аудио- и видеозвонках, выход 3,5 мм для наушников."
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/e1196a12bc5c8d51816c4333.jpg",
+    "assets/product-images/7ea6e9dbae9b80f7e1c8ad23.jpg",
+    "assets/product-images/c6b57e531033bf22fa406205.jpg",
+    "assets/product-images/14fed9e4b64fc8fa811e27e5.jpg",
+    "assets/product-images/42d334eb35618ba0d56447b7.jpg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:15.407248Z"
+}

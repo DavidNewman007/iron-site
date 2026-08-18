@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .config import CATEGORY_MANIFEST, HYBRID_ROOT, SOURCES_ROOT
+from .config import CATEGORY_MANIFEST, HYBRID_ROOT, HYBRID_ROOT_EN, SOURCES_ROOT
 
 
 def load_manifest(category: str) -> dict[str, Any]:
@@ -58,5 +58,6 @@ def save_source(source: dict[str, Any]) -> Path:
     return path
 
 
-def html_path(category: str, file_slug: str) -> Path:
-    return HYBRID_ROOT / category / f"{file_slug}.html"
+def html_path(category: str, file_slug: str, lang: str = "ru") -> Path:
+    корень = HYBRID_ROOT_EN if lang == "en" else HYBRID_ROOT
+    return корень / category / f"{file_slug}.html"

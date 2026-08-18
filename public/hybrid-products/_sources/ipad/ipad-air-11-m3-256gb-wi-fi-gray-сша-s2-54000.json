@@ -1,0 +1,122 @@
+{
+  "product_id": "ipad-air-11-m3-256gb-wi-fi-gray-сша-s2-54000",
+  "category": "ipad",
+  "file_slug": "ipad-air-11-m3-256gb-wi-fi-gray-s2-54000",
+  "name": "iPad Air 11\" M3 256GB Wi-Fi Gray",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 54000,
+  "catalog_url": "",
+  "catalog_title": "iPad Air 11\" M3 256GB Wi-Fi Gray",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "Liquid Retina"
+    },
+    {
+      "key": "Диагональ",
+      "value": "11\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2360×1640"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "264"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple A16 Bionic"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "9 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "12 МП"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "-"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12 МП"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "-"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Wi-Fi, Bluetooth"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "28.93 вТч"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 10 часов"
+    },
+    {
+      "key": "Материал",
+      "value": "Алюминий"
+    },
+    {
+      "key": "Ширина",
+      "value": "17,95"
+    },
+    {
+      "key": "Высота",
+      "value": "24,86"
+    },
+    {
+      "key": "Толщина",
+      "value": "0,7"
+    },
+    {
+      "key": "Вес",
+      "value": "477"
+    },
+    {
+      "key": "Операционная система",
+      "value": "IPadOS 18"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "Стереодинамики"
+    },
+    {
+      "key": "Поддержка",
+      "value": "9 ядер"
+    },
+    {
+      "key": "Датчики",
+      "value": "Touch ID, Трехосевой гироскоп, Акселерометр, Барометр, Датчик внешней освещенности"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "1 год"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/a09349f30c0b837086196cfc.jpg",
+    "assets/product-images/838106e5d16b8d768b0f4854.jpg",
+    "assets/product-images/ffe09ff1a0314639945377ce.jpg",
+    "assets/product-images/71423f4ad222184ff6c18cf4.jpg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:09.356759Z"
+}

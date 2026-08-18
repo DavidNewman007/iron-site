@@ -1,0 +1,81 @@
+{
+  "product_id": "ipad-11-a16-256gb-wi-fi-yellow-сша-s2-38500",
+  "category": "ipad",
+  "file_slug": "ipad-11-a16-256gb-wi-fi-yellow-s2-38500",
+  "name": "iPad 11\" A16 256GB Wi-Fi Yellow",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 38500,
+  "catalog_url": "",
+  "catalog_title": "iPad 11\" A16 256GB Wi-Fi Yellow",
+  "specs": [
+    {
+      "key": "Производитель",
+      "value": "Apple"
+    },
+    {
+      "key": "Тип дисплея",
+      "value": "Liquid Retina"
+    },
+    {
+      "key": "Диагональ",
+      "value": "11\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2360x1640"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple A16 Bionic"
+    },
+    {
+      "key": "Количество ядер процессора",
+      "value": "5"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 Гб"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "12 МП"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "eSim"
+    },
+    {
+      "key": "Материал",
+      "value": "Алюминий"
+    },
+    {
+      "key": "Длина",
+      "value": "17.9 см"
+    },
+    {
+      "key": "Ширина",
+      "value": "24.8 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "0.7 см"
+    },
+    {
+      "key": "Вес",
+      "value": "481 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Жёлтый"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/972ead1a68e76ccc071078e6.jpeg",
+    "assets/product-images/a7b718c51a3e750b16956cea.jpeg",
+    "assets/product-images/ebb9f4d3b227f389aa81175d.jpeg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:09.277543Z"
+}

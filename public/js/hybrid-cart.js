@@ -1,4 +1,9 @@
 (function () {
+
+  // Подписи корзины на детальной карточке. Английские страницы лежат в
+  // /en/hybrid-products/ и подключают тот же скрипт — язык определяется по
+  // <html lang>, как везде на сайте (18.08.2026).
+  const T = (key, ru) => (window.IRON_I18N ? window.IRON_I18N.t(key, ru) : ru);
   const CART_KEY = "iron_cart";
   const PID_PARAM = "pid";
   const SHEET_TABS = ["Prices", "Prices-2"];
@@ -31,7 +36,9 @@
 
   function formatPrice(value) {
     const price = typeof value === "number" ? value : parsePrice(value);
-    return price.toLocaleString("ru-RU") + " ₽";
+    // Разделитель разрядов по языку страницы: «58 600 ₽» против «58,600 ₽».
+    const локаль = window.IRON_I18N && window.IRON_I18N.isEn ? "en-US" : "ru-RU";
+    return price.toLocaleString(локаль) + " ₽";
   }
 
   function slugify(s) {
@@ -388,7 +395,11 @@
   }
 
   function applyLivePrice(pickBtn, product) {
-    const label = product.priceLabel || formatPrice(product.price);
+    // Подпись собирается заново, а не берётся из product.priceLabel: кэш
+    // каталога в localStorage общий для обеих версий сайта, и русская страница
+    // показывала «58,600 ₽» после захода на английскую (найдено 18.08.2026).
+    // Формат цены — производная от числа и языка, кэшировать её нечего.
+    const label = formatPrice(parsePrice(product.price) || parsePrice(product.priceLabel));
 
     document.querySelectorAll(".price-card__price").forEach((el) => {
       el.textContent = label;
@@ -517,10 +528,10 @@
     bar.className = "cart-mobile-bar hybrid-detail-cart-bar";
     bar.innerHTML =
       '<span class="cart-mobile-bar__info">' +
-      '<strong id="hybrid-cart-count-mobile">0</strong> шт. · <strong id="hybrid-cart-total-mobile">—</strong>' +
+      `<strong id="hybrid-cart-count-mobile">0</strong> <span id="hybrid-cart-units">${T("hybrid.items", "шт.")}</span> · <strong id="hybrid-cart-total-mobile">—</strong>` +
       "</span>" +
       '<div class="cart-mobile-bar__actions">' +
-      '<button type="button" class="btn btn-primary" id="hybrid-cart-pay" hidden>Оплатить онлайн</button>' +
+      `<button type="button" class="btn btn-primary" id="hybrid-cart-pay" hidden>${T("cart.pay", "Оплатить онлайн")}</button>` +
       '<button type="button" class="btn btn-primary" id="hybrid-cart-telegram">Telegram</button>' +
       '<button type="button" class="btn btn-primary" id="hybrid-cart-max">MAX</button>' +
       "</div>";
@@ -539,6 +550,13 @@
     const countEl = document.getElementById("hybrid-cart-count-mobile");
     const totalEl = document.getElementById("hybrid-cart-total-mobile");
     if (countEl) countEl.textContent = String(count);
+    // «1 items» читается как недоделка — на английском единственное число.
+    const unitsEl = document.getElementById("hybrid-cart-units");
+    if (unitsEl) {
+      unitsEl.textContent = count === 1
+        ? T("hybrid.item_one", "шт.")
+        : T("hybrid.items", "шт.");
+    }
     if (totalEl) totalEl.textContent = count ? formatPrice(total) : "—";
   }
 
@@ -570,14 +588,14 @@
     if (!pickBtn) return;
     const wrap = getDetailWrap();
     if (wrap?.dataset.priceState !== "ready") {
-      pickBtn.textContent = "+ Выбрать";
+      pickBtn.textContent = T("shop.select", "+ Выбрать");
       pickBtn.classList.remove("is-active");
       return;
     }
 
     const productId = resolveProductId(pickBtn);
     const inCart = getCartIndex(readCart(), productId) >= 0;
-    pickBtn.textContent = inCart ? "✓ В корзине" : "+ Выбрать";
+    pickBtn.textContent = inCart ? T("shop.selected", "✓ В корзине") : T("shop.select", "+ Выбрать");
     pickBtn.classList.toggle("is-active", inCart);
   }
 
@@ -651,9 +669,18 @@
     renderMobileCartBar();
   }
 
+  // Словарь грузится здесь: на детальной карточке нет prices.js, который делает
+  // это в магазине. На русской версии load() не делает ни одного запроса.
+  function запуск() {
+    const словарь = window.IRON_I18N
+      ? window.IRON_I18N.load("/data/i18n/shop.en.json")
+      : Promise.resolve(null);
+    словарь.then(initDetailCart, initDetailCart);
+  }
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initDetailCart);
+    document.addEventListener("DOMContentLoaded", запуск);
   } else {
-    initDetailCart();
+    запуск();
   }
 })();

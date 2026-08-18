@@ -1,0 +1,72 @@
+{
+  "product_id": "-airpods-pro-2-s2-15500",
+  "category": "airpods",
+  "file_slug": "airpods-pro-2-s2-15500",
+  "name": "🔈AirPods Pro 2",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 15500,
+  "catalog_url": "",
+  "catalog_title": "🔈AirPods Pro 2",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "в наушниках Apple H2; в кейсе Apple U1"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Bluetooth 5.3"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-C"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 30 часов прослушивания, до 24 часов работы в режиме разговора"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "Есть"
+    },
+    {
+      "key": "Ширина",
+      "value": "Наушник: 21.8 мм; Кейс: 60.6 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "Наушник: 30.9 мм; Кейс: 45.2 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "Наушник: 24.0 мм; Кейс: 21.7 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "Наушник: 5.3 г; Кейс: 50.8 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP54"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "активное шумоподавление"
+    },
+    {
+      "key": "Датчики",
+      "value": "микрофоны с двойным формированием луча, микрофон, обращенный внутрь, датчик распознавания уха, акселерометр для определения движения, акселерометр для распознавания речи, сенсорное управление"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/05aa29355b95c6b52db8a052.jpg",
+    "assets/product-images/84948ca3c6260bafed6f5540.jpg",
+    "assets/product-images/417685172e9e621d0e4f6881.jpg",
+    "assets/product-images/faf6ee4758aa19449dd5d240.jpg",
+    "assets/product-images/79d0df22a8dffa301318379c.jpg",
+    "assets/product-images/706ebf8b3879cee1feed71b7.jpg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:09.182208Z"
+}

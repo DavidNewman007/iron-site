@@ -642,7 +642,7 @@
         const allowHeuristicFallback = location.protocol === "file:" || !iphoneHybridManifestLoaded;
         const meta = resolveIphoneHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(detailUrlFor(meta)));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -655,7 +655,7 @@
         const allowHeuristicFallback = location.protocol === "file:" || !macbookHybridManifestLoaded;
         const meta = resolveMacbookHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(detailUrlFor(meta)));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -668,7 +668,7 @@
         const allowHeuristicFallback = location.protocol === "file:" || !ipadHybridManifestLoaded;
         const meta = resolveIpadHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(detailUrlFor(meta)));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -681,7 +681,7 @@
         const allowHeuristicFallback = location.protocol === "file:" || !watchHybridManifestLoaded;
         const meta = resolveWatchHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(detailUrlFor(meta)));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -694,7 +694,7 @@
         const allowHeuristicFallback = location.protocol === "file:" || !airpodsHybridManifestLoaded;
         const meta = resolveAirpodsHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(detailUrlFor(meta)));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -706,7 +706,7 @@
       if (isHybridSamsungCandidate(product)) {
         const meta = resolveSamsungHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(detailUrlFor(meta)));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -718,7 +718,7 @@
       if (isHybridAccessoriesCandidate(product)) {
         const meta = resolveAccessoriesHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(detailUrlFor(meta)));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -1548,6 +1548,30 @@
    * Найдено 18.08.2026 по логам сервера; глазами не видно — карточка просто
    * остаётся без картинки.
    */
+  /**
+   * Ссылка на подробную страницу товара с учётом языка (18.08.2026).
+   *
+   * Английские карточки генерируются рядом с русскими и лежат в
+   * /en/hybrid-products/. Манифест хранит оба пути; старые записи без url_en
+   * ведут на русскую страницу — это лучше, чем 404.
+   */
+  /**
+   * Подпись цены строится в момент показа, а не берётся из товара: кэш каталога
+   * в sessionStorage общий для русской и английской версий, и подпись,
+   * сохранённая на одной, всплывала на другой — «58,600 ₽» вместо «58 600 ₽»
+   * (найдено 18.08.2026 при проверке детальных карточек).
+   */
+  function priceLabelOf(product) {
+    const value = parsePrice(product.price) || parsePrice(product.priceLabel);
+    return value ? formatPrice(value) : product.priceLabel || "";
+  }
+
+  function detailUrlFor(meta) {
+    if (!meta) return "";
+    if (I18N.isEn && meta.url_en) return meta.url_en;
+    return meta.url || "";
+  }
+
   function siteRootUrl(path) {
     const raw = String(path || "").trim();
     if (!raw) return "";
@@ -2174,7 +2198,7 @@
   }
 
   function formatPrice(n) {
-    return n.toLocaleString("ru-RU") + " ₽";
+    return n.toLocaleString(I18N.isEn ? "en-US" : "ru-RU") + " ₽";
   }
 
   function formatNow() {
@@ -2868,7 +2892,7 @@
         ${p.warehouse ? `<p class="price-card__qty">${escapeHtml(I18N.quantity(p.warehouse))}</p>` : ""}
         ${extraWarrantyRowHtml(p, inCart)}
         <div class="price-card__footer">
-          <strong class="price-card__price">${escapeHtml(p.priceLabel)}</strong>
+          <strong class="price-card__price">${escapeHtml(priceLabelOf(p))}</strong>
           <button type="button" class="price-card__btn ${inCart ? "is-active" : ""}" data-action="toggle" data-id="${p.id}">
             ${inCart ? T("shop.selected", "✓ В корзине") : T("shop.select", "+ Выбрать")}
           </button>
@@ -3008,7 +3032,7 @@
         <span class="cart-item__num">${i + 1}</span>
         <div class="cart-item__body">
           <strong>${escapeHtml(I18N.productName(p.name))}</strong>
-          <span>${escapeHtml(p.priceLabel)}${p.country ? " · " + escapeHtml(I18N.country(p.country)) : ""}${p.warehouse ? " · " + escapeHtml(I18N.quantity(p.warehouse)) : ""}${p.preorder ? " · " + escapeHtml(PREORDER_BADGE_TEXT) : ""}</span>
+          <span>${escapeHtml(priceLabelOf(p))}${p.country ? " · " + escapeHtml(I18N.country(p.country)) : ""}${p.warehouse ? " · " + escapeHtml(I18N.quantity(p.warehouse)) : ""}${p.preorder ? " · " + escapeHtml(PREORDER_BADGE_TEXT) : ""}</span>
           ${p.extraWarranty ? `<span class="cart-item__warranty">${escapeHtml(T("cart.extra_warranty_item", `🛡 + гарантия 1 год — ${formatPrice(EXTRA_WARRANTY_PRICE)}`, { price: formatPrice(EXTRA_WARRANTY_PRICE) }))}</span>` : ""}
         </div>
         <button type="button" class="cart-item__remove" data-id="${p.id}" aria-label="${escapeHtml(T("cart.remove", "Убрать"))}">×</button>
@@ -3178,14 +3202,14 @@
 
   function buildIphoneDetailFallbackUrl(product) {
     const byName = slugify(product.name || "");
-    if (byName) return `/hybrid-products/${byName}.html`;
+    if (byName) return `${I18N.isEn ? "/en" : ""}/hybrid-products/${byName}.html`;
 
     const priceSuffix = parsePrice(product.price) || parsePrice(product.priceLabel);
     const byWarehouseAndPrice = slugifyWithSuffix(
       `${product.name || ""}${product.warehouse || ""}`,
       priceSuffix
     );
-    return byWarehouseAndPrice ? `/hybrid-products/iphone/${byWarehouseAndPrice}.html` : "";
+    return byWarehouseAndPrice ? `${I18N.isEn ? "/en" : ""}/hybrid-products/iphone/${byWarehouseAndPrice}.html` : "";
   }
 
   function buildMacbookDetailFallbackUrl(product) {
@@ -3194,7 +3218,7 @@
       `${product.name || ""}${product.warehouse || ""}`,
       priceSuffix
     );
-    return byWarehouseAndPrice ? `/hybrid-products/macbook/${byWarehouseAndPrice}.html` : "";
+    return byWarehouseAndPrice ? `${I18N.isEn ? "/en" : ""}/hybrid-products/macbook/${byWarehouseAndPrice}.html` : "";
   }
 
   function buildIpadDetailFallbackUrl(product) {
@@ -3203,7 +3227,7 @@
       `${product.name || ""}${product.warehouse || ""}`,
       priceSuffix
     );
-    return byWarehouseAndPrice ? `/hybrid-products/ipad/${byWarehouseAndPrice}.html` : "";
+    return byWarehouseAndPrice ? `${I18N.isEn ? "/en" : ""}/hybrid-products/ipad/${byWarehouseAndPrice}.html` : "";
   }
 
   function buildWatchDetailFallbackUrl(product) {
@@ -3212,7 +3236,7 @@
       `${product.name || ""}${product.warehouse || ""}`,
       priceSuffix
     );
-    return byWarehouseAndPrice ? `/hybrid-products/watch/${byWarehouseAndPrice}.html` : "";
+    return byWarehouseAndPrice ? `${I18N.isEn ? "/en" : ""}/hybrid-products/watch/${byWarehouseAndPrice}.html` : "";
   }
 
   function buildAirpodsDetailFallbackUrl(product) {
@@ -3221,7 +3245,7 @@
       `${product.name || ""}${product.warehouse || ""}`,
       priceSuffix
     );
-    return byWarehouseAndPrice ? `/hybrid-products/airpods/${byWarehouseAndPrice}.html` : "";
+    return byWarehouseAndPrice ? `${I18N.isEn ? "/en" : ""}/hybrid-products/airpods/${byWarehouseAndPrice}.html` : "";
   }
 
   function escapeHtml(s) {

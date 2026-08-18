@@ -1,0 +1,81 @@
+{
+  "product_id": "ipad-11-a16-128gb-wi-fi-pink-сша-s2-31400",
+  "category": "ipad",
+  "file_slug": "ipad-11-a16-128gb-wi-fi-pink-s2-31400",
+  "name": "iPad 11\" A16 128GB Wi-Fi Pink",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 31400,
+  "catalog_url": "",
+  "catalog_title": "iPad 11\" A16 128GB Wi-Fi Pink",
+  "specs": [
+    {
+      "key": "Производитель",
+      "value": "Apple"
+    },
+    {
+      "key": "Тип дисплея",
+      "value": "Liquid Retina"
+    },
+    {
+      "key": "Диагональ",
+      "value": "11\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2360x1640"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple A16 Bionic"
+    },
+    {
+      "key": "Количество ядер процессора",
+      "value": "5"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 Гб"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "12 МП"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "eSim"
+    },
+    {
+      "key": "Материал",
+      "value": "Алюминий"
+    },
+    {
+      "key": "Длина",
+      "value": "17.9 см"
+    },
+    {
+      "key": "Ширина",
+      "value": "24.8 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "0.7 см"
+    },
+    {
+      "key": "Вес",
+      "value": "481 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Розовый"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/fe0965c014b109e884e1e497.jpeg",
+    "assets/product-images/f02f3da53beff07f6c743737.jpeg",
+    "assets/product-images/39447df82d293706e1efea0c.jpeg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:09.229437Z"
+}

@@ -1,0 +1,81 @@
+{
+  "product_id": "ipad-11-a16-256gb-wi-fi-blue-сша-s2-38500",
+  "category": "ipad",
+  "file_slug": "ipad-11-a16-256gb-wi-fi-blue-s2-38500",
+  "name": "iPad 11\" A16 256GB Wi-Fi Blue",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 38500,
+  "catalog_url": "",
+  "catalog_title": "iPad 11\" A16 256GB Wi-Fi Blue",
+  "specs": [
+    {
+      "key": "Производитель",
+      "value": "Apple"
+    },
+    {
+      "key": "Тип дисплея",
+      "value": "Liquid Retina"
+    },
+    {
+      "key": "Диагональ",
+      "value": "11\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2360x1640"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple A16 Bionic"
+    },
+    {
+      "key": "Количество ядер процессора",
+      "value": "5"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 Гб"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "12 МП"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "eSim"
+    },
+    {
+      "key": "Материал",
+      "value": "Алюминий"
+    },
+    {
+      "key": "Длина",
+      "value": "17.9 см"
+    },
+    {
+      "key": "Ширина",
+      "value": "24.8 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "0.7 см"
+    },
+    {
+      "key": "Вес",
+      "value": "481 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Голубой"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/7543ba8b5ca2e7d9cc4cdb5d.jpeg",
+    "assets/product-images/737d251b34e411569f65e3a1.jpeg",
+    "assets/product-images/3e5e7718476dfdca614e53b3.jpeg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:09.253641Z"
+}

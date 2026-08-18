@@ -1,0 +1,44 @@
+{
+  "product_id": "apple-pencil-pro-s2-10800",
+  "category": "accessories",
+  "file_slug": "apple-pencil-pro-s2-10800",
+  "name": "Apple Pencil Pro",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 10800,
+  "catalog_url": "",
+  "catalog_title": "Apple Pencil Pro",
+  "specs": [
+    {
+      "key": "Интерфейсы",
+      "value": "Bluetooth"
+    },
+    {
+      "key": "Диаметр",
+      "value": "8.9 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "166 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "19.15 г"
+    },
+    {
+      "key": "Технологии",
+      "value": "магнитное крепление, сопряжение и зарядка"
+    },
+    {
+      "key": "Поддержка",
+      "value": "iPad Pro 13-inch (M4), iPad Pro 11-inch (M4), iPad Air 13-inch (M2), iPad Air 11-inch (M2)"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+    "assets/product-images/9fe3b9d44c0c38b2e8df8cb1.jpeg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:09.022765Z"
+}

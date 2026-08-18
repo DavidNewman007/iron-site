@@ -1,0 +1,148 @@
+{
+  "product_id": "iphone-17-pro-256-silver-sim-esim-европа-s2-98900",
+  "category": "iphone",
+  "file_slug": "iphone-17-pro-256-silver-sim-esim-s2-98900",
+  "name": "iPhone 17 Pro 256 Silver (SIM + eSIM)",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 98900,
+  "catalog_url": "",
+  "catalog_title": "iPhone 17 Pro 256 Silver (SIM + eSIM)",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "OLED (Super Retina XDR)"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6.3\""
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "Always-On display. ProMotion с адаптивной частотой обновления до 120 Гц"
+    },
+    {
+      "key": "Разрешение",
+      "value": "2622x1206 пикселей"
+    },
+    {
+      "key": "Яркость",
+      "value": "до 3000 кд/м²"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "460 пикс/дюйм"
+    },
+    {
+      "key": "Контрастность",
+      "value": "2000000:1"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple A19 Pro"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "6 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "48 Мп, 48 Мп, 48 Мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "основная: ƒ/1.78, сверхширокоугольная: ƒ/2.2, телефото (2x): ƒ/1.78, телефото (5x): ƒ/2.8"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "18 Мп"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "ƒ/1.9"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "nano-SIM + eSIM"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "5G (sub‑6 GHz), Gigabit Class LTE, Wi‑Fi 7 (802.11be) с 2x2 MIMO, Bluetooth 6, NFC с поддержкой режима считывания, GSM/EDGE, UMTS/​HSPA+/​DC-HSDPA, MIMO, Экспресс‑карты с резервным питанием"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, ГЛОНАСС, Galileo, QZSS, BeiDou, NavIC"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C 3.2 Gen 2 (до 10Гб/с), DisplayPort"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Ion"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "3988 мАч"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "Есть, до 25W"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий, Ceramic Shield 2"
+    },
+    {
+      "key": "Ширина",
+      "value": "71.9 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "150 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "8.75 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "206 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "iOS с поддержкой Apple Intelligence"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "поддержка Dolby Atmos, 4 микрофона"
+    },
+    {
+      "key": "Датчики",
+      "value": "Face ID, LiDAR, барометр, гироскоп с высоким динамическим диапазоном, акселерометр с высокой перегрузкой, датчик приближения, два датчика внешней освещенности"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [],
+  "images_local": [
+    "assets/product-images/940ab3901c3eaada30733bda.jpg",
+    "assets/product-images/afa169065a64e166bcf6675b.jpg",
+    "assets/product-images/617c670202e71bf0c096b566.jpg",
+    "assets/product-images/7d66e3c58f9a4528545d278e.jpg",
+    "assets/product-images/e976bbe8d6c14ce4a0dc657b.jpg",
+    "assets/product-images/2e65904c0285f8a2a56d1879.jpg"
+  ],
+  "recovered_from_html": true,
+  "updated_at": "2026-08-18T13:31:11.680147Z"
+}

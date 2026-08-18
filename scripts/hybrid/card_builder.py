@@ -5,6 +5,7 @@ import json
 from typing import Any
 
 from .config import HYBRID_CART_VERSION
+from . import i18n_en
 from .scraper import clean_catalog_title
 from .images import mirror_images
 from .manifest import html_path, save_source, upsert_manifest_entry
@@ -113,18 +114,18 @@ def _esc(value: str) -> str:
     return html.escape(str(value or ""), quote=True)
 
 
-def _gallery_block(images_rel: list[str], alt_text: str) -> tuple[str, str]:
+def _gallery_block(images_rel: list[str], alt_text: str, base: str = "../..") -> tuple[str, str]:
     if not images_rel:
-        return ("<p>Изображения не найдены</p>", "")
+        return ("<p>Изображения не найдены</p>" if base == "../.." else "<p>No images available</p>", "")
     gallery = images_rel[:MAX_GALLERY_IMAGES]
-    main = f"../../{gallery[0]}"
+    main = f"{base}/{gallery[0]}"
     main_img = (
         f'<img id="mainImg" src="{_esc(main)}" alt="{_esc(alt_text)}" '
         f'loading="eager" decoding="async" fetchpriority="high">'
     )
     thumbs = []
     for idx, rel in enumerate(gallery):
-        src = f"../../{rel}"
+        src = f"{base}/{rel}"
         active = " is-active" if idx == 0 else ""
         thumbs.append(
             f'<button type="button" class="thumb{active}" data-idx="{idx}">'
@@ -133,7 +134,7 @@ def _gallery_block(images_rel: list[str], alt_text: str) -> tuple[str, str]:
     return main_img, "".join(thumbs)
 
 
-def _og_block(source: dict[str, Any], images_rel: list[str]) -> str:
+def _og_block(source: dict[str, Any], images_rel: list[str], lang: str = "ru") -> str:
     if not images_rel:
         return ""
     name = source["name"]
@@ -142,12 +143,17 @@ def _og_block(source: dict[str, Any], images_rel: list[str]) -> str:
     )
     category = source["category"]
     cover_rel = images_rel[0]
-    page_url = f"{SITE_ORIGIN}/hybrid-products/{category}/{file_slug}.html"
+    prefix = "/en" if lang == "en" else ""
+    page_url = f"{SITE_ORIGIN}{prefix}/hybrid-products/{category}/{file_slug}.html"
     cover_url = f"{SITE_ORIGIN}/{cover_rel}"
+    описание = (
+        f"{name} — current price at IRON SERVICE" if lang == "en"
+        else f"{name} — актуальная цена в IRON SERVICE"
+    )
     return f"""  <meta property="og:type" content="website">
   <meta property="og:site_name" content="IRON SERVICE">
   <meta property="og:title" content="{_esc(name)}">
-  <meta property="og:description" content="{_esc(name)} — актуальная цена в IRON SERVICE">
+  <meta property="og:description" content="{_esc(описание)}">
   <meta property="og:url" content="{_esc(page_url)}">
   <meta property="og:image" content="{_esc(cover_url)}">
   <meta name="twitter:card" content="summary_large_image">"""
@@ -172,35 +178,74 @@ def build_source_from_match(match_entry: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def render_html(source: dict[str, Any]) -> str:
+def render_html(source: dict[str, Any], lang: str = "ru") -> str:
+    """HTML карточки. lang="en" — та же страница с переведёнными подписями и
+    характеристиками; см. hybrid/i18n_en.py. Английские файлы лежат на уровень
+    глубже (public/en/hybrid-products/), поэтому у них другой путь до ассетов."""
+    en = lang == "en"
+    base = "../../.." if en else "../.."
     name = source["name"]
     specs = source.get("specs") or []
+    if en:
+        specs = i18n_en.translate_specs(specs)
     images_rel = source.get("images_local") or []
-    images_js = [f"../../{rel}" for rel in images_rel]
-    meta_description = f"{name} — актуальная цена и характеристики в IRON SERVICE, Сочи."
+    images_js = [f"{base}/{rel}" for rel in images_rel]
+    meta_description = (
+        i18n_en.UI["meta_description"].format(name=name) if en
+        else f"{name} — актуальная цена и характеристики в IRON SERVICE, Сочи."
+    )
+
+    file_slug = source.get("file_slug") or build_file_slug(
+        source["name"], source.get("warehouse") or "", source["price"]
+    )
+    category = source["category"]
+    ru_url = f"{SITE_ORIGIN}/hybrid-products/{category}/{file_slug}.html"
+    en_url = f"{SITE_ORIGIN}/en/hybrid-products/{category}/{file_slug}.html"
+    # Обе версии генерируются вместе, поэтому hreflang можно ставить всегда:
+    # страница, на которую он указывает, заведомо существует.
+    alternates = (
+        f'  <link rel="canonical" href="{en_url if en else ru_url}">\n'
+        f'  <link rel="alternate" hreflang="ru" href="{ru_url}">\n'
+        f'  <link rel="alternate" hreflang="en" href="{en_url}">\n'
+        f'  <link rel="alternate" hreflang="x-default" href="{ru_url}">'
+    )
+
+    подписи = i18n_en.UI if en else {
+        "back": "← Назад в Магазин",
+        "price": "Цена:",
+        "price_note": "Цена за наличный расчет · из актуального прайса IRON SERVICE",
+        "specs": "Характеристики",
+        "pick": "+ Выбрать",
+        "about": "<strong>IRON SERVICE</strong> — магазин и сервис Apple в Сочи, ул. Московская, 5.",
+        "order": "Заказ:",
+        "footer_legal": "Независимый сервис Apple в Сочи. Не является официальным сайтом Apple Inc.",
+    }
+    shop_href = f"{base}/en/shop.html" if en else f"{base}/magazin.html"
+    home_href = f"{base}/en/index.html" if en else f"{base}/index.html"
 
     spec_rows = "".join(
         f"<tr><td>{_esc(item['key'])}</td><td>{_esc(item['value'])}</td></tr>"
         for item in specs
     )
-    gallery_main, thumbs_html = _gallery_block(images_rel, name)
+    gallery_main, thumbs_html = _gallery_block(images_rel, name, base)
     images_literal = json.dumps(images_js[:MAX_GALLERY_IMAGES], ensure_ascii=False)
     gallery_script = GALLERY_SCRIPT.replace("__IMAGES__", images_literal)
-    og_block = _og_block(source, images_rel)
+    og_block = _og_block(source, images_rel, lang)
 
     return f"""<!DOCTYPE html>
-<html lang="ru">
+<html lang="{lang}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{_esc(meta_description)}">
+{alternates}
 {og_block}
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://telegram.org 'unsafe-inline'; connect-src 'self' https://docs.google.com https://order-bot.4489530.workers.dev; frame-src 'none'">
   <title>{_esc(name)} — IRON SERVICE</title>
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/styles.css">
-  <link rel="stylesheet" href="../../css/shop.css">
+  <link rel="stylesheet" href="{base}/css/styles.css">
+  <link rel="stylesheet" href="{base}/css/shop.css">
   <style>
     .detail-wrap {{ max-width: 1200px; margin: 0 auto; padding: 1rem; }}
     .detail-grid {{ display:grid; grid-template-columns: 1fr 1fr; gap:1rem; align-items:start; }}
@@ -235,8 +280,8 @@ def render_html(source: dict[str, Any]) -> str:
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a href="../../index.html" class="logo-link"><img src="../../assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img"></a>
-      <a href="../../magazin.html" class="header-phone">← Назад в Магазин</a>
+      <a href="{home_href}" class="logo-link"><img src="{base}/assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img"></a>
+      <a href="{shop_href}" class="header-phone">{подписи["back"]}</a>
     </div>
   </header>
   <main class="detail-wrap">
@@ -245,8 +290,8 @@ def render_html(source: dict[str, Any]) -> str:
       <section class="price-card">
         <h3 class="price-card__name">{_esc(name)}</h3>
         <div class="meta">
-          <p class="price-line"><b>Цена:</b> <span class="price-card__price" aria-live="polite"></span></p>
-          <p class="meta-note">Цена за наличный расчет · из актуального прайса IRON SERVICE</p>
+          <p class="price-line"><b>{подписи["price"]}</b> <span class="price-card__price" aria-live="polite"></span></p>
+          <p class="meta-note">{подписи["price_note"]}</p>
         </div>
         <div class="gallery-main">
           {gallery_main}
@@ -256,23 +301,23 @@ def render_html(source: dict[str, Any]) -> str:
         <div class="thumbs" id="thumbs">{thumbs_html}</div>
         <div class="price-card__footer" style="margin-top:.8rem;">
           <strong class="price-card__price" aria-live="polite"></strong>
-          <button type="button" class="price-card__btn" id="pickBtn" data-name="{_esc(name)}" data-country="{_esc(source.get('country') or '')}" data-warehouse="{_esc(source.get('warehouse') or '')}">+ Выбрать</button>
+          <button type="button" class="price-card__btn" id="pickBtn" data-name="{_esc(name)}" data-country="{_esc(source.get('country') or '')}" data-warehouse="{_esc(source.get('warehouse') or '')}">{подписи["pick"]}</button>
         </div>
       </section>
       <section class="price-card">
-        <h3 class="price-card__name">Характеристики</h3>
+        <h3 class="price-card__name">{подписи["specs"]}</h3>
         <table>{spec_rows}</table>
         <div class="desc">
-          <p><strong>IRON SERVICE</strong> — магазин и сервис Apple в Сочи, ул. Московская, 5.</p>
-          <p>Заказ: <a href="tel:+79288509404">+7 928 850-94-04</a> · <a href="https://t.me/ironsochi" target="_blank" rel="noopener">Telegram</a> · <a href="https://yandex.ru/profile/1716684342" target="_blank" rel="noopener">Яндекс.Карты</a></p>
+          <p>{подписи["about"]}</p>
+          <p>{подписи["order"]} <a href="tel:+79288509404">+7 928 850-94-04</a> · <a href="https://t.me/ironsochi" target="_blank" rel="noopener">Telegram</a> · <a href="https://yandex.ru/profile/1716684342" target="_blank" rel="noopener">{"Yandex Maps" if en else "Яндекс.Карты"}</a></p>
         </div>
       </section>
     </div>
   </main>
   <footer class="site-footer hybrid-detail-footer">
     <div class="container footer-bottom">
-      <p>© IRON SERVICE · Сочи · <a href="tel:+79288509404">+7 928 850-94-04</a></p>
-      <p class="footer-legal">Независимый сервис Apple в Сочи. Не является официальным сайтом Apple Inc.</p>
+      <p>© IRON SERVICE · {"Sochi" if en else "Сочи"} · <a href="tel:+79288509404">+7 928 850-94-04</a></p>
+      <p class="footer-legal">{подписи["footer_legal"]}</p>
     </div>
   </footer>
   <div class="lightbox" id="lightbox">
@@ -282,8 +327,9 @@ def render_html(source: dict[str, Any]) -> str:
   <script>
 {gallery_script}
   </script>
-  <script src="../../js/config.js"></script>
-  <script src="../../js/hybrid-cart.js?v={HYBRID_CART_VERSION}"></script>
+  <script src="{base}/js/config.js"></script>
+  <script src="{base}/js/i18n.js?v={HYBRID_CART_VERSION}"></script>
+  <script src="{base}/js/hybrid-cart.js?v={HYBRID_CART_VERSION}"></script>
 </body>
 </html>
 """
@@ -299,18 +345,23 @@ def build_card_from_source(source: dict[str, Any], *, write_html: bool = True) -
     save_source(source)
 
     rel_url = f"hybrid-products/{category}/{file_slug}.html"
+    rel_url_en = f"en/hybrid-products/{category}/{file_slug}.html"
     cover = source.get("images_local", [""])[0] if source.get("images_local") else ""
 
     if write_html:
-        out_path = html_path(category, file_slug)
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        out_path.write_text(render_html(source), encoding="utf-8")
+        # Обе версии пишутся вместе — иначе английская отстаёт от русской при
+        # каждой пересборке и постепенно расходится с ней по данным.
+        for lang in ("ru", "en"):
+            out_path = html_path(category, file_slug, lang)
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(render_html(source, lang), encoding="utf-8")
 
     upsert_manifest_entry(
         category,
         product_id,
         {
             "url": rel_url,
+            "url_en": rel_url_en,
             "cover": cover,
             "name": source["name"],
             "warehouse": source.get("warehouse") or "",

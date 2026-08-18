@@ -182,10 +182,37 @@ def main() -> int:
         help="Audit images and rebuild only flagged cards (re-scrape from catalog)",
     )
     parser.add_argument("--from-source", action="store_true", help="Rebuild HTML from existing _sources JSON only")
+    parser.add_argument(
+        "--all-sources",
+        action="store_true",
+        help="Rebuild HTML for EVERY saved source, without network. Нужен после правки шаблона "
+             "или словаря переводов: пересобирает русскую и английскую версии всех карточек.",
+    )
     args = parser.parse_args()
 
     if args.repair_images:
         args.force_rebuild = True
+
+    if args.all_sources:
+        # Перегенерация из сохранённых источников: сеть не трогаем, каталог
+        # поставщика не опрашиваем — только пересобираем HTML по текущему
+        # шаблону. Добавлено 18.08.2026 вместе с английскими карточками.
+        from hybrid.config import SOURCES_ROOT
+
+        собрано, ошибки = 0, []
+        категории = [args.category] if args.category else sorted(
+            d.name for d in SOURCES_ROOT.iterdir() if d.is_dir()
+        )
+        for категория in категории:
+            for путь in sorted((SOURCES_ROOT / категория).glob("*.json")):
+                try:
+                    source = json.loads(путь.read_text(encoding="utf-8"))
+                    build_card_from_source(source)
+                    собрано += 1
+                except Exception as exc:  # noqa: BLE001
+                    ошибки.append({"file": str(путь), "error": str(exc)})
+        print(json.dumps({"rebuilt": собрано, "failed": ошибки}, ensure_ascii=False, indent=2))
+        return 0 if not ошибки else 1
 
     if args.from_source:
         if not args.product_id:
