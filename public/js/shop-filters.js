@@ -3,6 +3,10 @@
  * Каждая категория описывает свои facet-поля (серия, память, SIM, цвет и т.д.).
  */
 (function () {
+  // Подписи фильтров берутся из общего модуля локализации. Фолбэк на русский
+  // текст в коде — чтобы отсутствие i18n.js роняло перевод, а не фильтры.
+  const T = (key, ru) => (window.IRON_I18N ? window.IRON_I18N.t(key, ru) : ru);
+
   const IPHONE_SERIES_ORDER = [
     "17 Pro Max",
     "17 Pro",
@@ -177,8 +181,8 @@
     if (facetId === "series") return seriesLabel(value);
     if (facetId === "storage") {
       const tb = String(value || "").match(/^(\d+)tb$/i);
-      if (tb) return `${tb[1]} ТБ`;
-      return `${value} ГБ`;
+      if (tb) return `${tb[1]} ${T("filters.tb", "ТБ")}`;
+      return `${value} ${T("filters.gb", "ГБ")}`;
     }
     if (facetId === "sim") {
       if (value === "sim+esim") return "SIM + eSIM";
@@ -455,8 +459,8 @@
     if (facetId === "line") return macbookLineLabel(value);
     if (facetId === "storage") {
       const tb = String(value || "").match(/^(\d+)tb$/i);
-      if (tb) return `${tb[1]} ТБ`;
-      return `${value} ГБ`;
+      if (tb) return `${tb[1]} ${T("filters.tb", "ТБ")}`;
+      return `${value} ${T("filters.gb", "ГБ")}`;
     }
     if (facetId === "color") return formatColorLabel(value);
     return value;
@@ -570,8 +574,8 @@
     if (facetId === "model") return ipadModelLabel(value);
     if (facetId === "storage") {
       const tb = String(value || "").match(/^(\d+)tb$/i);
-      if (tb) return `${tb[1]} ТБ`;
-      return `${value} ГБ`;
+      if (tb) return `${tb[1]} ${T("filters.tb", "ТБ")}`;
+      return `${value} ${T("filters.gb", "ГБ")}`;
     }
     if (facetId === "color") return formatColorLabel(value);
     return value;
@@ -678,8 +682,8 @@
   function formatAirpodsFacetValue(facetId, value) {
     if (facetId === "model") return airpodsModelLabel(value);
     if (facetId === "anc") {
-      if (value === "anc") return "С ANC";
-      if (value === "standard") return "Без ANC";
+      if (value === "anc") return T("filters.with_anc", "С ANC");
+      if (value === "standard") return T("filters.without_anc", "Без ANC");
     }
     if (facetId === "color") return formatColorLabel(value);
     return value;
@@ -816,8 +820,8 @@
     if (facetId === "line") return samsungLineLabel(value);
     if (facetId === "storage") {
       const tb = String(value || "").match(/^(\d+)tb$/i);
-      if (tb) return `${tb[1]} ТБ`;
-      return `${value} ГБ`;
+      if (tb) return `${tb[1]} ${T("filters.tb", "ТБ")}`;
+      return `${value} ${T("filters.gb", "ГБ")}`;
     }
     if (facetId === "color") return formatColorLabel(value);
     return value;

@@ -87,46 +87,75 @@
 
   // Вступление одно на все три вида: гарантия — страховка, а не ожидание
   // поломки. Формулировка владельца (16.08.2026).
-  const WARRANTY_INTRO_HTML =
-    "<p>Гарантия — это, по сути, страховка. Пользуются ей единицы: техника Apple " +
-    "надёжная, и на тысячи проданных устройств приходятся единичные обращения. " +
-    "Но если случай окажется вашим — вот что будет.</p>";
+  //
+  // Тексты собираются из ключей, а не лежат готовым HTML: раньше три больших
+  // блока были захардкожены по-русски и на /en/ модалка открывалась целиком на
+  // русском — единственное место магазина, где так было. Русский текст остаётся
+  // здесь значением по умолчанию, английский приходит из shop.en.json
+  // (18.08.2026).
+  const WARRANTY_INTRO_HTML = () =>
+    "<p>" + T("warranty.intro",
+      "Гарантия — это, по сути, страховка. Пользуются ей единицы: техника Apple " +
+      "надёжная, и на тысячи проданных устройств приходятся единичные обращения. " +
+      "Но если случай окажется вашим — вот что будет.") + "</p>";
 
-  const WARRANTY_EXCLUSIONS_HTML =
-    "<h4>Что не покрывает</h4><ul>" +
-    "<li>Механические повреждения: удары, трещины, сколы, попадание влаги.</li>" +
-    "<li>Последствия самостоятельного или стороннего ремонта.</li>" +
-    "<li>Естественный износ, в том числе снижение ёмкости батареи.</li>" +
+  const WARRANTY_EXCLUSIONS_HTML = () =>
+    "<h4>" + T("warranty.not_covered", "Что не покрывает") + "</h4><ul>" +
+    "<li>" + T("warranty.not_covered_1",
+      "Механические повреждения: удары, трещины, сколы, попадание влаги.") + "</li>" +
+    "<li>" + T("warranty.not_covered_2",
+      "Последствия самостоятельного или стороннего ремонта.") + "</li>" +
+    "<li>" + T("warranty.not_covered_3",
+      "Естественный износ, в том числе снижение ёмкости батареи.") + "</li>" +
     "</ul>";
 
-  const WARRANTY_INFO_HTML = {
-    included:
-      "<h3>🛡️ Гарантия 1 год — уже включена в цену</h3>" + WARRANTY_INTRO_HTML +
-      "<h4>Как обслуживаем</h4><ul>" +
-      "<li>Разбираемся сами, за свой счёт — везти никуда не нужно.</li>" +
-      "<li>Срок — обычно <strong>1–2 недели</strong>, часто быстрее.</li>" +
-      "<li>Если ремонт невозможен — вернём деньги в размере стоимости покупки " +
-      "или заменим на аналогичное устройство.</li>" +
-      "</ul>" + WARRANTY_EXCLUSIONS_HTML,
-    extra:
-      "<h3>🛡 Дополнительная гарантия на 1 год</h3>" + WARRANTY_INTRO_HTML +
-      `<p>Стоимость — <strong>${formatPrice(EXTRA_WARRANTY_PRICE)}</strong> за устройство, ` +
-      "оформляется в момент покупки.</p>" +
-      "<h4>Как обслуживаем</h4><ul>" +
-      "<li>Устройство отправляется в авторизованный сервис Apple за границей — " +
-      "решение по гарантийному случаю принимает <strong>Apple</strong>, не мы.</li>" +
-      "<li>Срок обслуживания — <strong>от 1 до 2 месяцев</strong>, включая дорогу.</li>" +
-      "<li>Все расходы по отправке и обслуживанию берём на себя.</li>" +
-      "</ul>" + WARRANTY_EXCLUSIONS_HTML +
-      "<h4>Без допгарантии</h4><p>Действует только базовая — 7 дней с покупки " +
-      "либо до активации, дальше обслуживание платное.</p>",
-    basic:
-      "<h3>🛡 Базовая гарантия</h3>" + WARRANTY_INTRO_HTML +
-      "<p>На это устройство действует базовая гарантия: <strong>7 дней с момента " +
-      "покупки</strong> либо <strong>до активации</strong> — зависит от позиции.</p>" +
-      "<p>Перед выдачей мы проверяем устройство при вас: внешний вид, комплект и работу.</p>" +
-      "<p>Точные условия по конкретной позиции лучше уточнить — ответим сразу.</p>",
-  };
+  function warrantyInfoHtml(kind) {
+    const how = "<h4>" + T("warranty.how_we_handle", "Как обслуживаем") + "</h4>";
+
+    if (kind === "included") {
+      return "<h3>" + T("warranty.included_title", "🛡️ Гарантия 1 год — уже включена в цену") + "</h3>" +
+        WARRANTY_INTRO_HTML() + how + "<ul>" +
+        "<li>" + T("warranty.included_1",
+          "Разбираемся сами, за свой счёт — везти никуда не нужно.") + "</li>" +
+        "<li>" + T("warranty.included_2",
+          "Срок — обычно <strong>1–2 недели</strong>, часто быстрее.") + "</li>" +
+        "<li>" + T("warranty.included_3",
+          "Если ремонт невозможен — вернём деньги в размере стоимости покупки " +
+          "или заменим на аналогичное устройство.") + "</li>" +
+        "</ul>" + WARRANTY_EXCLUSIONS_HTML();
+    }
+
+    if (kind === "extra") {
+      const price = formatPrice(EXTRA_WARRANTY_PRICE);
+      return "<h3>" + T("warranty.extra_title", "🛡 Дополнительная гарантия на 1 год") + "</h3>" +
+        WARRANTY_INTRO_HTML() +
+        "<p>" + T("warranty.extra_price",
+          `Стоимость — <strong>${price}</strong> за устройство, оформляется в момент покупки.`,
+          { price }) + "</p>" + how + "<ul>" +
+        "<li>" + T("warranty.extra_1",
+          "Устройство отправляется в авторизованный сервис Apple за границей — " +
+          "решение по гарантийному случаю принимает <strong>Apple</strong>, не мы.") + "</li>" +
+        "<li>" + T("warranty.extra_2",
+          "Срок обслуживания — <strong>от 1 до 2 месяцев</strong>, включая дорогу.") + "</li>" +
+        "<li>" + T("warranty.extra_3",
+          "Все расходы по отправке и обслуживанию берём на себя.") + "</li>" +
+        "</ul>" + WARRANTY_EXCLUSIONS_HTML() +
+        "<h4>" + T("warranty.no_extra_title", "Без допгарантии") + "</h4>" +
+        "<p>" + T("warranty.no_extra",
+          "Действует только базовая — 7 дней с покупки либо до активации, " +
+          "дальше обслуживание платное.") + "</p>";
+    }
+
+    return "<h3>" + T("warranty.basic_title", "🛡 Базовая гарантия") + "</h3>" +
+      WARRANTY_INTRO_HTML() +
+      "<p>" + T("warranty.basic_1",
+        "На это устройство действует базовая гарантия: <strong>7 дней с момента " +
+        "покупки</strong> либо <strong>до активации</strong> — зависит от позиции.") + "</p>" +
+      "<p>" + T("warranty.basic_2",
+        "Перед выдачей мы проверяем устройство при вас: внешний вид, комплект и работу.") + "</p>" +
+      "<p>" + T("warranty.basic_3",
+        "Точные условия по конкретной позиции лучше уточнить — ответим сразу.") + "</p>";
+  }
 
   /**
    * Ссылка на переписку с нами с уже набранным вопросом про гарантию.
@@ -138,7 +167,9 @@
     const names = cart.map((i) => i.name).filter(Boolean);
     if (!names.length) return null;
     const list = names.length === 1 ? names[0] : names.map((n) => `• ${n}`).join("\n");
-    const text = `Здравствуйте! Хочу уточнить гарантию по товару:\n${list}`;
+    // Название уходит в чат ОРИГИНАЛЬНОЕ, не переведённое: читает его наш
+    // оператор, и оно должно совпадать со строкой в прайсе.
+    const text = `${T("warranty.ask_message", "Здравствуйте! Хочу уточнить гарантию по товару:")}\n${list}`;
     return `https://t.me/${WARRANTY_CONTACT_USERNAME}?text=${encodeURIComponent(text)}`;
   }
 
@@ -148,11 +179,12 @@
     if (!product) return;
     const askUrl = warrantyAskUrl();
     const footer = askUrl
-      ? `<a class="warranty-modal__ask" href="${escapeHtml(askUrl)}" target="_blank" rel="noopener">✍️ Уточнить гарантию у IRON SERVICE</a>`
-      : "<p class=\"warranty-modal__hint\">Чтобы уточнить условия по конкретному устройству, " +
-        "сначала добавьте его в корзину — тогда вопрос уйдёт нам вместе с названием товара.</p>";
+      ? `<a class="warranty-modal__ask" href="${escapeHtml(askUrl)}" target="_blank" rel="noopener">${escapeHtml(T("warranty.ask", "✍️ Уточнить гарантию у IRON SERVICE"))}</a>`
+      : `<p class="warranty-modal__hint">${escapeHtml(T("warranty.hint",
+          "Чтобы уточнить условия по конкретному устройству, сначала добавьте его в " +
+          "корзину — тогда вопрос уйдёт нам вместе с названием товара."))}</p>`;
 
-    openWarrantyModal(WARRANTY_INFO_HTML[warrantyKindFor(product)] + footer);
+    openWarrantyModal(warrantyInfoHtml(warrantyKindFor(product)) + footer);
   }
 
   /**
@@ -165,8 +197,8 @@
     el.className = "warranty-modal";
     el.innerHTML =
       '<div class="warranty-modal__backdrop" data-close="1"></div>' +
-      '<div class="warranty-modal__box" role="dialog" aria-modal="true" aria-label="Условия гарантии">' +
-      '<button type="button" class="warranty-modal__close" data-close="1" aria-label="Закрыть">×</button>' +
+      `<div class="warranty-modal__box" role="dialog" aria-modal="true" aria-label="${escapeHtml(T("warranty.modal_aria", "Условия гарантии"))}">` +
+      `<button type="button" class="warranty-modal__close" data-close="1" aria-label="${escapeHtml(T("warranty.close", "Закрыть"))}">×</button>` +
       `<div class="warranty-modal__body">${innerHtml}</div></div>`;
     el.addEventListener("click", (e) => {
       if (e.target.dataset.close) el.remove();
@@ -178,13 +210,13 @@
     });
     document.body.appendChild(el);
   }
-  const HYBRID_IPHONE_MANIFEST = "hybrid-products/iphone-cards.json";
-  const HYBRID_IPAD_MANIFEST = "hybrid-products/ipad-cards.json";
-  const HYBRID_MACBOOK_MANIFEST = "hybrid-products/macbook-cards.json";
-  const HYBRID_WATCH_MANIFEST = "hybrid-products/watch-cards.json";
-  const HYBRID_AIRPODS_MANIFEST = "hybrid-products/airpods-cards.json";
-  const HYBRID_SAMSUNG_MANIFEST = "hybrid-products/samsung-cards.json";
-  const HYBRID_ACCESSORIES_MANIFEST = "hybrid-products/accessories-cards.json";
+  const HYBRID_IPHONE_MANIFEST = "/hybrid-products/iphone-cards.json";
+  const HYBRID_IPAD_MANIFEST = "/hybrid-products/ipad-cards.json";
+  const HYBRID_MACBOOK_MANIFEST = "/hybrid-products/macbook-cards.json";
+  const HYBRID_WATCH_MANIFEST = "/hybrid-products/watch-cards.json";
+  const HYBRID_AIRPODS_MANIFEST = "/hybrid-products/airpods-cards.json";
+  const HYBRID_SAMSUNG_MANIFEST = "/hybrid-products/samsung-cards.json";
+  const HYBRID_ACCESSORIES_MANIFEST = "/hybrid-products/accessories-cards.json";
   const HYBRID_IPHONE_MANIFEST_VERSION = "2026-06-20-3";
   const HYBRID_IPAD_MANIFEST_VERSION = "2026-06-20-1";
   const HYBRID_MACBOOK_MANIFEST_VERSION = "2026-06-26-3";
@@ -307,7 +339,10 @@
   // товары без признака «под заказ» — то есть без пометки в карточке.
   const CATALOG_CACHE_KEY = "iron_catalog_products_v2";
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
-  const USER_LOAD_ERROR = "Не удалось загрузить товары. Идут технические работы. Скоро все починим";
+  // Функция, а не константа: словарь приезжает асинхронно, а константа
+  // вычислилась бы до его загрузки и на /en/ осталась русской.
+  const userLoadError = () => T("shop.load_error",
+    "Не удалось загрузить товары. Идут технические работы. Скоро все починим");
 
   const els = {
     root: document.getElementById("shop-prices"),
@@ -438,7 +473,7 @@
       console.error(e);
       if (!allProducts.length && !tryShowCachedProducts(true)) {
         catalogLoadState = "ready";
-        showError(USER_LOAD_ERROR);
+        showError(userLoadError());
         renderGrid();
       }
     }
@@ -607,7 +642,7 @@
         const allowHeuristicFallback = location.protocol === "file:" || !iphoneHybridManifestLoaded;
         const meta = resolveIphoneHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -620,7 +655,7 @@
         const allowHeuristicFallback = location.protocol === "file:" || !macbookHybridManifestLoaded;
         const meta = resolveMacbookHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -633,7 +668,7 @@
         const allowHeuristicFallback = location.protocol === "file:" || !ipadHybridManifestLoaded;
         const meta = resolveIpadHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -646,7 +681,7 @@
         const allowHeuristicFallback = location.protocol === "file:" || !watchHybridManifestLoaded;
         const meta = resolveWatchHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -659,7 +694,7 @@
         const allowHeuristicFallback = location.protocol === "file:" || !airpodsHybridManifestLoaded;
         const meta = resolveAirpodsHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -671,7 +706,7 @@
       if (isHybridSamsungCandidate(product)) {
         const meta = resolveSamsungHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -683,7 +718,7 @@
       if (isHybridAccessoriesCandidate(product)) {
         const meta = resolveAccessoriesHybridMeta(product);
         if (meta && meta.url) {
-          product.hybridDetailUrl = encodeURI(String(meta.url));
+          product.hybridDetailUrl = encodeURI(siteRootUrl(meta.url));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
           continue;
         }
@@ -1503,8 +1538,25 @@
     return Boolean(product && product.category === "accessories");
   }
 
+  /**
+   * Путь из манифеста — от корня сайта, а не от текущей папки.
+   *
+   * Манифесты hybrid-products пишут пути относительными («assets/product-images/
+   * x.jpg», «hybrid-products/iphone/y.html»), и на русских страницах в корне это
+   * работало. На /en/shop.html тот же путь превращался в /en/assets/… — фотографии
+   * товаров не грузились вовсе, а ссылки на подробные страницы вели в 404.
+   * Найдено 18.08.2026 по логам сервера; глазами не видно — карточка просто
+   * остаётся без картинки.
+   */
+  function siteRootUrl(path) {
+    const raw = String(path || "").trim();
+    if (!raw) return "";
+    if (/^[a-z]+:/i.test(raw) || raw.startsWith("/") || raw.startsWith("#")) return raw;
+    return "/" + raw.replace(/^\.\//, "");
+  }
+
   function normalizeHybridCoverUrl(cover) {
-    const raw = String(cover || "").trim();
+    const raw = siteRootUrl(cover);
     if (!raw) return "";
     try {
       const parsed = new URL(raw);
@@ -1561,7 +1613,7 @@
 
     allProducts = result.products || [];
     if (!allProducts.length) {
-      if (!partial) showError(USER_LOAD_ERROR);
+      if (!partial) showError(userLoadError());
       return false;
     }
 
@@ -1674,7 +1726,8 @@
       const changed = select.value !== value;
       if (changed) select.value = value;
       label.textContent =
-        select.options[select.selectedIndex]?.textContent || select.options[0]?.textContent || "Все категории";
+        select.options[select.selectedIndex]?.textContent || select.options[0]?.textContent ||
+        T("page.all_categories", "Все категории");
       menu.querySelectorAll(".shop-category-picker__option").forEach((node) => {
         const active = node.dataset.value === value;
         node.classList.toggle("is-active", active);
@@ -2502,7 +2555,7 @@
       chips.push(
         `<button type="button" class="shop-filter-chip${active[facet.id] ? "" : " is-active"}" data-facet="${escapeHtml(
           facet.id
-        )}" data-value="">Все</button>`
+        )}" data-value="">${escapeHtml(T("filters.all", "Все"))}</button>`
       );
     }
     for (const value of options) {
@@ -2516,7 +2569,7 @@
 
     const labelHtml = hideLabel
       ? ""
-      : `<span class="shop-filter-group__label">${escapeHtml(facet.label)}</span>`;
+      : `<span class="shop-filter-group__label">${escapeHtml(I18N.value("filter_labels", facet.label))}</span>`;
 
     return `
       <div class="shop-filter-group">
@@ -2536,7 +2589,7 @@
     if (!items.length) return "";
 
     return `
-      <div class="shop-filters-trail" aria-label="Выбранные параметры">
+      <div class="shop-filters-trail" aria-label="${escapeHtml(T("filters.trail_aria", "Выбранные параметры"))}">
         ${items
           .map(
             (item) =>
@@ -2606,10 +2659,10 @@
     root.innerHTML = `
       <div class="shop-filters shop-filters--desktop">
         <div class="shop-filters__head">
-          <strong class="shop-filters__title">Подбор ${escapeHtml(registry.label || cat)}</strong>
+          <strong class="shop-filters__title">${escapeHtml(T("filters.picker", "Подбор"))} ${escapeHtml(registry.label || cat)}</strong>
           ${
             hasActive
-              ? '<button type="button" class="shop-filters__reset" data-action="reset-filters">Сбросить</button>'
+              ? `<button type="button" class="shop-filters__reset" data-action="reset-filters">${escapeHtml(T("filters.reset", "Сбросить"))}</button>`
               : ""
           }
         </div>
@@ -2630,7 +2683,7 @@
       root.innerHTML = `
         <div class="shop-filters shop-filters--mobile">
           <div class="shop-filters__head">
-            <strong class="shop-filters__title">Подбор ${escapeHtml(registry.label || cat)}</strong>
+            <strong class="shop-filters__title">${escapeHtml(T("filters.picker", "Подбор"))} ${escapeHtml(registry.label || cat)}</strong>
             <button type="button" class="shop-filters__reset" data-action="reset-filters">Сбросить</button>
           </div>
           ${trailHtml}
@@ -2646,7 +2699,8 @@
       return;
     }
 
-    const prompt = registry.getMobileWizardPrompt?.(step) || facet.label;
+    const prompt = I18N.value("filter_prompts",
+      registry.getMobileWizardPrompt?.(step) || facet.label);
     const groupHtml = buildFilterGroupHtml(registry, products, active, facet, false, true);
     if (!groupHtml) {
       root.hidden = true;
@@ -2658,10 +2712,10 @@
     root.innerHTML = `
       <div class="shop-filters shop-filters--mobile">
         <div class="shop-filters__head">
-          <strong class="shop-filters__title">Подбор ${escapeHtml(registry.label || cat)}</strong>
+          <strong class="shop-filters__title">${escapeHtml(T("filters.picker", "Подбор"))} ${escapeHtml(registry.label || cat)}</strong>
           ${
             hasActive
-              ? '<button type="button" class="shop-filters__reset" data-action="reset-filters">Сброс</button>'
+              ? `<button type="button" class="shop-filters__reset" data-action="reset-filters">${escapeHtml(T("filters.reset_short", "Сброс"))}</button>`
               : ""
           }
         </div>
@@ -2670,7 +2724,7 @@
           <div class="shop-filters-wizard__head">
             ${
               step !== firstFacetId
-                ? '<button type="button" class="shop-filters-wizard__back" data-action="wizard-back">← Назад</button>'
+                ? `<button type="button" class="shop-filters-wizard__back" data-action="wizard-back">${escapeHtml(T("filters.back", "← Назад"))}</button>`
                 : ""
             }
             <p class="shop-filters-wizard__prompt">${escapeHtml(prompt)}</p>
@@ -2868,14 +2922,14 @@
         els.grid.innerHTML = renderGridLoadingHtml();
         return;
       }
-      els.grid.innerHTML = '<p class="price-grid-empty">Ничего не найдено. Попробуйте другой запрос.</p>';
+      els.grid.innerHTML = `<p class="price-grid-empty">${escapeHtml(T("shop.nothing_found", "Ничего не найдено. Попробуйте другой запрос."))}</p>`;
       return;
     }
 
     const cardsHtml = groups
       .map(({ section, items }) => {
         const header = section
-          ? `<header class="price-section-head"><h2 class="price-section-title">${escapeHtml(section)}</h2></header>`
+          ? `<header class="price-section-head"><h2 class="price-section-title">${escapeHtml(I18N.section(section))}</h2></header>`
           : "";
         return header + items.map(renderProductCard).join("");
       })
@@ -2883,7 +2937,7 @@
 
     const tailHtml =
       catalogLoadState === "partial"
-        ? '<p class="price-grid-more" aria-live="polite">Загружаем остальные позиции…</p>'
+        ? `<p class="price-grid-more" aria-live="polite">${escapeHtml(T("shop.loading_more", "Загружаем остальные позиции…"))}</p>`
         : "";
 
     els.grid.innerHTML = cardsHtml + tailHtml;
@@ -2957,7 +3011,7 @@
           <span>${escapeHtml(p.priceLabel)}${p.country ? " · " + escapeHtml(I18N.country(p.country)) : ""}${p.warehouse ? " · " + escapeHtml(I18N.quantity(p.warehouse)) : ""}${p.preorder ? " · " + escapeHtml(PREORDER_BADGE_TEXT) : ""}</span>
           ${p.extraWarranty ? `<span class="cart-item__warranty">${escapeHtml(T("cart.extra_warranty_item", `🛡 + гарантия 1 год — ${formatPrice(EXTRA_WARRANTY_PRICE)}`, { price: formatPrice(EXTRA_WARRANTY_PRICE) }))}</span>` : ""}
         </div>
-        <button type="button" class="cart-item__remove" data-id="${p.id}" aria-label="Убрать">×</button>
+        <button type="button" class="cart-item__remove" data-id="${p.id}" aria-label="${escapeHtml(T("cart.remove", "Убрать"))}">×</button>
       </li>`
       )
       .join("");
@@ -3124,14 +3178,14 @@
 
   function buildIphoneDetailFallbackUrl(product) {
     const byName = slugify(product.name || "");
-    if (byName) return `hybrid-products/${byName}.html`;
+    if (byName) return `/hybrid-products/${byName}.html`;
 
     const priceSuffix = parsePrice(product.price) || parsePrice(product.priceLabel);
     const byWarehouseAndPrice = slugifyWithSuffix(
       `${product.name || ""}${product.warehouse || ""}`,
       priceSuffix
     );
-    return byWarehouseAndPrice ? `hybrid-products/iphone/${byWarehouseAndPrice}.html` : "";
+    return byWarehouseAndPrice ? `/hybrid-products/iphone/${byWarehouseAndPrice}.html` : "";
   }
 
   function buildMacbookDetailFallbackUrl(product) {
@@ -3140,7 +3194,7 @@
       `${product.name || ""}${product.warehouse || ""}`,
       priceSuffix
     );
-    return byWarehouseAndPrice ? `hybrid-products/macbook/${byWarehouseAndPrice}.html` : "";
+    return byWarehouseAndPrice ? `/hybrid-products/macbook/${byWarehouseAndPrice}.html` : "";
   }
 
   function buildIpadDetailFallbackUrl(product) {
@@ -3149,7 +3203,7 @@
       `${product.name || ""}${product.warehouse || ""}`,
       priceSuffix
     );
-    return byWarehouseAndPrice ? `hybrid-products/ipad/${byWarehouseAndPrice}.html` : "";
+    return byWarehouseAndPrice ? `/hybrid-products/ipad/${byWarehouseAndPrice}.html` : "";
   }
 
   function buildWatchDetailFallbackUrl(product) {
@@ -3158,7 +3212,7 @@
       `${product.name || ""}${product.warehouse || ""}`,
       priceSuffix
     );
-    return byWarehouseAndPrice ? `hybrid-products/watch/${byWarehouseAndPrice}.html` : "";
+    return byWarehouseAndPrice ? `/hybrid-products/watch/${byWarehouseAndPrice}.html` : "";
   }
 
   function buildAirpodsDetailFallbackUrl(product) {
@@ -3167,7 +3221,7 @@
       `${product.name || ""}${product.warehouse || ""}`,
       priceSuffix
     );
-    return byWarehouseAndPrice ? `hybrid-products/airpods/${byWarehouseAndPrice}.html` : "";
+    return byWarehouseAndPrice ? `/hybrid-products/airpods/${byWarehouseAndPrice}.html` : "";
   }
 
   function escapeHtml(s) {

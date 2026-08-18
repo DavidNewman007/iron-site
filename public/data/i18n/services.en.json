@@ -198,7 +198,14 @@
       "Стёкла камер": "Camera glass",
       "Шлейф с датчиком приближения и микрофоном": "Flex with proximity sensor and microphone",
       "Шлейфы кнопок и вспышки": "Button and flash flex cables",
-      "переклей": "glass refurbishment"
+      "переклей": "glass refurbishment",
+      "с гарантией": "with warranty",
+      "без гарантии": "without warranty",
+      "если треснуло только стекло, а сенсор работает — матрица остаётся родная": "if only the glass is cracked and the touch still works, the original panel stays in place",
+      "запчастей нет — цена целиком за работу": "no parts needed — the price is labour only",
+      "переклейка новой матрицы в родную крышку; плюс сама матрица": "a new panel is bonded into your original lid; the panel itself is charged on top",
+      "плюс сам тачпад — его цена зависит от модели": "plus the trackpad itself — its price depends on the model",
+      "точная цена только после диагностики — залития непредсказуемы": "the exact price comes after diagnostics — liquid damage is unpredictable"
     },
     "fragments": {
       "с привязкой": "paired",

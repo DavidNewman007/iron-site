@@ -274,7 +274,7 @@
         (s.options || []).forEach(function (o) {
           var sub = document.createElement("li");
           sub.className = "rs-option";
-          sub.appendChild(document.createTextNode(o.label + " — " + money(o.price) + " "));
+          sub.appendChild(document.createTextNode(variantLabel(o.label) + " — " + money(o.price) + " "));
           sub.appendChild(addButton(s, o));
           ul.appendChild(sub);
         });
@@ -282,7 +282,11 @@
       card.appendChild(ul);
 
       if (head.work_only) card.appendChild(note(t("work_only", "Указана работа — запчасть считается отдельно.")));
-      if (head.note) card.appendChild(note(head.note));
+      // Заметка мастера из прайса иногда повторяет автоматическую подпись про
+      // диагностику — тогда под карточкой стояли две строки об одном и том же
+      // (видно и на русской версии). Показываем одну.
+      var дубльДиагностики = head.requires_diagnostics && /диагностик/i.test(head.note || "");
+      if (head.note && !дубльДиагностики) card.appendChild(note(variantLabel(head.note)));
       if (head.requires_diagnostics) {
         card.appendChild(note(t("liquid_note", "Точную цену назовём после диагностики — залития непредсказуемы.")));
       }
@@ -621,6 +625,9 @@
   // лежит в /en/, и "data/services.json" превратился бы там в
   // "/en/data/services.json" — 404 и пустой прайс (найдено при проверке
   // 17.08.2026, до того как страница попала в бой).
+  // Версия — из общего модуля: без неё браузер отдавал закэшированный прайс и
+  // словарь, и свежие цены на странице не появлялись.
+  var верс = function (u) { return window.IRON_I18N ? window.IRON_I18N.url(u) : u; };
   var DATA = "/data/services.json";
   var DICT_URL = "/data/i18n/services.en.json";
 
@@ -630,8 +637,8 @@
   // Если он не подтянулся — работаем с русскими подписями: пустой прайс хуже,
   // чем прайс с непереведёнными названиями операций.
   Promise.all([
-    fetch(DATA).then(function (r) { return r.json(); }),
-    EN ? fetch(DICT_URL).then(function (r) { return r.json(); }).catch(function () { return null; })
+    fetch(верс(DATA)).then(function (r) { return r.json(); }),
+    EN ? fetch(верс(DICT_URL)).then(function (r) { return r.json(); }).catch(function () { return null; })
        : Promise.resolve(null)
   ])
     .then(function (both) {
