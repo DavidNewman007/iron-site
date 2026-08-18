@@ -16,7 +16,16 @@
     "замена шлейфа": "Flex cable replacement",
     "переклейка стекла дисплея": "Glass-only refurbishment",
     "профилактика (чистка, термопаста)": "Cleaning and thermal service",
-    "ремонт после залития": "Liquid damage repair"
+    "ремонт после залития": "Liquid damage repair",
+    "установка ПО": "Software install",
+    "ремонт платы": "Board-level repair",
+    "замена динамика": "Speaker replacement",
+    "перенос данных": "Data transfer",
+    "замена накопителя (SSD)": "SSD replacement",
+    "диагностика": "Diagnostics",
+    "замена стекла": "Glass replacement",
+    "замена разъёма зарядки": "Charging port replacement",
+    "полировка стекла": "Glass polishing"
   },
   "op_labels": {
     "замена аккумулятора": "Battery",
@@ -34,7 +43,16 @@
     "замена матрицы без крышки": "Display panel",
     "переклейка стекла дисплея": "Glass only",
     "профилактика (чистка, термопаста)": "Cleaning",
-    "ремонт после залития": "Liquid damage"
+    "ремонт после залития": "Liquid damage",
+    "установка ПО": "Software",
+    "ремонт платы": "Board repair",
+    "замена динамика": "Speaker",
+    "перенос данных": "Data transfer",
+    "замена накопителя (SSD)": "SSD",
+    "диагностика": "Diagnostics",
+    "замена стекла": "Glass",
+    "замена разъёма зарядки": "Charging port",
+    "полировка стекла": "Polishing"
   },
   "quality": {
     "title": "Which part is which, and how the warranty depends on it",
@@ -220,5 +238,48 @@
       "переклей": "refurbished glass",
       "АКБ": "Battery"
     }
+  },
+  "repair_extra": {
+    "_комментарий": "Раздел «остальная техника» на английской странице услуг. Данные (repair-extra.json) генерируются из базы знаний бота и правкам не подлежат — поэтому переводы лежат здесь и подставляются по ключу блока. Добавлено 18.08.2026.",
+    "title": "We repair the rest of it too",
+    "lead": "The search above covers everything we have an exact price for. Anything else we repair as well — we name the price after looking at the device, and diagnostics are free.",
+    "water_summary": "💧 Liquid damage — what to do right now",
+    "no_price": "quoted after inspection",
+    "included": "included",
+    "arm_note": "Upgrading a Mac to Apple Silicon:",
+    "devices": {
+      "Mac mini": "Mac mini",
+      "AirPods": "AirPods",
+      "системные блоки, ПК": "desktop PCs",
+      "iPad и планшеты": "iPad and tablets",
+      "iMac и моноблоки": "iMac and all-in-ones",
+      "Apple Watch": "Apple Watch",
+      "MacBook": "MacBook",
+      "iPhone": "iPhone"
+    },
+    "water": {
+      "общее": "⚠️ The most important things right now\n• Do not switch it on and do not put it on charge — under voltage the corrosion goes many times faster.\n• Do not dry it with a hairdryer and do not heat it: hot air drives the moisture deeper, under the screen and onto the board.\n• Do not shake it or turn it over repeatedly — that spreads the liquid across the board.",
+      "ноутбук": "💻 If it is a MacBook or another laptop\nOpen it and lay it screen up, keyboard down — like an open book placed cover up. Do not stand it in a tent shape (screen and keyboard pointing down): in that position the liquid runs straight into the display, and you add a screen to the board repair.",
+      "срочность": "⏱ Why it needs to come in as fast as possible\nWhile the battery is still connected to the board, there is voltage on the contacts — and corrosion begins. Traces and contacts literally rot, and the longer it goes on, the more expensive the repair. The first thing to do is cut the power: we disconnect the battery straight away. We do not advise opening the device yourself — without experience it is easy to add damage.",
+      "не_включается": "If the device no longer switches on, that is not a reason to wait — quite the opposite. The sooner we open it and clean off the corrosion, the better the chance of getting away with a clean.",
+      "недорогой_исход": "💡 It often ends well. Quite frequently very little liquid gets in: we open the device, see that it is dry inside with no traces — and that is that. Such an inspection costs between 1,000 and 2,000 ₽ if no damage is found.",
+      "почему_нет_цены": "🔍 Why we cannot name an exact price straight away\nWater spreads unpredictably: on one device it is an hour's cleaning, on another the traces under the processor are damaged. Until a technician opens the device and sees the scale of it, any figure would be invention. We look, then name the exact price before any work starts.",
+      "скрытые_дефекты": "⚠️ About hidden faults — we say this upfront, not afterwards.\nOn liquid-damaged devices that do not switch on, some problems only become visible once the board has been brought back to life. It happens that after start-up a screen or trackpad fault appears that could not have been known about before. In that case we stop and agree it with you before doing anything further or charging for it."
+    },
+    "arm_text": "On Macs with Apple silicon (M1 and later) the memory and storage are soldered to the board. Technically we can reball an SSD and increase memory, but the work is expensive and risky — it is usually better value to sell the current machine and buy one with the capacity you need. We will tell you honestly how it works out in your case."
+  },
+  "families": {
+    "iphone": "iPhone",
+    "mac": "MacBook",
+    "imac": "iMac",
+    "ipad": "iPad",
+    "watch": "Apple Watch",
+    "laptop": "Other laptops",
+    "android": "Android"
+  },
+  "devices": {
+    "Ноутбук (другой марки)": "Laptop (other brand)",
+    "Смартфон Android": "Android phone",
+    "iMac 24\" M1 и новее": "iMac 24\" M1 and newer"
   }
 }

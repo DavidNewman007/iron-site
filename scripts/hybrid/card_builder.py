@@ -244,8 +244,8 @@ def render_html(source: dict[str, Any], lang: str = "ru") -> str:
   <title>{_esc(name)} — IRON SERVICE</title>
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
-  <link rel="stylesheet" href="{base}/css/styles.css">
-  <link rel="stylesheet" href="{base}/css/shop.css">
+  <link rel="stylesheet" href="{base}/css/styles.css?v={HYBRID_CART_VERSION}">
+  <link rel="stylesheet" href="{base}/css/shop.css?v={HYBRID_CART_VERSION}">
   <style>
     .detail-wrap {{ max-width: 1200px; margin: 0 auto; padding: 1rem; }}
     .detail-grid {{ display:grid; grid-template-columns: 1fr 1fr; gap:1rem; align-items:start; }}

@@ -1439,40 +1439,31 @@ section {
   color: var(--cream);
 }
 
-/* — корзина — */
-.rs-cart {
-  margin-top: 1.5rem;
-  padding: 1.15rem 1.25rem;
-  background: rgba(20, 20, 20, 0.45);
-  border: 1px solid var(--red-soft);
-  border-radius: 14px;
+/* — корзина услуг —
+   Облик берётся из css/shop.css (.cart-panel, .cart-list, .cart-mobile-bar):
+   владелец попросил, чтобы корзина услуг была такой же, как корзина товаров
+   (18.08.2026). Здесь остаётся только раскладка, которой в магазине занимается
+   двухколоночная сетка .shop-layout — на странице услуг её нет, поэтому панель
+   прижимаем вправо и ограничиваем по ширине. Прежние декоративные правила
+   (.rs-cart с собственным фоном и рамкой) удалены: две похожие, но разные
+   корзины разъезжаются при первой же правке стилей. */
+.rs-cart.cart-panel {
+  margin: 1.5rem 0 0 auto;
+  max-width: 360px;
+  width: 100%;
 }
-.rs-cart h3 { margin: 0 0 0.7rem; font-size: 1.05rem; }
-.rs-cart-list { list-style: none; margin: 0 0 0.6rem; padding: 0; }
-.rs-cart-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.3rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-}
-.rs-cart-list li:last-child { border-bottom: 0; }
-.rs-cart-list button {
-  background: none; border: 0; color: var(--text-muted);
-  cursor: pointer; font: inherit; text-decoration: underline;
-}
-.rs-cart-list button:hover { color: var(--red-bright); }
-.rs-cart-total {
-  margin: 0.7rem 0 1rem;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  color: var(--gold);
-}
-.rs-cart-clear {
-  margin-left: 0.9rem; background: none; border: 0;
-  color: var(--text-muted); cursor: pointer; font: inherit; text-decoration: underline;
-}
+
+.rs-cart .cart-item__body strong { display: block; }
+
 .rs-cart-note { margin: 0.8rem 0 0; font-size: 0.92rem; color: var(--text-muted); }
+
+@media (max-width: 900px) {
+  /* На телефоне панель выезжает снизу — ширину и отступы задаёт shop.css. */
+  .rs-cart.cart-panel {
+    max-width: none;
+    margin: 0;
+  }
+}
 
 /* — разбор качества — */
 .rs-quality { margin-top: 2rem; }

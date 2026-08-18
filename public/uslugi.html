@@ -15,8 +15,9 @@
   <link rel="icon" href="assets/logo-icon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/repair-extra.css">
+  <link rel="stylesheet" href="css/styles.css?v=2026-08-18-12">
+  <link rel="stylesheet" href="css/shop.css?v=2026-08-18-12">
+  <link rel="stylesheet" href="css/repair-extra.css?v=2026-08-18-12">
 </head>
 <body>
   <header class="site-header">
@@ -95,14 +96,30 @@
 
           <p class="rs-status" role="status"></p>
           <div class="rs-results"></div>
-          <div class="rs-cart" hidden>
-            <h3>Выбранные услуги</h3>
-            <ul class="rs-cart-list"></ul>
-            <p class="rs-cart-total"></p>
-            <button type="button" class="btn btn-primary rs-cart-send">Отправить заявку в Telegram</button>
-            <button type="button" class="rs-cart-clear">Очистить</button>
+          <!--
+            Корзина услуг устроена как корзина магазина (просьба владельца
+            18.08.2026): те же классы, та же выезжающая панель на телефоне и
+            та же плашка снизу. Раньше это был блок в потоке страницы — его не
+            было видно, пока не доскроллишь, а в магазине корзина всегда под
+            рукой. Классы переиспользуются из css/shop.css намеренно: две
+            похожие, но разные корзины разъедутся при первой же правке стилей.
+          -->
+          <aside class="cart-panel rs-cart" id="rs-cart" hidden>
+            <div class="cart-panel__head">
+              <h3>Выбранные услуги <span class="rs-cart-count">0</span></h3>
+              <button type="button" class="cart-close rs-cart-close" aria-label="Закрыть корзину">×</button>
+            </div>
+            <ul class="cart-list rs-cart-list"></ul>
+            <div class="cart-summary">
+              <span>Ориентир</span>
+              <strong class="rs-cart-total">—</strong>
+            </div>
+            <div class="cart-actions">
+              <button type="button" class="btn btn-primary rs-cart-send">Отправить заявку в Telegram</button>
+              <button type="button" class="btn btn-secondary rs-cart-clear">Очистить</button>
+            </div>
             <p class="rs-cart-note"></p>
-          </div>
+          </aside>
           <div id="rs-quality" class="rs-quality"></div>
         </div>
       </div>
@@ -188,6 +205,15 @@
     </section>
   </main>
 
+  <div class="cart-mobile-bar rs-cart-bar" hidden>
+    <span class="cart-mobile-bar__info">
+      <strong class="rs-cart-count-mobile">0</strong> усл. · <strong class="rs-cart-total-mobile">—</strong>
+    </span>
+    <div class="cart-mobile-bar__actions">
+      <button type="button" class="btn btn-primary rs-cart-toggle">Корзина</button>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
@@ -213,10 +239,10 @@
     </div>
   </footer>
 
-  <script src="js/i18n.js?v=2026-08-18-8"></script>
+  <script src="js/i18n.js?v=2026-08-18-12"></script>
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/repair-search.js?v=2026-08-18-8"></script>
-  <script src="js/repair-extra.js"></script>
+  <script src="js/repair-search.js?v=2026-08-18-12"></script>
+  <script src="js/repair-extra.js?v=2026-08-18-12"></script>
 </body>
 </html>

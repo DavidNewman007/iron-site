@@ -58,6 +58,16 @@
     return out.replace(/\s*,\s*/g, ", ").replace(/\s{2,}/g, " ").trim();
   }
 
+  /**
+   * Название модели. Почти все на латинице, но три записи в прайсе русские
+   * («Ноутбук (другой марки)», «Смартфон Android», «iMac 24" M1 и новее») —
+   * они и вылезали на английской странице (18.08.2026).
+   */
+  function deviceName(device) {
+    if (EN && DICT && DICT.devices && DICT.devices[device]) return DICT.devices[device];
+    return device;
+  }
+
   /** Полное название операции для заголовка карточки. */
   function opName(operation) {
     if (EN && DICT && DICT.operations && DICT.operations[operation]) return DICT.operations[operation];
@@ -75,6 +85,16 @@
   var cartList = root.querySelector(".rs-cart-list");
   var cartTotal = root.querySelector(".rs-cart-total");
   var cartNote = root.querySelector(".rs-cart-note");
+  // Корзина услуг теперь выглядит и ведёт себя как корзина магазина (просьба
+  // владельца 18.08.2026): счётчик в заголовке, панель и плашка снизу на
+  // телефоне. Элементы плашки лежат вне #repair-search — она прижата к низу
+  // экрана, поэтому ищем их по документу.
+  var cartCount = root.querySelector(".rs-cart-count");
+  var cartBar = document.querySelector(".rs-cart-bar");
+  var cartCountMobile = document.querySelector(".rs-cart-count-mobile");
+  var cartTotalMobile = document.querySelector(".rs-cart-total-mobile");
+  var cartToggle = document.querySelector(".rs-cart-toggle");
+  var cartClose = root.querySelector(".rs-cart-close");
 
   var services = [];
   var families = [];
@@ -244,7 +264,7 @@
 
       var device = document.createElement("p");
       device.className = "rs-device-name";
-      device.textContent = head.device;
+      device.textContent = deviceName(head.device);
       card.appendChild(device);
 
       var ul = document.createElement("ul");
@@ -428,7 +448,10 @@
   }
 
   function renderCart() {
-    cartBox.hidden = cart.length === 0;
+    var пустая = cart.length === 0;
+    cartBox.hidden = пустая;
+    if (пустая) cartBox.classList.remove("is-open");
+    if (cartBar) cartBar.hidden = пустая;
     cartList.innerHTML = "";
     var total = 0;
     var anyFrom = false;
@@ -436,25 +459,35 @@
       total += Number(c.price) || 0;
       if (c.priceFrom) anyFrom = true;
       var li = document.createElement("li");
+      li.className = "cart-item";
       var left = document.createElement("span");
+      left.className = "cart-item__body";
       // В корзине ХРАНЯТСЯ русские названия — заявку читают мастера, и она
       // должна прийти им на русском. Клиенту же показываем перевод: турист
       // выбирает услугу по-английски, мастерская получает её по-русски.
       var shownOp = opName(c.operation);
       var shownVariant = c.variant ? variantLabel(c.variant) : "";
-      left.textContent = shownOp + (shownVariant ? ", " + shownVariant : "") + " — " + c.device;
-      var right = document.createElement("span");
-      right.textContent = (c.priceFrom ? t("from", "от ") : "") + money(c.price) + " ";
+      var название = document.createElement("strong");
+      название.textContent = shownOp + (shownVariant ? ", " + shownVariant : "");
+      var устройство = document.createElement("span");
+      устройство.textContent = deviceName(c.device) + " · " + (c.priceFrom ? t("from", "от ") : "") + money(c.price);
+      left.appendChild(название);
+      left.appendChild(устройство);
       var rm = document.createElement("button");
       rm.type = "button";
-      rm.textContent = t("remove", "убрать");
+      rm.className = "cart-item__remove";
+      rm.setAttribute("aria-label", t("remove", "убрать"));
+      rm.textContent = "×";
       rm.addEventListener("click", function () { cart.splice(i, 1); renderCart(); apply(); });
-      right.appendChild(rm);
       li.appendChild(left);
-      li.appendChild(right);
+      li.appendChild(rm);
       cartList.appendChild(li);
     });
-    cartTotal.textContent = t("cart_total", "Итого: ") + (anyFrom ? t("from", "от ") : "") + money(total);
+    var сумма = (anyFrom ? t("from", "от ") : "") + money(total);
+    cartTotal.textContent = пустая ? "—" : сумма;
+    if (cartCount) cartCount.textContent = String(cart.length);
+    if (cartCountMobile) cartCountMobile.textContent = String(cart.length);
+    if (cartTotalMobile) cartTotalMobile.textContent = пустая ? "—" : сумма;
     cartNote.textContent = "";
   }
 
@@ -583,6 +616,17 @@
     apply();
   });
 
+  if (cartToggle) {
+    cartToggle.addEventListener("click", function () {
+      cartBox.classList.toggle("is-open");
+    });
+  }
+  if (cartClose) {
+    cartClose.addEventListener("click", function () {
+      cartBox.classList.remove("is-open");
+    });
+  }
+
   root.querySelector(".rs-cart-clear").addEventListener("click", function () {
     cart = [];
     renderCart();
@@ -639,7 +683,7 @@
     list.forEach(function (d) {
       var o = document.createElement("option");
       o.value = d;
-      o.textContent = d;
+      o.textContent = deviceName(d);
       if (d === activeDevice) o.selected = true;
       deviceSelect.appendChild(o);
     });
