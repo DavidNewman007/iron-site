@@ -95,7 +95,6 @@
   var cartTotalMobile = document.querySelector(".rs-cart-total-mobile");
   var cartToggle = document.querySelector(".rs-cart-toggle");
   var cartClose = root.querySelector(".rs-cart-close");
-  var cartLayout = root.querySelector(".rs-layout");
 
   var services = [];
   var families = [];
@@ -451,9 +450,6 @@
   function renderCart() {
     var пустая = cart.length === 0;
     cartBox.hidden = пустая;
-    // Вторая колонка появляется вместе с корзиной: пока ничего не выбрано,
-    // список занимает всю ширину.
-    if (cartLayout) cartLayout.classList.toggle("has-cart", !пустая);
     if (пустая) cartBox.classList.remove("is-open");
     if (cartBar) cartBar.hidden = пустая;
     cartList.innerHTML = "";

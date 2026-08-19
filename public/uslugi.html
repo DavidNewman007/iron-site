@@ -15,9 +15,9 @@
   <link rel="icon" href="assets/logo-icon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=2026-08-19-2">
-  <link rel="stylesheet" href="css/shop.css?v=2026-08-19-2">
-  <link rel="stylesheet" href="css/repair-extra.css?v=2026-08-19-2">
+  <link rel="stylesheet" href="css/styles.css?v=2026-08-19-3">
+  <link rel="stylesheet" href="css/shop.css?v=2026-08-19-3">
+  <link rel="stylesheet" href="css/repair-extra.css?v=2026-08-19-3">
 </head>
 <body>
   <header class="site-header">
@@ -69,32 +69,41 @@
         </p>
 
         <div id="repair-search" class="rs">
-          <label class="rs-field">
-            <span class="visually-hidden">Поиск по услугам ремонта</span>
-            <input type="search" class="rs-input" placeholder="Модель и поломка — «экран 13 про», «батарея 11», «чистка макбук»" autocomplete="off">
-          </label>
+          <!--
+            Рамка — только вокруг поиска и фильтров. Список и корзина живут
+            под ней, как в магазине: там тулбар отдельно, а сетка товаров и
+            корзина — рядом друг с другом и вне рамки (замечание владельца
+            19.08.2026 — корзина оказалась внутри рамки подбора и отъедала
+            место у списка).
+          -->
+          <div class="rs-panel">
+            <label class="rs-field">
+              <span class="visually-hidden">Поиск по услугам ремонта</span>
+              <input type="search" class="rs-input" placeholder="Модель и поломка — «экран 13 про», «батарея 11», «чистка макбук»" autocomplete="off">
+            </label>
 
-          <div class="rs-group">
-            <span class="rs-label">Устройство</span>
-            <!-- Кнопки техники строит repair-search.js из data/services.json.
-                 До 18.08.2026 они были вписаны сюда руками — ровно две, — и новая
-                 техника в прайсе появлялась, а отфильтровать по ней было нечем. -->
-            <div class="rs-chips" data-group="family"></div>
+            <div class="rs-group">
+              <span class="rs-label">Устройство</span>
+              <!-- Кнопки техники строит repair-search.js из data/services.json.
+                   До 18.08.2026 они были вписаны сюда руками — ровно две, — и новая
+                   техника в прайсе появлялась, а отфильтровать по ней было нечем. -->
+              <div class="rs-chips" data-group="family"></div>
+            </div>
+
+            <div class="rs-group">
+              <span class="rs-label">Что нужно сделать</span>
+              <div class="rs-chips rs-chips--ops" data-group="operation"></div>
+            </div>
+
+            <div class="rs-group">
+              <label class="rs-label" for="rs-device">Модель <button type="button" class="rs-reset" hidden>сбросить фильтры</button></label>
+              <select class="rs-device" id="rs-device" aria-label="Модель устройства">
+                <option value="">все модели</option>
+              </select>
+            </div>
+
+            <p class="rs-status" role="status"></p>
           </div>
-
-          <div class="rs-group">
-            <span class="rs-label">Что нужно сделать</span>
-            <div class="rs-chips rs-chips--ops" data-group="operation"></div>
-          </div>
-
-          <div class="rs-group">
-            <label class="rs-label" for="rs-device">Модель <button type="button" class="rs-reset" hidden>сбросить фильтры</button></label>
-            <select class="rs-device" id="rs-device" aria-label="Модель устройства">
-              <option value="">все модели</option>
-            </select>
-          </div>
-
-          <p class="rs-status" role="status"></p>
           <div class="rs-layout">
             <div class="rs-results"></div>
 
@@ -243,10 +252,10 @@
     </div>
   </footer>
 
-  <script src="js/i18n.js?v=2026-08-19-2"></script>
+  <script src="js/i18n.js?v=2026-08-19-3"></script>
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/repair-search.js?v=2026-08-19-2"></script>
-  <script src="js/repair-extra.js?v=2026-08-19-2"></script>
+  <script src="js/repair-search.js?v=2026-08-19-3"></script>
+  <script src="js/repair-extra.js?v=2026-08-19-3"></script>
 </body>
 </html>
