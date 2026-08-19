@@ -194,7 +194,9 @@
     "sending": "Sending…",
     "opening_telegram": "Opening Telegram…",
     "send_failed": "Could not send. Call us and we will take the order by phone.",
-    "price_note": "Prices are in Russian roubles and include the labour. Foreign-issued Visa and Mastercard do not work in Russia — please bring cash if your cards were issued abroad."
+    "price_note": "Prices are in Russian roubles and include the labour. Foreign-issued Visa and Mastercard do not work in Russia — please bring cash if your cards were issued abroad.",
+    "unit_one": "service",
+    "unit_many": "services"
   },
   "variants": {
     "_комментарий": "Тексты вариантов запчастей приходят из прайса свободной строкой. Здесь перевод целых строк (точное совпадение) и, ниже, кусочков (fragments) — на случай если генератор соберёт новую комбинацию. Не найдено ни там, ни там — показывается исходная русская строка.",

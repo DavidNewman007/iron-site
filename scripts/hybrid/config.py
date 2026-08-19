@@ -35,7 +35,7 @@ CATEGORY_DIR = {cat: HYBRID_ROOT / cat for cat in HYBRID_CATEGORIES}
 DR_STORE_BASE = "https://sochi.dr-store.ru"
 SITEMAP_URL = f"{DR_STORE_BASE}/sitemap.xml"
 
-HYBRID_CART_VERSION = "2026-08-18-12"
+HYBRID_CART_VERSION = "2026-08-19-2"
 
 CATEGORY_URL_PREFIXES: dict[str, list[str]] = {
     "iphone": ["/apple/iphone/"],

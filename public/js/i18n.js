@@ -21,7 +21,7 @@ window.IRON_I18N = (function () {
   // разметки, поэтому версионировать их некому — и браузер продолжал отдавать
   // старый словарь даже после деплоя нового. Поднимать вместе с версией
   // скриптов в HTML (18.08.2026).
-  var DATA_VERSION = "2026-08-18-12";
+  var DATA_VERSION = "2026-08-19-2";
 
   var lang = (document.documentElement.lang || "ru").slice(0, 2);
   var isEn = lang === "en";

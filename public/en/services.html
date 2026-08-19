@@ -50,9 +50,9 @@
   </script>
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css?v=2026-08-18-12">
-  <link rel="stylesheet" href="../css/shop.css?v=2026-08-18-12">
-  <link rel="stylesheet" href="../css/repair-extra.css?v=2026-08-18-12">
+  <link rel="stylesheet" href="../css/styles.css?v=2026-08-19-2">
+  <link rel="stylesheet" href="../css/shop.css?v=2026-08-19-2">
+  <link rel="stylesheet" href="../css/repair-extra.css?v=2026-08-19-2">
 </head>
 <body>
   <header class="site-header">
@@ -121,24 +121,36 @@
           </div>
 
           <p class="rs-status" role="status"></p>
-          <div class="rs-results"></div>
-          <!-- Та же корзина, что в магазине; см. комментарий в uslugi.html. -->
-          <aside class="cart-panel rs-cart" id="rs-cart" hidden>
-            <div class="cart-panel__head">
-              <h3>Selected services <span class="rs-cart-count">0</span></h3>
-              <button type="button" class="cart-close rs-cart-close" aria-label="Close cart">×</button>
-            </div>
-            <ul class="cart-list rs-cart-list"></ul>
-            <div class="cart-summary">
-              <span>Estimate</span>
-              <strong class="rs-cart-total">—</strong>
-            </div>
-            <div class="cart-actions">
-              <button type="button" class="btn btn-primary rs-cart-send">Send request via Telegram</button>
-              <button type="button" class="btn btn-secondary rs-cart-clear">Clear</button>
-            </div>
-            <p class="rs-cart-note"></p>
-          </aside>
+          <!-- Результаты и корзина в одной сетке; см. комментарий в uslugi.html. -->
+          <div class="rs-layout">
+            <div class="rs-results"></div>
+
+            <!--
+              Корзина услуг — та же, что в магазине (просьба владельца 18.08.2026),
+              и стоит она так же: справа от списка, закреплена сверху и едет вместе
+              с прокруткой (уточнение 19.08.2026 — до этого была под списком и
+              попадалась на глаза только внизу). Вторая колонка появляется вместе с
+              корзиной, то есть после выбора первой услуги: пустая колонка сузила бы
+              список ни за чем. Классы переиспользуются из css/shop.css намеренно —
+              две похожие, но разные корзины разъедутся при первой же правке стилей.
+            -->
+            <aside class="cart-panel rs-cart" id="rs-cart" hidden>
+              <div class="cart-panel__head">
+                <h3>Selected services <span class="rs-cart-count">0</span></h3>
+                <button type="button" class="cart-close rs-cart-close" aria-label="Close cart">×</button>
+              </div>
+              <ul class="cart-list rs-cart-list"></ul>
+              <div class="cart-summary">
+                <span>Estimate</span>
+                <strong class="rs-cart-total">—</strong>
+              </div>
+              <div class="cart-actions">
+                <button type="button" class="btn btn-primary rs-cart-send">Send request via Telegram</button>
+                <button type="button" class="btn btn-secondary rs-cart-clear">Clear</button>
+              </div>
+              <p class="rs-cart-note"></p>
+            </aside>
+          </div>
           <div id="rs-quality" class="rs-quality"></div>
         </div>
 
@@ -244,10 +256,10 @@
     </div>
   </footer>
 
-  <script src="../js/i18n.js?v=2026-08-18-12"></script>
+  <script src="../js/i18n.js?v=2026-08-19-2"></script>
   <script src="../js/config.js"></script>
   <script src="../js/main.js"></script>
-  <script src="../js/repair-search.js?v=2026-08-18-12"></script>
-  <script src="../js/repair-extra.js?v=2026-08-18-12"></script>
+  <script src="../js/repair-search.js?v=2026-08-19-2"></script>
+  <script src="../js/repair-extra.js?v=2026-08-19-2"></script>
 </body>
 </html>

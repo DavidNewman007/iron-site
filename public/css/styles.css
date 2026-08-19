@@ -1447,9 +1447,26 @@ section {
    прижимаем вправо и ограничиваем по ширине. Прежние декоративные правила
    (.rs-cart с собственным фоном и рамкой) удалены: две похожие, но разные
    корзины разъезжаются при первой же правке стилей. */
+/* Список и корзина стоят рядом, как в магазине: корзина справа, закреплена
+   сверху и едет вместе с прокруткой (уточнение владельца 19.08.2026). Вторая
+   колонка появляется только вместе с корзиной — класс has-cart вешает
+   repair-search.js, — иначе пустая колонка сужала бы список ни за чем. */
+.rs-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 1.25rem;
+}
+
+.rs-layout.has-cart {
+  grid-template-columns: minmax(0, 1fr) 340px;
+}
+
 .rs-cart.cart-panel {
-  margin: 1.5rem 0 0 auto;
-  max-width: 360px;
+  position: sticky;
+  /* Тот же отсчёт, что у корзины магазина: высота шапки плюс воздух. */
+  top: calc(var(--header-h) + 1rem);
   width: 100%;
 }
 
@@ -1458,8 +1475,17 @@ section {
 .rs-cart-note { margin: 0.8rem 0 0; font-size: 0.92rem; color: var(--text-muted); }
 
 @media (max-width: 900px) {
-  /* На телефоне панель выезжает снизу — ширину и отступы задаёт shop.css. */
+  /* На телефоне колонки нет: панель выезжает снизу, её положение задаёт
+     shop.css, а список остаётся во всю ширину. */
+  .rs-layout,
+  .rs-layout.has-cart {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
   .rs-cart.cart-panel {
+    position: fixed;
+    top: auto;
     max-width: none;
     margin: 0;
   }
