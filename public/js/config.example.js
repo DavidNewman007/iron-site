@@ -36,8 +36,12 @@ window.IRON_CONFIG = {
   yandexPayApiUrl: "",
   siteUrl: "https://1iron.ru",
 
-  // URL Web App PersonalOffer.js (Deploy → Web app, Anyone)
-  personalOfferApiUrl: "https://script.google.com/macros/s/AKfycbylyHTrL3Wj3533w4ZbKeFoE1x5aHaSLCiucWaRMRI/exec",
+  // URL Web App PersonalOffer.js (Deploy → Web app, Anyone).
+  // Обновлено 21.08.2026: прежний деплой AKfycbyl… отдавал не JSON, а форму
+  // логина Google (проверено курлом) — offer.html молча терял запасной путь
+  // загрузки предложения по токену. Текущий деплой тот же, что у channel-bot
+  // для daily-offer, и отвечает анонимно.
+  personalOfferApiUrl: "https://script.google.com/macros/s/AKfycbxrUfD6zplItTSN5gnsEiBn0I8awbs5t5eFwRkeFNd6kHLIyqlQg-hc5hsHo2n5jjVR/exec",
 
   map: {
     lat: 43.5854,
