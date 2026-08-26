@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Товар дня — IRON SERVICE</title>
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://1iron.ru/deal.html">
+<!--
+  ПОСТОЯННЫЙ АДРЕС ТОВАРА ДНЯ (26.08.2026).
+
+  Зачем страница нужна. Ссылка на спеццену каждый день новая и живёт сутки, а
+  акция в Яндекс Бизнесе проходит модерацию до 48 часов — вписать в акцию
+  суточный адрес нельзя в принципе, он протухнет раньше, чем акцию пропустят.
+  Поэтому в акции (и везде, где нужен вечный адрес) стоит ЭТА страница, а
+  меняется только то, куда она ведёт: кнопка «🔗 Обновить ссылку акции» под
+  готовым роликом товара дня переписывает запись в KV контент-бота.
+
+  Переадресация идёт на /deal контент-бота, а он уже 302-ит на сегодняшний
+  offer.html — или на каталог, если спеццена закончилась. Мёртвой ссылки
+  в карточке организации не бывает ни в один момент времени.
+-->
+<meta http-equiv="refresh" content="0; url=https://channel-bot.4489530.workers.dev/deal">
+<style>
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       font:16px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;background:#111;color:#eee;text-align:center}
+  a{color:#ff5a5f;font-weight:600}
+  .box{max-width:420px;padding:24px}
+  .muted{color:#9a9a9a;font-size:14px}
+</style>
+</head>
+<body>
+  <div class="box">
+    <p>Открываем товар дня…</p>
+    <p class="muted">Если ничего не произошло:</p>
+    <p><a href="https://channel-bot.4489530.workers.dev/deal">Открыть товар дня</a></p>
+    <p><a href="magazin.html">Перейти в каталог</a></p>
+  </div>
+  <script>location.replace("https://channel-bot.4489530.workers.dev/deal");</script>
+</body>
+</html>

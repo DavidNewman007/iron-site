@@ -58,6 +58,15 @@
     <span class="offer-badge">Персональное предложение</span>
     <div class="offer-card" id="offerCard">
       <p id="offerStatus">Загрузка предложения…</p>
+      <!-- Выходы из тупика: показываются под любым сообщением об ошибке
+           (истёкшая ссылка, неизвестный токен) — см. showError в js/offer.js. -->
+      <div id="offerFallback" hidden>
+        <div class="offer-actions">
+          <a class="btn btn-primary" href="deal.html">Товар дня сегодня</a>
+          <a class="btn" href="magazin.html">Каталог техники</a>
+          <a class="btn" href="uslugi.html">Цены на ремонт</a>
+        </div>
+      </div>
       <div id="offerContent" hidden>
         <div class="offer-grid">
           <div>

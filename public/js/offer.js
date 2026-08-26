@@ -13,6 +13,7 @@
     expiry: document.getElementById("offerExpiry"),
     addCart: document.getElementById("offerAddCart"),
     catalogLink: document.getElementById("offerCatalogLink"),
+    fallback: document.getElementById("offerFallback"),
     cartBar: document.getElementById("offerCartBar"),
     cartCount: document.getElementById("offer-cart-count"),
     cartTotal: document.getElementById("offer-cart-total"),
@@ -107,12 +108,17 @@
       if (expired) els.status.classList.add("offer-expired");
     }
     if (els.content) els.content.hidden = true;
+    // Тупик без выхода — худшее, что можно показать человеку, пришедшему по
+    // ссылке из сторис или из канала. Под любым сообщением об ошибке даём
+    // каталог и сегодняшний товар дня (26.08.2026).
+    if (els.fallback) els.fallback.hidden = false;
   }
 
   function renderOffer(offer) {
     currentOffer = offer;
     setOgMeta(offer);
     if (els.status) els.status.hidden = true;
+    if (els.fallback) els.fallback.hidden = true;
     if (els.content) els.content.hidden = false;
     if (els.title) els.title.textContent = offer.productName;
     if (els.retail) els.retail.textContent = formatPrice(offer.retailPrice);
@@ -198,6 +204,15 @@
   }
 
   async function loadOffer() {
+    // `?expired=1` ставит короткая ссылка контент-бота (`/o/<id>`), когда её
+    // запись в KV уже стёрлась. Раньше в этом случае человек получал голое
+    // «not found» с кодом 404 — «страница не найдена» вместо «срок вышел»
+    // (жалоба владельца 26.08.2026). Данных о товаре тут нет и быть не может,
+    // поэтому говорим честно и уводим в каталог.
+    if (params.get("expired") === "1") {
+      showError("Срок действия предложения истёк. Актуальные цены — в каталоге.", true);
+      return;
+    }
     const fromUrl = parseOfferFromQueryParams();
     if (fromUrl?.expired) {
       showError("Срок действия предложения истёк. Актуальные цены — в каталоге.", true);
@@ -227,7 +242,11 @@
       console.warn("[offer] API fallback failed:", err);
     }
 
-    showError("Предложение не найдено или недоступно.");
+    // Записи по токену нет вовсе. Чаще всего это тоже истёкшее предложение:
+    // строка в таблице помечается `expired` и через какое-то время вычищается,
+    // а ссылка у человека остаётся. Поэтому формулировка мягкая и с той же
+    // подсказкой про каталог, а не сухое «не найдено».
+    showError("Предложение больше не действует. Актуальные цены — в каталоге.", true);
   }
 
   if (els.addCart) els.addCart.addEventListener("click", addOfferToCart);
