@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from typing import Any
 
 from .config import HYBRID_CART_VERSION
@@ -216,6 +217,7 @@ def render_html(source: dict[str, Any], lang: str = "ru") -> str:
         "price_note": "Цена за наличный расчет · из актуального прайса IRON SERVICE",
         "specs": "Характеристики",
         "pick": "+ Выбрать",
+        "preorder": "🛩️ под заказ, 1–2 дня",
         "about": "<strong>IRON SERVICE</strong> — магазин и сервис Apple в Сочи, ул. Московская, 5.",
         "order": "Заказ:",
         "footer_legal": "Независимый сервис Apple в Сочи. Не является официальным сайтом Apple Inc.",
@@ -226,6 +228,15 @@ def render_html(source: dict[str, Any], lang: str = "ru") -> str:
     spec_rows = "".join(
         f"<tr><td>{_esc(item['key'])}</td><td>{_esc(item['value'])}</td></tr>"
         for item in specs
+    )
+    # Позиция склада S3 — не наличие, а поставка за 1–2 дня. Без этой пометки
+    # детальная страница выглядела бы как товар в наличии: в магазине бейдж есть,
+    # а на странице товара его не было вовсе (27.08.2026, когда для S3 начали
+    # собирать карточки). Класс тот же, что в магазине, — стиль в shop.css.
+    preorder_badge = (
+        f'\n          <p class="price-card__preorder">{подписи["preorder"]}</p>'
+        if re.search(r"s3", str(source.get("warehouse") or ""), re.I)
+        else ""
     )
     gallery_main, thumbs_html = _gallery_block(images_rel, name, base)
     images_literal = json.dumps(images_js[:MAX_GALLERY_IMAGES], ensure_ascii=False)
@@ -290,7 +301,7 @@ def render_html(source: dict[str, Any], lang: str = "ru") -> str:
       <section class="price-card">
         <h3 class="price-card__name">{_esc(name)}</h3>
         <div class="meta">
-          <p class="price-line"><b>{подписи["price"]}</b> <span class="price-card__price" aria-live="polite"></span></p>
+          <p class="price-line"><b>{подписи["price"]}</b> <span class="price-card__price" aria-live="polite"></span></p>{preorder_badge}
           <p class="meta-note">{подписи["price_note"]}</p>
         </div>
         <div class="gallery-main">

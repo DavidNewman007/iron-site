@@ -1,0 +1,66 @@
+{
+  "product_id": "airpods-max-2-orange-европа-s3-42700",
+  "category": "airpods",
+  "file_slug": "airpods-max-2-orange-s3-42700",
+  "name": "AirPods Max 2 Orange",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 42700,
+  "catalog_url": "https://sochi.dr-store.ru/apple/airpods/airpods-max-2/airpods-max-2-orange",
+  "catalog_title": "беспроводные наушники Apple AirPods Max 2, Orange",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Apple H2"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Bluetooth 5.3"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-C"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 20 часов"
+    },
+    {
+      "key": "Ширина",
+      "value": "168.6 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "187.3 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "83.4 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "386.2 г"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "9 микрофонов (8 микрофонов для активного шумоподавления), 3 микрофона для передачи голоса (два общих с активным шумоподавлением и один дополнительный микрофон). Адаптивный звук, изоляция голоса"
+    },
+    {
+      "key": "Датчики",
+      "value": "оптический датчик, датчик положения, датчик обнаружения корпуса, акселерометр, гироскоп (левая амбушюра)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-21-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-16-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-max-2024/airpods-max-2024-dr-store-8-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/f1c4a3b965fedf7aa19000e5.jpg",
+    "assets/product-images/937e9c6587e20e5a9b7182f6.jpg",
+    "assets/product-images/7887a42ecafa4eafc9bfb647.jpg",
+    "assets/product-images/54a173417159d3afdc98d558.jpg"
+  ],
+  "updated_at": "2026-08-27T15:32:54.573707Z"
+}

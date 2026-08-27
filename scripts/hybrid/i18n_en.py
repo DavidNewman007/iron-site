@@ -35,6 +35,7 @@ UI = {
     "price_note": "Cash price · from the current IRON SERVICE price list",
     "specs": "Specifications",
     "pick": "+ Select",
+    "preorder": "🛩️ to order, 1–2 days",
     "about": "<strong>IRON SERVICE</strong> — Apple shop and repair workshop in Sochi, Moskovskaya Street 5.",
     "order": "Orders:",
     "footer_legal": "Independent Apple service in Sochi. Not an official Apple Inc. website.",
