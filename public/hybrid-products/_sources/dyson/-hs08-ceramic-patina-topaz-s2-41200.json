@@ -1,0 +1,62 @@
+{
+  "product_id": "-hs08-ceramic-patina-topaz-s2-41200",
+  "category": "dyson",
+  "file_slug": "hs08-ceramic-patina-topaz-s2-41200",
+  "name": "👱‍♀️HS08 Ceramic Patina/Topaz",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 41200,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-styler/dyson-airwrap-hs08-box-ceramic-topaz",
+  "catalog_title": "стайлер Dyson Airwrap i.d. HS08 + подарочный футляр, Ceramic Patina/Topaz Orange",
+  "specs": [
+    {
+      "key": "Длина сетевого шнура",
+      "value": "2.7 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1300 Вт"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий/пластик"
+    },
+    {
+      "key": "Ширина",
+      "value": "48 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "272 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "41мм"
+    },
+    {
+      "key": "Вес",
+      "value": "600 г"
+    },
+    {
+      "key": "Ионизация",
+      "value": "Есть"
+    },
+    {
+      "key": "Скорость воздушного потока",
+      "value": "13.5 л/сек"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs08-patina-orange/533598-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs08-patina-orange/308f-curly-conical-ceramic-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/1c13bc7acd834812fe4858ac.jpg",
+    "assets/product-images/02f2e1c95af54da42cbc4a94.jpg"
+  ],
+  "updated_at": "2026-08-27T15:01:50.337180Z"
+}

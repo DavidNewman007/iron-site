@@ -1,0 +1,112 @@
+{
+  "product_id": "macbook-neo-13-a18-pro-8-256gb-silver-mhfa4-сша-s2-68800",
+  "category": "macbook",
+  "file_slug": "macbook-neo-13-a18-pro-8-256gb-silver-mhfa4-s2-68800",
+  "name": "MacBook Neo 13 A18 Pro 8+ 256Gb Silver MHFA4",
+  "country": "🇺🇸 США",
+  "warehouse": "(S2)",
+  "price": 68800,
+  "catalog_url": "https://sochi.dr-store.ru/apple/macbook/macbook-neo/macbook-neo-8-256gb-silver",
+  "catalog_title": "ноутбук Apple MacBook Neo 13'' 8/256GB, Silver (MHFA4)",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "TFT IPS Retina"
+    },
+    {
+      "key": "Диагональ",
+      "value": "13\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2408x1506 пикселей"
+    },
+    {
+      "key": "Яркость",
+      "value": "500 кд/м²"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "219 пикс/дюйм"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple A18 Pro (6 ядер)"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "5 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "1080p FaceTime HD"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Wi-Fi (802.11ac), Wi-Fi 6E (802.11ax), Bluetooth 6"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB 3 (USB-C); USB 2 (USB-C)"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Pol"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 16 часов"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий"
+    },
+    {
+      "key": "Ширина",
+      "value": "29.75 см"
+    },
+    {
+      "key": "Высота",
+      "value": "20.64 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "1.27 см"
+    },
+    {
+      "key": "Вес",
+      "value": "1230 г"
+    },
+    {
+      "key": "Операционная система",
+      "value": "macOS"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "звуковая система с двумя динамиками, поддержка пространственного звука при воспроизведении музыки или видео с Dolby Atmos на встроенных динамиках, два микрофона с направленным формированием луча, режимы изоляции голоса и широкополосного микрофона для повышения четкости звука при аудио- и видеозвонках, выход 3,5 мм для наушников."
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/neo/macbook-neo-dr-store-10-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/neo/macbook-neo-dr-store-20-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/neo/macbook-neo-dr-store-13-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/neo/macbook-neo-dr-store-6-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/macbook/neo/macbook-neo-dr-store-2-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/e1196a12bc5c8d51816c4333.jpg",
+    "assets/product-images/20e1e1db0085a912be4897d0.jpg",
+    "assets/product-images/77bd8d19d09715b609614cf8.jpg",
+    "assets/product-images/6918cb789b51b618224eff7b.jpg",
+    "assets/product-images/a7b9a91200aa23ec761c4e54.jpg"
+  ],
+  "updated_at": "2026-08-27T14:46:59.619070Z"
+}

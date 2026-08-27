@@ -1,0 +1,88 @@
+{
+  "product_id": "-яндекс-станция-max-бирюзовый-s2-30400",
+  "category": "audio",
+  "file_slug": "яндекс-станция-max-бирюзовый-s2-30400",
+  "name": "🔈Яндекс Станция MAX Бирюзовый",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 30400,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-station-max-zigbee-turquoise",
+  "catalog_title": "Умную колонку Яндекс Станция MAX YNDX-00052K",
+  "specs": [
+    {
+      "key": "Количество динамиков",
+      "value": "2 x ВЧ, НЧ, 2 x СЧ, пассивн. излучатель"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "65 Вт"
+    },
+    {
+      "key": "Минимальная частота",
+      "value": "45 Гц"
+    },
+    {
+      "key": "Максимальная частота",
+      "value": "20 кГц"
+    },
+    {
+      "key": "Количество микрофонов",
+      "value": "7"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "протокол связи умного дома ZigBee, стандарт Wi-Fi (IEEE 802.11 a/b/g/n/ac), Bluetooth 4.2"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "Ethernet (RJ-45), выход HDMI, выход аудио"
+    },
+    {
+      "key": "Тип питания",
+      "value": "от сети"
+    },
+    {
+      "key": "Материал",
+      "value": "металл, ткань"
+    },
+    {
+      "key": "Ширина",
+      "value": "141 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "231 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "141 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "2700 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "защита от брызг"
+    },
+    {
+      "key": "Голосовой помощник",
+      "value": "Алиса"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/Умная колонка Яндекс Станция MAX с Zigbee/Бирюзовая /Group 25-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Умная колонка Яндекс Станция MAX с Zigbee/Бирюзовая /Group 27-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Умная колонка Яндекс Станция MAX с Zigbee/Бирюзовая /Group 26-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/25ed97a9b34ca663ee28fd4b.jpg",
+    "assets/product-images/1506387370b4ebd4ac6c3eeb.jpg",
+    "assets/product-images/1963244a5b5abffc0b0ed74d.jpg"
+  ],
+  "updated_at": "2026-08-27T15:00:50.642872Z"
+}

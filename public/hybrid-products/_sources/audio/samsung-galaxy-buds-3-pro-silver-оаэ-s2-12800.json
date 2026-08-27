@@ -1,0 +1,46 @@
+{
+  "product_id": "samsung-galaxy-buds-3-pro-silver-оаэ-s2-12800",
+  "category": "audio",
+  "file_slug": "samsung-galaxy-buds-3-pro-silver-s2-12800",
+  "name": "Samsung Galaxy Buds 3 Pro Silver",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S2)",
+  "price": 12800,
+  "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/samsung-buds/samsung-galaxy-buds-3-pro-silver-besprovodnye-naushniki",
+  "catalog_title": "Samsung Galaxy Buds 3 Pro Silver",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Беспроводные наушники TWS (True Wireless Stereo)"
+    },
+    {
+      "key": "Активное шумоподавление (ANC)",
+      "value": "Да"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 30 часов"
+    },
+    {
+      "key": "Цвет",
+      "value": "Серебристый (Silver)"
+    },
+    {
+      "key": "Управление",
+      "value": "Сенсорное (касания)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav_11zon-5-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2_11zon-5-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3_11zon-5-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/4_11zon-5-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/9022d9cab6ca8a2548b24a40.jpeg",
+    "assets/product-images/7def4bab6b8d63924b4e4db1.jpeg",
+    "assets/product-images/0d05a6b3cdd60594aa9290ed.jpeg",
+    "assets/product-images/1e4a0cf7bfc9e87e63529f8a.jpeg"
+  ],
+  "updated_at": "2026-08-27T15:00:38.240415Z"
+}

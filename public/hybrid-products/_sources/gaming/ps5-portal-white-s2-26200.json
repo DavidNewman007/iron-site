@@ -1,0 +1,70 @@
+{
+  "product_id": "ps5-portal-white-s2-26200",
+  "category": "gaming",
+  "file_slug": "ps5-portal-white-s2-26200",
+  "name": "PS5 Portal White",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 26200,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/playstation-5/Sony_PlayStation_Portable_Console_for_PS5_White",
+  "catalog_title": "портативную консоль Sony PlayStation Portal для PS5, белый для PS5",
+  "specs": [
+    {
+      "key": "Диагональ",
+      "value": "8\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "1920x1080 пикселей"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 680"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Wi-Fi 802.11a/b/g/n"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C, 3.5 мм"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 10 часов"
+    },
+    {
+      "key": "Ширина",
+      "value": "330 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "150 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "9 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "2000 г."
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "14 дней"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/portal/ps5-portal-dr-store-30-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/portal/ps5-portal-dr-store-31-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/portal/ps5-portal-dr-store-22-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/portal/ps5-portal-dr-store-23-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/9e175dd37be85181eac35fa5.jpg",
+    "assets/product-images/89af52a33624623384d7ac86.jpg",
+    "assets/product-images/c5c8079a3b82c3241af27e64.jpg",
+    "assets/product-images/901a06fa3f66b075b1db6d5e.jpg"
+  ],
+  "updated_at": "2026-08-27T15:01:26.260206Z"
+}

@@ -1,0 +1,52 @@
+{
+  "product_id": "-canon-powershot-g7-x-mark-iii-silver-s2-104600",
+  "category": "gadgets",
+  "file_slug": "canon-powershot-g7-x-mark-iii-silver-s2-104600",
+  "name": "📷Canon PowerShot G7 X Mark III, Silver",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 104600,
+  "catalog_url": "https://sochi.dr-store.ru/foto-video/camera/canon-powershot-g7-x-mark-iii-silver",
+  "catalog_title": "фотоаппарат Canon PowerShot G7 X Mark III, Silver",
+  "specs": [
+    {
+      "key": "Диагональ",
+      "value": "регулируемый сенсорный ЖК-экран (TFT) 7,5 см (3,0\"). Соотношение сторон 3:2."
+    },
+    {
+      "key": "Процессор",
+      "value": "DIGIC 8"
+    },
+    {
+      "key": "Поддержка MicroSD",
+      "value": "SD, SDHC, SDXC (совместимые карты UHS класса скорости 1)"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Wi-Fi (IEEE802.11b/g/n), (только 2,4 ГГц),"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C, Микроразъем HDMI (тип D), AUX 3,5 мм"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "литий-ионный аккумулятор NB-13L (аккумулятор и зарядное устройство в комплекте)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/1562629669_IMG_1210991-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/1562629669_IMG_1210986-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/1562629669_IMG_1210987-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/1562629669_IMG_1210990-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/1562629669_IMG_1210988-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/dd1b9655ba8ad1dedcc47b4e.jpg",
+    "assets/product-images/29e910382c902aa1d6e0462c.jpg",
+    "assets/product-images/c841d3af57eca65860cf60a1.jpg",
+    "assets/product-images/71b87e61b0b80a9e94afb59d.jpg",
+    "assets/product-images/9ddde109e26337387c5d6a2f.jpg"
+  ],
+  "updated_at": "2026-08-27T15:02:22.683778Z"
+}

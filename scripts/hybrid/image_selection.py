@@ -52,6 +52,13 @@ DEVICE_LINEUP_RE = re.compile(
 
 MAX_IMAGES = 8
 
+# Категории, где товар — само устройство Apple/Samsung. Только у них картинку
+# с зарядкой, чехлом или подставкой надо выбрасывать как кросс-селл: в аудио,
+# gaming и dyson «stand», «charger» и «case» — это и есть товар (27.08.2026).
+DEVICE_CATEGORIES = frozenset(
+    {"iphone", "ipad", "macbook", "watch", "airpods", "samsung"}
+)
+
 
 def normalize_image_url(url: str) -> str:
     value = html_lib.unescape(str(url or "")).strip()
@@ -207,10 +214,12 @@ def should_exclude_image_url(url: str, hints: dict[str, str], *, strict_gen: boo
     if any(token in value for token in GENERIC_JUNK_IN_URL):
         return True
     category = hints.get("category") or ""
-    if category != "accessories":
+    if category in DEVICE_CATEGORIES:
         if any(token in value for token in ACCESSORY_IMAGE_PATTERNS):
             return True
-    if category == "accessories" and is_device_lineup_image(url):
+    elif is_device_lineup_image(url):
+        # На странице колонки или приставки витринный кадр iPhone/MacBook —
+        # это блок «с этим товаром покупают», а не сам товар.
         return True
 
     if category != "macbook":
@@ -261,8 +270,17 @@ def parse_gallery_page_order(page_html: str) -> list[str]:
     best: dict[str, str] = {}
     best_score: dict[str, int] = {}
 
+    # Апостроф в класс не входит: у dr-store он встречается прямо в пути
+    # («Apple MacBook Air 15'' (2026)», «iPad Air 11''2025Blue»), и старый
+    # шаблон [^"\'] обрывал такую ссылку — галерея схлопывалась до одной
+    # картинки из og:image (27.08.2026).
     for raw in re.findall(
-        r'https://sochi\.dr-store\.ru/image/[^"\']+?\.(?:jpg|jpeg|png|webp)',
+        # Плюс ЖАДНЫЙ: у части товаров кэш назван «имя.jpg-1000x1000.jpg», и
+        # нежадный шаблон обрывал ссылку на первом «.jpg» — получался адрес,
+        # который отдаёт 404, и в карточку попадала одна картинка из og:image
+        # (27.08.2026). Кавычка и пробел в класс не входят, так что жадность
+        # не перепрыгнет на соседнюю ссылку.
+        r'https://sochi\.dr-store\.ru/image/[^"\s<>\\]+\.(?:jpg|jpeg|png|webp)',
         scope,
         flags=re.I,
     ):

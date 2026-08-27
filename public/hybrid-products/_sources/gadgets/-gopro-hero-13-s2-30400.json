@@ -1,0 +1,60 @@
+{
+  "product_id": "-gopro-hero-13-s2-30400",
+  "category": "gadgets",
+  "file_slug": "gopro-hero-13-s2-30400",
+  "name": "📷 GoPro Hero 13",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 30400,
+  "catalog_url": "https://sochi.dr-store.ru/foto-video/ekshn-kamery/GoPro_HERO_13_Black_Action_Camera",
+  "catalog_title": "Go Pro Hero 13 Black: покупка экшн-камеры GoPro для активных путешествий",
+  "specs": [
+    {
+      "key": "Максимальная частота кадров",
+      "value": "240"
+    },
+    {
+      "key": "Тип дисплея",
+      "value": "Сенсорный"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "1900 мАч"
+    },
+    {
+      "key": "Ширина",
+      "value": "71.8 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "50.8 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "33.6 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "121 г"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "1 год"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/gopro-13/gopro-13-dr-store-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/gopro-13/gopro-13-dr-store-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/gopro-13/gopro-13-dr-store-1-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/gopro-13/gopro-13-dr-store-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/blog/rew/Gemini_Generated_Image_z40bd4z40bd4z40b-1020x1530.png"
+  ],
+  "images_local": [
+    "assets/product-images/0cb851527304ed6a248fce0d.jpg",
+    "assets/product-images/89d3a28b869ae51bffc2e661.jpg",
+    "assets/product-images/1493c80a466d7dbe07a2ec77.jpg",
+    "assets/product-images/55ff7b51b591fd0ce7cd95af.jpg",
+    "assets/product-images/ae2dfa09a8f87cbbf7ecf79d.png"
+  ],
+  "updated_at": "2026-08-27T15:02:20.681539Z"
+}

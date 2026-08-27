@@ -1,0 +1,38 @@
+{
+  "product_id": "-gamepad-ps5-cobalt-blue-s2-7800",
+  "category": "gaming",
+  "file_slug": "gamepad-ps5-cobalt-blue-s2-7800",
+  "name": "🎮GamePad PS5 Cobalt Blue",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 7800,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-cobalt-blue",
+  "catalog_title": "геймпад Sony DualSense для PS5, Cobalt Blue",
+  "specs": [
+    {
+      "key": "Срок гарантии",
+      "value": "14 дней"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-10-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-14-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-15-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-9-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_67-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_10-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_40-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/fb299bc84f2757ff25a6764b.jpg",
+    "assets/product-images/46b6ec3999c4de4de41418cc.jpg",
+    "assets/product-images/3604f4f52a368f0785fe5aa0.jpg",
+    "assets/product-images/261a6a07445d4c355b866800.jpg",
+    "assets/product-images/8e58677f5ba6e051c1a2f920.jpg",
+    "assets/product-images/56754ecfd99d202f2f41baea.jpg",
+    "assets/product-images/3b084549f020b1aa9b52d880.jpg",
+    "assets/product-images/2caeb97ec9d608ca9dd0bd65.jpg"
+  ],
+  "updated_at": "2026-08-27T15:01:26.313168Z"
+}

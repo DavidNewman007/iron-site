@@ -19,6 +19,12 @@ CONFIG_JS = PUBLIC / "js" / "config.example.js"
 SHEET_TABS = ["Prices", "Prices-2"]
 SHEET_RANGE = "A1:F1200"
 
+# Категории, для которых собираются hybrid-карточки. Первые семь — с самого
+# начала; audio/gaming/dyson/gadgets/galaxy_watch/meta добавлены 27.08.2026.
+# До этого прайс-парсер их различал, а конвейер карточек — нет, поэтому 112
+# позиций магазина (колонки, приставки, Dyson, instax/GoPro, Galaxy Watch,
+# умные очки) висели плитками без фотографии. У поставщика они есть: разделы
+# /audio/, /gaming/, /dyson/, /foto-video/, /smart-watches/, /gadgets/.
 HYBRID_CATEGORIES = [
     "iphone",
     "ipad",
@@ -27,6 +33,12 @@ HYBRID_CATEGORIES = [
     "airpods",
     "samsung",
     "accessories",
+    "audio",
+    "gaming",
+    "dyson",
+    "gadgets",
+    "galaxy_watch",
+    "meta",
 ]
 
 CATEGORY_MANIFEST = {cat: HYBRID_ROOT / f"{cat}-cards.json" for cat in HYBRID_CATEGORIES}
@@ -44,8 +56,36 @@ CATEGORY_URL_PREFIXES: dict[str, list[str]] = {
     "watch": ["/apple/apple-watch/", "/apple/watch/"],
     "airpods": ["/apple/airpods/"],
     "samsung": ["/smartfony/samsung/", "/samsung/"],
-    "accessories": ["/apple/accessories/", "/accessories/"],
+    # /apple/apple-gadgets/ — там Magic Mouse и клавиатуры (добавлено 27.08.2026).
+    "accessories": ["/apple/accessories/", "/accessories/", "/apple/apple-gadgets/"],
+    "audio": ["/audio/"],
+    "gaming": ["/gaming/"],
+    "dyson": ["/dyson/"],
+    # Whoop и Fitbit прайс относит к гаджетам, а поставщик — к фитнес-браслетам.
+    "gadgets": ["/foto-video/", "/gadgets/", "/smart-watches/fitness-bracelets/"],
+    "galaxy_watch": ["/smart-watches/samsung-watch/", "/smart-watches/"],
+    "meta": ["/gadgets/smart-glasses/"],
 }
+
+# Минимальная глубина ссылки товара в карте сайта. У Apple товар лежит на
+# четвёртом уровне (/apple/iphone/iphone-17/<товар>), у остальных разделов —
+# на третьем (/audio/naushniki/<товар>), и порог 4 отсекал их целиком.
+CATEGORY_MIN_URL_DEPTH: dict[str, int] = {
+    "accessories": 3,
+    "audio": 3,
+    "gaming": 3,
+    "dyson": 3,
+    "gadgets": 3,
+    "galaxy_watch": 3,
+    "meta": 3,
+}
+DEFAULT_MIN_URL_DEPTH = 4
+
+# Категории, которым разрешено брать товары из КОРНЯ карты сайта. У поставщика
+# часть аксессуаров лежит без раздела вовсе (ремешки Ultra 2, Galaxy SmartTag2,
+# защитные стёкла) — по префиксу их не поймать (27.08.2026).
+ROOT_LEVEL_CATEGORIES = frozenset({"accessories"})
+ROOT_LEVEL_MIN_PATH_LEN = 20
 
 LEGACY_COUNTRY_TOKENS = {
     "япония",

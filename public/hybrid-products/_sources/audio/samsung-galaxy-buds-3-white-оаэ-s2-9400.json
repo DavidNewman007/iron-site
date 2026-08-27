@@ -1,0 +1,54 @@
+{
+  "product_id": "samsung-galaxy-buds-3-white-оаэ-s2-9400",
+  "category": "audio",
+  "file_slug": "samsung-galaxy-buds-3-white-s2-9400",
+  "name": "Samsung Galaxy Buds 3 White",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S2)",
+  "price": 9400,
+  "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/samsung-galaxy-buds-3-white",
+  "catalog_title": "Samsung Galaxy Buds 3 White",
+  "specs": [
+    {
+      "key": "Тип наушников",
+      "value": "Внутриканальные TWS"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Android, iOS"
+    },
+    {
+      "key": "Активное шумоподавление (ANC)",
+      "value": "Да"
+    },
+    {
+      "key": "Время работы",
+      "value": "До 6 часов"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "Да"
+    },
+    {
+      "key": "Цвет",
+      "value": "Серебристый (Silver)"
+    },
+    {
+      "key": "Управление",
+      "value": "Сенсорное"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav_11zon-2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2_11zon-2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3_11zon-2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/4_11zon-2-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/a088b026b2b6f9c0719fa19b.jpeg",
+    "assets/product-images/1074096bf3baec2f332802e1.jpeg",
+    "assets/product-images/f4445012bc283ad61487139e.jpeg",
+    "assets/product-images/ee404586d27cecaea19f9483.jpeg"
+  ],
+  "updated_at": "2026-08-27T15:00:38.233457Z"
+}

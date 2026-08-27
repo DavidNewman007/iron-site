@@ -1,0 +1,258 @@
+{
+  "product_id": "samsung-a17-6-128-black-оаэ-s2-17200",
+  "category": "samsung",
+  "file_slug": "samsung-a17-6-128-black-s2-17200",
+  "name": "Samsung A17 6/128 Black",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S2)",
+  "price": 17200,
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a17/smartfon-samsung-galaxy-a17-6-128gb-black",
+  "catalog_title": "Samsung Galaxy A17 6/128GB, Black",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Смартфон"
+    },
+    {
+      "key": "Производитель",
+      "value": "Samsung"
+    },
+    {
+      "key": "Версия",
+      "value": "Международная"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6.7\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "2340x1080"
+    },
+    {
+      "key": "Соотношение сторон",
+      "value": "19.5:9"
+    },
+    {
+      "key": "Тип матрицы",
+      "value": "Super AMOLED"
+    },
+    {
+      "key": "Частота обновления",
+      "value": "90 Гц"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "385 пикселей/дюйм"
+    },
+    {
+      "key": "Количество цветов экрана",
+      "value": "16 млн."
+    },
+    {
+      "key": "Процессор",
+      "value": "Exynos 1330"
+    },
+    {
+      "key": "Техпроцесс",
+      "value": "5 нм"
+    },
+    {
+      "key": "Конфигурация процессора",
+      "value": "Octa-core (2x2.4 GHz Cortex-A78 & 6x2.0 GHz Cortex-A55)"
+    },
+    {
+      "key": "Количество ядер процессора",
+      "value": "8"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "Mali-G68 MP2"
+    },
+    {
+      "key": "Частота процессора",
+      "value": "2.4 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "6 Гб"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 Гб"
+    },
+    {
+      "key": "Слот для карты памяти",
+      "value": "есть (использует общий слот SIM-карты)"
+    },
+    {
+      "key": "Количество основных (тыловых) камер",
+      "value": "3"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50 МП+5 МП+2 МП"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "f/1.8, f/2.2, f/2.4"
+    },
+    {
+      "key": "Максимальное разрешение видео",
+      "value": "1080p"
+    },
+    {
+      "key": "Максимальная частота кадров видео при максимальном разрешении",
+      "value": "30 к/с"
+    },
+    {
+      "key": "Особенности и технологии тыловой оптики",
+      "value": "Широкоугольная съемка, Сверхширокоугольная съемка, Макро съемка"
+    },
+    {
+      "key": "Количество фронтальных камер",
+      "value": "1"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "13 МП"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "f/2.0"
+    },
+    {
+      "key": "Частота кадров записи фронтальной камеры",
+      "value": "30 к/с"
+    },
+    {
+      "key": "Функции фронтальной камеры",
+      "value": "Широкоугольная съемка"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 Nano-Sim"
+    },
+    {
+      "key": "Беспроводные модули",
+      "value": "Wi-Fi 802.11 a/b/g/n/ac, Bluetooth 5.3, NFC"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, GALILEO, GLONASS, BDS, QZSS"
+    },
+    {
+      "key": "Стандарт сотовой связи",
+      "value": "GSM / HSPA / LTE / 5G"
+    },
+    {
+      "key": "Модуль NFC (бесконтактная оплата)",
+      "value": "есть"
+    },
+    {
+      "key": "Профили Bluetooth",
+      "value": "A2DP, LE"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Po"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "5000 мАч"
+    },
+    {
+      "key": "Мощность",
+      "value": "25 Вт"
+    },
+    {
+      "key": "Время работы при воспроизведении видео",
+      "value": "15 ч"
+    },
+    {
+      "key": "Время работы при прослушивании музыки",
+      "value": "40 ч"
+    },
+    {
+      "key": "Разъём питания",
+      "value": "USB Type-C 2.0"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "нет"
+    },
+    {
+      "key": "Беспроводная реверсивная зарядка",
+      "value": "нет"
+    },
+    {
+      "key": "Материал",
+      "value": "Стеклянная передняя часть, пластиковая рамка, стекловолокнистая задняя часть"
+    },
+    {
+      "key": "Длина",
+      "value": "164.4 мм"
+    },
+    {
+      "key": "Ширина",
+      "value": "77.9 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "7.5 мм"
+    },
+    {
+      "key": "Устойчивое к царапинам стекло",
+      "value": "Corning Gorilla Glass Victus"
+    },
+    {
+      "key": "Вес",
+      "value": "192 г"
+    },
+    {
+      "key": "Биометрическая защита",
+      "value": "Отпечаток пальца (боковой)"
+    },
+    {
+      "key": "Цвет",
+      "value": "Чёрный"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android"
+    },
+    {
+      "key": "Оболочка ОС",
+      "value": "One UI 7"
+    },
+    {
+      "key": "Датчики",
+      "value": "Отпечаток пальца (боковой), акселерометр, гироскоп, близость, компас"
+    },
+    {
+      "key": "Класс водонепроницаемости",
+      "value": "IP54"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "1 год"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-6-128gb-black/smartfon-samsung-galaxy-a17-6-128gb-black-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-6-128gb-black/smartfon-samsung-galaxy-a17-6-128gb-black-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-6-128gb-black/smartfon-samsung-galaxy-a17-6-128gb-black-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-6-128gb-black/smartfon-samsung-galaxy-a17-6-128gb-black-4-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/a7c3039fc6d10fbc97923d7b.jpg",
+    "assets/product-images/6404f007ca47f9b174e2d67b.jpg",
+    "assets/product-images/5ebca427d2585edd881d1b21.jpg",
+    "assets/product-images/5da1316a821731cd1de122ba.jpg"
+  ],
+  "updated_at": "2026-08-27T14:45:40.019545Z"
+}

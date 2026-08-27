@@ -1,0 +1,145 @@
+{
+  "product_id": "-gopro-hero-4k-s2-18300",
+  "category": "gadgets",
+  "file_slug": "gopro-hero-4k-s2-18300",
+  "name": "📷 GoPro Hero 4K",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 18300,
+  "catalog_url": "https://sochi.dr-store.ru/foto-video/ekshn-kamery/ekshn-kamera-gopro-hero-4k-black",
+  "catalog_title": "Экшн-камеру GoPro HERO 4K, Black",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "экшн-камера"
+    },
+    {
+      "key": "Производитель",
+      "value": "GoPro"
+    },
+    {
+      "key": "Функции",
+      "value": "авто баланс белого, предустановки баланса белого, циклическая запись"
+    },
+    {
+      "key": "Число пикселей матрицы",
+      "value": "12 МП"
+    },
+    {
+      "key": "Тип стабилизатора изображения",
+      "value": "электронный (цифровой)"
+    },
+    {
+      "key": "Качество съемки",
+      "value": "UHD 4K"
+    },
+    {
+      "key": "Количество матриц",
+      "value": "1"
+    },
+    {
+      "key": "Разрешение видеосъемки",
+      "value": "3840x2160"
+    },
+    {
+      "key": "Тип матрицы",
+      "value": "CMOS"
+    },
+    {
+      "key": "Физический размер матрицы",
+      "value": "1/2.8\""
+    },
+    {
+      "key": "Диафрагма при макс. фокусном расстоянии",
+      "value": "f/2.3"
+    },
+    {
+      "key": "Режимы съемки",
+      "value": "Time-lapse, замедленная"
+    },
+    {
+      "key": "Частота кадров видеосъемки",
+      "value": "30 (4K) - 60 (1920x1080)"
+    },
+    {
+      "key": "Форматы записи видео",
+      "value": "H.265 (HEVC)"
+    },
+    {
+      "key": "Соотношение сторон",
+      "value": "16:9"
+    },
+    {
+      "key": "Температура эксплуатации",
+      "value": "-10 °C - 35 °C"
+    },
+    {
+      "key": "Фокусное расстояние объектива",
+      "value": "15 мм"
+    },
+    {
+      "key": "Диагональ",
+      "value": "1.76\""
+    },
+    {
+      "key": "Поддержка карт памяти",
+      "value": "micro SD"
+    },
+    {
+      "key": "Беспроводные модули",
+      "value": "Bluetooth, Wi-Fi"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "1255 мАч"
+    },
+    {
+      "key": "Ширина",
+      "value": "57 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "48 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "29 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "86 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP68"
+    },
+    {
+      "key": "Особенности",
+      "value": "сенсорный дисплей, стабилизатор изображения"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/ekshn-kamera-gopro-hero-4k-black/ekshn-kamera-gopro-hero-4k-black-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/ekshn-kamera-gopro-hero-4k-black/ekshn-kamera-gopro-hero-4k-black-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/ekshn-kamera-gopro-hero-4k-black/ekshn-kamera-gopro-hero-4k-black-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/ekshn-kamera-gopro-hero-4k-black/ekshn-kamera-gopro-hero-4k-black-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/ekshn-kamera-gopro-hero-4k-black/ekshn-kamera-gopro-hero-4k-black-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/ekshn-kamera-gopro-hero-4k-black/ekshn-kamera-gopro-hero-4k-black-6-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/ekshn-kamera-gopro-hero-4k-black/ekshn-kamera-gopro-hero-4k-black-7-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/blog/rew/Gemini_Generated_Image_z40bd4z40bd4z40b-1020x1530.png"
+  ],
+  "images_local": [
+    "assets/product-images/e0cc6c07d11e63aab46167bb.jpg",
+    "assets/product-images/f0cf59f2ac8d1853e79d0353.jpg",
+    "assets/product-images/ac770ccd3f9c2206ccaedcc0.jpg",
+    "assets/product-images/bebc5d5a23e28938bfb4c664.jpg",
+    "assets/product-images/e36fa09086af259040ffe617.jpg",
+    "assets/product-images/341324bbd310eeb1e50a3ff7.jpg",
+    "assets/product-images/ae2dfa09a8f87cbbf7ecf79d.png"
+  ],
+  "updated_at": "2026-08-27T15:02:20.814132Z"
+}

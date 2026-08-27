@@ -50,7 +50,9 @@ CATEGORY_RULES = [
     {"id": "dyson", "test": re.compile(r"dyson|\bhs\d{2}\b|\bhd\d{2}\b|\bht\d{2}\b", re.I)},
     {
         "id": "gadgets",
-        "test": re.compile(r"whoop|gopro|instax|fujifilm|canon|dji|osmo|apple tv", re.I),
+        # fitbit добавлен 27.08.2026: из-за эмодзи ⌚️ он попадал в apple watch,
+        # где у поставщика его, разумеется, нет, и карточка не собиралась.
+        "test": re.compile(r"whoop|gopro|instax|fujifilm|canon|dji|osmo|apple tv|fitbit", re.I),
     },
     {"id": "macbook", "test": re.compile(r"macbook", re.I)},
     {
@@ -69,7 +71,7 @@ CATEGORY_RULES = [
             r"apple\s*watch|series\s*(?:se\s*\d*|\d+|ultra(?:\s*\d+)?)|^series\s+ultra|^\s*ultra\s*\d+\b|^\s*se\d+\s+\d{2}mm\b|^\s*s\d{1,2}\s+\d{2}mm\b|⌚",
             re.I,
         ),
-        "exclude": re.compile(r"galaxy\s*watch|samsung|whoop", re.I),
+        "exclude": re.compile(r"galaxy\s*watch|samsung|whoop|fitbit", re.I),
     },
     {"id": "other", "test": re.compile(r".", re.I)},
 ]

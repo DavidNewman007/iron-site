@@ -1,0 +1,90 @@
+{
+  "product_id": "-яндекс-станция-max-зеленый-s2-30400",
+  "category": "audio",
+  "file_slug": "яндекс-станция-max-зеленый-s2-30400",
+  "name": "🔈Яндекс Станция MAX Зеленый",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 30400,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-station-max-zigbee-green",
+  "catalog_title": "умную колонку Яндекс Станция MAX с Zigbee, Зелёный",
+  "specs": [
+    {
+      "key": "Количество динамиков",
+      "value": "2 x ВЧ, НЧ, 2 x СЧ, пассивн. излучатель"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "65 Вт"
+    },
+    {
+      "key": "Минимальная частота",
+      "value": "45 Гц"
+    },
+    {
+      "key": "Максимальная частота",
+      "value": "20 кГц"
+    },
+    {
+      "key": "Количество микрофонов",
+      "value": "7"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "протокол связи умного дома ZigBee, стандарт Wi-Fi (IEEE 802.11 a/b/g/n/ac), Bluetooth 4.2"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "Ethernet (RJ-45), выход HDMI, выход аудио"
+    },
+    {
+      "key": "Тип питания",
+      "value": "от сети"
+    },
+    {
+      "key": "Материал",
+      "value": "металл, ткань"
+    },
+    {
+      "key": "Ширина",
+      "value": "141 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "231 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "141 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "2700 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "защита от брызг"
+    },
+    {
+      "key": "Голосовой помощник",
+      "value": "Алиса"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/ya-station-max/yandex-station-max-1-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/ya-station-max/yandex-station-max-8-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/ya-station-max/yandex-station-max-2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/news/Frame 226-1020x1530.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/b39a83816d38b8101c4251db.jpeg",
+    "assets/product-images/7abe6c6164b2c3c439d85746.jpeg",
+    "assets/product-images/dc851979faf93562e95c9102.jpeg",
+    "assets/product-images/5ffee2b9526c688e7b663c52.jpg"
+  ],
+  "updated_at": "2026-08-27T15:00:51.803038Z"
+}

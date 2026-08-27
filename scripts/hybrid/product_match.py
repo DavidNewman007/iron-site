@@ -99,3 +99,51 @@ def iphone_match_penalty(name: str, url: str) -> float:
         multiplier *= 0.15
 
     return multiplier
+
+
+# Apple Watch: поколение и размер (27.08.2026).
+#
+# После того как в token_set научились разбирать слаги через подчёркивание,
+# «Series Ultra 3 49mm» начал попадать на страницу Ultra 2 (Apple_Watch_Ultra_2_
+# GPS_49mm_…): общих слов достаточно, а номер поколения короче двух символов и
+# из токенов выбрасывался. Отдельная проверка семейства, поколения и размера.
+SE_YEAR_TO_GEN = {"2020": "1", "2022": "2", "2025": "3"}
+
+
+def _watch_family_gen(text: str) -> tuple[str, str]:
+    value = normalize_match_text(text).replace("_", " ").replace("-", " ")
+    ultra = re.search(r"\bultra\s*(\d)?\b", value)
+    if ultra:
+        return "ultra", (ultra.group(1) or "")
+    se = re.search(r"\bse\s*(\d{1,4})?\b", value)
+    if se:
+        raw = se.group(1) or ""
+        return "se", SE_YEAR_TO_GEN.get(raw, raw)
+    series = re.search(r"\b(?:series|watch|s)\s*(\d{1,2})\b", value)
+    if series:
+        return "series", series.group(1)
+    return "", ""
+
+
+def _watch_size(text: str) -> str:
+    match = re.search(r"\b(\d{2})\s*mm\b", normalize_match_text(text).replace("_", " "))
+    return match.group(1) if match else ""
+
+
+def watch_match_penalty(product_name: str, url: str) -> float:
+    slug = str(url or "").rsplit("/", 1)[-1]
+    name_family, name_gen = _watch_family_gen(product_name)
+    slug_family, slug_gen = _watch_family_gen(slug)
+
+    penalty = 1.0
+    if name_family and slug_family and name_family != slug_family:
+        penalty *= 0.05
+    if name_gen and slug_gen and name_gen != slug_gen:
+        penalty *= 0.05
+
+    name_size = _watch_size(product_name)
+    slug_size = _watch_size(slug)
+    if name_size and slug_size and name_size != slug_size:
+        penalty *= 0.15
+
+    return penalty

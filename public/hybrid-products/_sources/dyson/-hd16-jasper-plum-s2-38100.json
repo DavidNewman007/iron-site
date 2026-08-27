@@ -1,0 +1,68 @@
+{
+  "product_id": "-hd16-jasper-plum-s2-38100",
+  "category": "dyson",
+  "file_slug": "hd16-jasper-plum-s2-38100",
+  "name": "👱‍♀️HD16 Jasper Plum",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 38100,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-feny/Dyson_Supersonic_Nural_HD16_hair_dryer_Jasper_Plum",
+  "catalog_title": "Фен Dyson Supersonic Nural HD16, Jasper/Plum",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Supersonic Nural HD16"
+    },
+    {
+      "key": "Производитель",
+      "value": "Dyson"
+    },
+    {
+      "key": "Длина сетевого шнура",
+      "value": "1.8 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1600 Вт"
+    },
+    {
+      "key": "Ширина",
+      "value": "78 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "245 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "97 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "660 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Сливовый"
+    },
+    {
+      "key": "Ионизация",
+      "value": "есть"
+    },
+    {
+      "key": "Подача холодного воздуха",
+      "value": "есть"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-jasper/599003-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-jasper/Web_605_West_gallery_02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-jasper/Web_605_West_gallery_no_copy_02-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/00717ddc548be1b1444b0030.jpg",
+    "assets/product-images/4baf339406f35eaf250105d6.jpg",
+    "assets/product-images/1a2a5e68a44a47bc9c3164bc.jpg"
+  ],
+  "updated_at": "2026-08-27T15:01:50.384089Z"
+}

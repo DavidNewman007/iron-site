@@ -1,0 +1,76 @@
+{
+  "product_id": "яндекс-станция-мини-3-лиловый-s2-9500",
+  "category": "audio",
+  "file_slug": "яндекс-станция-мини-3-лиловый-s2-9500",
+  "name": "Яндекс Станция Мини 3 Лиловый",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 9500,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-headphones-and-speakers/yandex-station-mini-3/yandex-station-mini-3-purple",
+  "catalog_title": "Умную колонку Яндекс Станция Мини 3, Лиловый",
+  "specs": [
+    {
+      "key": "Количество динамиков",
+      "value": "широкополосный x 1, 40 мм"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "12 Вт"
+    },
+    {
+      "key": "Минимальная частота",
+      "value": "110 Гц"
+    },
+    {
+      "key": "Максимальная частота",
+      "value": "16 кГц"
+    },
+    {
+      "key": "Количество микрофонов",
+      "value": "3"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Стандарт Wi-Fi (2,4 и 5 ГГц), Bluetooth 5.0"
+    },
+    {
+      "key": "Тип питания",
+      "value": "от сети"
+    },
+    {
+      "key": "Материал",
+      "value": "пластик, ткань"
+    },
+    {
+      "key": "Ширина",
+      "value": "102 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "60.5 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "102 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "326 г"
+    },
+    {
+      "key": "Голосовой помощник",
+      "value": "Алиса"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yandex-mini3/ya-mini3-dr-store-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yandex-mini3/ya-mini3-dr-store-8-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yandex-mini3/ya-mini3-dr-store-2-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/87f3162798cc8e5104144504.jpg",
+    "assets/product-images/d31a34d2ab924df3170237e6.jpeg",
+    "assets/product-images/175d5dbb0827b1ab4b29569e.jpg"
+  ],
+  "updated_at": "2026-08-27T15:00:46.557405Z"
+}

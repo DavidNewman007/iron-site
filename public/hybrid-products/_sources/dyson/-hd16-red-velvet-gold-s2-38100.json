@@ -1,0 +1,70 @@
+{
+  "product_id": "-hd16-red-velvet-gold-s2-38100",
+  "category": "dyson",
+  "file_slug": "hd16-red-velvet-gold-s2-38100",
+  "name": "👱‍♀HD16 Red Velvet/Gold",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 38100,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-feny/dyson-supersonic-hd16-red-velvet",
+  "catalog_title": "фен Dyson Supersonic Nural HD16 + подарочный футляр, Red Velvet/Gold",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Supersonic Nural HD16"
+    },
+    {
+      "key": "Длина сетевого шнура",
+      "value": "1.8 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1600 Вт"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий/пластик"
+    },
+    {
+      "key": "Ширина",
+      "value": "97 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "245 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "78 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "560 г"
+    },
+    {
+      "key": "Ионизация",
+      "value": "Есть"
+    },
+    {
+      "key": "Скорость воздушного потока",
+      "value": "13.3 л/сек"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-red-velvet/493117-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-red-velvet/hd16-red-velvet-dr-store-9-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-red-velvet/Web_605_East_Gallery_Card_3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-red-velvet/hd16-red-velvet-dr-store-10-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/21cb34b06a552c57038084f1.jpg",
+    "assets/product-images/f0282b9e7c51269e9addf6c8.jpg",
+    "assets/product-images/efa8bbeef3c8036552f52178.jpg",
+    "assets/product-images/fdafb181763099777a13239f.jpg"
+  ],
+  "updated_at": "2026-08-27T15:01:50.373127Z"
+}

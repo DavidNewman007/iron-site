@@ -1,0 +1,40 @@
+{
+  "product_id": "-marshall-major-v-brown-s2-7700",
+  "category": "audio",
+  "file_slug": "marshall-major-v-brown-s2-7700",
+  "name": "🎧Marshall Major V Brown",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 7700,
+  "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/marshall-major-v-brown",
+  "catalog_title": "беспроводные наушники Marshall Major V, Brown",
+  "specs": [
+    {
+      "key": "Интерфейсы",
+      "value": "USB-C"
+    },
+    {
+      "key": "Время работы",
+      "value": "100 ч"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Вес",
+      "value": "186 г"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/ec418e55e0fba3522748d7ee.jpeg",
+    "assets/product-images/73b4aba3513dec1903c93ec4.jpeg",
+    "assets/product-images/5f1897926a1c71e0b3a33ea3.jpeg"
+  ],
+  "updated_at": "2026-08-27T15:00:44.463551Z"
+}

@@ -1,0 +1,54 @@
+{
+  "product_id": "samsung-galaxy-buds-3-silver-оаэ-s2-9400",
+  "category": "audio",
+  "file_slug": "samsung-galaxy-buds-3-silver-s2-9400",
+  "name": "Samsung Galaxy Buds 3 Silver",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S2)",
+  "price": 9400,
+  "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/samsung-buds/samsung-galaxy-buds-3-silver",
+  "catalog_title": "Samsung Galaxy Buds 3 Silver",
+  "specs": [
+    {
+      "key": "Тип наушников",
+      "value": "Внутриканальные TWS"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Android, iOS"
+    },
+    {
+      "key": "Активное шумоподавление (ANC)",
+      "value": "Да"
+    },
+    {
+      "key": "Время работы",
+      "value": "До 6 часов"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "Да"
+    },
+    {
+      "key": "Цвет",
+      "value": "Серебристый (Silver)"
+    },
+    {
+      "key": "Управление",
+      "value": "Сенсорное"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav_11zon-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2_11zon-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3_11zon-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/4_11zon-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/b893049221c10fd33a69ae3d.jpeg",
+    "assets/product-images/da5258669327ae979b8e8a1d.jpeg",
+    "assets/product-images/a89006c2f54cfd697f9f9ab7.jpeg",
+    "assets/product-images/05970132b8aa37286ab8fdb1.jpeg"
+  ],
+  "updated_at": "2026-08-27T15:00:38.224816Z"
+}

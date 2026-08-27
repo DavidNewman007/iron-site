@@ -1,0 +1,50 @@
+{
+  "product_id": "samsung-galaxy-buds-4-pro-white-оаэ-s2-16300",
+  "category": "audio",
+  "file_slug": "samsung-galaxy-buds-4-pro-white-s2-16300",
+  "name": "Samsung Galaxy Buds 4 Pro White",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S2)",
+  "price": 16300,
+  "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/samsung-buds/samsung-galaxy-buds-4pro-white",
+  "catalog_title": "беспроводные наушники Samsung Galaxy Buds 4 Pro,…",
+  "specs": [
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Bluetooth 6.1"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-C"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 26 часов прослушивания с включенной функцией активного шумоподавления"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "Есть"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP57"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "активное шумоподавление, адаптивное шумоподавление,"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/buds-4pro/buds-4pro-dr-store-10-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/buds-4pro/buds-4pro-dr-store-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/buds-4pro/buds-4pro-dr-store-1-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/buds-4pro/buds-4pro-dr-store-7-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/d7e14946e6986e9c91310868.jpg",
+    "assets/product-images/ab3fdc190883a32910c10ef3.jpg",
+    "assets/product-images/524bc577ff42ecb263e3d0bb.jpg",
+    "assets/product-images/7ddb280f895f0ae91321ab84.jpg"
+  ],
+  "updated_at": "2026-08-27T15:00:41.962256Z"
+}

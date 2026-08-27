@@ -1,0 +1,68 @@
+{
+  "product_id": "-ht01-nickel-cooper-s2-34500",
+  "category": "dyson",
+  "file_slug": "ht01-nickel-cooper-s2-34500",
+  "name": "👩HT01 Nickel Cooper",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 34500,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-airstrait-ht01-nickel-copper",
+  "catalog_title": "выпрямитель для волос Dyson Airstrait HT01, Nickel/Cooper",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Airstrait HT01"
+    },
+    {
+      "key": "Длина сетевого шнура",
+      "value": "2 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1600 Вт"
+    },
+    {
+      "key": "Ширина",
+      "value": "41 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "330 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "60 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "460 г"
+    },
+    {
+      "key": "Скорость воздушного потока",
+      "value": "11.9 л/с"
+    },
+    {
+      "key": "Технологии",
+      "value": "два режима укладки, авто-пауза, ЖК-дисплей, блокировка, интеллектуальная система контроля температур"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-nickel-dr-store-13-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-nickel-dr-store-12-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-nickel-dr-store-11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-nickel-dr-store-7-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-nickel-dr-store-8-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/b028af352d0c4e82aa81fbc7.jpg",
+    "assets/product-images/5fd44550a2d6135b96981bb1.jpg",
+    "assets/product-images/0b4114bf43574e36d54df441.jpg",
+    "assets/product-images/35760561159dc2a23f31c260.jpg",
+    "assets/product-images/28e71f82aef6995d5f68022e.jpg"
+  ],
+  "updated_at": "2026-08-27T15:01:50.395095Z"
+}

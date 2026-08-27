@@ -14,6 +14,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const hybridRoot = path.join(root, "public/hybrid-products");
 
+// Список зеркалит HYBRID_CATEGORIES из scripts/hybrid/config.py.
+// Шесть последних добавлены 27.08.2026 вместе с карточками для них.
 const categories = [
   "iphone",
   "ipad",
@@ -22,6 +24,12 @@ const categories = [
   "airpods",
   "samsung",
   "accessories",
+  "audio",
+  "gaming",
+  "dyson",
+  "gadgets",
+  "galaxy_watch",
+  "meta",
 ];
 
 const args = process.argv.slice(2);

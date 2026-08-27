@@ -1,0 +1,76 @@
+{
+  "product_id": "яндекс-станция-мини-3-серый-s2-9500",
+  "category": "audio",
+  "file_slug": "яндекс-станция-мини-3-серый-s2-9500",
+  "name": "Яндекс Станция Мини 3 Серый",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 9500,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-headphones-and-speakers/yandex-station-mini-3/yandex-station-mini-3-gray",
+  "catalog_title": "Яндекс Станция Мини 3 YNDX-00021",
+  "specs": [
+    {
+      "key": "Количество динамиков",
+      "value": "широкополосный x 1, 40 мм"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "12 Вт"
+    },
+    {
+      "key": "Минимальная частота",
+      "value": "110 Гц"
+    },
+    {
+      "key": "Максимальная частота",
+      "value": "16 кГц"
+    },
+    {
+      "key": "Количество микрофонов",
+      "value": "3"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Стандарт Wi-Fi (2,4 и 5 ГГц), Bluetooth 5.0"
+    },
+    {
+      "key": "Тип питания",
+      "value": "от сети"
+    },
+    {
+      "key": "Материал",
+      "value": "пластик, ткань"
+    },
+    {
+      "key": "Ширина",
+      "value": "102 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "60.5 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "102 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "326 г"
+    },
+    {
+      "key": "Голосовой помощник",
+      "value": "Алиса"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yandex-mini3/ya-mini3-dr-store-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yandex-mini3/ya-mini3-dr-store-7-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yandex-mini3/ya-mini3-dr-store-2-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/494f62ad5f39fa179ceb4db1.jpg",
+    "assets/product-images/7cdfc7d3692358aa002449d4.jpeg",
+    "assets/product-images/175d5dbb0827b1ab4b29569e.jpg"
+  ],
+  "updated_at": "2026-08-27T15:00:47.579996Z"
+}

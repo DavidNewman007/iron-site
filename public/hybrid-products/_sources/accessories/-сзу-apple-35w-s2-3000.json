@@ -1,0 +1,52 @@
+{
+  "product_id": "-сзу-apple-35w-s2-3000",
+  "category": "accessories",
+  "file_slug": "сзу-apple-35w-s2-3000",
+  "name": "🔌 СЗУ Apple 35W",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 3000,
+  "catalog_url": "https://sochi.dr-store.ru/accessories/zaryadnye-ustrojstva/network-chargers/Apple_C_C_Power_Adapter_35W_white",
+  "catalog_title": "СЗУ Apple С+С Power Adapter 35W, white",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Сетевое зарядное устройство"
+    },
+    {
+      "key": "Производитель",
+      "value": "Apple"
+    },
+    {
+      "key": "Количество разъемов",
+      "value": "2"
+    },
+    {
+      "key": "Максимальная мощность",
+      "value": "35 Вт"
+    },
+    {
+      "key": "Сила тока ЗУ",
+      "value": "2 А"
+    },
+    {
+      "key": "Тип разъема ЗУ",
+      "value": "USB-Type-C, USB-Type-C"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "1 год"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_C_C_Power_Adapter_35W_white/Apple_C_C_Power_Adapter_35W_white-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_C_C_Power_Adapter_35W_white/Apple_C_C_Power_Adapter_35W_white-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_C_C_Power_Adapter_35W_white/Apple_C_C_Power_Adapter_35W_white-3-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/6fa8f57a51e9352778101a18.jpg",
+    "assets/product-images/e3358c9885c0a8614a948a06.jpg",
+    "assets/product-images/0c9d84f146d907eca903dcf1.jpg"
+  ],
+  "updated_at": "2026-08-27T15:03:53.383559Z"
+}

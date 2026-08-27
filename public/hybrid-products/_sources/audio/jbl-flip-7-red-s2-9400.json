@@ -1,0 +1,128 @@
+{
+  "product_id": "jbl-flip-7-red-s2-9400",
+  "category": "audio",
+  "file_slug": "jbl-flip-7-red-s2-9400",
+  "name": "JBL Flip 7 Red",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 9400,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/jbl/jbl-flip-7/JBL_Flip_7_Portable_Speaker_Red",
+  "catalog_title": "Портативная колонка JBL Flip 7, Red",
+  "specs": [
+    {
+      "key": "Звук",
+      "value": "стерео"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "35 Вт"
+    },
+    {
+      "key": "Минимальная частота",
+      "value": "60 Гц"
+    },
+    {
+      "key": "Максимальная частота",
+      "value": "20 000 Гц"
+    },
+    {
+      "key": "Количество полос AC",
+      "value": "2"
+    },
+    {
+      "key": "ВЧ-динамик",
+      "value": "16 мм"
+    },
+    {
+      "key": "НЧ-динамик",
+      "value": "80 мм"
+    },
+    {
+      "key": "Отношение сигнал/шум",
+      "value": "80 дБ"
+    },
+    {
+      "key": "Беспроводные модули",
+      "value": "Bluetooth 5.4"
+    },
+    {
+      "key": "Радиус действия беспроводной связи",
+      "value": "10 м"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-Type-C"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "встроенный"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "4800 мАч"
+    },
+    {
+      "key": "Параметры входа",
+      "value": "5В/2А"
+    },
+    {
+      "key": "Выходная сила тока",
+      "value": "5В/2А"
+    },
+    {
+      "key": "Время работы",
+      "value": "14 ч"
+    },
+    {
+      "key": "Время зарядки",
+      "value": "2,5 ч"
+    },
+    {
+      "key": "Длина",
+      "value": "18,25 см"
+    },
+    {
+      "key": "Ширина",
+      "value": "6,95 см"
+    },
+    {
+      "key": "Высота",
+      "value": "7,15 см"
+    },
+    {
+      "key": "Вес",
+      "value": "560 г"
+    },
+    {
+      "key": "Особенности",
+      "value": "влагозащищенный корпус"
+    },
+    {
+      "key": "Класс водонепроницаемости",
+      "value": "IP68"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "1 год"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Red/JBL_Flip_7_Portable_Speaker_Red-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Red/JBL_Flip_7_Portable_Speaker_Red-2-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Red/JBL_Flip_7_Portable_Speaker_Red-3-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Red/JBL_Flip_7_Portable_Speaker_Red-4-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Red/JBL_Flip_7_Portable_Speaker_Red-5-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Red/JBL_Flip_7_Portable_Speaker_Red-6-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Red/JBL_Flip_7_Portable_Speaker_Red-7-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Red/JBL_Flip_7_Portable_Speaker_Red-8-1200x1200.png"
+  ],
+  "images_local": [
+    "assets/product-images/af555e979e1c7a68ede7956b.png",
+    "assets/product-images/47f206f8949195acc49cbc45.png",
+    "assets/product-images/7071527fa7ce3d4367023cca.png",
+    "assets/product-images/aabff7f5804bb6490cf578d0.png",
+    "assets/product-images/d54326dbf469efbc306e96c2.png",
+    "assets/product-images/b2c91f057234394b2704e7b1.png"
+  ],
+  "updated_at": "2026-08-27T15:00:44.454188Z"
+}

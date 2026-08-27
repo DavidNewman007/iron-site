@@ -1,0 +1,46 @@
+{
+  "product_id": "apple-pencil-2-s2-8300",
+  "category": "accessories",
+  "file_slug": "apple-pencil-2-s2-8300",
+  "name": "Apple Pencil 2",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 8300,
+  "catalog_url": "https://sochi.dr-store.ru/accessories/accessories-ipad/apple-pencil-2",
+  "catalog_title": "стилус Apple Pencil 2",
+  "specs": [
+    {
+      "key": "Интерфейсы",
+      "value": "Bluetooth"
+    },
+    {
+      "key": "Диаметр",
+      "value": "8,9 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "166 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "18.2 г"
+    },
+    {
+      "key": "Технологии",
+      "value": "магнитное крепление и сопряжение"
+    },
+    {
+      "key": "Поддержка",
+      "value": "iPad Pro 12.9\" (6th, 5th, 4th, 3rd generation), iPad Pro 11\" (4th, 3rd, 2nd, 1st generation), iPad Air (5th, 4th generation), iPad mini (6th generation)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/pencil-2-dr-store-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/pencil-2-dr-store-5-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+    "assets/product-images/964434aa527850862a63deda.jpg"
+  ],
+  "updated_at": "2026-08-27T14:46:09.819399Z"
+}

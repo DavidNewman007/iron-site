@@ -224,6 +224,35 @@
   const HYBRID_AIRPODS_MANIFEST_VERSION = "2026-06-26-2";
   const HYBRID_SAMSUNG_MANIFEST_VERSION = "2026-06-27-3";
   const HYBRID_ACCESSORIES_MANIFEST_VERSION = "2026-06-27-1";
+  /**
+   * Категории без собственных правил сопоставления (27.08.2026).
+   *
+   * У аудио, игровых приставок, Dyson, фото-гаджетов, Galaxy Watch и умных
+   * очков hybrid-карточек не было вовсе: `HYBRID_CATEGORIES` в питоновском
+   * конвейере их не знал, манифестов не существовало, и в магазине эти позиции
+   * рисовались плиткой без фотографии — 112 карточек из 622 на 27.08.2026.
+   * Отдельные правила им не нужны: имена в прайсе и в каталоге поставщика
+   * совпадают почти дословно, поэтому обвязка общая — «id без цены», ключ
+   * каталога и нормализованное название.
+   */
+  const HYBRID_PREVIEW_CATEGORIES = [
+    "iphone",
+    "ipad",
+    "macbook",
+    "watch",
+    "airpods",
+    "samsung",
+    "accessories",
+  ];
+  const EXTRA_HYBRID_CATEGORIES = [
+    "audio",
+    "gaming",
+    "dyson",
+    "gadgets",
+    "galaxy_watch",
+    "meta",
+  ];
+  const EXTRA_HYBRID_MANIFEST_VERSION = "2026-08-27-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
   const CART_KEY = "iron_cart";
   const CART_PRODUCT_ID_QUERY_PARAM = "pid";
@@ -294,7 +323,9 @@
       label: "Gadgets",
       icon: "🖱",
       // magic mouse / airtag / smarttag moved to accessories
-      test: (t) => /whoop|gopro|instax|fujifilm|canon|dji|osmo|apple tv/i.test(t),
+      // fitbit добавлен 27.08.2026: из-за эмодзи ⌚️ он попадал в apple watch
+      // и искал карточку не в том манифесте (правило зеркалит price_parser.py).
+      test: (t) => /whoop|gopro|instax|fujifilm|canon|dji|osmo|apple tv|fitbit/i.test(t),
     },
     {
       id: "macbook",
@@ -328,7 +359,7 @@
       test: (t) =>
         /apple\s*watch|series\s*(?:se\s*\d*|\d+|ultra(?:\s*\d+)?)|^series\s+ultra|^\s*ultra\s*\d+\b|^\s*se\d+\s+\d{2}mm\b|^\s*s\d{1,2}\s+\d{2}mm\b|⌚/iu.test(
           t
-        ) && !/galaxy\s*watch|samsung|whoop/i.test(t),
+        ) && !/galaxy\s*watch|samsung|whoop|fitbit/i.test(t),
     },
     { id: "other", label: "Прочее", icon: "◆", test: () => true }];
 
@@ -408,6 +439,7 @@
   let airpodsHybridManifestLoaded = false;
   let samsungHybridManifestLoaded = false;
   let accessoriesHybridManifestLoaded = false;
+  const extraHybridIndex = new Map();
   let cart = loadCart();
   let searchRenderTimer = null;
   let queryPlanCache = { raw: "", plan: null };
@@ -436,7 +468,8 @@
       loadWatchHybridCards(),
       loadAirpodsHybridCards(),
       loadSamsungHybridCards(),
-      loadAccessoriesHybridCards()]);
+      loadAccessoriesHybridCards(),
+      ...EXTRA_HYBRID_CATEGORIES.map(loadExtraHybridCards)]);
 
     const hadFreshCache = tryShowCachedProducts();
     if (hadFreshCache) {
@@ -635,6 +668,91 @@
     }
   }
 
+  /**
+   * Манифест для категории без собственных правил (см. EXTRA_HYBRID_CATEGORIES).
+   * Индексы те же три, что у samsung/accessories, но без разбора модели и
+   * цвета: у колонок, приставок и фенов нет общей схемы названия.
+   */
+  async function loadExtraHybridCards(category) {
+    const state = {
+      byId: {},
+      byIdNoPrice: new Map(),
+      byCatalogKey: new Map(),
+      byNameKey: new Map(),
+      loaded: false,
+    };
+    extraHybridIndex.set(category, state);
+    try {
+      const manifestUrl = `/hybrid-products/${category}-cards.json?v=${encodeURIComponent(
+        EXTRA_HYBRID_MANIFEST_VERSION
+      )}`;
+      const res = await fetch(manifestUrl, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      state.byId = data && typeof data.byId === "object" ? data.byId : {};
+      for (const [id, meta] of Object.entries(state.byId)) {
+        const price = extractTrailingPrice(id) || parsePrice(meta?.price);
+        const noPrice = stripTrailingPrice(id);
+        if (noPrice) {
+          if (!state.byIdNoPrice.has(noPrice)) state.byIdNoPrice.set(noPrice, []);
+          state.byIdNoPrice.get(noPrice).push({ id, meta, price });
+        }
+        pushHybridCandidate(
+          state.byCatalogKey,
+          buildHybridCatalogKey(meta?.name || "", meta?.warehouse || "", price),
+          id,
+          meta,
+          price
+        );
+        pushHybridCandidate(state.byNameKey, buildExtraHybridNameKey(meta?.name || ""), id, meta, price);
+      }
+      state.loaded = true;
+    } catch (_) {
+      state.byId = {};
+      state.byIdNoPrice = new Map();
+      state.byCatalogKey = new Map();
+      state.byNameKey = new Map();
+      state.loaded = false;
+    }
+  }
+
+  /** Название без эмодзи и знаков: «🔈Яндекс Станция MAX Зеленый» → «яндекс станция max зеленый». */
+  function buildExtraHybridNameKey(name) {
+    return String(name || "")
+      .toLowerCase()
+      .replace(/ё/g, "е")
+      .replace(/[^\wа-я0-9\s]/gi, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function resolveExtraHybridMeta(product) {
+    const state = extraHybridIndex.get(product.category);
+    if (!state) return null;
+
+    const exact = state.byId[product.id];
+    if (exact && exact.url) return exact;
+
+    const targetPrice = parsePrice(product.price) || parsePrice(product.priceLabel);
+
+    const catalogKey = buildHybridCatalogKey(product.name, product.warehouse, targetPrice);
+    const catalogMatch = pickHybridMetaFromMap(state.byCatalogKey, catalogKey, targetPrice);
+    if (catalogMatch) return catalogMatch;
+
+    const nameMatch = pickHybridMetaFromMap(
+      state.byNameKey,
+      buildExtraHybridNameKey(product.name),
+      targetPrice
+    );
+    if (nameMatch) return nameMatch;
+
+    const noPrice = stripTrailingPrice(product.id);
+    const candidates = noPrice ? state.byIdNoPrice.get(noPrice) : null;
+    if (!candidates?.length) return null;
+
+    return pickBestIphoneHybridCandidate(candidates, targetPrice);
+  }
+
   function applyHybridData() {
     if (!allProducts.length) return;
     for (const product of allProducts) {
@@ -717,6 +835,18 @@
 
       if (isHybridAccessoriesCandidate(product)) {
         const meta = resolveAccessoriesHybridMeta(product);
+        if (meta && meta.url) {
+          product.hybridDetailUrl = encodeURI(siteRootUrl(detailUrlFor(meta)));
+          product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
+          continue;
+        }
+        product.hybridDetailUrl = "";
+        product.hybridCoverUrl = "";
+        continue;
+      }
+
+      if (EXTRA_HYBRID_CATEGORIES.includes(product.category)) {
+        const meta = resolveExtraHybridMeta(product);
         if (meta && meta.url) {
           product.hybridDetailUrl = encodeURI(siteRootUrl(detailUrlFor(meta)));
           product.hybridCoverUrl = normalizeHybridCoverUrl(meta.cover);
@@ -1418,7 +1548,7 @@
 
   function isWatchLikeName(text) {
     const t = String(text || "").trim();
-    if (/galaxy\s*watch|samsung|whoop/i.test(t)) return false;
+    if (/galaxy\s*watch|samsung|whoop|fitbit/i.test(t)) return false;
     return /apple\s*watch|series\s*(?:se\s*\d*|\d+|ultra(?:\s*\d+)?)|^series\s+ultra|^\s*ultra\s*\d+\b|⌚|^\s*se\d+\s+\d{2}mm\b|^\s*s\d{1,2}\s+\d{2}mm\b|^\s*ultra\s+\d+\b/iu.test(
       t
     );
@@ -1430,7 +1560,7 @@
 
   function isWatchSectionLabel(section) {
     const s = String(section || "").trim();
-    if (/galaxy\s*watch|samsung|whoop/i.test(s)) return false;
+    if (/galaxy\s*watch|samsung|whoop|fitbit/i.test(s)) return false;
     return /⌚|apple\s*watch|series\s*(?:se\s*\d*|\d+|ultra(?:\s*\d+)?)|\bultra\s*\d+|^\s*🔘\s*(?:se\d+|s\d{1,2}|ultra)/iu.test(
       s
     );
@@ -2855,14 +2985,12 @@
 
   function renderProductCard(p) {
     const inCart = getCartIndexByProductId(p.id) >= 0;
+    // Список категорий с подробной страницей. Шесть «дополнительных» добавлены
+    // 27.08.2026: без них карточка получала обложку в applyHybridData, но
+    // отрисовщик её молча выбрасывал — фото так и не появлялось.
     const hasHybrid =
-      (p.category === "iphone" ||
-        p.category === "ipad" ||
-        p.category === "macbook" ||
-        p.category === "watch" ||
-        p.category === "airpods" ||
-        p.category === "samsung" ||
-        p.category === "accessories") &&
+      (HYBRID_PREVIEW_CATEGORIES.includes(p.category) ||
+        EXTRA_HYBRID_CATEGORIES.includes(p.category)) &&
       p.hybridDetailUrl;
     const detailLink = hasHybrid ? withProductIdQueryParam(p.hybridDetailUrl, p.id) : "";
     const previewImage = hasHybrid && p.hybridCoverUrl ? p.hybridCoverUrl : "";
