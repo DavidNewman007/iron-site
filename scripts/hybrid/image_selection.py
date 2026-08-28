@@ -43,14 +43,41 @@ ACCESSORY_IMAGE_PATTERNS = (
     "remax",
 )
 
-GENERIC_JUNK_IN_URL = ("logo", "favicon", "mailservice", "/szu/", "remax")
+# Настоящий мусор, который не является товаром ни в одной категории.
+#
+# Изменено 28.08.2026: отсюда убраны «/szu/» и «remax». Они означают «папка
+# зарядок» и «бренд защитных стёкол» — у iPhone или MacBook такая картинка
+# действительно кросс-селл, но у САМОЙ зарядки и у САМОГО стекла это их
+# единственные фотографии. Из-за глобального запрета карточка «🔌 СЗУ Apple 20W»
+# выбросила свой og:image (`/accessories/szu/MU7V2_GEO_EMEA`) и набрала галерею
+# из блока «с этим товаром покупают» — восемь снимков iPhone 14. Оба слова уже
+# есть в ACCESSORY_IMAGE_PATTERNS, который применяется только к DEVICE_CATEGORIES,
+# так что для устройств ничего не изменилось.
+GENERIC_JUNK_IN_URL = ("logo", "favicon", "mailservice", "/blog/", "/блог/")
 
 DEVICE_LINEUP_RE = re.compile(
     r"/demo-prostore/products/(?:apple/)?(?:iphone|ipad|macbook|watch|airpods)/.+?-dr-store-\d+",
     re.I,
 )
 
+# Папка устройства в пути картинки. В отличие от DEVICE_LINEUP_RE не требует
+# суффикса «-dr-store-N»: именно из-за этого требования у СЗУ 20W прошли
+# снимки `/apple/iphone/14-14-plus/iphone_14_midnight.jpg` — они лежат в папке
+# айфона, но названы иначе (28.08.2026).
+DEVICE_FOLDER_RE = re.compile(
+    r"/products/(?:apple/)?(iphone|ipad|macbook|watch|airpods)/",
+    re.I,
+)
+
 MAX_IMAGES = 8
+
+# Минимальная сторона настоящей фотографии товара. Всё мельче — интерфейс
+# страницы, а не товар: у dr-store в `demo-prostore/options/` лежат квадратики
+# 50×50 для выбора цвета, и они попадали в галерею 275 карточек (28.08.2026).
+MIN_IMAGE_SIDE = 400
+
+OPTION_SWATCH_RE = re.compile(r"/demo-prostore/options/", re.I)
+IMAGE_SIDE_RE = re.compile(r"-(\d{2,4})x(\d{2,4})\.(?:jpe?g|png|webp)$", re.I)
 
 # Категории, где товар — само устройство Apple/Samsung. Только у них картинку
 # с зарядкой, чехлом или подставкой надо выбрасывать как кросс-селл: в аудио,
@@ -111,7 +138,7 @@ def parse_og_image(page_html: str) -> str:
 
 def parse_product_image_hints(category: str, product_name: str, catalog_url: str) -> dict[str, str]:
     blob = f"{product_name} {catalog_url}".lower()
-    hints: dict[str, str] = {"category": category}
+    hints: dict[str, str] = {"category": category, "catalog_url": (catalog_url or "").lower()}
 
     if category == "macbook":
         if re.search(r"\bneo\b", blob):
@@ -172,6 +199,20 @@ def is_device_lineup_image(url: str) -> bool:
     return bool(DEVICE_LINEUP_RE.search(urllib.parse.unquote(str(url or ""))))
 
 
+def is_foreign_device_folder_image(url: str, catalog_url: str) -> bool:
+    """Картинка лежит в папке устройства, а товар к этому устройству не относится.
+
+    Зарядка, кабель или колонка не хранятся у поставщика в `/products/apple/iphone/`:
+    если такой снимок оказался на их странице, это блок «с этим товаром покупают».
+    Исключение — товар, чей собственный адрес ведёт в тот же раздел (аксессуар,
+    выложенный внутри раздела устройства), поэтому раздел из адреса сверяется.
+    """
+    match = DEVICE_FOLDER_RE.search(urllib.parse.unquote(str(url or "")))
+    if not match:
+        return False
+    return match.group(1).lower() not in str(catalog_url or "").lower()
+
+
 def catalog_slug_from_url(catalog_url: str) -> str:
     return str(catalog_url or "").rstrip("/").rsplit("/", 1)[-1].lower()
 
@@ -221,6 +262,8 @@ def should_exclude_image_url(url: str, hints: dict[str, str], *, strict_gen: boo
         # На странице колонки или приставки витринный кадр iPhone/MacBook —
         # это блок «с этим товаром покупают», а не сам товар.
         return True
+    elif is_foreign_device_folder_image(url, hints.get("catalog_url", "")):
+        return True
 
     if category != "macbook":
         return False
@@ -244,6 +287,86 @@ def should_exclude_image_url(url: str, hints: dict[str, str], *, strict_gen: boo
     if hints.get("family") == "neo" and "macbook-neo" not in value and "/neo/" not in value:
         return True
     return False
+
+
+def is_ui_swatch_image(url: str) -> bool:
+    """Квадратик выбора цвета или иная мелочь из интерфейса страницы."""
+    value = urllib.parse.unquote(str(url or "")).lower()
+    if OPTION_SWATCH_RE.search(value):
+        return True
+    match = IMAGE_SIDE_RE.search(value)
+    if match and max(int(match.group(1)), int(match.group(2))) < MIN_IMAGE_SIDE:
+        return True
+    return False
+
+
+def image_folder(url: str) -> str:
+    """Папка картинки у поставщика — единица, в которой он держит один товар."""
+    value = urllib.parse.unquote(str(url or "")).lower()
+    value = value.split("/image/cache/catalog/", 1)[-1]
+    return value.rsplit("/", 1)[0] if "/" in value else ""
+
+
+COMPAT_TAIL_RE = re.compile(r"[^0-9a-zа-я](?:dlya|для|for)[^0-9a-zа-я].*$", re.I)
+
+
+def _folder_tokens(value: str) -> set[str]:
+    """Слова имени папки БЕЗ хвоста «для …».
+
+    У аксессуаров поставщик пишет в имени папки, к чему товар подходит:
+    «podstavka-sony-vertical-stand-dlya-playstation-5-slim-i-pro»,
+    «remeshok-ubear-…-dlya-apple-watch-44-45-46». Эти слова совпадают с названием
+    самого устройства, и без обрезки подставка выглядела бы «своей» для приставки,
+    а ремешок — для часов. То же правило и по той же причине действует в
+    сопоставлении товара со страницей (`generic_match_penalty`).
+    """
+    trimmed = COMPAT_TAIL_RE.sub("", f" {value.lower()} ")
+    return {t for t in re.split(r"[^0-9a-zа-я]+", trimmed) if len(t) >= 3}
+
+
+def is_own_product_folder(folder: str, cover_folder: str, catalog_slug: str) -> bool:
+    """Папка принадлежит этому товару, а не блоку «с этим товаром покупают».
+
+    Три признака, любой достаточен: та же папка, что у обложки; имя папки и слаг
+    страницы товара содержат друг друга; у них хотя бы два общих значимых слова.
+    Последнее нужно из-за товаров, чьи снимки поставщик держит в ДВУХ папках
+    сразу: у выпрямителя Dyson HT01 обложка лежит в `products/dyson/ht01-apricot`,
+    а остальные четыре кадра — в `new products/vypryamitel-…-ht01-apricot-topaz`,
+    и обе папки — его собственные.
+    """
+    if not folder:
+        return True
+    if folder == cover_folder:
+        return True
+    if not catalog_slug:
+        return False
+    tail = folder.rsplit("/", 1)[-1]
+    if catalog_slug in folder or (tail and tail in catalog_slug):
+        return True
+    return len(_folder_tokens(tail) & _folder_tokens(catalog_slug)) >= 2
+
+
+def keep_product_folder_images(urls: list[str], catalog_url: str) -> list[str]:
+    """Оставить фотографии этого товара, выбросив соседей по странице.
+
+    Главный признак «это тот товар» — папка. Поставщик держит снимки одного
+    товара в одной папке (изредка в двух, см. выше), а блок «с этим товаром
+    покупают» приводит картинки из чужой: у Apple Pencil в галерее оказывались
+    шесть кадров iPad Air, у Apple Watch — зарядная станция Ubear, у PS5 Slim —
+    подставка Vertical Stand (28.08.2026). Списками исключений это не ловится:
+    завтра поставщик поставит рядом другой аксессуар.
+
+    Якорь — ПЕРВАЯ картинка: в очередь она попадает из og:image, то есть с самой
+    страницы товара.
+    """
+    if len(urls) < 2:
+        return urls
+    cover = image_folder(urls[0])
+    if not cover:
+        return urls
+    slug = catalog_slug_from_url(catalog_url)
+    kept = [url for url in urls if is_own_product_folder(image_folder(url), cover, slug)]
+    return kept or urls
 
 
 def image_resolution_score(url: str) -> int:
@@ -305,6 +428,8 @@ def _append_unique(result: list[str], seen: set[str], url: str, hints: dict[str,
     for relaxed in (False, True):
         normalized = normalize_image_url(url)
         if not normalized:
+            return
+        if is_ui_swatch_image(normalized):
             return
         if should_exclude_image_url(normalized, hints, strict_gen=not relaxed):
             continue
@@ -441,5 +566,9 @@ def select_product_images(
 
     if category == "watch":
         result = fix_watch_cover_order(result)
+
+    # Последним — общий фильтр по папке: он не знает про категории и потому
+    # работает и там, где для категории своих правил нет вовсе.
+    result = keep_product_folder_images(result, catalog_url)
 
     return result[:MAX_IMAGES]

@@ -24,6 +24,7 @@ from hybrid.existing import card_already_published  # noqa: E402
 from hybrid.manifest import load_manifest, load_source, save_source  # noqa: E402
 from hybrid.bot_index import save_bot_index  # noqa: E402
 from hybrid.price_parser import load_products_from_sheet  # noqa: E402
+from hybrid.image_selection import is_ui_swatch_image, keep_product_folder_images  # noqa: E402
 from hybrid.scraper import sanitize_specs, scrape_catalog_product  # noqa: E402
 from hybrid.source_repair import repair_or_bootstrap_source  # noqa: E402
 
@@ -223,6 +224,13 @@ def main() -> int:
              "(scripts/audit_hybrid_sources.py покажет, что найдено)",
     )
     parser.add_argument(
+        "--refilter-images",
+        action="store_true",
+        help="Прогнать сохранённые галереи через нынешние правила отбора картинок "
+             "(свотчи выбора цвета, чужие папки — блок «с этим товаром покупают») и "
+             "пересобрать HTML только у изменившихся карточек. Сеть не трогает",
+    )
+    parser.add_argument(
         "--resanitize",
         action="store_true",
         help="Прогнать сохранённые характеристики через нынешние правила чистки "
@@ -240,6 +248,74 @@ def main() -> int:
 
     if args.repair_images or args.repair_cards:
         args.force_rebuild = True
+
+    if args.refilter_images:
+        # Чужие кадры и свотчи уже лежат в сохранённой галерее — чтобы их убрать,
+        # заново ходить к поставщику не нужно: правила применимы прямо к списку
+        # адресов. Списки remote и local идут парами по индексу, поэтому чистятся
+        # синхронно, иначе подпись «фото N» разъедется с файлом (28.08.2026).
+        from hybrid.config import SOURCES_ROOT
+
+        изменено, ошибки = [], []
+        категории = [args.category] if args.category else sorted(
+            d.name for d in SOURCES_ROOT.iterdir() if d.is_dir()
+        )
+        for категория in категории:
+            for путь in sorted((SOURCES_ROOT / категория).glob("*.json")):
+                try:
+                    source = json.loads(путь.read_text(encoding="utf-8"))
+                    remote = source.get("images_remote") or []
+                    local = source.get("images_local") or []
+                    # Источники, восстановленные из HTML, помнят только локальные
+                    # файлы — по ним о папке поставщика судить нечем.
+                    if len(remote) < 2:
+                        continue
+                    if len(remote) != len(local):
+                        # Часть картинок не скачалась, и соответствие «i-я remote =
+                        # i-я local» нарушено. Трогать local нельзя — карточка
+                        # показывает именно его, — но сам список адресов чистим,
+                        # иначе следующая пересборка снова притащит чужой кадр.
+                        чистые = [r for r in remote if not is_ui_swatch_image(r)]
+                        чистые = keep_product_folder_images(чистые, source.get("catalog_url") or "")
+                        if чистые and len(чистые) != len(remote):
+                            source["images_remote"] = чистые
+                            save_source(source)
+                            изменено.append({
+                                "product_id": source.get("product_id"),
+                                "category": категория,
+                                "убрано": len(remote) - len(чистые),
+                                "только_адреса": True,
+                            })
+                        continue
+                    пары = [(r, l) for r, l in zip(remote, local) if not is_ui_swatch_image(r)]
+                    if not пары:
+                        continue
+                    оставить = set(keep_product_folder_images(
+                        [r for r, _ in пары], source.get("catalog_url") or ""
+                    ))
+                    пары = [(r, l) for r, l in пары if r in оставить]
+                    if not пары or len(пары) == len(remote):
+                        continue
+                    source["images_remote"] = [r for r, _ in пары]
+                    source["images_local"] = [l for _, l in пары]
+                    build_card_from_source(source)
+                    изменено.append({
+                        "product_id": source.get("product_id"),
+                        "category": категория,
+                        "убрано": len(remote) - len(пары),
+                    })
+                except Exception as exc:  # noqa: BLE001
+                    ошибки.append({"file": str(путь), "error": str(exc)})
+        print(json.dumps(
+            {
+                "cleaned": len(изменено),
+                "removed_images": sum(x["убрано"] for x in изменено),
+                "failed": ошибки,
+                "bot_index": refresh_bot_index(),
+            },
+            ensure_ascii=False, indent=2,
+        ))
+        return 0 if not ошибки else 1
 
     if args.resanitize:
         # Правила чистки характеристик со временем прибавляются (28.08.2026 — гарантия
