@@ -22,6 +22,7 @@ from hybrid.eligibility import hybrid_skip_reason  # noqa: E402
 from hybrid.images import mirror_images  # noqa: E402
 from hybrid.existing import card_already_published  # noqa: E402
 from hybrid.manifest import load_manifest, load_source, save_source  # noqa: E402
+from hybrid.bot_index import save_bot_index  # noqa: E402
 from hybrid.price_parser import load_products_from_sheet  # noqa: E402
 from hybrid.scraper import scrape_catalog_product  # noqa: E402
 from hybrid.source_repair import repair_or_bootstrap_source  # noqa: E402
@@ -189,6 +190,18 @@ def drop_card(category: str, product_id: str) -> None:
     remove_manifest_entry(category, product_id)
 
 
+def refresh_bot_index() -> dict:
+    """Пересобрать индекс для бота заказов.
+
+    Зовётся в конце ЛЮБОЙ ветки, которая трогала карточки: индекс собирается из
+    файлов на диске за секунду, а бот по нему решает, показывать ли кнопку «📸
+    Фото и характеристики». Отстанет индекс — кнопка либо пропадёт у товара с
+    карточкой, либо появится там, где фотографий нет (28.08.2026, план 45).
+    """
+    count, size = save_bot_index()
+    return {"count": count, "bytes": size}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Incrementally build hybrid product cards.")
     parser.add_argument("--category", choices=HYBRID_CATEGORIES)
@@ -239,7 +252,9 @@ def main() -> int:
                     собрано += 1
                 except Exception as exc:  # noqa: BLE001
                     ошибки.append({"file": str(путь), "error": str(exc)})
-        print(json.dumps({"rebuilt": собрано, "failed": ошибки}, ensure_ascii=False, indent=2))
+        индекс = refresh_bot_index()
+        print(json.dumps({"rebuilt": собрано, "failed": ошибки, "bot_index": индекс},
+                         ensure_ascii=False, indent=2))
         return 0 if not ошибки else 1
 
     if args.from_source:
@@ -252,7 +267,8 @@ def main() -> int:
             if not source:
                 raise SystemExit(f"Source not found: {category}/{product_id}")
             results.append(build_card_from_source(source))
-        print(json.dumps({"built": results}, ensure_ascii=False, indent=2))
+        print(json.dumps({"built": results, "bot_index": refresh_bot_index()},
+                         ensure_ascii=False, indent=2))
         return 0
 
     products, _ = load_products_from_sheet()
@@ -339,7 +355,13 @@ def main() -> int:
 
     print(
         json.dumps(
-            {"built": results, "count": len(results), "failed": failures, "failed_count": len(failures)},
+            {
+                "built": results,
+                "count": len(results),
+                "failed": failures,
+                "failed_count": len(failures),
+                "bot_index": refresh_bot_index(),
+            },
             ensure_ascii=False,
             indent=2,
         )
