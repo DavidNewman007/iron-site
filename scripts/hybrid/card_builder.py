@@ -188,6 +188,10 @@ def render_html(source: dict[str, Any], lang: str = "ru") -> str:
     name = source["name"]
     specs = source.get("specs") or []
     if en:
+        # Название переводится тем же словарём, что в магазине (28.08.2026):
+        # до этого английская карточка показывала «Защитное стекло 3D Remax»
+        # там, где плитка магазина уже писала «Remax 3D screen protector».
+        name = i18n_en.product_name(name)
         specs = i18n_en.translate_specs(specs)
     images_rel = source.get("images_local") or []
     images_js = [f"{base}/{rel}" for rel in images_rel]
