@@ -1,0 +1,55 @@
+{
+  "product_id": "-canon-powershot-g7-x-mark-iii-black-s2-106700",
+  "category": "gadgets",
+  "file_slug": "canon-powershot-g7-x-mark-iii-black-s2-106700",
+  "name": "📷Canon PowerShot G7 X Mark III, Black",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 106700,
+  "catalog_url": "https://sochi.dr-store.ru/foto-video/camera/canon-powershot-g7-x-mark3-black",
+  "catalog_title": "фотоаппарат Canon PowerShot G7 X Mark III, Black",
+  "specs": [
+    {
+      "key": "Диагональ",
+      "value": "регулируемый сенсорный ЖК-экран (TFT) 7,5 см (3,0\"). Соотношение сторон 3:2."
+    },
+    {
+      "key": "Процессор",
+      "value": "DIGIC 8"
+    },
+    {
+      "key": "Поддержка MicroSD",
+      "value": "SD, SDHC, SDXC (совместимые карты UHS класса скорости 1)"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Wi-Fi (IEEE802.11b/g/n), (только 2,4 ГГц),"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C, Микроразъем HDMI (тип D), AUX 3,5 мм"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "литий-ионный аккумулятор NB-13L (аккумулятор и зарядное устройство в комплекте)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/foto-video/canon-powershot-g7-mark3/Canon-PowerShot-G7X-Mark-3-dr-store-16-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/foto-video/canon-powershot-g7-mark3/Canon-PowerShot-G7X-Mark-3-dr-store-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/foto-video/canon-powershot-g7-mark3/Canon-PowerShot-G7X-Mark-3-dr-store-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/foto-video/canon-powershot-g7-mark3/Canon-PowerShot-G7X-Mark-3-dr-store-1-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/foto-video/canon-powershot-g7-mark3/Canon-PowerShot-G7X-Mark-3-dr-store-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/foto-video/canon-powershot-g7-mark3/Canon-PowerShot-G7X-Mark-3-dr-store-6-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/foto-video/canon-powershot-g7-mark3/Canon-PowerShot-G7X-Mark-3-dr-store-4-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/333874f719a026e25cd64d37.jpg",
+    "assets/product-images/73e9f7ca8e4349840dbee9fb.jpg",
+    "assets/product-images/2d29bbaaf68d9a199ef1bf3a.jpg",
+    "assets/product-images/3cf5ce12b95670db79a5cb61.jpg",
+    "assets/product-images/825008bdb983256f67c19a9b.jpg",
+    "assets/product-images/2091d62341b068657f95387a.jpg"
+  ],
+  "updated_at": "2026-08-28T07:57:41.454555Z"
+}

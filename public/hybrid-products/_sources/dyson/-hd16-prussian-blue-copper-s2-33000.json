@@ -1,0 +1,66 @@
+{
+  "product_id": "-hd16-prussian-blue-copper-s2-33000",
+  "category": "dyson",
+  "file_slug": "hd16-prussian-blue-copper-s2-33000",
+  "name": "👱‍♀️HD16 Prussian Blue/Copper",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 33000,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-feny/dyson-supersonic-hd16-prussian-blue-copper",
+  "catalog_title": "фен Dyson Supersonic Nural HD16, Blue/Copper",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Supersonic Nural HD16"
+    },
+    {
+      "key": "Длина сетевого шнура",
+      "value": "1.8 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1600 Вт"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий/пластик"
+    },
+    {
+      "key": "Ширина",
+      "value": "97 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "245 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "78 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "560 г"
+    },
+    {
+      "key": "Ионизация",
+      "value": "Есть"
+    },
+    {
+      "key": "Скорость воздушного потока",
+      "value": "13.3 л/сек"
+    },
+    {
+      "key": "Срок гарантии",
+      "value": "12 месяцев"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-prussian-cooper/122612-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-prussian-cooper/Web-605M-PDP-Gallery_GB_S_W_4-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/db42adecb55826d26a702201.jpg",
+    "assets/product-images/c94f71e4cda0eb15f1d3a4e1.jpg"
+  ],
+  "updated_at": "2026-08-28T07:57:41.393891Z"
+}

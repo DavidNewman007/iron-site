@@ -9,7 +9,12 @@
   "catalog_url": "",
   "catalog_title": "Защитное стекло 3D Remax для iPhone 15 Plus",
   "specs": [],
-  "images_remote": [],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Protective_Glass_3D_Remax_iPhone_11_Xr_black_frame/Protective_Glass_3D_Remax_iPhone_11_Xr_black_frame-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Protective_Glass_3D_Remax_iPhone_11_Xr_black_frame/Protective_Glass_3D_Remax_iPhone_11_Xr_black_frame-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Protective_Glass_3D_Remax_iPhone_11_Xr_black_frame/Protective_Glass_3D_Remax_iPhone_11_Xr_black_frame-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Protective_Glass_3D_Remax_iPhone_11_Xr_black_frame/Protective_Glass_3D_Remax_iPhone_11_Xr_black_frame-4-1200x1200.jpg"
+  ],
   "images_local": [
     "assets/product-images/27d6436cd1c3f691746f7fd7.jpg",
     "assets/product-images/d7fb0de5372b4e6bf2cf7257.jpg",
@@ -17,5 +22,5 @@
     "assets/product-images/19f332e405e6f3811374cb6e.jpg"
   ],
   "recovered_from_html": true,
-  "updated_at": "2026-08-27T15:32:54.327651Z"
+  "updated_at": "2026-08-28T07:57:40.951678Z"
 }

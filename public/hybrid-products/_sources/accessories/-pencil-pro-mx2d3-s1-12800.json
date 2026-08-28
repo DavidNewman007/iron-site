@@ -1,0 +1,58 @@
+{
+  "product_id": "-pencil-pro-mx2d3-s1-12800",
+  "category": "accessories",
+  "file_slug": "pencil-pro-mx2d3-s1-12800",
+  "name": "🖊 Pencil Pro MX2D3",
+  "country": "",
+  "warehouse": "(S1)",
+  "price": 12800,
+  "catalog_url": "https://sochi.dr-store.ru/accessories/accessories-ipad/apple-pencil-pro",
+  "catalog_title": "стилус Apple Pencil Pro",
+  "specs": [
+    {
+      "key": "Интерфейсы",
+      "value": "Bluetooth"
+    },
+    {
+      "key": "Диаметр",
+      "value": "8.9 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "166 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "19.15 г"
+    },
+    {
+      "key": "Технологии",
+      "value": "магнитное крепление, сопряжение и зарядка"
+    },
+    {
+      "key": "Поддержка",
+      "value": "iPad Pro 13-inch (M4), iPad Pro 11-inch (M4), iPad Air 13-inch (M2), iPad Air 11-inch (M2)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/MX2D3-dr-store2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/MX2D3-dr-store1-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/ipadnewimg/iPad Air 11 2025 A3266/Apple iPad Air 11''2025Blue/главная-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/ipadnewimg/iPad Air 11 2025 A3266/Apple iPad Air 11''2025Blue/2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/ipadnewimg/iPad Air 11 2025 A3266/Apple iPad Air 11''2025Blue/3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/ipadnewimg/iPad Air 11 2025 A3266/Apple iPad Air 11''2025Blue/4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/ipadnewimg/iPad Air 11 2025 A3266/Apple iPad Air 11''2025Gray/главная-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/ipadnewimg/iPad Air 11 2025 A3266/Apple iPad Air 11''2025Gray/2-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+    "assets/product-images/9fe3b9d44c0c38b2e8df8cb1.jpeg",
+    "assets/product-images/25b0e6302ffb3858b2cd86cf.jpg",
+    "assets/product-images/4e1057ca6d5726db26de25f1.jpg",
+    "assets/product-images/70cb77ab69ea05f2e3a6ded3.jpg",
+    "assets/product-images/070a5fa56b03095cff8f6e29.jpg",
+    "assets/product-images/a09349f30c0b837086196cfc.jpg",
+    "assets/product-images/838106e5d16b8d768b0f4854.jpg"
+  ],
+  "updated_at": "2026-08-28T07:57:40.851100Z"
+}

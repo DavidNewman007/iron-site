@@ -1,0 +1,38 @@
+{
+  "product_id": "-gamepad-ps5-camouflage-s2-7800",
+  "category": "gaming",
+  "file_slug": "gamepad-ps5-camouflage-s2-7800",
+  "name": "🎮GamePad PS5 Camouflage",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 7800,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-camouflage",
+  "catalog_title": "геймпад Sony DualSense для PS5, Camouflage",
+  "specs": [
+    {
+      "key": "Срок гарантии",
+      "value": "14 дней"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-1-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/sony-playstation-dualsense-grey-camouflage-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5-dualsense-gray-camouflage-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_35-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_36-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_1-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-6-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/627bd94cba9e9bc334f6e71b.jpg",
+    "assets/product-images/78ea9ddf027a9a2ec66a5d9c.jpg",
+    "assets/product-images/5e95e82e514fe99621af8a98.jpg",
+    "assets/product-images/c36248458fe2e350df682200.jpg",
+    "assets/product-images/298952e4731f4130fd8c1b86.jpg",
+    "assets/product-images/36448bf6683d30d7e411ad8e.jpg",
+    "assets/product-images/8d73db3cc43464a5ba83cbcd.jpg",
+    "assets/product-images/4ef1d100ab2bc3f8b814e758.jpg"
+  ],
+  "updated_at": "2026-08-28T07:57:41.576406Z"
+}

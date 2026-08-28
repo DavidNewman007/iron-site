@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-27T15:32:54.588557Z",
-  "count": 83,
+  "generated_at": "2026-08-28T07:57:41.255535Z",
+  "count": 84,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -665,6 +665,14 @@
       "name": "AirPods Max 2 Orange",
       "warehouse": "(S3)",
       "price": 42700
+    },
+    "-airpods-4-s2-12100": {
+      "url": "hybrid-products/airpods/airpods-4-s2-12100.html",
+      "url_en": "en/hybrid-products/airpods/airpods-4-s2-12100.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "🔈Airpods 4",
+      "warehouse": "(S2)",
+      "price": 12100
     }
   }
 }

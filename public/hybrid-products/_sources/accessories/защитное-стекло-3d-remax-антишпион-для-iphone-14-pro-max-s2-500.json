@@ -9,7 +9,12 @@
   "catalog_url": "",
   "catalog_title": "Защитное стекло 3D Remax Антишпион для iPhone 14 Pro Max",
   "specs": [],
-  "images_remote": [],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/Protective_Glass_3D_Remax_iPhone_12_Pro_Max_Black_frame/Protective_Glass_3D_Remax_iPhone_12_Pro_Max_Black_frame-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Protective_Glass_3D_Remax_iPhone_12_Pro_Max_Black_frame/Protective_Glass_3D_Remax_iPhone_12_Pro_Max_Black_frame-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Protective_Glass_3D_Remax_iPhone_12_Pro_Max_Black_frame/Protective_Glass_3D_Remax_iPhone_12_Pro_Max_Black_frame-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Protective_Glass_3D_Remax_iPhone_12_Pro_Max_Black_frame/Protective_Glass_3D_Remax_iPhone_12_Pro_Max_Black_frame-4-1200x1200.jpg"
+  ],
   "images_local": [
     "assets/product-images/ac1824084e6fd9c0f387e640.jpg",
     "assets/product-images/dd960fdc5462eec0f61c8888.jpg",
@@ -17,5 +22,5 @@
     "assets/product-images/f20bf13110e410c216f59ce5.jpg"
   ],
   "recovered_from_html": true,
-  "updated_at": "2026-08-27T15:32:54.318260Z"
+  "updated_at": "2026-08-28T07:57:40.938371Z"
 }

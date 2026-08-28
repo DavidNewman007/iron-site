@@ -340,7 +340,16 @@ def repair_or_bootstrap_source(category: str, product_id: str) -> dict[str, Any]
 
     min_gallery = MIN_GALLERY_IMAGES.get(category, 2)
     local_count = len(source.get("images_local") or [])
-    if local_count < min_gallery and source.get("catalog_url"):
+    # Пустые характеристики — тоже повод сходить к поставщику ещё раз
+    # (28.08.2026). Источник, восстановленный из HTML или скопированный у
+    # соседа, приходит с specs: [], хотя на странице их бывает под сорок строк.
+    needs_specs = not (source.get("specs") or [])
+    if (local_count < min_gallery or needs_specs) and not source.get("catalog_url"):
+        # Адрес мог не сохраниться, но у карточки-тёзки он обычно есть.
+        source["catalog_url"] = find_catalog_url_fallback(
+            category, product_id, str(source.get("name") or "")
+        )
+    if (local_count < min_gallery or needs_specs) and source.get("catalog_url"):
         try:
             source = refresh_source_from_catalog(dict(source))
             source = repair_source_images(source)

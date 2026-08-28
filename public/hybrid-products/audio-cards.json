@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-27T15:32:54.694691Z",
-  "count": 23,
+  "generated_at": "2026-08-28T07:57:41.380864Z",
+  "count": 27,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -183,6 +183,38 @@
       "url_en": "en/hybrid-products/audio/яндекс-станция-дуо-max-zigbeeчерный-s2-42200.html",
       "cover": "assets/product-images/26cd8806235c17e967807edf.jpeg",
       "name": "🔈Яндекс Станция Дуо MAX ZigbeeЧерный",
+      "warehouse": "(S2)",
+      "price": 42200
+    },
+    "samsung-galaxy-buds-4-black-оаэ-s2-12000": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-black-s2-12000.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-black-s2-12000.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Samsung Galaxy Buds 4 Black",
+      "warehouse": "(S2)",
+      "price": 12000
+    },
+    "jbl-flip-7-red-s2-10400": {
+      "url": "hybrid-products/audio/jbl-flip-7-red-s2-10400.html",
+      "url_en": "en/hybrid-products/audio/jbl-flip-7-red-s2-10400.html",
+      "cover": "assets/product-images/af555e979e1c7a68ede7956b.png",
+      "name": "JBL Flip 7 Red",
+      "warehouse": "(S2)",
+      "price": 10400
+    },
+    "-яндекс-станция-max-зеленый-s2-31400": {
+      "url": "hybrid-products/audio/яндекс-станция-max-зеленый-s2-31400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-зеленый-s2-31400.html",
+      "cover": "assets/product-images/b39a83816d38b8101c4251db.jpeg",
+      "name": "🔈Яндекс Станция MAX Зеленый",
+      "warehouse": "(S2)",
+      "price": 31400
+    },
+    "-яндекс-станция-дуо-max-zigbee-черный-s2-42200": {
+      "url": "hybrid-products/audio/яндекс-станция-дуо-max-zigbee-черный-s2-42200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-дуо-max-zigbee-черный-s2-42200.html",
+      "cover": "assets/product-images/26cd8806235c17e967807edf.jpeg",
+      "name": "🔈Яндекс Станция Дуо MAX Zigbee Черный",
       "warehouse": "(S2)",
       "price": 42200
     }

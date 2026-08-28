@@ -229,6 +229,15 @@ def render_html(source: dict[str, Any], lang: str = "ru") -> str:
         f"<tr><td>{_esc(item['key'])}</td><td>{_esc(item['value'])}</td></tr>"
         for item in specs
     )
+    # Пустой заголовок «Характеристики» с пустой таблицей под ним выглядит как
+    # недоделанная карточка. Если у поставщика характеристик нет вовсе (защитные
+    # стёкла, часть аксессуаров) — блока просто не будет (28.08.2026).
+    specs_block = (
+        f'<h3 class="price-card__name">{подписи["specs"]}</h3>\n        '
+        f"<table>{spec_rows}</table>\n        "
+        if spec_rows
+        else ""
+    )
     # Позиция склада S3 — не наличие, а поставка за 1–2 дня. Без этой пометки
     # детальная страница выглядела бы как товар в наличии: в магазине бейдж есть,
     # а на странице товара его не было вовсе (27.08.2026, когда для S3 начали
@@ -316,9 +325,7 @@ def render_html(source: dict[str, Any], lang: str = "ru") -> str:
         </div>
       </section>
       <section class="price-card">
-        <h3 class="price-card__name">{подписи["specs"]}</h3>
-        <table>{spec_rows}</table>
-        <div class="desc">
+        {specs_block}<div class="desc">
           <p>{подписи["about"]}</p>
           <p>{подписи["order"]} <a href="tel:+79288509404">+7 928 850-94-04</a> · <a href="https://t.me/ironsochi" target="_blank" rel="noopener">Telegram</a> · <a href="https://yandex.ru/profile/1716684342" target="_blank" rel="noopener">{"Yandex Maps" if en else "Яндекс.Карты"}</a></p>
         </div>

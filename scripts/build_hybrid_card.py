@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from hybrid.audit import audit_all, missing_product_ids  # noqa: E402
 from hybrid.audit_images import find_cards_needing_repair  # noqa: E402
+from hybrid.audit_sources import find_cards_missing_specs, find_stale_matches  # noqa: E402
 from hybrid.card_builder import build_card_from_source, build_source_from_match  # noqa: E402
 from hybrid.catalog_match import probe_category_products, save_probe_result  # noqa: E402
 from hybrid.config import HYBRID_CATEGORIES, PROBE_DIR  # noqa: E402
@@ -168,6 +169,26 @@ def build_from_probe(
     return built, failed
 
 
+def drop_card(category: str, product_id: str) -> None:
+    """Снести карточку целиком: HTML (ru+en), источник и запись манифеста."""
+    from hybrid.config import HYBRID_ROOT, HYBRID_ROOT_EN, SOURCES_ROOT
+    from hybrid.manifest import load_manifest, remove_manifest_entry
+
+    meta = (load_manifest(category).get("byId") or {}).get(product_id) or {}
+    file_slug = str(meta.get("url") or "").rsplit("/", 1)[-1].replace(".html", "")
+    if not file_slug:
+        source = load_source(category, product_id) or {}
+        file_slug = str(source.get("file_slug") or "")
+    for path in (
+        HYBRID_ROOT / category / f"{file_slug}.html" if file_slug else None,
+        HYBRID_ROOT_EN / category / f"{file_slug}.html" if file_slug else None,
+        SOURCES_ROOT / category / f"{product_id}.json",
+    ):
+        if path and path.exists():
+            path.unlink()
+    remove_manifest_entry(category, product_id)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Incrementally build hybrid product cards.")
     parser.add_argument("--category", choices=HYBRID_CATEGORIES)
@@ -181,6 +202,13 @@ def main() -> int:
         action="store_true",
         help="Audit images and rebuild only flagged cards (re-scrape from catalog)",
     )
+    parser.add_argument(
+        "--repair-cards",
+        action="store_true",
+        help="Пересобрать карточки, собранные по устаревшим правилам: страница "
+             "поставщика от другого товара или пустые характеристики "
+             "(scripts/audit_hybrid_sources.py покажет, что найдено)",
+    )
     parser.add_argument("--from-source", action="store_true", help="Rebuild HTML from existing _sources JSON only")
     parser.add_argument(
         "--all-sources",
@@ -190,7 +218,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    if args.repair_images:
+    if args.repair_images or args.repair_cards:
         args.force_rebuild = True
 
     if args.all_sources:
@@ -239,6 +267,24 @@ def main() -> int:
         if not args.category:
             raise SystemExit("--repair-images requires --category")
         product_ids.extend(find_cards_needing_repair(args.category))
+    if args.repair_cards:
+        if not args.category:
+            raise SystemExit("--repair-cards requires --category")
+        # Чужая страница поставщика лечится только пересбором с нуля: пока
+        # источник на месте, repair_or_bootstrap_source возьмёт из него тот же
+        # неверный catalog_url. Поэтому сносим источник, HTML и запись
+        # манифеста — и позиция становится «отсутствующей», а её собирают
+        # заново по нынешним правилам сопоставления (28.08.2026).
+        stale = find_stale_matches(args.category)
+        for item in stale:
+            drop_card(args.category, str(item["product_id"]))
+        product_ids.extend(str(item["product_id"]) for item in stale)
+        # Пустые характеристики чинятся мягко: источник остаётся, дозабираем
+        # характеристики со страницы поставщика (см. repair_or_bootstrap_source).
+        product_ids.extend(
+            str(item["product_id"]) for item in find_cards_missing_specs(args.category)
+        )
+        args.refresh_match = True
 
     if args.all_in_category:
         if not args.category:

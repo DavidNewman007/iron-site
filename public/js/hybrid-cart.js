@@ -6,11 +6,15 @@
   const T = (key, ru) => (window.IRON_I18N ? window.IRON_I18N.t(key, ru) : ru);
   const CART_KEY = "iron_cart";
   const PID_PARAM = "pid";
-  const SHEET_TABS = ["Prices", "Prices-2"];
+  // Prices-3 добавлен 28.08.2026: 27.08 для склада «под заказ» начали собирать
+  // карточки, а этот скрипт по-прежнему читал только два листа — открытая
+  // напрямую страница S3-товара показывала «Цена: временно недоступна» и
+  // неактивную кнопку «Выбрать». Список обязан совпадать с prices.js.
+  const SHEET_TABS = ["Prices", "Prices-2", "Prices-3"];
   // Ключ обязан совпадать с prices.js — там же он и записывается (v2 с
   // 16.08.2026, после добавления полей preorder/eta).
   const CATALOG_CACHE_KEY = "iron_catalog_products_v2";
-  const PRICE_CACHE_KEY = "iron_prices_sheet_Prices_Prices-2_v5";
+  const PRICE_CACHE_KEY = "iron_prices_sheet_Prices_Prices-2_Prices-3_v5";
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   const LEGACY_COUNTRY_TOKENS = new Set([
     "япония",
@@ -366,6 +370,21 @@
     if (exactMatches.length > 1) {
       exactMatches.sort((a, b) => (b.price || 0) - (a.price || 0));
       return exactMatches[0];
+    }
+
+    // Страна у позиции меняется чаще, чем название: поставщик привозит ту же
+    // модель из другой страны, и карточка, собранная вчера, переставала
+    // находить свою цену — страница показывала «Цена: временно недоступна» и
+    // мёртвую кнопку «Выбрать». Ищем ещё раз без страны (28.08.2026).
+    // Из нескольких берём дорогую: занизить цену хуже, чем завысить.
+    const byNameWarehouse = catalog.filter(
+      (item) =>
+        normalizeText(item.name) === nName &&
+        (!nWarehouse || normalizeText(item.warehouse) === nWarehouse)
+    );
+    if (byNameWarehouse.length) {
+      byNameWarehouse.sort((a, b) => (b.price || 0) - (a.price || 0));
+      return byNameWarehouse[0];
     }
 
     const modelCode = extractModelCode(name);

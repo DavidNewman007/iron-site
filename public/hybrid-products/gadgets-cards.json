@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-27T15:32:54.830961Z",
-  "count": 17,
+  "generated_at": "2026-08-28T07:57:41.518724Z",
+  "count": 20,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -137,6 +137,30 @@
       "name": "📸Instax Mini Evo, Brown",
       "warehouse": "(S2)",
       "price": 21000
+    },
+    "-whoop-5-0-peak-годовая-подписка-s2-25200": {
+      "url": "hybrid-products/gadgets/whoop-5-0-peak-годовая-подписка-s2-25200.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-peak-годовая-подписка-s2-25200.html",
+      "cover": "assets/product-images/4d9970f26038ca8a77f5df02.png",
+      "name": "⌚️Whoop 5.0 Peak + годовая подписка",
+      "warehouse": "(S2)",
+      "price": 25200
+    },
+    "-canon-powershot-g7-x-mark-iii-black-s2-106700": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-black-s2-106700.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-black-s2-106700.html",
+      "cover": "assets/product-images/333874f719a026e25cd64d37.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Black",
+      "warehouse": "(S2)",
+      "price": 106700
+    },
+    "-canon-powershot-g7-x-mark-iii-silver-s2-105200": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-105200.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-105200.html",
+      "cover": "assets/product-images/dd1b9655ba8ad1dedcc47b4e.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Silver",
+      "warehouse": "(S2)",
+      "price": 105200
     }
   }
 }

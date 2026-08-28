@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-27T15:32:55.149212Z",
-  "count": 77,
+  "generated_at": "2026-08-28T07:57:41.881331Z",
+  "count": 81,
   "byId": {
     "ipad-11-a16-wi-fi-128gb-blue-j-a-япония-s1-31600": {
       "url": "hybrid-products/ipad/ipad-11-a16-wi-fi-128gb-blue-j-a-s1-31600.html",
@@ -617,6 +617,38 @@
       "name": "iPad Pro 11\" M5 256GB Wi-Fi Black",
       "warehouse": "(S2)",
       "price": 102000
+    },
+    "ipad-11-a16-128gb-wi-fi-blue-сша-s2-42700": {
+      "url": "hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-blue-s2-42700.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-blue-s2-42700.html",
+      "cover": "assets/product-images/78c2bd95ca973a781df329e3.jpg",
+      "name": "iPad 11\" A16 128GB Wi-Fi Blue",
+      "warehouse": "(S2)",
+      "price": 42700
+    },
+    "ipad-11-a16-128gb-wi-fi-pink-сша-s2-43300": {
+      "url": "hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-pink-s2-43300.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-pink-s2-43300.html",
+      "cover": "assets/product-images/106bcc4b2cba9216a4ff8d4b.jpg",
+      "name": "iPad 11\" A16 128GB Wi-Fi Pink",
+      "warehouse": "(S2)",
+      "price": 43300
+    },
+    "ipad-air-11-m4-128gb-wi-fi-blue-сша-s2-65800": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-128gb-wi-fi-blue-s2-65800.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m4-128gb-wi-fi-blue-s2-65800.html",
+      "cover": "assets/product-images/25b0e6302ffb3858b2cd86cf.jpg",
+      "name": "iPad Air 11\" M4 128GB Wi-Fi Blue",
+      "warehouse": "(S2)",
+      "price": 65800
+    },
+    "ipad-pro-11-m5-256gb-wi-fi-black-сша-s2-102500": {
+      "url": "hybrid-products/ipad/ipad-pro-11-m5-256gb-wi-fi-black-s2-102500.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-11-m5-256gb-wi-fi-black-s2-102500.html",
+      "cover": "assets/product-images/d3122f62d2fefbce337b7d0f.jpg",
+      "name": "iPad Pro 11\" M5 256GB Wi-Fi Black",
+      "warehouse": "(S2)",
+      "price": 102500
     }
   }
 }

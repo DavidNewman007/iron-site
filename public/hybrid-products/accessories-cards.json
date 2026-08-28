@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-27T15:32:54.330294Z",
-  "count": 42,
+  "generated_at": "2026-08-28T07:57:40.956066Z",
+  "count": 46,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -77,7 +77,7 @@
     "-сзу-apple-20w-mhje3zm-a-s2-2300": {
       "url": "hybrid-products/accessories/сзу-apple-20w-mhje3zm-a-s2-2300.html",
       "url_en": "en/hybrid-products/accessories/сзу-apple-20w-mhje3zm-a-s2-2300.html",
-      "cover": "assets/product-images/2e1a647953c17e26c312ee2c.jpg",
+      "cover": "assets/product-images/36143c648e79ff8ee123331b.jpg",
       "name": "🔌 СЗУ Apple 20W (MHJE3ZM/A)",
       "warehouse": "(S2)",
       "price": 2300
@@ -337,6 +337,38 @@
       "name": "🔌 СЗУ Apple 35W",
       "warehouse": "(S2)",
       "price": 3000
+    },
+    "-pencil-usb-c-muwa3-s1-8900": {
+      "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-8900.html",
+      "url_en": "en/hybrid-products/accessories/pencil-usb-c-muwa3-s1-8900.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "🖊 Pencil (USB-C) MUWA3",
+      "warehouse": "(S1)",
+      "price": 8900
+    },
+    "-pencil-pro-mx2d3-s1-12800": {
+      "url": "hybrid-products/accessories/pencil-pro-mx2d3-s1-12800.html",
+      "url_en": "en/hybrid-products/accessories/pencil-pro-mx2d3-s1-12800.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "🖊 Pencil Pro MX2D3",
+      "warehouse": "(S1)",
+      "price": 12800
+    },
+    "apple-pencil-1-usb-c-s2-8500": {
+      "url": "hybrid-products/accessories/apple-pencil-1-usb-c-s2-8500.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-1-usb-c-s2-8500.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "Apple Pencil 1(USB-C)",
+      "warehouse": "(S2)",
+      "price": 8500
+    },
+    "apple-pencil-pro-s2-12900": {
+      "url": "hybrid-products/accessories/apple-pencil-pro-s2-12900.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-pro-s2-12900.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "Apple Pencil Pro",
+      "warehouse": "(S2)",
+      "price": 12900
     }
   }
 }
