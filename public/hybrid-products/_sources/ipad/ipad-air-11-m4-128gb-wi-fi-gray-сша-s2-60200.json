@@ -104,10 +104,6 @@
     {
       "key": "Датчики",
       "value": "Touch ID, Трехосевой гироскоп, Акселерометр, Барометр, Датчик внешней освещенности"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "1 год"
     }
   ],
   "images_remote": [
@@ -130,5 +126,5 @@
     "assets/product-images/bb30ebd88c009c9c8b9526bc.jpg",
     "assets/product-images/5b4bd3a580b1305e4ecbd93c.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.825373Z"
+  "updated_at": "2026-08-28T09:32:56.993645Z"
 }

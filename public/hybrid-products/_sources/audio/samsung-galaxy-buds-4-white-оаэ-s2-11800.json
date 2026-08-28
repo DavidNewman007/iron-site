@@ -156,10 +156,6 @@
     {
       "key": "Страна производства",
       "value": "Вьетнам"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "1 год"
     }
   ],
   "images_remote": [
@@ -180,5 +176,5 @@
     "assets/product-images/a889419e641ab04d15f28c18.jpg",
     "assets/product-images/be83b188928a218a4b957fbd.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.333143Z"
+  "updated_at": "2026-08-28T09:32:56.666675Z"
 }

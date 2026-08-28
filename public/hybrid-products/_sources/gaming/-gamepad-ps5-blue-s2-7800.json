@@ -8,12 +8,7 @@
   "price": 7800,
   "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-blue",
   "catalog_title": "геймпад Sony DualSense для PS5, Blue",
-  "specs": [
-    {
-      "key": "Срок гарантии",
-      "value": "14 дней"
-    }
-  ],
+  "specs": [],
   "images_remote": [
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-6-1200x1200.jpg",
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_33-1200x1200.jpg",
@@ -34,5 +29,5 @@
     "assets/product-images/175dbde1bf510a91280ef8e9.jpg",
     "assets/product-images/c36248458fe2e350df682200.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.575435Z"
+  "updated_at": "2026-08-28T09:32:56.797758Z"
 }

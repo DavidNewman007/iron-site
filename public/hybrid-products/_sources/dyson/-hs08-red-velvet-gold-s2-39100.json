@@ -44,10 +44,6 @@
     {
       "key": "Скорость воздушного потока",
       "value": "13.5 л/сек"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "12 месяцев"
     }
   ],
   "images_remote": [
@@ -60,5 +56,5 @@
     "assets/product-images/a86ca75ced33ae9df827de7d.jpg",
     "assets/product-images/cc68cd662d45cd01cd743d32.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.426187Z"
+  "updated_at": "2026-08-28T09:32:42.234746Z"
 }

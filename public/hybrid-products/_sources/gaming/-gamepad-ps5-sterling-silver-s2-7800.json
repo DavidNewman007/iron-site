@@ -8,12 +8,7 @@
   "price": 7800,
   "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-sterling-silver",
   "catalog_title": "геймпад Sony DualSense для PS5, Sterling Silver",
-  "specs": [
-    {
-      "key": "Срок гарантии",
-      "value": "14 дней"
-    }
-  ],
+  "specs": [],
   "images_remote": [
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-7-1200x1200.jpg",
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-16-1200x1200.jpg",
@@ -34,5 +29,5 @@
     "assets/product-images/3b084549f020b1aa9b52d880.jpg",
     "assets/product-images/2caeb97ec9d608ca9dd0bd65.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.600826Z"
+  "updated_at": "2026-08-28T09:32:56.820308Z"
 }

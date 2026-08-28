@@ -8,12 +8,7 @@
   "price": 8700,
   "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gejmpad-sony-dualsense-dlya-ps5-rhythm-blue",
   "catalog_title": "геймпад Sony DualSense для PS5, Rhythm Blue",
-  "specs": [
-    {
-      "key": "Срок гарантии",
-      "value": "14 дней"
-    }
-  ],
+  "specs": [],
   "images_remote": [
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-84-1200x1200.jpg",
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-88-1200x1200.jpg",
@@ -34,5 +29,5 @@
     "assets/product-images/2caeb97ec9d608ca9dd0bd65.jpg",
     "assets/product-images/273008e658823f99fffeffdf.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.599704Z"
+  "updated_at": "2026-08-28T09:32:56.819342Z"
 }

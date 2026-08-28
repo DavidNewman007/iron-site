@@ -28,10 +28,6 @@
     {
       "key": "Цвет",
       "value": "Чёрный"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "1 год"
     }
   ],
   "images_remote": [
@@ -42,5 +38,5 @@
     "assets/product-images/99d12012b49d116839fe5229.jpg",
     "assets/product-images/08eb427e0616d5686c5fd378.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:40.813971Z"
+  "updated_at": "2026-08-28T09:32:56.554960Z"
 }

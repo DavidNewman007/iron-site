@@ -112,10 +112,6 @@
     {
       "key": "Датчики",
       "value": "акселерометр, гироскоп, датчик приближения, компас, барометр"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "1 год"
     }
   ],
   "images_remote": [
@@ -138,5 +134,5 @@
     "assets/product-images/d1f8ef7ef663492716ce56bf.png",
     "assets/product-images/994f95c7b3df6cf1c8a473a3.png"
   ],
-  "updated_at": "2026-08-28T07:57:54.613421Z"
+  "updated_at": "2026-08-28T09:33:09.026292Z"
 }

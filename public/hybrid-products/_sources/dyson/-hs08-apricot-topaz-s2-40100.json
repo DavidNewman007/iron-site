@@ -56,10 +56,6 @@
     {
       "key": "Страна производства",
       "value": "Филиппины"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "1 год"
     }
   ],
   "images_remote": [
@@ -70,5 +66,5 @@
     "assets/product-images/414299834c0fdce97ae8e390.jpg",
     "assets/product-images/e62fde60c34ec0c316d82647.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.408940Z"
+  "updated_at": "2026-08-28T09:32:42.220324Z"
 }

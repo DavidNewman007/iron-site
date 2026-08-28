@@ -4,7 +4,12 @@ import html as html_lib
 import re
 from dataclasses import dataclass
 
-from .config import COMPETITOR_PATTERNS, DR_STORE_BASE, SPEC_DROP_KEYS
+from .config import (
+    COMPETITOR_PATTERNS,
+    DR_STORE_BASE,
+    SPEC_DROP_KEY_PATTERNS,
+    SPEC_DROP_KEYS,
+)
 from .http_utils import fetch_text
 from .image_selection import select_product_images
 
@@ -108,6 +113,10 @@ def sanitize_spec(key: str, value: str) -> tuple[str, str] | None:
         return None
     if key_clean.lower() in SPEC_DROP_KEYS:
         return None
+    # Гарантия поставщика — не наша гарантия, см. SPEC_DROP_KEY_PATTERNS.
+    for pattern in SPEC_DROP_KEY_PATTERNS:
+        if pattern.search(key_clean):
+            return None
     for pattern in COMPETITOR_PATTERNS:
         if pattern.search(value_clean):
             return None

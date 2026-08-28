@@ -88,10 +88,6 @@
     {
       "key": "Страна производства",
       "value": "Китай"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "1 год"
     }
   ],
   "images_remote": [
@@ -108,5 +104,5 @@
     "assets/product-images/533ffa57813a898ee9e668f0.jpg",
     "assets/product-images/202d07aa7e450edd4739d912.png"
   ],
-  "updated_at": "2026-08-28T07:57:41.483605Z"
+  "updated_at": "2026-08-28T09:32:56.723525Z"
 }

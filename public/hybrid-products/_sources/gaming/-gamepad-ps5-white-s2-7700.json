@@ -8,12 +8,7 @@
   "price": 7700,
   "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-white",
   "catalog_title": "геймпад Sony DualSense для PS5, White",
-  "specs": [
-    {
-      "key": "Срок гарантии",
-      "value": "14 дней"
-    }
-  ],
+  "specs": [],
   "images_remote": [
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-2-1200x1200.jpg",
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_39-1200x1200.jpg",
@@ -34,5 +29,5 @@
     "assets/product-images/2caeb97ec9d608ca9dd0bd65.jpg",
     "assets/product-images/c36248458fe2e350df682200.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.601875Z"
+  "updated_at": "2026-08-28T09:32:56.821475Z"
 }

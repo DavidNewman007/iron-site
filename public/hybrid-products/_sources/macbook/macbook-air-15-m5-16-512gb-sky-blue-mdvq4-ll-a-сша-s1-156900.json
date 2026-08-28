@@ -124,10 +124,6 @@
     {
       "key": "Датчики",
       "value": "Датчик отпечатка пальца, Датчик освещенности"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "12 месяцев"
     }
   ],
   "images_remote": [
@@ -146,5 +142,5 @@
     "assets/product-images/5298c034b9cc41db3bcd749b.jpg",
     "assets/product-images/9d44e0b598acfe6805ee95d6.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:53.820306Z"
+  "updated_at": "2026-08-28T09:33:08.482325Z"
 }

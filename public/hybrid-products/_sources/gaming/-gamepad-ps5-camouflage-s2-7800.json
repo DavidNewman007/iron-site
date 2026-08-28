@@ -8,12 +8,7 @@
   "price": 7800,
   "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-camouflage",
   "catalog_title": "геймпад Sony DualSense для PS5, Camouflage",
-  "specs": [
-    {
-      "key": "Срок гарантии",
-      "value": "14 дней"
-    }
-  ],
+  "specs": [],
   "images_remote": [
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-1-1200x1200.jpg",
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/sony-playstation-dualsense-grey-camouflage-1200x1200.jpg",
@@ -34,5 +29,5 @@
     "assets/product-images/8d73db3cc43464a5ba83cbcd.jpg",
     "assets/product-images/4ef1d100ab2bc3f8b814e758.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.576406Z"
+  "updated_at": "2026-08-28T09:32:56.798678Z"
 }

@@ -116,10 +116,6 @@
     {
       "key": "Датчики",
       "value": "Face ID, Трёхосевой гироскоп, Акселерометр, Барометр, Датчик внешней освещённости"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "12 месяцев"
     }
   ],
   "images_remote": [
@@ -142,5 +138,5 @@
     "assets/product-images/45cc83c46e3d555e1e0db51b.jpg",
     "assets/product-images/f2c55afa1a4df3be01d23fc1.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.862542Z"
+  "updated_at": "2026-08-28T09:32:57.029695Z"
 }

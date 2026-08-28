@@ -24,7 +24,7 @@ from hybrid.existing import card_already_published  # noqa: E402
 from hybrid.manifest import load_manifest, load_source, save_source  # noqa: E402
 from hybrid.bot_index import save_bot_index  # noqa: E402
 from hybrid.price_parser import load_products_from_sheet  # noqa: E402
-from hybrid.scraper import scrape_catalog_product  # noqa: E402
+from hybrid.scraper import sanitize_specs, scrape_catalog_product  # noqa: E402
 from hybrid.source_repair import repair_or_bootstrap_source  # noqa: E402
 
 
@@ -222,6 +222,13 @@ def main() -> int:
              "поставщика от другого товара или пустые характеристики "
              "(scripts/audit_hybrid_sources.py покажет, что найдено)",
     )
+    parser.add_argument(
+        "--resanitize",
+        action="store_true",
+        help="Прогнать сохранённые характеристики через нынешние правила чистки "
+             "(SPEC_DROP_KEYS, SPEC_DROP_KEY_PATTERNS, COMPETITOR_PATTERNS) и "
+             "пересобрать HTML только у изменившихся карточек. Сеть не трогает",
+    )
     parser.add_argument("--from-source", action="store_true", help="Rebuild HTML from existing _sources JSON only")
     parser.add_argument(
         "--all-sources",
@@ -233,6 +240,47 @@ def main() -> int:
 
     if args.repair_images or args.repair_cards:
         args.force_rebuild = True
+
+    if args.resanitize:
+        # Правила чистки характеристик со временем прибавляются (28.08.2026 — гарантия
+        # поставщика), а карточки уже собраны и сеть для этого не нужна: чужая строка
+        # лежит в сохранённом источнике. Пересобираем HTML только у тех, где что-то
+        # реально убралось, — иначе перегенерация тронула бы полторы тысячи файлов и
+        # правку стало бы не видно в git.
+        from hybrid.config import SOURCES_ROOT
+
+        изменено, ошибки = [], []
+        категории = [args.category] if args.category else sorted(
+            d.name for d in SOURCES_ROOT.iterdir() if d.is_dir()
+        )
+        for категория in категории:
+            for путь in sorted((SOURCES_ROOT / категория).glob("*.json")):
+                try:
+                    source = json.loads(путь.read_text(encoding="utf-8"))
+                    было = [(s.get("key", ""), s.get("value", "")) for s in source.get("specs") or []]
+                    стало = sanitize_specs(было)
+                    if стало == было:
+                        continue
+                    source["specs"] = [{"key": k, "value": v} for k, v in стало]
+                    save_source(source)
+                    build_card_from_source(source)
+                    изменено.append({
+                        "product_id": source.get("product_id"),
+                        "category": категория,
+                        "убрано": len(было) - len(стало),
+                    })
+                except Exception as exc:  # noqa: BLE001
+                    ошибки.append({"file": str(путь), "error": str(exc)})
+        print(json.dumps(
+            {
+                "cleaned": len(изменено),
+                "removed_rows": sum(x["убрано"] for x in изменено),
+                "failed": ошибки,
+                "bot_index": refresh_bot_index(),
+            },
+            ensure_ascii=False, indent=2,
+        ))
+        return 0 if not ошибки else 1
 
     if args.all_sources:
         # Перегенерация из сохранённых источников: сеть не трогаем, каталог

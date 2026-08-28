@@ -8,12 +8,7 @@
   "price": 7800,
   "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-black",
   "catalog_title": "геймпад Sony DualSense для PS5, Black",
-  "specs": [
-    {
-      "key": "Срок гарантии",
-      "value": "14 дней"
-    }
-  ],
+  "specs": [],
   "images_remote": [
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-3-1200x1200.jpg",
     "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_35-1200x1200.jpg",
@@ -34,5 +29,5 @@
     "assets/product-images/175dbde1bf510a91280ef8e9.jpg",
     "assets/product-images/4ef1d100ab2bc3f8b814e758.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.572556Z"
+  "updated_at": "2026-08-28T09:32:56.795727Z"
 }

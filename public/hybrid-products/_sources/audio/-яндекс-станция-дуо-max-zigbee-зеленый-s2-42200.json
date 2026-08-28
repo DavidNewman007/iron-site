@@ -80,10 +80,6 @@
     {
       "key": "Голосовой помощник",
       "value": "Алиса"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "12 месяцев"
     }
   ],
   "images_remote": [
@@ -102,5 +98,5 @@
     "assets/product-images/e3875b8a1c052e0e4e8743eb.jpg",
     "assets/product-images/5ffee2b9526c688e7b663c52.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.282879Z"
+  "updated_at": "2026-08-28T09:32:56.626879Z"
 }

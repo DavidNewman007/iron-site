@@ -92,10 +92,6 @@
     {
       "key": "Страна производства",
       "value": "Малайзия"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "1 год"
     }
   ],
   "images_remote": [
@@ -112,5 +108,5 @@
     "assets/product-images/756fe34423c15ce6557eac85.jpg",
     "assets/product-images/08164d20b4e09bf238b5e320.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.441149Z"
+  "updated_at": "2026-08-28T09:32:42.248413Z"
 }

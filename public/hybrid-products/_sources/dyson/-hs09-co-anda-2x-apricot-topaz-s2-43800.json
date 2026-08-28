@@ -60,10 +60,6 @@
     {
       "key": "Подача холодного воздуха",
       "value": "есть"
-    },
-    {
-      "key": "Срок гарантии",
-      "value": "1 год"
     }
   ],
   "images_remote": [
@@ -76,5 +72,5 @@
     "assets/product-images/b17b5ee0990945813289cf07.jpg",
     "assets/product-images/bc3778a6f0bf9e37f515a9b4.jpg"
   ],
-  "updated_at": "2026-08-28T07:57:41.432417Z"
+  "updated_at": "2026-08-28T09:32:42.240143Z"
 }
