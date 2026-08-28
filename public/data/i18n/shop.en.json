@@ -175,7 +175,10 @@
     "Цвет": "Colour",
     "Модель": "Model",
     "Корпус": "Case",
-    "Ремешок": "Band"
+    "Ремешок": "Band",
+    "Тип": "Type",
+    "Бренд": "Brand",
+    "Для устройства": "For device"
   },
   "filter_prompts": {
     "Выберите серию": "Choose a series",
@@ -189,7 +192,12 @@
     "Выберите модель Samsung": "Choose a Samsung model",
     "Выберите серию Apple Watch": "Choose an Apple Watch series",
     "Выберите размер корпуса": "Choose the case size",
-    "Выберите размер ремешка": "Choose the band size"
+    "Выберите размер ремешка": "Choose the band size",
+    "Наушники или колонка": "Headphones or speaker",
+    "Выберите бренд": "Choose a brand",
+    "Выберите модель": "Choose a model",
+    "Что нужно": "What do you need",
+    "Для какого устройства": "Which device is it for"
   },
   "sections": {
     "_комментарий": "Заголовки групп товаров. Часть приходит категорийными строками из таблицы, часть собирает resolveAccessorySection в prices.js. Точное совпадение надёжнее пословного перевода; заголовка нет в списке — работает пословный механизм названий товаров, и он же оставит заголовок русским, если слово незнакомо.",

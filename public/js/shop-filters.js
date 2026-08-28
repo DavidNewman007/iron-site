@@ -985,6 +985,194 @@
     formatWatchFacetValue
   );
 
+
+  // ─── Группы без своей схемы названия (28.08.2026) ────────────────────────
+  //
+  // Аудио, аксессуары, приставки, Dyson и гаджеты — товары разных марок в одной
+  // куче, общего формата названия у них нет. Поэтому вместо пяти копий обвязки
+  // — один конструктор: семейство описывается разбором названия, порядком
+  // значений и подписями, остальное одинаковое.
+  //
+  // Разбор ОБЯЗАН давать пустую строку там, где признак не читается: фильтр
+  // сверяет значения точно, и выдуманный признак спрятал бы товар. Позиции, у
+  // которых не распознан ни один признак (в Dyson так лежат «(Диффузор,
+  // распак)» и чужая подставка Sony), просто не фильтруются и видны, пока
+  // фильтр не выбран.
+  function createSimpleFamily({ label, facets, parse, order = {}, labels = {}, prompts = {} }) {
+    function getTraits(product) {
+      if (!product._shopTraits) product._shopTraits = parse(product.name);
+      return product._shopTraits;
+    }
+    function isFilterable(product) {
+      const traits = getTraits(product);
+      return facets.some((facet) => traits[facet.id]);
+    }
+    function formatValue(facetId, value) {
+      const map = labels[facetId];
+      if (map && map[value]) return map[value];
+      return formatColorLabel(value);
+    }
+    function sortValues(facetId, values) {
+      const list = order[facetId];
+      if (!list) return [...values].sort((a, b) => a.localeCompare(b, "ru"));
+      return [...values].sort((a, b) => {
+        const ia = list.indexOf(a);
+        const ib = list.indexOf(b);
+        return (ia < 0 ? 999 : ia) - (ib < 0 ? 999 : ib) || a.localeCompare(b, "ru");
+      });
+    }
+    const wizard = createLinearWizardHelpers(facets, getTraits, isFilterable, prompts, formatValue);
+    return {
+      label,
+      facets,
+      getTraits,
+      isFilterable,
+      matches(product, filters) {
+        // Пока ни один фильтр не выбран — показываем ВСЁ, включая позиции, у
+        // которых ни один признак не распознался. Иначе товар молча пропадает
+        // из магазина от одного лишь появления фильтров: в Dyson так исчезли
+        // бы «(Диффузор, распак)» и чужая подставка Sony (28.08.2026). У
+        // старых семейств (iPhone, MacBook…) названия однородные и такой
+        // ситуации не возникает, поэтому их поведение не трогаем.
+        const hasActive = Object.values(filters || {}).some(Boolean);
+        if (!hasActive) return true;
+        if (!isFilterable(product)) return false;
+        const traits = getTraits(product);
+        return Object.entries(filters || {}).every(([facetId, value]) => traitMatchesFilter(traits, facetId, value));
+      },
+      collectOptions(products, facetId, activeFilters) {
+        return sortValues(facetId, collectFacetOptions(products, facetId, activeFilters, getTraits, isFilterable));
+      },
+      formatValue,
+      ...wizard,
+    };
+  }
+
+  function matchFirst(name, rules) {
+    for (const [value, re] of rules) {
+      if (re.test(String(name || ""))) return value;
+    }
+    return "";
+  }
+
+  // --- Аудио: наушники и колонки разных марок ---
+  const AUDIO_KIND_RULES = [
+    ["headphones", /buds|major|наушник|headphone/i],
+    ["speaker", /станци|стрит|flip|acton|stanmore|колонк|speaker/i]];
+  const AUDIO_BRAND_RULES = [
+    ["yandex", /яндекс|yandex/i],
+    ["samsung", /samsung|galaxy/i],
+    ["marshall", /marshall/i],
+    ["jbl", /\bjbl\b/i]];
+  const AUDIO_LINE_RULES = [
+    ["buds4pro", /buds\s*4\s*pro/i],
+    ["buds4", /buds\s*4/i],
+    ["buds3pro", /buds\s*3\s*pro/i],
+    ["buds3", /buds\s*3/i],
+    ["major", /major/i],
+    ["acton", /acton/i],
+    ["flip", /flip/i],
+    ["duomax", /дуо\s*max/i],
+    ["mini3pro", /мини\s*3\s*про/i],
+    ["mini3", /мини\s*3/i],
+    // Кириллица: \w в JS — это только латиница, поэтому «станци\w*» не ловило
+    // «Станция MAX». Правило «дуо max» проверяется выше, так что .* безопасно.
+    ["max", /станци.*max/i],
+    ["street", /стрит/i]];
+
+  function parseAudioTraits(name) {
+    return {
+      kind: matchFirst(name, AUDIO_KIND_RULES),
+      brand: matchFirst(name, AUDIO_BRAND_RULES),
+      line: matchFirst(name, AUDIO_LINE_RULES),
+    };
+  }
+
+  // --- Аксессуары: тип и для какого устройства ---
+  const ACCESSORY_KIND_RULES = [
+    ["case", /чехол|бумажник|case\b/i],
+    ["glass", /стекл|glass/i],
+    ["stylus", /pencil|стилус/i],
+    ["tracker", /airtag|smarttag|треке/i],
+    ["mouse", /mouse|мышь|keyboard|клавиатур/i],
+    ["charger", /сзу|заряд|adapter|кабел|cable/i],
+    ["band", /ремеш|\bband\b|\bloop\b/i]];
+  const ACCESSORY_DEVICE_RULES = [
+    ["iphone-17-pro-max", /iphone\s*17\s*pro\s*max/i],
+    ["iphone-17-pro", /iphone\s*17\s*pro/i],
+    ["iphone-16-pro-max", /iphone\s*16\s*pro\s*max/i],
+    ["iphone-16-pro", /iphone\s*16\s*pro/i],
+    ["galaxy-watch", /galaxy\s*watch/i],
+    ["samsung", /samsung|\bs\d{2}\s*ultra/i],
+    ["ipad", /ipad|pencil/i]];
+
+  function parseAccessoryTraits(name) {
+    return {
+      kind: matchFirst(name, ACCESSORY_KIND_RULES),
+      device: matchFirst(name, ACCESSORY_DEVICE_RULES),
+    };
+  }
+
+  // --- Приставки и всё вокруг них ---
+  const GAMING_KIND_RULES = [
+    ["gamepad", /gamepad|геймпад|dualsense/i],
+    ["headset", /pulse|наушник|headset|гарнитур/i],
+    ["console", /ps5\s*(?:pro|slim)|switch|portal|\bvr2\b|приставк/i],
+    ["accessory", /дисковод|станц|stand|подставк|charging/i]];
+
+  function parseGamingTraits(name) {
+    const kind = matchFirst(name, GAMING_KIND_RULES);
+    // Цвет берём только у геймпадов: у консолей в названии стоит объём диска,
+    // а не цвет, и фасет получился бы наполовину пустым.
+    const color =
+      kind === "gamepad" || kind === "headset"
+        ? String(name || "")
+            .replace(/^[^\p{L}\p{N}]+/u, "")
+            .replace(/^(?:gamepad|геймпад)\s*/i, "")
+            .replace(/\bps\s*5\b|\bps5\b/i, "")
+            .replace(/pulse|elite|3d/gi, "")
+            .replace(/\s+/g, " ")
+            .trim()
+            .toLowerCase()
+        : "";
+    return { kind, color };
+  }
+
+  // --- Dyson: тип прибора и модель ---
+  const DYSON_KIND_RULES = [
+    ["styler", /\bhs\d{2}\b|airwrap|стайлер/i],
+    ["dryer", /\bhd\d{2}\b|supersonic|\bфен\b/i],
+    ["straightener", /\bht\d{2}\b|airstrait|выпрямит/i]];
+
+  function parseDysonTraits(name) {
+    const model = String(name || "").match(/\b(H[SDT]\d{2})\b/i);
+    return {
+      kind: matchFirst(name, DYSON_KIND_RULES),
+      model: model ? model[1].toUpperCase() : "",
+    };
+  }
+
+  // --- Гаджеты: тип и марка ---
+  const GADGET_KIND_RULES = [
+    ["tracker", /whoop|fitbit|браслет/i],
+    ["action", /gopro|экшн/i],
+    ["film", /картридж|плёнк|пленк|twin\s*pack/i],
+    ["printer", /link|принтер/i],
+    ["camera", /instax|canon|powershot|фотоаппарат/i]];
+  const GADGET_BRAND_RULES = [
+    ["whoop", /whoop/i],
+    ["google", /fitbit|google/i],
+    ["gopro", /gopro/i],
+    ["canon", /canon/i],
+    ["fujifilm", /instax|fujifilm/i]];
+
+  function parseGadgetTraits(name) {
+    return {
+      kind: matchFirst(name, GADGET_KIND_RULES),
+      brand: matchFirst(name, GADGET_BRAND_RULES),
+    };
+  }
+
   const samsungFacets = [
     { id: "line", label: "Модель" },
     { id: "storage", label: "Память" },
@@ -1106,6 +1294,11 @@
       getTraits: getWatchTraits,
       isFilterable: isWatchFilterable,
       matches(product, filters) {
+        // Как и у групп ниже: без выбранного фильтра показываем всё. Сейчас
+        // разбираются все 76 позиций, но появится четвёртая форма названия —
+        // товар должен пропасть из фильтра, а не из магазина (28.08.2026).
+        const hasActive = Object.values(filters || {}).some(Boolean);
+        if (!hasActive) return true;
         if (!isWatchFilterable(product)) return false;
         const traits = getWatchTraits(product);
         return Object.entries(filters || {}).every(([facetId, value]) => traitMatchesFilter(traits, facetId, value));
@@ -1119,6 +1312,98 @@
       formatValue: formatWatchFacetValue,
       ...watchWizard,
     },
+    audio: createSimpleFamily({
+      label: "Аудио",
+      facets: [
+        { id: "kind", label: "Тип" },
+        { id: "brand", label: "Бренд" },
+        { id: "line", label: "Модель" }],
+      parse: parseAudioTraits,
+      order: {
+        kind: ["headphones", "speaker"],
+        brand: ["yandex", "samsung", "marshall", "jbl"],
+        line: ["buds3", "buds3pro", "buds4", "buds4pro", "major", "acton", "flip", "mini3", "mini3pro", "max", "duomax", "street"],
+      },
+      labels: {
+        kind: { headphones: "Наушники", speaker: "Колонки" },
+        brand: { yandex: "Яндекс", samsung: "Samsung", marshall: "Marshall", jbl: "JBL" },
+        line: {
+          buds3: "Galaxy Buds 3", buds3pro: "Galaxy Buds 3 Pro",
+          buds4: "Galaxy Buds 4", buds4pro: "Galaxy Buds 4 Pro",
+          major: "Major V", acton: "Acton III", flip: "Flip 7",
+          mini3: "Станция Мини 3", mini3pro: "Станция Мини 3 Про",
+          max: "Станция MAX", duomax: "Станция Дуо MAX", street: "Стрит",
+        },
+      },
+      prompts: { kind: "Наушники или колонка", brand: "Выберите бренд", line: "Выберите модель" },
+    }),
+    accessories: createSimpleFamily({
+      label: "Аксессуары",
+      facets: [
+        { id: "kind", label: "Тип" },
+        { id: "device", label: "Для устройства" }],
+      parse: parseAccessoryTraits,
+      order: {
+        kind: ["case", "glass", "stylus", "tracker", "mouse", "charger", "band"],
+        device: ["iphone-17-pro-max", "iphone-17-pro", "iphone-16-pro-max", "iphone-16-pro", "ipad", "samsung", "galaxy-watch"],
+      },
+      labels: {
+        kind: {
+          case: "Чехлы", glass: "Защитные стёкла", stylus: "Стилусы",
+          tracker: "Трекеры", mouse: "Мыши и клавиатуры", charger: "Зарядки",
+          band: "Ремешки",
+        },
+        device: {
+          "iphone-17-pro-max": "iPhone 17 Pro Max", "iphone-17-pro": "iPhone 17 Pro",
+          "iphone-16-pro-max": "iPhone 16 Pro Max", "iphone-16-pro": "iPhone 16 Pro",
+          ipad: "iPad", samsung: "Samsung", "galaxy-watch": "Galaxy Watch",
+        },
+      },
+      prompts: { kind: "Что нужно", device: "Для какого устройства" },
+    }),
+    gaming: createSimpleFamily({
+      label: "Приставки",
+      facets: [
+        { id: "kind", label: "Тип" },
+        { id: "color", label: "Цвет" }],
+      parse: parseGamingTraits,
+      order: { kind: ["console", "gamepad", "headset", "accessory"] },
+      labels: {
+        kind: { console: "Консоли", gamepad: "Геймпады", headset: "Гарнитуры", accessory: "Аксессуары" },
+      },
+      prompts: { kind: "Что нужно", color: "Выберите цвет" },
+    }),
+    dyson: createSimpleFamily({
+      label: "Dyson",
+      facets: [
+        { id: "kind", label: "Тип" },
+        { id: "model", label: "Модель" }],
+      parse: parseDysonTraits,
+      order: { kind: ["styler", "dryer", "straightener"], model: ["HS08", "HS09", "HD16", "HD17", "HT01"] },
+      labels: {
+        kind: { styler: "Стайлеры", dryer: "Фены", straightener: "Выпрямители" },
+      },
+      prompts: { kind: "Что нужно", model: "Выберите модель" },
+    }),
+    gadgets: createSimpleFamily({
+      label: "Гаджеты",
+      facets: [
+        { id: "kind", label: "Тип" },
+        { id: "brand", label: "Бренд" }],
+      parse: parseGadgetTraits,
+      order: {
+        kind: ["tracker", "action", "camera", "printer", "film"],
+        brand: ["whoop", "google", "gopro", "canon", "fujifilm"],
+      },
+      labels: {
+        kind: {
+          tracker: "Фитнес-браслеты", action: "Экшн-камеры", camera: "Фотоаппараты",
+          printer: "Фотопринтеры", film: "Плёнка и картриджи",
+        },
+        brand: { whoop: "Whoop", google: "Google", gopro: "GoPro", canon: "Canon", fujifilm: "Fujifilm" },
+      },
+      prompts: { kind: "Что нужно", brand: "Выберите бренд" },
+    }),
     samsung: {
       label: "Samsung",
       facets: samsungFacets,
