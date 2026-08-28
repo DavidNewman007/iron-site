@@ -166,13 +166,16 @@
     "tb": "TB",
     "gb": "GB",
     "with_anc": "With ANC",
-    "without_anc": "Without ANC"
+    "without_anc": "Without ANC",
+    "mm": "mm"
   },
   "filter_labels": {
     "Серия": "Series",
     "Память": "Storage",
     "Цвет": "Colour",
-    "Модель": "Model"
+    "Модель": "Model",
+    "Корпус": "Case",
+    "Ремешок": "Band"
   },
   "filter_prompts": {
     "Выберите серию": "Choose a series",
@@ -183,7 +186,10 @@
     "Выберите модель iPad": "Choose an iPad model",
     "Выберите модель AirPods": "Choose an AirPods model",
     "Выберите версию AirPods 4": "Choose the AirPods 4 version",
-    "Выберите модель Samsung": "Choose a Samsung model"
+    "Выберите модель Samsung": "Choose a Samsung model",
+    "Выберите серию Apple Watch": "Choose an Apple Watch series",
+    "Выберите размер корпуса": "Choose the case size",
+    "Выберите размер ремешка": "Choose the band size"
   },
   "sections": {
     "_комментарий": "Заголовки групп товаров. Часть приходит категорийными строками из таблицы, часть собирает resolveAccessorySection в prices.js. Точное совпадение надёжнее пословного перевода; заголовка нет в списке — работает пословный механизм названий товаров, и он же оставит заголовок русским, если слово незнакомо.",

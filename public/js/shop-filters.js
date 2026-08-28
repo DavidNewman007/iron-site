@@ -827,6 +827,164 @@
     return value;
   }
 
+
+  // ─── Apple Watch (28.08.2026) ───────────────────────────────────────────
+  //
+  // Названия часов приходят в ТРЁХ формах, и парсер обязан понимать все:
+  //   S1  «Series 11 42mm S/M Jet Black Black MEQT4 LW/A»
+  //   S2  «S11 42mm Silver M/L», «Ultra 3 Black Ocean Black»
+  //   S3  «Apple Watch Series 11 42mm Silver with Purple Fog Sport Band S/M»
+  //
+  // Фасетов четыре, и все — по признакам, которые есть во всех трёх формах.
+  // Тип ремешка (Ocean / Alpine / Trail / Milanese) в фасеты НЕ вынесен
+  // намеренно: в коротких названиях S2 его часто нет вовсе, и фильтр по нему
+  // прятал бы товары, у которых ремешок тот же самый, просто не написан.
+
+  // Порядок важен: составные цвета проверяются раньше односложных, иначе
+  // «Jet Black» схлопнется в «black», а «Rose Gold» — в «gold».
+  const WATCH_CASE_COLORS = [
+    ["jet black", /\bjet\s*black\b/i],
+    ["rose gold", /\brose\s*gold\b/i],
+    ["space gray", /\bspace\s*gray\b/i],
+    ["black", /\bblack\s*titanium\b/i],
+    ["natural", /\bnatural\s*titanium\b/i],
+    ["midnight", /\bmidnight\b|\bmid\b/i],
+    ["starlight", /\bstarlight\b|\bstar\b/i],
+    ["silver", /\bsilver\b/i],
+    ["natural", /\bnatural\b/i],
+    ["black", /\bblack\b/i],
+    ["gray", /\bgray\b|\bgrey\b/i]];
+
+  const WATCH_SERIES_ORDER = ["se3", "s11", "ultra2", "ultra3"];
+
+  const WATCH_SERIES_LABEL = {
+    se3: "SE 3",
+    s11: "Series 11",
+    ultra2: "Ultra 2",
+    ultra3: "Ultra 3",
+  };
+
+  const WATCH_BAND_SIZE_ORDER = ["s/m", "m/l", "s", "m", "l"];
+
+  function parseWatchSeries(name) {
+    const productName = String(name || "");
+    const ultra = productName.match(/\bultra\s*(\d)\b/i);
+    if (ultra) return `ultra${ultra[1]}`;
+    const se = productName.match(/\bse\s*(\d)\b/i);
+    if (se) return `se${se[1]}`;
+    const series = productName.match(/\bseries\s*(\d{1,2})\b/i);
+    if (series) return `s${series[1]}`;
+    const short = productName.match(/^\s*S(\d{1,2})\b/i);
+    if (short) return `s${short[1]}`;
+    return "";
+  }
+
+  function parseWatchSize(name, series) {
+    const size = String(name || "").match(/\b(\d{2})\s*mm\b/i);
+    if (size) return size[1];
+    // У коротких названий S2 («Ultra 3 Black Ocean Black») размера нет, но
+    // корпус у Ultra всегда 49 мм — иначе эти позиции выпадали бы из фильтра.
+    if (/^ultra/.test(series || "")) return "49";
+    return "";
+  }
+
+  function parseWatchCaseColor(name) {
+    const productName = String(name || "");
+    for (const [value, re] of WATCH_CASE_COLORS) {
+      if (re.test(productName)) return value;
+    }
+    return "";
+  }
+
+  function parseWatchBandSize(name) {
+    const productName = String(name || "");
+    const pair = productName.match(/\b(S\/M|M\/L)\b/i);
+    if (pair) return pair[1].toLowerCase();
+    const single = productName.match(/(?:^|\s)([SML])(?=\s|$)/);
+    if (single) return single[1].toLowerCase();
+    return "";
+  }
+
+  // Один и тот же корпус в прайсе назван по-разному: длинное название S1 пишет
+  // «Jet Black» и «Space Gray», короткое S2 — просто «Black» и «Gray». Без
+  // сведения к одному значению цвет двоился бы в фильтре. У Ultra трогать
+  // нельзя: там «Black» и «Natural» — это титан, а не алюминий.
+  function canonicalWatchColor(color, series) {
+    if (!color || /^ultra/.test(series || "")) return color;
+    if (color === "black") return "jet black";
+    if (color === "gray") return "space gray";
+    return color;
+  }
+
+  function parseWatchTraits(name) {
+    const series = parseWatchSeries(name);
+    return {
+      series,
+      size: parseWatchSize(name, series),
+      color: canonicalWatchColor(parseWatchCaseColor(name), series),
+      bandSize: parseWatchBandSize(name),
+    };
+  }
+
+  function getWatchTraits(product) {
+    if (!product._shopTraits) {
+      product._shopTraits = parseWatchTraits(product.name);
+    }
+    return product._shopTraits;
+  }
+
+  function isWatchFilterable(product) {
+    return Boolean(getWatchTraits(product).series);
+  }
+
+  function sortWatchFacetValues(facetId, values) {
+    if (facetId === "series") {
+      return [...values].sort((a, b) => {
+        const ia = WATCH_SERIES_ORDER.indexOf(a);
+        const ib = WATCH_SERIES_ORDER.indexOf(b);
+        return (ia < 0 ? 999 : ia) - (ib < 0 ? 999 : ib) || a.localeCompare(b, "ru");
+      });
+    }
+    if (facetId === "size") {
+      return [...values].sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+    }
+    if (facetId === "bandSize") {
+      return [...values].sort(
+        (a, b) => WATCH_BAND_SIZE_ORDER.indexOf(a) - WATCH_BAND_SIZE_ORDER.indexOf(b)
+      );
+    }
+    return [...values].sort((a, b) => a.localeCompare(b, "ru"));
+  }
+
+  function formatWatchFacetValue(facetId, value) {
+    if (facetId === "series") return WATCH_SERIES_LABEL[value] || value;
+    if (facetId === "size") return `${value} ${T("filters.mm", "мм")}`;
+    if (facetId === "bandSize") return String(value || "").toUpperCase();
+    if (facetId === "color") return formatColorLabel(value);
+    return value;
+  }
+
+  const watchFacets = [
+    { id: "series", label: "Серия" },
+    { id: "size", label: "Корпус" },
+    { id: "color", label: "Цвет" },
+    { id: "bandSize", label: "Ремешок" }];
+
+  const WATCH_WIZARD_PROMPTS = {
+    series: "Выберите серию Apple Watch",
+    size: "Выберите размер корпуса",
+    color: "Выберите цвет",
+    bandSize: "Выберите размер ремешка",
+  };
+
+  const watchWizard = createLinearWizardHelpers(
+    watchFacets,
+    getWatchTraits,
+    isWatchFilterable,
+    WATCH_WIZARD_PROMPTS,
+    formatWatchFacetValue
+  );
+
   const samsungFacets = [
     { id: "line", label: "Модель" },
     { id: "storage", label: "Память" },
@@ -941,6 +1099,25 @@
       },
       formatValue: formatAirpodsFacetValue,
       ...airpodsWizard,
+    },
+    watch: {
+      label: "Apple Watch",
+      facets: watchFacets,
+      getTraits: getWatchTraits,
+      isFilterable: isWatchFilterable,
+      matches(product, filters) {
+        if (!isWatchFilterable(product)) return false;
+        const traits = getWatchTraits(product);
+        return Object.entries(filters || {}).every(([facetId, value]) => traitMatchesFilter(traits, facetId, value));
+      },
+      collectOptions(products, facetId, activeFilters) {
+        return sortWatchFacetValues(
+          facetId,
+          collectFacetOptions(products, facetId, activeFilters, getWatchTraits, isWatchFilterable)
+        );
+      },
+      formatValue: formatWatchFacetValue,
+      ...watchWizard,
     },
     samsung: {
       label: "Samsung",
