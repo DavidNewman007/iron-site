@@ -1466,6 +1466,61 @@
   to { opacity: 1; transform: none; }
 }
 
+/* ——— Переключатели цвета и памяти внутри карточки ———
+   Значения выводим текстом, а не кружками: в прайсе больше девяноста разных
+   названий цвета, и часть из них — не цвета вовсе («Silver QN/A»). Текст не
+   врёт, кружок соврать может. */
+.price-card__variants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.1rem 0 0;
+}
+
+.price-card__variant {
+  border: 1px solid rgba(212, 160, 18, 0.34);
+  background: rgba(28, 28, 28, 0.84);
+  color: var(--cream);
+  border-radius: 8px;
+  padding: 0.18rem 0.5rem;
+  font: inherit;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.price-card__variant:hover {
+  border-color: rgba(212, 160, 18, 0.7);
+}
+
+.price-card__variant.is-active {
+  border-color: var(--gold);
+  background: rgba(212, 160, 18, 0.18);
+  color: #fff6df;
+}
+
+/* ——— Колонка фильтров слева ———
+   Три колонки включаются классом от prices.js, только когда фильтры есть.
+   Без класса раскладка ровно такая, какой была: сетка и корзина. */
+.shop-layout--with-filters {
+  grid-template-columns: 240px minmax(0, 1fr) 320px;
+}
+
+.shop-layout--with-filters > .shop-filters {
+  position: sticky;
+  top: calc(var(--header-h) + var(--shop-toolbar-sticky-offset));
+  margin: 0;
+  max-height: calc(100vh - var(--header-h) - 4rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Внутри узкой колонки группы фильтров идут одна под другой, а не в ряд */
+.shop-layout--with-filters .shop-filters__groups {
+  grid-template-columns: 1fr;
+}
+
 /* Кнопка «показать ещё» под сеткой */
 .price-grid-more-btn {
   grid-column: 1 / -1;
@@ -1570,5 +1625,27 @@
 
   .sk-line--media {
     height: 112px;
+  }
+
+  /* На телефоне переключатели крупнее: палец должен попадать, а 29 пикселей
+     высоты (замер 03.09.2026) для этого мало. Держим 44 — минимум, который
+     Apple рекомендует для касания. */
+  .price-card__variant {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.82rem;
+  }
+
+  /* Телефон: колонки нет, фильтры снова над списком и не липнут */
+  .shop-layout--with-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-layout--with-filters > .shop-filters {
+    position: static;
+    max-height: none;
+    overflow: visible;
   }
 }

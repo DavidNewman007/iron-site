@@ -22,9 +22,13 @@
   <meta property="og:image" content="https://1iron.ru/assets/logo-horizontal.png">
   <link rel="icon" href="../assets/logo-icon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.bunny.net">
+  <!-- Прайс приходит из Google Sheets. Рукопожатие с docs.google.com
+       занимает около трёхсот миллисекунд; начинаем его заранее, пока грузятся
+       стили, а не в момент первого запроса (замер 03.09.2026). -->
+  <link rel="preconnect" href="https://docs.google.com" crossorigin>
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css?v=2026-08-19-3">
-  <link rel="stylesheet" href="../css/shop.css?v=2026-09-03-1">
+  <link rel="stylesheet" href="../css/shop.css?v=2026-09-03-4">
 </head>
 <body>
   <header class="site-header">
@@ -103,13 +107,19 @@
           </div>
         </div>
 
-        <div class="shop-filters" id="shop-filters" hidden aria-label="Filter by specification"></div>
-
         <p class="price-status" id="price-updated"></p>
         <p class="price-status" id="price-loading">Loading the price list…</p>
         <p class="price-status price-status--error" id="price-error" hidden></p>
 
+        <!--
+          Фильтры стоят слева от сетки (редизайн 03.09.2026): раньше они лежали
+          над списком и на десктопе отъедали высоту первого экрана. Колонка
+          появляется только когда фильтры есть — класс shop-layout--with-filters
+          ставит prices.js. На телефоне колонка схлопывается, и пошаговый
+          подбор снова оказывается над списком, как раньше.
+        -->
         <div class="shop-layout">
+          <div class="shop-filters" id="shop-filters" hidden aria-label="Filter by specification"></div>
           <div id="price-grid" class="price-grid" aria-live="polite"></div>
 
           <aside class="cart-panel" id="cart-panel">
@@ -176,12 +186,12 @@
     </div>
   </footer>
 
-  <script src="../js/i18n.js?v=2026-08-19-3"></script>
-  <script src="../js/config.js"></script>
-  <script src="../js/search-dictionary.js?v=2026-06-26-1"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/shop-filters.js?v=2026-08-28-3"></script>
-  <script src="../js/order-channels.js?v=2026-07-04-5"></script>
-  <script src="../js/prices.js?v=2026-09-03-1"></script>
+  <script defer src="../js/i18n.js?v=2026-08-19-3"></script>
+  <script defer src="../js/config.js"></script>
+  <script defer src="../js/search-dictionary.js?v=2026-06-26-1"></script>
+  <script defer src="../js/main.js"></script>
+  <script defer src="../js/shop-filters.js?v=2026-08-28-3"></script>
+  <script defer src="../js/order-channels.js?v=2026-07-04-5"></script>
+  <script defer src="../js/prices.js?v=2026-09-03-3"></script>
 </body>
 </html>

@@ -2998,7 +2998,7 @@
     });
   }
 
-  function renderProductCard(p) {
+  function renderProductCard(p, group) {
     const inCart = getCartIndexByProductId(p.id) >= 0;
     // Список категорий с подробной страницей. Шесть «дополнительных» добавлены
     // 27.08.2026: без них карточка получала обложку в applyHybridData, но
@@ -3027,6 +3027,7 @@
           ${p.country ? `<span class="price-card__country">${escapeHtml(I18N.country(p.country))}</span>` : ""}
         </div>
         <h3 class="price-card__name">${nameHtml}</h3>
+        ${group ? variantChipsHtml(group, group.selected) : ""}
         ${p.preorder ? `<p class="price-card__preorder">${escapeHtml(PREORDER_BADGE_TEXT)}</p>` : ""}
         <p class="price-card__warranty">
           ${escapeHtml(WARRANTY_SHORT_LABEL[warrantyKindFor(p)])}
@@ -3097,6 +3098,197 @@
     );
   }
 
+  /* ═══════════════════════════════════════════════════════════════
+     ВАРИАНТЫ ВНУТРИ КАРТОЧКИ: цвет и память (03.09.2026, план 27)
+
+     Было: четыре цвета одной модели — четыре почти одинаковые карточки
+     подряд, а с учётом памяти на iPhone 15 их набиралось двенадцать.
+     Стало: одна карточка с переключателями цвета и памяти.
+
+     Осторожность здесь важнее красоты — магазин живой:
+     1. Цвет и память берём НЕ своим парсером, а через getTraits() из
+        shop-filters.js: этот код уже работает в фильтрах и ему доверяем.
+     2. Значение цвета проверяем на вменяемость — оно обязано встречаться
+        в названии товара. У iPad и AirPods в поле цвета иногда лежит
+        целое название модели; такие позиции просто не группируются.
+     3. Ни один товар не должен пропасть. Если в группе оказались две
+        позиции с одинаковым цветом и памятью (одна модель у двух
+        поставщиков по разной цене), в переключателе остаётся дешёвая,
+        а остальные рисуются отдельными карточками, как раньше.
+     ═══════════════════════════════════════════════════════════════ */
+
+  /** Выбранный вариант в каждой группе: ключ группы → id товара. */
+  const variantChoice = Object.create(null);
+
+  function normalizeForStem(value) {
+    return String(value || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9а-яё]+/gi, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function filtersRegistryFor(product) {
+    const reg = window.IRON_SHOP_FILTERS?.[product?.category];
+    if (!reg || typeof reg.getTraits !== "function") return null;
+    if (!Array.isArray(reg.facets) || !reg.facets.some((f) => f.id === "color")) return null;
+    if (typeof reg.isFilterable === "function" && !reg.isFilterable(product)) return null;
+    return reg;
+  }
+
+  /**
+   * «Основа» названия — то, что остаётся после вычёркивания цвета и памяти.
+   * Пустая строка означает «группировать нельзя»: цвет не нашёлся в названии
+   * или от названия почти ничего не осталось.
+   */
+  function variantStem(product, traits) {
+    const color = normalizeForStem(traits.color);
+    if (!color) return "";
+    const name = normalizeForStem(product.name);
+    if (!name.includes(color)) return "";
+    let stem = name.split(color).join(" ");
+    const storage = String(traits.storage || "").trim();
+    if (storage) {
+      stem = stem.replace(new RegExp("\\b" + storage + "\\s*(gb|tb)?\\b", "g"), " ");
+    }
+    stem = stem.replace(/\s+/g, " ").trim();
+    return stem.length >= 8 ? stem : "";
+  }
+
+  function variantGroupKey(product) {
+    const reg = filtersRegistryFor(product);
+    if (!reg) return "";
+    const traits = reg.getTraits(product) || {};
+    const stem = variantStem(product, traits);
+    if (!stem) return "";
+    const rest = reg.facets
+      .filter((f) => f.id !== "color" && f.id !== "storage")
+      .map((f) => f.id + "=" + (traits[f.id] ?? ""))
+      .join("|");
+    return [
+      product.category,
+      stem,
+      rest,
+      "c=" + (product.country || ""),
+      "w=" + (product.warehouse || ""),
+      "p=" + (product.preorder ? 1 : 0),
+      "g=" + warrantyKindFor(product),
+    ].join("|");
+  }
+
+  /**
+   * Складывает список товаров в «карточки»: либо одиночный товар, либо
+   * группа вариантов. Порядок исходного списка сохраняется — он уже
+   * отсортирован, и первым в группе оказывается самый дешёвый вариант.
+   */
+  function buildCardList(items) {
+    const groups = new Map();
+    const order = [];
+
+    for (const product of items) {
+      const key = variantGroupKey(product);
+      const reg = key ? filtersRegistryFor(product) : null;
+      if (!key || !reg) {
+        order.push({ kind: "single", product });
+        continue;
+      }
+      const traits = reg.getTraits(product) || {};
+      const pair = (traits.color || "") + "\u0000" + (traits.storage || "");
+      let group = groups.get(key);
+      if (!group) {
+        group = { kind: "group", key, reg, variants: [], seen: new Set() };
+        groups.set(key, group);
+        order.push(group);
+      }
+      if (group.seen.has(pair)) {
+        // Такой цвет с такой памятью в группе уже есть — не прячем товар,
+        // а показываем его отдельной карточкой, как было до редизайна.
+        order.push({ kind: "single", product });
+        continue;
+      }
+      group.seen.add(pair);
+      group.variants.push({ product, traits });
+    }
+
+    // Группа из одного варианта — обычная карточка без переключателей.
+    return order.map((entry) => {
+      if (entry.kind === "group" && entry.variants.length < 2) {
+        return { kind: "single", product: entry.variants[0].product };
+      }
+      return entry;
+    });
+  }
+
+  function selectedVariantOf(group) {
+    const chosenId = variantChoice[group.key];
+    if (chosenId) {
+      const hit = group.variants.find((v) => idsLookEqual(v.product.id, chosenId));
+      if (hit) return hit;
+    }
+    return group.variants[0];
+  }
+
+  /** Уникальные значения одной характеристики в порядке появления. */
+  function variantValues(group, facetId) {
+    const seen = new Set();
+    const out = [];
+    for (const v of group.variants) {
+      const value = String(v.traits[facetId] || "").trim();
+      if (!value || seen.has(value)) continue;
+      seen.add(value);
+      out.push(value);
+    }
+    return out;
+  }
+
+  /**
+   * Куда переключиться при клике: ищем вариант с новым значением и, по
+   * возможности, с тем же вторым параметром. Если такой пары нет — берём
+   * первый (он же самый дешёвый) вариант с новым значением.
+   */
+  function findVariant(group, facetId, value, keepFacetId, keepValue) {
+    const sameBoth = group.variants.find(
+      (v) =>
+        String(v.traits[facetId] || "") === value &&
+        String(v.traits[keepFacetId] || "") === keepValue
+    );
+    if (sameBoth) return sameBoth;
+    return group.variants.find((v) => String(v.traits[facetId] || "") === value) || null;
+  }
+
+  function variantChipsHtml(group, selected) {
+    const rows = [];
+    const facetLabel = (id) => group.reg.facets.find((f) => f.id === id)?.label || "";
+    const format = (id, value) =>
+      typeof group.reg.formatValue === "function" ? group.reg.formatValue(id, value) : value;
+
+    for (const facetId of ["color", "storage"]) {
+      const values = variantValues(group, facetId);
+      if (values.length < 2) continue;
+      const current = String(selected.traits[facetId] || "");
+      const chips = values
+        .map((value) => {
+          const target = findVariant(
+            group,
+            facetId,
+            value,
+            facetId === "color" ? "storage" : "color",
+            String(selected.traits[facetId === "color" ? "storage" : "color"] || "")
+          );
+          if (!target) return "";
+          const on = value === current;
+          return `<button type="button" class="price-card__variant${on ? " is-active" : ""}" data-action="variant" data-group="${escapeHtml(
+            group.key
+          )}" data-id="${escapeHtml(target.product.id)}" aria-pressed="${on ? "true" : "false"}" title="${escapeHtml(
+            facetLabel(facetId) + ": " + format(facetId, value)
+          )}">${escapeHtml(format(facetId, value))}</button>`;
+        })
+        .join("");
+      if (chips) rows.push(`<div class="price-card__variants">${chips}</div>`);
+    }
+    return rows.join("");
+  }
+
   /*
    * Сетка рисуется порциями.
    *
@@ -3117,9 +3309,23 @@
     return items.length + "|" + items[0].id + "|" + items[items.length - 1].id;
   }
 
+  /**
+   * Колонка фильтров слева включается только когда фильтры реально есть.
+   * Без этого в сетке остался бы пустой первый столбец, а на телефоне
+   * подбор уехал бы вбок вместо привычного положения над списком.
+   */
+  function syncFiltersColumn() {
+    const layout = document.querySelector(".shop-layout");
+    if (!layout) return;
+    const on =
+      !!els.filtersRoot && !els.filtersRoot.hidden && !isMobileFiltersView();
+    layout.classList.toggle("shop-layout--with-filters", on);
+  }
+
   function renderGrid() {
     if (!els.grid) return;
     renderCategoryFilters();
+    syncFiltersColumn();
     const selectedCategory = els.category?.value || "all";
     const filtered = getFiltered();
     const groups = sortGroups(groupBySection(filtered), selectedCategory);
@@ -3144,18 +3350,32 @@
     // только если под ним есть хотя бы одна карточка этой порции.
     let shown = 0;
     let animIndex = 0;
+    let totalCards = 0;
     const parts = [];
-    for (const { section, items } of groups) {
+    const cardsBySection = groups.map(({ section, items }) => {
+      const cards = buildCardList(items);
+      totalCards += cards.length;
+      return { section, cards };
+    });
+
+    for (const { section, cards } of cardsBySection) {
       if (shown >= gridLimit) break;
-      const slice = items.slice(0, gridLimit - shown);
+      const slice = cards.slice(0, gridLimit - shown);
       if (!slice.length) continue;
       if (section) {
         parts.push(
           `<header class="price-section-head"><h2 class="price-section-title">${escapeHtml(I18N.section(section))}</h2></header>`
         );
       }
-      for (const item of slice) {
-        const html = renderProductCard(item);
+      for (const card of slice) {
+        let html;
+        if (card.kind === "group") {
+          const selected = selectedVariantOf(card);
+          card.selected = selected;
+          html = renderProductCard(selected.product, card);
+        } else {
+          html = renderProductCard(card.product);
+        }
         // Анимируем только то, что появилось в этот заход: при «показать ещё»
         // уже показанные карточки не должны мигать заново.
         if (shown >= gridAnimateFrom) {
@@ -3172,7 +3392,7 @@
       }
     }
 
-    const total = filtered.length;
+    const total = totalCards;
     const restHtml =
       shown < total
         ? `<button type="button" class="price-grid-more-btn" data-action="more">${escapeHtml(
@@ -3186,6 +3406,20 @@
         : "";
 
     els.grid.innerHTML = parts.join("") + restHtml + tailHtml;
+
+    // Переключение цвета или памяти внутри карточки: запоминаем выбор и
+    // перерисовываем сетку. Порция и позиция прокрутки не меняются, потому
+    // что высота карточки от выбора не зависит.
+    els.grid.querySelectorAll("[data-action=variant]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.group;
+        const id = btn.dataset.id;
+        if (!key || !id) return;
+        variantChoice[key] = id;
+        gridAnimateFrom = gridLimit;
+        renderGrid();
+      });
+    });
 
     const moreBtn = els.grid.querySelector("[data-action=more]");
     if (moreBtn) {
