@@ -24,8 +24,8 @@
   <link rel="icon" href="assets/logo-icon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=2026-08-19-3">
-  <link rel="stylesheet" href="css/shop.css?v=2026-08-19-3">
+  <link rel="stylesheet" href="css/styles.css?v=2026-09-03-1">
+  <link rel="stylesheet" href="css/shop.css?v=2026-09-03-1">
 </head>
 <body>
   <header class="site-header">
@@ -54,13 +54,52 @@
   </header>
 
   <main>
-    <div class="page-hero">
-      <div class="container">
-        <h1>Магазин</h1>
-        <p>Актуальный прайс — выберите и забронируйте устройства</p>
+    <!--
+      Табло цеха: живые цифры о прайсе. Ничего не выдумывается — время
+      обновления и счётчик позиций подставляет prices.js (#board-updated,
+      #board-count), остальное статические факты о магазине.
+    -->
+    <div class="shop-board">
+      <div class="container shop-board__inner">
+        <span class="shop-board__live"><span class="shop-board__dot" aria-hidden="true"></span><span id="board-updated">Прайс обновляется каждый день</span></span>
+        <span id="board-count" hidden></span>
+        <span>В наличии в Сочи · Московская, 5</span>
+        <span>Под заказ 3–5 дней</span>
+        <span class="shop-board__accent">Скоро: раздел «Запчасти»</span>
       </div>
     </div>
 
+    <!--
+      Шапка магазина с фотографией мастерской и тремя вкладками.
+      Вкладки «Техника» и «Запчасти» переключают панели на этой же странице
+      (адрес получает #tehnika / #zapchasti), «Услуги ремонта» — обычная
+      ссылка на uslugi.html, где живёт свой движок подбора услуг.
+    -->
+    <div class="shop-hero">
+      <img class="shop-hero__photo" src="assets/hero-magazin.jpg" alt="" width="1600" height="800" fetchpriority="high" decoding="async">
+      <div class="container shop-hero__inner">
+        <div class="shop-hero__head">
+          <h1>Магазин</h1>
+          <p class="shop-hero__lead">Техника, запчасти и ремонт — на одной странице</p>
+        </div>
+        <div class="shop-tabs" role="tablist" aria-label="Разделы магазина">
+          <button type="button" class="shop-tab is-active" id="tab-btn-tehnika" role="tab" aria-selected="true" aria-controls="panel-tehnika" data-tab="tehnika">
+            <svg class="shop-tab__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"></rect><path d="M10.5 5.5h3"></path></svg>
+            <span class="shop-tab__text"><span class="shop-tab__name">Техника</span><span class="shop-tab__note" id="tab-note-tehnika">прайс обновляется каждый день</span></span>
+          </button>
+          <button type="button" class="shop-tab" id="tab-btn-zapchasti" role="tab" aria-selected="false" aria-controls="panel-zapchasti" data-tab="zapchasti">
+            <svg class="shop-tab__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>
+            <span class="shop-tab__text"><span class="shop-tab__name">Запчасти <span class="shop-tab__badge">Скоро</span></span><span class="shop-tab__note">деталь отдельно или с установкой</span></span>
+          </button>
+          <a class="shop-tab" href="uslugi.html">
+            <svg class="shop-tab__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5l4 4L8 20H4v-4z"></path><path d="M13 7l4 4"></path></svg>
+            <span class="shop-tab__text"><span class="shop-tab__name">Услуги ремонта</span><span class="shop-tab__note">960 услуг · 100 дней гарантии</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-tab-panel" id="panel-tehnika" role="tabpanel" aria-labelledby="tab-btn-tehnika">
     <section class="shop-section" id="shop-prices">
       <div class="container">
         <p class="shop-intro">
@@ -159,6 +198,31 @@
         </div>
       </div>
     </section>
+    </div><!-- /panel-tehnika -->
+
+    <!--
+      Панель «Запчасти». Данных ещё нет — ждём прайс от поставщика, поэтому
+      здесь честная заглушка с переходом в чат, а не пустая таблица.
+    -->
+    <div class="shop-tab-panel" id="panel-zapchasti" role="tabpanel" aria-labelledby="tab-btn-zapchasti" hidden>
+      <section class="shop-section">
+        <div class="container">
+          <div class="parts-soon">
+            <img class="parts-soon__photo" src="assets/hero-zapchasti.jpg" alt="" width="1400" height="1050" loading="lazy" decoding="async">
+            <div class="parts-soon__body">
+              <h2>Запчасти — скоро</h2>
+              <p>Собираем прайс: дисплеи, аккумуляторы, камеры, стёкла, шлейфы и разъёмы. У каждой детали будут две цены рядом — забрать деталь или поставить её у нас в мастерской.</p>
+              <p>Нужна деталь прямо сейчас? Напишите модель и что менять — ответим с ценой и сроком.</p>
+              <div class="parts-soon__actions">
+                <a class="btn btn-primary" href="https://t.me/ironservice" target="_blank" rel="noopener">Спросить в Telegram</a>
+                <a class="btn btn-secondary" href="uslugi.html">Посмотреть ремонт с деталью</a>
+              </div>
+              <p class="parts-soon__note">Сейчас деталь можно взять вместе с установкой — цены на странице «Услуги»: работа и деталь одной строкой, гарантия на работу 100 дней.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
   <div class="cart-mobile-bar">
@@ -182,6 +246,7 @@
   <script src="js/main.js"></script>
   <script src="js/shop-filters.js?v=2026-08-28-3"></script>
   <script src="js/order-channels.js?v=2026-07-04-5"></script>
-  <script src="js/prices.js?v=2026-08-27-3"></script>
+  <script src="js/shop-tabs.js?v=2026-09-03-1"></script>
+  <script src="js/prices.js?v=2026-09-03-1"></script>
 </body>
 </html>

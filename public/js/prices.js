@@ -1796,6 +1796,21 @@
       els.updated.textContent = I18N.isEn
         ? T("shop.updated", "", { when: when, count: allProducts.length, suffix: suffix })
         : `Обновлено: ${when} · ${allProducts.length} позиций${suffix}`;
+      // Те же цифры на табло над шапкой магазина (редизайн 03.09.2026).
+      // Отдельных данных не заводим — берём ровно то, что уже посчитано.
+      const boardUpdated = document.getElementById("board-updated");
+      if (boardUpdated) {
+        boardUpdated.textContent = I18N.isEn
+          ? `Price updated ${when}`
+          : `Прайс обновлён ${when}`;
+      }
+      const boardCount = document.getElementById("board-count");
+      if (boardCount) {
+        boardCount.textContent = I18N.isEn
+          ? `${allProducts.length} items`
+          : `${allProducts.length} позиций`;
+        boardCount.hidden = false;
+      }
     }
     renderGrid();
     return true;
@@ -3005,7 +3020,7 @@
                 p.name
               )}"><img src="${escapeHtml(previewImage)}" alt="${escapeHtml(
                 p.name
-              )}" loading="lazy" decoding="async"></a>`
+              )}" width="260" height="150" loading="lazy" decoding="async"></a>`
             : ""
         }
         <div class="price-card__meta">
@@ -3055,19 +3070,59 @@
     return Boolean(active && Object.values(active).some(Boolean));
   }
 
+  /**
+   * Скелетоны на месте будущих карточек.
+   *
+   * Раньше здесь была строчка «Загрузка прайса…» посреди пустого экрана: сетка
+   * появлялась рывком и сдвигала всё вниз. Геометрия скелетона повторяет
+   * настоящую карточку, поэтому подмена проходит незаметно. Восемь штук —
+   * примерно первый экран на десктопе.
+   */
   function renderGridLoadingHtml() {
-    return `
-      <div class="price-grid-loading" aria-busy="true">
-        <p class="price-grid-loading__title">Загрузка прайса…</p>
-        <p class="price-grid-loading__hint">Сначала показываем iPhone и основной ассортимент</p>
-      </div>`;
+    const card =
+      '<article class="price-card price-card--skeleton" aria-hidden="true">' +
+      '<span class="sk-line sk-line--meta"></span>' +
+      '<span class="sk-line sk-line--media"></span>' +
+      '<span class="sk-line sk-line--title"></span>' +
+      '<span class="sk-line sk-line--sub"></span>' +
+      '<div class="price-card__footer--skeleton">' +
+      '<span class="sk-line sk-line--price"></span>' +
+      '<span class="sk-line sk-line--btn"></span>' +
+      "</div></article>";
+    return (
+      '<p class="price-grid-loading__title" aria-live="polite">' +
+      escapeHtml(T("shop.loading", "Загрузка прайса…")) +
+      "</p>" +
+      card.repeat(8)
+    );
+  }
+
+  /*
+   * Сетка рисуется порциями.
+   *
+   * Было: innerHTML сразу на все отфильтрованные позиции — при «Все категории»
+   * это под восемьсот карточек за один заход, и первый экран ждал, пока браузер
+   * соберёт весь список. Стало: первая порция 24 карточки, дальше по кнопке.
+   * Порция сбрасывается, когда меняется выборка (поиск, категория, фильтры) —
+   * иначе после нового запроса остался бы старый «показать ещё».
+   */
+  const GRID_CHUNK = 24;
+  let gridLimit = GRID_CHUNK;
+  let gridSignature = "";
+  let gridAnimateFrom = 0;
+
+  /** Отпечаток текущей выборки: длина плюс края списка. */
+  function filteredSignature(items) {
+    if (!items.length) return "0";
+    return items.length + "|" + items[0].id + "|" + items[items.length - 1].id;
   }
 
   function renderGrid() {
     if (!els.grid) return;
     renderCategoryFilters();
     const selectedCategory = els.category?.value || "all";
-    const groups = sortGroups(groupBySection(getFiltered()), selectedCategory);
+    const filtered = getFiltered();
+    const groups = sortGroups(groupBySection(filtered), selectedCategory);
 
     if (!groups.length) {
       if (catalogLoadState !== "ready" && !hasActiveShopQuery()) {
@@ -3078,21 +3133,68 @@
       return;
     }
 
-    const cardsHtml = groups
-      .map(({ section, items }) => {
-        const header = section
-          ? `<header class="price-section-head"><h2 class="price-section-title">${escapeHtml(I18N.section(section))}</h2></header>`
-          : "";
-        return header + items.map(renderProductCard).join("");
-      })
-      .join("");
+    const signature = filteredSignature(filtered);
+    if (signature !== gridSignature) {
+      gridSignature = signature;
+      gridLimit = GRID_CHUNK;
+      gridAnimateFrom = 0;
+    }
+
+    // Раскладываем группы в порцию: заголовок раздела попадает в вёрстку
+    // только если под ним есть хотя бы одна карточка этой порции.
+    let shown = 0;
+    let animIndex = 0;
+    const parts = [];
+    for (const { section, items } of groups) {
+      if (shown >= gridLimit) break;
+      const slice = items.slice(0, gridLimit - shown);
+      if (!slice.length) continue;
+      if (section) {
+        parts.push(
+          `<header class="price-section-head"><h2 class="price-section-title">${escapeHtml(I18N.section(section))}</h2></header>`
+        );
+      }
+      for (const item of slice) {
+        const html = renderProductCard(item);
+        // Анимируем только то, что появилось в этот заход: при «показать ещё»
+        // уже показанные карточки не должны мигать заново.
+        if (shown >= gridAnimateFrom) {
+          parts.push(
+            html.replace(
+              '<article class="price-card',
+              `<article style="--i:${animIndex++}" class="price-card price-card--enter`
+            )
+          );
+        } else {
+          parts.push(html);
+        }
+        shown += 1;
+      }
+    }
+
+    const total = filtered.length;
+    const restHtml =
+      shown < total
+        ? `<button type="button" class="price-grid-more-btn" data-action="more">${escapeHtml(
+            T("shop.show_more", "Показать ещё")
+          )} ${Math.min(GRID_CHUNK, total - shown)} ${escapeHtml(T("shop.of", "из"))} ${total - shown}</button>`
+        : "";
 
     const tailHtml =
       catalogLoadState === "partial"
         ? `<p class="price-grid-more" aria-live="polite">${escapeHtml(T("shop.loading_more", "Загружаем остальные позиции…"))}</p>`
         : "";
 
-    els.grid.innerHTML = cardsHtml + tailHtml;
+    els.grid.innerHTML = parts.join("") + restHtml + tailHtml;
+
+    const moreBtn = els.grid.querySelector("[data-action=more]");
+    if (moreBtn) {
+      moreBtn.addEventListener("click", () => {
+        gridAnimateFrom = gridLimit;
+        gridLimit += GRID_CHUNK;
+        renderGrid();
+      });
+    }
 
     els.grid.querySelectorAll("[data-action=toggle]").forEach((btn) => {
       btn.addEventListener("click", () => toggleCart(btn.dataset.id));
