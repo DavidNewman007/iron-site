@@ -1800,9 +1800,12 @@
       // Отдельных данных не заводим — берём ровно то, что уже посчитано.
       const boardUpdated = document.getElementById("board-updated");
       if (boardUpdated) {
+        // «Обновлён», а не «Прайс обновлён»: слово «Прайс» стоит 58 пикселей,
+        // а табло при 1200 ширины впритык (замер 11.09.2026). Что обновлено,
+        // понятно из соседнего счётчика позиций.
         boardUpdated.textContent = I18N.isEn
-          ? `Price updated ${when}`
-          : `Прайс обновлён ${when}`;
+          ? `Updated ${when}`
+          : `Обновлён ${when}`;
       }
       const boardCount = document.getElementById("board-count");
       if (boardCount) {

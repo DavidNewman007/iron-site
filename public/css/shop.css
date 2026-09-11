@@ -1163,7 +1163,10 @@
 .shop-board__inner {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  /* 1.35rem, а не 1.75: с пунктом «Доставка по России» строка при 1.75
+     не помещалась в 1200 (замер 11.09.2026). См. комментарий у табло
+     в magazin.html. */
+  gap: 1.35rem;
   min-height: 36px;
   white-space: nowrap;
   overflow-x: auto;
