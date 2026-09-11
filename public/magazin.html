@@ -119,6 +119,15 @@
             <svg class="shop-tab__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5l4 4L8 20H4v-4z"></path><path d="M13 7l4 4"></path></svg>
             <span class="shop-tab__text"><span class="shop-tab__name">Услуги ремонта</span><span class="shop-tab__note">960 услуг · 100 дней гарантии</span></span>
           </a>
+          <!-- Четвёртая кнопка — не вкладка: это якорь на секцию #dostavka
+               ниже на этой же странице. Оформлена как вкладка намеренно, по
+               просьбе владельца 11.09.2026: клиент ищет условия доставки там
+               же, где выбирает раздел магазина. Панели не переключает, поэтому
+               <a>, как и «Услуги ремонта», и в TABS в shop-tabs.js её нет. -->
+          <a class="shop-tab shop-tab--link" href="#dostavka">
+            <svg class="shop-tab__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16V7h11v9"></path><path d="M14 10h3.6l2.4 3v3h-6"></path><circle cx="7" cy="17.5" r="1.8"></circle><circle cx="16.5" cy="17.5" r="1.8"></circle></svg>
+            <span class="shop-tab__text"><span class="shop-tab__name">Условия доставки</span><span class="shop-tab__note">Яндекс, СДЭК, Почта · самовывоз</span></span>
+          </a>
         </div>
       </div>
     </div>
