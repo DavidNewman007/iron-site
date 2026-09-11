@@ -46,9 +46,15 @@
     }
   }
 
+  // Возвращает null, а не "tehnika", если в адресе не имя вкладки. Это не
+  // придирка: на странице есть якоря вне панелей (#dostavka), и по переходу
+  // на такой якорь вкладку трогать нельзя — иначе клиент, смотревший
+  // «Запчасти», щёлкает «Доставка по России» и оказывается на «Технике».
+  // Исправлено 11.09.2026 вместе с блоком доставки; раньше любой чужой хеш
+  // молча сбрасывал вкладку на «Технику».
   function fromHash() {
     var h = (location.hash || "").replace(/^#/, "");
-    return TABS.indexOf(h) === -1 ? "tehnika" : h;
+    return TABS.indexOf(h) === -1 ? null : h;
   }
 
   function init() {
@@ -59,9 +65,10 @@
         show(t, { updateHash: true });
       });
     });
-    show(fromHash(), { updateHash: false });
+    show(fromHash() || "tehnika", { updateHash: false });
     window.addEventListener("hashchange", function () {
-      show(fromHash(), { updateHash: false });
+      var t = fromHash();
+      if (t) show(t, { updateHash: false });
     });
   }
 
