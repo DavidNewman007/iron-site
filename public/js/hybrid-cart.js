@@ -512,7 +512,9 @@
       .catch((err) => console.warn("[hybrid-cart]", err));
   }
 
-  function openYandexPay() {
+  // Онлайн-оплата. Провайдер-агностично: см. комментарий в prices.js.
+  // Ключ конфига payApiUrl (до 11.09.2026 был yandexPayApiUrl).
+  function openPayment() {
     const cart = readCart();
     if (!cart.length) {
       window.location.href = "../../magazin.html";
@@ -520,7 +522,7 @@
     }
     ensureConfig()
       .then((cfg) => {
-        const base = String(cfg?.yandexPayApiUrl || "").trim();
+        const base = String(cfg?.payApiUrl || "").trim();
         if (!base) return;
         // Отправляем только id товаров — цену функция берёт из прайса (защита от подмены).
         const ids = cart.map((p) => p.id).filter(Boolean).join(",");
@@ -530,10 +532,10 @@
       .catch((err) => console.warn("[hybrid-cart]", err));
   }
 
-  function revealYandexPayButton() {
+  function revealPayButton() {
     ensureConfig()
       .then((cfg) => {
-        if (!String(cfg?.yandexPayApiUrl || "").trim()) return;
+        if (!String(cfg?.payApiUrl || "").trim()) return;
         document.querySelectorAll("#hybrid-cart-pay").forEach((el) => {
           el.hidden = false;
         });
@@ -555,10 +557,10 @@
       '<button type="button" class="btn btn-primary" id="hybrid-cart-max">MAX</button>' +
       "</div>";
     document.body.appendChild(bar);
-    bar.querySelector("#hybrid-cart-pay")?.addEventListener("click", openYandexPay);
+    bar.querySelector("#hybrid-cart-pay")?.addEventListener("click", openPayment);
     bar.querySelector("#hybrid-cart-telegram")?.addEventListener("click", openTelegramOrder);
     bar.querySelector("#hybrid-cart-max")?.addEventListener("click", openMaxOrder);
-    revealYandexPayButton();
+    revealPayButton();
   }
 
   function renderMobileCartBar() {

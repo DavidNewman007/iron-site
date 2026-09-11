@@ -1850,8 +1850,8 @@
     });
     els.cartTelegram?.addEventListener("click", openTelegramOrder);
     els.cartMax?.addEventListener("click", openMaxOrder);
-    els.cartPay?.addEventListener("click", openYandexPay);
-    revealYandexPayButton();
+    els.cartPay?.addEventListener("click", openPayment);
+    revealPayButton();
     els.cartToggle?.addEventListener("click", () => {
       els.cartPanel?.classList.toggle("is-open");
     });
@@ -3522,18 +3522,24 @@
     window.IRON_ORDER.openMaxOrder(cart);
   }
 
-  function yandexPayBase() {
-    return String((window.IRON_CONFIG || {}).yandexPayApiUrl || "").trim();
+  // Онлайн-оплата. Клиент НЕ знает, чей платёжный шлюз стоит за функцией:
+  // уходим навигацией верхнего уровня на payApiUrl со списком id товаров, а
+  // сумму считает функция по прайсу. Поэтому смена провайдера (Яндекс Пэй →
+  // Альфа-Банк, 11.09.2026) здесь не меняет ни строчки, кроме имени ключа —
+  // и имя намеренно нейтральное, чтобы третья смена прошла вообще без правок.
+  function payBase() {
+    return String((window.IRON_CONFIG || {}).payApiUrl || "").trim();
   }
 
-  function revealYandexPayButton() {
+  function revealPayButton() {
     if (!els.cartPay) return;
-    if (yandexPayBase()) els.cartPay.hidden = false;
+    if (payBase()) els.cartPay.hidden = false;
   }
 
-  function openYandexPay() {
-    const base = yandexPayBase();
+  function openPayment() {
+    const base = payBase();
     if (!base || !cart.length) return;
+    // Только id: цену функция берёт из прайса, с клиента её не принимают.
     const ids = cart.map((p) => p.id).filter(Boolean).join(",");
     if (!ids) return;
     const url = base + (base.includes("?") ? "&" : "?") + "ids=" + encodeURIComponent(ids);
