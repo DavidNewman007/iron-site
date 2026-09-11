@@ -1,0 +1,206 @@
+/* Страница запчастей (план 66). Тёмная тема сайта, переменные из styles.css. */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Табло — то же, что над магазином: сразу видно объём и свежесть прайса. */
+.parts-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+}
+
+.parts-board__item {
+  background: var(--surface-1);
+  border: 1px solid var(--surface-border);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  text-align: center;
+}
+
+.parts-board__item span {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--cream);
+  line-height: 1.1;
+}
+
+.parts-board__item small {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.parts-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.9rem;
+}
+
+.parts-search {
+  flex: 1 1 260px;
+}
+
+.parts-search input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--surface-border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.parts-search input:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
+.parts-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.parts-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+
+.parts-chip {
+  border: 1px solid var(--surface-border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.parts-chip[aria-pressed="true"] {
+  background: var(--red);
+  border-color: var(--red-bright);
+  color: #fff;
+}
+
+.parts-status {
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.parts-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.parts-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 0.75rem;
+  align-items: center;
+  background: var(--surface-1);
+  border: 1px solid var(--surface-border);
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+}
+
+.parts-row__main {
+  min-width: 0;
+}
+
+.parts-row__title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--text);
+  margin: 0 0 0.15rem;
+}
+
+.parts-row__meta {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.parts-row__meta i {
+  font-style: normal;
+  color: var(--metal);
+}
+
+.parts-row__price {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+.parts-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.8rem;
+  margin-left: 0.4rem;
+  white-space: nowrap;
+}
+
+.parts-badge--stock {
+  background: rgba(60, 140, 60, 0.25);
+  color: #a7d9a7;
+  border: 1px solid rgba(120, 200, 120, 0.4);
+}
+
+.parts-badge--order {
+  background: rgba(212, 160, 18, 0.16);
+  color: var(--gold);
+  border: 1px solid rgba(212, 160, 18, 0.35);
+}
+
+.parts-row .btn {
+  white-space: nowrap;
+}
+
+.parts-more-wrap {
+  text-align: center;
+  margin: 1.25rem 0;
+}
+
+.parts-note {
+  margin-top: 2rem;
+}
+
+@media (max-width: 640px) {
+  .parts-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "main price"
+      "btn  btn";
+  }
+
+  .parts-row__main { grid-area: main; }
+  .parts-row__price { grid-area: price; }
+  .parts-row .btn {
+    grid-area: btn;
+    width: 100%;
+    text-align: center;
+  }
+}
