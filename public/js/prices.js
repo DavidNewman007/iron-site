@@ -3561,8 +3561,9 @@
       box.hidden = false;
       box.innerHTML =
         `<div class="cart-pay-breakdown__row"><span>Товары</span><span>${f(total)}</span></div>` +
-        `<div class="cart-pay-breakdown__row"><span>По СБП, с налогом и комиссией</span><span>${f(b.способы.сбп.итог)}</span></div>` +
-        `<div class="cart-pay-breakdown__row"><span>Картой, с налогом и комиссией</span><span>${f(b.способы.карта.итог)}</span></div>`;
+        `<div class="cart-pay-breakdown__row"><span>По СБП</span><span>${f(b.способы.сбп.итог)}</span></div>` +
+        `<div class="cart-pay-breakdown__row"><span>Картой, Alfa Pay, SberPay, Mir Pay, T-Pay</span><span>${f(b.способы.карта.итог)}</span></div>` +
+        `<div class="cart-pay-breakdown__note">В сумму включены налог и комиссия банка. По СБП комиссия ниже — поэтому и сумма меньше.</div>`;
       if (els.cartPaySbp) els.cartPaySbp.textContent = `Оплатить по СБП · ${f(b.способы.сбп.итог)}`;
       if (els.cartPayCard) els.cartPayCard.textContent = `Оплатить картой · ${f(b.способы.карта.итог)}`;
     }).catch(() => { box.hidden = true; });

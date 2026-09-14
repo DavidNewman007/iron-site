@@ -881,6 +881,12 @@
   white-space: nowrap;
 }
 
+.cart-pay-breakdown__note {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+
 .cart-actions {
   display: flex;
   flex-direction: column;
