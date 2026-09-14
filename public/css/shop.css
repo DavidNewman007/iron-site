@@ -855,6 +855,32 @@
   border-top: 1px solid rgba(212, 160, 18, 0.35);
 }
 
+/* Разбивка суммы онлайн-оплаты (план 70, 14.09.2026). Показывается только при
+   включённой онлайн-оплате: наценка есть лишь у неё, при заказе через Telegram
+   или MAX человек платит ровно цену из прайса. */
+.cart-pay-breakdown {
+  margin-bottom: 0.85rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid rgba(212, 160, 18, 0.25);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.cart-pay-breakdown__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.cart-pay-breakdown__row + .cart-pay-breakdown__row {
+  margin-top: 0.25rem;
+}
+
+.cart-pay-breakdown__row span:last-child {
+  white-space: nowrap;
+}
+
 .cart-actions {
   display: flex;
   flex-direction: column;

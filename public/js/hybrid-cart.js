@@ -514,7 +514,7 @@
 
   // Онлайн-оплата. Провайдер-агностично: см. комментарий в prices.js.
   // Ключ конфига payApiUrl (до 11.09.2026 был yandexPayApiUrl).
-  function openPayment() {
+  function openPayment(method) {
     const cart = readCart();
     if (!cart.length) {
       window.location.href = "../../magazin.html";
@@ -524,21 +524,59 @@
       .then((cfg) => {
         const base = String(cfg?.payApiUrl || "").trim();
         if (!base) return;
-        // Отправляем только id товаров — цену функция берёт из прайса (защита от подмены).
+        // Отправляем только id товаров и способ оплаты — сумму функция считает
+        // сама по прайсу и ставкам наценки (защита от подмены цены в браузере).
         const ids = cart.map((p) => p.id).filter(Boolean).join(",");
         window.location.href =
-          base + (base.indexOf("?") >= 0 ? "&" : "?") + "ids=" + encodeURIComponent(ids);
+          base + (base.indexOf("?") >= 0 ? "&" : "?") + "ids=" + encodeURIComponent(ids)
+          + "&method=" + encodeURIComponent(method === "sbp" ? "sbp" : "card");
       })
       .catch((err) => console.warn("[hybrid-cart]", err));
+  }
+
+  /**
+   * Подгружает модуль наценки по требованию. Карточек товаров на сайте сотни, и
+   * все они собраны генератором — вписывать в каждую ещё один <script> значило бы
+   * пересобирать весь каталог ради одной строки. Здесь же он нужен только когда
+   * онлайн-оплата включена.
+   */
+  function ensurePayMarkup() {
+    if (window.IRON_PAY) return Promise.resolve(window.IRON_PAY);
+    return new Promise((resolve, reject) => {
+      const el = document.createElement("script");
+      el.src = "/js/pay-markup.js?v=2026-09-14-1";
+      el.onload = () => resolve(window.IRON_PAY);
+      el.onerror = reject;
+      document.head.appendChild(el);
+    });
+  }
+
+  /** Подписи кнопок с суммой: «Оплатить по СБП · 61 900 ₽». */
+  function renderPayButtons() {
+    const cart = readCart();
+    const total = cart.reduce((s, p) => s + (p.price || 0), 0);
+    if (!total) return;
+    ensurePayMarkup()
+      .then((pay) => pay.load().then((rates) => ({ pay, rates })))
+      .then(({ pay, rates }) => {
+        const b = pay.breakdown(total, rates);
+        const set = (id, текст) => {
+          document.querySelectorAll(id).forEach((el) => { el.textContent = текст; });
+        };
+        set("#hybrid-cart-pay-sbp", `СБП · ${pay.формат(b.способы.сбп.итог)}`);
+        set("#hybrid-cart-pay-card", `Картой · ${pay.формат(b.способы.карта.итог)}`);
+      })
+      .catch((err) => console.warn("[hybrid-cart] наценка", err));
   }
 
   function revealPayButton() {
     ensureConfig()
       .then((cfg) => {
         if (!String(cfg?.payApiUrl || "").trim()) return;
-        document.querySelectorAll("#hybrid-cart-pay").forEach((el) => {
+        document.querySelectorAll("#hybrid-cart-pay-sbp, #hybrid-cart-pay-card").forEach((el) => {
           el.hidden = false;
         });
+        renderPayButtons();
       })
       .catch(() => {});
   }
@@ -552,12 +590,14 @@
       `<strong id="hybrid-cart-count-mobile">0</strong> <span id="hybrid-cart-units">${T("hybrid.items", "шт.")}</span> · <strong id="hybrid-cart-total-mobile">—</strong>` +
       "</span>" +
       '<div class="cart-mobile-bar__actions">' +
-      `<button type="button" class="btn btn-primary" id="hybrid-cart-pay" hidden>${T("cart.pay", "Оплатить онлайн")}</button>` +
+      `<button type="button" class="btn btn-primary" id="hybrid-cart-pay-sbp" hidden>${T("cart.pay_sbp", "СБП")}</button>` +
+      `<button type="button" class="btn btn-primary" id="hybrid-cart-pay-card" hidden>${T("cart.pay_card", "Картой")}</button>` +
       '<button type="button" class="btn btn-primary" id="hybrid-cart-telegram">Telegram</button>' +
       '<button type="button" class="btn btn-primary" id="hybrid-cart-max">MAX</button>' +
       "</div>";
     document.body.appendChild(bar);
-    bar.querySelector("#hybrid-cart-pay")?.addEventListener("click", openPayment);
+    bar.querySelector("#hybrid-cart-pay-sbp")?.addEventListener("click", () => openPayment("sbp"));
+    bar.querySelector("#hybrid-cart-pay-card")?.addEventListener("click", () => openPayment("card"));
     bar.querySelector("#hybrid-cart-telegram")?.addEventListener("click", openTelegramOrder);
     bar.querySelector("#hybrid-cart-max")?.addEventListener("click", openMaxOrder);
     revealPayButton();

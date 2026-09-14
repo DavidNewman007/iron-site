@@ -204,6 +204,10 @@
               <span>Ориентир</span>
               <strong id="cart-total">—</strong>
             </div>
+            <!-- Разбивка появляется только когда включена онлайн-оплата: наценка
+                 (налог и комиссия банка) есть лишь у неё, при заказе через
+                 Telegram/MAX человек платит ровно цену из прайса. -->
+            <div class="cart-pay-breakdown" id="cart-pay-breakdown" hidden></div>
             <div class="cart-actions">
               <button type="button" class="btn btn-primary" id="cart-telegram" disabled>
                 Забронировать в Telegram
@@ -211,8 +215,11 @@
               <button type="button" class="btn btn-primary" id="cart-max" disabled>
                 Забронировать в MAX
               </button>
-              <button type="button" class="btn btn-primary" id="cart-pay" hidden disabled>
-                Оплатить онлайн
+              <button type="button" class="btn btn-primary" id="cart-pay-sbp" hidden disabled>
+                Оплатить по СБП
+              </button>
+              <button type="button" class="btn btn-primary" id="cart-pay-card" hidden disabled>
+                Оплатить картой
               </button>
               <button type="button" class="btn btn-secondary" id="cart-clear">Очистить</button>
             </div>
@@ -373,6 +380,7 @@
   <script defer src="js/shop-filters.js?v=2026-08-28-3"></script>
   <script defer src="js/order-channels.js?v=2026-07-04-5"></script>
   <script defer src="js/shop-tabs.js?v=2026-09-11-1"></script>
-  <script defer src="js/prices.js?v=2026-09-11-2"></script>
+  <script defer src="js/pay-markup.js?v=2026-09-14-1"></script>
+  <script defer src="js/prices.js?v=2026-09-14-1"></script>
 </body>
 </html>

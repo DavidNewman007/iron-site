@@ -393,7 +393,9 @@
     cartClear: document.getElementById("cart-clear"),
     cartTelegram: document.getElementById("cart-telegram"),
     cartMax: document.getElementById("cart-max"),
-    cartPay: document.getElementById("cart-pay"),
+    cartPaySbp: document.getElementById("cart-pay-sbp"),
+    cartPayCard: document.getElementById("cart-pay-card"),
+    cartPayBreakdown: document.getElementById("cart-pay-breakdown"),
     cartMobileBar: document.querySelector(".cart-mobile-bar"),
     cartTotalMobile: document.getElementById("cart-total-mobile"),
   };
@@ -1850,7 +1852,8 @@
     });
     els.cartTelegram?.addEventListener("click", openTelegramOrder);
     els.cartMax?.addEventListener("click", openMaxOrder);
-    els.cartPay?.addEventListener("click", openPayment);
+    els.cartPaySbp?.addEventListener("click", () => openPayment("sbp"));
+    els.cartPayCard?.addEventListener("click", () => openPayment("card"));
     revealPayButton();
     els.cartToggle?.addEventListener("click", () => {
       els.cartPanel?.classList.toggle("is-open");
@@ -3484,7 +3487,9 @@
     if (els.cartTotalMobile) els.cartTotalMobile.textContent = totalLabel;
     if (els.cartTelegram) els.cartTelegram.disabled = count === 0;
     if (els.cartMax) els.cartMax.disabled = count === 0;
-    if (els.cartPay) els.cartPay.disabled = count === 0;
+    if (els.cartPaySbp) els.cartPaySbp.disabled = count === 0;
+    if (els.cartPayCard) els.cartPayCard.disabled = count === 0;
+    renderPayBreakdown(total, count);
 
     if (!els.cartList) return;
     if (!count) {
@@ -3532,17 +3537,47 @@
   }
 
   function revealPayButton() {
-    if (!els.cartPay) return;
-    if (payBase()) els.cartPay.hidden = false;
+    if (!payBase()) return;
+    if (els.cartPaySbp) els.cartPaySbp.hidden = false;
+    if (els.cartPayCard) els.cartPayCard.hidden = false;
   }
 
-  function openPayment() {
+  /**
+   * Разбивка суммы под корзиной: цена товаров и сколько к ней добавит онлайн-оплата.
+   * Цифры здесь — предварительные: окончательную сумму считает облачная функция по
+   * тому же файлу ставок (/data/pay-rates.json), потому что цену из браузера принимать
+   * нельзя. Расхождения быть не должно — формула и файл одни и те же.
+   */
+  function renderPayBreakdown(total, count) {
+    const box = els.cartPayBreakdown;
+    if (!box || !window.IRON_PAY) return;
+    if (!payBase() || !count) {
+      box.hidden = true;
+      return;
+    }
+    window.IRON_PAY.load().then((rates) => {
+      const b = window.IRON_PAY.breakdown(total, rates);
+      const f = window.IRON_PAY.формат;
+      box.hidden = false;
+      box.innerHTML =
+        `<div class="cart-pay-breakdown__row"><span>Товары</span><span>${f(total)}</span></div>` +
+        `<div class="cart-pay-breakdown__row"><span>По СБП, с налогом и комиссией</span><span>${f(b.способы.сбп.итог)}</span></div>` +
+        `<div class="cart-pay-breakdown__row"><span>Картой, с налогом и комиссией</span><span>${f(b.способы.карта.итог)}</span></div>`;
+      if (els.cartPaySbp) els.cartPaySbp.textContent = `Оплатить по СБП · ${f(b.способы.сбп.итог)}`;
+      if (els.cartPayCard) els.cartPayCard.textContent = `Оплатить картой · ${f(b.способы.карта.итог)}`;
+    }).catch(() => { box.hidden = true; });
+  }
+
+  function openPayment(method) {
     const base = payBase();
     if (!base || !cart.length) return;
-    // Только id: цену функция берёт из прайса, с клиента её не принимают.
+    // Только id и способ оплаты: сумму функция считает сама по прайсу и ставкам,
+    // с клиента её не принимают — иначе цену можно было бы подменить в браузере.
     const ids = cart.map((p) => p.id).filter(Boolean).join(",");
     if (!ids) return;
-    const url = base + (base.includes("?") ? "&" : "?") + "ids=" + encodeURIComponent(ids);
+    const url = base + (base.includes("?") ? "&" : "?")
+      + "ids=" + encodeURIComponent(ids)
+      + "&method=" + encodeURIComponent(method === "sbp" ? "sbp" : "card");
     window.location.assign(url);
   }
 
