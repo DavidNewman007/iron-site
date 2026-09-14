@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' 'unsafe-inline'; frame-src 'none'; connect-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' 'unsafe-inline'; frame-src 'none'; connect-src 'self' https://functions.yandexcloud.net">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex">
-  <title>Оплата прошла — IRON SERVICE</title>
+  <title>Оплата заказа — IRON SERVICE</title>
   <link rel="icon" href="assets/logo-icon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
@@ -25,15 +25,13 @@
   <main>
     <div class="page-hero">
       <div class="container">
-        <h1>Спасибо! Оплата прошла успешно</h1>
-        <p>Мы получили ваш платёж и уже готовим заказ. Менеджер свяжется с вами для подтверждения деталей.</p>
+        <h1 id="pay-title">Проверяем оплату…</h1>
+        <p id="pay-lead">Секунду — уточняем в банке, прошёл ли платёж.</p>
       </div>
     </div>
     <div class="container" style="padding:2rem 0">
       <p id="order-number" style="font-size:1.1rem"></p>
-      <p id="manager-note" style="font-size:1.15rem;font-weight:600;margin-top:.75rem">
-        Наш менеджер свяжется с вами в ближайшее время.
-      </p>
+      <p id="manager-note" style="font-size:1.15rem;font-weight:600;margin-top:.75rem"></p>
       <p style="margin-top:1.5rem">
         <a href="magazin.html" class="btn btn-primary">Вернуться в магазин</a>
         <a href="tel:+79288509404" class="btn">Позвонить нам</a>
@@ -48,14 +46,71 @@
     </div>
   </footer>
 
+  <script src="js/config.js"></script>
   <script>
-    try {
-      localStorage.setItem("iron_cart", "[]");
-      var order = new URLSearchParams(location.search).get("order");
-      if (order) {
-        document.getElementById("order-number").textContent = "Номер заказа: " + order;
+    /**
+     * Страница не верит самому факту возврата с платёжной страницы: банк уводит сюда
+     * и после успеха, и в спорных случаях, а ссылку клиент может открыть повторно
+     * хоть через неделю. Поэтому статус спрашиваем у функции, а она — у шлюза.
+     * До ответа не утверждаем ничего и НЕ чистим корзину: если платёж не прошёл,
+     * человек должен вернуться к тем же товарам, а не собирать их заново.
+     * (Раньше здесь было «Спасибо! Оплата прошла успешно» безусловно и очистка
+     * корзины в первой же строке — исправлено 14.09.2026.)
+     */
+    (function () {
+      var order = new URLSearchParams(location.search).get("order") || "";
+      var $ = function (id) { return document.getElementById(id); };
+      if (order) $("order-number").textContent = "Номер заказа: " + order;
+
+      function показать(заголовок, текст, заметка) {
+        $("pay-title").textContent = заголовок;
+        $("pay-lead").textContent = текст;
+        $("manager-note").textContent = заметка || "";
       }
-    } catch (e) {}
+
+      function очиститьКорзину() {
+        try { localStorage.setItem("iron_cart", "[]"); } catch (e) {}
+      }
+
+      var base = String((window.IRON_CONFIG || {}).payApiUrl || "").trim();
+      if (!order || !base) {
+        // Спросить не у кого — держимся нейтральной формулировки.
+        показать("Спасибо за заказ", "Если платёж прошёл, он уже у нас.",
+                 "Менеджер свяжется с вами в ближайшее время.");
+        return;
+      }
+
+      var попыток = 0;
+      (function спросить() {
+        попыток++;
+        fetch(base + (base.indexOf("?") >= 0 ? "&" : "?") + "check=" + encodeURIComponent(order),
+              { cache: "no-store" })
+          .then(function (r) { return r.json(); })
+          .then(function (д) {
+            if (д && д.оплачен === true) {
+              очиститьКорзину();
+              var сумма = д.сумма ? " на " + Number(д.сумма).toLocaleString("ru-RU") + " ₽" : "";
+              показать("Оплата прошла", "Мы получили платёж" + сумма + " и уже готовим заказ.",
+                       "Менеджер свяжется с вами для подтверждения деталей.");
+              return;
+            }
+            if (д && д.оплачен === false && попыток < 5) {
+              // Банк проводит платёж не мгновенно — несколько раз переспрашиваем,
+              // прежде чем сказать человеку, что денег не видно.
+              setTimeout(спросить, 3000);
+              return;
+            }
+            показать("Платёж обрабатывается",
+                     "Банк ещё не подтвердил оплату. Если деньги списались, заказ у нас — " +
+                     "проверять повторно не нужно.",
+                     "Если списания не было, попробуйте оплатить ещё раз или позвоните нам.");
+          })
+          .catch(function () {
+            показать("Спасибо за заказ", "Статус платежа сейчас уточнить не удалось.",
+                     "Менеджер свяжется с вами в ближайшее время.");
+          });
+      })();
+    })();
   </script>
 </body>
 </html>
