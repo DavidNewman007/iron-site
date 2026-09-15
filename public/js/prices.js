@@ -3077,6 +3077,11 @@
         ${extraWarrantyRowHtml(p, inCart)}
         <div class="price-card__footer">
           <strong class="price-card__price">${escapeHtml(priceLabelOf(p))}</strong>
+          <!-- Цена в прайсе — та, что владелец получает чистыми. При оплате картой
+               или по СБП к ней добавляются налог и комиссия эквайринга, поэтому в
+               корзине сумма будет выше — подпись предупреждает об этом заранее,
+               чтобы разница не выглядела скрытой наценкой. -->
+          <span class="price-card__cash-note">${T("shop.cash_price", "Цена указана за наличный расчет")}</span>
           <button type="button" class="price-card__btn ${inCart ? "is-active" : ""}" data-action="toggle" data-id="${p.id}">
             ${inCart ? T("shop.selected", "✓ В корзине") : T("shop.select", "+ Выбрать")}
           </button>

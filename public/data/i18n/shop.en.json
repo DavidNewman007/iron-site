@@ -25,7 +25,8 @@
     "select": "+ Select",
     "selected": "✓ Selected",
     "details": "details",
-    "nothing_found": "Nothing found. Try a different model, or ask us."
+    "nothing_found": "Nothing found. Try a different model, or ask us.",
+    "cash_price": "Price shown is for cash payment"
   },
   "cart": {
     "title": "Cart",
@@ -39,7 +40,9 @@
     "extra_warranty_add": "+ 1-year warranty — {price}",
     "extra_warranty_on": "✓ 1-year warranty added",
     "extra_warranty_item": "🛡 + 1-year warranty — {price}",
-    "remove": "Remove"
+    "remove": "Remove",
+    "pay_sbp": "SBP",
+    "pay_card": "Card"
   },
   "warranty": {
     "_комментарий": "Тексты модального окна гарантии. До 18.08.2026 три блока были захардкожены в prices.js по-русски, и на /en/ окно открывалось целиком на русском. Теперь prices.js собирает их из этих ключей, русский текст остался в коде значением по умолчанию.",
