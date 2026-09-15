@@ -3608,17 +3608,15 @@
     }).catch(() => { box.hidden = true; });
   }
 
+  /**
+   * Кнопки оплаты ведут не в банк, а на страницу оформления: сначала нужно
+   * узнать, кому и куда везти. Добавлено 15.09.2026 — раньше из корзины уходили
+   * прямо на платёжную страницу, и о покупателе не оставалось ни телефона, ни
+   * адреса, а без телефона СДЭК не оформляет накладную.
+   */
   function openPayment(method) {
-    const base = payBase();
-    if (!base || !cart.length) return;
-    // Только id и способ оплаты: сумму функция считает сама по прайсу и ставкам,
-    // с клиента её не принимают — иначе цену можно было бы подменить в браузере.
-    const ids = cart.map((p) => p.id).filter(Boolean).join(",");
-    if (!ids) return;
-    const url = base + (base.includes("?") ? "&" : "?")
-      + "ids=" + encodeURIComponent(ids)
-      + "&method=" + encodeURIComponent(method === "sbp" ? "sbp" : "card");
-    window.location.assign(url);
+    if (!payBase() || !cart.length) return;
+    window.location.assign("oformlenie.html?method=" + encodeURIComponent(method === "sbp" ? "sbp" : "card"));
   }
 
   function loadCart() {

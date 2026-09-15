@@ -42,6 +42,12 @@ window.IRON_CONFIG = {
    * (репозиторий iron-automation).
    */
   payApiUrl: "https://functions.yandexcloud.net/d4ehhk2cv3438ig0ipto",
+  /**
+   * URL функции доставки СДЭК (расчёт, пункты выдачи, накладные).
+   * Пусто = на странице оформления не будет расчёта доставки, останутся
+   * самовывоз и «своя транспортная компания».
+   */
+  cdekApiUrl: "https://functions.yandexcloud.net/d4elkvb9nrrvpcq57equ",
   siteUrl: "https://1iron.ru",
 
   // URL Web App PersonalOffer.js (Deploy → Web app, Anyone).

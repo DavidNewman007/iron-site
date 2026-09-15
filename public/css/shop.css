@@ -1862,3 +1862,141 @@
     padding: 1.1rem 1.15rem;
   }
 }
+
+
+/* --------------------------------------------------------------------------
+   Страница оформления заказа (план 71, 15.09.2026)
+   -------------------------------------------------------------------------- */
+
+.checkout {
+  padding: 2rem 0 3rem;
+  max-width: 620px;
+}
+
+.checkout__block {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(212, 160, 18, 0.2);
+}
+
+.checkout__block:last-child {
+  border-bottom: none;
+}
+
+.checkout__block h2 {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+}
+
+.checkout__items {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+}
+
+.checkout__items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0;
+  font-size: 0.92rem;
+}
+
+.checkout__total {
+  margin: 0.5rem 0 0;
+  font-size: 1.05rem;
+}
+
+.checkout__note,
+.checkout__hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  opacity: 0.75;
+}
+
+.checkout__field {
+  display: block;
+  margin-bottom: 0.85rem;
+}
+
+.checkout__field > span {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.checkout__field em {
+  font-style: normal;
+  opacity: 0.7;
+}
+
+.checkout__field input,
+.checkout__field select,
+.checkout__field textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font: inherit;
+  font-size: 0.95rem;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(212, 160, 18, 0.35);
+  border-radius: 8px;
+}
+
+.checkout__modes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+}
+
+.checkout__modes label,
+.checkout__check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.checkout__check {
+  margin: 0.75rem 0;
+}
+
+/* Подсказки городов: список поверх формы, поэтому позиционируется относительно
+   блока, а не растягивает страницу при появлении. */
+.checkout__suggest {
+  list-style: none;
+  margin: -0.6rem 0 0.85rem;
+  padding: 0;
+  border: 1px solid rgba(212, 160, 18, 0.35);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.checkout__suggest li {
+  padding: 0.55rem 0.75rem;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.checkout__suggest li:hover {
+  background: rgba(212, 160, 18, 0.15);
+}
+
+.checkout__delivery {
+  margin: 0.85rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.checkout__error {
+  margin: 0 0 0.85rem;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+  border: 1px solid rgba(220, 80, 60, 0.6);
+  border-radius: 8px;
+}

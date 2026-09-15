@@ -523,14 +523,11 @@
     }
     ensureConfig()
       .then((cfg) => {
-        const base = String(cfg?.payApiUrl || "").trim();
-        if (!base) return;
-        // Отправляем только id товаров и способ оплаты — сумму функция считает
-        // сама по прайсу и ставкам наценки (защита от подмены цены в браузере).
-        const ids = cart.map((p) => p.id).filter(Boolean).join(",");
-        window.location.href =
-          base + (base.indexOf("?") >= 0 ? "&" : "?") + "ids=" + encodeURIComponent(ids)
-          + "&method=" + encodeURIComponent(method === "sbp" ? "sbp" : "card");
+        if (!String(cfg?.payApiUrl || "").trim()) return;
+        // Ведём на оформление, а не сразу в банк: там спросим телефон и куда
+        // везти — без телефона СДЭК не оформит накладную (15.09.2026).
+        window.location.href = "/oformlenie.html?method="
+          + encodeURIComponent(method === "sbp" ? "sbp" : "card");
       })
       .catch((err) => console.warn("[hybrid-cart]", err));
   }
