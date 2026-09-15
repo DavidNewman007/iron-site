@@ -40,7 +40,12 @@
       // Склад S3 — поставка под заказ (Dr.Store МСК). Признак берём из метки
       // склада: корзина может прийти из localStorage, записанного версией
       // сайта без поля preorder.
-      var isPreorder = p.preorder === true || /S3/i.test(String(p.warehouse || ""));
+      // С 15.09.2026 таких складов два: S3 (Dr.Store МСК, 1–2 дня) и S4
+      // (предзаказ новых iPhone, 5–7 дней); срок берём из товара.
+      var warehouse = String(p.warehouse || "");
+      var isPreorder = p.preorder === true || /S[34]/i.test(warehouse);
+      var isPreorderNew = /S4/i.test(warehouse);
+      var eta = String(p.eta || "").trim() || (isPreorderNew ? "5–7 дней" : "1–2 дня");
       return (
         (i + 1) +
         ". " +
@@ -49,7 +54,7 @@
         (p.warehouse ? " " + p.warehouse : "") +
         " — " +
         (p.priceLabel || formatPrice(p.price)) +
-        (isPreorder ? " (под заказ, 1–2 дня)" : "") +
+        (isPreorder ? " (" + (isPreorderNew ? "предзаказ" : "под заказ") + ", " + eta + ")" : "") +
         // Допгарантия — отдельная услуга поверх товара; в заказ она обязана
         // попасть строкой, иначе оператор не узнает, что клиент за неё заплатил.
         (p.extraWarranty ? "\n    + допгарантия 1 год — " + formatPrice(EXTRA_WARRANTY_PRICE) : "")

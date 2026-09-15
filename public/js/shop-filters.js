@@ -8,6 +8,10 @@
   const T = (key, ru) => (window.IRON_I18N ? window.IRON_I18N.t(key, ru) : ru);
 
   const IPHONE_SERIES_ORDER = [
+    "18 Pro Max",
+    "18 Pro",
+    "18",
+    "18e",
     "17 Pro Max",
     "17 Pro",
     "17",

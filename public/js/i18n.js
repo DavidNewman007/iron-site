@@ -110,6 +110,7 @@ window.IRON_I18N = (function () {
       var n = text.match(/^(\d+)\s*шт\.?$/i);
       if (n) return apply(pick("shop.in_stock") || inStockTpl || "{n} in stock", { n: n[1] });
       if (/под\s*заказ/i.test(text)) return pick("shop.to_order") || toOrder || "to order";
+      if (/предзаказ/i.test(text)) return pick("shop.pre_order") || "pre-order";
       return text;
     },
 

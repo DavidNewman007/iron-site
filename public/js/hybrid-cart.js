@@ -10,11 +10,12 @@
   // карточки, а этот скрипт по-прежнему читал только два листа — открытая
   // напрямую страница S3-товара показывала «Цена: временно недоступна» и
   // неактивную кнопку «Выбрать». Список обязан совпадать с prices.js.
-  const SHEET_TABS = ["Prices", "Prices-2", "Prices-3"];
-  // Ключ обязан совпадать с prices.js — там же он и записывается (v2 с
-  // 16.08.2026, после добавления полей preorder/eta).
-  const CATALOG_CACHE_KEY = "iron_catalog_products_v2";
-  const PRICE_CACHE_KEY = "iron_prices_sheet_Prices_Prices-2_Prices-3_v5";
+  // Prices-4 (15.09.2026) — предзаказ склада 1 (S4, новые iPhone, 5–7 дней).
+  const SHEET_TABS = ["Prices", "Prices-2", "Prices-3", "Prices-4"];
+  // Ключи обязаны совпадать с prices.js — там же они и записываются (v3 с
+  // 15.09.2026: срок eta стал построчным, из колонки «Срок»).
+  const CATALOG_CACHE_KEY = "iron_catalog_products_v3";
+  const PRICE_CACHE_KEY = "iron_prices_sheet_Prices_Prices-2_Prices-3_Prices-4_v5";
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   const LEGACY_COUNTRY_TOKENS = new Set([
     "япония",

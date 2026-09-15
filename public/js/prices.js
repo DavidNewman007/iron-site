@@ -27,11 +27,35 @@
   // (склад S3, Dr.Store МСК, добавлен 16.08.2026). Порядок важен: товары
   // складываются в том же порядке, что и листы, поэтому «под заказ» встаёт
   // хвостом каждой секции, а не оттесняет наличие.
-  const SHEET_TABS = ["Prices", "Prices-2", "Prices-3"];
-  const PREORDER_SHEET_TAB = "Prices-3";
-  const PREORDER_WAREHOUSE_RE = /\(?\s*S3\s*\)?/i;
+  // Prices-4 — предзаказ склада 1 (S4, Double Apple, новые iPhone, 5–7 дней,
+  // добавлен 15.09.2026). Список обязан совпадать с hybrid-cart.js.
+  const SHEET_TABS = ["Prices", "Prices-2", "Prices-3", "Prices-4"];
+  const PREORDER_SHEET_TABS = ["Prices-3", "Prices-4"];
+  const PREORDER_WAREHOUSE_RE = /\(?\s*S[34]\s*\)?/i;
+  // Склад 1 в режиме предзаказа: для клиента это «предзаказ», а не «под заказ».
+  const PREORDER_NEW_WAREHOUSE_RE = /\(?\s*S4\s*\)?/i;
+  // Запасной срок для строк без колонки «Срок» (старый лист S3). Срок каждой
+  // позиции приходит из колонки G публичного листа и лежит в product.eta.
   const PREORDER_ETA_TEXT = I18N.isEn ? "1–2 days" : "1–2 дня";
-  const PREORDER_BADGE_TEXT = I18N.isEn ? "🛩️ to order, 1–2 days" : "🛩️ под заказ, 1–2 дня";
+
+  /** «1–2 дня» / «5–7 дней» → «1–2 days» / «5–7 days» для английских страниц. */
+  function localizeEta(eta) {
+    const text = String(eta || "").trim();
+    if (!text) return "";
+    return I18N.isEn ? text.replace(/\s*дн(?:я|ей)\s*$/u, " days") : text;
+  }
+
+  /**
+   * Бейдж на карточке и в корзине: «🛩️ под заказ, 1–2 дня» (Dr.Store, S3) или
+   * «🛩️ предзаказ, 5–7 дней» (новые iPhone, S4). Срок берётся из товара, а
+   * не из константы — с 15.09.2026 сроки у складов разные.
+   */
+  function preorderBadgeText(product) {
+    const eta = localizeEta(product && product.eta) || PREORDER_ETA_TEXT;
+    const isNew = PREORDER_NEW_WAREHOUSE_RE.test(String((product && product.warehouse) || ""));
+    if (I18N.isEn) return `🛩️ ${isNew ? "pre-order" : "to order"}, ${eta}`;
+    return `🛩️ ${isNew ? "предзаказ" : "под заказ"}, ${eta}`;
+  }
 
   // ——— Гарантии (те же правила, что в боте: cloudflare-order-bot/src/worker.js) ———
   //
@@ -368,7 +392,8 @@
   // v2 (16.08.2026): у товара появились поля preorder/eta. Без смены ключа
   // вкладка, открытая до деплоя, продолжила бы отдавать из sessionStorage
   // товары без признака «под заказ» — то есть без пометки в карточке.
-  const CATALOG_CACHE_KEY = "iron_catalog_products_v2";
+  // v3 (15.09.2026): срок (eta) у товара стал построчным, из колонки «Срок».
+  const CATALOG_CACHE_KEY = "iron_catalog_products_v3";
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   // Функция, а не константа: словарь приезжает асинхронно, а константа
   // вычислилась бы до его загрузки и на /en/ осталась русской.
@@ -1951,7 +1976,7 @@
   }
 
   function getSheetUrl() {
-    const range = "A1:F1200";
+    const range = "A1:G1200";
     return (
       `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq`
     );
@@ -1993,7 +2018,7 @@
     const tabResults = new Map();
 
     const fetchTab = async (tab) => {
-      const url = `${base}?tqx=out:json&sheet=${encodeURIComponent(tab)}&range=${encodeURIComponent("A1:F1200")}`;
+      const url = `${base}?tqx=out:json&sheet=${encodeURIComponent(tab)}&range=${encodeURIComponent("A1:G1200")}`;
       const json = await loadSheetJson(url, { cache: false });
       return { tab, parsed: parseSheetJson(json, tab) };
     };
@@ -2037,7 +2062,7 @@
    * проверяются по метке склада — чужие в него не попадут.
    */
   function parseSheetJson(json, tab) {
-    const requirePreorder = tab === PREORDER_SHEET_TAB;
+    const requirePreorder = PREORDER_SHEET_TABS.includes(tab);
     const rows = json.table?.rows || [];
     const { colMap, dataRows } = resolveSheetLayout(rows);
 
@@ -2047,7 +2072,7 @@
     let currentSection = "";
 
     for (const row of dataRows) {
-      let { name, warranty, country, qty, priceRaw, warehouse } = parseSheetRow(row, colMap);
+      let { name, warranty, country, qty, priceRaw, warehouse, eta: etaRaw } = parseSheetRow(row, colMap);
       if (!name) continue;
 
       const updatedMatch = name.match(/^обновлено:\s*(.+)$/i);
@@ -2122,7 +2147,9 @@
         // с молчаливой лжи про позиции под заказ.
         inStock: preorder ? false : !/0\s*шт/i.test(qty),
         preorder,
-        eta: preorder ? PREORDER_ETA_TEXT : "",
+        // Срок — из колонки «Срок» листа (у Prices-3 «1–2 дня», у Prices-4
+        // «5–7 дней»); запасной вариант — для листа без колонки.
+        eta: preorder ? (String(etaRaw || "").trim() || PREORDER_ETA_TEXT) : "",
       });
     }
 
@@ -2240,7 +2267,7 @@
   }
 
   /** Фиксированная схема публичной таблицы: A–F. */
-  const DEFAULT_COL_MAP = { name: 0, warranty: 1, country: 2, qty: 3, price: 4, warehouse: 5 };
+  const DEFAULT_COL_MAP = { name: 0, warranty: 1, country: 2, qty: 3, price: 4, warehouse: 5, eta: -1 };
 
   /**
    * gviz не отдаёт русские заголовки в cols.label (там буквы A,B,C…),
@@ -2254,13 +2281,15 @@
       return { colMap: DEFAULT_COL_MAP, dataRows: rows };
     }
 
-    const map = { name: 0, warranty: 1, country: 2, qty: 3, price: 4, warehouse: 5 };
-    for (let i = 0; i < 6; i++) {
+    const map = { name: 0, warranty: 1, country: 2, qty: 3, price: 4, warehouse: 5, eta: -1 };
+    for (let i = 0; i < 7; i++) {
       const label = getSheetCell(rows[0], i).toLowerCase();
       if (label.includes("гарант")) map.warranty = i;
       else if (label.includes("страна")) map.country = i;
       else if (label.includes("колич")) map.qty = i;
       else if (label.includes("склад")) map.warehouse = i;
+      // «Срок» есть только у листов под заказ (Prices-3/4), колонка G.
+      else if (label.includes("срок")) map.eta = i;
     }
     for (let i = 5; i >= 0; i--) {
       const label = getSheetCell(rows[0], i).toLowerCase();
@@ -2281,6 +2310,7 @@
       qty: pick(colMap.qty),
       priceRaw: pick(colMap.price),
       warehouse: pick(colMap.warehouse),
+      eta: pick(colMap.eta),
     };
   }
 
@@ -2981,6 +3011,10 @@
     else if (/^iphone 15\b/.test(s)) modelRank = /\bplus\b/.test(s) ? 151 : 150;
     else if (/^iphone 16e\b/.test(s)) modelRank = 160;
     else if (/^iphone 16\b/.test(s)) modelRank = /\bplus\b/.test(s) ? 162 : 161;
+    else if (/^iphone 18 pro max\b/.test(s)) modelRank = 184;
+    else if (/^iphone 18 pro\b/.test(s)) modelRank = 183;
+    else if (/^iphone 18e\b/.test(s)) modelRank = 180;
+    else if (/^iphone 18\b/.test(s)) modelRank = 181;
     else if (/^iphone 17e\b/.test(s)) modelRank = 170;
     else if (/^iphone 17 pro max\b/.test(s)) modelRank = 174;
     else if (/^iphone 17 pro\b/.test(s)) modelRank = 173;
@@ -3034,7 +3068,7 @@
         </div>
         <h3 class="price-card__name">${nameHtml}</h3>
         ${group ? variantChipsHtml(group, group.selected) : ""}
-        ${p.preorder ? `<p class="price-card__preorder">${escapeHtml(PREORDER_BADGE_TEXT)}</p>` : ""}
+        ${p.preorder ? `<p class="price-card__preorder">${escapeHtml(preorderBadgeText(p))}</p>` : ""}
         <p class="price-card__warranty">
           ${escapeHtml(WARRANTY_SHORT_LABEL[warrantyKindFor(p)])}
           <button type="button" class="price-card__warranty-link" data-action="warranty" data-id="${p.id}">${T("shop.details", "подробнее")}</button>
@@ -3504,7 +3538,7 @@
         <span class="cart-item__num">${i + 1}</span>
         <div class="cart-item__body">
           <strong>${escapeHtml(I18N.productName(p.name))}</strong>
-          <span>${escapeHtml(priceLabelOf(p))}${p.country ? " · " + escapeHtml(I18N.country(p.country)) : ""}${p.warehouse ? " · " + escapeHtml(I18N.quantity(p.warehouse)) : ""}${p.preorder ? " · " + escapeHtml(PREORDER_BADGE_TEXT) : ""}</span>
+          <span>${escapeHtml(priceLabelOf(p))}${p.country ? " · " + escapeHtml(I18N.country(p.country)) : ""}${p.warehouse ? " · " + escapeHtml(I18N.quantity(p.warehouse)) : ""}${p.preorder ? " · " + escapeHtml(preorderBadgeText(p)) : ""}</span>
           ${p.extraWarranty ? `<span class="cart-item__warranty">${escapeHtml(T("cart.extra_warranty_item", `🛡 + гарантия 1 год — ${formatPrice(EXTRA_WARRANTY_PRICE)}`, { price: formatPrice(EXTRA_WARRANTY_PRICE) }))}</span>` : ""}
         </div>
         <button type="button" class="cart-item__remove" data-id="${p.id}" aria-label="${escapeHtml(T("cart.remove", "Убрать"))}">×</button>
@@ -3629,6 +3663,9 @@
         // сохранённого поля: корзина живёт в localStorage и могла быть
         // записана версией сайта, которая про него ещё не знала.
         preorder: PREORDER_WAREHOUSE_RE.test(warehouse),
+        // Срок — как сохранён; у старой корзины его нет, тогда бейдж возьмёт
+        // запасной «1–2 дня» (для S4 — см. preorderBadgeText, там по складу).
+        eta: String(item.eta || "").trim(),
         // А вот допгарантию восстановить неоткуда — это выбор человека,
         // поэтому читаем сохранённый флаг как есть.
         extraWarranty: item.extraWarranty === true,
