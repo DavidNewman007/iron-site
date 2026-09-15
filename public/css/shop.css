@@ -1014,11 +1014,17 @@
     inset: auto 0 0;
     top: auto;
     z-index: 90;
-    max-height: min(42vh, 320px);
+    /* Было min(42vh, 320px) с overflow: hidden. 15.09.2026 в корзину добавилась
+       разбивка сумм по способам оплаты (+134 px), содержимое перестало влезать —
+       и обрезалось молча: список товаров в мобильной версии схлопывался в ноль,
+       человек видел итог, но не видел, ЗА ЧТО платит. Теперь панели можно занять
+       до 80% экрана, а остаток — доскроллить. */
+    max-height: 80vh;
     transform: translateY(100%);
     transition: transform 0.3s ease;
     border-bottom: none;
-    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 0.75rem 0.85rem 0.85rem;
     display: flex;
     flex-direction: column;
@@ -1037,6 +1043,10 @@
   }
 
   .cart-list {
+    /* Список — то, ради чего корзину и открывают: он не должен сжиматься
+       под напором соседних блоков (flex-shrink), а свою прокрутку сохраняет. */
+    flex: 0 0 auto;
+    min-height: 4.5rem;
     max-height: 9rem;
     margin-bottom: 0.65rem;
   }
