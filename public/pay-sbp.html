@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' 'unsafe-inline'; frame-src 'none'; connect-src 'self' https://functions.yandexcloud.net">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="noindex">
+  <title>Оплата по СБП — IRON SERVICE</title>
+  <link rel="icon" href="assets/logo-icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=2026-08-19-3">
+  <link rel="stylesheet" href="css/shop.css?v=2026-09-18-5">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img" width="180" height="48">
+      </a>
+      <a href="tel:+79288509404" class="header-phone">+7 928 850-94-04</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-hero">
+      <div class="container">
+        <h1 id="sbp-title">Оплата по СБП</h1>
+        <p id="sbp-lead">Отсканируйте код камерой телефона или в приложении банка.</p>
+      </div>
+    </div>
+
+    <div class="container sbp">
+      <p class="sbp__sum" id="sbp-sum"></p>
+      <div class="sbp__qr" id="sbp-qr"></div>
+      <p class="sbp__status" id="sbp-status">Ждём оплату…</p>
+      <p class="sbp__hint">
+        Страница сама определит, что платёж прошёл — закрывать её не нужно.
+      </p>
+      <p>
+        <a class="btn btn-secondary" id="sbp-open" href="#" hidden>Открыть приложение банка</a>
+        <a class="btn btn-secondary" href="magazin.html">Вернуться в магазин</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <p style="margin-top:1.5rem">© IRON SERVICE · Сочи 2013-2026</p>
+      <p class="footer-tagline">· Запчасти • Аксессуары • Сервис •</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/pay-sbp.js?v=2026-09-18-5"></script>
+</body>
+</html>

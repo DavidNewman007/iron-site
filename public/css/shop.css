@@ -2008,3 +2008,40 @@
   border: 1px solid rgba(220, 80, 60, 0.6);
   border-radius: 8px;
 }
+
+/* --------------------------------------------------------------------------
+   Страница оплаты по СБП (18.09.2026)
+   -------------------------------------------------------------------------- */
+
+.sbp {
+  padding: 2rem 0 3rem;
+  max-width: 520px;
+  text-align: center;
+}
+
+.sbp__sum {
+  margin: 0 0 1rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.sbp__qr img {
+  display: block;
+  margin: 0 auto 1rem;
+  padding: 0.75rem;
+  background: #fff;
+  border-radius: 12px;
+}
+
+.sbp__status {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sbp__hint {
+  margin: 0 0 1.5rem;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
