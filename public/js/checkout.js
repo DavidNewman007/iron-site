@@ -24,6 +24,7 @@
   var PAY_URL = String(cfg.payApiUrl || "").trim();
   var CDEK_URL = String(cfg.cdekApiUrl || "").trim();
 
+  var DRAFT_KEY = "iron_checkout_draft";
   var $ = function (id) { return document.getElementById(id); };
   var состояние = {
     город: null,        // {code, name}
@@ -143,9 +144,10 @@
     состояние.доставка = null;
     if (режим() === "pvz") загрузитьПункты();
     посчитатьДоставку();
+    сохранитьЧерновик();
   }
 
-  function загрузитьПункты() {
+  function загрузитьПункты(выбранный) {
     if (!состояние.город) return;
     var sel = $("f-point");
     sel.innerHTML = "<option value=''>— загружаем пункты… —</option>";
@@ -158,6 +160,7 @@
       sel.innerHTML = состояние.пункты.map(function (p) {
         return '<option value="' + экранировать(p.code) + '">' + экранировать(p.address || p.code) + "</option>";
       }).join("");
+      if (выбранный) sel.value = выбранный;
     }).catch(function () {
       sel.innerHTML = "<option value=''>— не удалось загрузить пункты —</option>";
     });
@@ -209,6 +212,57 @@
     $("self-hint").hidden = m !== "self";
     if (m === "pvz" && состояние.город && !состояние.пункты.length) загрузитьПункты();
     посчитатьДоставку();
+  }
+
+  /**
+   * Черновик формы. Человек уходит посмотреть товар, возвращается — и ничего не
+   * надо заполнять заново. Хранится в localStorage, то есть только в его же
+   * браузере: никуда не отправляется, поэтому и согласия на куки не требует
+   * (баннер нужен для аналитики и сторонних трекеров, а их на сайте нет).
+   *
+   * Чистится после успешного перехода к оплате — вместе с корзиной.
+   */
+  function сохранитьЧерновик() {
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({
+        name: $("f-name").value,
+        phone: $("f-phone").value,
+        mode: режим(),
+        city: состояние.город,
+        point: $("f-point").value,
+        address: $("f-address").value,
+        own: $("f-own").value,
+        insurance: $("f-insurance").checked,
+      }));
+    } catch (e) { /* приватный режим — просто не сохраним */ }
+  }
+
+  function восстановитьЧерновик() {
+    var d;
+    try { d = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null"); } catch (e) { d = null; }
+    if (!d) return;
+    $("f-name").value = d.name || "";
+    $("f-phone").value = d.phone || "";
+    $("f-address").value = d.address || "";
+    $("f-own").value = d.own || "";
+    $("f-insurance").checked = !!d.insurance;
+    var r = document.querySelector('input[name="mode"][value="' + (d.mode || "pvz") + '"]');
+    if (r) r.checked = true;
+    обновитьФормуПодРежим();
+    if (d.city && d.city.code) {
+      состояние.город = d.city;
+      $("f-city").value = d.city.name || "";
+      if (режим() === "pvz") {
+        // Пункты подгружаются заново — список мог измениться, — и уже после
+        // загрузки возвращаем ранее выбранный.
+        загрузитьПункты(d.point);
+      }
+      посчитатьДоставку();
+    }
+  }
+
+  function забытьЧерновик() {
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) { /* не страшно */ }
   }
 
   // --- отправка -----------------------------------------------------------
@@ -272,6 +326,7 @@
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (!d || !d.id) throw new Error(d && d.error ? d.error : "не сохранить заказ");
+        забытьЧерновик();
         var ids = корзина().map(function (p) { return p.id; }).filter(Boolean).join(",");
         location.assign(PAY_URL + (PAY_URL.indexOf("?") >= 0 ? "&" : "?") +
           "ids=" + encodeURIComponent(ids) +
@@ -314,9 +369,20 @@
     if (li) выбратьГород(Number(li.dataset.code), li.textContent);
   });
   document.querySelectorAll('input[name="mode"]').forEach(function (r) {
-    r.addEventListener("change", обновитьФормуПодРежим);
+    r.addEventListener("change", function () {
+      обновитьФормуПодРежим();
+      сохранитьЧерновик();
+    });
   });
-  $("f-insurance").addEventListener("change", посчитатьДоставку);
+  $("f-insurance").addEventListener("change", function () {
+    посчитатьДоставку();
+    сохранитьЧерновик();
+  });
+  ["f-name", "f-phone", "f-address", "f-own", "f-point"].forEach(function (id) {
+    $(id).addEventListener("change", сохранитьЧерновик);
+    $(id).addEventListener("blur", сохранитьЧерновик);
+  });
+  восстановитьЧерновик();
   $("pay-sbp").addEventListener("click", function () { оплатить("sbp"); });
   $("pay-card").addEventListener("click", function () { оплатить("card"); });
 })();

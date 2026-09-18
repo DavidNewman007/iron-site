@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=2026-08-19-3">
-  <link rel="stylesheet" href="css/shop.css?v=2026-09-18-1">
+  <link rel="stylesheet" href="css/shop.css?v=2026-09-18-4">
 </head>
 <body>
   <header class="site-header">
@@ -20,6 +20,18 @@
         <img src="assets/logo-horizontal.png" alt="IRON SERVICE" class="logo-img" width="180" height="48">
       </a>
       <a href="tel:+79288509404" class="header-phone">+7 928 850-94-04</a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-label="Меню">Меню</button>
+      <nav class="main-nav" aria-label="Основное меню">
+        <ul>
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="uslugi.html">Услуги</a></li>
+          <li><a href="garantiya.html">Гарантия</a></li>
+          <li><a href="magazin.html">Магазин</a></li>
+          <li><a href="zapchasti.html">Запчасти</a></li>
+          <li><a href="articles.html">Статьи</a></li>
+          <li><a href="kontakty.html">Контакты</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
@@ -28,6 +40,7 @@
       <div class="container">
         <h1>Оформление заказа</h1>
         <p>Доставку оплачиваете при получении — на сайте только товар.</p>
+        <p><a href="magazin.html" class="checkout__back">← Вернуться в корзину</a></p>
       </div>
     </div>
 
@@ -107,7 +120,7 @@
         <div class="cart-actions">
           <button type="button" class="btn btn-primary" id="pay-sbp">Оплатить по СБП</button>
           <button type="button" class="btn btn-primary" id="pay-card">Оплатить картой</button>
-          <a class="btn btn-secondary" href="magazin.html">Вернуться в магазин</a>
+          <a class="btn btn-secondary" href="magazin.html">Вернуться в корзину</a>
         </div>
       </section>
     </div>
@@ -120,8 +133,9 @@
     </div>
   </footer>
 
+  <script defer src="js/main.js"></script>
   <script src="js/config.js"></script>
   <script src="js/pay-markup.js?v=2026-09-18-1"></script>
-  <script src="js/checkout.js?v=2026-09-18-3"></script>
+  <script src="js/checkout.js?v=2026-09-18-4"></script>
 </body>
 </html>

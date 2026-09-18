@@ -1873,6 +1873,14 @@
   max-width: 620px;
 }
 
+.checkout__back {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+
 .checkout__block {
   margin-bottom: 1.75rem;
   padding-bottom: 1.25rem;
