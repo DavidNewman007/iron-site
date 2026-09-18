@@ -32,6 +32,17 @@
     занят: false,
   };
 
+  /** Доступна ли прямая оплата по СБП (спрашиваем у функции оплаты). */
+  var кэшРежимов = null;
+  function режимыОплаты() {
+    if (кэшРежимов) return Promise.resolve(кэшРежимов);
+    if (!PAY_URL) return Promise.resolve({ sbp_direct: false });
+    return fetch(PAY_URL + (PAY_URL.indexOf("?") >= 0 ? "&" : "?") + "action=modes", { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { return (кэшРежимов = d || { sbp_direct: false }); })
+      .catch(function () { return { sbp_direct: false }; });
+  }
+
   // --- корзина -----------------------------------------------------------
   function корзина() {
     try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); }
@@ -53,12 +64,26 @@
     $("checkout-goods").textContent = деньги(сумма);
 
     if (window.IRON_PAY) {
-      window.IRON_PAY.load().then(function (rates) {
+      Promise.all([window.IRON_PAY.load(), режимыОплаты()]).then(function (r) {
+        var rates = r[0], modes = r[1];
         var b = window.IRON_PAY.breakdown(сумма, rates);
+        if (!modes.sbp_direct) {
+          // Прямой СБП-ссылки нет — способ человек выберет на странице банка,
+          // поэтому сумма одна и кнопка одна. Две кнопки с разными суммами
+          // обещали бы цену, которой в банке не будет.
+          $("checkout-pay-note").textContent =
+            "К оплате " + деньги(b.способы.карта.итог) +
+            " — с налогом и комиссией банка. Способ (карта, СБП, Alfa Pay, SberPay, T-Pay) " +
+            "выберете на странице банка. Доставка оплачивается отдельно при получении.";
+          $("pay-sbp").hidden = true;
+          $("pay-card").textContent = "Оплатить онлайн · " + деньги(b.способы.карта.итог);
+          return;
+        }
         $("checkout-pay-note").textContent =
           "К оплате: по СБП " + деньги(b.способы.сбп.итог) +
           ", картой " + деньги(b.способы.карта.итог) +
           " — с налогом и комиссией банка. Доставка оплачивается отдельно при получении.";
+        $("pay-sbp").hidden = false;
         $("pay-sbp").textContent = "Оплатить по СБП · " + деньги(b.способы.сбп.итог);
         $("pay-card").textContent = "Оплатить картой · " + деньги(b.способы.карта.итог);
       });

@@ -561,8 +561,21 @@
         const set = (id, текст) => {
           document.querySelectorAll(id).forEach((el) => { el.textContent = текст; });
         };
-        set("#hybrid-cart-pay-sbp", `СБП · ${pay.формат(b.способы.сбп.итог)}`);
-        set("#hybrid-cart-pay-card", `Картой · ${pay.формат(b.способы.карта.итог)}`);
+        // Пока прямой СБП-ссылки нет, кнопка одна: способ выбирается на странице
+        // банка, а сумма там посчитана по карточной ставке (см. prices.js).
+        const base = String((window.IRON_CONFIG || {}).payApiUrl || "").trim();
+        fetch(base + (base.includes("?") ? "&" : "?") + "action=modes", { cache: "no-store" })
+          .then((r) => r.json())
+          .catch(() => ({ sbp_direct: false }))
+          .then((modes) => {
+            if (modes && modes.sbp_direct) {
+              set("#hybrid-cart-pay-sbp", `СБП · ${pay.формат(b.способы.сбп.итог)}`);
+              set("#hybrid-cart-pay-card", `Картой · ${pay.формат(b.способы.карта.итог)}`);
+              return;
+            }
+            document.querySelectorAll("#hybrid-cart-pay-sbp").forEach((el) => { el.hidden = true; });
+            set("#hybrid-cart-pay-card", `Оплатить · ${pay.формат(b.способы.карта.итог)}`);
+          });
       })
       .catch((err) => console.warn("[hybrid-cart] наценка", err));
   }

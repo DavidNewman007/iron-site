@@ -3587,6 +3587,29 @@
    * тому же файлу ставок (/data/pay-rates.json), потому что цену из браузера принимать
    * нельзя. Расхождения быть не должно — формула и файл одни и те же.
    */
+  /**
+   * Доступна ли прямая оплата по СБП. Спрашиваем у функции один раз за визит.
+   *
+   * Пока её нет, отдельной кнопки «по СБП» быть НЕ ДОЛЖНО: без прямой ссылки
+   * человек попадает на общую страницу банка, где рядом с СБП лежат карта и
+   * Pay-сервисы, а сумма заказа посчитана по карточной ставке. Показывать при
+   * этом кнопку с меньшей суммой — значит обещать цену, которой не будет.
+   * (Поймано владельцем 18.09.2026: по кнопке СБП за 174 900 ₽ в банке
+   * открывалось 175 450 ₽.)
+   */
+  let режимыОплаты = null;
+  function загрузитьРежимы() {
+    if (режимыОплаты) return Promise.resolve(режимыОплаты);
+    const base = payBase();
+    if (!base) return Promise.resolve({ sbp_direct: false });
+    return fetch(base + (base.includes("?") ? "&" : "?") + "action=modes", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d) => (режимыОплаты = d || { sbp_direct: false }))
+      // Не достучались — считаем, что прямого СБП нет: одна честная кнопка
+      // лучше двух, из которых одна врёт про цену.
+      .catch(() => ({ sbp_direct: false }));
+  }
+
   function renderPayBreakdown(total, count) {
     const box = els.cartPayBreakdown;
     if (!box || !window.IRON_PAY) return;
@@ -3594,10 +3617,23 @@
       box.hidden = true;
       return;
     }
-    window.IRON_PAY.load().then((rates) => {
+    Promise.all([window.IRON_PAY.load(), загрузитьРежимы()]).then(([rates, modes]) => {
       const b = window.IRON_PAY.breakdown(total, rates);
       const f = window.IRON_PAY.формат;
       box.hidden = false;
+      if (!modes.sbp_direct) {
+        // Одна кнопка и одна сумма: способ человек выберет уже на странице банка.
+        box.innerHTML =
+          `<div class="cart-pay-breakdown__row"><span>Наличными при самовывозе</span><span>${f(total)}</span></div>` +
+          `<div class="cart-pay-breakdown__row"><span>Онлайн: картой, СБП, Alfa Pay, SberPay, T-Pay</span><span>${f(b.способы.карта.итог)}</span></div>` +
+          `<div class="cart-pay-breakdown__note">Наличными — забронируйте в Telegram или MAX. В сумму онлайн-оплаты включены налог и комиссия банка; способ выберете на странице банка.</div>`;
+        if (els.cartPaySbp) els.cartPaySbp.hidden = true;
+        if (els.cartPayCard) {
+          els.cartPayCard.hidden = false;
+          els.cartPayCard.textContent = `Оплатить онлайн · ${f(b.способы.карта.итог)}`;
+        }
+        return;
+      }
       // Первая строка — цена прайса. Она не «просто товары», а цена при расчёте
       // наличными на месте: онлайн-оплата дороже на налог и комиссию, и человек
       // должен понимать, откуда разница, не дочитывая мелкий шрифт.
@@ -3606,8 +3642,14 @@
         `<div class="cart-pay-breakdown__row"><span>По СБП</span><span>${f(b.способы.сбп.итог)}</span></div>` +
         `<div class="cart-pay-breakdown__row"><span>Картой, Alfa Pay, SberPay, Mir Pay, T-Pay</span><span>${f(b.способы.карта.итог)}</span></div>` +
         `<div class="cart-pay-breakdown__note">Наличными — забронируйте в Telegram или MAX. В онлайн-суммы включены налог и комиссия банка, по СБП она ниже.</div>`;
-      if (els.cartPaySbp) els.cartPaySbp.textContent = `Оплатить по СБП · ${f(b.способы.сбп.итог)}`;
-      if (els.cartPayCard) els.cartPayCard.textContent = `Оплатить картой · ${f(b.способы.карта.итог)}`;
+      if (els.cartPaySbp) {
+        els.cartPaySbp.hidden = false;
+        els.cartPaySbp.textContent = `Оплатить по СБП · ${f(b.способы.сбп.итог)}`;
+      }
+      if (els.cartPayCard) {
+        els.cartPayCard.hidden = false;
+        els.cartPayCard.textContent = `Оплатить картой · ${f(b.способы.карта.итог)}`;
+      }
     }).catch(() => { box.hidden = true; });
   }
 
