@@ -51,6 +51,16 @@
 
   function деньги(n) { return (Number(n) || 0).toLocaleString("ru-RU") + " ₽"; }
 
+  /** Склонение по последнему числу диапазона: «3–4 дня», «11–12 дней». */
+  function дней(n) {
+    var x = Math.abs(Number(n) || 0) % 100;
+    if (x > 10 && x < 20) return "дней";
+    var y = x % 10;
+    if (y === 1) return "день";
+    if (y >= 2 && y <= 4) return "дня";
+    return "дней";
+  }
+
   function отрисоватьЗаказ() {
     var items = корзина();
     if (!items.length) {
@@ -178,7 +188,7 @@
       состояние.доставка = v[0];
       $("delivery-result").textContent =
         "Доставка " + деньги(v[0].sum) + " · " + v[0].period_min + "–" + v[0].period_max +
-        " дней. Оплачивается при получении.";
+        " " + дней(v[0].period_max) + ". Оплачивается при получении.";
     }).catch(function () {
       состояние.доставка = null;
       $("delivery-result").textContent = "Доставку посчитаем при подтверждении заказа.";
