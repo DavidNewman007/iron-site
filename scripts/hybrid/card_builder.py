@@ -264,7 +264,7 @@ def render_html(source: dict[str, Any], lang: str = "ru") -> str:
   <meta name="description" content="{_esc(meta_description)}">
 {alternates}
 {og_block}
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://telegram.org 'unsafe-inline'; connect-src 'self' https://docs.google.com https://order-bot.4489530.workers.dev; frame-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://telegram.org 'unsafe-inline'; connect-src 'self' https://docs.google.com https://order-bot.4489530.workers.dev https://functions.yandexcloud.net; frame-src 'none'">
   <title>{_esc(name)} — IRON SERVICE</title>
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
