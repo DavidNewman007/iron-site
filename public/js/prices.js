@@ -3598,11 +3598,14 @@
       const b = window.IRON_PAY.breakdown(total, rates);
       const f = window.IRON_PAY.формат;
       box.hidden = false;
+      // Первая строка — цена прайса. Она не «просто товары», а цена при расчёте
+      // наличными на месте: онлайн-оплата дороже на налог и комиссию, и человек
+      // должен понимать, откуда разница, не дочитывая мелкий шрифт.
       box.innerHTML =
-        `<div class="cart-pay-breakdown__row"><span>Товары</span><span>${f(total)}</span></div>` +
+        `<div class="cart-pay-breakdown__row"><span>Наличными при самовывозе</span><span>${f(total)}</span></div>` +
         `<div class="cart-pay-breakdown__row"><span>По СБП</span><span>${f(b.способы.сбп.итог)}</span></div>` +
         `<div class="cart-pay-breakdown__row"><span>Картой, Alfa Pay, SberPay, Mir Pay, T-Pay</span><span>${f(b.способы.карта.итог)}</span></div>` +
-        `<div class="cart-pay-breakdown__note">В сумму включены налог и комиссия банка. По СБП комиссия ниже — поэтому и сумма меньше.</div>`;
+        `<div class="cart-pay-breakdown__note">Наличными — забронируйте в Telegram или MAX. В онлайн-суммы включены налог и комиссия банка, по СБП она ниже.</div>`;
       if (els.cartPaySbp) els.cartPaySbp.textContent = `Оплатить по СБП · ${f(b.способы.сбп.итог)}`;
       if (els.cartPayCard) els.cartPayCard.textContent = `Оплатить картой · ${f(b.способы.карта.итог)}`;
     }).catch(() => { box.hidden = true; });
