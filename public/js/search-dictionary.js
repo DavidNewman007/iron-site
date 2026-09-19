@@ -1,7 +1,7 @@
 /**
  * Словари поиска магазина IRON SERVICE.
  * Сгенерировано: 2026-09-19
- * Источники: Товары список.txt, витрина запчастей, листы прайса (Prices, Prices-2, Prices-3, Prices-4)
+ * Источники: витрина запчастей
  * Пересборка: node scripts/build-search-dictionary.mjs
  */
 window.IRON_SEARCH_DICT = {

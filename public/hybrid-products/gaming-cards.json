@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-18T15:45:24.898Z",
-  "count": 26,
+  "generated_at": "2026-09-19T12:19:46.478Z",
+  "count": 35,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -209,6 +209,78 @@
       "name": "🎮GamePad PS5 White",
       "warehouse": "(S2)",
       "price": 7800
+    },
+    "-ps5-slim-digital-825gb-s2-65300": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-65300.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-825gb-s2-65300.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "🎮PS5 Slim Digital 825Gb",
+      "warehouse": "(S2)",
+      "price": 65300
+    },
+    "portal-ps5-черный-s2-26200": {
+      "url": "hybrid-products/gaming/portal-ps5-черный-s2-26200.html",
+      "url_en": "en/hybrid-products/gaming/portal-ps5-черный-s2-26200.html",
+      "cover": "assets/product-images/807f53163a7f14597ff54836.jpg",
+      "name": "Portal PS5 Черный",
+      "warehouse": "(S2)",
+      "price": 26200
+    },
+    "portal-ps5-белый-s2-26200": {
+      "url": "hybrid-products/gaming/portal-ps5-белый-s2-26200.html",
+      "url_en": "en/hybrid-products/gaming/portal-ps5-белый-s2-26200.html",
+      "cover": "assets/product-images/9e175dd37be85181eac35fa5.jpg",
+      "name": "Portal PS5 Белый",
+      "warehouse": "(S2)",
+      "price": 26200
+    },
+    "-gamepad-ps5-pink-s2-8500": {
+      "url": "hybrid-products/gaming/gamepad-ps5-pink-s2-8500.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-pink-s2-8500.html",
+      "cover": "assets/product-images/2974e4fb98f9ab1d964906be.jpg",
+      "name": "🎮GamePad PS5 Pink",
+      "warehouse": "(S2)",
+      "price": 8500
+    },
+    "-gamepad-ps5-volcanic-red-s2-7900": {
+      "url": "hybrid-products/gaming/gamepad-ps5-volcanic-red-s2-7900.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-volcanic-red-s2-7900.html",
+      "cover": "assets/product-images/6dff1efeecb9f63494cd696c.jpg",
+      "name": "🎮GamePad PS5 Volcanic Red",
+      "warehouse": "(S2)",
+      "price": 7900
+    },
+    "-gamepad-ps5-techno-red-s2-8300": {
+      "url": "hybrid-products/gaming/gamepad-ps5-techno-red-s2-8300.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-techno-red-s2-8300.html",
+      "cover": "assets/product-images/6060ab25f8228d5c146fa2d7.jpg",
+      "name": "🎮GamePad PS5 Techno Red",
+      "warehouse": "(S2)",
+      "price": 8300
+    },
+    "-gamepad-ps5-rhythm-blue-s2-8300": {
+      "url": "hybrid-products/gaming/gamepad-ps5-rhythm-blue-s2-8300.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-rhythm-blue-s2-8300.html",
+      "cover": "assets/product-images/01306a630995cdf1095cf9dd.jpg",
+      "name": "🎮GamePad PS5 Rhythm Blue",
+      "warehouse": "(S2)",
+      "price": 8300
+    },
+    "-gamepad-ps5-remix-green-s2-8300": {
+      "url": "hybrid-products/gaming/gamepad-ps5-remix-green-s2-8300.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-remix-green-s2-8300.html",
+      "cover": "assets/product-images/e26d164c902ed5739728d247.jpg",
+      "name": "🎮GamePad PS5 Remix Green",
+      "warehouse": "(S2)",
+      "price": 8300
+    },
+    "-ps5-pulse-elite-white-s2-15600": {
+      "url": "hybrid-products/gaming/ps5-pulse-elite-white-s2-15600.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pulse-elite-white-s2-15600.html",
+      "cover": "assets/product-images/1301064be8906b6740519b6c.jpg",
+      "name": "🎧PS5 Pulse Elite White",
+      "warehouse": "(S2)",
+      "price": 15600
     }
   }
 }

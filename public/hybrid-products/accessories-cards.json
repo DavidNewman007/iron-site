@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-18T15:45:24.890Z",
-  "count": 46,
+  "generated_at": "2026-09-19T12:19:46.470Z",
+  "count": 54,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -369,6 +369,70 @@
       "name": "Apple Pencil Pro",
       "warehouse": "(S2)",
       "price": 12900
+    },
+    "-pencil-usb-c-muwa3-s1-8700": {
+      "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-8700.html",
+      "url_en": "en/hybrid-products/accessories/pencil-usb-c-muwa3-s1-8700.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "🖊 Pencil (USB-C) MUWA3",
+      "warehouse": "(S1)",
+      "price": 8700
+    },
+    "-pencil-pro-mx2d3-s1-13000": {
+      "url": "hybrid-products/accessories/pencil-pro-mx2d3-s1-13000.html",
+      "url_en": "en/hybrid-products/accessories/pencil-pro-mx2d3-s1-13000.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "🖊 Pencil Pro MX2D3",
+      "warehouse": "(S1)",
+      "price": 13000
+    },
+    "-magic-mouse-3-black-s2-11100": {
+      "url": "hybrid-products/accessories/magic-mouse-3-black-s2-11100.html",
+      "url_en": "en/hybrid-products/accessories/magic-mouse-3-black-s2-11100.html",
+      "cover": "assets/product-images/082f86c05a019b81f5ea66e2.jpg",
+      "name": "🖱Magic Mouse 3 Black",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "dyson-hd16-blue-copper-с-кейсом-европа-s3-48900": {
+      "url": "hybrid-products/accessories/dyson-hd16-blue-copper-с-кейсом-s3-48900.html",
+      "url_en": "en/hybrid-products/accessories/dyson-hd16-blue-copper-с-кейсом-s3-48900.html",
+      "cover": "",
+      "name": "Dyson HD16 Blue/Copper с кейсом",
+      "warehouse": "(S3)",
+      "price": 48900
+    },
+    "dyson-hd17-red-velvet-с-кейсом-европа-s3-43200": {
+      "url": "hybrid-products/accessories/dyson-hd17-red-velvet-с-кейсом-s3-43200.html",
+      "url_en": "en/hybrid-products/accessories/dyson-hd17-red-velvet-с-кейсом-s3-43200.html",
+      "cover": "",
+      "name": "Dyson HD17 Red Velvet с кейсом",
+      "warehouse": "(S3)",
+      "price": 43200
+    },
+    "dyson-pencil-wash-wr04-европа-s3-43200": {
+      "url": "hybrid-products/accessories/dyson-pencil-wash-wr04-s3-43200.html",
+      "url_en": "en/hybrid-products/accessories/dyson-pencil-wash-wr04-s3-43200.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "Dyson Pencil Wash WR04",
+      "warehouse": "(S3)",
+      "price": 43200
+    },
+    "dyson-pencilvac-fluffy-black-гонконг-s3-49000": {
+      "url": "hybrid-products/accessories/dyson-pencilvac-fluffy-black-s3-49000.html",
+      "url_en": "en/hybrid-products/accessories/dyson-pencilvac-fluffy-black-s3-49000.html",
+      "cover": "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+      "name": "Dyson PencilVac Fluffy Black",
+      "warehouse": "(S3)",
+      "price": 49000
+    },
+    "dyson-pencilvac-fluffycone-black-европа-s3-43800": {
+      "url": "hybrid-products/accessories/dyson-pencilvac-fluffycone-black-s3-43800.html",
+      "url_en": "en/hybrid-products/accessories/dyson-pencilvac-fluffycone-black-s3-43800.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "Dyson PencilVac Fluffycone Black",
+      "warehouse": "(S3)",
+      "price": 43800
     }
   }
 }

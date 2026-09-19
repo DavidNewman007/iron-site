@@ -1,0 +1,68 @@
+{
+  "product_id": "dyson-hd19-ceramic-pink-гонконг-s3-26100",
+  "category": "dyson",
+  "file_slug": "dyson-hd19-ceramic-pink-s3-26100",
+  "name": "Dyson HD19 Ceramic Pink",
+  "country": "🇭🇰 Гонконг",
+  "warehouse": "(S3)",
+  "price": 26100,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-feny/fen-dyson-supersonic-hd19-travel-ceramic-pink-rose-gold",
+  "catalog_title": "Фен Dyson Supersonic Travel HD19, Ceramic Pink/Rose…",
+  "specs": [
+    {
+      "key": "Производитель",
+      "value": "Dyson"
+    },
+    {
+      "key": "Количество режимов",
+      "value": "3"
+    },
+    {
+      "key": "Длина кабеля",
+      "value": "1.98 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1220 Вт"
+    },
+    {
+      "key": "Ширина",
+      "value": "66 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "221 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "71 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "318 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Розовый"
+    },
+    {
+      "key": "Ионизация",
+      "value": "есть"
+    },
+    {
+      "key": "Подача холодного воздуха",
+      "value": "есть"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd19-ceramic-pink/492454-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd19-ceramic-pink/Web_922_Dynamic_Spec_image-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd19-ceramic-pink/Web_PDP_922_Module_3_Carousel_Card_3-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/57f5764224f8503f6b8d153e.jpg",
+    "assets/product-images/0e95cc5750eff5cb4a8dee93.jpg",
+    "assets/product-images/52cdda07c1b66cf393d1099c.jpg"
+  ],
+  "updated_at": "2026-09-19T12:18:07.213341Z"
+}

@@ -1,0 +1,51 @@
+{
+  "product_id": "-gopro-12-s2-26700",
+  "category": "gadgets",
+  "file_slug": "gopro-12-s2-26700",
+  "name": "📷GoPro 12",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 26700,
+  "catalog_url": "https://sochi.dr-store.ru/foto-video/ekshn-kamery/GoPro_HERO_12_Action_Camera_Black",
+  "catalog_title": "Экшн-камеру GoPro HERO 12, Black",
+  "specs": [
+    {
+      "key": "Производитель",
+      "value": "GoPro"
+    },
+    {
+      "key": "Процессор",
+      "value": "GP2"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "1720 мАч"
+    },
+    {
+      "key": "Вес",
+      "value": "154 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Черный"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_12_Action_Camera_Black/GoPro_HERO_12_Action_Camera_Black-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_12_Action_Camera_Black/GoPro_HERO_12_Action_Camera_Black-2-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_12_Action_Camera_Black/GoPro_HERO_12_Action_Camera_Black-3-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_12_Action_Camera_Black/GoPro_HERO_12_Action_Camera_Black-4-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_12_Action_Camera_Black/GoPro_HERO_12_Action_Camera_Black-5-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_12_Action_Camera_Black/GoPro_HERO_12_Action_Camera_Black-6-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_12_Action_Camera_Black/GoPro_HERO_12_Action_Camera_Black-7-1200x1200.png"
+  ],
+  "images_local": [
+    "assets/product-images/f06f43352feaf4bc7a1f5056.png",
+    "assets/product-images/76bd5cdbe79d397363983726.png",
+    "assets/product-images/5dec2d4cd1aac72207130b43.png",
+    "assets/product-images/61871d502f22356ed3249644.png",
+    "assets/product-images/3086f65d20f62b5bf9c5c874.png",
+    "assets/product-images/8fb2bfae9a46a91264bf7a3c.png"
+  ],
+  "updated_at": "2026-09-19T12:19:17.638688Z"
+}

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-18T15:45:24.895Z",
-  "count": 27,
+  "generated_at": "2026-09-19T12:19:46.475Z",
+  "count": 51,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -217,6 +217,198 @@
       "name": "🔈Яндекс Станция Дуо MAX Zigbee Черный",
       "warehouse": "(S2)",
       "price": 42200
+    },
+    "buds-3-silver-оаэ-s2-9400": {
+      "url": "hybrid-products/audio/buds-3-silver-s2-9400.html",
+      "url_en": "en/hybrid-products/audio/buds-3-silver-s2-9400.html",
+      "cover": "assets/product-images/b893049221c10fd33a69ae3d.jpeg",
+      "name": "Buds 3 Silver",
+      "warehouse": "(S2)",
+      "price": 9400
+    },
+    "buds-3-pro-silver-оаэ-s2-12800": {
+      "url": "hybrid-products/audio/buds-3-pro-silver-s2-12800.html",
+      "url_en": "en/hybrid-products/audio/buds-3-pro-silver-s2-12800.html",
+      "cover": "assets/product-images/9022d9cab6ca8a2548b24a40.jpeg",
+      "name": "Buds 3 Pro Silver",
+      "warehouse": "(S2)",
+      "price": 12800
+    },
+    "buds-4-black-оаэ-s2-12100": {
+      "url": "hybrid-products/audio/buds-4-black-s2-12100.html",
+      "url_en": "en/hybrid-products/audio/buds-4-black-s2-12100.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Buds 4 Black",
+      "warehouse": "(S2)",
+      "price": 12100
+    },
+    "buds-4-white-оаэ-s2-12100": {
+      "url": "hybrid-products/audio/buds-4-white-s2-12100.html",
+      "url_en": "en/hybrid-products/audio/buds-4-white-s2-12100.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Buds 4 White",
+      "warehouse": "(S2)",
+      "price": 12100
+    },
+    "buds-4-pro-black-оаэ-s2-16700": {
+      "url": "hybrid-products/audio/buds-4-pro-black-s2-16700.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-black-s2-16700.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Buds 4 Pro Black",
+      "warehouse": "(S2)",
+      "price": 16700
+    },
+    "buds-4-pro-white-оаэ-s2-16700": {
+      "url": "hybrid-products/audio/buds-4-pro-white-s2-16700.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-white-s2-16700.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Buds 4 Pro White",
+      "warehouse": "(S2)",
+      "price": 16700
+    },
+    "jbl-flip-7-black-s2-10400": {
+      "url": "hybrid-products/audio/jbl-flip-7-black-s2-10400.html",
+      "url_en": "en/hybrid-products/audio/jbl-flip-7-black-s2-10400.html",
+      "cover": "assets/product-images/16dfcaefc4c6f10b647d67aa.png",
+      "name": "JBL Flip 7 Black",
+      "warehouse": "(S2)",
+      "price": 10400
+    },
+    "jbl-flip-7-purple-s2-10400": {
+      "url": "hybrid-products/audio/jbl-flip-7-purple-s2-10400.html",
+      "url_en": "en/hybrid-products/audio/jbl-flip-7-purple-s2-10400.html",
+      "cover": "assets/product-images/0ee8359eda8ced54e3d4d00a.png",
+      "name": "JBL Flip 7 Purple",
+      "warehouse": "(S2)",
+      "price": 10400
+    },
+    "jbl-flip-7-squad-s2-10400": {
+      "url": "hybrid-products/audio/jbl-flip-7-squad-s2-10400.html",
+      "url_en": "en/hybrid-products/audio/jbl-flip-7-squad-s2-10400.html",
+      "cover": "assets/product-images/c94062dfc305f721ec0f8238.png",
+      "name": "JBL Flip 7 Squad",
+      "warehouse": "(S2)",
+      "price": 10400
+    },
+    "-marshall-major-v-cream-s2-7700": {
+      "url": "hybrid-products/audio/marshall-major-v-cream-s2-7700.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-cream-s2-7700.html",
+      "cover": "assets/product-images/21171281248b133c6477961b.jpeg",
+      "name": "🎧Marshall Major V Cream",
+      "warehouse": "(S2)",
+      "price": 7700
+    },
+    "marshall-acton-iii-black-s2-23000": {
+      "url": "hybrid-products/audio/marshall-acton-iii-black-s2-23000.html",
+      "url_en": "en/hybrid-products/audio/marshall-acton-iii-black-s2-23000.html",
+      "cover": "assets/product-images/9cfb03393e1fae546b8be195.jpg",
+      "name": "Marshall Acton III, Black",
+      "warehouse": "(S2)",
+      "price": 23000
+    },
+    "яндекс-станция-лайт-2-зеленый-без-часов-s2-6400": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-зеленый-без-часов-s2-6400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-зеленый-без-часов-s2-6400.html",
+      "cover": "assets/product-images/45b46141672346f50b991ed8.jpg",
+      "name": "Яндекс Станция Лайт 2 Зеленый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6400
+    },
+    "яндекс-станция-лайт-2-зеленый-s2-7200": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-зеленый-s2-7200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-зеленый-s2-7200.html",
+      "cover": "assets/product-images/5c9af245e70e3122e50ee579.jpg",
+      "name": "Яндекс Станция Лайт 2 Зеленый",
+      "warehouse": "(S2)",
+      "price": 7200
+    },
+    "яндекс-станция-лайт-2-фиолетовый-s2-7200": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-фиолетовый-s2-7200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-фиолетовый-s2-7200.html",
+      "cover": "assets/product-images/cec3b010164d02009b600a27.jpg",
+      "name": "Яндекс Станция Лайт 2 Фиолетовый",
+      "warehouse": "(S2)",
+      "price": 7200
+    },
+    "яндекс-станция-лайт-2-синий-s2-7200": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-синий-s2-7200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-синий-s2-7200.html",
+      "cover": "assets/product-images/1d4af22da3733fcf703d6737.jpg",
+      "name": "Яндекс Станция Лайт 2 Синий",
+      "warehouse": "(S2)",
+      "price": 7200
+    },
+    "яндекс-станция-мини-3-про-черный-s2-13400": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-про-черный-s2-13400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-про-черный-s2-13400.html",
+      "cover": "assets/product-images/462fb2c0dc3eb3bbb5a5d8e0.jpg",
+      "name": "Яндекс Станция Мини 3 Про Черный",
+      "warehouse": "(S2)",
+      "price": 13400
+    },
+    "яндекс-станция-мини-3-про-синий-s2-13400": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-про-синий-s2-13400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-про-синий-s2-13400.html",
+      "cover": "assets/product-images/f764039f14533c26f0c3044b.jpg",
+      "name": "Яндекс Станция Мини 3 Про Синий",
+      "warehouse": "(S2)",
+      "price": 13400
+    },
+    "-яндекс-станция-max-черный-s2-35500": {
+      "url": "hybrid-products/audio/яндекс-станция-max-черный-s2-35500.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-черный-s2-35500.html",
+      "cover": "assets/product-images/1f04736e3d615bcedf619c73.jpg",
+      "name": "🔈Яндекс Станция MAX Черный",
+      "warehouse": "(S2)",
+      "price": 35500
+    },
+    "buds-3-fe-black-оаэ-s3-9100": {
+      "url": "hybrid-products/audio/buds-3-fe-black-s3-9100.html",
+      "url_en": "en/hybrid-products/audio/buds-3-fe-black-s3-9100.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Buds 3 FE Black",
+      "warehouse": "(S3)",
+      "price": 9100
+    },
+    "buds-4-black-оаэ-s3-12300": {
+      "url": "hybrid-products/audio/buds-4-black-s3-12300.html",
+      "url_en": "en/hybrid-products/audio/buds-4-black-s3-12300.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Buds 4 Black",
+      "warehouse": "(S3)",
+      "price": 12300
+    },
+    "buds-4-white-оаэ-s3-12300": {
+      "url": "hybrid-products/audio/buds-4-white-s3-12300.html",
+      "url_en": "en/hybrid-products/audio/buds-4-white-s3-12300.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Buds 4 White",
+      "warehouse": "(S3)",
+      "price": 12300
+    },
+    "buds-4-pro-black-оаэ-s3-16200": {
+      "url": "hybrid-products/audio/buds-4-pro-black-s3-16200.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-black-s3-16200.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Buds 4 Pro Black",
+      "warehouse": "(S3)",
+      "price": 16200
+    },
+    "buds-4-pro-white-оаэ-s3-16600": {
+      "url": "hybrid-products/audio/buds-4-pro-white-s3-16600.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-white-s3-16600.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Buds 4 Pro White",
+      "warehouse": "(S3)",
+      "price": 16600
+    },
+    "buds-4-pro-pink-оаэ-s3-18600": {
+      "url": "hybrid-products/audio/buds-4-pro-pink-s3-18600.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-pink-s3-18600.html",
+      "cover": "assets/product-images/9c24473bcf3b07c8103dfb49.jpg",
+      "name": "Buds 4 Pro Pink",
+      "warehouse": "(S3)",
+      "price": 18600
     }
   }
 }

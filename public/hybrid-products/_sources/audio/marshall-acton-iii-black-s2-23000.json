@@ -1,0 +1,94 @@
+{
+  "product_id": "marshall-acton-iii-black-s2-23000",
+  "category": "audio",
+  "file_slug": "marshall-acton-iii-black-s2-23000",
+  "name": "Marshall Acton III, Black",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 23000,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/marshall-speakers/acton-iii/Marshall_Acton_III_speaker_system_Black",
+  "catalog_title": "Акустическая система Marshall Acton III, Black",
+  "specs": [
+    {
+      "key": "Максимальный уровень звукового давления",
+      "value": "95 дБ"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "60 Вт"
+    },
+    {
+      "key": "Минимальная частота",
+      "value": "45 Гц"
+    },
+    {
+      "key": "СЧ-динамик",
+      "value": "2 х 15 Вт"
+    },
+    {
+      "key": "Максимальная частота",
+      "value": "20 кГц"
+    },
+    {
+      "key": "НЧ-динамик",
+      "value": "1 х 30 Вт"
+    },
+    {
+      "key": "Встроенный микрофон",
+      "value": "Нет"
+    },
+    {
+      "key": "Радиус действия беспроводной связи",
+      "value": "10 м"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "Bluetooth 5.2, mini jack 3.5 мм"
+    },
+    {
+      "key": "Тип питания",
+      "value": "От сети"
+    },
+    {
+      "key": "Параметры входа",
+      "value": "100-240 В"
+    },
+    {
+      "key": "Длина",
+      "value": "15 см"
+    },
+    {
+      "key": "Ширина",
+      "value": "26 см"
+    },
+    {
+      "key": "Высота",
+      "value": "17 см"
+    },
+    {
+      "key": "Вес",
+      "value": "2850 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Черный"
+    },
+    {
+      "key": "Страна производства",
+      "value": "Китай"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Акустическая система Marshall Acton III/Черная /Group 260-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Акустическая система Marshall Acton III/Черная /Group 261-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Акустическая система Marshall Acton III/Черная /Group 262-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Акустическая система Marshall Acton III/Черная /Group 263-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/9cfb03393e1fae546b8be195.jpg",
+    "assets/product-images/a01c6a2747bfb416c8929697.jpg",
+    "assets/product-images/e990a68ec2e1341a728c0af1.jpg",
+    "assets/product-images/6ef2014aec019fbcbe0a6cc1.jpg"
+  ],
+  "updated_at": "2026-09-19T12:16:05.217527Z"
+}

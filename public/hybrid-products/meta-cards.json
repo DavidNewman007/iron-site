@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-18T15:45:24.908Z",
-  "count": 13,
+  "generated_at": "2026-09-19T12:19:46.488Z",
+  "count": 19,
   "byId": {
     "-oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100": {
       "url": "hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100.html",
@@ -105,6 +105,54 @@
       "name": "🕶Meta Starfire Kylie Edition S48 Classic Black/Black",
       "warehouse": "(S2)",
       "price": 52000
+    },
+    "-oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-38300": {
+      "url": "hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-38300.html",
+      "url_en": "en/hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-38300.html",
+      "cover": "assets/product-images/66575747d0327e9598d95e50.jpg",
+      "name": "👓 Oakley HSTN Black Prizm Black Polarized 145 - 51 Size C",
+      "warehouse": "(S1)",
+      "price": 38300
+    },
+    "-skyler-gen-2-shiny-black-g15-green-150-52-size-c-601-s1-38300": {
+      "url": "hybrid-products/meta/skyler-gen-2-shiny-black-g15-green-150-52-size-c-601-s1-38300.html",
+      "url_en": "en/hybrid-products/meta/skyler-gen-2-shiny-black-g15-green-150-52-size-c-601-s1-38300.html",
+      "cover": "assets/product-images/aadad7db98276a988d3a73b3.jpg",
+      "name": "👓 Skyler (Gen 2) Shiny Black G15 Green 150 - 52 Size C 601/",
+      "warehouse": "(S1)",
+      "price": 38300
+    },
+    "-wayfarer-gen-2-shiny-black-g15-green-150-50-size-c-601-s1-36600": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-shiny-black-g15-green-150-50-size-c-601-s1-36600.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-shiny-black-g15-green-150-50-size-c-601-s1-36600.html",
+      "cover": "assets/product-images/533b99892bcc0c54268d7851.jpg",
+      "name": "👓 Wayfarer (Gen 2) Shiny Black G15 Green 150 - 50 Size C 601/",
+      "warehouse": "(S1)",
+      "price": 36600
+    },
+    "-wayfarer-gen-2-matte-black-gradient-graphite-155-53-size-c-601st353-s1-38300": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-gradient-graphite-155-53-size-c-601st353-s1-38300.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-gradient-graphite-155-53-size-c-601st353-s1-38300.html",
+      "cover": "assets/product-images/adede315e00c0ea89966a40f.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Gradient Graphite 155 - 53 Size C 601ST353",
+      "warehouse": "(S1)",
+      "price": 38300
+    },
+    "-wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-42300": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-42300.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-42300.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 155 - 53 Size C 601S1Z53",
+      "warehouse": "(S1)",
+      "price": 42300
+    },
+    "-starfire-kylie-edition-s48-classic-black-transitions-grey-s2-58700": {
+      "url": "hybrid-products/meta/starfire-kylie-edition-s48-classic-black-transitions-grey-s2-58700.html",
+      "url_en": "en/hybrid-products/meta/starfire-kylie-edition-s48-classic-black-transitions-grey-s2-58700.html",
+      "cover": "assets/product-images/6f2411ad0d9f6a6e90d76c57.jpg",
+      "name": "🕶Starfire Kylie Edition S48, Classic Black/Transitions Grey",
+      "warehouse": "(S2)",
+      "price": 58700
     }
   }
 }

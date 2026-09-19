@@ -1,0 +1,130 @@
+{
+  "product_id": "ipad-pro-13-m4-256-black-lte-сша-s3-106200",
+  "category": "ipad",
+  "file_slug": "ipad-pro-13-m4-256-black-lte-s3-106200",
+  "name": "iPad Pro 13 M4 256 Black LTE",
+  "country": "🇺🇸 США",
+  "warehouse": "(S3)",
+  "price": 106200,
+  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-pro/ipad-pro-13-2024/ipad-pro-13-2024-lte-256gb-space-black",
+  "catalog_title": "Планшет Apple iPad Pro 13' (2024)",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "Ultra Retina XDR Display, Tandem OLED"
+    },
+    {
+      "key": "Диагональ",
+      "value": "13\""
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "ProMotion Technology"
+    },
+    {
+      "key": "Разрешение",
+      "value": "2752x2064 пикселей"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "264 пикс/дюйм"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple M4"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "10 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "12 Мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "ƒ/1.8"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12 Мп"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "ƒ/2"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "5G (sub‑6 GHz), Gigabit LTE, eSIM, Wi-Fi 6E (802.11ax), MIMO, Bluetooth 5.3"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB‑C, поддержка Thunderbolt / USB 4"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Pol"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "10340 мАч"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 10 часов"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий"
+    },
+    {
+      "key": "Ширина",
+      "value": "215.5 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "281.6 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "5.1мм"
+    },
+    {
+      "key": "Вес",
+      "value": "582 г"
+    },
+    {
+      "key": "Операционная система",
+      "value": "iPadOS"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "4 динамика"
+    },
+    {
+      "key": "Поддержка",
+      "value": "стилус Apple Pencil Pro, стилус Apple Pencil (USB-C), клавиатура Magic Keyboard"
+    },
+    {
+      "key": "Датчики",
+      "value": "Face ID, трёхосевой гироскоп, акселерометр, барометр, датчик внешней освещённости"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-9-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-7-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-13-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/d3122f62d2fefbce337b7d0f.jpg",
+    "assets/product-images/63dfc81ec30ce8ac024854ed.jpg",
+    "assets/product-images/ac2ef9d73fe0b5b5de05475d.jpg",
+    "assets/product-images/1cde36c5e345c2640452c8b8.jpg"
+  ],
+  "updated_at": "2026-09-19T12:00:55.687928Z"
+}

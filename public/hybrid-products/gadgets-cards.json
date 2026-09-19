@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-18T15:45:24.904Z",
-  "count": 20,
+  "generated_at": "2026-09-19T12:19:46.484Z",
+  "count": 24,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -161,6 +161,38 @@
       "name": "📷Canon PowerShot G7 X Mark III, Silver",
       "warehouse": "(S2)",
       "price": 105200
+    },
+    "-gopro-12-s2-26700": {
+      "url": "hybrid-products/gadgets/gopro-12-s2-26700.html",
+      "url_en": "en/hybrid-products/gadgets/gopro-12-s2-26700.html",
+      "cover": "assets/product-images/f06f43352feaf4bc7a1f5056.png",
+      "name": "📷GoPro 12",
+      "warehouse": "(S2)",
+      "price": 26700
+    },
+    "instax-mini-evo-black-s2-21000": {
+      "url": "hybrid-products/gadgets/instax-mini-evo-black-s2-21000.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-evo-black-s2-21000.html",
+      "cover": "assets/product-images/9fd5dc0f3b9311b0e398f86f.jpg",
+      "name": "Instax Mini Evo Black",
+      "warehouse": "(S2)",
+      "price": 21000
+    },
+    "-whoop-5-0-life-годовая-подписка-s2-35500": {
+      "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-35500.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-35500.html",
+      "cover": "assets/product-images/4d9e6703c652a11877f82d11.png",
+      "name": "⌚️Whoop 5.0 Life + годовая подписка",
+      "warehouse": "(S2)",
+      "price": 35500
+    },
+    "-whoop-5-0-peak-годовая-подписка-s2-26200": {
+      "url": "hybrid-products/gadgets/whoop-5-0-peak-годовая-подписка-s2-26200.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-peak-годовая-подписка-s2-26200.html",
+      "cover": "assets/product-images/4d9970f26038ca8a77f5df02.png",
+      "name": "⌚️Whoop 5.0 Peak + годовая подписка",
+      "warehouse": "(S2)",
+      "price": 26200
     }
   }
 }

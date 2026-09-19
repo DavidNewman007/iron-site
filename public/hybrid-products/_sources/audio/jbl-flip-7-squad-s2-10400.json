@@ -1,0 +1,124 @@
+{
+  "product_id": "jbl-flip-7-squad-s2-10400",
+  "category": "audio",
+  "file_slug": "jbl-flip-7-squad-s2-10400",
+  "name": "JBL Flip 7 Squad",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 10400,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/jbl/jbl-flip-7/JBL_Flip_7_Portable_Speaker_Squad",
+  "catalog_title": "Портативная колонка JBL Flip 7, Squad",
+  "specs": [
+    {
+      "key": "Звук",
+      "value": "стерео"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "35 Вт"
+    },
+    {
+      "key": "Минимальная частота",
+      "value": "60 Гц"
+    },
+    {
+      "key": "Максимальная частота",
+      "value": "20 000 Гц"
+    },
+    {
+      "key": "Количество полос AC",
+      "value": "2"
+    },
+    {
+      "key": "ВЧ-динамик",
+      "value": "16 мм"
+    },
+    {
+      "key": "НЧ-динамик",
+      "value": "80 мм"
+    },
+    {
+      "key": "Отношение сигнал/шум",
+      "value": "80 дБ"
+    },
+    {
+      "key": "Беспроводные модули",
+      "value": "Bluetooth 5.4"
+    },
+    {
+      "key": "Радиус действия беспроводной связи",
+      "value": "10 м"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-Type-C"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "встроенный"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "4800 мАч"
+    },
+    {
+      "key": "Параметры входа",
+      "value": "5В/2А"
+    },
+    {
+      "key": "Выходная сила тока",
+      "value": "5В/2А"
+    },
+    {
+      "key": "Время работы",
+      "value": "14 ч"
+    },
+    {
+      "key": "Время зарядки",
+      "value": "2,5 ч"
+    },
+    {
+      "key": "Длина",
+      "value": "18,25 см"
+    },
+    {
+      "key": "Ширина",
+      "value": "6,95 см"
+    },
+    {
+      "key": "Высота",
+      "value": "7,15 см"
+    },
+    {
+      "key": "Вес",
+      "value": "560 г"
+    },
+    {
+      "key": "Особенности",
+      "value": "влагозащищенный корпус"
+    },
+    {
+      "key": "Класс водонепроницаемости",
+      "value": "IP68"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Squad/JBL_Flip_7_Portable_Speaker_Squad-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Squad/JBL_Flip_7_Portable_Speaker_Squad-2-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Squad/JBL_Flip_7_Portable_Speaker_Squad-3-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Squad/JBL_Flip_7_Portable_Speaker_Squad-4-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Squad/JBL_Flip_7_Portable_Speaker_Squad-5-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Squad/JBL_Flip_7_Portable_Speaker_Squad-6-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Squad/JBL_Flip_7_Portable_Speaker_Squad-7-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/JBL_Flip_7_Portable_Speaker_Squad/JBL_Flip_7_Portable_Speaker_Squad-8-1200x1200.png"
+  ],
+  "images_local": [
+    "assets/product-images/c94062dfc305f721ec0f8238.png",
+    "assets/product-images/a8bea2dddaa3500b35c880ba.png",
+    "assets/product-images/ec5b2819574dbd797d65d462.png",
+    "assets/product-images/b0828b8eb83429f5039c329c.png",
+    "assets/product-images/72fd0c7e268cc994adf3078e.png",
+    "assets/product-images/62152ea2b96f745f5440d71e.png"
+  ],
+  "updated_at": "2026-09-19T12:15:55.922298Z"
+}

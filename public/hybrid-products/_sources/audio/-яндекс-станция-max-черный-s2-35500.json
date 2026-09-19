@@ -1,0 +1,84 @@
+{
+  "product_id": "-яндекс-станция-max-черный-s2-35500",
+  "category": "audio",
+  "file_slug": "яндекс-станция-max-черный-s2-35500",
+  "name": "🔈Яндекс Станция MAX Черный",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 35500,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-station-max-zigbee-black",
+  "catalog_title": "Умную колонку Яндекс Станция MAX YNDX-00052K",
+  "specs": [
+    {
+      "key": "Количество динамиков",
+      "value": "2 x ВЧ, НЧ, 2 x СЧ, пассивн. излучатель"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "65 Вт"
+    },
+    {
+      "key": "Минимальная частота",
+      "value": "45 Гц"
+    },
+    {
+      "key": "Максимальная частота",
+      "value": "20 кГц"
+    },
+    {
+      "key": "Количество микрофонов",
+      "value": "7"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "протокол связи умного дома ZigBee, стандарт Wi-Fi (IEEE 802.11 a/b/g/n/ac), Bluetooth 4.2"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "Ethernet (RJ-45), выход HDMI, выход аудио"
+    },
+    {
+      "key": "Тип питания",
+      "value": "от сети"
+    },
+    {
+      "key": "Материал",
+      "value": "металл, ткань"
+    },
+    {
+      "key": "Ширина",
+      "value": "141 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "231 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "141 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "2700 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "защита от брызг"
+    },
+    {
+      "key": "Голосовой помощник",
+      "value": "Алиса"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/ya-station-max/yandex-max-35-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/ya-station-max/yandex-max-32-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/ya-station-max/yandex-max-27-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/1f04736e3d615bcedf619c73.jpg",
+    "assets/product-images/f7f6dbea8bf10ee1a2113cbe.jpg",
+    "assets/product-images/d5ed708cd3c270b099278c36.jpg"
+  ],
+  "updated_at": "2026-09-19T12:16:28.985433Z"
+}
