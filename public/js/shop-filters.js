@@ -76,21 +76,40 @@
     const productName = String(name || "").trim();
     const productSection = String(section || "");
 
+    // ⚠️ Air приходит в ТРЁХ написаниях (19.09.2026): «iPhone Air …»,
+    // «iPhone 17 Air …» (склад S3) и голым «Air …» (склад S2, без слова
+    // iPhone). Прежний разбор знал только первое, поэтому у Air не читались ни
+    // память, ни цвет — фильтры по гигабайтам и цвету у него просто исчезали.
+    // Заметил владелец. Air проверяется отдельно и ДО общего правила, дальше
+    // разбор идёт от «хвоста» — того, что осталось после имени серии.
+    // ⚠️ Те же правила продублированы в cloudflare-order-bot/src/worker.js —
+    // менять в ОБОИХ местах, это разные репозитории и разные среды.
     let series = "";
-    const seriesMatch = productName.match(/^iPhone\s+(Air|\d+\s*e|\d+\s*Pro\s*Max|\d+\s*Pro|\d+\s*Plus|\d+)/i);
-    if (seriesMatch) {
-      series = seriesMatch[1].replace(/\s+/g, " ").trim();
+    if (/^(?:iPhone\s+)?(?:\d{1,2}\s+)?Air\b/i.test(productName)) {
+      series = "Air";
+    } else {
+      // Слово «iPhone» необязательно: склад S2 отдаёт «17e 256 Pink» и
+      // «Air 256 Gold» — модель без марки, она вынесена в заголовок раздела
+      // у поставщика. Для чужих строк это безопасно: разбор зовётся только
+      // для позиций категорий iphone_*, а имя часов «Series SE 3 40mm»
+      // цифрой не начинается и по-прежнему не разбирается.
+      const seriesMatch = productName.match(/^(?:iPhone\s+)?(\d+\s*e|\d+\s*Pro\s*Max|\d+\s*Pro|\d+\s*Plus|\d+)/i);
+      if (seriesMatch) series = seriesMatch[1].replace(/\s+/g, " ").trim();
+    }
+
+    let tail = "";
+    if (series) {
+      tail = productName.replace(/^iPhone\s+/i, "");
+      if (series === "Air") tail = tail.replace(/^\d{1,2}\s+/, "");
+      tail = tail.replace(new RegExp("^" + escapeRegExp(series).replace(/\s+/g, "\\s+") + "\\s*", "i"), "").trim();
     }
 
     let storage = "";
-    const capMatch = productName.match(
-      /^iPhone\s+(?:Air|\d+\s*e|\d+\s*Pro\s*Max|\d+\s*Pro|\d+\s*Plus|\d+)\s+(\d+)\s*(Tb|TB|Gb|GB|G)?/i
-    );
+    const capMatch = tail.match(/^(\d+)\s*(Tb|TB|Gb|GB|G)?\b/i);
     if (capMatch) {
       const num = capMatch[1];
       const unit = String(capMatch[2] || "").toLowerCase();
-      if (unit.startsWith("t")) storage = `${num}tb`;
-      else storage = num;
+      storage = unit.startsWith("t") ? `${num}tb` : num;
     }
 
     let sim = "";
@@ -107,14 +126,14 @@
 
     let color = "";
     if (series && storage) {
-      const seriesRe = new RegExp(`^${escapeRegExp(series).replace(/\s+/g, "\\s+")}\\s+`, "i");
-      const tail = productName
-        .replace(/^iPhone\s+/i,"")
-        .replace(seriesRe,"")
-        .replace(/^(\d+)\s*(?:Tb|TB|Gb|GB|G)?\s+/i,"")
+      // Отрезаем РОВНО то, что распозналось как объём (`capMatch[0]`), а не
+      // повторяем регулярку. Повтор уже подвёл: у «Air 256 Gold» вариант `G`
+      // из списка единиц съедал букву G в слове Gold, цвет выходил «old».
+      color = tail
+        .slice(capMatch[0].length)
         .replace(/\s*\([^)]*\)\s*$/g,"")
         .trim();
-      color = tail.replace(/\s+[A-Z]{1,2}\/[A-Z]\/?A?\s*$/i,"").trim();
+      color = color.replace(/\s+[A-Z]{1,2}\/[A-Z]\/?A?\s*$/i,"").trim();
       if (color.includes("(")) color = color.split("(")[0].trim();
     }
 
