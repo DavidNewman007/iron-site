@@ -516,9 +516,13 @@ function mergeTranslit(existing, base, extended, tokens) {
 async function main() {
   const sheetId = readSheetId();
   const sourceLines = [];
+  const источники = [];
 
   if (fs.existsSync(inputFile)) {
     sourceLines.push(...fs.readFileSync(inputFile, "utf8").split(/\r?\n/));
+    источники.push(path.basename(inputFile));
+  } else {
+    console.warn("Файл списка товаров не найден, пропускаю:", inputFile);
   }
 
   // Витрина запчастей — такой же источник строк, как прайс: из неё берутся
@@ -530,6 +534,7 @@ async function main() {
       const lines = (parts["позиции"] || []).map((i) =>
         [i["узел"], i["модель"], i["вариант"], i["цвет"]].filter(Boolean).join(" "));
       sourceLines.push(...lines);
+      источники.push("витрина запчастей");
       console.log("Строк из витрины запчастей:", lines.length);
     } catch (err) {
       console.warn("parts.json не прочитан:", err.message);
@@ -540,6 +545,7 @@ async function main() {
     try {
       const sheetLines = await fetchSheetLines(sheetId);
       sourceLines.push(...sheetLines);
+      источники.push(`листы прайса (${SHEET_TABS.join(", ")})`);
       console.log("Строк из Google Sheet:", sheetLines.length);
     } catch (err) {
       console.warn("Google Sheet недоступен:", err.message);
@@ -558,9 +564,17 @@ async function main() {
   const translit = mergeTranslit(existing.translit, BASE_TRANSLIT, { ...EXTENDED_TRANSLIT, ...PARTS_TRANSLIT }, tokens);
   const translate = mergeTranslate(existing.translate, EXTENDED_TRANSLATE);
 
+  // Шапка перечисляет ТОЛЬКО те источники, которые реально прочитались.
+  // Раньше здесь всегда стояло «из Google Sheet + Товары список.txt», даже
+  // когда файла не было на диске. В ежедневном прогоне на GitHub Actions его
+  // не бывает вовсе — там выложен только репозиторий сайта, а список товаров
+  // лежит в соседнем, приватном. Потерь от этого нет (слияние умеет только
+  // добавлять), но шапка обязана говорить правду: по ней судят, свежий ли
+  // словарь и откуда он собран.
   const header = `/**
  * Словари поиска магазина IRON SERVICE.
- * Сгенерировано: ${new Date().toISOString().slice(0, 10)} из Google Sheet + ${path.basename(inputFile)}
+ * Сгенерировано: ${new Date().toISOString().slice(0, 10)}
+ * Источники: ${источники.join(", ") || "только прежний словарь"}
  * Пересборка: node scripts/build-search-dictionary.mjs
  */
 window.IRON_SEARCH_DICT = {
@@ -574,11 +588,51 @@ window.IRON_SEARCH_DICT = {
 };
 `;
 
+  // ——— Проверка перед записью (19.09.2026) ——————————————————————————
+  //
+  // Пересборка идёт автоматически в ежедневном прогоне карточек, и файл после
+  // неё коммитится и уезжает на боевой сайт. Значит «собралось как-то» здесь
+  // недопустимо: молча испорченный словарь никто не заметит, потому что
+  // потребители (`prices.js`, `parts.js`) переживают его отсутствие тихо —
+  // поиск просто перестаёт понимать «айфон» и «akb».
+  //
+  // Три проверки, все дешёвые:
+  //   1) результат разбирается тем же парсером, что читает существующий файл;
+  //   2) словарь не УМЕНЬШИЛСЯ — слияние умеет только добавлять, поэтому
+  //      падение числа записей означает поломку, а не изменение прайса;
+  //   3) в нём есть опорные слова, без которых поиск заведомо сломан.
+  // Не прошло — файл не трогаем и выходим с ненулевым кодом.
+  const ОПОРНЫЕ = ["iphone", "ipad", "macbook", "airpods", "watch"];
+  const было = { translit: Object.keys(existing.translit).length, translate: existing.translate.length };
+  const стало = { translit: Object.keys(translit).length, translate: translate.length };
+
+  const беды = [];
+  const проверка = parseExistingDict(header);
+  if (!proverkaOk(проверка)) беды.push("результат не разбирается обратно");
+  if (стало.translit < было.translit) беды.push(`токенов стало меньше: ${было.translit} → ${стало.translit}`);
+  if (стало.translate < было.translate) беды.push(`переводов стало меньше: ${было.translate} → ${стало.translate}`);
+  const нет = ОПОРНЫЕ.filter((k) => !translit[k]);
+  if (нет.length) беды.push(`пропали опорные слова: ${нет.join(", ")}`);
+
+  if (беды.length) {
+    console.error("Словарь НЕ записан, проверки не прошли:");
+    беды.forEach((b) => console.error("  •", b));
+    console.error("Прежний файл оставлен как был:", outputFile);
+    process.exit(1);
+  }
+
   fs.writeFileSync(outputFile, header, "utf8");
   console.log("OK:", outputFile);
-  console.log("Токенов translit:", Object.keys(translit).length);
-  console.log("Записей translate:", translate.length);
+  console.log(`Токенов translit: ${стало.translit} (было ${было.translit})`);
+  console.log(`Записей translate: ${стало.translate} (было ${было.translate})`);
   console.log("Строк в источнике:", sourceLines.length);
+}
+
+/** Разбор вернул непустые словари обеих половин. */
+function proverkaOk(parsed) {
+  return Boolean(parsed)
+    && parsed.translit && Object.keys(parsed.translit).length > 0
+    && Array.isArray(parsed.translate) && parsed.translate.length > 0;
 }
 
 main().catch((err) => {

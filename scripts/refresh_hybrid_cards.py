@@ -59,6 +59,36 @@ def run(cmd: list[str], *, cwd: Path | None = None) -> None:
     subprocess.run(cmd, cwd=cwd or ROOT, check=True)
 
 
+def rebuild_search_dictionary() -> dict:
+    """Пересборка словаря поиска (`public/js/search-dictionary.js`).
+
+    Зачем в этом прогоне: словарь строится из тех же листов прайса и из витрины
+    запчастей, то есть устаревает ровно тогда же, когда появляются новые
+    позиции. Отдельного расписания ему заводить незачем.
+
+    ⚠️ Падение словаря НЕ валит прогон карточек. Это разные вещи: карточки —
+    товар на витрине, словарь — удобство поиска. Сам скрипт при неудачной
+    сборке не трогает прежний файл и выходит с ненулевым кодом (проверки внутри
+    `build-search-dictionary.mjs`), поэтому худшее, что здесь бывает, — словарь
+    остаётся вчерашним. Это записывается в отчёт, а не прячется.
+    """
+    cmd = ["node", "scripts/build-search-dictionary.mjs"]
+    print("$", " ".join(cmd))
+    result = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    print(result.stdout, end="")
+    if result.stderr:
+        print(result.stderr, file=sys.stderr, end="")
+    if result.returncode != 0:
+        return {
+            "ok": False,
+            "exit_code": result.returncode,
+            "error": (result.stderr or result.stdout).strip()[-500:],
+            "note": "словарь остался прежним, карточки собираются дальше",
+        }
+    tail = [line for line in result.stdout.splitlines() if line.startswith(("Токенов", "Записей"))]
+    return {"ok": True, "summary": tail}
+
+
 def git_publish(message: str, *, push: bool) -> dict:
     name = os.environ.get("GIT_AUTHOR_NAME", "github-actions[bot]")
     email = os.environ.get(
@@ -74,6 +104,10 @@ def git_publish(message: str, *, push: bool) -> dict:
             "public/hybrid-products",
             "public/assets/product-images",
             "product-image-map.json",
+            # Словарь поиска пересобирается этим же прогоном (см.
+            # rebuild_search_dictionary): без него правка осталась бы только на
+            # машине, где прогон выполнялся.
+            "public/js/search-dictionary.js",
         ]
     )
     status = subprocess.run(
@@ -113,6 +147,7 @@ def main() -> int:
     parser.add_argument("--skip-match", action="store_true")
     parser.add_argument("--skip-build", action="store_true")
     parser.add_argument("--skip-patch", action="store_true")
+    parser.add_argument("--skip-dict", action="store_true", help="Не пересобирать словарь поиска")
     parser.add_argument("--refresh-sitemap", action="store_true")
     parser.add_argument(
         "--no-push",
@@ -136,6 +171,9 @@ def main() -> int:
     if not args.skip_sync:
         run([sys.executable, "scripts/sync_public_sheets.py"])
         report["steps"]["sync"] = "ok"
+
+    if not args.skip_dict:
+        report["steps"]["dictionary"] = rebuild_search_dictionary()
 
     products, updated_at = load_products_from_sheet()
     report["price_updated_at"] = updated_at
