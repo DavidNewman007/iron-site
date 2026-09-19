@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=2026-08-19-3">
-  <link rel="stylesheet" href="css/parts.css?v=2026-09-12-1">
+  <link rel="stylesheet" href="css/parts.css?v=2026-09-19-1">
 </head>
 <body>
   <header class="site-header">
@@ -56,15 +56,29 @@
         <div class="parts-controls">
           <label class="parts-search">
             <span class="visually-hidden">Поиск по модели</span>
-            <input type="search" id="parts-search" placeholder="Модель или деталь: 13 pro, дисплей, акб…" autocomplete="off">
+            <input type="search" id="parts-search" placeholder="Модель или деталь: 13 pro, дисплей, akb…" autocomplete="off">
           </label>
-          <label class="parts-toggle">
+          <label class="parts-toggle" id="parts-stock-only-wrap">
             <input type="checkbox" id="parts-stock-only">
             <span>Только в наличии</span>
           </label>
+          <button type="button" class="parts-reset" id="parts-reset" hidden>Сбросить фильтры</button>
         </div>
 
-        <div class="parts-chips" id="parts-chips" role="group" aria-label="Тип детали"></div>
+        <div class="parts-filters">
+          <div class="parts-filter">
+            <span class="parts-filter__label">Устройство</span>
+            <div class="parts-chips" id="parts-devices" role="group" aria-label="Устройство"></div>
+          </div>
+          <div class="parts-filter parts-filter--model" id="parts-model-wrap">
+            <label class="parts-filter__label" for="parts-model">Модель</label>
+            <select class="parts-select" id="parts-model"></select>
+          </div>
+          <div class="parts-filter">
+            <span class="parts-filter__label">Тип детали</span>
+            <div class="parts-chips" id="parts-chips" role="group" aria-label="Тип детали"></div>
+          </div>
+        </div>
 
         <p class="parts-status" id="parts-status">Загружаем прайс…</p>
         <div class="parts-list" id="parts-list"></div>
@@ -92,6 +106,7 @@
   </footer>
 
   <script defer src="js/main.js"></script>
-  <script defer src="js/parts.js?v=2026-09-12-1"></script>
+  <script defer src="js/search-dictionary.js?v=2026-09-19-1"></script>
+  <script defer src="js/parts.js?v=2026-09-19-1"></script>
 </body>
 </html>

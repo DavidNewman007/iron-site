@@ -1,18 +1,51 @@
 /**
  * Словари поиска магазина IRON SERVICE.
- * Сгенерировано: 2026-06-26 из Google Sheet + Товары список.txt
+ * Сгенерировано: 2026-09-19 из Google Sheet + Товары список.txt
  * Пересборка: node scripts/build-search-dictionary.mjs
  */
 window.IRON_SEARCH_DICT = {
   /** en/латиница → варианты русской записи и транслита */
   translit:   {
+      "a07": [
+          "a07"
+      ],
       "a16": [
           "а16",
           "a16"
       ],
+      "a17": [
+          "a17"
+      ],
       "a18": [
           "а18",
           "a18"
+      ],
+      "a2337": [
+          "a2337"
+      ],
+      "a2338": [
+          "a2338"
+      ],
+      "a2442": [
+          "a2442"
+      ],
+      "a26": [
+          "a26"
+      ],
+      "a27": [
+          "a27"
+      ],
+      "a2779": [
+          "a2779"
+      ],
+      "a2918": [
+          "a2918"
+      ],
+      "a2992": [
+          "a2992"
+      ],
+      "a36": [
+          "a36"
       ],
       "a37": [
           "а37",
@@ -30,6 +63,18 @@ window.IRON_SEARCH_DICT = {
           "аксессуары",
           "аксесуары",
           "акссесуары"
+      ],
+      "acton": [
+          "acton"
+      ],
+      "adapter": [
+          "переходник",
+          "адаптер"
+      ],
+      "adhesive": [
+          "проклейка",
+          "скотч",
+          "клей"
       ],
       "air": [
           "аир",
@@ -56,10 +101,25 @@ window.IRON_SEARCH_DICT = {
           "air tag",
           "метка apple"
       ],
+      "akb": [
+          "акб",
+          "аккумулятор",
+          "батарея"
+      ],
+      "akkumulyator": [
+          "аккумулятор",
+          "акб"
+      ],
+      "al": [
+          "al"
+      ],
       "alpine": [
           "альпийский",
           "альпин",
           "горный"
+      ],
+      "alr": [
+          "alr"
       ],
       "amber": [
           "amber",
@@ -68,6 +128,10 @@ window.IRON_SEARCH_DICT = {
       "amethyst": [
           "аметист",
           "аметист"
+      ],
+      "analog": [
+          "аналог",
+          "копия"
       ],
       "anc": [
           "анц",
@@ -79,6 +143,10 @@ window.IRON_SEARCH_DICT = {
       "anchor": [
           "anchor",
           "анкор"
+      ],
+      "antenna": [
+          "антенна",
+          "антенны"
       ],
       "apple": [
           "эпл",
@@ -99,17 +167,47 @@ window.IRON_SEARCH_DICT = {
           "audio",
           "аудио"
       ],
+      "aurora": [
+          "aurora"
+      ],
       "b/ds": [
           "b/ds"
+      ],
+      "back": [
+          "задняя",
+          "заднее",
+          "зад"
       ],
       "band": [
           "банд",
           "ремешок",
           "браслет"
       ],
+      "bataree": [
+          "батарея",
+          "акб"
+      ],
+      "battery": [
+          "акб",
+          "аккумулятор",
+          "батарея",
+          "батарейка"
+      ],
+      "berry": [
+          "berry"
+      ],
+      "big": [
+          "big"
+      ],
       "black": [
           "блэк",
           "блек"
+      ],
+      "black/black": [
+          "black/black"
+      ],
+      "black/charcoal": [
+          "black/charcoal"
       ],
       "black/g15": [
           "black/g15"
@@ -117,16 +215,42 @@ window.IRON_SEARCH_DICT = {
       "black/gray": [
           "black/gray"
       ],
+      "black/transitions": [
+          "black/transitions"
+      ],
       "blue": [
           "блю",
           "блу"
       ],
+      "blue/bright": [
+          "blue/bright"
+      ],
       "blue/cooper": [
           "blue/cooper"
+      ],
+      "blue/copper": [
+          "blue/copper"
+      ],
+      "blue/topaz": [
+          "blue/topaz"
+      ],
+      "blueberry": [
+          "blueberry"
+      ],
+      "bluetooth": [
+          "bluetooth"
       ],
       "blush": [
           "блаш",
           "блёш"
+      ],
+      "board": [
+          "материнская плата",
+          "плата",
+          "мать"
+      ],
+      "box": [
+          "box"
       ],
       "bright": [
           "bright",
@@ -141,6 +265,21 @@ window.IRON_SEARCH_DICT = {
           "бадс",
           "buds",
           "будс"
+      ],
+      "buzzer": [
+          "полифонический динамик",
+          "бузер",
+          "динамик"
+      ],
+      "cable": [
+          "кабель",
+          "провод",
+          "шнур"
+      ],
+      "camera": [
+          "камера",
+          "камеру",
+          "камеры"
       ],
       "camouflage": [
           "camouflage",
@@ -167,9 +306,18 @@ window.IRON_SEARCH_DICT = {
           "чаркоал",
           "угольный"
       ],
+      "charger": [
+          "зарядное устройство",
+          "зарядка",
+          "сзу",
+          "блок питания"
+      ],
       "charging": [
           "зарядка",
           "чarging"
+      ],
+      "cherry": [
+          "cherry"
       ],
       "chroma": [
           "chroma",
@@ -195,9 +343,20 @@ window.IRON_SEARCH_DICT = {
           "cobalt",
           "кобalt"
       ],
+      "coming": [
+          "coming"
+      ],
       "cooper": [
           "cooper",
           "купер"
+      ],
+      "copy": [
+          "копия",
+          "аналог",
+          "неоригинал"
+      ],
+      "coral": [
+          "coral"
       ],
       "core": [
           "core",
@@ -212,13 +371,44 @@ window.IRON_SEARCH_DICT = {
           "крим",
           "кремовый"
       ],
+      "curry": [
+          "curry"
+      ],
+      "dark": [
+          "dark"
+      ],
+      "datchik": [
+          "датчик"
+      ],
+      "dd": [
+          "dd"
+      ],
+      "deep": [
+          "deep"
+      ],
+      "desert": [
+          "desert"
+      ],
       "digital": [
           "digital",
           "диджитал"
       ],
+      "dinamik": [
+          "динамик"
+      ],
       "disk": [
           "disk",
           "диск"
+      ],
+      "display": [
+          "дисплей",
+          "дисплэй",
+          "экран",
+          "диспл"
+      ],
+      "displey": [
+          "дисплей",
+          "экран"
       ],
       "dual": [
           "dual",
@@ -228,9 +418,16 @@ window.IRON_SEARCH_DICT = {
           "дайсон",
           "дисон"
       ],
+      "earpiece": [
+          "слуховой динамик",
+          "разговорный динамик"
+      ],
       "edge": [
           "edge",
           "эдж"
+      ],
+      "edition": [
+          "edition"
       ],
       "elite": [
           "elite",
@@ -249,8 +446,36 @@ window.IRON_SEARCH_DICT = {
           "evo",
           "эво"
       ],
+      "f7": [
+          "f7"
+      ],
+      "f8": [
+          "f8"
+      ],
+      "f9": [
+          "f9"
+      ],
       "fe": [
           "fe"
+      ],
+      "fi": [
+          "fi"
+      ],
+      "fit": [
+          "fit"
+      ],
+      "fitbit": [
+          "fitbit"
+      ],
+      "flash": [
+          "вспышка",
+          "вспышки",
+          "флеш"
+      ],
+      "flex": [
+          "шлейф",
+          "шлейфа",
+          "шлейфы"
       ],
       "flip": [
           "flip",
@@ -259,6 +484,15 @@ window.IRON_SEARCH_DICT = {
       "fog": [
           "фог",
           "туман"
+      ],
+      "fold": [
+          "fold"
+      ],
+      "fujifilm": [
+          "fujifilm"
+      ],
+      "full": [
+          "full"
       ],
       "g15": [
           "g15",
@@ -289,6 +523,11 @@ window.IRON_SEARCH_DICT = {
           "ген",
           "поколение"
       ],
+      "glass": [
+          "стекло",
+          "стекла",
+          "стёкла"
+      ],
       "glasses": [
           "glasses",
           "очки"
@@ -304,6 +543,9 @@ window.IRON_SEARCH_DICT = {
       "golden": [
           "golden",
           "golden"
+      ],
+      "google": [
+          "google"
       ],
       "gopro": [
           "гоупро",
@@ -343,6 +585,15 @@ window.IRON_SEARCH_DICT = {
           "грей",
           "грэй"
       ],
+      "hard": [
+          "hard"
+      ],
+      "hd": [
+          "hd"
+      ],
+      "hd+": [
+          "hd+"
+      ],
       "hd16": [
           "hd16"
       ],
@@ -356,6 +607,13 @@ window.IRON_SEARCH_DICT = {
       "hero": [
           "hero",
           "хиро"
+      ],
+      "hole": [
+          "hole"
+      ],
+      "housing": [
+          "корпус",
+          "корпуса"
       ],
       "hs08": [
           "hs08"
@@ -379,6 +637,12 @@ window.IRON_SEARCH_DICT = {
       "id": [
           "айди",
           "ид"
+      ],
+      "ii": [
+          "ii"
+      ],
+      "iii": [
+          "iii"
       ],
       "indigo": [
           "индиго",
@@ -419,9 +683,35 @@ window.IRON_SEARCH_DICT = {
           "jetblack",
           "jet black"
       ],
+      "kabel": [
+          "кабель"
+      ],
+      "kamera": [
+          "камера"
+      ],
+      "kbs": [
+          "kbs"
+      ],
+      "keyboard": [
+          "keyboard"
+      ],
+      "korpus": [
+          "корпус"
+      ],
+      "kylie": [
+          "kylie"
+      ],
+      "late": [
+          "late"
+      ],
       "lavender": [
           "лавендер",
           "лавандер"
+      ],
+      "lcd": [
+          "лсд",
+          "матрица",
+          "дисплей"
       ],
       "life": [
           "life",
@@ -436,6 +726,9 @@ window.IRON_SEARCH_DICT = {
           "лайтгрей",
           "светлосерый"
       ],
+      "lightning": [
+          "lightning"
+      ],
       "lilac": [
           "lilac",
           "лайлак",
@@ -449,6 +742,9 @@ window.IRON_SEARCH_DICT = {
           "loop",
           "луп",
           "петля"
+      ],
+      "lotus": [
+          "lotus"
       ],
       "lte": [
           "лте",
@@ -496,6 +792,15 @@ window.IRON_SEARCH_DICT = {
           "magnetic",
           "магнит"
       ],
+      "magnit": [
+          "магнит",
+          "магсейф"
+      ],
+      "magsafe": [
+          "магсейф",
+          "магнит",
+          "магсэйф"
+      ],
       "major": [
           "major",
           "major iv"
@@ -536,8 +841,20 @@ window.IRON_SEARCH_DICT = {
       "mhfh4": [
           "mhfh4"
       ],
+      "mhfj4": [
+          "mhfj4"
+      ],
       "mhje3zm/a": [
           "mhje3zm/a"
+      ],
+      "mi": [
+          "mi"
+      ],
+      "mic": [
+          "микрофон"
+      ],
+      "microphone": [
+          "микрофон"
       ],
       "mid": [
           "mid",
@@ -547,6 +864,9 @@ window.IRON_SEARCH_DICT = {
           "миднайт",
           "мид найт"
       ],
+      "milanese": [
+          "milanese"
+      ],
       "milky": [
           "milky",
           "milky way",
@@ -555,6 +875,9 @@ window.IRON_SEARCH_DICT = {
       "mini": [
           "мини",
           "миди"
+      ],
+      "mint": [
+          "mint"
       ],
       "mist": [
           "мист",
@@ -569,6 +892,13 @@ window.IRON_SEARCH_DICT = {
           "moonrise",
           "moonrise"
       ],
+      "motherboard": [
+          "материнская плата",
+          "плата"
+      ],
+      "motif": [
+          "motif"
+      ],
       "mouse": [
           "mouse",
           "маус",
@@ -577,6 +907,9 @@ window.IRON_SEARCH_DICT = {
       "mystic": [
           "мистик",
           "мистик"
+      ],
+      "nano": [
+          "nano"
       ],
       "natural": [
           "нэчурал",
@@ -591,9 +924,18 @@ window.IRON_SEARCH_DICT = {
           "нео",
           "нио"
       ],
+      "nfc": [
+          "nfc"
+      ],
       "nickel": [
           "nickel",
           "nickel"
+      ],
+      "note": [
+          "note"
+      ],
+      "oak": [
+          "oak"
       ],
       "oakley": [
           "оакли",
@@ -606,13 +948,37 @@ window.IRON_SEARCH_DICT = {
           "океан",
           "морской"
       ],
+      "oled": [
+          "олед",
+          "олед дисплей"
+      ],
+      "olive": [
+          "olive"
+      ],
+      "one": [
+          "one"
+      ],
       "orange": [
           "оранж",
           "орандж"
       ],
+      "orig": [
+          "orig"
+      ],
+      "original": [
+          "оригинал",
+          "оригинальный"
+      ],
+      "pacific": [
+          "pacific"
+      ],
       "pack": [
           "pack",
           "пак"
+      ],
+      "part": [
+          "деталь",
+          "запчасть"
       ],
       "patina/topaz": [
           "patina/topaz"
@@ -627,6 +993,9 @@ window.IRON_SEARCH_DICT = {
           "пенсель",
           "пэнсиль"
       ],
+      "perehodnik": [
+          "переходник"
+      ],
       "pink": [
           "пинк",
           "пинк"
@@ -634,8 +1003,18 @@ window.IRON_SEARCH_DICT = {
       "pink/rose": [
           "pink/rose"
       ],
+      "pistachio": [
+          "pistachio"
+      ],
       "pitaka": [
           "питака"
+      ],
+      "pitch": [
+          "pitch"
+      ],
+      "plata": [
+          "плата",
+          "материнская плата"
       ],
       "playstation": [
           "плейстейшн",
@@ -651,16 +1030,35 @@ window.IRON_SEARCH_DICT = {
           "плюс",
           "плас"
       ],
+      "poco": [
+          "poco"
+      ],
       "polar": [
           "polar",
           "полар"
       ],
+      "polarized": [
+          "polarized"
+      ],
       "portal": [
           "портал"
+      ],
+      "prizm": [
+          "prizm"
       ],
       "pro": [
           "про",
           "про"
+      ],
+      "product": [
+          "product"
+      ],
+      "proklejka": [
+          "проклейка"
+      ],
+      "proximity": [
+          "датчик приближения",
+          "приближения"
       ],
       "prussian": [
           "prussian",
@@ -702,9 +1100,21 @@ window.IRON_SEARCH_DICT = {
       "red/velvet": [
           "red/velvet"
       ],
+      "redmi": [
+          "redmi"
+      ],
       "remax": [
           "римакс",
           "remax"
+      ],
+      "remix": [
+          "remix"
+      ],
+      "rhythm": [
+          "rhythm"
+      ],
+      "rj": [
+          "rj"
       ],
       "rose": [
           "роуз",
@@ -718,6 +1128,12 @@ window.IRON_SEARCH_DICT = {
           "эс11",
           "series 11"
       ],
+      "s12": [
+          "s12"
+      ],
+      "s1z53": [
+          "s1z53"
+      ],
       "s25": [
           "s25",
           "эс25"
@@ -726,8 +1142,32 @@ window.IRON_SEARCH_DICT = {
           "s26",
           "эс26"
       ],
+      "s26+": [
+          "s26+"
+      ],
+      "s4": [
+          "s4"
+      ],
+      "s48": [
+          "s48"
+      ],
+      "s5": [
+          "s5"
+      ],
       "s50": [
           "s50"
+      ],
+      "s6": [
+          "s6"
+      ],
+      "s7": [
+          "s7"
+      ],
+      "s8": [
+          "s8"
+      ],
+      "s9": [
+          "s9"
       ],
       "sage": [
           "сейдж",
@@ -741,6 +1181,10 @@ window.IRON_SEARCH_DICT = {
       "sapphire": [
           "сапфир",
           "сапфайр"
+      ],
+      "screen": [
+          "экран",
+          "дисплей"
       ],
       "se": [
           "se"
@@ -758,6 +1202,10 @@ window.IRON_SEARCH_DICT = {
           "серии",
           "сириес"
       ],
+      "service": [
+          "сервисный",
+          "сервис"
+      ],
       "shadow": [
           "шэдоу",
           "шадоу"
@@ -765,6 +1213,12 @@ window.IRON_SEARCH_DICT = {
       "shiny": [
           "шайни",
           "шини"
+      ],
+      "shleyf": [
+          "шлейф"
+      ],
+      "sierra": [
+          "sierra"
       ],
       "silk": [
           "silk",
@@ -774,6 +1228,9 @@ window.IRON_SEARCH_DICT = {
           "сильвер",
           "силвер"
       ],
+      "silverblue": [
+          "silverblue"
+      ],
       "silvershadow": [
           "silvershadow",
           "silver shadow"
@@ -781,6 +1238,9 @@ window.IRON_SEARCH_DICT = {
       "sim": [
           "сим",
           "симка"
+      ],
+      "sim/esim": [
+          "sim/esim"
       ],
       "size": [
           "сайз",
@@ -809,17 +1269,38 @@ window.IRON_SEARCH_DICT = {
           "smart tag",
           "метка"
       ],
+      "snapdragon": [
+          "snapdragon"
+      ],
       "soft": [
           "софт",
           "софт"
+      ],
+      "sony": [
+          "sony"
+      ],
+      "soon": [
+          "soon"
       ],
       "space": [
           "спейс",
           "спэйс"
       ],
+      "spare": [
+          "запчасть",
+          "запчасти",
+          "деталь"
+      ],
+      "speaker": [
+          "динамик",
+          "динамика"
+      ],
       "sport": [
           "спорт",
           "спортивный"
+      ],
+      "squad": [
+          "squad"
       ],
       "st350": [
           "st350"
@@ -827,16 +1308,31 @@ window.IRON_SEARCH_DICT = {
       "st353": [
           "st353"
       ],
+      "stand": [
+          "stand"
+      ],
       "star": [
           "star",
           "star"
+      ],
+      "starfire": [
+          "starfire"
       ],
       "starlight": [
           "старлайт",
           "стар лайт"
       ],
+      "starlit": [
+          "starlit"
+      ],
       "station": [
           "станция"
+      ],
+      "steklo": [
+          "стекло"
+      ],
+      "stephen": [
+          "stephen"
       ],
       "sterling": [
           "sterling",
@@ -845,6 +1341,11 @@ window.IRON_SEARCH_DICT = {
       "sunset": [
           "sunset",
           "sunset"
+      ],
+      "szu": [
+          "сзу",
+          "зарядное устройство",
+          "зарядка"
       ],
       "tan": [
           "tan",
@@ -858,6 +1359,21 @@ window.IRON_SEARCH_DICT = {
       "teal": [
           "тил",
           "тиал"
+      ],
+      "techno": [
+          "techno"
+      ],
+      "texture": [
+          "texture"
+      ],
+      "tft": [
+          "tft"
+      ],
+      "th": [
+          "th"
+      ],
+      "titanium": [
+          "titanium"
       ],
       "tl": [
           "tl"
@@ -886,6 +1402,15 @@ window.IRON_SEARCH_DICT = {
       "tv": [
           "tv"
       ],
+      "twin": [
+          "twin"
+      ],
+      "type-c": [
+          "type-c"
+      ],
+      "uae": [
+          "uae"
+      ],
       "ultra": [
           "ультра",
           "ульта"
@@ -908,6 +1433,9 @@ window.IRON_SEARCH_DICT = {
       "velvet/gold": [
           "velvet/gold"
       ],
+      "vertical": [
+          "vertical"
+      ],
       "vinca": [
           "vinca",
           "vinca"
@@ -923,6 +1451,9 @@ window.IRON_SEARCH_DICT = {
       "vr2": [
           "vr2"
       ],
+      "vspyshka": [
+          "вспышка"
+      ],
       "wallet": [
           "wallet",
           "валлет",
@@ -935,7 +1466,7 @@ window.IRON_SEARCH_DICT = {
           "ватч"
       ],
       "watches": [
-          "вotчес",
+          "вотчес",
           "часы",
           "ватчи"
       ],
@@ -954,9 +1485,15 @@ window.IRON_SEARCH_DICT = {
           "вайт",
           "вейт"
       ],
+      "whitesilver": [
+          "whitesilver"
+      ],
       "whoop": [
           "вуп",
           "whoop"
+      ],
+      "wi": [
+          "wi"
       ],
       "wi-fi": [
           "wi-fi"
@@ -975,6 +1512,18 @@ window.IRON_SEARCH_DICT = {
           "woven",
           "тканевый"
       ],
+      "x8": [
+          "x8"
+      ],
+      "xiaomi": [
+          "xiaomi"
+      ],
+      "xr": [
+          "xr"
+      ],
+      "xs": [
+          "xs"
+      ],
       "yandex": [
           "яндекс"
       ],
@@ -982,6 +1531,15 @@ window.IRON_SEARCH_DICT = {
           "yellow",
           "еллоу",
           "желтый"
+      ],
+      "zadnee": [
+          "заднее",
+          "задняя"
+      ],
+      "zapchast": [
+          "запчасть",
+          "запчасти",
+          "деталь"
       ],
       "zigbee": [
           "zigbee",
@@ -1283,6 +1841,27 @@ window.IRON_SEARCH_DICT = {
           ]
       ],
       [
+          "protective glass",
+          [
+              "защитное стекло",
+              "защита экрана"
+          ]
+      ],
+      [
+          "proximity sensor",
+          [
+              "шлейф датчика приближения",
+              "датчик приближения"
+          ]
+      ],
+      [
+          "service original",
+          [
+              "сервисный оригинал",
+              "оригинал сервисный"
+          ]
+      ],
+      [
           "jet black black",
           [
               "глубокий черный",
@@ -1475,6 +2054,13 @@ window.IRON_SEARCH_DICT = {
           ]
       ],
       [
+          "dock connector",
+          [
+              "нижний шлейф",
+              "разъём зарядки"
+          ]
+      ],
+      [
           "silver shadow",
           [
               "серебряная тень",
@@ -1564,6 +2150,14 @@ window.IRON_SEARCH_DICT = {
               "gopro hero 13",
               "hero 13",
               "гоупро 13"
+          ]
+      ],
+      [
+          "charging port",
+          [
+              "нижний шлейф",
+              "разъём зарядки",
+              "разъем зарядки"
           ]
       ],
       [
@@ -1687,6 +2281,28 @@ window.IRON_SEARCH_DICT = {
               "ray ban meta",
               "рей бан meta",
               "очки ray ban meta"
+          ]
+      ],
+      [
+          "camera glass",
+          [
+              "стекло камеры",
+              "стеклышко камеры"
+          ]
+      ],
+      [
+          "front camera",
+          [
+              "фронтальная камера",
+              "фронталка",
+              "селфи камера"
+          ]
+      ],
+      [
+          "loud speaker",
+          [
+              "полифонический динамик",
+              "нижний динамик"
           ]
       ],
       [
@@ -1918,6 +2534,35 @@ window.IRON_SEARCH_DICT = {
           ]
       ],
       [
+          "rear camera",
+          [
+              "основная камера",
+              "задняя камера"
+          ]
+      ],
+      [
+          "volume flex",
+          [
+              "шлейф кнопок",
+              "шлейф громкости"
+          ]
+      ],
+      [
+          "ear speaker",
+          [
+              "слуховой динамик",
+              "разговорный динамик",
+              "верхний динамик"
+          ]
+      ],
+      [
+          "logic board",
+          [
+              "материнская плата",
+              "системная плата"
+          ]
+      ],
+      [
           "sim + esim",
           [
               "сим и есим",
@@ -2032,6 +2677,35 @@ window.IRON_SEARCH_DICT = {
               "камуфляж",
               "camo",
               "camouflage"
+          ]
+      ],
+      [
+          "back glass",
+          [
+              "заднее стекло",
+              "задняя крышка",
+              "зад стекло"
+          ]
+      ],
+      [
+          "back cover",
+          [
+              "задняя крышка",
+              "заднее стекло"
+          ]
+      ],
+      [
+          "power flex",
+          [
+              "шлейф кнопок",
+              "шлейф кнопки питания"
+          ]
+      ],
+      [
+          "flash flex",
+          [
+              "шлейф вспышки",
+              "вспышка"
           ]
       ],
       [

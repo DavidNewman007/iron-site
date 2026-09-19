@@ -204,3 +204,97 @@
     text-align: center;
   }
 }
+
+/* ——— Фильтры по разделам (19.09.2026) ————————————————————————————
+   Раньше был один ряд чипов «тип детали» на 21 значение и поиск. Клиент ищет
+   иначе: сначала устройство, потом своя модель, и только потом какая деталь.
+   Поэтому три уровня, и у каждого — счётчик, посчитанный БЕЗ учёта самого
+   фильтра (иначе у выбранного значения число, а у соседних нули).            */
+.parts-filters {
+  display: grid;
+  gap: 0.85rem;
+  margin-bottom: 1.2rem;
+}
+
+.parts-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.parts-filter__label {
+  font-family: var(--font-display, inherit);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Ряд чипов внутри группы уже имеет свой отступ снизу — здесь он лишний. */
+.parts-filter .parts-chips {
+  margin-bottom: 0;
+}
+
+.parts-filter--model {
+  max-width: 24rem;
+}
+
+.parts-select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--surface-border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.parts-select:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
+.parts-reset {
+  border: 1px solid var(--surface-border);
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.parts-reset:hover {
+  color: var(--text);
+  border-color: var(--gold);
+}
+
+/* Вступление над витриной запчастей внутри вкладки магазина. */
+.parts-intro {
+  margin-bottom: 1.2rem;
+}
+
+.parts-intro h2 {
+  margin: 0 0 0.4rem;
+}
+
+.parts-intro p {
+  margin: 0;
+  color: var(--text-muted);
+  max-width: 60ch;
+}
+
+/* ⚠️ Атрибут `hidden` проигрывает своему же `display` (19.09.2026).
+   `.parts-toggle` объявлен как inline-flex, `.parts-filter` — как flex, и
+   браузерное правило `[hidden] { display: none }` их не перебивает: у классов
+   специфичность выше. Из-за этого переключатель «только в наличии» оставался
+   на экране даже когда в наличии нет ни одной позиции, то есть заведомо давал
+   пустой список. Прячем явно. */
+.parts-toggle[hidden],
+.parts-filter[hidden],
+.parts-reset[hidden] {
+  display: none;
+}

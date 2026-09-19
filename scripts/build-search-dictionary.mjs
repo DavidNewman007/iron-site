@@ -16,7 +16,18 @@ const outputFile = path.resolve(__dirname, "../public/js/search-dictionary.js");
 const configFile = path.resolve(__dirname, "../public/js/config.js");
 const inputFile = process.argv[2] ? path.resolve(process.argv[2]) : defaultInput;
 
-const SHEET_TABS = ["Prices", "Prices-2"];
+// ⚠️ Дополнено 19.09.2026: было ["Prices", "Prices-2"]. Словарь собирался из
+// двух листов из четырёх, поэтому не знал ни склада «под заказ» (Prices-3,
+// заведён 27.08.2026), ни предзаказа новых айфонов (Prices-4, 15.09.2026).
+// Симптом тихий: поиск в магазине просто не находил часть товаров по русскому
+// написанию, а сам словарь выглядел живым. Заводя лист прайса, правь и здесь —
+// это ЧЕТВЁРТОЕ место, где листы перечислены поимённо (см. план 45).
+const SHEET_TABS = ["Prices", "Prices-2", "Prices-3", "Prices-4"];
+
+// Витрина запчастей (план 66). Названия деталей и моделей оттуда тоже должны
+// попадать в словарь: клиент ищет «akb 13 pro» и «displey», а в данных лежит
+// «АКБ» и «дисплей».
+const partsFile = path.resolve(__dirname, "../public/data/parts.json");
 
 const BASE_TRANSLIT = {
   iphone: ["айфон", "аифон", "айфоон", "ифон"],
@@ -107,6 +118,63 @@ const BASE_TRANSLIT = {
   gb: ["гб", "гигабайт", "гигабайта"],
   tb: ["тб", "терабайт", "терабайта"],
   mm: ["мм", "millimetр", "миллиметров"],
+};
+
+// Запчасти (добавлено 19.09.2026). Направление то же, что у остального
+// словаря: латиница или английское слово → как это пишут по-русски. Сюда же
+// латинская раскладка русских слов — клиент часто набирает «displey», «akb»,
+// «shleyf», не переключая язык.
+const PARTS_TRANSLIT = {
+  display: ["дисплей", "дисплэй", "экран", "диспл"],
+  displey: ["дисплей", "экран"],
+  screen: ["экран", "дисплей"],
+  lcd: ["лсд", "матрица", "дисплей"],
+  oled: ["олед", "олед дисплей"],
+  battery: ["акб", "аккумулятор", "батарея", "батарейка"],
+  akb: ["акб", "аккумулятор", "батарея"],
+  akkumulyator: ["аккумулятор", "акб"],
+  bataree: ["батарея", "акб"],
+  camera: ["камера", "камеру", "камеры"],
+  kamera: ["камера"],
+  glass: ["стекло", "стекла", "стёкла"],
+  steklo: ["стекло"],
+  back: ["задняя", "заднее", "зад"],
+  zadnee: ["заднее", "задняя"],
+  housing: ["корпус", "корпуса"],
+  korpus: ["корпус"],
+  flex: ["шлейф", "шлейфа", "шлейфы"],
+  shleyf: ["шлейф"],
+  speaker: ["динамик", "динамика"],
+  dinamik: ["динамик"],
+  buzzer: ["полифонический динамик", "бузер", "динамик"],
+  earpiece: ["слуховой динамик", "разговорный динамик"],
+  mic: ["микрофон"],
+  microphone: ["микрофон"],
+  antenna: ["антенна", "антенны"],
+  board: ["материнская плата", "плата", "мать"],
+  motherboard: ["материнская плата", "плата"],
+  plata: ["плата", "материнская плата"],
+  proximity: ["датчик приближения", "приближения"],
+  datchik: ["датчик"],
+  flash: ["вспышка", "вспышки", "флеш"],
+  vspyshka: ["вспышка"],
+  adhesive: ["проклейка", "скотч", "клей"],
+  proklejka: ["проклейка"],
+  magsafe: ["магсейф", "магнит", "магсэйф"],
+  magnit: ["магнит", "магсейф"],
+  cable: ["кабель", "провод", "шнур"],
+  kabel: ["кабель"],
+  charger: ["зарядное устройство", "зарядка", "сзу", "блок питания"],
+  szu: ["сзу", "зарядное устройство", "зарядка"],
+  adapter: ["переходник", "адаптер"],
+  perehodnik: ["переходник"],
+  original: ["оригинал", "оригинальный"],
+  service: ["сервисный", "сервис"],
+  copy: ["копия", "аналог", "неоригинал"],
+  analog: ["аналог", "копия"],
+  zapchast: ["запчасть", "запчасти", "деталь"],
+  spare: ["запчасть", "запчасти", "деталь"],
+  part: ["деталь", "запчасть"],
 };
 
 const EXTENDED_TRANSLIT = {
@@ -223,6 +291,23 @@ const EXTENDED_TRANSLIT = {
 };
 
 const EXTENDED_TRANSLATE = [
+  ["back glass", ["заднее стекло", "задняя крышка", "зад стекло"]],
+  ["back cover", ["задняя крышка", "заднее стекло"]],
+  ["camera glass", ["стекло камеры", "стеклышко камеры"]],
+  ["protective glass", ["защитное стекло", "защита экрана"]],
+  ["front camera", ["фронтальная камера", "фронталка", "селфи камера"]],
+  ["rear camera", ["основная камера", "задняя камера"]],
+  ["charging port", ["нижний шлейф", "разъём зарядки", "разъем зарядки"]],
+  ["dock connector", ["нижний шлейф", "разъём зарядки"]],
+  ["power flex", ["шлейф кнопок", "шлейф кнопки питания"]],
+  ["volume flex", ["шлейф кнопок", "шлейф громкости"]],
+  ["proximity sensor", ["шлейф датчика приближения", "датчик приближения"]],
+  ["flash flex", ["шлейф вспышки", "вспышка"]],
+  ["loud speaker", ["полифонический динамик", "нижний динамик"]],
+  ["ear speaker", ["слуховой динамик", "разговорный динамик", "верхний динамик"]],
+  ["logic board", ["материнская плата", "системная плата"]],
+  ["service original", ["сервисный оригинал", "оригинал сервисный"]],
+
   ["airpods max 2026", ["аирподс макс 2026", "эирподс макс", "наушники max 2026"]],
   ["airpods max 2024", ["аирподс макс 2024", "эирподс макс", "наушники max"]],
   ["airpods max", ["аирподс макс", "эирподс макс", "эйрподс макс", "наушники max"]],
@@ -436,6 +521,21 @@ async function main() {
     sourceLines.push(...fs.readFileSync(inputFile, "utf8").split(/\r?\n/));
   }
 
+  // Витрина запчастей — такой же источник строк, как прайс: из неё берутся
+  // латинские токены (модели, A-номера матриц MacBook) и она же держит словарь
+  // честным, когда у Витали появляются новые позиции.
+  if (fs.existsSync(partsFile)) {
+    try {
+      const parts = JSON.parse(fs.readFileSync(partsFile, "utf8"));
+      const lines = (parts["позиции"] || []).map((i) =>
+        [i["узел"], i["модель"], i["вариант"], i["цвет"]].filter(Boolean).join(" "));
+      sourceLines.push(...lines);
+      console.log("Строк из витрины запчастей:", lines.length);
+    } catch (err) {
+      console.warn("parts.json не прочитан:", err.message);
+    }
+  }
+
   if (sheetId) {
     try {
       const sheetLines = await fetchSheetLines(sheetId);
@@ -455,7 +555,7 @@ async function main() {
 
   const tokens = extractLatinTokens(sourceLines);
   const existing = parseExistingDict(fs.readFileSync(outputFile, "utf8"));
-  const translit = mergeTranslit(existing.translit, BASE_TRANSLIT, EXTENDED_TRANSLIT, tokens);
+  const translit = mergeTranslit(existing.translit, BASE_TRANSLIT, { ...EXTENDED_TRANSLIT, ...PARTS_TRANSLIT }, tokens);
   const translate = mergeTranslate(existing.translate, EXTENDED_TRANSLATE);
 
   const header = `/**

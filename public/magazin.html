@@ -29,7 +29,8 @@
   <link rel="preconnect" href="https://docs.google.com" crossorigin>
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=2026-09-03-1">
-  <link rel="stylesheet" href="css/shop.css?v=2026-09-18-5">
+  <link rel="stylesheet" href="css/shop.css?v=2026-09-19-1">
+  <link rel="stylesheet" href="css/parts.css?v=2026-09-19-1">
 </head>
 <body>
   <header class="site-header">
@@ -79,7 +80,9 @@
       и золотое «Скоро…» (.shop-board__accent, margin-left:auto) уезжало за
       правый край на КАЖДОМ десктопе. Поэтому здесь: адрес убран (он строкой
       ниже, во вводном абзаце, и в карточке самовывоза), акцент сокращён до
-      «Скоро: Запчасти» (вкладка под ним и так подписана «ЗАПЧАСТИ СКОРО»),
+      «Запчасти — уже доступны» (изменено 19.09.2026, раньше стояло «Скоро:
+      Запчасти», а вкладка была подписана «ЗАПЧАСТИ СКОРО» — прайс запчастей
+      уже выложен, и обещание «скоро» врало),
       gap в .shop-board__inner уменьшен, а prices.js пишет «Обновлён», а не
       «Прайс обновлён». Итог — перелёт 0. Добавляя сюда пункт, замеряй заново
       с ЖИВЫМИ значениями, а не по голой разметке.
@@ -90,7 +93,7 @@
         <span id="board-count" hidden></span>
         <span>В наличии в Сочи — или под заказ 1–2 дня</span>
         <span><a href="#dostavka">Доставка по России</a></span>
-        <span class="shop-board__accent">Скоро: Запчасти</span>
+        <span class="shop-board__accent"><a href="#zapchasti">Запчасти — уже доступны</a></span>
       </div>
     </div>
 
@@ -114,7 +117,7 @@
           </button>
           <button type="button" class="shop-tab" id="tab-btn-zapchasti" role="tab" aria-selected="false" aria-controls="panel-zapchasti" data-tab="zapchasti">
             <svg class="shop-tab__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>
-            <span class="shop-tab__text"><span class="shop-tab__name">Запчасти <span class="shop-tab__badge">Скоро</span></span><span class="shop-tab__note">деталь отдельно или с установкой</span></span>
+            <span class="shop-tab__text"><span class="shop-tab__name">Запчасти <span class="shop-tab__badge shop-tab__badge--live">Уже доступны</span></span><span class="shop-tab__note">деталь отдельно или с установкой</span></span>
           </button>
           <a class="shop-tab" href="uslugi.html">
             <svg class="shop-tab__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5l4 4L8 20H4v-4z"></path><path d="M13 7l4 4"></path></svg>
@@ -252,21 +255,68 @@
       Панель «Запчасти». Данных ещё нет — ждём прайс от поставщика, поэтому
       здесь честная заглушка с переходом в чат, а не пустая таблица.
     -->
+    <!--
+      Запчасти. До 19.09.2026 здесь висела заглушка «Запчасти — скоро» со
+      ссылкой на отдельную страницу. Владелец: «пусть эта кнопка не
+      перекидывается на страницу запчастей, а прям тут открывает всё с
+      фильтрами». Разметка та же, что на zapchasti.html, и обслуживает её тот
+      же parts.js — привязка идёт по идентификаторам элементов, копии кода нет.
+      Прайс подтягивается ЛЕНИВО, когда вкладку впервые открыли: 923 позиции
+      незачем качать тем, кто пришёл за техникой (см. запуститьКогдаВидно).
+    -->
     <div class="shop-tab-panel" id="panel-zapchasti" role="tabpanel" aria-labelledby="tab-btn-zapchasti" hidden>
       <section class="shop-section">
         <div class="container">
-          <div class="parts-soon">
-            <img class="parts-soon__photo" src="assets/hero-zapchasti.jpg" alt="" width="1400" height="1050" loading="lazy" decoding="async">
-            <div class="parts-soon__body">
-              <h2>Запчасти — скоро</h2>
-              <p>Собираем прайс: дисплеи, аккумуляторы, камеры, стёкла, шлейфы и разъёмы. У каждой детали будут две цены рядом — забрать деталь или поставить её у нас в мастерской.</p>
-              <p>Нужна деталь прямо сейчас? Напишите модель и что менять — ответим с ценой и сроком.</p>
-              <div class="parts-soon__actions">
-                <a class="btn btn-primary" href="https://t.me/ironservice" target="_blank" rel="noopener">Спросить в Telegram</a>
-                <a class="btn btn-secondary" href="uslugi.html">Посмотреть ремонт с деталью</a>
-              </div>
-              <p class="parts-soon__note">Сейчас деталь можно взять вместе с установкой — цены на странице «Услуги»: работа и деталь одной строкой, гарантия на работу 100 дней.</p>
-            </div>
+          <div class="parts-intro">
+            <h2>Запчасти для Apple</h2>
+            <p>Дисплеи, аккумуляторы, задние стёкла, камеры, шлейфы и корпуса. Можно забрать деталь отдельно или поставить у нас — <a href="uslugi.html">цены на установку</a>.</p>
+          </div>
+
+          <div class="parts-board" id="parts-board">
+            <div class="parts-board__item"><span id="parts-count">—</span><small>позиций в прайсе</small></div>
+            <div class="parts-board__item"><span id="parts-stock">—</span><small>в наличии в Сочи</small></div>
+            <div class="parts-board__item"><span>2–4 дня</span><small>поставка под заказ</small></div>
+            <div class="parts-board__item"><span id="parts-updated">—</span><small>обновлено</small></div>
+          </div>
+
+        <div class="parts-controls">
+          <label class="parts-search">
+            <span class="visually-hidden">Поиск по модели</span>
+            <input type="search" id="parts-search" placeholder="Модель или деталь: 13 pro, дисплей, akb…" autocomplete="off">
+          </label>
+          <label class="parts-toggle" id="parts-stock-only-wrap">
+            <input type="checkbox" id="parts-stock-only">
+            <span>Только в наличии</span>
+          </label>
+          <button type="button" class="parts-reset" id="parts-reset" hidden>Сбросить фильтры</button>
+        </div>
+
+        <div class="parts-filters">
+          <div class="parts-filter">
+            <span class="parts-filter__label">Устройство</span>
+            <div class="parts-chips" id="parts-devices" role="group" aria-label="Устройство"></div>
+          </div>
+          <div class="parts-filter parts-filter--model" id="parts-model-wrap">
+            <label class="parts-filter__label" for="parts-model">Модель</label>
+            <select class="parts-select" id="parts-model"></select>
+          </div>
+          <div class="parts-filter">
+            <span class="parts-filter__label">Тип детали</span>
+            <div class="parts-chips" id="parts-chips" role="group" aria-label="Тип детали"></div>
+          </div>
+        </div>
+
+          <p class="parts-status" id="parts-status">Загружаем прайс…</p>
+          <div class="parts-list" id="parts-list"></div>
+          <div class="parts-more-wrap">
+            <button type="button" class="btn btn-secondary parts-more" id="parts-more" hidden>Показать ещё</button>
+          </div>
+
+          <div class="loft-note parts-note">
+            Цена указана за деталь. Для позиций под заказ доставка из Ростова-на-Дону уже включена в цену,
+            срок — 2–4 дня. Гарантия на деталь указана в карточке и действует с момента установки;
+            на деталь, установленную не у нас, гарантия сохраняется до установки.
+            Нужна установка — <a href="uslugi.html">посмотрите цены на работу</a>.
           </div>
         </div>
       </section>
@@ -375,11 +425,12 @@
 
   <script defer src="js/i18n.js?v=2026-08-19-3"></script>
   <script defer src="js/config.js"></script>
-  <script defer src="js/search-dictionary.js?v=2026-06-26-1"></script>
+  <script defer src="js/search-dictionary.js?v=2026-09-19-1"></script>
   <script defer src="js/main.js"></script>
   <script defer src="js/shop-filters.js?v=2026-08-28-3"></script>
   <script defer src="js/order-channels.js?v=2026-07-04-5"></script>
   <script defer src="js/shop-tabs.js?v=2026-09-11-1"></script>
+  <script defer src="js/parts.js?v=2026-09-19-1"></script>
   <script defer src="js/pay-markup.js?v=2026-09-18-1"></script>
   <script defer src="js/prices.js?v=2026-09-18-1"></script>
 </body>
