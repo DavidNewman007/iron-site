@@ -279,32 +279,46 @@
             <div class="parts-board__item"><span id="parts-updated">—</span><small>обновлено</small></div>
           </div>
 
-        <div class="parts-controls">
-          <label class="parts-search">
-            <span class="visually-hidden">Поиск по модели</span>
-            <input type="search" id="parts-search" placeholder="Модель или деталь: 13 pro, дисплей, akb…" autocomplete="off">
-          </label>
-          <label class="parts-toggle" id="parts-stock-only-wrap">
-            <input type="checkbox" id="parts-stock-only">
-            <span>Только в наличии</span>
-          </label>
-          <button type="button" class="parts-reset" id="parts-reset" hidden>Сбросить фильтры</button>
-        </div>
+          <div class="parts-controls">
+            <label class="parts-search">
+              <span class="visually-hidden">Поиск по модели</span>
+              <input type="search" id="parts-search" placeholder="Модель или деталь: 13 pro, дисплей, akb…" autocomplete="off">
+            </label>
+            <label class="parts-toggle" id="parts-stock-only-wrap">
+              <input type="checkbox" id="parts-stock-only">
+              <span>Только в наличии</span>
+            </label>
+            <button type="button" class="parts-reset" id="parts-reset" hidden>Сбросить фильтры</button>
+          </div>
 
-        <div class="parts-filters">
-          <div class="parts-filter">
-            <span class="parts-filter__label">Устройство</span>
-            <div class="parts-chips" id="parts-devices" role="group" aria-label="Устройство"></div>
+          <!--
+            Лестница фильтров: устройство → серия → модель → класс детали →
+            конкретная деталь. Ряды рисует parts.js и он же их прячет, когда
+            выбирать не из чего. Порядок и подписи повторяют дерево
+            detaliapple.ru, на которое указал владелец 19.09.2026.
+          -->
+          <div class="parts-filters">
+            <div class="parts-filter" id="parts-step-devices">
+              <span class="parts-filter__label">Устройство</span>
+              <div class="parts-chips" id="parts-devices" role="group" aria-label="Устройство"></div>
+            </div>
+            <div class="parts-filter" id="parts-step-series" hidden>
+              <span class="parts-filter__label">Серия</span>
+              <div class="parts-chips" id="parts-series" role="group" aria-label="Серия"></div>
+            </div>
+            <div class="parts-filter" id="parts-step-models" hidden>
+              <span class="parts-filter__label">Модель</span>
+              <div class="parts-chips" id="parts-models" role="group" aria-label="Модель"></div>
+            </div>
+            <div class="parts-filter" id="parts-step-classes">
+              <span class="parts-filter__label">Класс детали</span>
+              <div class="parts-chips" id="parts-classes" role="group" aria-label="Класс детали"></div>
+            </div>
+            <div class="parts-filter parts-filter--nested" id="parts-step-nodes" hidden>
+              <span class="parts-filter__label">Деталь</span>
+              <div class="parts-chips" id="parts-nodes" role="group" aria-label="Деталь"></div>
+            </div>
           </div>
-          <div class="parts-filter parts-filter--model" id="parts-model-wrap">
-            <label class="parts-filter__label" for="parts-model">Модель</label>
-            <select class="parts-select" id="parts-model"></select>
-          </div>
-          <div class="parts-filter">
-            <span class="parts-filter__label">Тип детали</span>
-            <div class="parts-chips" id="parts-chips" role="group" aria-label="Тип детали"></div>
-          </div>
-        </div>
 
           <p class="parts-status" id="parts-status">Загружаем прайс…</p>
           <div class="parts-list" id="parts-list"></div>

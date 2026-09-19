@@ -37,10 +37,11 @@
 
   var all = [];
   var shown = 0;
-  var filters = { устройство: "", модель: "", узел: "", поиск: "", наличие: false };
+  var filters = { устройство: "", серия: "", модель: "", класс: "", узел: "", поиск: "", наличие: false };
   var запущено = false;
 
   var els = {};
+  var ряды = {};
 
   // ——— поиск: словарь и транслитерация ————————————————————————————————
 
@@ -126,33 +127,126 @@
     return base + " " + вЛатиницу(base);
   }
 
-  // ——— фильтры ——————————————————————————————————————————————————
+  // ——— разделы: устройство → серия → модель → класс детали ——————————
+  //
+  // Было (19.09.2026, первая версия): устройство, выпадающий список из 72
+  // моделей и один ряд из 21 чипа. Владелец: «всё в кучу, сделай
+  // структурированные фильтры — макбуки, внутри какие макбуки, внутри по
+  // классам запчастей». В списке моделей вперемешку лежали «iPhone SE 2016»,
+  // «СЗУ USB-C 20W 1:1» и «LCD Матрица Macbook Pro 14.2 A2442 / A2779 / A2918
+  // / A2992 Оригинал» — то есть телефон, зарядка и целое название товара
+  // одним списком.
+  //
+  // Образец, на который указал владелец, — detaliapple.ru. Там дерево:
+  // устройство (MacBook Air / MacBook Pro / iPhone / Watch / Аксессуары) →
+  // модель или диагональ (MacBook Air 11" / 13" / 15", iPhone 17 Pro Max) →
+  // категория детали (Аккумуляторы, Дисплеи, Матрицы, Шлейфы). Повторяем ту же
+  // лестницу, только чипами, а не страницами.
+  //
+  // Каждый ряд прячется, когда выбирать в нём не из чего (меньше двух
+  // значений) или когда не выбран родитель. Иначе лестница снова превращается
+  // в кучу — уже из пустых рядов.
 
-  /**
-   * Раздел по модели. Не по названию узла: узел говорит, ЧТО за деталь, а
-   * человек сначала выбирает, для какого устройства она нужна.
-   */
+  var ПОРЯДОК_УСТРОЙСТВ = ["iPhone", "Apple Watch", "MacBook", "Аксессуары"];
+
   function устройствоИз(модель) {
     var m = String(модель || "");
     if (/^iphone/i.test(m)) return "iPhone";
     if (/watch/i.test(m)) return "Apple Watch";
-    if (/macbook|imac|\bmac\b/i.test(m)) return "Mac";
+    if (/macbook|imac/i.test(m)) return "MacBook";
     return "Аксессуары";
   }
 
-  var ПОРЯДОК_УСТРОЙСТВ = ["iPhone", "Apple Watch", "Mac", "Аксессуары"];
+  /**
+   * У поставщика модель макбука лежит целой строкой товара:
+   * «LCD Матрица Macbook Alr 13 A2337 Оригинал». В фильтре такое читать нельзя,
+   * поэтому вытаскиваем тип, диагональ и A-номера.
+   * «Alr» — опечатка поставщика вместо «Air», встречается в данных как есть.
+   */
+  function макбукМодель(raw) {
+    var тип = /\bpro\b/i.test(raw) ? "Pro" : /\b(air|alr)\b/i.test(raw) ? "Air" : "";
+    var диаг = (String(raw).match(/\b(\d{2}(?:[.,]\d)?)\b/) || [])[1] || "";
+    var номера = String(raw).match(/A\d{4}/gi) || [];
+    return ("MacBook " + тип).trim()
+      + (диаг ? " " + диаг.replace(",", ".") + "″" : "")
+      + (номера.length ? " (" + номера.join(" / ") + ")" : "");
+  }
 
-  /** Сортировка моделей: новые сверху — «iPhone 17 Pro Max» выше «iPhone 11». */
+  /** Подпись модели в фильтре. Для макбуков — разобранная, для остального как есть. */
+  function подписьМодели(модель) {
+    return устройствоИз(модель) === "MacBook" ? макбукМодель(модель) : String(модель || "");
+  }
+
+  /**
+   * Серия — средняя ступень. У iPhone их тринадцать по три-пять моделей, и без
+   * неё ряд моделей снова был бы на полсотни значений.
+   */
+  function серияИз(модель) {
+    var устройство = устройствоИз(модель);
+    var m = String(модель || "");
+    if (устройство === "iPhone") {
+      var ном = m.match(/^iPhone\s+(\d{1,2})/i);
+      if (ном) return "iPhone " + ном[1];
+      if (/^iPhone\s+SE/i.test(m)) return "iPhone SE";
+      if (/^iPhone\s+X/i.test(m)) return "iPhone X · XR · XS";
+      return "iPhone — прочие";
+    }
+    if (устройство === "Apple Watch") {
+      var s = m.match(/s(\d+)/i);
+      return s ? "Apple Watch S" + s[1] : "Apple Watch";
+    }
+    if (устройство === "MacBook") return /\bpro\b/i.test(m) ? "MacBook Pro" : "MacBook Air";
+    return "";
+  }
+
+  /** Новые серии сверху: «iPhone 17» выше «iPhone 11», буквенные — в конце. */
+  function весСерии(серия) {
+    var m = серия.match(/(\d{1,2})/);
+    return m ? Number(m[1]) : -1;
+  }
+
   function весМодели(модель) {
-    var m = модель.match(/(\d{1,2})/);
+    var m = String(модель).match(/(\d{1,2})/);
     var номер = m ? Number(m[1]) : 0;
-    var ранг = /pro max/i.test(модель) ? 3 : /\bpro\b/i.test(модель) ? 2 : /plus/i.test(модель) ? 1 : 0;
+    var ранг = /pro max/i.test(модель) ? 4 : /\bpro\b/i.test(модель) ? 3
+      : /plus/i.test(модель) ? 2 : /mini|air/i.test(модель) ? 1 : 0;
     return номер * 10 + ранг;
   }
 
+  /**
+   * Классы деталей — та же группировка, что разделами у detaliapple.ru.
+   * Узел, которого здесь нет, попадает в «Прочее», а не теряется.
+   */
+  var КЛАССЫ = [
+    { имя: "Дисплеи и стёкла", узлы: ["дисплей", "защитное стекло"] },
+    { имя: "Корпус и задняя крышка", узлы: ["заднее стекло", "корпус", "стекло камеры", "проклейка", "магнит MagSafe"] },
+    { имя: "Питание и зарядка", узлы: ["АКБ", "зарядное устройство", "кабель", "переходник"] },
+    { имя: "Камеры", узлы: ["камера", "фронтальная камера", "шлейф вспышки"] },
+    { имя: "Динамики", узлы: ["слуховой динамик", "полифонический динамик"] },
+    { имя: "Шлейфы и антенны", узлы: ["нижний шлейф", "шлейф кнопок", "шлейф датчика приближения", "антенна"] },
+    { имя: "Платы", узлы: ["материнская плата"] },
+  ];
+
+  var КЛАСС_ПО_УЗЛУ = (function () {
+    var map = {};
+    КЛАССЫ.forEach(function (k) { k.узлы.forEach(function (u) { map[u] = k.имя; }); });
+    return map;
+  })();
+
+  function классИз(узел) {
+    return КЛАСС_ПО_УЗЛУ[узел] || "Прочее";
+  }
+
+  /**
+   * Подходит ли позиция под фильтры. `кроме` исключает одну ступень — так
+   * считаются счётчики: выбрав «дисплеи», человек всё равно видит, сколько
+   * есть АКБ, и переключается одним нажатием.
+   */
   function подходит(item, кроме) {
     if (кроме !== "устройство" && filters.устройство && устройствоИз(item.модель) !== filters.устройство) return false;
+    if (кроме !== "серия" && filters.серия && серияИз(item.модель) !== filters.серия) return false;
     if (кроме !== "модель" && filters.модель && item.модель !== filters.модель) return false;
+    if (кроме !== "класс" && filters.класс && классИз(item.узел) !== filters.класс) return false;
     if (кроме !== "узел" && filters.узел && item.узел !== filters.узел) return false;
     if (filters.наличие && !(item.наличие > 0)) return false;
     if (!filters.поиск) return true;
@@ -247,7 +341,7 @@
     els.status.textContent = list.length
       ? "Показано " + shown + " из " + list.length
       : "По этому запросу ничего не нашлось — попробуйте другое слово или сбросьте фильтр.";
-    if (els.reset) els.reset.hidden = !(filters.устройство || filters.модель || filters.узел || filters.поиск || filters.наличие);
+    if (els.reset) els.reset.hidden = !(ЛЕСТНИЦА.some(function (f) { return filters[f]; }) || filters.поиск || filters.наличие);
   }
 
   function чип(label, active, onClick) {
@@ -260,81 +354,105 @@
     return btn;
   }
 
-  /**
-   * Счётчики на фильтрах считаются БЕЗ учёта самого фильтра: выбрав «дисплей»,
-   * человек всё равно видит, сколько есть АКБ, и может переключиться одним
-   * нажатием. Иначе у выбранного чипа стоит число, а у соседних — нули, и
-   * фильтр превращается в тупик.
-   */
+  /** Счётчики по ступени, посчитанные БЕЗ учёта её самой (см. `подходит`). */
   function счётчики(поле, кроме) {
     var counts = {};
     all.forEach(function (i) {
       if (!подходит(i, кроме)) return;
       var key = поле(i);
+      if (!key) return;
       counts[key] = (counts[key] || 0) + 1;
     });
     return counts;
   }
 
-  function рисоватьУстройства() {
-    var counts = счётчики(function (i) { return устройствоИз(i.модель); }, "устройство");
-    var всего = Object.keys(counts).reduce(function (s, k) { return s + counts[k]; }, 0);
-    els.devices.innerHTML = "";
-    els.devices.appendChild(чип("Все · " + всего, !filters.устройство, function () {
-      filters.устройство = ""; filters.модель = ""; перерисоватьФильтры(); render(true);
+  /**
+   * Рисует одну ступень лестницы.
+   * @param {object} ряд  контейнер и подпись
+   * @param {string} поле имя фильтра
+   * @param {function} ключИз как достать значение из позиции
+   * @param {object} опции  сортировка, подпись значения, подпись «всё»
+   */
+  function ступень(ряд, поле, ключИз, опции) {
+    var counts = счётчики(ключИз, поле);
+    var значения = Object.keys(counts).sort(опции.сорт);
+    // Ступень открывается только после выбора на предыдущей — так же, как
+    // разделы у detaliapple.ru открываются кликом по устройству, а не висят
+    // все сразу. Иначе «Серия» и «Модель» вываливают полсотни значений ещё до
+    // того, как человек сказал, что у него iPhone, и это ровно та куча, из-за
+    // которой фильтры и переделывались.
+    // Прячем и когда выбирать не из чего: один вариант — не выбор, а лишний
+    // ряд. Выбранное значение при этом сохраняем, иначе фильтр сбрасывался бы
+    // сам при сужении.
+    var прятать = опции.родитель === false
+      || (значения.length < 2 && !filters[поле]);
+    ряд.блок.hidden = прятать;
+    if (прятать) { ряд.чипы.innerHTML = ""; return; }
+
+    ряд.чипы.innerHTML = "";
+    var всего = значения.reduce(function (s, k) { return s + counts[k]; }, 0);
+    ряд.чипы.appendChild(чип(опции.всё + " · " + всего, !filters[поле], function () {
+      выбрать(поле, "");
     }));
-    ПОРЯДОК_УСТРОЙСТВ.forEach(function (d) {
-      if (!counts[d]) return;
-      els.devices.appendChild(чип(d + " · " + counts[d], filters.устройство === d, function () {
-        filters.устройство = filters.устройство === d ? "" : d;
-        filters.модель = "";
-        перерисоватьФильтры(); render(true);
+    значения.forEach(function (v) {
+      ряд.чипы.appendChild(чип((опции.подпись ? опции.подпись(v) : v) + " · " + counts[v], filters[поле] === v, function () {
+        выбрать(поле, filters[поле] === v ? "" : v);
       }));
     });
   }
 
-  function рисоватьМодели() {
-    var counts = счётчики(function (i) { return i.модель; }, "модель");
-    var модели = Object.keys(counts).sort(function (a, b) {
-      return весМодели(b) - весМодели(a) || a.localeCompare(b, "ru");
-    });
-    els.model.innerHTML = "";
-    var all0 = document.createElement("option");
-    all0.value = "";
-    all0.textContent = "Все модели";
-    els.model.appendChild(all0);
-    модели.forEach(function (m) {
-      var o = document.createElement("option");
-      o.value = m;
-      o.textContent = m + " · " + counts[m];
-      if (m === filters.модель) o.selected = true;
-      els.model.appendChild(o);
-    });
-    // Выбранная модель отвалилась после смены устройства — сбрасываем, иначе
-    // список пуст, а причина не видна.
-    if (filters.модель && !counts[filters.модель]) filters.модель = "";
-    if (els.modelWrap) els.modelWrap.hidden = модели.length < 2;
-  }
+  /**
+   * Выбор на ступени сбрасывает всё, что ниже. Без этого остаётся «iPhone 17
+   * Pro Max» внутри выбранного Apple Watch — пустой список без объяснения.
+   */
+  var ЛЕСТНИЦА = ["устройство", "серия", "модель", "класс", "узел"];
 
-  function рисоватьУзлы() {
-    var counts = счётчики(function (i) { return i.узел; }, "узел");
-    var узлы = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b, "ru"); });
-    els.chips.innerHTML = "";
-    els.chips.appendChild(чип("Любая деталь", !filters.узел, function () {
-      filters.узел = ""; перерисоватьФильтры(); render(true);
-    }));
-    узлы.forEach(function (n) {
-      els.chips.appendChild(чип(n + " · " + counts[n], filters.узел === n, function () {
-        filters.узел = filters.узел === n ? "" : n;
-        перерисоватьФильтры(); render(true);
-      }));
+  function выбрать(поле, значение) {
+    filters[поле] = значение;
+    ЛЕСТНИЦА.slice(ЛЕСТНИЦА.indexOf(поле) + 1).forEach(function (ниже) {
+      filters[ниже] = "";
     });
+    перерисоватьФильтры();
+    render(true);
   }
 
   function перерисоватьФильтры() {
-    рисоватьУстройства();
-    рисоватьМодели();
-    рисоватьУзлы();
+    ступень(ряды.устройство, "устройство", function (i) { return устройствоИз(i.модель); }, {
+      всё: "Все устройства",
+      сорт: function (a, b) { return ПОРЯДОК_УСТРОЙСТВ.indexOf(a) - ПОРЯДОК_УСТРОЙСТВ.indexOf(b); },
+    });
+    ступень(ряды.серия, "серия", function (i) { return серияИз(i.модель); }, {
+      всё: "Все серии",
+      родитель: Boolean(filters.устройство),
+      сорт: function (a, b) { return весСерии(b) - весСерии(a) || a.localeCompare(b, "ru"); },
+    });
+    ступень(ряды.модель, "модель", function (i) { return i.модель; }, {
+      всё: "Все модели",
+      родитель: Boolean(filters.серия),
+      подпись: подписьМодели,
+      сорт: function (a, b) { return весМодели(b) - весМодели(a) || a.localeCompare(b, "ru"); },
+    });
+    ступень(ряды.класс, "класс", function (i) { return классИз(i.узел); }, {
+      всё: "Любая деталь",
+      сорт: function (a, b) {
+        var ia = КЛАССЫ.findIndex(function (k) { return k.имя === a; });
+        var ib = КЛАССЫ.findIndex(function (k) { return k.имя === b; });
+        return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+      },
+    });
+    // Последняя ступень появляется только внутри выбранного класса: иначе это
+    // снова один ряд из двадцати одного значения, с которого всё началось.
+    //
+    // Исключение — когда класс в текущем срезе ОДИН: у аксессуаров это всегда
+    // «Питание и зарядка», у макбуков «Дисплеи и стёкла». Выбирать там нечего,
+    // ряд классов прячется, и без этого исключения человек оставался бы вообще
+    // без фильтра по детали, хотя зарядки, кабели и переходники различать надо.
+    var классовВСрезе = Object.keys(счётчики(function (i) { return классИз(i.узел); }, "класс")).length;
+    ступень(ряды.узел, "узел", function (i) { return i.узел; }, {
+      всё: "Все в классе",
+      родитель: Boolean(filters.класс) || классовВСрезе <= 1,
+      сорт: function (a, b) { return a.localeCompare(b, "ru"); },
+    });
   }
 
   function start(data) {
@@ -388,13 +506,17 @@
     observer.observe(panel, { attributes: true, attributeFilter: ["hidden"] });
   }
 
+  /** Ступень = подпись + контейнер чипов. Прячем блок целиком, а не только чипы. */
+  function ряд(имя) {
+    return {
+      блок: document.getElementById("parts-step-" + имя),
+      чипы: document.getElementById("parts-" + имя),
+    };
+  }
+
   function init() {
     els = {
       list: document.getElementById("parts-list"),
-      devices: document.getElementById("parts-devices"),
-      model: document.getElementById("parts-model"),
-      modelWrap: document.getElementById("parts-model-wrap"),
-      chips: document.getElementById("parts-chips"),
       status: document.getElementById("parts-status"),
       more: document.getElementById("parts-more"),
       search: document.getElementById("parts-search"),
@@ -405,7 +527,14 @@
       stock: document.getElementById("parts-stock"),
       updated: document.getElementById("parts-updated"),
     };
-    if (!els.list || !els.devices) return;
+    ряды = {
+      устройство: ряд("devices"),
+      серия: ряд("series"),
+      модель: ряд("models"),
+      класс: ряд("classes"),
+      узел: ряд("nodes"),
+    };
+    if (!els.list || !ряды.устройство.чипы) return;
 
     els.more.addEventListener("click", function () { render(false); });
 
@@ -418,11 +547,6 @@
         render(true);
       }, 150);
     });
-    els.model.addEventListener("change", function () {
-      filters.модель = els.model.value;
-      перерисоватьФильтры();
-      render(true);
-    });
     if (els.stockOnly) {
       els.stockOnly.addEventListener("change", function () {
         filters.наличие = els.stockOnly.checked;
@@ -432,7 +556,7 @@
     }
     if (els.reset) {
       els.reset.addEventListener("click", function () {
-        filters = { устройство: "", модель: "", узел: "", поиск: "", наличие: false };
+        filters = { устройство: "", серия: "", модель: "", класс: "", узел: "", поиск: "", наличие: false };
         els.search.value = "";
         if (els.stockOnly) els.stockOnly.checked = false;
         перерисоватьФильтры();
