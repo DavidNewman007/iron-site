@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-19T12:19:46.482Z",
-  "count": 57,
+  "generated_at": "2026-09-20T12:14:59.126Z",
+  "count": 58,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -457,6 +457,14 @@
       "name": "Dyson V15 Detect Absolute SV47 Yellow/Nickel",
       "warehouse": "(S3)",
       "price": 58700
+    },
+    "-hs08-jasper-plum-s2-45300": {
+      "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45300.html",
+      "url_en": "en/hybrid-products/dyson/hs08-jasper-plum-s2-45300.html",
+      "cover": "assets/product-images/cb2b76fbce4463f5d7d430fc.jpg",
+      "name": "👱‍♀HS08 Jasper Plum",
+      "warehouse": "(S2)",
+      "price": 45300
     }
   }
 }

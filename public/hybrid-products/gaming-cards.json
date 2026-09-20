@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-19T12:19:46.478Z",
-  "count": 35,
+  "generated_at": "2026-09-20T12:14:59.122Z",
+  "count": 37,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -281,6 +281,22 @@
       "name": "🎧PS5 Pulse Elite White",
       "warehouse": "(S2)",
       "price": 15600
+    },
+    "-ps5-slim-digital-1tb-s2-69800": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-1tb-s2-69800.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-1tb-s2-69800.html",
+      "cover": "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+      "name": "🎮PS5 Slim Digital 1TB",
+      "warehouse": "(S2)",
+      "price": 69800
+    },
+    "-ps5-slim-digital-825gb-s2-68300": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-68300.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-825gb-s2-68300.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "🎮PS5 Slim Digital 825Gb",
+      "warehouse": "(S2)",
+      "price": 68300
     }
   }
 }

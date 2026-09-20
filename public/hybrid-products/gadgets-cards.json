@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-19T12:19:46.484Z",
-  "count": 24,
+  "generated_at": "2026-09-20T12:14:59.129Z",
+  "count": 28,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -193,6 +193,38 @@
       "name": "⌚️Whoop 5.0 Peak + годовая подписка",
       "warehouse": "(S2)",
       "price": 26200
+    },
+    "-instax-mini-12-blue-s2-11100": {
+      "url": "hybrid-products/gadgets/instax-mini-12-blue-s2-11100.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-12-blue-s2-11100.html",
+      "cover": "assets/product-images/c7e6071e77cc2bb826b98da9.jpg",
+      "name": "📸instax mini 12 Blue",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "-instax-mini-12-green-s2-11100": {
+      "url": "hybrid-products/gadgets/instax-mini-12-green-s2-11100.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-12-green-s2-11100.html",
+      "cover": "assets/product-images/1a01f84477367085647a52ca.jpg",
+      "name": "📸instax mini 12 Green",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "-instax-mini-link-3-green-s2-12800": {
+      "url": "hybrid-products/gadgets/instax-mini-link-3-green-s2-12800.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-link-3-green-s2-12800.html",
+      "cover": "assets/product-images/f082320a01592e1ab19e8e69.jpg",
+      "name": "📸instax mini Link 3, Green",
+      "warehouse": "(S2)",
+      "price": 12800
+    },
+    "-instax-mini-link-3-white-s2-12800": {
+      "url": "hybrid-products/gadgets/instax-mini-link-3-white-s2-12800.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-link-3-white-s2-12800.html",
+      "cover": "assets/product-images/130ae97c09f406d30a97d0d9.jpg",
+      "name": "📸instax mini Link 3, White",
+      "warehouse": "(S2)",
+      "price": 12800
     }
   }
 }

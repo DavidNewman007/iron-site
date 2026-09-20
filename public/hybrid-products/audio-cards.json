@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-19T12:19:46.475Z",
-  "count": 51,
+  "generated_at": "2026-09-20T12:14:59.119Z",
+  "count": 58,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -409,6 +409,62 @@
       "name": "Buds 4 Pro Pink",
       "warehouse": "(S3)",
       "price": 18600
+    },
+    "-яндекс-станция-миди-черный-s2-17200": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-черный-s2-17200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-черный-s2-17200.html",
+      "cover": "assets/product-images/6b3187d94b656b951f87d8ed.jpeg",
+      "name": "🔈Яндекс Станция Миди Черный",
+      "warehouse": "(S2)",
+      "price": 17200
+    },
+    "-яндекс-станция-миди-оранжевый-s2-16700": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-оранжевый-s2-16700.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-оранжевый-s2-16700.html",
+      "cover": "assets/product-images/10007a1f74890729ec6c0470.jpeg",
+      "name": "🔈Яндекс Станция Миди Оранжевый",
+      "warehouse": "(S2)",
+      "price": 16700
+    },
+    "buds-core-white-оаэ-s3-5500": {
+      "url": "hybrid-products/audio/buds-core-white-s3-5500.html",
+      "url_en": "en/hybrid-products/audio/buds-core-white-s3-5500.html",
+      "cover": "assets/product-images/c89f5d0852ae2924cb559f59.jpg",
+      "name": "Buds Core White",
+      "warehouse": "(S3)",
+      "price": 5500
+    },
+    "buds-3-fe-black-оаэ-s3-8600": {
+      "url": "hybrid-products/audio/buds-3-fe-black-s3-8600.html",
+      "url_en": "en/hybrid-products/audio/buds-3-fe-black-s3-8600.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Buds 3 FE Black",
+      "warehouse": "(S3)",
+      "price": 8600
+    },
+    "buds-4-black-оаэ-s3-12200": {
+      "url": "hybrid-products/audio/buds-4-black-s3-12200.html",
+      "url_en": "en/hybrid-products/audio/buds-4-black-s3-12200.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Buds 4 Black",
+      "warehouse": "(S3)",
+      "price": 12200
+    },
+    "buds-4-white-оаэ-s3-12200": {
+      "url": "hybrid-products/audio/buds-4-white-s3-12200.html",
+      "url_en": "en/hybrid-products/audio/buds-4-white-s3-12200.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Buds 4 White",
+      "warehouse": "(S3)",
+      "price": 12200
+    },
+    "buds-4-pro-white-оаэ-s3-17000": {
+      "url": "hybrid-products/audio/buds-4-pro-white-s3-17000.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-white-s3-17000.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Buds 4 Pro White",
+      "warehouse": "(S3)",
+      "price": 17000
     }
   }
 }

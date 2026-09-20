@@ -1,0 +1,84 @@
+{
+  "product_id": "-яндекс-станция-миди-черный-s2-17200",
+  "category": "audio",
+  "file_slug": "яндекс-станция-миди-черный-s2-17200",
+  "name": "🔈Яндекс Станция Миди Черный",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 17200,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-headphones-and-speakers/yandex-station-midi/yandex-station-midi-black",
+  "catalog_title": "умную колонку Яндекс Станция Миди, Чёрный",
+  "specs": [
+    {
+      "key": "Количество динамиков",
+      "value": "ВЧ x 2, НЧ x 1, пассивн. излучатель x 2"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "24 Вт"
+    },
+    {
+      "key": "Минимальная частота",
+      "value": "70 Гц"
+    },
+    {
+      "key": "Максимальная частота",
+      "value": "20 кГц"
+    },
+    {
+      "key": "Количество микрофонов",
+      "value": "4"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Стандарт Wi-Fi (IEEE 802.11 a/b/g/n/ac), Bluetooth 5.0/BLE, протокол связи умного дома ZigBee"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "Тип питания",
+      "value": "от сети"
+    },
+    {
+      "key": "Материал",
+      "value": "пластик, ткань"
+    },
+    {
+      "key": "Ширина",
+      "value": "96 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "110 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "96 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "900 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "защита от брызг"
+    },
+    {
+      "key": "Голосовой помощник",
+      "value": "Алиса"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yndx-midi/yandex-midi-dr-store-101-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yndx-midi/yandex-midi-dr-store-102-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yndx-midi/yandex-midi-dr-store-107-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/6b3187d94b656b951f87d8ed.jpeg",
+    "assets/product-images/4aeb50890bd86498f093bd90.jpeg",
+    "assets/product-images/959637a0dfbba92b7101abfa.jpeg"
+  ],
+  "updated_at": "2026-09-20T12:14:00.196739Z"
+}
