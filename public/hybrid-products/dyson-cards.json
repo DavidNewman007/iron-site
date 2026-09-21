@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-20T12:14:59.126Z",
-  "count": 58,
+  "generated_at": "2026-09-21T13:50:03.283Z",
+  "count": 63,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -465,6 +465,46 @@
       "name": "👱‍♀HS08 Jasper Plum",
       "warehouse": "(S2)",
       "price": 45300
+    },
+    "dyson-ht01-amber-silk-оаэ-s3-37800": {
+      "url": "hybrid-products/dyson/dyson-ht01-amber-silk-s3-37800.html",
+      "url_en": "en/hybrid-products/dyson/dyson-ht01-amber-silk-s3-37800.html",
+      "cover": "assets/product-images/d37c3cf1eab35b23d35914dc.png",
+      "name": "Dyson HT01 Amber Silk",
+      "warehouse": "(S3)",
+      "price": 37800
+    },
+    "dyson-ht01-apricot-topaz-великобритания-s3-37800": {
+      "url": "hybrid-products/dyson/dyson-ht01-apricot-topaz-s3-37800.html",
+      "url_en": "en/hybrid-products/dyson/dyson-ht01-apricot-topaz-s3-37800.html",
+      "cover": "assets/product-images/5889de94e02e4dc95d31b629.png",
+      "name": "Dyson HT01 Apricot Topaz",
+      "warehouse": "(S3)",
+      "price": 37800
+    },
+    "dyson-ht01-nickel-copper-европа-s3-38800": {
+      "url": "hybrid-products/dyson/dyson-ht01-nickel-copper-s3-38800.html",
+      "url_en": "en/hybrid-products/dyson/dyson-ht01-nickel-copper-s3-38800.html",
+      "cover": "assets/product-images/b028af352d0c4e82aa81fbc7.jpg",
+      "name": "Dyson HT01 Nickel/Copper",
+      "warehouse": "(S3)",
+      "price": 38800
+    },
+    "dyson-ht01-nickel-copper-индия-s3-33800": {
+      "url": "hybrid-products/dyson/dyson-ht01-nickel-copper-s3-33800.html",
+      "url_en": "en/hybrid-products/dyson/dyson-ht01-nickel-copper-s3-33800.html",
+      "cover": "assets/product-images/b028af352d0c4e82aa81fbc7.jpg",
+      "name": "Dyson HT01 Nickel/Copper",
+      "warehouse": "(S3)",
+      "price": 33800
+    },
+    "dyson-hs08-amber-silk-европа-s3-42200": {
+      "url": "hybrid-products/dyson/dyson-hs08-amber-silk-s3-42200.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-amber-silk-s3-42200.html",
+      "cover": "assets/product-images/29f0ef3544bf36164fbfd8c1.jpg",
+      "name": "Dyson HS08 Amber Silk",
+      "warehouse": "(S3)",
+      "price": 42200
     }
   }
 }

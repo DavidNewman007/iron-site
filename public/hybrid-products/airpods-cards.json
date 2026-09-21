@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-20T12:14:59.072Z",
-  "count": 119,
+  "generated_at": "2026-09-21T13:50:03.215Z",
+  "count": 125,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -953,6 +953,54 @@
       "name": "AirPods Max 2 2026 (USB-C) Orange",
       "warehouse": "(S3)",
       "price": 44800
+    },
+    "-airpods-4-with-anc-mxp93-s1-14600": {
+      "url": "hybrid-products/airpods/airpods-4-with-anc-mxp93-s1-14600.html",
+      "url_en": "en/hybrid-products/airpods/airpods-4-with-anc-mxp93-s1-14600.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "🎧 AirPods 4 with ANC MXP93",
+      "warehouse": "(S1)",
+      "price": 14600
+    },
+    "-airpods-pro-3-mfhp4-s1-21200": {
+      "url": "hybrid-products/airpods/airpods-pro-3-mfhp4-s1-21200.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-3-mfhp4-s1-21200.html",
+      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
+      "name": "🎧 AirPods Pro 3 MFHP4",
+      "warehouse": "(S1)",
+      "price": 21200
+    },
+    "airpods-max-2-2026-usb-c-blue-европа-s3-45300": {
+      "url": "hybrid-products/airpods/airpods-max-2-2026-usb-c-blue-s3-45300.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-2026-usb-c-blue-s3-45300.html",
+      "cover": "assets/product-images/026927b2495d8f4ba255f6b2.jpg",
+      "name": "AirPods Max 2 2026 (USB-C) Blue",
+      "warehouse": "(S3)",
+      "price": 45300
+    },
+    "airpods-max-2-2026-usb-c-midnight-европа-s3-45200": {
+      "url": "hybrid-products/airpods/airpods-max-2-2026-usb-c-midnight-s3-45200.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-2026-usb-c-midnight-s3-45200.html",
+      "cover": "assets/product-images/1611732bf1dd6c4e9030627a.jpg",
+      "name": "AirPods Max 2 2026 (USB-C) Midnight",
+      "warehouse": "(S3)",
+      "price": 45200
+    },
+    "airpods-max-2-2026-usb-c-starlight-европа-s3-45000": {
+      "url": "hybrid-products/airpods/airpods-max-2-2026-usb-c-starlight-s3-45000.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-2026-usb-c-starlight-s3-45000.html",
+      "cover": "assets/product-images/3fc3b26680f7e3f1f7024395.jpg",
+      "name": "AirPods Max 2 2026 (USB-C) Starlight",
+      "warehouse": "(S3)",
+      "price": 45000
+    },
+    "airpods-max-2-2026-usb-c-purple-европа-s3-44400": {
+      "url": "hybrid-products/airpods/airpods-max-2-2026-usb-c-purple-s3-44400.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-2026-usb-c-purple-s3-44400.html",
+      "cover": "assets/product-images/ed05f9e1384c6ce6df3cef52.jpg",
+      "name": "AirPods Max 2 2026 (USB-C) Purple",
+      "warehouse": "(S3)",
+      "price": 44400
     }
   }
 }

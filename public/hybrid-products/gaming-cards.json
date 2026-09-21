@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-20T12:14:59.122Z",
-  "count": 37,
+  "generated_at": "2026-09-21T13:50:03.278Z",
+  "count": 39,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -297,6 +297,22 @@
       "name": "🎮PS5 Slim Digital 825Gb",
       "warehouse": "(S2)",
       "price": 68300
+    },
+    "-ps5-pro-2tb-s2-118200": {
+      "url": "hybrid-products/gaming/ps5-pro-2tb-s2-118200.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-2tb-s2-118200.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro 2TB",
+      "warehouse": "(S2)",
+      "price": 118200
+    },
+    "-ps5-slim-digital-1tb-s2-72300": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-1tb-s2-72300.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-1tb-s2-72300.html",
+      "cover": "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+      "name": "🎮PS5 Slim Digital 1TB",
+      "warehouse": "(S2)",
+      "price": 72300
     }
   }
 }

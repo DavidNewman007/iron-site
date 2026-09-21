@@ -1,0 +1,62 @@
+{
+  "product_id": "-ps5-slim-digital-1tb-s2-72300",
+  "category": "gaming",
+  "file_slug": "ps5-slim-digital-1tb-s2-72300",
+  "name": "🎮PS5 Slim Digital 1TB",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 72300,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/playstation-5/sony-playstation-5-slim-digital-edition",
+  "catalog_title": "игровую приставку Sony PlayStation 5 Slim Digital Edition 1TB",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "AMD Ryzen Zen 2 (8-ядерный 3.50 МГц)"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "AMD Radeon RDNA 2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "1024 ГБ"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-A 3.0 2 шт., USB Type-C 2 шт., выход HDMI, Bluetooth 5.1, Wi-Fi, LAN"
+    },
+    {
+      "key": "Материал",
+      "value": "пластик"
+    },
+    {
+      "key": "Ширина",
+      "value": "80 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "358 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "216 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "2600 г"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5-slim/ps5-slim-digital-dr-store-1-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5-slim/ps5-slim-digital-dr-store-2-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+    "assets/product-images/90b431a6f9a566b4e31b8685.jpg"
+  ],
+  "updated_at": "2026-09-21T13:49:33.857329Z"
+}

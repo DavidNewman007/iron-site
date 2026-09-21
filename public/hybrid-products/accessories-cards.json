@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-20T12:14:59.114Z",
-  "count": 54,
+  "generated_at": "2026-09-21T13:50:03.270Z",
+  "count": 55,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -433,6 +433,14 @@
       "name": "Dyson PencilVac Fluffycone Black",
       "warehouse": "(S3)",
       "price": 43800
+    },
+    "-pencil-pro-mx2d3-s1-12900": {
+      "url": "hybrid-products/accessories/pencil-pro-mx2d3-s1-12900.html",
+      "url_en": "en/hybrid-products/accessories/pencil-pro-mx2d3-s1-12900.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "🖊 Pencil Pro MX2D3",
+      "warehouse": "(S1)",
+      "price": 12900
     }
   }
 }
