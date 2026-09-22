@@ -1,0 +1,62 @@
+{
+  "product_id": "dyson-v8-absolute-sv25-silver-yellow-великобритания-s3-31700",
+  "category": "dyson",
+  "file_slug": "dyson-v8-absolute-sv25-silver-yellow-s3-31700",
+  "name": "Dyson V8 Absolute SV25 Silver/Yellow",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S3)",
+  "price": 31700,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/dyson-v11-absolute",
+  "catalog_title": "пылесос беспроводной Dyson V11 Absolute, Nickel/Blue…",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "V11 Absolute"
+    },
+    {
+      "key": "Мощность всасывания",
+      "value": "185 Вт"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 60 минут"
+    },
+    {
+      "key": "Материал",
+      "value": "пластик"
+    },
+    {
+      "key": "Объем пылесборника",
+      "value": "760 мл"
+    },
+    {
+      "key": "Ширина",
+      "value": "250 м"
+    },
+    {
+      "key": "Высота",
+      "value": "1.280 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "260 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "3000 г"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/v11/dyson-v11-absolute-6-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/v11/dyson-v11-absolute-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/v11/dyson-v11-absolute-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/v11/dyson-v11-absolute-7-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/29763f928eae8642f39b5e4a.jpg",
+    "assets/product-images/fd05c4f669c4f3e20cacc3de.jpg",
+    "assets/product-images/3328fa2b6868320cdf244f42.jpg",
+    "assets/product-images/ecf3ade66164be6e6599ff52.jpg"
+  ],
+  "updated_at": "2026-09-22T12:35:08.968361Z"
+}

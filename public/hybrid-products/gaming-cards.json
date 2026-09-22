@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-21T13:50:03.278Z",
-  "count": 39,
+  "generated_at": "2026-09-22T12:35:50.094Z",
+  "count": 43,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -313,6 +313,38 @@
       "name": "🎮PS5 Slim Digital 1TB",
       "warehouse": "(S2)",
       "price": 72300
+    },
+    "-ps5-pro-2tb-s2-117700": {
+      "url": "hybrid-products/gaming/ps5-pro-2tb-s2-117700.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-2tb-s2-117700.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro 2TB",
+      "warehouse": "(S2)",
+      "price": 117700
+    },
+    "-ps5-slim-digital-1tb-s2-71800": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-1tb-s2-71800.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-1tb-s2-71800.html",
+      "cover": "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+      "name": "🎮PS5 Slim Digital 1TB",
+      "warehouse": "(S2)",
+      "price": 71800
+    },
+    "-ps-vr2-horizon-s2-36500": {
+      "url": "hybrid-products/gaming/ps-vr2-horizon-s2-36500.html",
+      "url_en": "en/hybrid-products/gaming/ps-vr2-horizon-s2-36500.html",
+      "cover": "assets/product-images/53ba5b9e8fd4d1ad012d5513.jpg",
+      "name": "🥽PS VR2+Horizon",
+      "warehouse": "(S2)",
+      "price": 36500
+    },
+    "-gamepad-ps5-cobalt-blue-s2-7700": {
+      "url": "hybrid-products/gaming/gamepad-ps5-cobalt-blue-s2-7700.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-cobalt-blue-s2-7700.html",
+      "cover": "assets/product-images/fb299bc84f2757ff25a6764b.jpg",
+      "name": "🎮GamePad PS5 Cobalt Blue",
+      "warehouse": "(S2)",
+      "price": 7700
     }
   }
 }

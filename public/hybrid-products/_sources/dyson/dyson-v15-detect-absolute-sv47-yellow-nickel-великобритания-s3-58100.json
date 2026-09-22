@@ -1,0 +1,66 @@
+{
+  "product_id": "dyson-v15-detect-absolute-sv47-yellow-nickel-великобритания-s3-58100",
+  "category": "dyson",
+  "file_slug": "dyson-v15-detect-absolute-sv47-yellow-nickel-s3-58100",
+  "name": "Dyson V15 Detect Absolute SV47 Yellow/Nickel",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S3)",
+  "price": 58100,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/dyson-v15-detect-absolute",
+  "catalog_title": "пылесос беспроводной Dyson V15 Detect Absolute, Yellow/Nickel",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "V15 Detect Absolute"
+    },
+    {
+      "key": "Мощность всасывания",
+      "value": "230 Вт"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 60 минут"
+    },
+    {
+      "key": "Материал",
+      "value": "пластик"
+    },
+    {
+      "key": "Объем пылесборника",
+      "value": "770 мл"
+    },
+    {
+      "key": "Ширина",
+      "value": "250 м"
+    },
+    {
+      "key": "Высота",
+      "value": "1.260 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "266 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "2740 г"
+    },
+    {
+      "key": "Технологии",
+      "value": "подсветка частиц пыли, замер частиц пыли"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/v15/446986-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/v15/dyson-v15-absolute-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/v15/dyson-v15-absolute-11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/v15/dyson-v15-absolute-1-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/117cd3827ffbc1ce09d242ce.jpg",
+    "assets/product-images/18099e4d051747dfd4a2e68e.jpg",
+    "assets/product-images/b7f4e68cbe6627f6fbd2341a.jpg",
+    "assets/product-images/e5257fccccedf2e5fb745890.jpg"
+  ],
+  "updated_at": "2026-09-22T12:35:17.992818Z"
+}

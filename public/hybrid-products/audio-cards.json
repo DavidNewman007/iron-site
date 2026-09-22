@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-21T13:50:03.275Z",
-  "count": 61,
+  "generated_at": "2026-09-22T12:35:50.091Z",
+  "count": 66,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -489,6 +489,46 @@
       "name": "Buds 4 Pro Pink",
       "warehouse": "(S3)",
       "price": 18100
+    },
+    "buds-4-black-оаэ-s2-12200": {
+      "url": "hybrid-products/audio/buds-4-black-s2-12200.html",
+      "url_en": "en/hybrid-products/audio/buds-4-black-s2-12200.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Buds 4 Black",
+      "warehouse": "(S2)",
+      "price": 12200
+    },
+    "buds-4-white-оаэ-s2-12400": {
+      "url": "hybrid-products/audio/buds-4-white-s2-12400.html",
+      "url_en": "en/hybrid-products/audio/buds-4-white-s2-12400.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Buds 4 White",
+      "warehouse": "(S2)",
+      "price": 12400
+    },
+    "buds-4-pro-black-оаэ-s2-16500": {
+      "url": "hybrid-products/audio/buds-4-pro-black-s2-16500.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-black-s2-16500.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Buds 4 Pro Black",
+      "warehouse": "(S2)",
+      "price": 16500
+    },
+    "buds-4-pro-white-оаэ-s2-17000": {
+      "url": "hybrid-products/audio/buds-4-pro-white-s2-17000.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-white-s2-17000.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Buds 4 Pro White",
+      "warehouse": "(S2)",
+      "price": 17000
+    },
+    "-яндекс-станция-max-черный-s2-34500": {
+      "url": "hybrid-products/audio/яндекс-станция-max-черный-s2-34500.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-черный-s2-34500.html",
+      "cover": "assets/product-images/1f04736e3d615bcedf619c73.jpg",
+      "name": "🔈Яндекс Станция MAX Черный",
+      "warehouse": "(S2)",
+      "price": 34500
     }
   }
 }

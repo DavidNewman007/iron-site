@@ -1,0 +1,52 @@
+{
+  "product_id": "dyson-gen5-purple-европа-s3-67200",
+  "category": "dyson",
+  "file_slug": "dyson-gen5-purple-s3-67200",
+  "name": "Dyson Gen5 Purple",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 67200,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/dyson-gen5-detect-iron-purple",
+  "catalog_title": "Беспроводной пылесос Dyson Gen5 Detect (Iron/Purple)",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Gen5 Detect"
+    },
+    {
+      "key": "Мощность всасывания",
+      "value": "до 280 AW"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 70 минут"
+    },
+    {
+      "key": "Объем пылесборника",
+      "value": "0,77 л"
+    },
+    {
+      "key": "Вес",
+      "value": "3.1 кг."
+    },
+    {
+      "key": "Цвет",
+      "value": "Iron/Purple"
+    },
+    {
+      "key": "Технологии",
+      "value": "Fluffy Optic™"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav_11zon-7-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2_11zon-7-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3_11zon-7-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/8c325f9a31ee5f8d54991b19.jpeg",
+    "assets/product-images/b7446d236f3367cb6e78c542.jpeg",
+    "assets/product-images/6cf47199b301adcf7a3a499b.jpeg"
+  ],
+  "updated_at": "2026-09-22T12:35:03.477980Z"
+}

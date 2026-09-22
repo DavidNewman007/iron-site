@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-21T13:50:03.270Z",
-  "count": 55,
+  "generated_at": "2026-09-22T12:35:50.085Z",
+  "count": 58,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -441,6 +441,30 @@
       "name": "🖊 Pencil Pro MX2D3",
       "warehouse": "(S1)",
       "price": 12900
+    },
+    "dyson-pencil-wash-wr04-европа-s3-42600": {
+      "url": "hybrid-products/accessories/dyson-pencil-wash-wr04-s3-42600.html",
+      "url_en": "en/hybrid-products/accessories/dyson-pencil-wash-wr04-s3-42600.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "Dyson Pencil Wash WR04",
+      "warehouse": "(S3)",
+      "price": 42600
+    },
+    "dyson-pencilvac-fluffy-black-гонконг-s3-48500": {
+      "url": "hybrid-products/accessories/dyson-pencilvac-fluffy-black-s3-48500.html",
+      "url_en": "en/hybrid-products/accessories/dyson-pencilvac-fluffy-black-s3-48500.html",
+      "cover": "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+      "name": "Dyson PencilVac Fluffy Black",
+      "warehouse": "(S3)",
+      "price": 48500
+    },
+    "dyson-pencilvac-fluffycone-black-европа-s3-43600": {
+      "url": "hybrid-products/accessories/dyson-pencilvac-fluffycone-black-s3-43600.html",
+      "url_en": "en/hybrid-products/accessories/dyson-pencilvac-fluffycone-black-s3-43600.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "Dyson PencilVac Fluffycone Black",
+      "warehouse": "(S3)",
+      "price": 43600
     }
   }
 }

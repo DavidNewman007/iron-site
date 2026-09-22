@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-21T13:50:03.148Z",
-  "count": 215,
+  "generated_at": "2026-09-22T12:35:49.945Z",
+  "count": 242,
   "byId": {
     "ipad-11-a16-wi-fi-128gb-blue-j-a-япония-s1-31600": {
       "url": "hybrid-products/ipad/ipad-11-a16-wi-fi-128gb-blue-j-a-s1-31600.html",
@@ -1721,6 +1721,222 @@
       "name": "iPad Pro 13 M5 256 Space Black LTE",
       "warehouse": "(S3)",
       "price": 124000
+    },
+    "ipad-11-a16-128gb-wi-fi-silver-сша-s2-44800": {
+      "url": "hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-silver-s2-44800.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-silver-s2-44800.html",
+      "cover": "assets/product-images/583a2d3c9183b1410db105a8.jpg",
+      "name": "iPad 11\" A16 128GB Wi-Fi Silver",
+      "warehouse": "(S2)",
+      "price": 44800
+    },
+    "ipad-11-a16-256gb-wi-fi-blue-сша-s2-54000": {
+      "url": "hybrid-products/ipad/ipad-11-a16-256gb-wi-fi-blue-s2-54000.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-a16-256gb-wi-fi-blue-s2-54000.html",
+      "cover": "assets/product-images/78c2bd95ca973a781df329e3.jpg",
+      "name": "iPad 11\" A16 256GB Wi-Fi Blue",
+      "warehouse": "(S2)",
+      "price": 54000
+    },
+    "ipad-11-128-blue-wi-fi-сша-s3-43100": {
+      "url": "hybrid-products/ipad/ipad-11-128-blue-wi-fi-s3-43100.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-128-blue-wi-fi-s3-43100.html",
+      "cover": "assets/product-images/78c2bd95ca973a781df329e3.jpg",
+      "name": "iPad 11 128 Blue Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 43100
+    },
+    "ipad-11-128-pink-wi-fi-сша-s3-44400": {
+      "url": "hybrid-products/ipad/ipad-11-128-pink-wi-fi-s3-44400.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-128-pink-wi-fi-s3-44400.html",
+      "cover": "assets/product-images/106bcc4b2cba9216a4ff8d4b.jpg",
+      "name": "iPad 11 128 Pink Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 44400
+    },
+    "ipad-11-128-silver-lte-сша-s3-54000": {
+      "url": "hybrid-products/ipad/ipad-11-128-silver-lte-s3-54000.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-128-silver-lte-s3-54000.html",
+      "cover": "assets/product-images/ea149c1f4e7a414c71940fa3.jpg",
+      "name": "iPad 11 128 Silver LTE",
+      "warehouse": "(S3)",
+      "price": 54000
+    },
+    "ipad-11-256-blue-wi-fi-сша-s3-53500": {
+      "url": "hybrid-products/ipad/ipad-11-256-blue-wi-fi-s3-53500.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-256-blue-wi-fi-s3-53500.html",
+      "cover": "assets/product-images/78c2bd95ca973a781df329e3.jpg",
+      "name": "iPad 11 256 Blue Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 53500
+    },
+    "ipad-11-256-pink-wi-fi-сша-s3-55100": {
+      "url": "hybrid-products/ipad/ipad-11-256-pink-wi-fi-s3-55100.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-256-pink-wi-fi-s3-55100.html",
+      "cover": "assets/product-images/106bcc4b2cba9216a4ff8d4b.jpg",
+      "name": "iPad 11 256 Pink Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 55100
+    },
+    "ipad-air-11-m3-128-starlight-wi-fi-сша-s3-64800": {
+      "url": "hybrid-products/ipad/ipad-air-11-m3-128-starlight-wi-fi-s3-64800.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m3-128-starlight-wi-fi-s3-64800.html",
+      "cover": "assets/product-images/fb7630407a8aee1ab9ffee57.jpg",
+      "name": "iPad Air 11\" M3 128 Starlight Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 64800
+    },
+    "ipad-air-11-m3-1tb-blue-wi-fi-сша-s3-90000": {
+      "url": "hybrid-products/ipad/ipad-air-11-m3-1tb-blue-wi-fi-s3-90000.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m3-1tb-blue-wi-fi-s3-90000.html",
+      "cover": "assets/product-images/25b0e6302ffb3858b2cd86cf.jpg",
+      "name": "iPad Air 11\" M3 1TB Blue Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 90000
+    },
+    "ipad-air-11-m4-128-gray-wi-fi-сша-s3-66800": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-128-gray-wi-fi-s3-66800.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m4-128-gray-wi-fi-s3-66800.html",
+      "cover": "assets/product-images/a09349f30c0b837086196cfc.jpg",
+      "name": "iPad Air 11\" M4 128 Gray Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 66800
+    },
+    "ipad-air-11-m4-128-starlight-wi-fi-сша-s3-66800": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-128-starlight-wi-fi-s3-66800.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m4-128-starlight-wi-fi-s3-66800.html",
+      "cover": "assets/product-images/fb7630407a8aee1ab9ffee57.jpg",
+      "name": "iPad Air 11\" M4 128 Starlight Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 66800
+    },
+    "ipad-air-11-m4-256-gray-wi-fi-сша-s3-76700": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-256-gray-wi-fi-s3-76700.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m4-256-gray-wi-fi-s3-76700.html",
+      "cover": "assets/product-images/a09349f30c0b837086196cfc.jpg",
+      "name": "iPad Air 11\" M4 256 Gray Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 76700
+    },
+    "ipad-pro-11-m4-1tb-black-wi-fi-nano-texture-сша-s3-106200": {
+      "url": "hybrid-products/ipad/ipad-pro-11-m4-1tb-black-wi-fi-nano-texture-s3-106200.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-11-m4-1tb-black-wi-fi-nano-texture-s3-106200.html",
+      "cover": "assets/product-images/d3122f62d2fefbce337b7d0f.jpg",
+      "name": "iPad Pro 11\" M4 1TB Black Wi-Fi Nano Texture",
+      "warehouse": "(S3)",
+      "price": 106200
+    },
+    "ipad-pro-11-m4-2tb-black-wi-fi-nano-texture-сша-s3-121300": {
+      "url": "hybrid-products/ipad/ipad-pro-11-m4-2tb-black-wi-fi-nano-texture-s3-121300.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-11-m4-2tb-black-wi-fi-nano-texture-s3-121300.html",
+      "cover": "assets/product-images/d3122f62d2fefbce337b7d0f.jpg",
+      "name": "iPad Pro 11\" M4 2TB Black Wi-Fi Nano Texture",
+      "warehouse": "(S3)",
+      "price": 121300
+    },
+    "ipad-pro-11-m4-2tb-silver-lte-nano-texture-сша-s3-119800": {
+      "url": "hybrid-products/ipad/ipad-pro-11-m4-2tb-silver-lte-nano-texture-s3-119800.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-11-m4-2tb-silver-lte-nano-texture-s3-119800.html",
+      "cover": "assets/product-images/ea149c1f4e7a414c71940fa3.jpg",
+      "name": "iPad Pro 11\" M4 2TB Silver LTE Nano Texture",
+      "warehouse": "(S3)",
+      "price": 119800
+    },
+    "ipad-pro-11-m4-2tb-black-lte-nano-texture-сша-s3-119800": {
+      "url": "hybrid-products/ipad/ipad-pro-11-m4-2tb-black-lte-nano-texture-s3-119800.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-11-m4-2tb-black-lte-nano-texture-s3-119800.html",
+      "cover": "assets/product-images/d3122f62d2fefbce337b7d0f.jpg",
+      "name": "iPad Pro 11\" M4 2TB Black LTE Nano Texture",
+      "warehouse": "(S3)",
+      "price": 119800
+    },
+    "ipad-pro-13-m4-1tb-silver-lte-nano-texture-сша-s3-124000": {
+      "url": "hybrid-products/ipad/ipad-pro-13-m4-1tb-silver-lte-nano-texture-s3-124000.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-13-m4-1tb-silver-lte-nano-texture-s3-124000.html",
+      "cover": "assets/product-images/ea149c1f4e7a414c71940fa3.jpg",
+      "name": "iPad Pro 13\" M4 1TB Silver LTE Nano Texture",
+      "warehouse": "(S3)",
+      "price": 124000
+    },
+    "ipad-pro-13-m4-1tb-black-lte-nano-texture-сша-s3-124000": {
+      "url": "hybrid-products/ipad/ipad-pro-13-m4-1tb-black-lte-nano-texture-s3-124000.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-13-m4-1tb-black-lte-nano-texture-s3-124000.html",
+      "cover": "assets/product-images/d3122f62d2fefbce337b7d0f.jpg",
+      "name": "iPad Pro 13\" M4 1TB Black LTE Nano Texture",
+      "warehouse": "(S3)",
+      "price": 124000
+    },
+    "ipad-pro-13-m4-2tb-silver-lte-nano-texture-сша-s3-133400": {
+      "url": "hybrid-products/ipad/ipad-pro-13-m4-2tb-silver-lte-nano-texture-s3-133400.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-13-m4-2tb-silver-lte-nano-texture-s3-133400.html",
+      "cover": "assets/product-images/3c3b549762f772d1c034e317.jpg",
+      "name": "iPad Pro 13\" M4 2TB Silver LTE Nano Texture",
+      "warehouse": "(S3)",
+      "price": 133400
+    },
+    "ipad-pro-13-m4-2tb-black-lte-nano-texture-сша-s3-133400": {
+      "url": "hybrid-products/ipad/ipad-pro-13-m4-2tb-black-lte-nano-texture-s3-133400.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-13-m4-2tb-black-lte-nano-texture-s3-133400.html",
+      "cover": "assets/product-images/896a8cb6cf742c9f43d5c2c4.jpg",
+      "name": "iPad Pro 13\" M4 2TB Black LTE Nano Texture",
+      "warehouse": "(S3)",
+      "price": 133400
+    },
+    "ipad-pro-13-m4-2tb-silver-lte-standard-glass-сша-s3-133400": {
+      "url": "hybrid-products/ipad/ipad-pro-13-m4-2tb-silver-lte-standard-glass-s3-133400.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-13-m4-2tb-silver-lte-standard-glass-s3-133400.html",
+      "cover": "assets/product-images/3c3b549762f772d1c034e317.jpg",
+      "name": "iPad Pro 13\" M4 2TB Silver LTE Standard Glass",
+      "warehouse": "(S3)",
+      "price": 133400
+    },
+    "ipad-pro-13-m4-2tb-black-lte-standard-glass-сша-s3-133400": {
+      "url": "hybrid-products/ipad/ipad-pro-13-m4-2tb-black-lte-standard-glass-s3-133400.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-13-m4-2tb-black-lte-standard-glass-s3-133400.html",
+      "cover": "assets/product-images/896a8cb6cf742c9f43d5c2c4.jpg",
+      "name": "iPad Pro 13\" M4 2TB Black LTE Standard Glass",
+      "warehouse": "(S3)",
+      "price": 133400
+    },
+    "ipad-pro-11-m5-256-silver-wi-fi-сша-s3-105700": {
+      "url": "hybrid-products/ipad/ipad-pro-11-m5-256-silver-wi-fi-s3-105700.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-11-m5-256-silver-wi-fi-s3-105700.html",
+      "cover": "assets/product-images/ea149c1f4e7a414c71940fa3.jpg",
+      "name": "iPad Pro 11\" M5 256 Silver Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 105700
+    },
+    "ipad-pro-11-m5-256-black-lte-сша-s3-115600": {
+      "url": "hybrid-products/ipad/ipad-pro-11-m5-256-black-lte-s3-115600.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-11-m5-256-black-lte-s3-115600.html",
+      "cover": "assets/product-images/d3122f62d2fefbce337b7d0f.jpg",
+      "name": "iPad Pro 11\" M5 256 Black LTE",
+      "warehouse": "(S3)",
+      "price": 115600
+    },
+    "ipad-pro-11-m5-256-silver-lte-сша-s3-116600": {
+      "url": "hybrid-products/ipad/ipad-pro-11-m5-256-silver-lte-s3-116600.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-11-m5-256-silver-lte-s3-116600.html",
+      "cover": "assets/product-images/ea149c1f4e7a414c71940fa3.jpg",
+      "name": "iPad Pro 11\" M5 256 Silver LTE",
+      "warehouse": "(S3)",
+      "price": 116600
+    },
+    "ipad-pro-13-m5-256-black-wi-fi-сша-s3-119200": {
+      "url": "hybrid-products/ipad/ipad-pro-13-m5-256-black-wi-fi-s3-119200.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-13-m5-256-black-wi-fi-s3-119200.html",
+      "cover": "assets/product-images/896a8cb6cf742c9f43d5c2c4.jpg",
+      "name": "iPad Pro 13\" M5 256 Black Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 119200
+    },
+    "ipad-pro-13-m5-256-black-lte-сша-s3-122900": {
+      "url": "hybrid-products/ipad/ipad-pro-13-m5-256-black-lte-s3-122900.html",
+      "url_en": "en/hybrid-products/ipad/ipad-pro-13-m5-256-black-lte-s3-122900.html",
+      "cover": "assets/product-images/896a8cb6cf742c9f43d5c2c4.jpg",
+      "name": "iPad Pro 13\" M5 256 Black LTE",
+      "warehouse": "(S3)",
+      "price": 122900
     }
   }
 }

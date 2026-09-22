@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-21T13:50:03.287Z",
-  "count": 16,
+  "generated_at": "2026-09-22T12:35:50.105Z",
+  "count": 18,
   "byId": {
     "watch-8-40mm-graphite-оаэ-s2-18800": {
       "url": "hybrid-products/galaxy_watch/watch-8-40mm-graphite-s2-18800.html",
@@ -129,6 +129,22 @@
       "name": "Watch Ultra (2025) 47mm Gray",
       "warehouse": "(S2)",
       "price": 32500
+    },
+    "watch-8-classic-46mm-white-оаэ-s2-24100": {
+      "url": "hybrid-products/galaxy_watch/watch-8-classic-46mm-white-s2-24100.html",
+      "url_en": "en/hybrid-products/galaxy_watch/watch-8-classic-46mm-white-s2-24100.html",
+      "cover": "assets/product-images/6bb59bb70eaa4aa34db94571.jpeg",
+      "name": "Watch 8 Classic 46mm White",
+      "warehouse": "(S2)",
+      "price": 24100
+    },
+    "watch-ultra-2025-47mm-blue-оаэ-s2-32000": {
+      "url": "hybrid-products/galaxy_watch/watch-ultra-2025-47mm-blue-s2-32000.html",
+      "url_en": "en/hybrid-products/galaxy_watch/watch-ultra-2025-47mm-blue-s2-32000.html",
+      "cover": "assets/product-images/8f80ebef9d31df7f3bfa1ac5.jpeg",
+      "name": "Watch Ultra (2025) 47mm Blue",
+      "warehouse": "(S2)",
+      "price": 32000
     }
   }
 }
