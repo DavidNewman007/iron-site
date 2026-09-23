@@ -1,0 +1,78 @@
+{
+  "product_id": "dyson-v8-cyclone-европа-s3-31500",
+  "category": "dyson",
+  "file_slug": "dyson-v8-cyclone-s3-31500",
+  "name": "Dyson V8 Cyclone",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 31500,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/pylesos-besprovodnoj-dyson-cyclone-v10-submarine",
+  "catalog_title": "Беспроводной пылесос Dyson Cyclone V10 Submarine",
+  "specs": [
+    {
+      "key": "Тип уборки",
+      "value": "сухая и влажная"
+    },
+    {
+      "key": "Мощность всасывания",
+      "value": "150 аэроватт"
+    },
+    {
+      "key": "Производитель",
+      "value": "Dyson"
+    },
+    {
+      "key": "Тип пылесборника",
+      "value": "контейнер"
+    },
+    {
+      "key": "Труба всасывания",
+      "value": "цельная"
+    },
+    {
+      "key": "Тип питания",
+      "value": "Семиячеечный литий-ионный"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 60 мин"
+    },
+    {
+      "key": "Время зарядки",
+      "value": "3.5 ч"
+    },
+    {
+      "key": "Объем пылесборника",
+      "value": "0.76 л"
+    },
+    {
+      "key": "Длина",
+      "value": "2021 мм"
+    },
+    {
+      "key": "Ширина",
+      "value": "252 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "3.3 кг"
+    },
+    {
+      "key": "Цвет",
+      "value": "Black/Copper"
+    },
+    {
+      "key": "Особенности",
+      "value": "вертикальная парковка"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/v10-submarine/594594-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/v10-submarine/SV580_v10_cyclone_specifications-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/992105922ea53d68f54e31b5.jpg",
+    "assets/product-images/3ab2f0a96d9264e15910a30a.jpg"
+  ],
+  "updated_at": "2026-09-23T12:34:42.798911Z"
+}

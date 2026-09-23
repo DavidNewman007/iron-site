@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-22T12:35:50.091Z",
-  "count": 66,
+  "generated_at": "2026-09-23T12:35:01.516Z",
+  "count": 69,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -529,6 +529,30 @@
       "name": "🔈Яндекс Станция MAX Черный",
       "warehouse": "(S2)",
       "price": 34500
+    },
+    "buds-3-fe-black-оаэ-s3-8700": {
+      "url": "hybrid-products/audio/buds-3-fe-black-s3-8700.html",
+      "url_en": "en/hybrid-products/audio/buds-3-fe-black-s3-8700.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Buds 3 FE Black",
+      "warehouse": "(S3)",
+      "price": 8700
+    },
+    "buds-4-pro-white-оаэ-s3-16800": {
+      "url": "hybrid-products/audio/buds-4-pro-white-s3-16800.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-white-s3-16800.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Buds 4 Pro White",
+      "warehouse": "(S3)",
+      "price": 16800
+    },
+    "buds-4-pro-pink-оаэ-s3-17800": {
+      "url": "hybrid-products/audio/buds-4-pro-pink-s3-17800.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-pink-s3-17800.html",
+      "cover": "assets/product-images/9c24473bcf3b07c8103dfb49.jpg",
+      "name": "Buds 4 Pro Pink",
+      "warehouse": "(S3)",
+      "price": 17800
     }
   }
 }

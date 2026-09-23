@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-22T12:35:50.085Z",
-  "count": 58,
+  "generated_at": "2026-09-23T12:35:01.509Z",
+  "count": 59,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -465,6 +465,14 @@
       "name": "Dyson PencilVac Fluffycone Black",
       "warehouse": "(S3)",
       "price": 43600
+    },
+    "dyson-pencilvac-fluffy-black-гонконг-s3-48900": {
+      "url": "hybrid-products/accessories/dyson-pencilvac-fluffy-black-s3-48900.html",
+      "url_en": "en/hybrid-products/accessories/dyson-pencilvac-fluffy-black-s3-48900.html",
+      "cover": "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+      "name": "Dyson PencilVac Fluffy Black",
+      "warehouse": "(S3)",
+      "price": 48900
     }
   }
 }

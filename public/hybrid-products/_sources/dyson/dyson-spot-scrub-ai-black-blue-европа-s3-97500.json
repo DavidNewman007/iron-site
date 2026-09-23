@@ -1,0 +1,54 @@
+{
+  "product_id": "dyson-spot-scrub-ai-black-blue-европа-s3-97500",
+  "category": "dyson",
+  "file_slug": "dyson-spot-scrub-ai-black-blue-s3-97500",
+  "name": "Dyson Spot+Scrub AI Black/Blue",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 97500,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/robot-pylesos-dyson-spot-scrub-ai",
+  "catalog_title": "Робот-пылесос Dyson Spot + Scrub Ai",
+  "specs": [
+    {
+      "key": "Тип уборки",
+      "value": "сухая и влажная"
+    },
+    {
+      "key": "Время работы",
+      "value": "200 мин"
+    },
+    {
+      "key": "Время зарядки",
+      "value": "3 часа"
+    },
+    {
+      "key": "Объем пылесборника",
+      "value": "3 л"
+    },
+    {
+      "key": "Длина",
+      "value": "робот 370 мм, станция 508"
+    },
+    {
+      "key": "Ширина",
+      "value": "робот 373 мм, станция 440 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "робот 110 мм, станция 455 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "робот 6.6 кг, станция 9 кг"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/dr-30/586180-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/dr-30/805A-PDP-Spec-Image-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/fe86ff3412160bf316c05dd5.jpg",
+    "assets/product-images/1151c724ea369a8083a5f98f.jpg"
+  ],
+  "updated_at": "2026-09-23T12:34:38.960816Z"
+}

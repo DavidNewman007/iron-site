@@ -1,0 +1,58 @@
+{
+  "product_id": "dyson-hs08-jasper-plum-гонконг-s3-44200",
+  "category": "dyson",
+  "file_slug": "dyson-hs08-jasper-plum-s3-44200",
+  "name": "Dyson HS08 Jasper Plum",
+  "country": "🇭🇰 Гонконг",
+  "warehouse": "(S3)",
+  "price": 44200,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-styler/dyson-airwrap-hs08-box-curly-jasper-plum",
+  "catalog_title": "стайлер Dyson Airwrap i.d. HS08 Curly/Coily + подарочный футляр, Jasper Plum",
+  "specs": [
+    {
+      "key": "Длина сетевого шнура",
+      "value": "2.7 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1300 Вт"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий/пластик"
+    },
+    {
+      "key": "Ширина",
+      "value": "48 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "272 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "41мм"
+    },
+    {
+      "key": "Вес",
+      "value": "600 г"
+    },
+    {
+      "key": "Ионизация",
+      "value": "Есть"
+    },
+    {
+      "key": "Скорость воздушного потока",
+      "value": "13.5 л/сек"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs08-jasper-plum/hs08-strawberry-dr-store-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs08-jasper-plum/Web_308F_PDP_Gift_with_Purchase_Banner_Presentation-Case-ROW-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/cb2b76fbce4463f5d7d430fc.jpg",
+    "assets/product-images/2cd503b6655d246fecb43171.jpg"
+  ],
+  "updated_at": "2026-09-23T12:34:22.184911Z"
+}

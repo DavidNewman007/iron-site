@@ -1,0 +1,68 @@
+{
+  "product_id": "dyson-hd17-apricot-topaz-великобритания-s3-36200",
+  "category": "dyson",
+  "file_slug": "dyson-hd17-apricot-topaz-s3-36200",
+  "name": "Dyson HD17 Apricot Topaz",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S3)",
+  "price": 36200,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-feny/Dyson_Supersonic_Nural_HD17_R_Pro_Hair_dryer_apricot_topaz",
+  "catalog_title": "Фен Dyson Supersonic r HD17, Apricot/Topaz",
+  "specs": [
+    {
+      "key": "Производитель",
+      "value": "Dyson"
+    },
+    {
+      "key": "Количество режимов",
+      "value": "4"
+    },
+    {
+      "key": "Длина кабеля",
+      "value": "2.8 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1700 Вт"
+    },
+    {
+      "key": "Ширина",
+      "value": "55 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "285 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "108 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "680 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Абрикос/Топаз"
+    },
+    {
+      "key": "Ионизация",
+      "value": "есть"
+    },
+    {
+      "key": "Подача холодного воздуха",
+      "value": "есть"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd17-apricot/Web-505D_T1T2_Dynamic_primary_machine_dr-store_1500_white-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd17-apricot/Web_505_Gallery_T1T2_Card_4-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd17-apricot/HD17_CAPCTPORSRO_126-RGB-MothersDay26-FlatLay-PowerfulAir-Box-CMACAP-A2_WS_1-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/49c5844fc9874055352cd773.png",
+    "assets/product-images/b5c587ebc47e2cf7fed7358c.png",
+    "assets/product-images/c704fbda761ef0e3893e63c5.jpg"
+  ],
+  "updated_at": "2026-09-23T12:34:18.301694Z"
+}
