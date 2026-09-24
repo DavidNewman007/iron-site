@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-23T12:35:01.528Z",
-  "count": 105,
+  "generated_at": "2026-09-24T12:35:11.465Z",
+  "count": 109,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -841,6 +841,38 @@
       "name": "Dyson V12S Detect Slim Submarine Yellow/Nickel",
       "warehouse": "(S3)",
       "price": 47800
+    },
+    "dyson-hs08-apricot-topaz-airwrap-i-d-южная-корея-s3-42700": {
+      "url": "hybrid-products/dyson/dyson-hs08-apricot-topaz-airwrap-i-d-s3-42700.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-apricot-topaz-airwrap-i-d-s3-42700.html",
+      "cover": "assets/product-images/414299834c0fdce97ae8e390.jpg",
+      "name": "Dyson HS08 Apricot Topaz Airwrap i.d.",
+      "warehouse": "(S3)",
+      "price": 42700
+    },
+    "dyson-hs08-kanzan-pink-airwrap-i-d-straight-wavy-гонконг-s3-51500": {
+      "url": "hybrid-products/dyson/dyson-hs08-kanzan-pink-airwrap-i-d-straight-wavy-s3-51500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-kanzan-pink-airwrap-i-d-straight-wavy-s3-51500.html",
+      "cover": "assets/product-images/6016b6cf9dba5c75e3436091.jpg",
+      "name": "Dyson HS08 Kanzan Pink Airwrap i.d. Straight+Wavy",
+      "warehouse": "(S3)",
+      "price": 51500
+    },
+    "dyson-v16-piston-animal-sv53-matblack-copper-европа-s3-64500": {
+      "url": "hybrid-products/dyson/dyson-v16-piston-animal-sv53-matblack-copper-s3-64500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v16-piston-animal-sv53-matblack-copper-s3-64500.html",
+      "cover": "assets/product-images/2c08d2666490f5b66268d6a7.jpg",
+      "name": "Dyson V16 Piston Animal SV53 MatBlack/Copper",
+      "warehouse": "(S3)",
+      "price": 64500
+    },
+    "dyson-v16s-piston-animal-sv53a-matblack-copper-европа-s3-74500": {
+      "url": "hybrid-products/dyson/dyson-v16s-piston-animal-sv53a-matblack-copper-s3-74500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v16s-piston-animal-sv53a-matblack-copper-s3-74500.html",
+      "cover": "assets/product-images/2c08d2666490f5b66268d6a7.jpg",
+      "name": "Dyson V16S Piston Animal SV53A MatBlack/Copper",
+      "warehouse": "(S3)",
+      "price": 74500
     }
   }
 }
