@@ -47,7 +47,7 @@
   ];
 
   // Финальные статусы — сделка закрыта. Всё остальное считается «в работе».
-  const FINAL = ["выполнен", "отказ от ремонта", "ремонт невозможен", "без ремонта"];
+  const FINAL = ["выполнен", "отказ от ремонта", "ремонт невозможен", "без ремонта", "продан", "разобран"];
   const ORDER = ["принят на диагностику", "ждем предоплату", "ждём предоплату", "заказана запчасть", "готов"];
   const isFinal = s => FINAL.some(f => norm(s).startsWith(f));
   const isReady = s => norm(s).startsWith("готов");
@@ -55,7 +55,7 @@
     const n = norm(s);
     if (!n) return "new";
     if (n.startsWith("готов")) return "ready";
-    if (n.startsWith("выполнен")) return "done";
+    if (n.startsWith("выполнен") || n.startsWith("продан")) return "done";
     if (n.startsWith("отказ") || n.startsWith("ремонт невозможен") || n.startsWith("без ремонта")) return "stop";
     if (n.startsWith("жд") || n.startsWith("заказана")) return "wait";
     return "new";
@@ -180,15 +180,25 @@
         return norm(cell(r, C.name) + " " + cell(r, C.device) + " " + cell(r, C.issue)).includes(q);
       }).reverse();
     }
+    if (S.tab === "stale") return S.rows.filter(isStale).reverse();
     if (S.tab === "work") return S.rows.filter(r => inWork(r) && !isReady(cell(r, C.status))).reverse();
     if (S.tab === "ready") return S.rows.filter(r => inWork(r) && isReady(cell(r, C.status))).reverse();
     if (S.tab === "done") return S.rows.filter(r => isFinal(cell(r, C.status)) && (daysSince(cell(r, C.issued) || cell(r, C.date)) ?? 999) <= 30).reverse();
     return S.rows.slice().reverse();
   }
+  // «Долго висят» — приём из ServiceM8 («требует действия»): список, который хорошо держать пустым.
+  // Даты смены статуса в листе нет, поэтому меряем от даты приёма: в работе дольше 14 дней
+  // или готов и не забран дольше 7 дней от приёма.
+  function isStale(r) {
+    if (!inWork(r)) return false;
+    const age = daysSince(cell(r, C.date));
+    if (age == null) return false;
+    return isReady(cell(r, C.status)) ? age > 7 : age > 14;
+  }
   function counts() {
-    let work = 0, ready = 0;
-    for (const r of S.rows) if (inWork(r)) isReady(cell(r, C.status)) ? ready++ : work++;
-    return { work, ready };
+    let work = 0, ready = 0, stale = 0;
+    for (const r of S.rows) if (inWork(r)) { isReady(cell(r, C.status)) ? ready++ : work++; if (isStale(r)) stale++; }
+    return { work, ready, stale };
   }
 
   // ── экраны ──────────────────────────────────────────────
@@ -238,7 +248,7 @@
 
   function renderList() {
     const list = pick(), n = counts();
-    const tabs = [["work", "В работе", n.work], ["ready", "Готовы, ждут клиента", n.ready], ["done", "Выданы за 30 дней"], ["all", "Все"]];
+    const tabs = [["work", "В работе", n.work], ["stale", "⚡ Долго висят", n.stale], ["ready", "Готовы, ждут клиента", n.ready], ["done", "Выданы за 30 дней"], ["all", "Все"]];
     let body = S.q ? "" : `<nav class="tabs">${tabs.map(([k, t, c]) =>
       `<button class="tab" data-tab="${k}" aria-pressed="${S.tab === k}">${t}${c != null ? `<small>${c}</small>` : ""}</button>`).join("")}</nav>`;
     if (!list.length) body += `<div class="empty">${S.q ? "Ничего не нашлось" : "Здесь пусто"}</div>`;
@@ -289,7 +299,7 @@
 
       <section class="block"><h3>Клиент</h3>
         <div class="big">${esc(cell(r, C.name) || "без имени")}</div>
-        <div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a>`).join("") || `<span class="note">Телефона нет</span>`}</div>
+        <div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("") || `<span class="note">Телефона нет</span>`}</div>
         <p class="note">Имя и телефон меняются в таблице — от них зависит карточка в Google Контактах.</p>
       </section>
 
