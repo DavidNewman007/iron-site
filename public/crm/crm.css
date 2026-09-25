@@ -171,3 +171,26 @@ a { color: var(--red); }
   html { font-size: 19px; }
   .list { grid-template-columns: 1fr 1fr; }
 }
+
+/* ── v3: статусы кнопками, списки, флажки, «＋» ─────────── */
+.statuses { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+.st {
+  min-height: 56px; padding: 8px 14px; border-radius: 14px; border: 2px solid transparent;
+  font-weight: 700; font-size: 1.02rem; text-align: left; line-height: 1.2;
+  background: var(--new-bg); color: var(--new);
+}
+.st--wait { background: var(--wait-bg); color: var(--wait); }
+.st--ready { background: var(--ready-bg); color: var(--ready); }
+.st--done { background: var(--done-bg); color: var(--done); }
+.st--stop { background: var(--stop-bg); color: var(--stop); }
+.st[aria-pressed="true"] { border-color: var(--ink); box-shadow: 0 0 0 2px var(--gold) inset; }
+.st[aria-pressed="true"]::before { content: "✓ "; }
+.field select {
+  width: 100%; min-height: var(--tap); border: 2px solid var(--line); border-radius: 12px; background: #fff;
+  padding: 10px 14px; font-size: 1.15rem; appearance: auto;
+}
+.field.is-dirty select { border-color: var(--gold); background: #fffaf0; }
+.check { display: flex; align-items: center; gap: 12px; min-height: var(--tap); font-size: 1.15rem; cursor: pointer; }
+.check input { width: 30px; height: 30px; accent-color: var(--red); }
+.iconbtn--add { background: var(--red); text-decoration: none; font-weight: 800; }
+.btn:disabled { opacity: .6; }
