@@ -10,7 +10,7 @@
  * уведомление мастеру, Google Контакты, «История статусов», напоминание об отзыве.
  * Поэтому после записи оболочка зовёт «дверь» (Apps Script, CrmDoor.js): та прогоняет
  * каждую изменённую клетку через те же обработчики, что и правка руками.
- * Пока адрес двери не задан (CFG.doorUrl пуст), поля, от которых зависят сообщения,
+ * Пока двери не заданы (CFG.doors пуст), поля, от которых зависят сообщения,
  * меняются в таблице по кнопке «↗» — иначе клиенту молча ничего бы не ушло.
  *
  * Выпадающие списки берутся из правил проверки данных самой таблицы: поменяли список в
@@ -27,8 +27,15 @@
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
     lastCol: "AB",
-    // Веб-приложение Apps Script с CrmDoor.js, развёрнутое из-под рабочего аккаунта.
-    doorUrl: "",
+    // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
+    // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
+    // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
+    // остальное (сообщения клиенту, отчёт, мастер). Каждая дверь исполняет только свои
+    // триггеры. Порядок как у ручной правки по смыслу: сначала контакт и дата, потом сообщения.
+    doors: [
+      "https://script.google.com/macros/s/AKfycbwHC5_EA-wndVqLcRW0ehkZ_r56Hcji1cqmwGgfCF7vY7a13_35T4ckh5n6YE-GoXO7/exec", // ironsapple, v64
+      "https://script.google.com/macros/s/AKfycbyOtzn7cQARc_H9heNEvukPwMhsOapCMc8BNNLi1IBZ9zLABBpb2wJvePbHnpQLPKbr/exec", // личный, v63
+    ],
     newStatus: "Принят на диагностику",
     reportValue: "Ok",
   };
@@ -73,7 +80,7 @@
   // реакция — правка уже отправленного отчёта, а если отчёта нет, реагировать нечему.
   const editable = (c, r) => {
     const f = F[c]; if (!f) return false;
-    if (!f.door || CFG.doorUrl || DEMO) return true;
+    if (!f.door || CFG.doors.length || DEMO) return true;
     return !f.notify && c !== C.name && c !== C.phone && !!r && !isTrue(cell(r, C.report));
   };
 
@@ -290,7 +297,7 @@
       ${search ? `<input class="search" type="search" inputmode="search" placeholder="Номер, телефон, имя или устройство" value="${esc(S.q)}" data-act="search" autocomplete="off">` : ""}
       </header><main class="wrap">${body}</main>`;
   }
-  const canCreate = () => DEMO || !!CFG.doorUrl;
+  const canCreate = () => DEMO || CFG.doors.length > 0;
 
   function itemHtml(r) {
     const st = cell(r, C.status), age = daysSince(cell(r, C.date));
@@ -445,14 +452,18 @@
     if (entered.length) await api("/values:batchUpdate", { method: "POST", body: JSON.stringify({ valueInputOption: "USER_ENTERED", data: pack(entered) }) });
   }
   async function door(row, num, list) {
-    if (DEMO || !CFG.doorUrl) return null;
-    const r = await fetch(CFG.doorUrl + "?action=crm-door", {
-      method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ token: S.token, row, num, changes: list.map(ch => ({ col: ch.c + 1, value: S.bools.has(ch.c) ? String(isTrue(ch.v)).toUpperCase() : String(ch.v ?? ""), old: String(ch.old ?? "") })) }),
-    });
-    const j = await r.json().catch(() => ({ ok: false, error: "дверь ответила не JSON (" + r.status + ")" }));
-    if (!j.ok) throw new Error(j.error || "дверь не ответила");
-    return j;
+    if (DEMO || !CFG.doors.length) return null;
+    const body = JSON.stringify({ token: S.token, row, num, changes: list.map(ch => ({ col: ch.c + 1, value: S.bools.has(ch.c) ? String(isTrue(ch.v)).toUpperCase() : String(ch.v ?? ""), old: String(ch.old ?? "") })) });
+    const all = { ok: true, results: [], statusBackground: "", issued: null };
+    for (const url of CFG.doors) {
+      const r = await fetch(url + "?action=crm-door", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body });
+      const j = await r.json().catch(() => ({ ok: false, error: "дверь ответила не JSON (" + r.status + ")" }));
+      if (!j.ok) throw new Error(j.error || "дверь не ответила");
+      all.results.push(...(j.results || []));
+      all.statusBackground = j.statusBackground || all.statusBackground; // последняя дверь шлёт статус и красит H
+      if (j.issued != null) all.issued = j.issued;
+    }
+    return all;
   }
   function doorReport(j, list) {
     if (!j) return "";
