@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-24T12:35:11.454Z",
-  "count": 61,
+  "generated_at": "2026-09-25T12:22:22.610Z",
+  "count": 62,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -489,6 +489,14 @@
       "name": "Dyson HD08 Blue/Copper с кейсом",
       "warehouse": "(S3)",
       "price": 43200
+    },
+    "-pencil-pro-mx2d3-s1-13200": {
+      "url": "hybrid-products/accessories/pencil-pro-mx2d3-s1-13200.html",
+      "url_en": "en/hybrid-products/accessories/pencil-pro-mx2d3-s1-13200.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "🖊 Pencil Pro MX2D3",
+      "warehouse": "(S1)",
+      "price": 13200
     }
   }
 }

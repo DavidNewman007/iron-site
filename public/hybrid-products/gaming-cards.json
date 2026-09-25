@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-24T12:35:11.460Z",
-  "count": 46,
+  "generated_at": "2026-09-25T12:22:22.619Z",
+  "count": 47,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -369,6 +369,14 @@
       "name": "🎮GamePad PS5 Black",
       "warehouse": "(S2)",
       "price": 7900
+    },
+    "-ps5-pro-2tb-s2-120800": {
+      "url": "hybrid-products/gaming/ps5-pro-2tb-s2-120800.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-2tb-s2-120800.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro 2TB",
+      "warehouse": "(S2)",
+      "price": 120800
     }
   }
 }

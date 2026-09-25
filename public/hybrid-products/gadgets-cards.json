@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-24T12:35:11.467Z",
-  "count": 28,
+  "generated_at": "2026-09-25T12:22:22.630Z",
+  "count": 30,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -225,6 +225,22 @@
       "name": "📸instax mini Link 3, White",
       "warehouse": "(S2)",
       "price": 12800
+    },
+    "-canon-powershot-g7-x-mark-iii-black-s2-107200": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-black-s2-107200.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-black-s2-107200.html",
+      "cover": "assets/product-images/333874f719a026e25cd64d37.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Black",
+      "warehouse": "(S2)",
+      "price": 107200
+    },
+    "-canon-powershot-g7-x-mark-iii-silver-s2-107200": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-107200.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-107200.html",
+      "cover": "assets/product-images/dd1b9655ba8ad1dedcc47b4e.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Silver",
+      "warehouse": "(S2)",
+      "price": 107200
     }
   }
 }

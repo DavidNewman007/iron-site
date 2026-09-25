@@ -1,0 +1,150 @@
+{
+  "product_id": "iphone-15-plus-256gb-yellow-sim-esim-индия-s3-69500",
+  "category": "iphone",
+  "file_slug": "iphone-15-plus-256gb-yellow-sim-esim-s3-69500",
+  "name": "iPhone 15 Plus 256Gb Yellow (SIM + eSIM)",
+  "country": "🇮🇳 Индия",
+  "warehouse": "(S3)",
+  "price": 69500,
+  "catalog_url": "https://sochi.dr-store.ru/apple/iphone/iphone-15/iphone-15-256gb-yellow",
+  "catalog_title": "Apple iPhone 15 256GB, Yellow",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "OLED (Super Retina XDR)"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6.1\""
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "True Tone, Dynamic Island"
+    },
+    {
+      "key": "Разрешение",
+      "value": "2556x1179 пикселей"
+    },
+    {
+      "key": "Яркость",
+      "value": "2000 кд/м²"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "460 пикс/дюйм"
+    },
+    {
+      "key": "Контрастность",
+      "value": "2000000:1"
+    },
+    {
+      "key": "Процессор",
+      "value": "Apple A16 Bionic"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "5 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "6 ГБ"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "48 Мп, 12 Мп, 12 Мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "основная: ƒ/1.6, сверхширокоугольная: ƒ/2.4, телефото (2x): ƒ/1.6"
+    },
+    {
+      "key": "Технологии камеры",
+      "value": "Photonic Engine, Smart HDR 5"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12 Мп"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "ƒ/1.9"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "nano-SIM + eSIM"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "5G (sub‑6 GHz), Gigabit Class LTE, Wi‑Fi 6 (802.11ax), Bluetooth 5.3, NFC с поддержкой режима считывания, GSM/EDGE, UMTS/​HSPA+/​DC-HSDPA, MIMO, Экспресс‑карты с резервным питанием"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, ГЛОНАСС, Galileo, QZSS, BeiDou"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-C"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Ion"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "3349 мАч"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "Есть"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий/стекло"
+    },
+    {
+      "key": "Ширина",
+      "value": "71.6 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "147.6 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "7.8 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "171 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "iOS"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "поддержка Dolby Atmos"
+    },
+    {
+      "key": "Датчики",
+      "value": "трёхосевой гироскоп, акселерометр, барометр, датчик внешней, освещённости, датчик приближения"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/15-15-plus/iphone-15-dr-store-35-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/15-15-plus/iphone-15-dr-store-30-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/15-15-plus/iphone-15-dr-store-25-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/iphone/15-15-plus/iphone-15-dr-store-13-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/fa6999da1c75251b22c9ca48.jpg",
+    "assets/product-images/cd1d55c4ed5ba1e2dd4fb392.jpg",
+    "assets/product-images/8c81eae382370a5e16a411a2.jpg",
+    "assets/product-images/e6dd5f06a816d0bc679b88e2.jpg"
+  ],
+  "updated_at": "2026-09-25T12:15:03.760277Z"
+}

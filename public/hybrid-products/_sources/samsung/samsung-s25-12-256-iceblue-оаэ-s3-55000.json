@@ -1,0 +1,128 @@
+{
+  "product_id": "samsung-s25-12-256-iceblue-оаэ-s3-55000",
+  "category": "samsung",
+  "file_slug": "samsung-s25-12-256-iceblue-s3-55000",
+  "name": "Samsung S25 12/256 IceBlue",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S3)",
+  "price": 55000,
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-s/galaxy-s25/galaxy-s25-12-256gb-iceblue",
+  "catalog_title": "Samsung Galaxy S25 12/256GB, Icyblue",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "Dynamic AMOLED 2X 120 Гц"
+    },
+    {
+      "key": "Диагональ",
+      "value": "USB 3.2 Gen 1"
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "Always-on display"
+    },
+    {
+      "key": "Разрешение",
+      "value": "2340x1080 пикселей (FHD+)"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Elite"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "Qualcomm Adreno 830"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50 Мп, 10 Мп, 12 Мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "ƒ/1.8, ƒ/2.4, ƒ/2.2"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12 Мп"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "ƒ/2.2"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 nano‑SIM, eSIM"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "5G, LTE, Wi-Fi 6E, Wi-Fi Direct, Bluetooth v5.4"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, ГЛОНАСС, Beidou, Galileo, QZSS"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Ion"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "4000 мАч"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминиевая рамка Armor Aluminum, Gorilla Glass Victus 2"
+    },
+    {
+      "key": "Ширина",
+      "value": "70.5 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "146.9 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "7.2 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "162 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "стерео динамики Tuned by AKG"
+    },
+    {
+      "key": "Датчики",
+      "value": "акселерометр, барометр, сканер отпечатка пальца, гироскопический датчик, геомагнитный датчик, датчик Холла, датчик освещенности, датчик приближения"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s25/s25-dr-store-27-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s25/s25-dr-store-14-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s25/s25-dr-store-21-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s25/s25-dr-store-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s25/s25-dr-store-6-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/8e3b4784ae90687d2c690ddb.jpg",
+    "assets/product-images/94e9b4984c0d16c5f7000992.jpg",
+    "assets/product-images/0076860afd6795310c7d0aab.jpg",
+    "assets/product-images/f00443cee658ae8ff04df700.jpg",
+    "assets/product-images/05aa27f492c9de1e0a5df6f1.jpg"
+  ],
+  "updated_at": "2026-09-25T12:20:20.824262Z"
+}
