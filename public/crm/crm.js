@@ -175,7 +175,7 @@
 
   const DEMO = new URLSearchParams(location.search).has("demo");
   const S = { token: null, email: "", rows: [], byNum: new Map(), gid: 0, loadedAt: 0, loading: false,
-    tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [] };
+    since: new Map(), tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [] };
   const $app = document.getElementById("app");
   const $toast = document.getElementById("toast");
 
@@ -276,6 +276,7 @@
         const data = await api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A2:${CFG.lastCol}${last}`)}?valueRenderOption=FORMATTED_VALUE`);
         setRows((data.values || []).map((cells, i) => ({ row: i + 2, cells })));
         await loadOptions().catch(e => console.warn("списки:", e));
+        loadHistory().catch(e => console.warn("история статусов:", e)); // в фоне, не держит загрузку
       }
       S.loadedAt = Date.now();
     } catch (e) {
@@ -352,7 +353,7 @@
   }
   function demoOptions() {
     const uniq = c => [...new Set(S.rows.map(r => String(cell(r, c)).trim()).filter(Boolean))];
-    S.opts[C.status] = ["Принят на диагностику", "На соглосовании", "Ждем предоплату", "Заказана запчасть", "В работе", "Готов ожидает клиента", "Выполнен", "Отказ от ремонта после диагностики", "Выкуплен", "Разобран на запчасти", "Обмен оформлен", "Продан"];
+    S.opts[C.status] = ["Принят на диагностику", "На согласовании", "Ждем предоплату", "Заказана запчасть", "В работе", "Готов ожидает клиента", "Выполнен", "Отказ от ремонта после диагностики", "Выкуплен", "Разобран на запчасти", "Обмен оформлен", "Продан"];
     S.opts[C.master] = uniq(C.master).sort();
     S.opts[C.source] = uniq(C.source);
     S.opts[C.type] = ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Другое"];
@@ -558,10 +559,12 @@
     const tel = phones(val(C.phone));
     const typeNow = val(C.type) || "Ремонт";
 
+    const box = (order, inner) => `<div class="cg-item" style="order:${order}">${inner}</div>`;
     let html = `<section class="block"><h3>Тип сделки</h3>${
       editable(C.type, r) || isNew ? choiceButtons(key, C.type, typeNow, typeOptions(), () => "type") : `<div class="big">${esc(typeNow)}</div>`}
       ${["buyback", "parts", "tradein"].includes(dk) ? `<p class="note">${dk === "tradein" ? "Сданное устройство" : "Перед выкупом"}: iCloud и «Найти iPhone» отключены, IMEI не в розыске, проверены АКБ и экран. Паспортные данные — только в бумажный договор, в таблицу не писать.</p>` : ""}
     </section>`;
+    let left = box(1, html), right = ""; html = "";
 
     if (isNew && dk !== "repair" && dk !== "other") {
       html += `<section class="block"><h3>Статус</h3>${choiceButtons(key, C.status, val(C.status), statusesFor(dk), statusKind)}
@@ -578,30 +581,36 @@
       html += `<section class="block"><h3>Статус</h3>${statusBlock}
         <div class="row row--report">${reportBtn}${reviewBtn(key, r)}</div></section>`;
     }
+    left += box(2, html); html = "";
 
-    html += `<section class="block"><h3>Клиент</h3>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}
+    html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
     </section>`;
+    left += box(3, html); html = "";
 
     html += `<section class="block"><h3>${isNew && S.multi ? "Устройство 1" : dk === "repair" || dk === "other" ? "Ремонт" : "Устройство"}</h3>
       ${isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>${esc(TYPE_UI[dk].multi)}</b></label>` : ""}
-      ${fh(C.device)}${fh(C.imei)}${fh(C.issue)}${fh(C.work)}
-      ${fh(C.parts)}<div class="grid2">${fh(C.partFrom)}${fh(C.warranty)}</div>
+      <div class="grid2">${fh(C.device)}${fh(C.imei)}</div>
+      <div class="grid2">${fh(C.issue)}${fh(C.work)}</div>
+      <div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>
       ${dk === "sale_used" || String(r ? cell(r, C.linked) : "").trim() ? fh(C.linked) : ""}
       ${fh(C.master)}
       <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass)}</div>
     </section>`;
+    right += box(4, html); html = "";
 
-    if (isNew && S.multi) html += extraDevicesHtml(dk);
+    if (isNew && S.multi) right += box(5, extraDevicesHtml(dk));
 
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
       : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : [C.total, C.labor, C.partCost, C.extra];
-    html += `<section class="block"><h3>Деньги</h3><div class="grid2">${moneyFields.map(c => fh(c)).join("")}</div>
+    html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => fh(c)).join("")}</div>
       <div class="margin">${moneySummary(dk, val, r)}</div></section>`;
+    right += box(6, html); html = "";
 
-    html += `<section class="block"><h3>Прочее</h3><div class="grid2">${fh(C.date)}${isNew ? "" : fh(C.issued)}</div>${fh(C.source)}
+    html += `<section class="block"><h3>Прочее</h3><div class="grid3">${fh(C.date)}${isNew ? "" : fh(C.issued)}${fh(C.source)}</div>
       ${!isNew && !DEMO ? `<div class="row"><a class="btn btn--ghost" href="${sheetLink(r.row, C.num)}" target="_blank" rel="noopener">Открыть строку в таблице ↗</a></div>` : ""}</section>`;
-    return html;
+    left += box(7, html);
+    return `<div class="card-grid"><div class="col">${left}</div><div class="col">${right}</div></div>`;
   }
 
   // Группа — заказы одного клиента, созданные одной формой (колонка AG = № первого заказа).
@@ -650,12 +659,35 @@
     return `<button type="button" class="btn btn--toggle" data-act="review" aria-pressed="${on}">${on ? "✓ Напомнить об отзыве" : "⭐ Напомнить об отзыве"}</button>`;
   }
 
+  // Когда поставлен текущий статус: последняя запись «Истории статусов» по этой строке
+  // (её ведёт onEditTrigger, в т. ч. через дверь). Для закрытых статусов, если записи нет, —
+  // дата выдачи (I).
+  function statusSince(r) {
+    const h = S.since.get(r.row), st = cell(r, C.status);
+    if (h && norm(h.st) === norm(st)) return h.ts.slice(0, 5);
+    if (isFinal(st) && cell(r, C.issued)) return String(cell(r, C.issued)).slice(0, 5);
+    return "";
+  }
+  async function loadHistory() {
+    if (DEMO) return;
+    const v = await api(`/values/${encodeURIComponent("'История статусов'!A2:D")}`);
+    for (const [ts, where, , st] of v.values || []) {
+      const m = String(where || "").match(/(\d+)/); if (m) S.since.set(+m[1], { ts: String(ts || ""), st: String(st || "") });
+    }
+    const n = location.hash.match(/^#\/(\d+)/)?.[1];
+    if (n && ![...S.dirty.keys()].length) render();
+  }
+
   function renderCard(num) {
     const r = S.byNum.get(num);
     if (!r) return renderShell(`<div class="empty">Сделка №${esc(num)} не найдена<div class="row" style="justify-content:center"><a class="btn" href="#">К списку</a></div></div>`, { search: false });
     const st = cell(r, C.status), dk = dealKey(cell(r, C.type));
-    const head = `<div class="card-head" style="margin-top:14px"><a class="iconbtn" href="#" aria-label="Назад">←</a>
-      <h1>№${esc(num)}</h1>${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}<span class="chip chip--big chip--${statusKind(st)}">${esc(st || "без статуса")}</span></div>`;
+    // Шапка: номер, когда принят и сколько дней, тип (если не ремонт), статус с датой смены.
+    const accepted = String(cell(r, C.date)).slice(0, 10), age = daysSince(cell(r, C.date)), since = statusSince(r);
+    const head = `<div class="card-head" style="margin-top:12px"><a class="iconbtn" href="#" aria-label="Назад">←</a>
+      <h1>№${esc(num)}</h1>
+      ${accepted ? `<span class="head-meta">принят <b>${esc(accepted)}</b>${age != null ? ` · ${age === 0 ? "сегодня" : age + " дн."}` : ""}</span>` : ""}
+      ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}<span class="chip chip--big chip--${statusKind(st)}">${esc(st || "без статуса")}${since ? `<small>с ${esc(since)}</small>` : ""}</span></div>`;
     renderShell(head + groupBlock(r) + cardBody(r.row, r, false), { search: false });
     saveBar(r.row, `data-num="${esc(num)}"`);
   }
@@ -792,6 +824,8 @@
       await Promise.all([list.length ? writeCells(r.row, list) : null, ...[...others].map(([x, l]) => writeCells(x.row, l))]);
       for (const ch of list) { r.cells[ch.c] = String(ch.w ?? ""); S.dirty.delete(key + ":" + ch.c); }
       for (const [x, l] of others) { for (const ch of l) x.cells[ch.c] = String(ch.w ?? ""); index(x); }
+      const stamp = today().slice(0, 5) + today().slice(5);
+      for (const [x, l] of [[r, list], ...others]) { const st = l.find(ch => ch.c === C.status); if (st) S.since.set(x.row, { ts: stamp, st: String(st.v) }); }
       index(r); S.clients = null;
       render();
       const all = [...list, ...[...others.values()].flat()];
