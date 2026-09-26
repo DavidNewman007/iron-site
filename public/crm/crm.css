@@ -97,6 +97,9 @@ h1, h2, h3, .btn, .tab, .st, .chip--big, .more { font-family: var(--font-display
 .list { display: grid; gap: 10px; }
 .item {
   display: grid; grid-template-columns: 1fr auto; gap: 4px 12px;
+  /* Лишняя высота (соседняя карточка в ряду выше) уходит в первую строку, а не в плашку
+     статуса: раньше она раздувалась в «таблетку» на полкарточки (26.09.2026). */
+  grid-template-rows: 1fr auto;
   width: 100%; text-align: left; border: 1px solid var(--line); border-radius: var(--radius);
   background: var(--surface); color: var(--text); padding: 16px 18px;
   box-shadow: 4px 6px 14px rgba(0, 0, 0, .22);
@@ -111,7 +114,7 @@ h1, h2, h3, .btn, .tab, .st, .chip--big, .more { font-family: var(--font-display
 .item__sum { font-weight: 700; font-size: 1.12rem; color: var(--cream); font-family: var(--font-display); }
 .item__date, .item__age { color: var(--muted); font-size: .88rem; }
 .item__age.is-old { color: var(--red-bright); font-weight: 700; }
-.item__chips { display: flex; flex-wrap: wrap; gap: 6px; grid-column: 1 / -1; margin-top: 6px; }
+.item__chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; grid-column: 1 / -1; margin-top: 6px; }
 .more { width: 100%; height: var(--tap); margin-top: 12px; border-radius: var(--radius); border: 1px dashed var(--line-strong); background: transparent; color: var(--cream); letter-spacing: .08em; text-transform: uppercase; }
 .empty { padding: 40px 10px; text-align: center; color: var(--muted); font-size: 1.1rem; }
 

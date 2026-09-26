@@ -61,6 +61,7 @@
   //  entered — пишется как «набрано руками» (даты), остальное — как есть.
   //  spell  — проверка правописания браузера (подчёркивание, исправление правой кнопкой).
   //  free   — у колонки в таблице есть список, но пишут и своё: подсказки + свободный ввод.
+  //  calc   — в клетке формула таблицы: показываем, но не пишем (запись стёрла бы формулу).
   const F = {
     [C.date]: { label: "Дата приёма", entered: true },
     [C.name]: { label: "Имя клиента", door: true },
@@ -77,7 +78,9 @@
     [C.parts]: { label: "Запчасти", door: true, spell: true, free: true },
     [C.master]: { label: "Мастер", door: true, notify: true },
     [C.total]: { label: "Итого, ₽ (платит клиент)", num: true, door: true },
-    [C.labor]: { label: "Чистая работа, ₽", num: true },
+    // R = Q − S − T — формула таблицы. До 26.09.2026 поле было редактируемым: число из
+    // оболочки молча затирало формулу (так в истории 137 строк с R, вписанной руками).
+    [C.labor]: { label: "Чистая работа, ₽", num: true, calc: true },
     [C.partCost]: { label: "Запчасть (закуп), ₽", num: true, free: true },
     [C.extra]: { label: "Сторонний мастер / расходы, ₽", num: true },
     [C.partFrom]: { label: "Откуда запчасть" },
@@ -534,6 +537,7 @@
     const label = opts.label || f.label;
     const dirty = S.dirty.has(key + ":" + c);
     const v = dirty ? S.dirty.get(key + ":" + c) : value;
+    if (f.calc) return opts.r ? `<div class="field"><span>${esc(label)} <small class="note">(считает таблица)</small></span><div class="ro">${esc(value || "—")}</div></div>` : "";
     const lock = !editable(c, opts.r) && !opts.force;
     if (lock) return `<div class="field"><span>${esc(label)} 🔒</span><div class="ro">${esc(value || "—")}</div>
       ${opts.row ? `<a class="btn btn--ghost" style="margin-top:6px" href="${sheetLink(opts.row, c)}" target="_blank" rel="noopener">Изменить в таблице ↗</a>` : ""}</div>`;
@@ -865,12 +869,13 @@
     for (const ch of list) {
       const f = F[ch.c];
       if (S.bools.has(ch.c)) { const b = bv(ch.c); ch.w = isTrue(ch.v) ? b.on : b.off; }
-      else if (f?.num) { const n = toNum(ch.v); ch.w = n == null ? String(ch.v ?? "") : n; }
+      else if (ch.formula) ch.w = String(ch.v);
+      else if (f?.num || ch.c === C.num) { const n = toNum(ch.v); ch.w = n == null ? String(ch.v ?? "") : n; } // номер — числом, как у всех строк
       else ch.w = String(ch.v ?? "");
     }
     if (DEMO) return;
     const pack = arr => arr.map(ch => ({ range: `'${CFG.sheet}'!${LETTER(ch.c)}${row}`, values: [[ch.w]] }));
-    const entered = list.filter(ch => F[ch.c]?.entered), raw = list.filter(ch => !F[ch.c]?.entered);
+    const entered = list.filter(ch => F[ch.c]?.entered || ch.formula), raw = list.filter(ch => !F[ch.c]?.entered && !ch.formula);
     const calls = [];
     if (raw.length) calls.push(api("/values:batchUpdate", { method: "POST", body: JSON.stringify({ valueInputOption: "RAW", data: pack(raw) }) }));
     if (entered.length) calls.push(api("/values:batchUpdate", { method: "POST", body: JSON.stringify({ valueInputOption: "USER_ENTERED", data: pack(entered) }) }));
@@ -977,42 +982,50 @@
       if (DEMO) {
         row0 = (S.rows.at(-1)?.row || 1) + 1; num0 = Math.max(0, ...S.rows.map(x => +cell(x, C.num) || 0)) + 1;
       }
-      // Куда класть и какие номера. В таблице номера в колонке A стоят ЗАРАНЕЕ — на сотни
-      // строк вперёд (26.09.2026: после последнего заказа №7778 пустые заготовки до №7996).
-      // Поэтому заказ ложится в первую строку ПОСЛЕ последнего заполненного заказа и берёт
-      // уже стоящий там номер; A пишем, только если номера нет. Раньше (v3–v14) оболочка
-      // брала строку после последнего номера и «максимум + 1» — первый же заказ получил бы
-      // №7997 и лёг бы за 218 заготовками. Живых заказов так создано не было.
+      // Куда класть и какие номера. В таблице номера (A) и формула «Чистая работа» (R)
+      // стоят ЗАРАНЕЕ — владелец протягивал их на сотни строк вперёд (26.09.2026: после
+      // №7778 заготовки до №7996, формула до строки 7981). Заказ ложится в первую строку
+      // ПОСЛЕ последнего заполненного заказа и берёт уже стоящий там номер; нет номера —
+      // «наибольший в колонке + 1», как у onEdit в таблице (OrderAutofill.js).
+      // Раньше (v3–v14) бралась строка после последнего номера — первый же заказ получил бы
+      // №7997 за 218 заготовками. В v15 это исправили, но заготовка с формулой в R всё равно
+      // считалась занятой строкой — первый живой заказ 26.09.2026 не сохранился
+      // («Строки 7748–7749 не пустые»). Теперь формулы и снятые галочки строку не занимают.
       let slots;
       if (DEMO) {
-        slots = devices.map((_, i) => ({ row: row0 + i, num: String(num0 + i), hasNum: false }));
+        slots = devices.map((_, i) => ({ row: row0 + i, num: String(num0 + i), hasNum: false, hasMargin: true }));
       } else {
         const got = await api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A2:H`)}`);
         const vals = got.values || [];
         let lastData = -1;
         vals.forEach((r, i) => { if ([C.name, C.phone, C.device, C.issue, C.status].some(c => String(r[c] ?? "").trim())) lastData = i; });
-        let prev = +String(vals[lastData]?.[0] ?? "").trim() || Math.max(0, ...vals.map(r => +String(r[0] ?? "").trim() || 0));
+        let maxNum = Math.max(0, ...vals.map(r => +String(r[0] ?? "").trim() || 0));
         slots = [];
         for (let i = 0; i < N; i++) {
           const idx = lastData + 1 + i, a = String(vals[idx]?.[0] ?? "").trim();
-          const num = a && +a ? a : String(prev + 1);
-          slots.push({ row: idx + 2, num, hasNum: !!(a && +a) }); prev = +num;
+          const has = !!(a && +a);
+          slots.push({ row: idx + 2, num: has ? a : String(++maxNum), hasNum: has });
         }
         const r0 = slots[0].row, r1 = slots[N - 1].row;
-        const probe = await api(`/values/${A1(1, r0, C.group, r1)}?valueRenderOption=FORMULA`);
-        if ((probe.values || []).some(rw => (rw || []).some(v => String(v).trim()))) throw new Error("Строки " + r0 + "–" + r1 + " не пустые — обновите список и повторите");
+        const probe = await api(`/values/${A1(1, r0, C.group, r1)}?valueRenderOption=FORMULA`)
+          .catch(e => { throw /400/.test(e.message) ? new Error(`В листе закончились строки (нужна строка ${r1}) — добавьте строки внизу листа в таблице и повторите`) : e; });
+        const busyCell = v => { const t = String(v ?? "").trim(); return t !== "" && !t.startsWith("=") && t.toUpperCase() !== "FALSE"; };
+        const pv = probe.values || [];
+        if (pv.some(rw => (rw || []).some(busyCell))) throw new Error("Строки " + r0 + "–" + r1 + " уже заняты — обновите список (⟳) и повторите");
+        slots.forEach((s, i) => { s.hasMargin = String(pv[i]?.[C.labor - 1] ?? "").trim().startsWith("="); });
         num0 = +slots[0].num;
       }
       const head = slots[0].num;
       const made = devices.map((fields, i) => {
-        const { num, row, hasNum } = slots[i];
-        const list = [...(hasNum ? [] : [{ c: C.num, v: num }]), ...(N > 1 ? [{ c: C.group, v: head, old: "" }] : []), ...fields.map(f => ({ ...f }))]
+        const { num, row, hasNum, hasMargin } = slots[i];
+        const list = [...(hasNum ? [] : [{ c: C.num, v: num }]), ...(N > 1 ? [{ c: C.group, v: head, old: "" }] : []), ...fields.filter(f => !F[f.c]?.calc).map(f => ({ ...f })),
+          ...(hasMargin ? [] : [{ c: C.labor, v: `=Q${row}-S${row}-T${row}`, formula: true }])]
           .filter(ch => String(ch.v ?? "").trim() !== "" && !(S.bools.has(ch.c) && !isTrue(ch.v)));
         return { num, row, list };
       });
       await Promise.all(made.map(m => writeCells(m.row, m.list)));
       for (const m of made) {
-        const cells = []; cells[C.num] = m.num; for (const ch of m.list) cells[ch.c] = String(ch.w ?? "");
+        const cells = []; cells[C.num] = m.num; for (const ch of m.list) if (!ch.formula) cells[ch.c] = String(ch.w ?? "");
         m.rec = { row: m.row, cells }; index(m.rec); S.rows.push(m.rec); S.byNum.set(m.num, m.rec);
       }
       S.clients = null;
@@ -1020,9 +1033,9 @@
       S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null;
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
-      toast(DEMO ? nums + " созданы (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`, null, true);
+      toast(DEMO ? nums + (N > 1 ? " созданы" : " создан") + " (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`, null, true);
       // Двери по очереди, заказ за заказом — как если бы строки заполняли в таблице одну за другой.
-      made.reduce((p, m) => p.then(() => doorInBackground(m.rec, m.num, m.list.filter(ch => ch.c !== C.num))), Promise.resolve());
+      made.reduce((p, m) => p.then(() => doorInBackground(m.rec, m.num, m.list.filter(ch => ch.c !== C.num && !ch.formula))), Promise.resolve());
     } catch (e) { busy(false); toast(e.message, null, true); }
   }
   function busy(on) { const b = $app.querySelector('[data-act="save"]'); if (b) { b.disabled = on; if (on) b.textContent = "Сохраняю…"; } }
