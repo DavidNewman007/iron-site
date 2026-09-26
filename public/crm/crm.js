@@ -759,7 +759,7 @@
         if (!r.ok || !j.ok) throw new Error(j.error || "бот не ответил (" + r.status + ")");
         for (const o of j.orders) out.push({ at: o.createdAt, when: new Date(o.createdAt + 3 * 3600e3).toISOString().slice(5, 16).replace("T", " ").replace(/^(\d\d)-(\d\d)/, "$2.$1"),
           who: o.customer?.name || o.customer?.label || "", user: o.customer?.username || "", phone: o.customer?.phone || "",
-          src: "бот" + (o.source && o.source !== "бот" ? " · " + o.source : "") + (o.backfilled ? " · заказ до 26.09: цена по текущему прайсу, проверьте" : ""), ref: "заказ бота " + o.id,
+          src: "бот" + (o.source && o.source !== "бот" ? " · " + o.source : "") + (o.backfilled === true ? " · цена по текущему прайсу, проверьте" : ""), ref: "заказ бота " + o.id,
           items: (o.items || []).filter(x => x.kind !== "service").map(x => ({ name: x.name, price: x.price, purchase: x.purchase, warranty: x.warranty })),
           total: o.total, promo: o.promo });
         // оплаченные заказы с сайта — из листа той же книги
