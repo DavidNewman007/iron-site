@@ -26,7 +26,7 @@
     scope: "openid email https://www.googleapis.com/auth/spreadsheets",
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
-    lastCol: "AF",
+    lastCol: "AG",
     // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
@@ -45,7 +45,8 @@
     review: 9, report: 11, comment: 12, warranty: 13, parts: 14, master: 15, total: 16, labor: 17,
     partCost: 18, extra: 19, partFrom: 20, source: 21,
     // Добавлены 25.09.2026 (план 93 §11.3): K «Пароль», AC–AF — тип сделки и её данные.
-    pass: 10, type: 28, imei: 29, buyback: 30, linked: 31 };
+    pass: 10, type: 28, imei: 29, buyback: 30, linked: 31,
+    group: 32 }; // AG — «Группа»: № первого заказа, если устройств у клиента несколько (26.09.2026)
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -83,6 +84,7 @@
     [C.imei]: { label: "IMEI / серийный", door: true },
     [C.buyback]: { label: "Выкуп / зачёт, ₽", num: true, door: true },
     [C.linked]: { label: "Связанная сделка №" },
+    [C.group]: { label: "Группа" },
   };
 
   // Тип сделки (колонка AC). Пусто = ремонт. Ключи — как в DealTypes.js на стороне таблицы.
@@ -505,10 +507,10 @@
     if (!isNew) {
       const reportSent = isTrue(cell(r, C.report));
       const statusBlock = editable(C.status, r)
-        ? `${choiceButtons(key, C.status, st, S.opts[C.status] || [], statusKind)}<p class="note">Выберите статус и нажмите «Сохранить» внизу — клиенту уйдёт уведомление, как из таблицы.</p>`
+        ? `${choiceButtons(key, C.status, st, S.opts[C.status] || [], statusKind)}<p class="note">Выберите статус и нажмите «Сохранить» внизу — клиенту уйдёт уведомление, как из таблицы.${groupOf(r)?.shared ? " <b>Статус поменяется у всех устройств группы.</b>" : ""}</p>`
         : `<div class="big">${esc(st || "без статуса")}</div><div class="row"><a class="btn btn--red" href="${sheetLink(r.row, C.status)}" target="_blank" rel="noopener">Сменить статус в таблице ↗</a></div>`;
       const reportBtn = editable(C.report, r)
-        ? `<button type="button" class="btn ${reportSent ? "btn--ghost" : ""}" data-act="report">${reportSent ? "Отчёт уже отправлен — отправить заново" : "📨 Отправить отчёт клиенту"}</button>`
+        ? `<button type="button" class="btn ${reportSent ? "btn--ghost" : ""}" data-act="report">${reportSent ? "Отчёт уже отправлен — отправить заново" : groupOf(r)?.shared ? "📨 Отправить общий отчёт" : "📨 Отправить отчёт клиенту"}</button>`
         : `<a class="btn" href="${sheetLink(r.row, C.report)}" target="_blank" rel="noopener">Отчёт клиенту (Ok) ↗</a>`;
       html += `<section class="block"><h3>Статус</h3>${statusBlock}
         <div class="row row--report">${reportBtn}<div class="inline-check">${fh(C.review)}</div></div></section>`;
@@ -539,6 +541,21 @@
     return html;
   }
 
+  // Группа — заказы одного клиента, созданные одной формой (колонка AG = № первого заказа).
+  function groupOf(r) {
+    const g = String(cell(r, C.group) ?? "").trim();
+    if (!g) return null;
+    const rows = S.rows.filter(x => String(cell(x, C.group)).trim() === g).sort((a, b) => +cell(a, C.num) - +cell(b, C.num));
+    if (rows.length < 2) return null;
+    return { g, rows, head: rows.find(x => String(cell(x, C.num)).trim() === g) || rows[0], shared: dealKey(cell(r, C.type)) !== "repair" };
+  }
+  function groupBlock(r) {
+    const gr = groupOf(r); if (!gr) return "";
+    return `<section class="block block--group"><h3>Несколько устройств у клиента — ${gr.rows.length}</h3>
+      <div class="group-list">${gr.rows.map(x => `<a class="group-item${x === r ? " is-cur" : ""}" href="#/${esc(cell(x, C.num))}"><b>№${esc(cell(x, C.num))}</b> ${esc(cell(x, C.device) || "—")}<span class="chip chip--${statusKind(cell(x, C.status))}">${esc(cell(x, C.status) || "—")}</span></a>`).join("")}</div>
+      <p class="note">${gr.shared ? "Статус и итоговый отчёт — общие: меняются сразу у всех устройств, клиенту уходит одно сообщение со списком." : "Ремонт: статусы и отчёты по каждому устройству — отдельно. Приёмка ушла одним сообщением."}</p></section>`;
+  }
+
   // Дополнительные устройства нового заказа. Каждое станет в таблице отдельным заказом со
   // своим номером; клиент, тип сделки, дата, источник и комментарий — общие.
   const blankDevice = () => ({ device: "", imei: "", issue: "", pass: "", master: "", total: "" });
@@ -566,7 +583,7 @@
     const st = cell(r, C.status), dk = dealKey(cell(r, C.type));
     const head = `<div class="card-head" style="margin-top:14px"><a class="iconbtn" style="background:var(--ink)" href="#" aria-label="Назад">←</a>
       <h1>№${esc(num)}</h1>${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}<span class="chip chip--big chip--${statusKind(st)}">${esc(st || "без статуса")}</span></div>`;
-    renderShell(head + cardBody(r.row, r, false), { search: false });
+    renderShell(head + groupBlock(r) + cardBody(r.row, r, false), { search: false });
     saveBar(r.row, `data-num="${esc(num)}"`);
   }
 
@@ -682,18 +699,32 @@
     const key = r.row;
     const list = [...S.dirty].filter(([k]) => k.startsWith(key + ":")).map(([k, v]) => { const c = +k.split(":")[1]; return { c, v, old: cell(r, c) }; });
     if (!list.length) return;
+    // Выкуп/trade-in/продажа группой: статус — сразу у всех устройств, отчёт — в первой строке.
+    const others = new Map(); // строка → изменения
+    const gr = groupOf(r);
+    if (gr?.shared) {
+      const st = list.find(ch => ch.c === C.status), rep = list.find(ch => ch.c === C.report);
+      const add = (x, ch) => { if (!others.has(x)) others.set(x, []); others.get(x).push(ch); };
+      if (st) for (const x of gr.rows) if (x !== r && cell(x, C.status) !== st.v) add(x, { c: C.status, v: st.v, old: cell(x, C.status) });
+      if (rep && gr.head !== r) { list.splice(list.indexOf(rep), 1); S.dirty.delete(key + ":" + C.report); add(gr.head, { c: C.report, v: rep.v, old: cell(gr.head, C.report) }); }
+    }
     busy(true);
     try {
-      if (!DEMO) {
-        const chk = await api(`/values/${A1(0, r.row)}`);
-        if (String(chk.values?.[0]?.[0] ?? "").trim() !== String(num)) throw new Error("Строка в таблице сдвинулась — обновите список (⟳) и повторите");
-      }
-      await writeCells(r.row, list);
+      const check = async x => {
+        if (DEMO) return;
+        const chk = await api(`/values/${A1(0, x.row)}`);
+        if (String(chk.values?.[0]?.[0] ?? "").trim() !== String(cell(x, C.num)).trim()) throw new Error("Строка в таблице сдвинулась — обновите список (⟳) и повторите");
+      };
+      await Promise.all([r, ...others.keys()].map(check));
+      await Promise.all([list.length ? writeCells(r.row, list) : null, ...[...others].map(([x, l]) => writeCells(x.row, l))]);
       for (const ch of list) { r.cells[ch.c] = String(ch.w ?? ""); S.dirty.delete(key + ":" + ch.c); }
+      for (const [x, l] of others) { for (const ch of l) x.cells[ch.c] = String(ch.w ?? ""); index(x); }
       index(r); S.clients = null;
       render();
-      toast(DEMO ? "Сохранено (демо — в таблицу не пишется)" : list.some(ch => F[ch.c]?.door) ? "Сохранено ✓ Уведомления отправляются…" : "Сохранено ✓", null, true);
-      doorInBackground(r, num, list);
+      const all = [...list, ...[...others.values()].flat()];
+      toast(DEMO ? "Сохранено (демо — в таблицу не пишется)" : all.some(ch => F[ch.c]?.door) ? `Сохранено ✓${others.size ? ` (и у ${others.size} устр. группы)` : ""} Уведомления отправляются…` : "Сохранено ✓", null, true);
+      // Двери по очереди: сначала эта строка, потом остальные строки группы.
+      [[r, list], ...others].reduce((p, [x, l]) => p.then(() => l.length ? doorInBackground(x, String(cell(x, C.num)).trim(), l) : null), Promise.resolve());
     } catch (e) { busy(false); toast(e.message, null, true); }
   }
 
@@ -730,7 +761,7 @@
       }
       const made = devices.map((fields, i) => {
         const num = String(num0 + i), row = row0 + i;
-        const list = [{ c: C.num, v: num }, ...fields.map(f => ({ ...f }))]
+        const list = [{ c: C.num, v: num }, ...(N > 1 ? [{ c: C.group, v: String(num0), old: "" }] : []), ...fields.map(f => ({ ...f }))]
           .filter(ch => String(ch.v ?? "").trim() !== "" && !(S.bools.has(ch.c) && !isTrue(ch.v)));
         return { num, row, list };
       });
