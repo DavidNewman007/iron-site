@@ -98,16 +98,57 @@
     if (s.startsWith("продажа")) return "sale_new";
     return "other";
   }
-  // Подписи полей по типу: одна и та же колонка значит разное в ремонте и в выкупе.
+  // Подписи полей по типу: одна и та же колонка значит разное в ремонте, выкупе и продаже.
+  // Пересмотрено 26.09.2026 по замечанию владельца: в продаже стояли ремонтные подписи.
   const LABELS = {
-    repair:   { [C.device]: "Устройство", [C.issue]: "Неисправность / с чем пришёл", [C.work]: "Выполненные работы", [C.total]: "Итого, ₽ (платит клиент)" },
-    buyback:  { [C.device]: "Что выкупаем", [C.issue]: "Дефекты", [C.work]: "Состояние и комплект (уйдёт клиенту в отчёте)", [C.buyback]: "Сумма выкупа (платим клиенту), ₽" },
-    parts:    { [C.device]: "Что выкупаем на запчасти", [C.issue]: "Что с ним", [C.work]: "Что годится на детали", [C.buyback]: "Сумма выкупа (платим клиенту), ₽" },
-    tradein:  { [C.device]: "Что сдаёт клиент", [C.issue]: "Состояние сданного", [C.work]: "Что выдали взамен (модель, IMEI)", [C.total]: "Доплата клиента, ₽", [C.buyback]: "Зачёт за сданное, ₽", [C.partCost]: "Закупка выданного, ₽" },
-    sale_used:{ [C.device]: "Что продаём", [C.issue]: "Примечание", [C.work]: "Подготовка перед продажей", [C.total]: "Цена продажи, ₽", [C.partCost]: "Себестоимость, ₽", [C.linked]: "Из какой сделки устройство (№ выкупа)" },
-    sale_new: { [C.device]: "Что продаём", [C.issue]: "Примечание", [C.work]: "Комплектация", [C.total]: "Цена продажи, ₽", [C.partCost]: "Закупка, ₽" },
+    repair:   { [C.device]: "Устройство", [C.imei]: "IMEI / серийный (по желанию)", [C.issue]: "Неисправность / с чем пришёл", [C.work]: "Выполненные работы",
+                [C.total]: "Итого, ₽ (платит клиент)", [C.date]: "Дата приёма", [C.issued]: "Дата выдачи" },
+    buyback:  { [C.device]: "Что выкупаем", [C.issue]: "Дефекты", [C.work]: "Состояние и комплект (уйдёт клиенту в отчёте)",
+                [C.buyback]: "Сумма выкупа (платим клиенту), ₽", [C.extra]: "Прочие расходы, ₽", [C.date]: "Дата обращения", [C.issued]: "Дата выкупа" },
+    parts:    { [C.device]: "Что выкупаем на запчасти", [C.issue]: "Неисправности", [C.work]: "Что годится на детали",
+                [C.buyback]: "Сумма выкупа (платим клиенту), ₽", [C.extra]: "Прочие расходы, ₽", [C.date]: "Дата обращения", [C.issued]: "Дата выкупа" },
+    tradein:  { [C.device]: "Что сдаёт клиент", [C.issue]: "Состояние сданного", [C.work]: "Что выдали взамен (модель, IMEI)", [C.warranty]: "Гарантия на выданное",
+                [C.total]: "Доплата клиента, ₽", [C.buyback]: "Зачёт за сданное, ₽", [C.partCost]: "Закупка выданного, ₽", [C.extra]: "Прочие расходы, ₽",
+                [C.date]: "Дата обращения", [C.issued]: "Дата обмена" },
+    sale_used:{ [C.device]: "Что продаём", [C.issue]: "Примечание", [C.work]: "Подготовка перед продажей", [C.warranty]: "Гарантия магазина",
+                [C.total]: "Цена продажи, ₽", [C.partCost]: "Себестоимость, ₽", [C.extra]: "Прочие расходы, ₽", [C.linked]: "Из какой сделки устройство (№ выкупа)",
+                [C.date]: "Дата обращения", [C.issued]: "Дата продажи" },
+    sale_new: { [C.device]: "Что продаём", [C.issue]: "Примечание", [C.work]: "Комплектация", [C.warranty]: "Гарантия",
+                [C.total]: "Цена продажи, ₽", [C.partCost]: "Закупка, ₽", [C.extra]: "Прочие расходы, ₽", [C.date]: "Дата обращения", [C.issued]: "Дата продажи" },
     other:    { [C.work]: "Что сделано", [C.total]: "Итого, ₽ (платит клиент)" },
   };
+  // Что по типу сделки вообще не показываем. Мастер в выкупе и продаже не нужен: его
+  // назначение шлёт мастеру «Для тебя новый заказ!» — о продаже это сбивает с толку.
+  // Пароль — только для устройства, которое остаётся у нас в ремонте.
+  const HIDE = {
+    repair: [], other: [],
+    buyback:  [C.master, C.pass, C.parts, C.partFrom, C.warranty, C.labor, C.total, C.partCost],
+    parts:    [C.master, C.pass, C.parts, C.partFrom, C.warranty, C.labor, C.total, C.partCost],
+    tradein:  [C.master, C.pass, C.parts, C.partFrom, C.labor],
+    sale_used:[C.master, C.pass, C.parts, C.partFrom, C.labor],
+    sale_new: [C.master, C.pass, C.parts, C.partFrom, C.labor, C.linked],
+  };
+  const TYPE_UI = {
+    repair:   { multi: "Клиент сдаёт несколько устройств", start: "Принят на диагностику" },
+    buyback:  { multi: "Выкупаем несколько устройств", start: "Выкуплен" },
+    parts:    { multi: "Выкупаем на запчасти несколько устройств", start: "Выкуплен" },
+    tradein:  { multi: "Клиент сдаёт несколько устройств", start: "Обмен оформлен" },
+    sale_used:{ multi: "Продаём несколько устройств", start: "Продан" },
+    sale_new: { multi: "Продаём несколько устройств", start: "Продан" },
+    other:    { multi: "Несколько устройств в сделке", start: "Принят на диагностику" },
+  };
+  // Статусы, уместные для типа (текущий статус строки показывается всегда).
+  const DEAL_FINAL = ["выкуплен", "разобран", "обмен оформлен", "продан"];
+  function statusesFor(dk) {
+    const all = S.opts[C.status] || [];
+    const pick = names => all.filter(x => names.some(n => norm(x).startsWith(n)));
+    if (dk === "repair") return all.filter(x => !DEAL_FINAL.some(n => norm(x).startsWith(n)));
+    if (dk === "buyback") return pick(["на согл", "выкуплен"]);
+    if (dk === "parts") return pick(["на согл", "выкуплен", "разобран"]);
+    if (dk === "tradein") return pick(["на согл", "ждем предоплату", "обмен оформлен"]);
+    if (dk === "sale_used" || dk === "sale_new") return pick(["ждем предоплату", "продан"]);
+    return all;
+  }
   const labelFor = (c, key) => LABELS[key]?.[c] || F[c]?.label || "";
   // Меняется ли поле здесь прямо сейчас. С дверью — всё. Без двери — поля без реакций, а
   // поля ремонта (устройство, работы, сумма…) ещё и пока отчёт клиенту не отправлен: их
@@ -298,7 +339,7 @@
   }
   function demoOptions() {
     const uniq = c => [...new Set(S.rows.map(r => String(cell(r, c)).trim()).filter(Boolean))];
-    S.opts[C.status] = ["Принят на диагностику", "Ждем предоплату", "Заказана запчасть", "В работе", "Готов ожидает клиента", "Выполнен", "Отказ от ремонта после диагностики"];
+    S.opts[C.status] = ["Принят на диагностику", "На соглосовании", "Ждем предоплату", "Заказана запчасть", "В работе", "Готов ожидает клиента", "Выполнен", "Отказ от ремонта после диагностики", "Выкуплен", "Разобран на запчасти", "Обмен оформлен", "Продан"];
     S.opts[C.master] = uniq(C.master).sort();
     S.opts[C.source] = uniq(C.source);
     S.opts[C.type] = ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Другое"];
@@ -381,7 +422,8 @@
 
   function renderLogin() {
     $app.innerHTML = `<main class="login"><div class="login__box">
-      <h1>IRON <b>CRM</b></h1>
+      <img class="login__logo" src="../assets/logo-horizontal.png" alt="IRON SERVICE" width="210" height="56">
+      <h1>CRM</h1>
       <p>Вход по Google-аккаунту. Пускает всех, у кого есть доступ к таблице базы, — и только их.</p>
       <button class="btn btn--red" data-act="login">Войти через Google</button>
       ${S.error ? `<p class="note">${esc(S.error)}</p>` : ""}
@@ -392,7 +434,7 @@
   function renderShell(body, { search = true } = {}) {
     $app.innerHTML = (DEMO ? `<div class="demo-bar">ДЕМО — выдуманные сделки, в таблицу ничего не пишется</div>` : "") + `
       <header class="top"><div class="top__row">
-        <a class="brand" href="#" style="color:inherit;text-decoration:none">IRON <b>CRM</b></a><div class="top__spacer"></div>
+        <a class="brand" href="#"><img src="../assets/logo-horizontal.png" alt="IRON SERVICE" width="128" height="34"><b>CRM</b></a><div class="top__spacer"></div>
         <div class="who">${esc(S.email)}</div>
         ${canCreate() ? `<a class="iconbtn iconbtn--add" href="#/new" title="Новый заказ">＋</a>` : ""}
         <button class="iconbtn" data-act="reload" title="Обновить">⟳</button>
@@ -411,6 +453,7 @@
       <div><div class="item__title"><span class="item__num">№${mark(cell(r, C.num))}</span>${mark(title || "—")}</div>
       <div class="item__sub">${mark(cell(r, C.name) || "без имени")}${S.q && cell(r, C.phone) ? " · " + mark(cell(r, C.phone)) : ""}${cell(r, C.master) ? " · " + mark(cell(r, C.master)) : ""}</div></div>
       <div class="item__right"><div class="item__sum">${money(cell(r, C.total))}</div>
+      <div class="item__date">${esc(String(cell(r, C.date)).slice(0, 10))}</div>
       <div class="item__age${old ? " is-old" : ""}">${age == null ? "" : age === 0 ? "сегодня" : age + " дн."}</div></div>
       <span class="item__chips"><span class="chip chip--${statusKind(st)}">${esc(st || "без статуса")}</span>${dealKey(cell(r, C.type)) !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}</span>
     </button>`;
@@ -494,26 +537,31 @@
   function cardBody(key, r, isNew) {
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const dk = dealKey(val(C.type));
-    const fh = (c, extra = {}) => fieldHtml(key, c, r ? cell(r, c) : "", { row: r?.row, r, force: isNew, label: labelFor(c, dk), ...extra });
+    const hidden = c => (HIDE[dk] || []).includes(c) && !String(r ? cell(r, c) : "").trim(); // уже заполненное не прячем
+    const fh = (c, extra = {}) => hidden(c) ? "" : fieldHtml(key, c, r ? cell(r, c) : "", { row: r?.row, r, force: isNew, label: labelFor(c, dk), ...extra });
     const st = r ? cell(r, C.status) : CFG.newStatus;
     const tel = phones(val(C.phone));
     const typeNow = val(C.type) || "Ремонт";
 
     let html = `<section class="block"><h3>Тип сделки</h3>${
-      editable(C.type, r) || isNew ? choiceButtons(key, C.type, typeNow, typeOptions(), () => "new") : `<div class="big">${esc(typeNow)}</div>`}
-      ${dk === "buyback" || dk === "parts" ? `<p class="note">Перед выкупом: iCloud и «Найти iPhone» отключены, IMEI не в розыске, проверены АКБ и экран. Паспортные данные — только в бумажный договор, в таблицу не писать.</p>` : ""}
+      editable(C.type, r) || isNew ? choiceButtons(key, C.type, typeNow, typeOptions(), () => "type") : `<div class="big">${esc(typeNow)}</div>`}
+      ${["buyback", "parts", "tradein"].includes(dk) ? `<p class="note">${dk === "tradein" ? "Сданное устройство" : "Перед выкупом"}: iCloud и «Найти iPhone» отключены, IMEI не в розыске, проверены АКБ и экран. Паспортные данные — только в бумажный договор, в таблицу не писать.</p>` : ""}
     </section>`;
 
+    if (isNew && dk !== "repair" && dk !== "other") {
+      html += `<section class="block"><h3>Статус</h3>${choiceButtons(key, C.status, val(C.status), statusesFor(dk), statusKind)}
+        <p class="note">Клиенту уйдёт одно сообщение — по этому статусу. Итоговый отчёт — кнопкой в карточке после создания.</p></section>`;
+    }
     if (!isNew) {
       const reportSent = isTrue(cell(r, C.report));
       const statusBlock = editable(C.status, r)
-        ? `${choiceButtons(key, C.status, st, S.opts[C.status] || [], statusKind)}<p class="note">Выберите статус и нажмите «Сохранить» внизу — клиенту уйдёт уведомление, как из таблицы.${groupOf(r)?.shared ? " <b>Статус поменяется у всех устройств группы.</b>" : ""}</p>`
+        ? `${choiceButtons(key, C.status, st, statusesFor(dk), statusKind)}<p class="note">Выберите статус и нажмите «Сохранить» внизу — клиенту уйдёт уведомление, как из таблицы.${groupOf(r)?.shared ? " <b>Статус поменяется у всех устройств группы.</b>" : ""}</p>`
         : `<div class="big">${esc(st || "без статуса")}</div><div class="row"><a class="btn btn--red" href="${sheetLink(r.row, C.status)}" target="_blank" rel="noopener">Сменить статус в таблице ↗</a></div>`;
       const reportBtn = editable(C.report, r)
-        ? `<button type="button" class="btn ${reportSent ? "btn--ghost" : ""}" data-act="report">${reportSent ? "Отчёт уже отправлен — отправить заново" : groupOf(r)?.shared ? "📨 Отправить общий отчёт" : "📨 Отправить отчёт клиенту"}</button>`
+        ? `<button type="button" class="btn ${reportSent ? "btn--ghost" : ""}" data-act="report">${reportSent ? "Отчёт уже отправлен — отправить заново" : groupOf(r)?.shared ? "📨 Отправить общий отчёт" : "📨 Отправить итоговый отчёт клиенту"}</button>`
         : `<a class="btn" href="${sheetLink(r.row, C.report)}" target="_blank" rel="noopener">Отчёт клиенту (Ok) ↗</a>`;
       html += `<section class="block"><h3>Статус</h3>${statusBlock}
-        <div class="row row--report">${reportBtn}<div class="inline-check">${fh(C.review)}</div></div></section>`;
+        <div class="row row--report">${reportBtn}${reviewBtn(key, r)}</div></section>`;
     }
 
     html += `<section class="block"><h3>Клиент</h3>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}
@@ -521,10 +569,10 @@
     </section>`;
 
     html += `<section class="block"><h3>${isNew && S.multi ? "Устройство 1" : dk === "repair" || dk === "other" ? "Ремонт" : "Устройство"}</h3>
-      ${isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>Несколько устройств у одного клиента</b></label>` : ""}
+      ${isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>${esc(TYPE_UI[dk].multi)}</b></label>` : ""}
       ${fh(C.device)}${fh(C.imei)}${fh(C.issue)}${fh(C.work)}
-      ${dk === "repair" || dk === "other" ? fh(C.parts) + `<div class="grid2">${fh(C.partFrom)}${fh(C.warranty)}</div>` : fh(C.warranty)}
-      ${dk === "sale_used" ? fh(C.linked) : ""}
+      ${fh(C.parts)}<div class="grid2">${fh(C.partFrom)}${fh(C.warranty)}</div>
+      ${dk === "sale_used" || String(r ? cell(r, C.linked) : "").trim() ? fh(C.linked) : ""}
       ${fh(C.master)}
       <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass)}</div>
     </section>`;
@@ -558,7 +606,7 @@
 
   // Дополнительные устройства нового заказа. Каждое станет в таблице отдельным заказом со
   // своим номером; клиент, тип сделки, дата, источник и комментарий — общие.
-  const blankDevice = () => ({ device: "", imei: "", issue: "", pass: "", master: "", total: "" });
+  const blankDevice = () => ({ device: "", imei: "", issue: "", pass: "", master: "", total: "", buyback: "" });
   function extraDevicesHtml(dk) {
     const inp = (i, f, label, o = {}) => {
       const v = S.extra[i][f] ?? "";
@@ -568,20 +616,30 @@
       return `<label class="field"><span>${esc(label)}</span>${el}</label>`;
     };
     const masters = S.opts[C.master] || [];
+    const hide = HIDE[dk] || [];
+    const moneyCol = (dk === "buyback" || dk === "parts") ? ["buyback", C.buyback] : ["total", C.total];
     return S.extra.map((x, i) => `<section class="block"><h3 class="h3-row">Устройство ${i + 2}<button type="button" class="linkbtn" data-act="rmdev" data-i="${i}">убрать</button></h3>
-      ${inp(i, "device", labelFor(C.device, dk))}${inp(i, "imei", "IMEI / серийный")}${inp(i, "issue", labelFor(C.issue, dk), { area: true, spell: true })}
-      <div class="grid2">
-        <label class="field"><span>Мастер</span><select data-extra="${i}" data-field="master"><option value="">как у первого</option>${masters.map(m => `<option ${m === x.master ? "selected" : ""}>${esc(m)}</option>`).join("")}</select></label>
-        ${inp(i, "pass", "Пароль устройства 🔑")}
-      </div>${inp(i, "total", labelFor(C.total, dk), { num: true })}
+      ${inp(i, "device", labelFor(C.device, dk))}${inp(i, "imei", labelFor(C.imei, dk))}${inp(i, "issue", labelFor(C.issue, dk), { area: true, spell: true })}
+      ${hide.includes(C.master) && hide.includes(C.pass) ? "" : `<div class="grid2">
+        ${hide.includes(C.master) ? "" : `<label class="field"><span>Мастер</span><select data-extra="${i}" data-field="master"><option value="">как у первого</option>${masters.map(m => `<option ${m === x.master ? "selected" : ""}>${esc(m)}</option>`).join("")}</select></label>`}
+        ${hide.includes(C.pass) ? "" : inp(i, "pass", "Пароль устройства 🔑")}
+      </div>`}${inp(i, moneyCol[0], labelFor(moneyCol[1], dk), { num: true })}
     </section>`).join("") + `<button type="button" class="more" data-act="adddev">＋ Добавить ещё устройство</button>`;
+  }
+
+  // «Напомнить об отзыве» — кнопкой-переключателем рядом с кнопкой отчёта (владелец,
+  // 26.09.2026: флажок с подписью сверху смотрелся невпопад). Сохраняется кнопкой внизу.
+  function reviewBtn(key, r) {
+    if (!editable(C.review, r)) return `<a class="btn btn--ghost" href="${sheetLink(r.row, C.review)}" target="_blank" rel="noopener">Напомнить об отзыве ↗</a>`;
+    const k = key + ":" + C.review, on = isTrue(S.dirty.has(k) ? S.dirty.get(k) : cell(r, C.review));
+    return `<button type="button" class="btn btn--toggle" data-act="review" aria-pressed="${on}">${on ? "✓ Напомнить об отзыве" : "⭐ Напомнить об отзыве"}</button>`;
   }
 
   function renderCard(num) {
     const r = S.byNum.get(num);
     if (!r) return renderShell(`<div class="empty">Сделка №${esc(num)} не найдена<div class="row" style="justify-content:center"><a class="btn" href="#">К списку</a></div></div>`, { search: false });
     const st = cell(r, C.status), dk = dealKey(cell(r, C.type));
-    const head = `<div class="card-head" style="margin-top:14px"><a class="iconbtn" style="background:var(--ink)" href="#" aria-label="Назад">←</a>
+    const head = `<div class="card-head" style="margin-top:14px"><a class="iconbtn" href="#" aria-label="Назад">←</a>
       <h1>№${esc(num)}</h1>${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}<span class="chip chip--big chip--${statusKind(st)}">${esc(st || "без статуса")}</span></div>`;
     renderShell(head + groupBlock(r) + cardBody(r.row, r, false), { search: false });
     saveBar(r.row, `data-num="${esc(num)}"`);
@@ -611,9 +669,9 @@
       S.dirty.set("new:" + C.date, today());
       S.dirty.set("new:" + C.type, "Ремонт");
     }
-    const head = `<div class="card-head" style="margin-top:14px"><a class="iconbtn" style="background:var(--ink)" href="#" aria-label="Назад">←</a><h1>Новый заказ</h1></div>`;
+    const head = `<div class="card-head" style="margin-top:14px"><a class="iconbtn" href="#" aria-label="Назад">←</a><h1>Новый заказ</h1></div>`;
     renderShell(head + cardBody("new", null, true) +
-      `<p class="note" style="margin:14px 4px 0">Статус — «${esc(CFG.newStatus)}». Номер присвоится следующий по порядку; клиенту уйдёт то же сообщение, что при записи в таблицу.</p>`, { search: false });
+      (["repair", "other"].includes(dealKey(S.dirty.get("new:" + C.type))) ? `<p class="note" style="margin:14px 4px 0">Статус — «${esc(CFG.newStatus)}». Номер присвоится следующий по порядку; клиенту уйдёт то же сообщение, что при записи в таблицу.</p>` : `<p class="note" style="margin:14px 4px 0">Номер присвоится следующий по порядку.</p>`), { search: false });
     saveBar("new", 'data-new="1"');
   }
 
@@ -739,7 +797,7 @@
       const devices = [shared];
       if (S.multi) for (const x of S.extra) {
         if (!String(x.device || "").trim()) continue;
-        const own = [[C.device, x.device], [C.imei, x.imei], [C.issue, x.issue], [C.pass, x.pass], [C.master, x.master], [C.total, x.total]]
+        const own = [[C.device, x.device], [C.imei, x.imei], [C.issue, x.issue], [C.pass, x.pass], [C.master, x.master], [C.total, x.total], [C.buyback, x.buyback]]
           .filter(([, v]) => String(v ?? "").trim() !== "").map(([c, v]) => ({ c, v, old: "" }));
         const ownCols = new Set(own.map(o => o.c));
         const base = shared.filter(ch => ![C.device, C.imei, C.issue, C.pass, C.total, C.work, C.buyback].includes(ch.c) && !ownCols.has(ch.c));
@@ -772,7 +830,7 @@
       }
       S.clients = null;
       for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-      S.draft = null; S.multi = false; S.extra = [];
+      S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false;
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
       toast(DEMO ? nums + " созданы (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`, null, true);
@@ -803,7 +861,11 @@
       const v = t.dataset.value, orig = curVal(key, c);
       if (c === C.type && key !== "new" && dealKey(v) === "repair" && dealKey(orig) === "repair") S.dirty.delete(key + ":" + c);
       else setDirty(key, c, v);
-      if (c === C.type) { const y = window.scrollY; render(); window.scrollTo(0, y); return; } // подписи и поля меняются по типу
+      if (c === C.status && key === "new") S.newStatusTouched = true;
+      if (c === C.type) {
+        if (key === "new" && !S.newStatusTouched) S.dirty.set("new:" + C.status, TYPE_UI[dealKey(v)].start);
+        const y = window.scrollY; render(); window.scrollTo(0, y); return; // подписи и поля меняются по типу
+      }
       $app.querySelectorAll(`[data-choice="${c}"]`).forEach(b => b.setAttribute("aria-pressed", String(b === t)));
       refreshSaveBar(key); return;
     }
@@ -816,9 +878,16 @@
     else if (act === "multi") { S.multi = t.checked; if (S.multi && !S.extra.length) S.extra.push(blankDevice()); if (!S.multi) S.extra = []; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "adddev") { S.extra.push(blankDevice()); const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "rmdev") { S.extra.splice(+t.dataset.i, 1); if (!S.extra.length) S.multi = false; const y = window.scrollY; render(); window.scrollTo(0, y); }
+    else if (act === "review") {
+      const key = curKey(), r = S.byNum.get(location.hash.slice(2)), k = key + ":" + C.review;
+      const on = !isTrue(S.dirty.has(k) ? S.dirty.get(k) : cell(r, C.review));
+      setDirty(key, C.review, on);
+      t.setAttribute("aria-pressed", String(on)); t.textContent = on ? "✓ Напомнить об отзыве" : "⭐ Напомнить об отзыве";
+      refreshSaveBar(key);
+    }
     else if (act === "report") { const key = curKey(); S.dirty.set(key + ":" + C.report, CFG.reportValue); t.textContent = "Отчёт уйдёт после «Сохранить»"; t.disabled = true; refreshSaveBar(key); }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
