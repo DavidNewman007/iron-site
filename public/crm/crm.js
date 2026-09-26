@@ -131,6 +131,27 @@
     sale_used:[C.master, C.pass, C.parts, C.partFrom, C.labor],
     sale_new: [C.master, C.pass, C.parts, C.partFrom, C.labor, C.linked],
   };
+  // Поля ОДНОГО устройства — одинаковые у каждого устройства заказа, включая первое
+  // (владелец, 26.09.2026: «карточки товаров не идентичны» — у первого цена была в общем
+  // блоке «Деньги», у остальных не было гарантии и закупки). Клиент, комментарий, дата,
+  // источник и прочие расходы — общие для всех устройств.
+  const PER_DEVICE = {
+    repair:   [C.device, C.imei, C.issue, C.master, C.pass, C.total],
+    other:    [C.device, C.imei, C.issue, C.work, C.master, C.pass, C.total],
+    buyback:  [C.device, C.imei, C.issue, C.work, C.buyback],
+    parts:    [C.device, C.imei, C.issue, C.work, C.buyback],
+    tradein:  [C.device, C.imei, C.issue, C.work, C.warranty, C.total, C.buyback, C.partCost],
+    sale_used:[C.device, C.imei, C.issue, C.work, C.warranty, C.linked, C.total, C.partCost],
+    sale_new: [C.device, C.imei, C.issue, C.work, C.warranty, C.total, C.partCost],
+  };
+  const AREAS = [C.issue, C.work];
+  // Раскладка полей устройства: короткие — попарно, тексты — рядом, деньги — в строку.
+  function deviceGrid(cols, fieldFn) {
+    const text = cols.filter(c => !AREAS.includes(c) && !F[c]?.num), areas = cols.filter(c => AREAS.includes(c)), nums = cols.filter(c => F[c]?.num);
+    return (text.length ? `<div class="grid2">${text.map(fieldFn).join("")}</div>` : "") +
+      (areas.length ? `<div class="grid2">${areas.map(fieldFn).join("")}</div>` : "") +
+      (nums.length ? `<div class="grid4">${nums.map(fieldFn).join("")}</div>` : "");
+  }
   const TYPE_UI = {
     repair:   { multi: "Клиент сдаёт несколько устройств", start: "Принят на диагностику" },
     buyback:  { multi: "Выкупаем несколько устройств", start: "Выкуплен" },
@@ -289,7 +310,10 @@
     S.loading = false; render();
   }
   function setRows(list) {
-    S.rows = list.filter(r => String(r.cells[C.num] ?? "").trim());
+    // Строка — заказ, если есть номер И хоть что-то ещё: номера в таблице проставлены
+    // заранее на сотни строк вперёд, и пустые заготовки не должны попадать в «В работе».
+    S.rows = list.filter(r => String(r.cells[C.num] ?? "").trim() &&
+      [C.name, C.phone, C.device, C.issue, C.status].some(c => String(r.cells[c] ?? "").trim()));
     S.byNum.clear();
     for (const r of S.rows) { S.byNum.set(String(r.cells[C.num]).trim(), r); index(r); }
     S.clients = null; // книга клиентов строится при первом обращении
@@ -592,8 +616,16 @@
     </section>`;
     left += box(3, html); html = "";
 
-    html += `<section class="block"><h3>${isNew && S.multi ? "Устройство 1" : dk === "repair" || dk === "other" ? "Ремонт" : "Устройство"}</h3>
-      ${isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>${esc(TYPE_UI[dk].multi)}</b></label>` : ""}
+    const multiBox = isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>${esc(TYPE_UI[dk].multi)}</b></label>` : "";
+    if (isNew && S.multi) {
+      const cols = PER_DEVICE[dk].filter(c => !hidden(c));
+      right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${deviceGrid(cols, c => fh(c))}</section>`);
+      right += box(5, extraDevicesHtml(dk));
+      right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}</div>
+        <div class="margin">${groupMoneySummary(dk)}</div></section>`);
+    } else {
+    html += `<section class="block"><h3>${dk === "repair" || dk === "other" ? "Ремонт" : "Устройство"}</h3>
+      ${multiBox}
       <div class="grid2">${fh(C.device)}${fh(C.imei)}</div>
       <div class="grid2">${fh(C.issue)}${fh(C.work)}</div>
       <div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>
@@ -603,13 +635,12 @@
     </section>`;
     right += box(4, html); html = "";
 
-    if (isNew && S.multi) right += box(5, extraDevicesHtml(dk));
-
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
       : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : [C.total, C.labor, C.partCost, C.extra];
     html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => fh(c)).join("")}</div>
       <div class="margin">${moneySummary(dk, val, r)}</div></section>`;
     right += box(6, html); html = "";
+    }
 
     html += `<section class="block"><h3>Прочее</h3><div class="grid3">${fh(C.date)}${isNew ? "" : fh(C.issued)}${fh(C.source)}</div>
       ${!isNew && !DEMO ? `<div class="row"><a class="btn btn--ghost" href="${sheetLink(r.row, C.num)}" target="_blank" rel="noopener">Открыть строку в таблице ↗</a></div>` : ""}</section>`;
@@ -633,26 +664,37 @@
   }
 
   // Дополнительные устройства нового заказа. Каждое станет в таблице отдельным заказом со
-  // своим номером; клиент, тип сделки, дата, источник и комментарий — общие.
-  const blankDevice = () => ({ device: "", imei: "", issue: "", pass: "", master: "", total: "", buyback: "" });
+  // своим номером. Поля — ровно те же, что у первого устройства (PER_DEVICE), значения —
+  // по номеру колонки: S.extra[i][колонка].
+  const blankDevice = () => ({});
+  function extraField(i, c, dk) {
+    const f = F[c], v = S.extra[i][c] ?? "", label = labelFor(c, dk);
+    const spell = f.spell ? ' spellcheck="true" lang="ru" autocorrect="on" autocapitalize="sentences"' : ' spellcheck="false"';
+    const attr = `data-extra="${i}" data-col="${c}"`;
+    let el;
+    if (c === C.master) el = `<select ${attr}><option value="">как у первого</option>${(S.opts[C.master] || []).map(m => `<option ${m === v ? "selected" : ""}>${esc(m)}</option>`).join("")}</select>`;
+    else if (AREAS.includes(c)) el = `<textarea ${attr} rows="2"${spell}>${esc(v)}</textarea>`;
+    else if (S.opts[c]?.length && !f.free) el = `<select ${attr}><option value="">—</option>${S.opts[c].map(o => `<option ${o === v ? "selected" : ""}>${esc(o)}</option>`).join("")}</select>`;
+    else el = `<input ${attr} value="${esc(v)}"${spell} ${f.num ? 'inputmode="decimal"' : ""}>`;
+    return `<label class="field"><span>${esc(label)}</span>${el}</label>`;
+  }
   function extraDevicesHtml(dk) {
-    const inp = (i, f, label, o = {}) => {
-      const v = S.extra[i][f] ?? "";
-      const spell = o.spell ? ' spellcheck="true" lang="ru" autocorrect="on" autocapitalize="sentences"' : ' spellcheck="false"';
-      const el = o.area ? `<textarea data-extra="${i}" data-field="${f}" rows="2"${spell}>${esc(v)}</textarea>`
-        : `<input data-extra="${i}" data-field="${f}" value="${esc(v)}"${spell} ${o.num ? 'inputmode="decimal"' : ""}>`;
-      return `<label class="field"><span>${esc(label)}</span>${el}</label>`;
-    };
-    const masters = S.opts[C.master] || [];
-    const hide = HIDE[dk] || [];
-    const moneyCol = (dk === "buyback" || dk === "parts") ? ["buyback", C.buyback] : ["total", C.total];
+    const cols = PER_DEVICE[dk].filter(c => !(HIDE[dk] || []).includes(c));
     return S.extra.map((x, i) => `<section class="block"><h3 class="h3-row">Устройство ${i + 2}<button type="button" class="linkbtn" data-act="rmdev" data-i="${i}">убрать</button></h3>
-      ${inp(i, "device", labelFor(C.device, dk))}${inp(i, "imei", labelFor(C.imei, dk))}${inp(i, "issue", labelFor(C.issue, dk), { area: true, spell: true })}
-      ${hide.includes(C.master) && hide.includes(C.pass) ? "" : `<div class="grid2">
-        ${hide.includes(C.master) ? "" : `<label class="field"><span>Мастер</span><select data-extra="${i}" data-field="master"><option value="">как у первого</option>${masters.map(m => `<option ${m === x.master ? "selected" : ""}>${esc(m)}</option>`).join("")}</select></label>`}
-        ${hide.includes(C.pass) ? "" : inp(i, "pass", "Пароль устройства 🔑")}
-      </div>`}${inp(i, moneyCol[0], labelFor(moneyCol[1], dk), { num: true })}
-    </section>`).join("") + `<button type="button" class="more" data-act="adddev">＋ Добавить ещё устройство</button>`;
+      ${deviceGrid(cols, c => extraField(i, c, dk))}</section>`).join("") + `<button type="button" class="more" data-act="adddev">＋ Добавить ещё устройство</button>`;
+  }
+  // Деньги по всему заказу из нескольких устройств.
+  function groupMoneySummary(dk) {
+    const get = c => [toNum(S.dirty.get("new:" + c)) ?? 0, ...S.extra.map(x => toNum(x[c]) ?? 0)].reduce((a, b) => a + b, 0);
+    const extra = toNum(S.dirty.get("new:" + C.extra)) ?? 0, N = 1 + S.extra.length;
+    const missing = [S.dirty.get("new:" + (dk === "buyback" || dk === "parts" ? C.buyback : C.total)), ...S.extra.map(x => x[dk === "buyback" || dk === "parts" ? C.buyback : C.total])]
+      .filter(v => toNum(v) == null).length;
+    const warn = missing ? `<div class="note" style="color:var(--wait)">⚠️ Без суммы: ${missing} из ${N} — впишите, иначе итог не сойдётся.</div>` : "";
+    const f = n => n.toLocaleString("ru-RU") + " ₽";
+    if (dk === "buyback" || dk === "parts") return `Итого отдаём клиенту за ${N} устр.: <b>${f(get(C.buyback))}</b>${warn}`;
+    if (dk === "tradein") return `Доплата ${f(get(C.total))} + зачёт ${f(get(C.buyback))} − закупка ${f(get(C.partCost))} − расходы ${f(extra)} = остаётся нам: <b>${f(get(C.total) + get(C.buyback) - get(C.partCost) - extra)}</b>${warn}`;
+    if (dk.startsWith("sale")) return `Итого по ${N} устр.: <b>${f(get(C.total))}</b> · закупка ${f(get(C.partCost))} · остаётся нам: <b>${f(get(C.total) - get(C.partCost) - extra)}</b>${warn}`;
+    return `Итого по ${N} устр.: <b>${f(get(C.total))}</b>${warn}`;
   }
 
   // «Напомнить об отзыве» — кнопкой-переключателем рядом с кнопкой отчёта (владелец,
@@ -747,11 +789,12 @@
     set(C.device, first.name); set(C.total, first.price != null ? Math.max(0, first.price - promo) : "");
     set(C.partCost, first.purchase || ""); set(C.warranty, first.warranty || "");
     set(C.comment, [o.ref + (o.user ? " (@" + o.user + ")" : ""), o.promo ? `промокод ${o.promo.code}: −${o.promo.amount} ₽` : ""].filter(Boolean).join("; "));
-    S.extra = rest.map(x => ({ ...blankDevice(), device: x.name, total: x.price != null ? String(x.price) : "" }));
+    S.extra = rest.map(x => ({ [C.device]: x.name, [C.total]: x.price != null ? String(x.price) : "", [C.partCost]: x.purchase ? String(x.purchase) : "", [C.warranty]: x.warranty || "" }));
     S.multi = S.extra.length > 0;
     S.imp = { open: false };
     render(); window.scrollTo(0, 0);
-    toast(`Подставлен ${o.ref}${o.phone ? "" : " — телефона в заказе нет, впишите"}`, null, true);
+    const noPrice = o.items.filter(x => x.price == null).length;
+    toast(`Подставлен ${o.ref}${noPrice ? ` — у ${noPrice} поз. нет цены, впишите` : ""}${o.phone ? "" : " · телефона нет, впишите"}`, null, true);
   }
 
   function renderCard(num) {
@@ -778,7 +821,7 @@
     </div></div>`);
   }
   function newLabel() {
-    const k = 1 + (S.multi ? S.extra.filter(x => String(x.device).trim()).length : 0);
+    const k = 1 + (S.multi ? S.extra.filter(x => String(x[C.device] ?? "").trim()).length : 0);
     return k > 1 ? `Создать ${k} ${k < 5 ? "заказа" : "заказов"}` : "Создать заказ";
   }
   function refreshSaveBar(key) { $app.querySelector(".savebar")?.remove(); saveBar(key, location.hash === "#/new" ? 'data-new="1"' : `data-num="${esc(location.hash.slice(2))}"`); }
@@ -920,37 +963,56 @@
       // общие поля клиента и сделки плюс свои поля устройства.
       const shared = [...S.dirty].filter(([k]) => k.startsWith("new:")).map(([k, v]) => ({ c: +k.split(":")[1], v, old: "" }));
       const devices = [shared];
+      const perDev = PER_DEVICE[dealKey(S.dirty.get("new:" + C.type))];
       if (S.multi) for (const x of S.extra) {
-        if (!String(x.device || "").trim()) continue;
-        const own = [[C.device, x.device], [C.imei, x.imei], [C.issue, x.issue], [C.pass, x.pass], [C.master, x.master], [C.total, x.total], [C.buyback, x.buyback]]
-          .filter(([, v]) => String(v ?? "").trim() !== "").map(([c, v]) => ({ c, v, old: "" }));
+        if (!String(x[C.device] || "").trim()) continue;
+        const own = perDev.filter(c => String(x[c] ?? "").trim() !== "").map(c => ({ c, v: x[c], old: "" }));
         const ownCols = new Set(own.map(o => o.c));
-        const base = shared.filter(ch => ![C.device, C.imei, C.issue, C.pass, C.total, C.work, C.buyback].includes(ch.c) && !ownCols.has(ch.c));
+        // общее — всё, что не поле устройства; мастер «как у первого», если свой не выбран
+        const base = shared.filter(ch => !perDev.includes(ch.c) || (ch.c === C.master && !ownCols.has(C.master)));
         devices.push([...base, ...own]);
       }
       const N = devices.length;
       let row0, num0;
       if (DEMO) {
         row0 = (S.rows.at(-1)?.row || 1) + 1; num0 = Math.max(0, ...S.rows.map(x => +cell(x, C.num) || 0)) + 1;
-      } else {
-        // Свежий взгляд на колонку A прямо перед записью: номера — следующие, строки — первые пустые.
-        const colA = await api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A:A`)}`);
-        const vals = (colA.values || []).map(v => String(v[0] ?? "").trim());
-        let last = vals.length; while (last > 1 && !vals[last - 1]) last--;
-        num0 = Math.max(0, ...vals.map(v => +v || 0)) + 1;
-        row0 = last + 1;
-        const probe = await api(`/values/${A1(0, row0, C.linked, row0 + N - 1)}?valueRenderOption=FORMULA`);
-        if ((probe.values || []).some(rw => (rw || []).some(v => String(v).trim()))) throw new Error("Строки " + row0 + "–" + (row0 + N - 1) + " не пустые — обновите список и повторите");
       }
+      // Куда класть и какие номера. В таблице номера в колонке A стоят ЗАРАНЕЕ — на сотни
+      // строк вперёд (26.09.2026: после последнего заказа №7778 пустые заготовки до №7996).
+      // Поэтому заказ ложится в первую строку ПОСЛЕ последнего заполненного заказа и берёт
+      // уже стоящий там номер; A пишем, только если номера нет. Раньше (v3–v14) оболочка
+      // брала строку после последнего номера и «максимум + 1» — первый же заказ получил бы
+      // №7997 и лёг бы за 218 заготовками. Живых заказов так создано не было.
+      let slots;
+      if (DEMO) {
+        slots = devices.map((_, i) => ({ row: row0 + i, num: String(num0 + i), hasNum: false }));
+      } else {
+        const got = await api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A2:H`)}`);
+        const vals = got.values || [];
+        let lastData = -1;
+        vals.forEach((r, i) => { if ([C.name, C.phone, C.device, C.issue, C.status].some(c => String(r[c] ?? "").trim())) lastData = i; });
+        let prev = +String(vals[lastData]?.[0] ?? "").trim() || Math.max(0, ...vals.map(r => +String(r[0] ?? "").trim() || 0));
+        slots = [];
+        for (let i = 0; i < N; i++) {
+          const idx = lastData + 1 + i, a = String(vals[idx]?.[0] ?? "").trim();
+          const num = a && +a ? a : String(prev + 1);
+          slots.push({ row: idx + 2, num, hasNum: !!(a && +a) }); prev = +num;
+        }
+        const r0 = slots[0].row, r1 = slots[N - 1].row;
+        const probe = await api(`/values/${A1(1, r0, C.group, r1)}?valueRenderOption=FORMULA`);
+        if ((probe.values || []).some(rw => (rw || []).some(v => String(v).trim()))) throw new Error("Строки " + r0 + "–" + r1 + " не пустые — обновите список и повторите");
+        num0 = +slots[0].num;
+      }
+      const head = slots[0].num;
       const made = devices.map((fields, i) => {
-        const num = String(num0 + i), row = row0 + i;
-        const list = [{ c: C.num, v: num }, ...(N > 1 ? [{ c: C.group, v: String(num0), old: "" }] : []), ...fields.map(f => ({ ...f }))]
+        const { num, row, hasNum } = slots[i];
+        const list = [...(hasNum ? [] : [{ c: C.num, v: num }]), ...(N > 1 ? [{ c: C.group, v: head, old: "" }] : []), ...fields.map(f => ({ ...f }))]
           .filter(ch => String(ch.v ?? "").trim() !== "" && !(S.bools.has(ch.c) && !isTrue(ch.v)));
         return { num, row, list };
       });
       await Promise.all(made.map(m => writeCells(m.row, m.list)));
       for (const m of made) {
-        const cells = []; for (const ch of m.list) cells[ch.c] = String(ch.w ?? "");
+        const cells = []; cells[C.num] = m.num; for (const ch of m.list) cells[ch.c] = String(ch.w ?? "");
         m.rec = { row: m.row, cells }; index(m.rec); S.rows.push(m.rec); S.byNum.set(m.num, m.rec);
       }
       S.clients = null;
@@ -1030,7 +1092,12 @@
       onEdit.t = setTimeout(() => { S.q = t.value; S.limit = 60; const pos = t.selectionStart; renderList(); const s = $app.querySelector(".search"); s.focus(); s.setSelectionRange(pos, pos); }, 120);
       return;
     }
-    if (t.dataset.extra != null) { S.extra[+t.dataset.extra][t.dataset.field] = t.value; if (t.dataset.field === "device") refreshSaveBar("new"); return; }
+    if (t.dataset.extra != null) {
+      S.extra[+t.dataset.extra][+t.dataset.col] = t.value;
+      refreshSaveBar("new");
+      const box = $app.querySelector(".margin"); if (box && S.multi) box.innerHTML = groupMoneySummary(dealKey(S.dirty.get("new:" + C.type)));
+      return;
+    }
     if (t.dataset.edit == null) return;
     const key = curKey(); if (key == null) return;
     const c = +t.dataset.edit, v = t.type === "checkbox" ? t.checked : t.value;
@@ -1039,7 +1106,8 @@
     if (t.type === "checkbox") t.nextElementSibling.textContent = t.checked ? "Да" : "Нет";
     refreshSaveBar(key);
     if (key === "new" && (c === C.name || c === C.phone)) { clearTimeout(onEdit.ac); onEdit.ac = setTimeout(() => suggest(c, t.value), 120); }
-    if (F[c]?.num || c === C.linked) {
+    if (key === "new" && S.multi && F[c]?.num) { const box = $app.querySelector(".margin"); if (box) box.innerHTML = groupMoneySummary(dealKey(S.dirty.get("new:" + C.type))); }
+    else if (F[c]?.num || c === C.linked) {
       const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
       const val = x => { const k = key + ":" + x; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, x) : ""); };
       const box = $app.querySelector(".margin"); if (box) box.innerHTML = moneySummary(dealKey(val(C.type)), val, r);
