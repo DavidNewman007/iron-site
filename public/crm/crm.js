@@ -207,25 +207,37 @@
   function sheetLink(row, col) { return `https://docs.google.com/spreadsheets/d/${CFG.sheetId}/edit#gid=${S.gid}&range=${LETTER(col)}${row}`; }
 
   // ── вход ────────────────────────────────────────────────
-  let tokenClient = null;
-  function saved() { try { const t = JSON.parse(sessionStorage.getItem("crm.tok") || "null"); return t && t.exp > Date.now() + 60e3 ? t : null; } catch { return null; } }
-  function signIn(prompt) {
+  // Вход помнится на устройстве (владелец, 26.09.2026: «закрыл страницу — приходится входить
+  // заново»). Токен Google живёт час; он лежит в localStorage, поэтому закрыть и открыть
+  // страницу в течение часа можно без входа. Когда час на исходе, токен обновляется сам на
+  // ближайшем нажатии (Google требует для этого действие человека — окно мелькнёт и
+  // закроется), а если страница была закрыта дольше — одна кнопка «Продолжить как …» без
+  // выбора аккаунта. Раньше токен лежал в sessionStorage и пропадал с закрытием вкладки.
+  let tokenClient = null, refreshing = null;
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+    del(k) { try { localStorage.removeItem(k); } catch {} },
+  };
+  function saved() { const t = store.get("crm.tok"); return t && t.exp > Date.now() + 60e3 ? t : null; }
+  const lastEmail = () => store.get("crm.who") || "";
+  function signIn(prompt, hint) {
     return new Promise((resolve, reject) => {
       if (!window.google?.accounts?.oauth2) return reject(new Error("Google ещё грузится — нажмите ещё раз через пару секунд"));
       tokenClient = tokenClient || google.accounts.oauth2.initTokenClient({ client_id: CFG.clientId, scope: CFG.scope, callback: () => {} });
       tokenClient.callback = r => {
         if (r.error) return reject(new Error(r.error_description || r.error));
         S.token = r.access_token;
-        try { sessionStorage.setItem("crm.tok", JSON.stringify({ t: r.access_token, exp: Date.now() + (r.expires_in - 60) * 1000 })); } catch {}
+        store.set("crm.tok", { t: r.access_token, exp: Date.now() + (r.expires_in - 60) * 1000 });
         resolve();
       };
       tokenClient.error_callback = e => reject(new Error(e?.type === "popup_closed" ? "Окно входа закрыли" : "Не удалось войти"));
-      tokenClient.requestAccessToken({ prompt: prompt ?? "" });
+      tokenClient.requestAccessToken({ prompt: prompt ?? "", ...(hint ? { hint } : {}) });
     });
   }
   function signOut() {
     if (S.token && window.google?.accounts?.oauth2) google.accounts.oauth2.revoke(S.token, () => {});
-    try { sessionStorage.removeItem("crm.tok"); } catch {}
+    store.del("crm.tok"); store.del("crm.who");
     S.token = null; S.rows = []; S.byNum.clear(); location.hash = ""; render();
   }
 
@@ -233,7 +245,7 @@
     const r = await fetch("https://sheets.googleapis.com/v4/spreadsheets/" + CFG.sheetId + path, {
       ...opts, headers: { Authorization: "Bearer " + S.token, "Content-Type": "application/json", ...(opts.headers || {}) },
     });
-    if (r.status === 401) { try { sessionStorage.removeItem("crm.tok"); } catch {} S.token = null; throw Object.assign(new Error("Вход истёк — войдите ещё раз"), { code: 401 }); }
+    if (r.status === 401) { store.del("crm.tok"); S.token = null; setTimeout(render, 0); throw Object.assign(new Error("Вход истёк — нажмите «Продолжить»"), { code: 401 }); }
     if (r.status === 403) throw Object.assign(new Error(opts.method && opts.method !== "GET"
       ? "Google не дал записать: у вашего аккаунта доступ к таблице только на просмотр"
       : "У этого Google-аккаунта нет доступа к базе. Попросите владельца открыть доступ к таблице"), { code: 403 });
@@ -256,6 +268,7 @@
           fetch("https://www.googleapis.com/oauth2/v3/userinfo", { headers: { Authorization: "Bearer " + S.token } }).then(r => r.ok ? r.json() : {}),
         ]);
         S.email = who.email || "";
+        if (S.email) store.set("crm.who", S.email);
         const sh = meta.sheets.find(s => s.properties.title === CFG.sheet);
         if (!sh) throw new Error("В таблице нет листа «" + CFG.sheet + "»");
         S.gid = sh.properties.sheetId;
@@ -425,7 +438,9 @@
       <img class="login__logo" src="../assets/logo-horizontal.png" alt="IRON SERVICE" width="210" height="56">
       <h1>CRM</h1>
       <p>Вход по Google-аккаунту. Пускает всех, у кого есть доступ к таблице базы, — и только их.</p>
-      <button class="btn btn--red" data-act="login">Войти через Google</button>
+      ${lastEmail() ? `<button class="btn btn--red" data-act="login" data-hint="${esc(lastEmail())}">Продолжить как <span style="text-transform:none;letter-spacing:0">${esc(lastEmail())}</span></button>
+        <div class="row" style="justify-content:center"><button class="btn btn--ghost" data-act="login">Другой аккаунт</button></div>`
+        : `<button class="btn btn--red" data-act="login">Войти через Google</button>`}
       ${S.error ? `<p class="note">${esc(S.error)}</p>` : ""}
       <p class="note">При первом входе Google покажет «приложение не проверено» — нажмите «Дополнительно» → «Перейти».</p>
     </div></main>`;
@@ -850,6 +865,11 @@
     if (same && !keepNew) S.dirty.delete(key + ":" + c); else S.dirty.set(key + ":" + c, v);
   }
 
+  document.addEventListener("click", () => {
+    const t = store.get("crm.tok");
+    if (DEMO || !S.token || refreshing || !t || t.exp - Date.now() > 5 * 60e3) return;
+    refreshing = signIn("", lastEmail()).catch(() => {}).finally(() => { refreshing = null; });
+  }, true);
   document.addEventListener("click", async e => {
     const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q]"); if (!t) return;
     if (t.dataset.q != null) { S.q = t.dataset.q; S.limit = 60; renderList(); return; }
@@ -871,7 +891,7 @@
     }
     const act = t.dataset.act;
     if (act === "login") {
-      try { await signIn("select_account"); S.error = ""; await load(); } catch (err) { S.error = err.message; render(); }
+      try { await signIn(t.dataset.hint ? "" : "select_account", t.dataset.hint); S.error = ""; await load(); } catch (err) { S.error = err.message; render(); }
     } else if (act === "logout") signOut();
     else if (act === "reload") { if (!DEMO && !S.token) render(); else load(); }
     else if (act === "more") { S.limit += 100; renderList(); }
