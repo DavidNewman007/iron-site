@@ -37,6 +37,9 @@
       "https://script.google.com/macros/s/AKfycbyOtzn7cQARc_H9heNEvukPwMhsOapCMc8BNNLi1IBZ9zLABBpb2wJvePbHnpQLPKbr/exec", // личный, v65
     ],
     newStatus: "Принят на диагностику",
+    // Заказы бота для «Продажи» (план 93 §11.17): бот пишет их в D1 с 26.09.2026.
+    botOrders: "https://order-bot.4489530.workers.dev/crm/orders",
+    siteOrdersSheet: "заказы с сайта",
     reportValue: "Ok",
   };
 
@@ -583,6 +586,7 @@
     }
     left += box(2, html); html = "";
 
+    if (isNew && (dk === "sale_used" || dk === "sale_new")) left += box(2, importBlock());
     html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
     </section>`;
@@ -676,6 +680,78 @@
     }
     const n = location.hash.match(/^#\/(\d+)/)?.[1];
     if (n && ![...S.dirty.keys()].length) render();
+  }
+
+  // ── подгрузка заказа из бота и с сайта в новую «Продажу» ──────────────────
+  // Бот: GET /crm/orders (Google-токен вошедшего; бот сам проверяет доступ к таблице).
+  // Сайт: лист «заказы с сайта» той же книги (оплаченные заказы; имени и телефона там нет).
+  const dayISO = off => { const d = new Date(Date.now() + 3 * 3600e3 - off * 864e5); return d.toISOString().slice(0, 10); };
+  const isoToRu = iso => iso.split("-").reverse().join(".");
+  function importBlock() {
+    const I = S.imp || {};
+    if (!I.open) return `<section class="block"><h3>Заказ из бота или с сайта</h3>
+      <button type="button" class="btn" data-act="impopen">🤖 Подгрузить заказ</button>
+      <p class="note">Заказы бота за сегодня и вчера (или за выбранную дату) и оплаченные заказы с сайта — одним нажатием в эту продажу.</p></section>`;
+    const list = I.loading ? `<div class="note">Загружаю…</div>` : I.error ? `<div class="note">${esc(I.error)}</div>`
+      : !I.orders?.length ? `<div class="note">Заказов за ${esc(I.label)} нет.</div>`
+      : `<div class="imp-list">${I.orders.map((o, i) => `<button type="button" class="imp-item" data-imp="${i}">
+          <b>${esc(o.when)} · ${esc(o.who || "без имени")}${o.phone ? " · " + esc(o.phone) : ""}</b>
+          <span>${o.items.map(x => esc(x.name) + (x.price ? " — " + money(x.price) : "")).join("<br>")}</span>
+          <em>${esc(o.src)}${o.total ? " · итого " + money(o.total) : ""}${o.promo ? " · промокод −" + money(o.promo.amount) : ""}</em></button>`).join("")}</div>`;
+    return `<section class="block"><h3 class="h3-row">Заказ из бота или с сайта<button type="button" class="linkbtn" data-act="impclose">закрыть</button></h3>
+      <div class="row" style="margin-top:0"><button type="button" class="btn ${I.mode === "recent" ? "btn--toggle" : ""}" aria-pressed="${I.mode === "recent"}" data-act="imprecent">Сегодня и вчера</button>
+      <label class="imp-date"><span>или дата</span><input type="date" data-act="impdate" value="${esc(I.date || "")}" max="${dayISO(0)}"></label></div>${list}</section>`;
+  }
+  async function loadImports(dates) {
+    S.imp = { ...(S.imp || {}), open: true, loading: true, error: "", orders: [], label: dates.length > 1 ? "сегодня и вчера" : isoToRu(dates[0]) };
+    render();
+    const out = [];
+    try {
+      if (DEMO) out.push(
+        { when: "26.09 12:40", who: "Анна Демо", user: "anna_demo", phone: "+7 000 000-11-22", src: "бот · мини-приложение сайта", ref: "заказ бота demo01",
+          items: [{ name: "AirPods Pro 3 🇺🇸 США", price: 24990, purchase: 21000, warranty: "1 год" }, { name: "Чехол MagSafe", price: 4990, purchase: 2500 }], total: 26980, promo: { code: "BD-DEMO", amount: 3000 } },
+        { when: "25.09 18:05", who: "", phone: "", src: "сайт · Альфа-Банк", ref: "заказ с сайта №A-1024", items: [{ name: "iPhone 17 128Gb Black (🇺🇸 США S1)", price: 61900 }], total: 61900, promo: null });
+      if (!DEMO) {
+        const r = await fetch(CFG.botOrders + "?dates=" + dates.join(","), { headers: { Authorization: "Bearer " + S.token } });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.ok) throw new Error(j.error || "бот не ответил (" + r.status + ")");
+        for (const o of j.orders) out.push({ at: o.createdAt, when: new Date(o.createdAt + 3 * 3600e3).toISOString().slice(5, 16).replace("T", " ").replace(/^(\d\d)-(\d\d)/, "$2.$1"),
+          who: o.customer?.name || o.customer?.label || "", user: o.customer?.username || "", phone: o.customer?.phone || "",
+          src: "бот" + (o.source && o.source !== "бот" ? " · " + o.source : ""), ref: "заказ бота " + o.id,
+          items: (o.items || []).filter(x => x.kind !== "service").map(x => ({ name: x.name, price: x.price, purchase: x.purchase, warranty: x.warranty })),
+          total: o.total, promo: o.promo });
+        // оплаченные заказы с сайта — из листа той же книги
+        const v = await api(`/values/${encodeURIComponent(`'${CFG.siteOrdersSheet}'!A2:G`)}`).catch(() => ({ values: [] }));
+        const ru = dates.map(isoToRu);
+        for (const row of v.values || []) {
+          const [when, num, , pay, items, sum, src] = row.map(x => String(x ?? ""));
+          if (!ru.some(d => when.startsWith(d))) continue;
+          out.push({ at: 0, when: when.slice(0, 5) + " " + when.slice(11, 16), who: "", phone: "", src: "сайт · " + (src || pay || "оплачен"), ref: "заказ с сайта №" + num,
+            items: items.split(/;\s*/).filter(Boolean).map(t => { const m = t.match(/^(.*?)\s+—\s+([\d\s ]+)\s*₽/); return m ? { name: m[1].trim(), price: toNum(m[2]) } : { name: t.trim(), price: null }; }),
+            total: toNum(sum), promo: null });
+        }
+      }
+      S.imp.orders = out.filter(o => o.items.length);
+    } catch (e) { S.imp.error = "Не удалось загрузить: " + e.message; }
+    S.imp.loading = false; render();
+  }
+  // Выбранный заказ → поля новой продажи: клиент, по устройству на каждую позицию
+  // (несколько позиций — «несколько устройств»), цены и закупка, промокод — в комментарий
+  // и вычтен из первой позиции, чтобы сумма сделки совпала с заказом.
+  function takeImport(i) {
+    const o = S.imp.orders[i]; if (!o) return;
+    const set = (c, v) => { if (v != null && String(v) !== "") S.dirty.set("new:" + c, String(v)); };
+    set(C.name, o.who); set(C.phone, o.phone);
+    const [first, ...rest] = o.items;
+    const promo = o.promo ? Number(o.promo.amount) || 0 : 0;
+    set(C.device, first.name); set(C.total, first.price != null ? Math.max(0, first.price - promo) : "");
+    set(C.partCost, first.purchase || ""); set(C.warranty, first.warranty || "");
+    set(C.comment, [o.ref + (o.user ? " (@" + o.user + ")" : ""), o.promo ? `промокод ${o.promo.code}: −${o.promo.amount} ₽` : ""].filter(Boolean).join("; "));
+    S.extra = rest.map(x => ({ ...blankDevice(), device: x.name, total: x.price != null ? String(x.price) : "" }));
+    S.multi = S.extra.length > 0;
+    S.imp = { open: false };
+    render(); window.scrollTo(0, 0);
+    toast(`Подставлен ${o.ref}${o.phone ? "" : " — телефона в заказе нет, впишите"}`, null, true);
   }
 
   function renderCard(num) {
@@ -879,7 +955,7 @@
       }
       S.clients = null;
       for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-      S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false;
+      S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null;
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
       toast(DEMO ? nums + " созданы (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`, null, true);
@@ -905,7 +981,8 @@
     refreshing = signIn("", lastEmail()).catch(() => {}).finally(() => { refreshing = null; });
   }, true);
   document.addEventListener("click", async e => {
-    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q]"); if (!t) return;
+    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp]"); if (!t) return;
+    if (t.dataset.imp != null) { takeImport(+t.dataset.imp); return; }
     if (t.dataset.q != null) { S.q = t.dataset.q; S.limit = 60; renderList(); return; }
     if (t.dataset.open) { location.hash = "#/" + t.dataset.open; return; }
     if (t.dataset.tab) { S.tab = t.dataset.tab; S.limit = 60; renderList(); return; }
@@ -929,6 +1006,8 @@
     } else if (act === "logout") signOut();
     else if (act === "reload") { if (!DEMO && !S.token) render(); else load(); }
     else if (act === "more") { S.limit += 100; renderList(); }
+    else if (act === "impopen" || act === "imprecent") { S.imp = { open: true, mode: "recent" }; loadImports([dayISO(1), dayISO(0)]); }
+    else if (act === "impclose") { S.imp = { open: false }; render(); }
     else if (act === "multi") { S.multi = t.checked; if (S.multi && !S.extra.length) S.extra.push(blankDevice()); if (!S.multi) S.extra = []; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "adddev") { S.extra.push(blankDevice()); const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "rmdev") { S.extra.splice(+t.dataset.i, 1); if (!S.extra.length) S.multi = false; const y = window.scrollY; render(); window.scrollTo(0, y); }
@@ -941,10 +1020,11 @@
     }
     else if (act === "report") { const key = curKey(); S.dirty.set(key + ":" + C.report, CFG.reportValue); t.textContent = "Отчёт уйдёт после «Сохранить»"; t.disabled = true; refreshSaveBar(key); }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
+    if (t.dataset.act === "impdate") { if (t.value && e.type === "change") { S.imp = { open: true, mode: "date", date: t.value }; loadImports([t.value]); } return; }
     if (t.dataset.act === "search") {
       clearTimeout(onEdit.t);
       onEdit.t = setTimeout(() => { S.q = t.value; S.limit = 60; const pos = t.selectionStart; renderList(); const s = $app.querySelector(".search"); s.focus(); s.setSelectionRange(pos, pos); }, 120);
@@ -1001,7 +1081,7 @@
     else if (it.dataset.phone) { fillField(C.phone, it.dataset.phone); document.getElementById("ac-" + C.phone).innerHTML = ""; refreshSaveBar("new"); }
   });
   document.addEventListener("input", onEdit);
-  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.type === "checkbox") && e.target.dataset.act !== "multi") onEdit(e); });
+  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.type === "checkbox" || e.target.dataset.act === "impdate") && e.target.dataset.act !== "multi") onEdit(e); });
   window.addEventListener("hashchange", () => { window.scrollTo(0, 0); render(); });
   window.addEventListener("beforeunload", e => { if ([...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
   document.addEventListener("visibilitychange", () => {

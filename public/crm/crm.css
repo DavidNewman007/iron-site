@@ -306,3 +306,13 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
   .card-grid .st { min-height: 36px; font-size: .84rem; }
   .card-grid .field textarea { min-height: 58px; }
 }
+
+/* подгрузка заказа из бота и с сайта */
+.imp-date { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .9rem; }
+.imp-date input { min-height: var(--tap); background: var(--field); color: var(--cream); border: 1px solid var(--line-strong); border-radius: 10px; padding: 6px 10px; font: inherit; color-scheme: dark; }
+.imp-list { display: grid; gap: 8px; margin-top: 12px; }
+.imp-item { text-align: left; border: 1px solid var(--line-strong); background: var(--surface-2); color: var(--text); border-radius: 12px; padding: 10px 14px; display: grid; gap: 4px; }
+.imp-item:hover { border-color: var(--gold); }
+.imp-item b { color: var(--cream); font-size: 1.02rem; }
+.imp-item span { color: var(--text); font-size: .95rem; line-height: 1.35; }
+.imp-item em { color: var(--gold); font-style: normal; font-size: .88rem; }
