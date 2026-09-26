@@ -206,3 +206,21 @@ a { color: var(--red); }
 .item__chips .chip { margin-top: 0; }
 .card-head .chip:not(.chip--big) { margin-left: auto; }
 .card-head .chip:not(.chip--big) + .chip--big { margin-left: 0; }
+
+/* ── v6: поиск и подсказки клиента ────────────────────── */
+mark { background: #f7e39a; color: inherit; border-radius: 3px; padding: 0 1px; }
+.clients { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; margin-bottom: 6px; }
+.client { text-align: left; border: 2px solid var(--gold); background: #fffaf0; border-radius: var(--radius); padding: 12px 14px; display: grid; gap: 2px; }
+.client b { font-size: 1.1rem; }
+.client span { color: var(--muted); font-size: .92rem; }
+.client em { color: var(--red); font-style: normal; font-weight: 700; font-size: .9rem; }
+.ac { display: grid; gap: 6px; margin-top: 6px; }
+.ac:empty { display: none; }
+.ac-item { text-align: left; border: 2px solid var(--line); background: #fff; border-radius: 12px; padding: 10px 14px; display: grid; gap: 2px; min-height: var(--tap); }
+.ac-item:hover, .ac-item:focus { border-color: var(--gold); background: #fffaf0; }
+.ac-item b { font-size: 1.1rem; }
+.ac-item span { color: var(--muted); font-size: .9rem; }
+.ac-info { color: var(--ready); font-weight: 600; font-size: .95rem; padding: 2px 4px; }
+.check.multi { border: 2px dashed var(--gold); border-radius: 14px; padding: 6px 14px; margin-bottom: 14px; }
+.h3-row { display: flex; align-items: center; justify-content: space-between; }
+.linkbtn { background: none; border: 0; color: var(--red); font-weight: 700; text-transform: none; letter-spacing: 0; font-size: .95rem; padding: 6px; }

@@ -132,7 +132,7 @@
 
   const DEMO = new URLSearchParams(location.search).has("demo");
   const S = { token: null, email: "", rows: [], byNum: new Map(), gid: 0, loadedAt: 0, loading: false,
-    tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {} };
+    tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [] };
   const $app = document.getElementById("app");
   const $toast = document.getElementById("toast");
 
@@ -231,8 +231,48 @@
   function setRows(list) {
     S.rows = list.filter(r => String(r.cells[C.num] ?? "").trim());
     S.byNum.clear();
-    for (const r of S.rows) S.byNum.set(String(r.cells[C.num]).trim(), r);
+    for (const r of S.rows) { S.byNum.set(String(r.cells[C.num]).trim(), r); index(r); }
+    S.clients = null; // книга клиентов строится при первом обращении
   }
+  // Поисковые ключи строки считаются один раз при загрузке (и после правки строки), а не
+  // на каждое нажатие клавиши: по 7–8 тысячам строк поиск так идёт за миллисекунды.
+  function index(r) {
+    r.hay = norm([C.num, C.name, C.phone, C.device, C.issue, C.work, C.parts, C.comment, C.master, C.imei, C.type, C.status].map(c => r.cells[c] ?? "").join(" "));
+    r.ph = phones(r.cells[C.phone]).map(p => p.d);
+    r.nameN = norm(String(r.cells[C.name] ?? "").split("\n")[0]);
+  }
+  function normDigits(d) { return d.length === 11 && d[0] === "8" ? "7" + d.slice(1) : d; }
+  const isDigitQuery = q => /^[\d\s+()\-]+$/.test(q);
+
+  // Книга клиентов из самой базы: одно имя — один клиент, у клиента может быть несколько
+  // телефонов. Свежие написание имени и телефоны — сверху.
+  function clients() {
+    if (S.clients) return S.clients;
+    const map = new Map();
+    for (const r of S.rows) {
+      if (!r.nameN) continue;
+      let c = map.get(r.nameN);
+      if (!c) map.set(r.nameN, c = { key: r.nameN, name: "", words: r.nameN.split(" "), phones: new Map(), count: 0, last: null });
+      c.count++; c.last = r;
+      c.name = String(cell(r, C.name)).split("\n")[0].trim() || c.name;
+      for (const p of phones(cell(r, C.phone))) c.phones.set(p.d, { text: p.text, d: p.d, row: r.row, date: cell(r, C.date) });
+    }
+    return (S.clients = [...map.values()]);
+  }
+  function findClients(q, limit = 8) {
+    let res;
+    if (isDigitQuery(q)) {
+      const d = normDigits(digits(q)); if (d.length < 4) return [];
+      res = clients().filter(c => [...c.phones.keys()].some(p => p.includes(d)));
+    } else {
+      const tokens = norm(q).split(" ").filter(Boolean);
+      if (tokens.join("").length < 3) return [];
+      res = clients().filter(c => tokens.every(t => c.words.some(w => w.startsWith(t))));
+    }
+    return res.sort((a, b) => b.last.row - a.last.row).slice(0, limit);
+  }
+  const phonesOf = c => [...c.phones.values()].sort((a, b) => b.row - a.row);
+  const ordersWord = n => n % 10 === 1 && n % 100 !== 11 ? "заказ" : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? "заказа" : "заказов";
   const cell = (r, c) => r.cells[c] ?? "";
 
   // Выпадающие списки — из правил проверки данных последних строк листа.
@@ -277,19 +317,49 @@
   }
   function pick() {
     const q = norm(S.q);
-    if (q) {
-      const d = digits(q);
-      return S.rows.filter(r => {
-        if (d.length >= 3 && (String(cell(r, C.num)).includes(d) || digits(cell(r, C.phone)).includes(d.slice(-10)))) return true;
-        return norm(cell(r, C.name) + " " + cell(r, C.device) + " " + cell(r, C.issue)).includes(q);
-      }).reverse();
-    }
+    if (q) return search(q);
     if (S.tab === "stale") return S.rows.filter(isStale).reverse();
     if (S.tab === "work") return S.rows.filter(r => inWork(r) && !isReady(cell(r, C.status))).reverse();
     if (S.tab === "ready") return S.rows.filter(r => inWork(r) && isReady(cell(r, C.status))).reverse();
     if (S.tab === "done") return S.rows.filter(r => isFinal(cell(r, C.status)) && (daysSince(cell(r, C.issued) || cell(r, C.date)) ?? 999) <= 30).reverse();
     return S.rows.slice().reverse();
   }
+  // Поиск одной строкой. Цифры: точный номер заказа → телефон (любая часть, от 4 цифр,
+  // «8…» и «+7…» одинаково) → IMEI → номер по началу. Слова: должны найтись ВСЕ
+  // («иван 13 pro»), в имени, телефоне, устройстве, неисправности, работах, запчастях,
+  // комментарии, мастере, IMEI, типе и статусе; выше — где слово совпало с началом имени
+  // или фамилии. При равенстве — свежие заказы выше.
+  function search(q) {
+    const tokens = q.split(" ").filter(Boolean);
+    const d = normDigits(digits(q)), digitsOnly = isDigitQuery(q);
+    const out = [];
+    for (const r of S.rows) {
+      let score;
+      if (digitsOnly) {
+        const num = String(cell(r, C.num)).trim();
+        if (num === d) score = 1000;
+        else if (d.length >= 4 && r.ph.some(p => p.includes(d))) score = 400;
+        else if (d.length >= 4 && digits(cell(r, C.imei)).includes(d)) score = 300;
+        else if (num.startsWith(d)) score = 200;
+        else continue;
+      } else {
+        if (!tokens.every(t => r.hay.includes(t))) continue;
+        const words = r.nameN.split(" ");
+        score = 100 + tokens.filter(t => words.some(w => w.startsWith(t))).length * 50;
+      }
+      out.push([score, r.row, r]);
+    }
+    return out.sort((a, b) => b[0] - a[0] || b[1] - a[1]).map(x => x[2]);
+  }
+  // Подсветка найденного в результатах поиска.
+  function mark(text) {
+    const safe = esc(text);
+    const tokens = norm(S.q).split(" ").filter(t => t.length >= 2);
+    if (!tokens.length) return safe;
+    const re = new RegExp("(" + tokens.map(t => esc(t).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")", "giu");
+    return safe.replace(re, "<mark>$1</mark>");
+  }
+
   function counts() {
     let work = 0, ready = 0, stale = 0;
     for (const r of S.rows) if (inWork(r)) { isReady(cell(r, C.status)) ? ready++ : work++; if (isStale(r)) stale++; }
@@ -336,8 +406,8 @@
     const title = [cell(r, C.device), cell(r, C.issue)].filter(Boolean).join(" · ");
     const old = !isFinal(st) && age != null && age > 14;
     return `<button class="item" data-open="${esc(cell(r, C.num))}">
-      <div><div class="item__title"><span class="item__num">№${esc(cell(r, C.num))}</span>${esc(title || "—")}</div>
-      <div class="item__sub">${esc(cell(r, C.name) || "без имени")}${cell(r, C.master) ? " · " + esc(cell(r, C.master)) : ""}</div></div>
+      <div><div class="item__title"><span class="item__num">№${mark(cell(r, C.num))}</span>${mark(title || "—")}</div>
+      <div class="item__sub">${mark(cell(r, C.name) || "без имени")}${S.q && cell(r, C.phone) ? " · " + mark(cell(r, C.phone)) : ""}${cell(r, C.master) ? " · " + mark(cell(r, C.master)) : ""}</div></div>
       <div class="item__right"><div class="item__sum">${money(cell(r, C.total))}</div>
       <div class="item__age${old ? " is-old" : ""}">${age == null ? "" : age === 0 ? "сегодня" : age + " дн."}</div></div>
       <span class="item__chips"><span class="chip chip--${statusKind(st)}">${esc(st || "без статуса")}</span>${dealKey(cell(r, C.type)) !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}</span>
@@ -349,6 +419,12 @@
     const tabs = [["work", "В работе", n.work], ["stale", "⚡ Долго висят", n.stale], ["ready", "Готовы, ждут клиента", n.ready], ["done", "Выданы за 30 дней"], ["all", "Все"]];
     let body = S.q ? "" : `<nav class="tabs">${tabs.map(([k, t, c]) =>
       `<button class="tab" data-tab="${k}" aria-pressed="${S.tab === k}">${t}${c != null ? `<small>${c}</small>` : ""}</button>`).join("")}</nav>`;
+    if (S.q) {
+      const found = !isDigitQuery(S.q) ? findClients(S.q, 3) : [];
+      body += `<div class="section"><h2>Найдено</h2><span>${list.length}</span></div>`;
+      if (found.length) body += `<div class="clients">${found.map(c => { const p = phonesOf(c)[0];
+        return `<button class="client" data-q="${esc(p ? p.d : c.name)}"><b>${mark(c.name)}</b><span>${c.count} ${ordersWord(c.count)}${p ? " · " + esc(p.text) : ""}${c.phones.size > 1 ? ` (+${c.phones.size - 1})` : ""}</span><em>все заказы клиента →</em></button>`; }).join("")}</div>`;
+    }
     if (!list.length) body += `<div class="empty">${S.q ? "Ничего не нашлось" : "Здесь пусто"}</div>`;
     else if (!S.q && S.tab === "work") {
       const groups = new Map();
@@ -438,17 +514,20 @@
         <div class="row row--report">${reportBtn}<div class="inline-check">${fh(C.review)}</div></div></section>`;
     }
 
-    html += `<section class="block"><h3>Клиент</h3>${fh(C.name)}${fh(C.phone)}
+    html += `<section class="block"><h3>Клиент</h3>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
     </section>`;
 
-    html += `<section class="block"><h3>${dk === "repair" || dk === "other" ? "Ремонт" : "Устройство"}</h3>
+    html += `<section class="block"><h3>${isNew && S.multi ? "Устройство 1" : dk === "repair" || dk === "other" ? "Ремонт" : "Устройство"}</h3>
+      ${isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>Несколько устройств у одного клиента</b></label>` : ""}
       ${fh(C.device)}${fh(C.imei)}${fh(C.issue)}${fh(C.work)}
       ${dk === "repair" || dk === "other" ? fh(C.parts) + `<div class="grid2">${fh(C.partFrom)}${fh(C.warranty)}</div>` : fh(C.warranty)}
       ${dk === "sale_used" ? fh(C.linked) : ""}
       ${fh(C.master)}
       <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass)}</div>
     </section>`;
+
+    if (isNew && S.multi) html += extraDevicesHtml(dk);
 
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
       : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : [C.total, C.labor, C.partCost, C.extra];
@@ -458,6 +537,27 @@
     html += `<section class="block"><h3>Прочее</h3><div class="grid2">${fh(C.date)}${isNew ? "" : fh(C.issued)}</div>${fh(C.source)}
       ${!isNew && !DEMO ? `<div class="row"><a class="btn btn--ghost" href="${sheetLink(r.row, C.num)}" target="_blank" rel="noopener">Открыть строку в таблице ↗</a></div>` : ""}</section>`;
     return html;
+  }
+
+  // Дополнительные устройства нового заказа. Каждое станет в таблице отдельным заказом со
+  // своим номером; клиент, тип сделки, дата, источник и комментарий — общие.
+  const blankDevice = () => ({ device: "", imei: "", issue: "", pass: "", master: "", total: "" });
+  function extraDevicesHtml(dk) {
+    const inp = (i, f, label, o = {}) => {
+      const v = S.extra[i][f] ?? "";
+      const spell = o.spell ? ' spellcheck="true" lang="ru" autocorrect="on" autocapitalize="sentences"' : ' spellcheck="false"';
+      const el = o.area ? `<textarea data-extra="${i}" data-field="${f}" rows="2"${spell}>${esc(v)}</textarea>`
+        : `<input data-extra="${i}" data-field="${f}" value="${esc(v)}"${spell} ${o.num ? 'inputmode="decimal"' : ""}>`;
+      return `<label class="field"><span>${esc(label)}</span>${el}</label>`;
+    };
+    const masters = S.opts[C.master] || [];
+    return S.extra.map((x, i) => `<section class="block"><h3 class="h3-row">Устройство ${i + 2}<button type="button" class="linkbtn" data-act="rmdev" data-i="${i}">убрать</button></h3>
+      ${inp(i, "device", labelFor(C.device, dk))}${inp(i, "imei", "IMEI / серийный")}${inp(i, "issue", labelFor(C.issue, dk), { area: true, spell: true })}
+      <div class="grid2">
+        <label class="field"><span>Мастер</span><select data-extra="${i}" data-field="master"><option value="">как у первого</option>${masters.map(m => `<option ${m === x.master ? "selected" : ""}>${esc(m)}</option>`).join("")}</select></label>
+        ${inp(i, "pass", "Пароль устройства 🔑")}
+      </div>${inp(i, "total", labelFor(C.total, dk), { num: true })}
+    </section>`).join("") + `<button type="button" class="more" data-act="adddev">＋ Добавить ещё устройство</button>`;
   }
 
   function renderCard(num) {
@@ -476,8 +576,12 @@
     const isNew = key === "new";
     $app.insertAdjacentHTML("beforeend", `<div class="savebar"><div class="savebar__in">
       <button class="btn btn--ghost" data-act="discard" ${n || isNew ? "" : "disabled"}>Отмена</button>
-      <button class="btn btn--red" data-act="save" ${attrs} ${n ? "" : "disabled"}>${isNew ? "Создать заказ" : n ? (notify ? `Сохранить и уведомить (${n})` : `Сохранить (${n})`) : "Изменений нет"}</button>
+      <button class="btn btn--red" data-act="save" ${attrs} ${n ? "" : "disabled"}>${isNew ? newLabel() : n ? (notify ? `Сохранить и уведомить (${n})` : `Сохранить (${n})`) : "Изменений нет"}</button>
     </div></div>`);
+  }
+  function newLabel() {
+    const k = 1 + (S.multi ? S.extra.filter(x => String(x.device).trim()).length : 0);
+    return k > 1 ? `Создать ${k} ${k < 5 ? "заказа" : "заказов"}` : "Создать заказ";
   }
   function refreshSaveBar(key) { $app.querySelector(".savebar")?.remove(); saveBar(key, location.hash === "#/new" ? 'data-new="1"' : `data-num="${esc(location.hash.slice(2))}"`); }
 
@@ -564,7 +668,7 @@
     if (DEMO || !CFG.doors.length) return;
     const notify = list.some(ch => F[ch.c]?.door);
     if (!notify) return;
-    door(r.row, num, list).then(j => {
+    return door(r.row, num, list).then(j => {
       if (j?.issued != null && j.issued !== cell(r, C.issued)) {
         r.cells[C.issued] = j.issued;
         if (location.hash === "#/" + num && ![...S.dirty.keys()].some(k => k.startsWith(r.row + ":"))) renderCard(num);
@@ -586,6 +690,7 @@
       }
       await writeCells(r.row, list);
       for (const ch of list) { r.cells[ch.c] = String(ch.w ?? ""); S.dirty.delete(key + ":" + ch.c); }
+      index(r); S.clients = null;
       render();
       toast(DEMO ? "Сохранено (демо — в таблицу не пишется)" : list.some(ch => F[ch.c]?.door) ? "Сохранено ✓ Уведомления отправляются…" : "Сохранено ✓", null, true);
       doorInBackground(r, num, list);
@@ -597,29 +702,51 @@
     if (!String(get(C.name)).trim() && !String(get(C.phone)).trim()) return toast("Нужно имя или телефон клиента");
     busy(true);
     try {
-      let row, num;
+      // Список полей на каждое устройство: первое — из основных полей формы, остальные —
+      // общие поля клиента и сделки плюс свои поля устройства.
+      const shared = [...S.dirty].filter(([k]) => k.startsWith("new:")).map(([k, v]) => ({ c: +k.split(":")[1], v, old: "" }));
+      const devices = [shared];
+      if (S.multi) for (const x of S.extra) {
+        if (!String(x.device || "").trim()) continue;
+        const own = [[C.device, x.device], [C.imei, x.imei], [C.issue, x.issue], [C.pass, x.pass], [C.master, x.master], [C.total, x.total]]
+          .filter(([, v]) => String(v ?? "").trim() !== "").map(([c, v]) => ({ c, v, old: "" }));
+        const ownCols = new Set(own.map(o => o.c));
+        const base = shared.filter(ch => ![C.device, C.imei, C.issue, C.pass, C.total, C.work, C.buyback].includes(ch.c) && !ownCols.has(ch.c));
+        devices.push([...base, ...own]);
+      }
+      const N = devices.length;
+      let row0, num0;
       if (DEMO) {
-        row = (S.rows.at(-1)?.row || 1) + 1; num = String(Math.max(0, ...S.rows.map(x => +cell(x, C.num) || 0)) + 1);
+        row0 = (S.rows.at(-1)?.row || 1) + 1; num0 = Math.max(0, ...S.rows.map(x => +cell(x, C.num) || 0)) + 1;
       } else {
-        // Свежий взгляд на колонку A прямо перед записью: номер — следующий, строка — первая пустая.
+        // Свежий взгляд на колонку A прямо перед записью: номера — следующие, строки — первые пустые.
         const colA = await api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A:A`)}`);
         const vals = (colA.values || []).map(v => String(v[0] ?? "").trim());
         let last = vals.length; while (last > 1 && !vals[last - 1]) last--;
-        num = String(Math.max(0, ...vals.map(v => +v || 0)) + 1);
-        row = last + 1;
-        const probe = await api(`/values/${A1(0, row, C.linked, row)}?valueRenderOption=FORMULA`);
-        if ((probe.values?.[0] || []).some(v => String(v).trim())) throw new Error("Строка " + row + " не пустая — обновите список и повторите");
+        num0 = Math.max(0, ...vals.map(v => +v || 0)) + 1;
+        row0 = last + 1;
+        const probe = await api(`/values/${A1(0, row0, C.linked, row0 + N - 1)}?valueRenderOption=FORMULA`);
+        if ((probe.values || []).some(rw => (rw || []).some(v => String(v).trim()))) throw new Error("Строки " + row0 + "–" + (row0 + N - 1) + " не пустые — обновите список и повторите");
       }
-      const list = [{ c: C.num, v: num }, ...[...S.dirty].filter(([k]) => k.startsWith("new:")).map(([k, v]) => ({ c: +k.split(":")[1], v, old: "" }))]
-        .filter(ch => String(ch.v ?? "").trim() !== "" && !(S.bools.has(ch.c) && !isTrue(ch.v)));
-      await writeCells(row, list);
-      const cells = []; for (const ch of list) cells[ch.c] = String(ch.w ?? "");
-      const rec = { row, cells }; S.rows.push(rec); S.byNum.set(num, rec);
+      const made = devices.map((fields, i) => {
+        const num = String(num0 + i), row = row0 + i;
+        const list = [{ c: C.num, v: num }, ...fields.map(f => ({ ...f }))]
+          .filter(ch => String(ch.v ?? "").trim() !== "" && !(S.bools.has(ch.c) && !isTrue(ch.v)));
+        return { num, row, list };
+      });
+      await Promise.all(made.map(m => writeCells(m.row, m.list)));
+      for (const m of made) {
+        const cells = []; for (const ch of m.list) cells[ch.c] = String(ch.w ?? "");
+        m.rec = { row: m.row, cells }; index(m.rec); S.rows.push(m.rec); S.byNum.set(m.num, m.rec);
+      }
+      S.clients = null;
       for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-      S.draft = null;
-      location.hash = "#/" + num;
-      toast(DEMO ? "Заказ создан (демо)" : `Заказ №${num} записан ✓ Уведомления отправляются…`, null, true);
-      doorInBackground(rec, num, list.filter(ch => ch.c !== C.num));
+      S.draft = null; S.multi = false; S.extra = [];
+      location.hash = "#/" + made[0].num;
+      const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
+      toast(DEMO ? nums + " созданы (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`, null, true);
+      // Двери по очереди, заказ за заказом — как если бы строки заполняли в таблице одну за другой.
+      made.reduce((p, m) => p.then(() => doorInBackground(m.rec, m.num, m.list.filter(ch => ch.c !== C.num))), Promise.resolve());
     } catch (e) { busy(false); toast(e.message, null, true); }
   }
   function busy(on) { const b = $app.querySelector('[data-act="save"]'); if (b) { b.disabled = on; if (on) b.textContent = "Сохраняю…"; } }
@@ -635,7 +762,8 @@
   }
 
   document.addEventListener("click", async e => {
-    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice]"); if (!t) return;
+    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q]"); if (!t) return;
+    if (t.dataset.q != null) { S.q = t.dataset.q; S.limit = 60; renderList(); return; }
     if (t.dataset.open) { location.hash = "#/" + t.dataset.open; return; }
     if (t.dataset.tab) { S.tab = t.dataset.tab; S.limit = 60; renderList(); return; }
     if (t.dataset.choice != null) {
@@ -654,13 +782,21 @@
     } else if (act === "logout") signOut();
     else if (act === "reload") { if (!DEMO && !S.token) render(); else load(); }
     else if (act === "more") { S.limit += 100; renderList(); }
+    else if (act === "multi") { S.multi = t.checked; if (S.multi && !S.extra.length) S.extra.push(blankDevice()); if (!S.multi) S.extra = []; const y = window.scrollY; render(); window.scrollTo(0, y); }
+    else if (act === "adddev") { S.extra.push(blankDevice()); const y = window.scrollY; render(); window.scrollTo(0, y); }
+    else if (act === "rmdev") { S.extra.splice(+t.dataset.i, 1); if (!S.extra.length) S.multi = false; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "report") { const key = curKey(); S.dirty.set(key + ":" + C.report, CFG.reportValue); t.textContent = "Отчёт уйдёт после «Сохранить»"; t.disabled = true; refreshSaveBar(key); }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
-    if (t.dataset.act === "search") { S.q = t.value; S.limit = 60; const pos = t.selectionStart; renderList(); const s = $app.querySelector(".search"); s.focus(); s.setSelectionRange(pos, pos); return; }
+    if (t.dataset.act === "search") {
+      clearTimeout(onEdit.t);
+      onEdit.t = setTimeout(() => { S.q = t.value; S.limit = 60; const pos = t.selectionStart; renderList(); const s = $app.querySelector(".search"); s.focus(); s.setSelectionRange(pos, pos); }, 120);
+      return;
+    }
+    if (t.dataset.extra != null) { S.extra[+t.dataset.extra][t.dataset.field] = t.value; if (t.dataset.field === "device") refreshSaveBar("new"); return; }
     if (t.dataset.edit == null) return;
     const key = curKey(); if (key == null) return;
     const c = +t.dataset.edit, v = t.type === "checkbox" ? t.checked : t.value;
@@ -668,14 +804,50 @@
     t.closest(".field")?.classList.toggle("is-dirty", S.dirty.has(key + ":" + c));
     if (t.type === "checkbox") t.nextElementSibling.textContent = t.checked ? "Да" : "Нет";
     refreshSaveBar(key);
+    if (key === "new" && (c === C.name || c === C.phone)) { clearTimeout(onEdit.ac); onEdit.ac = setTimeout(() => suggest(c, t.value), 120); }
     if (F[c]?.num || c === C.linked) {
       const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
       const val = x => { const k = key + ":" + x; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, x) : ""); };
       const box = $app.querySelector(".margin"); if (box) box.innerHTML = moneySummary(dealKey(val(C.type)), val, r);
     }
   }
+  // ── подсказки клиента в новом заказе ─────────────────────
+  // Набрал 3+ буквы имени или фамилии (или 4+ цифры телефона) — список клиентов из базы.
+  // Выбрал клиента: один телефон — подставился сам; несколько — выбираешь номер вторым шагом.
+  function suggest(c, value) {
+    const box = document.getElementById("ac-" + c); if (!box) return;
+    const list = findClients(value);
+    box.innerHTML = list.map(cl => {
+      const p = phonesOf(cl);
+      return `<button type="button" class="ac-item" data-client="${esc(cl.key)}" data-from="${c}"><b>${esc(cl.name)}</b>
+        <span>${cl.count} ${ordersWord(cl.count)} · ${p.length > 1 ? p.length + " телефона" : esc(p[0]?.text || "без телефона")} · последний: ${esc(cell(cl.last, C.device) || "—")}, ${esc(String(cell(cl.last, C.date)).slice(0, 10))}</span></button>`;
+    }).join("");
+  }
+  function fillField(c, v) {
+    const inp = $app.querySelector(`[data-edit="${c}"]`); if (inp) inp.value = v;
+    setDirty("new", c, v); inp?.closest(".field")?.classList.add("is-dirty");
+  }
+  function pickClient(key, fromPhone) {
+    const cl = clients().find(x => x.key === key); if (!cl) return;
+    fillField(C.name, cl.name);
+    const ps = phonesOf(cl), typed = normDigits(digits($app.querySelector(`[data-edit="${C.phone}"]`)?.value || ""));
+    const byTyped = fromPhone && typed.length >= 4 ? ps.find(p => p.d.includes(typed)) : null;
+    const nameBox = document.getElementById("ac-" + C.name), phoneBox = document.getElementById("ac-" + C.phone);
+    nameBox.innerHTML = `<div class="ac-info">Был у нас ${cl.count} ${ordersWord(cl.count)}; последний — №${esc(cell(cl.last, C.num))}, ${esc(cell(cl.last, C.device) || "—")}, ${esc(String(cell(cl.last, C.date)).slice(0, 10))}</div>`;
+    if (byTyped || ps.length === 1) { fillField(C.phone, (byTyped || ps[0]).text); phoneBox.innerHTML = ""; }
+    else if (ps.length > 1) phoneBox.innerHTML = `<div class="ac-info">У клиента ${ps.length} телефона — выберите:</div>` +
+      ps.map(p => `<button type="button" class="ac-item" data-phone="${esc(p.text)}"><b>📞 ${esc(p.text)}</b><span>последний раз ${esc(String(p.date).slice(0, 10))}</span></button>`).join("");
+    refreshSaveBar("new");
+  }
+  // pointerdown, а не click: иначе поле теряет фокус раньше, чем выбор успевает сработать.
+  document.addEventListener("pointerdown", e => {
+    const it = e.target.closest(".ac-item"); if (!it) return;
+    e.preventDefault();
+    if (it.dataset.client) pickClient(it.dataset.client, it.dataset.from === String(C.phone));
+    else if (it.dataset.phone) { fillField(C.phone, it.dataset.phone); document.getElementById("ac-" + C.phone).innerHTML = ""; refreshSaveBar("new"); }
+  });
   document.addEventListener("input", onEdit);
-  document.addEventListener("change", e => { if (e.target.tagName === "SELECT" || e.target.type === "checkbox") onEdit(e); });
+  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.type === "checkbox") && e.target.dataset.act !== "multi") onEdit(e); });
   window.addEventListener("hashchange", () => { window.scrollTo(0, 0); render(); });
   window.addEventListener("beforeunload", e => { if ([...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
   document.addEventListener("visibilitychange", () => {
