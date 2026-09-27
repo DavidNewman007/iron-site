@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-25T12:22:22.616Z",
-  "count": 74,
+  "generated_at": "2026-09-27T13:12:46.420Z",
+  "count": 75,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -593,6 +593,14 @@
       "name": "Buds 4 Pro Pink",
       "warehouse": "(S3)",
       "price": 18400
+    },
+    "buds-4-pro-black-оаэ-s3-16000": {
+      "url": "hybrid-products/audio/buds-4-pro-black-s3-16000.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-black-s3-16000.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Buds 4 Pro Black",
+      "warehouse": "(S3)",
+      "price": 16000
     }
   }
 }
