@@ -602,7 +602,7 @@
     $app.innerHTML = (DEMO ? `<div class="demo-bar">ДЕМО — выдуманные сделки, в таблицу ничего не пишется</div>` : "") + `
       <header class="top"><div class="top__row">
         <a class="brand" href="#"><img src="../assets/logo-horizontal.png" alt="IRON SERVICE" width="128" height="34"><b>CRM</b></a><div class="top__spacer"></div>
-        <div class="who">${esc(S.email)}</div>
+        <div class="who">${esc(S.email)} <small class="ver">v${VERSION}</small></div>
         ${canCreate() ? `<a class="iconbtn iconbtn--add" href="#/new" title="Новый заказ">＋</a>` : ""}
         <button class="iconbtn" data-act="reload" title="Обновить">⟳</button>
         ${DEMO ? "" : `<button class="iconbtn" data-act="logout" title="Выйти">⎋</button>`}
@@ -1707,7 +1707,7 @@
     const ps = phonesOf(cl), typed = normDigits(digits($app.querySelector(`[data-edit="${C.phone}"]`)?.value || ""));
     const byTyped = fromPhone && typed.length >= 4 ? ps.find(p => p.d.includes(typed)) : null;
     const nameBox = document.getElementById("ac-" + C.name), phoneBox = document.getElementById("ac-" + C.phone);
-    nameBox.innerHTML = `<div class="ac-info">Был у нас ${cl.count} ${ordersWord(cl.count)}; последний — №${esc(cell(cl.last, C.num))}, ${esc(cell(cl.last, C.device) || "—")}, ${esc(String(cell(cl.last, C.date)).slice(0, 10))}</div>`;
+    nameBox.innerHTML = ""; // «был у нас N заказов» и устройства — в блоке #client-devs ниже
     if (byTyped || ps.length === 1) { fillField(C.phone, (byTyped || ps[0]).text); phoneBox.innerHTML = ""; }
     else if (ps.length > 1) phoneBox.innerHTML = `<div class="ac-info">У клиента ${ps.length} телефона — выберите:</div>` +
       ps.map(p => `<button type="button" class="ac-item" data-phone="${esc(p.text)}"><b>📞 ${esc(p.text)}</b><span>последний раз ${esc(String(p.date).slice(0, 10))}</span></button>`).join("");
@@ -1725,7 +1725,21 @@
   document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
   window.addEventListener("hashchange", () => { window.scrollTo(0, 0); render(); });
   window.addEventListener("beforeunload", e => { if ([...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
+  // Новая версия на сайте. GitHub Pages отдаёт страницу с кэшем на 10 минут, и 28.09.2026
+  // владелец полчаса смотрел прошлую версию, решив, что правка не работает. Раз в 10 минут
+  // (и при возврате на вкладку) сверяем номер версии в свежей странице с нашим.
+  const VERSION = +(document.querySelector('script[src*="crm.js"]')?.src.match(/v=(\d+)/)?.[1] || 0);
+  async function checkUpdate() {
+    if (!VERSION) return;
+    try {
+      const html = await fetch(location.pathname + "?nocache=" + Date.now(), { cache: "no-store" }).then(r => r.text());
+      const v = +(html.match(/crm\.js\?v=(\d+)/)?.[1] || 0);
+      if (v > VERSION) toast(`Вышла новая версия оболочки (v${v})`, { label: "Обновить", run: () => location.reload() });
+    } catch {}
+  }
+  setInterval(checkUpdate, 600e3); setTimeout(checkUpdate, 5000);
   document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") checkUpdate();
     if (document.visibilityState === "visible" && S.rows.length && Date.now() - S.loadedAt > 120e3 && !S.dirty.size && !location.hash.startsWith("#/")) load();
   });
 

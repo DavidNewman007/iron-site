@@ -373,3 +373,4 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .cdev b { color: var(--cream); font-size: .95rem; }
 .cdev span { color: var(--muted); font-size: .8rem; }
 .ac-item b small { font-weight: 400; color: var(--muted); }
+.ver { font-size: .72rem; opacity: .7; margin-left: 4px; }
