@@ -672,18 +672,25 @@
     const fam = familyOf(text);
     return fam === "laptop" && !/mac/.test(norm(text)) ? "Ноутбуки на Windows" : fam === "phone" && !/iphone/.test(norm(text)) ? "Смартфон Android" : fam === "desktop" && !/mac/.test(norm(text)) ? "ПК / системный блок" : "";
   }
+  // Как говорят в сервисе → как написано в прайсе.
+  const PP_SYN = [[/^акб|^батар|^аккум/, ["аккумулятор"]], [/^экран|^диспл/, ["диспле", "матриц"]], [/^крышк|^задн/, ["заднего стекла", "корпус"]],
+    [/^ссд|^ssd|^диск/, ["ssd", "накопител", "диск"]], [/^клав/, ["клавиатур"]], [/^тач|^трек/, ["тачпад", "сенсор"]], [/^зарядк|^разъ/, ["разъёма зарядки", "разъема зарядки"]],
+    [/^чистк|^профил/, ["профилактик"]], [/^по$|^прошив|^ос$/, ["установка по", "по"]], [/^залит|^влаг/, ["залития"]], [/^вотч|^watch|^час/, ["watch"]]];
   function pricePickHtml(key, deviceText) {
     const P = S.pp?.key === key ? S.pp : null;
     if (!P?.open) return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppopen">📋 Работа из прайса</button>`;
     if (!S.svc?.list) return `<div class="pp"><div class="note">${S.svc?.error ? "Прайс не загрузился: " + esc(S.svc.error) : "Загружаю прайс…"}</div></div>`;
-    const dev = P.dev ?? matchDevice(deviceText);
-    const items = S.svc.list.map((x, i) => ({ x, i })).filter(({ x }) => x.device === dev);
+    const dev = P.dev ?? matchDevice(deviceText), q = norm(P.q || "");
+    // Поиск: слова запроса ищутся в работе и варианте; без модели — по всему прайсу (с моделью в строке).
+    const hit = x => { const t = norm(x.operation + " " + (x.variant || "") + (dev ? "" : " " + x.device)); return !q || q.split(" ").every(w => (PP_SYN.find(([re]) => re.test(w))?.[1] || [w]).some(a => t.includes(a))); };
+    const items = S.svc.list.map((x, i) => ({ x, i })).filter(({ x }) => (dev ? x.device === dev : q.length >= 2) && hit(x)).slice(0, 80);
     return `<div class="pp"><div class="pp__head"><select data-act="ppdev"><option value="">— модель из прайса —</option>${S.svc.devices.map(d => `<option ${d === dev ? "selected" : ""}>${esc(d)}</option>`).join("")}</select>
       <button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>
-      ${dev ? (items.length ? `<div class="pp__list">${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
-        <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}</b>
-        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}</div>` : `<div class="note">Для этой модели в прайсе работ нет.</div>`)
-        : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка.</div>`}
+      <input class="pp__q" data-act="ppq" value="${esc(P.q || "")}" placeholder="Поиск: дисплей, акб, oled…" autocomplete="off">
+      ${dev || q.length >= 2 ? (items.length ? `<div class="pp__list">${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
+        <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}${dev ? "" : ` <span class="note">· ${esc(x.device)}</span>`}</b>
+        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
+        : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка или ищите по всему прайсу.</div>`}
       <p class="note">Нажатие добавляет работу в «Выполненные работы», цену — к «Итого», запчасть — в список запчастей. Можно добавить несколько.</p></div>`;
   }
   function addService(key, r, i) {
@@ -839,6 +846,7 @@
     if (isNew && (dk === "sale_used" || dk === "sale_new")) left += box(2, importBlock());
     html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
+      ${!isNew && canCreate() ? clientActions(r, dk) : ""}
     </section>`;
     left += box(3, html); html = "";
 
@@ -858,7 +866,7 @@
       <div class="grid2"><div>${fh(C.issue)}${tips("issue", C.issue)}</div><div>${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device)) : ""}</div></div>
       ${rep ? `<div class="field field--parts"><span>Запчасти <small class="note">(клиенту в отчёте уходят только названия)</small></span>${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
         : `<div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>`}
-      ${dk === "sale_used" || String(r ? cell(r, C.linked) : "").trim() ? fh(C.linked) : ""}
+      ${dk === "sale_used" || String(val(C.linked)).trim() ? fh(C.linked) : ""}
       ${fh(C.master)}
       <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass)}</div>
     </section>`;
@@ -1045,6 +1053,7 @@
     const ks = [...S.dirty.keys()].filter(k => k.startsWith(key + ":"));
     const n = ks.length, notify = ks.some(k => F[+k.split(":")[1]]?.notify);
     const isNew = key === "new";
+    if (isNew) saveDraft();
     $app.insertAdjacentHTML("beforeend", `<div class="savebar"><div class="savebar__in">
       <button class="btn btn--ghost" data-act="discard" ${n || isNew ? "" : "disabled"}>Отмена</button>
       <button class="btn btn--red" data-act="save" ${attrs} ${n ? "" : "disabled"}>${isNew ? newLabel() : n ? (notify ? `Сохранить и уведомить (${n})` : `Сохранить (${n})`) : "Изменений нет"}</button>
@@ -1056,11 +1065,66 @@
   }
   function refreshSaveBar(key) { $app.querySelector(".savebar")?.remove(); saveBar(key, location.hash === "#/new" ? 'data-new="1"' : `data-num="${esc(location.hash.slice(2))}"`); }
 
+
+  // ── из карточки: новый заказ этому клиенту и гарантийный ремонт (v19) ──────────
+  // Как «Скопировать заказ» и «Гарантийный заказ» в RemOnline/RepairShopr: данные клиента
+  // не вводятся заново, а гарантийный заказ связан с исходным (AF «Связанная сделка №»).
+  function warrantyDays(v) { const m = String(v ?? "").match(/(\d+)\s*(дн|день|дня|мес|г)/i) || String(v ?? "").match(/^(\d+)$/); if (!m) return null; const n = +m[1]; return /мес/i.test(m[2] || "") ? n * 30 : /^г/i.test(m[2] || "") ? n * 365 : n; }
+  function warrantyUntil(r) {
+    const d = parseDate(cell(r, C.issued)), days = warrantyDays(cell(r, C.warranty));
+    if (!d || days == null) return null;
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate() + days);
+  }
+  const ru = d => `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
+  function clientActions(r, dk) {
+    let w = "";
+    if ((dk === "repair" || dk === "other") && norm(cell(r, C.status)).startsWith("выполнен")) {
+      const until = warrantyUntil(r), live = until && until >= new Date(new Date().toDateString());
+      w = `<button type="button" class="btn btn--ghost btn--sm" data-act="warranty">🔁 Гарантийный ремонт${until ? ` <small class="note">${live ? "гарантия до " + ru(until) : "гарантия истекла " + ru(until)}</small>` : ""}</button>`;
+    }
+    return `<div class="row">${w}<button type="button" class="btn btn--ghost btn--sm" data-act="newfor">＋ Новый заказ этому клиенту</button></div>`;
+  }
+  function startNewFrom(r, warranty) {
+    for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
+    S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
+    S.draft = true;
+    const set = (c, v) => { if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); };
+    set(C.status, CFG.newStatus); set(C.date, today()); set(C.type, "Ремонт");
+    set(C.name, cell(r, C.name)); set(C.phone, cell(r, C.phone)); set(C.source, "Постоянные");
+    if (warranty) {
+      const num = String(cell(r, C.num)).trim(), until = warrantyUntil(r);
+      set(C.device, cell(r, C.device)); set(C.imei, cell(r, C.imei)); set(C.pass, cell(r, C.pass)); set(C.linked, num);
+      set(C.total, "0");
+      set(C.comment, `Гарантия по заказу №${num}: ${cell(r, C.work) || "—"}${cell(r, C.issued) ? `; выдан ${String(cell(r, C.issued)).slice(0, 10)}` : ""}${until ? `; гарантия до ${ru(until)}` : ""}`);
+    }
+    location.hash = "#/new";
+    toast(warranty ? `Гарантийный заказ по №${cell(r, C.num)}: клиент и устройство подставлены, «Итого» — 0` : `Новый заказ: ${cell(r, C.name) || "клиент"} подставлен`, null, true);
+  }
+
+  // Черновик нового заказа — в браузере: перезагрузка страницы или случайно закрытая
+  // вкладка не стирают набранное (так жалуются на Orderry и HelloClient).
+  function saveDraft() {
+    const dirty = [...S.dirty].filter(([k]) => k.startsWith("new:"));
+    const meaningful = dirty.some(([k, v]) => ![C.status, C.date, C.type].includes(+k.split(":")[1]) && String(v ?? "").trim());
+    if (!meaningful && !S.extra.length) { store.del("crm.draft"); return; }
+    store.set("crm.draft", { at: Date.now(), dirty, multi: S.multi, extra: S.extra, parts: S.parts.get("new") || null, touched: !!S.newStatusTouched });
+  }
+  function restoreDraft() {
+    const d = store.get("crm.draft");
+    if (!d || Date.now() - d.at > 3 * 864e5 || !d.dirty?.length) return false;
+    for (const [k, v] of d.dirty) S.dirty.set(k, v);
+    S.multi = !!d.multi; S.extra = d.extra || []; S.newStatusTouched = !!d.touched;
+    if (d.parts) S.parts.set("new", d.parts);
+    setTimeout(() => toast("Восстановлен незаконченный заказ. «Отмена» внизу — начать заново", null, true), 50);
+    return true;
+  }
+
   // ── новый заказ ─────────────────────────────────────────
   function renderNew() {
     if (!canCreate()) { location.hash = ""; return; }
     if (!S.draft) {
       S.draft = true;
+      if (restoreDraft()) return renderNew();
       S.dirty.set("new:" + C.status, CFG.newStatus);
       S.dirty.set("new:" + C.date, today());
       S.dirty.set("new:" + C.type, "Ремонт");
@@ -1271,7 +1335,7 @@
       }
       S.clients = null;
       for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-      S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
+      S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null; store.del("crm.draft");
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
       toast(DEMO ? nums + (N > 1 ? " созданы" : " создан") + " (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`, null, true);
@@ -1355,6 +1419,7 @@
       S.dirty.set(key + ":" + C.report, CFG.reportValue); t.textContent = "Отчёт уйдёт после «Сохранить»"; t.disabled = true; refreshSaveBar(key);
     }
     else if (act === "ppopen") { S.pp = { key: curKey(), open: true }; const y = window.scrollY; render(); window.scrollTo(0, y); loadServices().then(() => { if (S.pp?.open) { const y2 = window.scrollY; render(); window.scrollTo(0, y2); } }); }
+    else if (act === "newfor" || act === "warranty") { const r = S.byNum.get(location.hash.slice(2)); if (r) startNewFrom(r, act === "warranty"); }
     else if (act === "tmore") { const c = +t.dataset.c; S.tipsOpen ||= new Set(); S.tipsOpen.has(c) ? S.tipsOpen.delete(c) : S.tipsOpen.add(c); const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "ppclose") { S.pp = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "addpart" || act === "rmpart") {
@@ -1364,7 +1429,7 @@
       if (act === "addpart") $app.querySelector(`[data-part="${list.length - 1}"][data-pf="name"]`)?.focus();
     }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; store.del("crm.draft"); location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
@@ -1372,6 +1437,11 @@
     if (t.dataset.act === "search") {
       clearTimeout(onEdit.t);
       onEdit.t = setTimeout(() => { S.q = t.value; S.limit = 60; const pos = t.selectionStart; renderList(); const s = $app.querySelector(".search"); s.focus(); s.setSelectionRange(pos, pos); }, 120);
+      return;
+    }
+    if (t.dataset.act === "ppq") {
+      if (!S.pp) return; S.pp.q = t.value; const pos = t.selectionStart, y = window.scrollY;
+      clearTimeout(onEdit.pq); onEdit.pq = setTimeout(() => { render(); window.scrollTo(0, y); const q = $app.querySelector(".pp__q"); if (q) { q.focus({ preventScroll: true }); q.setSelectionRange(pos, pos); } }, 150);
       return;
     }
     if (t.dataset.act === "ppdev") { if (e.type === "change" && S.pp) { S.pp.dev = t.value; const y = window.scrollY; render(); window.scrollTo(0, y); } return; }

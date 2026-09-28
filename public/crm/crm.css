@@ -359,3 +359,6 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .tchip--more { display: none; }
 .tchips.is-open .tchip--more { display: inline-block; }
 .tchip--toggle { background: transparent; border-style: dashed; color: var(--gold); }
+.pp__q { width: 100%; margin-top: 8px; min-height: 44px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--field); padding: 6px 12px; }
+.pp__q:focus { outline: none; border-color: var(--gold); }
+.btn--sm small { font-family: var(--font-body); text-transform: none; letter-spacing: 0; margin-left: 6px; }
