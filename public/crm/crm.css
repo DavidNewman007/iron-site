@@ -374,3 +374,9 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .cdev span { color: var(--muted); font-size: .8rem; }
 .ac-item b small { font-weight: 400; color: var(--muted); }
 .ver { font-size: .72rem; opacity: .7; margin-left: 4px; }
+/* v26: скидка ₽ / % */
+.disc { display: flex; gap: 6px; }
+.disc input { flex: 1; min-width: 0; }
+.seg { display: flex; border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
+.seg button { border: 0; background: var(--field); color: var(--muted); padding: 0 12px; min-width: 40px; font-weight: 700; }
+.seg button[aria-pressed="true"] { background: var(--wait-bg); color: var(--cream); }

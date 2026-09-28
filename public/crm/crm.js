@@ -47,6 +47,7 @@
   const C = { num: 0, date: 1, name: 2, phone: 3, device: 4, issue: 5, work: 6, status: 7, issued: 8,
     review: 9, report: 11, comment: 12, warranty: 13, parts: 14, master: 15, total: 16, labor: 17,
     partCost: 18, extra: 19, partFrom: 20, source: 21,
+    discount: 22, // W «Скидка» — «500 ₽» или «10%»; Q «Итого» уже со скидкой (28.09.2026)
     // Добавлены 25.09.2026 (план 93 §11.3): K «Пароль», AC–AF — тип сделки и её данные.
     pass: 10, type: 28, imei: 29, buyback: 30, linked: 31,
     group: 32 }; // AG — «Группа»: № первого заказа, если устройств у клиента несколько (26.09.2026)
@@ -91,6 +92,7 @@
     [C.buyback]: { label: "Выкуп / зачёт, ₽", num: true, door: true },
     [C.linked]: { label: "Связанная сделка №" },
     [C.group]: { label: "Группа" },
+    [C.discount]: { label: "Скидка" },
   };
 
   // Тип сделки (колонка AC). Пусто = ремонт. Ключи — как в DealTypes.js на стороне таблицы.
@@ -701,7 +703,9 @@
       const src = S.byNum.get(String(val(C.linked)).trim());
       if (src) extra = `<div class="note">Устройство из сделки №${esc(val(C.linked))}: выкуплено за ${money(cell(src, C.buyback)) || "—"}</div>`;
     }
-    return `Остаётся нам: <b>${m.toLocaleString("ru-RU")} ₽</b> <span class="note">(${how})</span>${extra}`;
+    const d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
+    const dline = d && q != null ? `<div class="note">Без скидки ${baseOf(q, d).toLocaleString("ru-RU")} ₽ · скидка ${discText(d)}${d.pct != null ? ` (−${discRub(d, baseOf(q, d)).toLocaleString("ru-RU")} ₽)` : ""} · клиент платит ${q.toLocaleString("ru-RU")} ₽</div>` : "";
+    return `Остаётся нам: <b>${m.toLocaleString("ru-RU")} ₽</b> <span class="note">(${how})</span>${dline}${extra}`;
   }
 
   // ── типовые неисправности и работы (v18, 28.09.2026) ─────────────────────────
@@ -820,7 +824,10 @@
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const work = cap(x.operation) + (x.variant ? ` (${x.variant})` : "");
     setDirty(key, C.work, addPhrase(val(C.work), work));
-    if (x.price) setDirty(key, C.total, String((toNum(val(C.total)) ?? 0) + x.price));
+    if (x.price) {
+      const d = parseDiscount(val(C.discount)), q = toNum(val(C.total)), base = (q == null ? 0 : baseOf(q, d)) + x.price;
+      setDirty(key, C.total, String(Math.max(0, base - discRub(d, base))));
+    }
     const partBase = OP_PART[norm(x.operation)];
     if (partBase && (x.part_cost || x.variant)) {
       const src = (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, ""])[1];
@@ -898,6 +905,40 @@
         <button type="button" class="linkbtn" data-act="rmpart" data-i="${i}" title="Убрать"${lock ? " disabled" : ""}>✕</button></div>`).join("")}
       <div class="parts__foot"><button type="button" class="btn btn--ghost btn--sm" data-act="addpart"${lock ? " disabled" : ""}>＋ Запчасть</button><span class="note" data-parts-note>${note}</span></div>
       ${dl(C.parts, "dl-pname")}${dl(C.partFrom, "dl-psrc")}</div>`;
+  }
+
+
+  // ── скидка (v26, 28.09.2026) ─────────────────────────────────────────────────
+  // В таблице — W «Скидка»: «500 ₽» или «10%». Q «Итого» остаётся суммой, которую платит
+  // клиент, уже со скидкой — поэтому маржа (R = Q − S − T), статистика и отчёты считают как
+  // раньше. Сумма без скидки не хранится: она выводится из Q и скидки.
+  function parseDiscount(v) {
+    const t = String(v ?? "").trim().replace(",", "."); let m;
+    if ((m = t.match(/^(\d+(?:\.\d+)?)\s*%$/))) return +m[1] > 0 && +m[1] < 100 ? { pct: +m[1] } : null;
+    if ((m = t.match(/^(\d+(?:\.\d+)?)\s*(?:₽|р\.?|руб\.?)?$/i))) return +m[1] > 0 ? { rub: +m[1] } : null;
+    return null;
+  }
+  const discText = d => !d ? "" : d.pct != null ? `${d.pct}%` : `${d.rub} ₽`;
+  const discRub = (d, base) => !d ? 0 : d.pct != null ? Math.round(base * d.pct / 100) : d.rub;
+  // Сумма без скидки из итога: 10% от 5000 → итог 4500 → без скидки 5000.
+  const baseOf = (q, d) => q == null ? null : !d ? q : d.pct != null ? Math.round(q / (1 - d.pct / 100)) : q + d.rub;
+  const DISC_TYPES = ["repair", "other", "sale_used", "sale_new"];
+  function discountHtml(key, r, val) {
+    const d = parseDiscount(val(C.discount)), unit = S.discUnit?.[key] || (d?.pct != null ? "pct" : "rub");
+    const num = d ? (d.pct ?? d.rub) : "";
+    const dirty = S.dirty.has(key + ":" + C.discount);
+    return `<div class="field${dirty ? " is-dirty" : ""}"><span>Скидка</span><div class="disc">
+      <input data-disc value="${esc(num)}" inputmode="decimal" placeholder="0">
+      <div class="seg"><button type="button" data-act="discunit" data-u="rub" aria-pressed="${unit === "rub"}">₽</button><button type="button" data-act="discunit" data-u="pct" aria-pressed="${unit === "pct"}">%</button></div></div></div>`;
+  }
+  // Новая скидка → новый итог: итог = (сумма без скидки) − скидка.
+  function applyDiscount(key, r, raw, unit) {
+    const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+    const q = toNum(val(C.total)), base = baseOf(q, parseDiscount(val(C.discount)));
+    const n = toNum(raw), d = n > 0 ? (unit === "pct" ? (n < 100 ? { pct: n } : null) : { rub: n }) : null;
+    setDirty(key, C.discount, d ? (d.pct != null ? d.pct + "%" : d.rub + " ₽") : "");
+    if (base != null) setDirty(key, C.total, String(Math.max(0, base - discRub(d, base))));
+    return base;
   }
 
   // ── без суммы заказ не закрыть (владелец, 28.09.2026) ────────────────────────
@@ -999,7 +1040,8 @@
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
       : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : rep ? [C.total, C.labor, "parts", C.extra] : [C.total, C.labor, C.partCost, C.extra];
     const partsRo = `<div class="field"><span>Запчасти (закуп), ₽ <small class="note">(из списка запчастей)</small></span><div class="ro" data-parts-sum>${esc(money(val(C.partCost)) || "—")}</div></div>`;
-    html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => c === "parts" ? partsRo : fh(c)).join("")}</div>
+    const discBox = DISC_TYPES.includes(dk) && (isNew || editable(C.total, r)) ? discountHtml(key, r, val) : "";
+    html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => c === "parts" ? partsRo : fh(c)).join("")}${discBox}</div>
       <div class="margin">${moneySummary(dk, val, r)}</div></section>`;
     right += box(6, html); html = "";
     }
@@ -1609,6 +1651,12 @@
     }
     else if (act === "ppopen") { S.pp = { key: curKey(), open: true }; const y = window.scrollY; render(); window.scrollTo(0, y); loadServices().then(() => { if (S.pp?.open) { const y2 = window.scrollY; render(); window.scrollTo(0, y2); } }); }
     else if (act === "newfor" || act === "warranty") { const r = S.byNum.get(location.hash.slice(2)); if (r) startNewFrom(r, act === "warranty"); }
+    else if (act === "discunit") {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); if (key == null) return;
+      S.discUnit = { ...(S.discUnit || {}), [key]: t.dataset.u };
+      const inp = $app.querySelector("[data-disc]"); if (inp && inp.value.trim()) applyDiscount(key, r, inp.value, t.dataset.u);
+      const y = window.scrollY; render(); window.scrollTo(0, y);
+    }
     else if (act === "tmore") { const c = +t.dataset.c; S.tipsOpen ||= new Set(); S.tipsOpen.has(c) ? S.tipsOpen.delete(c) : S.tipsOpen.add(c); const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "ppclose") { S.pp = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "addpart" || act === "rmpart") {
@@ -1627,6 +1675,19 @@
       clearTimeout(onEdit.t);
       onEdit.t = setTimeout(() => { S.q = t.value; S.limit = 60; const pos = t.selectionStart; renderList(); const s = $app.querySelector(".search"); s.focus(); s.setSelectionRange(pos, pos); }, 120);
       return;
+    }
+    if (t.dataset.disc != null) {
+      const key = curKey(); if (key == null) return;
+      const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
+      const cur = S.dirty.has(key + ":" + C.discount) ? S.dirty.get(key + ":" + C.discount) : curVal(key, C.discount);
+      const unit = S.discUnit?.[key] || (parseDiscount(cur)?.pct != null ? "pct" : "rub");
+      applyDiscount(key, r, t.value, unit);
+      const q = $app.querySelector(`[data-edit="${C.total}"]`), qk = key + ":" + C.total;
+      if (q) { const orig = curVal(key, C.total); q.value = S.dirty.has(qk) ? S.dirty.get(qk) : String(toNum(orig) ?? orig); q.closest(".field")?.classList.toggle("is-dirty", S.dirty.has(qk)); }
+      t.closest(".field")?.classList.toggle("is-dirty", S.dirty.has(key + ":" + C.discount));
+      const val = x => { const k = key + ":" + x; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, x) : ""); };
+      const box = $app.querySelector(".margin"); if (box && !S.multi) box.innerHTML = moneySummary(dealKey(val(C.type)), val, r);
+      refreshSaveBar(key); return;
     }
     if (t.dataset.act === "ppq") {
       if (!S.pp) return; S.pp.q = t.value; const pos = t.selectionStart, y = window.scrollY;
