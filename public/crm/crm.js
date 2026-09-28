@@ -167,7 +167,7 @@
   // Статусы, уместные для типа (текущий статус строки показывается всегда).
   const DEAL_FINAL = ["выкуплен", "разобран", "обмен оформлен", "продан"];
   function statusesFor(dk) {
-    const all = S.opts[C.status] || [];
+    const all = (S.opts[C.status] || []).filter(x => norm(x) !== "закрыт");
     const pick = names => all.filter(x => names.some(n => norm(x).startsWith(n)));
     if (dk === "repair") return all.filter(x => !DEAL_FINAL.some(n => norm(x).startsWith(n)));
     if (dk === "buyback") return pick(["на согл", "выкуплен"]);
@@ -186,7 +186,12 @@
     return !f.notify && c !== C.name && c !== C.phone && !!r && !isTrue(cell(r, C.report));
   };
 
-  const FINAL = ["выполнен", "отказ от ремонта", "ремонт невозможен", "без ремонта", "продан", "разобран", "выкуплен", "обмен оформлен"];
+  const FINAL = ["выполнен", "отказ от ремонта", "ремонт невозможен", "без ремонта", "продан", "разобран", "выкуплен", "обмен оформлен", "закрыт"];
+  // «Закрыт» — архивное закрытие без уведомления клиенту (28.09.2026: 1475 заказов старше
+  // двух месяцев закрыты разом). В таблице для простоты просто «Закрыт», в оболочке — с
+  // пояснением. Кнопкой в оболочке не ставится; руками в таблице — клиенту ничего не уходит.
+  const CLOSED_LABEL = "Закрыт по сроку давности — состояние неизвестно";
+  const stLabel = st => norm(st) === "закрыт" ? CLOSED_LABEL : st;
   const ORDER = ["принят на диагностику", "ждем предоплату", "заказана запчасть", "готов"];
   const isFinal = s => FINAL.some(f => norm(s).startsWith(f));
   const isReady = s => norm(s).startsWith("готов");
@@ -194,7 +199,7 @@
     const n = norm(s);
     if (!n) return "new";
     if (n.startsWith("готов")) return "ready";
-    if (["выполнен", "продан", "выкуплен", "обмен оформлен", "разобран"].some(x => n.startsWith(x))) return "done";
+    if (["выполнен", "продан", "выкуплен", "обмен оформлен", "разобран", "закрыт"].some(x => n.startsWith(x))) return "done";
     if (n.startsWith("отказ") || n.startsWith("ремонт невозможен") || n.startsWith("без ремонта")) return "stop";
     if (n.startsWith("жд") || n.startsWith("заказана")) return "wait";
     return "new";
@@ -325,7 +330,7 @@
   // Поисковые ключи строки считаются один раз при загрузке (и после правки строки), а не
   // на каждое нажатие клавиши: по 7–8 тысячам строк поиск так идёт за миллисекунды.
   function index(r) {
-    r.hay = norm([C.num, C.name, C.phone, C.device, C.issue, C.work, C.parts, C.comment, C.master, C.imei, C.type, C.status].map(c => r.cells[c] ?? "").join(" "));
+    r.hay = norm([C.num, C.name, C.phone, C.device, C.issue, C.work, C.parts, C.comment, C.master, C.imei, C.type, C.status].map(c => c === C.status ? stLabel(r.cells[c] ?? "") : r.cells[c] ?? "").join(" "));
     r.ph = phones(r.cells[C.phone]).map(p => p.d);
     r.nameN = norm(String(r.cells[C.name] ?? "").split("\n")[0]);
   }
@@ -502,7 +507,7 @@
       <div class="item__right"><div class="item__sum">${money(cell(r, C.total))}</div>
       <div class="item__date">${esc(String(cell(r, C.date)).slice(0, 10))}</div>
       <div class="item__age${old ? " is-old" : ""}">${age == null ? "" : age === 0 ? "сегодня" : age + " дн."}</div></div>
-      <span class="item__chips"><span class="chip chip--${statusKind(st)}">${esc(st || "без статуса")}</span>${dealKey(cell(r, C.type)) !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}</span>
+      <span class="item__chips"><span class="chip chip--${statusKind(st)}">${esc(stLabel(st) || "без статуса")}</span>${dealKey(cell(r, C.type)) !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}</span>
     </button>`;
   }
 
@@ -563,7 +568,7 @@
   function choiceButtons(key, col, current, opts, kindOf) {
     const chosen = S.dirty.has(key + ":" + col) ? S.dirty.get(key + ":" + col) : current;
     const list = opts.includes(current) || !current ? opts : [current, ...opts];
-    return `<div class="statuses">${list.map(o => `<button type="button" class="st st--${kindOf(o)}" data-choice="${col}" data-value="${esc(o)}" aria-pressed="${o === chosen}">${esc(o)}</button>`).join("")}</div>`;
+    return `<div class="statuses">${list.map(o => `<button type="button" class="st st--${kindOf(o)}" data-choice="${col}" data-value="${esc(o)}" aria-pressed="${o === chosen}">${esc(col === C.status ? stLabel(o) : o)}</button>`).join("")}</div>`;
   }
   const typeOptions = () => S.opts[C.type]?.length ? S.opts[C.type] : ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Другое"];
 
@@ -834,7 +839,7 @@
       const reportSent = isTrue(cell(r, C.report));
       const statusBlock = editable(C.status, r)
         ? `${choiceButtons(key, C.status, st, statusesFor(dk), statusKind)}<p class="note">Выберите статус и нажмите «Сохранить» внизу — клиенту уйдёт уведомление, как из таблицы.${groupOf(r)?.shared ? " <b>Статус поменяется у всех устройств группы.</b>" : ""}</p>`
-        : `<div class="big">${esc(st || "без статуса")}</div><div class="row"><a class="btn btn--red" href="${sheetLink(r.row, C.status)}" target="_blank" rel="noopener">Сменить статус в таблице ↗</a></div>`;
+        : `<div class="big">${esc(stLabel(st) || "без статуса")}</div><div class="row"><a class="btn btn--red" href="${sheetLink(r.row, C.status)}" target="_blank" rel="noopener">Сменить статус в таблице ↗</a></div>`;
       const reportBtn = editable(C.report, r)
         ? `<button type="button" class="btn ${reportSent ? "btn--ghost" : ""}" data-act="report">${reportSent ? "Отчёт уже отправлен — отправить заново" : groupOf(r)?.shared ? "📨 Отправить общий отчёт" : "📨 Отправить итоговый отчёт клиенту"}</button>`
         : `<a class="btn" href="${sheetLink(r.row, C.report)}" target="_blank" rel="noopener">Отчёт клиенту (Ok) ↗</a>`;
@@ -897,7 +902,7 @@
   function groupBlock(r) {
     const gr = groupOf(r); if (!gr) return "";
     return `<section class="block block--group"><h3>Несколько устройств у клиента — ${gr.rows.length}</h3>
-      <div class="group-list">${gr.rows.map(x => `<a class="group-item${x === r ? " is-cur" : ""}" href="#/${esc(cell(x, C.num))}"><b>№${esc(cell(x, C.num))}</b> ${esc(cell(x, C.device) || "—")}<span class="chip chip--${statusKind(cell(x, C.status))}">${esc(cell(x, C.status) || "—")}</span></a>`).join("")}</div>
+      <div class="group-list">${gr.rows.map(x => `<a class="group-item${x === r ? " is-cur" : ""}" href="#/${esc(cell(x, C.num))}"><b>№${esc(cell(x, C.num))}</b> ${esc(cell(x, C.device) || "—")}<span class="chip chip--${statusKind(cell(x, C.status))}">${esc(stLabel(cell(x, C.status)) || "—")}</span></a>`).join("")}</div>
       <p class="note">${gr.shared ? "Статус и итоговый отчёт — общие: меняются сразу у всех устройств, клиенту уходит одно сообщение со списком." : "Ремонт: статусы и отчёты по каждому устройству — отдельно. Приёмка ушла одним сообщением."}</p></section>`;
   }
 
@@ -1044,7 +1049,7 @@
     const head = `<div class="card-head" style="margin-top:12px"><a class="iconbtn" href="#" aria-label="Назад">←</a>
       <h1>№${esc(num)}</h1>
       ${accepted ? `<span class="head-meta">принят <b>${esc(accepted)}</b>${age != null ? ` · ${age === 0 ? "сегодня" : age + " дн."}` : ""}</span>` : ""}
-      ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}<span class="chip chip--big chip--${statusKind(st)}">${esc(st || "без статуса")}${since ? `<small>с ${esc(since)}</small>` : ""}</span></div>`;
+      ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}<span class="chip chip--big chip--${statusKind(st)}">${esc(stLabel(st) || "без статуса")}${since ? `<small>с ${esc(since)}</small>` : ""}</span></div>`;
     renderShell(head + groupBlock(r) + cardBody(r.row, r, false), { search: false });
     saveBar(r.row, `data-num="${esc(num)}"`);
   }
