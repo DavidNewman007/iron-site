@@ -1,0 +1,61 @@
+{
+  "product_id": "xiaomi-15t-pro-12-256-grey-европа-s3-54900",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-15t-pro-12-256-grey-s3-54900",
+  "name": "Xiaomi 15T Pro 12/256 Grey",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 54900,
+  "catalog_url": "https://www.mi.com/de/product/xiaomi-15t-pro/buy/?gid=4223711907",
+  "catalog_title": "Xiaomi 15T Pro Gray",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "Gray"
+    },
+    {
+      "key": "Память",
+      "value": "12 ГБ ОЗУ / 256 ГБ"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 9400+, 3 нм"
+    },
+    {
+      "key": "Экран",
+      "value": "6,83\" AMOLED, 144 Гц, Gorilla Glass 7i"
+    },
+    {
+      "key": "Камеры",
+      "value": "Leica, основная + телеобъектив + широкоугольная"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5500 мА·ч, 90 Вт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Размеры и вес",
+      "value": "162,7 × 77,9 × 7,96 мм, 210 г"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/739_item_de/09/09/2025/5bb6fcc234dbf2f27c6ba9503a41f0da.png",
+    "https://i05.appmifile.com/455_item_de/09/09/2025/2b1e474b72d0805fab93ef3865c55a12.png",
+    "https://i05.appmifile.com/465_item_de/09/09/2025/322995a0fbfb333fa3060c14639d04df.png",
+    "https://i05.appmifile.com/157_item_de/09/09/2025/5db0c3d71e09131209b4db55285b264b.png"
+  ],
+  "images_local": [
+    "assets/product-images/fe2e44af143380a63523b97b.jpg",
+    "assets/product-images/a3ad97f6a35dbeb58b941dc3.jpg",
+    "assets/product-images/8622326f1c3b6e50217162b8.jpg",
+    "assets/product-images/d6e34502a851ecd964408519.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi 15t pro 12 256 grey~s3",
+  "photo_source": "https://www.mi.com/de/product/xiaomi-15t-pro/buy/?gid=4223711907",
+  "updated_at": "2026-09-28T20:54:40.937835Z"
+}

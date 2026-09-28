@@ -1,0 +1,73 @@
+{
+  "product_id": "poco-f9-pro-5g-12-512-aurora-green-европа-s3-62700",
+  "category": "xiaomi",
+  "file_slug": "poco-f9-pro-5g-12-512-aurora-green-s3-62700",
+  "name": "Poco F9 Pro 5G 12/512 Aurora Green",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 62700,
+  "catalog_url": "https://www.mi.com/de/product/poco-f9-pro/buy/?gid=4223717830",
+  "catalog_title": "POCO F9 Pro Aurora Green",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "Aurora Green"
+    },
+    {
+      "key": "Память",
+      "value": "12 ГБ ОЗУ / 512 ГБ"
+    },
+    {
+      "key": "Процессор",
+      "value": "Snapdragon 8 Elite Gen 5 (V-серия)"
+    },
+    {
+      "key": "Экран",
+      "value": "6,59\" AMOLED, до 185 Гц"
+    },
+    {
+      "key": "Основная камера",
+      "value": "200 Мп OIS + телеобъектив 50 Мп (60 мм) + широкоугольная 8 Мп"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6330 мА·ч, 100 Вт, беспроводная 50 Вт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "NFC",
+      "value": "есть"
+    },
+    {
+      "key": "Размеры и вес",
+      "value": "157,49 × 75,25 × 8,79 мм, 206 г"
+    },
+    {
+      "key": "ОС",
+      "value": "Xiaomi HyperOS 3"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/973_operatorx_operatorx_xm/21/08/2026/5921d9fa000f52c9517921faefce5377.png",
+    "https://i02.appmifile.com/528_operatorx_operatorx_xm/21/08/2026/a60249a2d8115063e6699616276bb8bb.png",
+    "https://i02.appmifile.com/204_operatorx_operatorx_xm/21/08/2026/e497a1126318cf906b9ec7be3ef32de5.png",
+    "https://i02.appmifile.com/978_operatorx_operatorx_xm/21/08/2026/1a7533756eb1b02e8c3317e0c8e56165.png"
+  ],
+  "images_local": [
+    "assets/product-images/1c8eff3948abb77313f2fa72.jpg",
+    "assets/product-images/86315a3b2d1e983cddd5c5e5.jpg",
+    "assets/product-images/ac18860e7cd1932e1cb06d36.jpg",
+    "assets/product-images/cd03185b6486416c7e815922.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco f9 pro 5g 12 512 aurora green~s3",
+  "photo_source": "https://www.mi.com/de/product/poco-f9-pro/buy/?gid=4223717830",
+  "updated_at": "2026-09-28T20:54:48.144547Z"
+}

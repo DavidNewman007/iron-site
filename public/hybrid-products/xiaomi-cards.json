@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T20:36:43.130074Z",
-  "count": 57,
+  "generated_at": "2026-09-28T20:55:07.521Z",
+  "count": 77,
   "byId": {
     "xiaomi-15-5g-12-256-green-европа-s3-53000": {
       "url": "hybrid-products/xiaomi/xiaomi-15-5g-12-256-green-s3-53000.html",
@@ -457,6 +457,166 @@
       "name": "Redmi Note 17 Pro Max 5G 8/512 NFC Purple",
       "warehouse": "(S3)",
       "price": 42300
+    },
+    "xiaomi-15t-pro-12-256-grey-европа-s3-54900": {
+      "url": "hybrid-products/xiaomi/xiaomi-15t-pro-12-256-grey-s3-54900.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-15t-pro-12-256-grey-s3-54900.html",
+      "cover": "assets/product-images/fe2e44af143380a63523b97b.jpg",
+      "name": "Xiaomi 15T Pro 12/256 Grey",
+      "warehouse": "(S3)",
+      "price": 54900
+    },
+    "poco-f9-pro-5g-12-512-black-европа-s3-62700": {
+      "url": "hybrid-products/xiaomi/poco-f9-pro-5g-12-512-black-s3-62700.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-f9-pro-5g-12-512-black-s3-62700.html",
+      "cover": "assets/product-images/2314d4600d0d0c308e74db40.jpg",
+      "name": "Poco F9 Pro 5G 12/512 Black",
+      "warehouse": "(S3)",
+      "price": 62700
+    },
+    "poco-f9-pro-5g-12-512-aurora-green-европа-s3-62700": {
+      "url": "hybrid-products/xiaomi/poco-f9-pro-5g-12-512-aurora-green-s3-62700.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-f9-pro-5g-12-512-aurora-green-s3-62700.html",
+      "cover": "assets/product-images/1c8eff3948abb77313f2fa72.jpg",
+      "name": "Poco F9 Pro 5G 12/512 Aurora Green",
+      "warehouse": "(S3)",
+      "price": 62700
+    },
+    "poco-f9-pro-5g-12-512-white-европа-s3-62700": {
+      "url": "hybrid-products/xiaomi/poco-f9-pro-5g-12-512-white-s3-62700.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-f9-pro-5g-12-512-white-s3-62700.html",
+      "cover": "assets/product-images/de4469c5e1591e9a7d3bd73e.jpg",
+      "name": "Poco F9 Pro 5G 12/512 White",
+      "warehouse": "(S3)",
+      "price": 62700
+    },
+    "poco-f9-ultra-5g-16-512-black-европа-s3-75100": {
+      "url": "hybrid-products/xiaomi/poco-f9-ultra-5g-16-512-black-s3-75100.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-f9-ultra-5g-16-512-black-s3-75100.html",
+      "cover": "assets/product-images/4825622810443c627efb2222.jpg",
+      "name": "Poco F9 Ultra 5G 16/512 Black",
+      "warehouse": "(S3)",
+      "price": 75100
+    },
+    "poco-x8-pro-5g-12-512-black-iron-man-edition-европа-s3-43000": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-5g-12-512-black-iron-man-edition-s3-43000.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-5g-12-512-black-iron-man-edition-s3-43000.html",
+      "cover": "assets/product-images/d3bcd8080d01127b5eb4d8c9.jpg",
+      "name": "Poco X8 Pro 5G 12/512 Black Iron Man Edition",
+      "warehouse": "(S3)",
+      "price": 43000
+    },
+    "redmi-17-4g-4-128-nfc-black-европа-s3-17400": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-4-128-nfc-black-s3-17400.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-4-128-nfc-black-s3-17400.html",
+      "cover": "assets/product-images/fa53e7d2f661684335848fd5.jpg",
+      "name": "Redmi 17 4G 4/128 NFC Black",
+      "warehouse": "(S3)",
+      "price": 17400
+    },
+    "redmi-17-4g-4-128-nfc-blue-европа-s3-17000": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-4-128-nfc-blue-s3-17000.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-4-128-nfc-blue-s3-17000.html",
+      "cover": "assets/product-images/c6d0dc2b626429c82d8fc5a5.jpg",
+      "name": "Redmi 17 4G 4/128 NFC Blue",
+      "warehouse": "(S3)",
+      "price": 17000
+    },
+    "redmi-17-4g-4-128-nfc-purple-европа-s3-17400": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-4-128-nfc-purple-s3-17400.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-4-128-nfc-purple-s3-17400.html",
+      "cover": "assets/product-images/20f9316ba83215720c2bd4ff.jpg",
+      "name": "Redmi 17 4G 4/128 NFC Purple",
+      "warehouse": "(S3)",
+      "price": 17400
+    },
+    "redmi-17-4g-6-128-nfc-oak-green-европа-s3-19000": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-6-128-nfc-oak-green-s3-19000.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-6-128-nfc-oak-green-s3-19000.html",
+      "cover": "assets/product-images/f1fa7a76598d7a2cd5702eb6.jpg",
+      "name": "Redmi 17 4G 6/128 NFC Oak Green",
+      "warehouse": "(S3)",
+      "price": 19000
+    },
+    "redmi-17-4g-6-128-nfc-lotus-purple-европа-s3-19000": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-6-128-nfc-lotus-purple-s3-19000.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-6-128-nfc-lotus-purple-s3-19000.html",
+      "cover": "assets/product-images/20f9316ba83215720c2bd4ff.jpg",
+      "name": "Redmi 17 4G 6/128 NFC Lotus Purple",
+      "warehouse": "(S3)",
+      "price": 19000
+    },
+    "redmi-17-4g-4-256-nfc-black-европа-s3-19800": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-4-256-nfc-black-s3-19800.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-4-256-nfc-black-s3-19800.html",
+      "cover": "assets/product-images/fa53e7d2f661684335848fd5.jpg",
+      "name": "Redmi 17 4G 4/256 NFC Black",
+      "warehouse": "(S3)",
+      "price": 19800
+    },
+    "redmi-17-4g-4-256-nfc-deep-blue-европа-s3-19500": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-4-256-nfc-deep-blue-s3-19500.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-4-256-nfc-deep-blue-s3-19500.html",
+      "cover": "assets/product-images/c6d0dc2b626429c82d8fc5a5.jpg",
+      "name": "Redmi 17 4G 4/256 NFC Deep Blue",
+      "warehouse": "(S3)",
+      "price": 19500
+    },
+    "redmi-17-4g-4-256-nfc-purple-европа-s3-19700": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-4-256-nfc-purple-s3-19700.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-4-256-nfc-purple-s3-19700.html",
+      "cover": "assets/product-images/20f9316ba83215720c2bd4ff.jpg",
+      "name": "Redmi 17 4G 4/256 NFC Purple",
+      "warehouse": "(S3)",
+      "price": 19700
+    },
+    "redmi-17-4g-6-256-nfc-oak-green-европа-s3-21400": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-6-256-nfc-oak-green-s3-21400.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-6-256-nfc-oak-green-s3-21400.html",
+      "cover": "assets/product-images/f1fa7a76598d7a2cd5702eb6.jpg",
+      "name": "Redmi 17 4G 6/256 NFC Oak Green",
+      "warehouse": "(S3)",
+      "price": 21400
+    },
+    "redmi-17-4g-6-256-nfc-lotus-purple-европа-s3-21400": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-6-256-nfc-lotus-purple-s3-21400.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-6-256-nfc-lotus-purple-s3-21400.html",
+      "cover": "assets/product-images/20f9316ba83215720c2bd4ff.jpg",
+      "name": "Redmi 17 4G 6/256 NFC Lotus Purple",
+      "warehouse": "(S3)",
+      "price": 21400
+    },
+    "redmi-17-4g-8-256-nfc-black-европа-s3-22700": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-8-256-nfc-black-s3-22700.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-8-256-nfc-black-s3-22700.html",
+      "cover": "assets/product-images/fa53e7d2f661684335848fd5.jpg",
+      "name": "Redmi 17 4G 8/256 NFC Black",
+      "warehouse": "(S3)",
+      "price": 22700
+    },
+    "redmi-17-4g-8-256-nfc-blue-европа-s3-22700": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-8-256-nfc-blue-s3-22700.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-8-256-nfc-blue-s3-22700.html",
+      "cover": "assets/product-images/c6d0dc2b626429c82d8fc5a5.jpg",
+      "name": "Redmi 17 4G 8/256 NFC Blue",
+      "warehouse": "(S3)",
+      "price": 22700
+    },
+    "redmi-17-4g-8-256-nfc-green-европа-s3-22700": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-8-256-nfc-green-s3-22700.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-8-256-nfc-green-s3-22700.html",
+      "cover": "assets/product-images/f1fa7a76598d7a2cd5702eb6.jpg",
+      "name": "Redmi 17 4G 8/256 NFC Green",
+      "warehouse": "(S3)",
+      "price": 22700
+    },
+    "redmi-17-4g-8-256-nfc-purple-европа-s3-22700": {
+      "url": "hybrid-products/xiaomi/redmi-17-4g-8-256-nfc-purple-s3-22700.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-17-4g-8-256-nfc-purple-s3-22700.html",
+      "cover": "assets/product-images/20f9316ba83215720c2bd4ff.jpg",
+      "name": "Redmi 17 4G 8/256 NFC Purple",
+      "warehouse": "(S3)",
+      "price": 22700
     }
   }
 }

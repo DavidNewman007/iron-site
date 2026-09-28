@@ -1,0 +1,46 @@
+{
+  "product_id": "galaxy-watch-ultra-2-47mm-gray-оаэ-s3-44100",
+  "category": "galaxy_watch",
+  "file_slug": "galaxy-watch-ultra-2-47mm-gray-s3-44100",
+  "name": "Galaxy Watch Ultra 2 47mm Gray",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S3)",
+  "price": 44100,
+  "catalog_url": "https://sochi.dr-store.ru/smart-watches/samsung-watch/samsung-galaxy-watch-ultra-47mm-gray",
+  "catalog_title": "умные часы Samsung Galaxy Watch Ultra 47mm, Gray",
+  "specs": [
+    {
+      "key": "Совместимость",
+      "value": "Android и iOS"
+    },
+    {
+      "key": "Разрешение",
+      "value": "502x502 пикселей"
+    },
+    {
+      "key": "Процессор",
+      "value": "Exynos W920"
+    },
+    {
+      "key": "Время работы",
+      "value": "До 72 часов работы без подзарядки"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Wear OS"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/e77s4xrcuara1lzktwhqqt6a9df2i5zo-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/5123worsw6cnmn4k4365hjywwvvfzd48-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/cyosr5rn147wvmw2fdnecxa3qbegj57o-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/lw1ag2vn7kmzi5xke7gind6l7gpaet7l-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/70cc30a7c9c30ac449aada3f.jpg",
+    "assets/product-images/9108e1ca6245598ab49d1797.jpg",
+    "assets/product-images/7557476b174de1712c6bfdb9.jpg",
+    "assets/product-images/e997d705e05ef99f22d1a7a8.jpg"
+  ],
+  "updated_at": "2026-09-28T20:56:46.885332Z"
+}

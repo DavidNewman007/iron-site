@@ -1,0 +1,75 @@
+{
+  "product_id": "redmi-17-4g-4-128-nfc-blue-европа-s3-17000",
+  "category": "xiaomi",
+  "file_slug": "redmi-17-4g-4-128-nfc-blue-s3-17000",
+  "name": "Redmi 17 4G 4/128 NFC Blue",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 17000,
+  "catalog_url": "https://www.mi.com/global/product/redmi-17/",
+  "catalog_title": "REDMI 17 4G Deep Blue",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "Deep Blue"
+    },
+    {
+      "key": "Память",
+      "value": "4 ГБ ОЗУ / 128 ГБ"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+    },
+    {
+      "key": "Экран",
+      "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп, f/1.8"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64"
+    },
+    {
+      "key": "NFC",
+      "value": "есть"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+    },
+    {
+      "key": "Размеры и вес",
+      "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+    },
+    {
+      "key": "ОС",
+      "value": "Xiaomi HyperOS 3"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/mi-com-product/fly-birds/redmi-17/pc/slider_1_png_.png"
+  ],
+  "images_local": [
+    "assets/product-images/c6d0dc2b626429c82d8fc5a5.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi 17 4g 4 128 nfc blue~s3",
+  "photo_source": "https://www.mi.com/global/product/redmi-17/",
+  "updated_at": "2026-09-28T20:55:00.735761Z"
+}

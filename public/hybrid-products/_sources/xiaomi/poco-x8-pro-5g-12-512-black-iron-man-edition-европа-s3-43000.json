@@ -1,0 +1,67 @@
+{
+  "product_id": "poco-x8-pro-5g-12-512-black-iron-man-edition-европа-s3-43000",
+  "category": "xiaomi",
+  "file_slug": "poco-x8-pro-5g-12-512-black-iron-man-edition-s3-43000",
+  "name": "Poco X8 Pro 5G 12/512 Black Iron Man Edition",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 43000,
+  "catalog_url": "https://www.mi.com/de/product/poco-x8-pro/buy/",
+  "catalog_title": "POCO X8 Pro Iron Man Edition",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "Iron Man Edition"
+    },
+    {
+      "key": "Память",
+      "value": "12 ГБ ОЗУ / 512 ГБ"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 8500-Ultra, 4 нм"
+    },
+    {
+      "key": "Экран",
+      "value": "6,59\" AMOLED 1.5K, 120 Гц"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп Sony IMX882, OIS + широкоугольная 8 Мп"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "20 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6500 мА·ч, 100 Вт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Размеры и вес",
+      "value": "157,53 × 75,19 × 8,38 мм, 201 г"
+    },
+    {
+      "key": "Исполнение",
+      "value": "Iron Man Edition — чёрный корпус с рисунком Железного человека"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/715_item_de/16/03/2026/ec91bed1c600aa88150db43c250e7ffd.png",
+    "https://i05.appmifile.com/169_item_de/16/03/2026/74f663fe4c4e552c1d4f749f8bcd3f4a.png",
+    "https://i05.appmifile.com/744_item_de/16/03/2026/d010830d29c99783d0c205086312acf9.png"
+  ],
+  "images_local": [
+    "assets/product-images/d3bcd8080d01127b5eb4d8c9.jpg",
+    "assets/product-images/b724e0106683b8b3f2d2af30.jpg",
+    "assets/product-images/fa15f2259a20ba309c53a476.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco x8 pro 5g 12 512 black iron man edition~s3",
+  "photo_source": "https://www.mi.com/de/product/poco-x8-pro/buy/",
+  "updated_at": "2026-09-28T20:54:56.912625Z"
+}

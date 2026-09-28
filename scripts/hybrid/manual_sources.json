@@ -749,6 +749,1552 @@
       "catalog_url": "https://sochi.dr-store.ru/gadgets/smart-glasses/ray-ban-smart-glasses/umnye-ochki-ray-ban-meta-wayfarer-rw4012-s53-shiny-cosmic-blue-transitions-sapphire-gen-2",
       "note": "dr-store: Wayfarer (Gen 2) S53, Shiny Cosmic Blue/Transitions Sapphire. Позиция — уценка (царапина), фото нового",
       "checked": "2026-09-28"
+    },
+    "redmi 17 4g 4 128 nfc black~s3": {
+      "name": "Redmi 17 4G 4/128 NFC Black",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/?gid=4223729956",
+      "images": [
+        "https://i02.appmifile.com/432_operatorx_operatorx_xm/28/07/2026/4477d23324382b05663a065c83e499ad.png",
+        "https://i02.appmifile.com/5_operatorx_operatorx_xm/28/07/2026/a1523ae688e095134d3af8676a29c51d.png",
+        "https://i02.appmifile.com/88_operatorx_operatorx_xm/28/07/2026/e1685d7607533b9fb50fc4852c0ee212.png"
+      ],
+      "title": "REDMI 17 4G Black",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Black"
+        },
+        {
+          "key": "Память",
+          "value": "4 ГБ ОЗУ / 128 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Black.",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 4 128 nfc blue~s3": {
+      "name": "Redmi 17 4G 4/128 NFC Blue",
+      "source_url": "https://www.mi.com/global/product/redmi-17/",
+      "images": [
+        "https://i02.appmifile.com/mi-com-product/fly-birds/redmi-17/pc/slider_1_png_.png"
+      ],
+      "title": "REDMI 17 4G Deep Blue",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Deep Blue"
+        },
+        {
+          "key": "Память",
+          "value": "4 ГБ ОЗУ / 128 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Deep Blue. В прайсе «Blue»: у Redmi 17 4G всего четыре цвета (Black, Deep Blue, Lotus Purple, Oak Green), это Deep Blue. Deep Blue в витрине mi.com (Малайзия) нет — фото с глобальной страницы модели (кадр с видом сбоку).",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 4 128 nfc purple~s3": {
+      "name": "Redmi 17 4G 4/128 NFC Purple",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/",
+      "images": [
+        "https://i02.appmifile.com/886_operatorx_operatorx_xm/28/07/2026/f9e4a0fa5ad8c7dfb69d0a51c077d0b6.png",
+        "https://i02.appmifile.com/505_operatorx_operatorx_xm/28/07/2026/234fd44188c84b21000b1002ea58d076.png",
+        "https://i02.appmifile.com/658_operatorx_operatorx_xm/28/07/2026/41251ff7845f3941b94563bc920725d6.png",
+        "https://i02.appmifile.com/830_operatorx_operatorx_xm/28/07/2026/14ea745722b43ae49bfb10612cb0d491.png"
+      ],
+      "title": "REDMI 17 4G Lotus Purple",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Lotus Purple"
+        },
+        {
+          "key": "Память",
+          "value": "4 ГБ ОЗУ / 128 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Lotus Purple. В прайсе «Purple»: у Redmi 17 4G всего четыре цвета (Black, Deep Blue, Lotus Purple, Oak Green), это Lotus Purple.",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 6 128 nfc oak green~s3": {
+      "name": "Redmi 17 4G 6/128 NFC Oak Green",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/?gid=4223729957",
+      "images": [
+        "https://i02.appmifile.com/869_operatorx_operatorx_xm/28/07/2026/39d2526faa9c55fb54799c031e4affa2.png",
+        "https://i02.appmifile.com/415_operatorx_operatorx_xm/28/07/2026/e0feab05f1df38bf4e7f07ce16671e72.png",
+        "https://i02.appmifile.com/120_operatorx_operatorx_xm/28/07/2026/fb02f89ccf7203551dbc0d09dd8c64ae.png"
+      ],
+      "title": "REDMI 17 4G Oak Green",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Oak Green"
+        },
+        {
+          "key": "Память",
+          "value": "6 ГБ ОЗУ / 128 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Oak Green.",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 6 128 nfc lotus purple~s3": {
+      "name": "Redmi 17 4G 6/128 NFC Lotus Purple",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/",
+      "images": [
+        "https://i02.appmifile.com/886_operatorx_operatorx_xm/28/07/2026/f9e4a0fa5ad8c7dfb69d0a51c077d0b6.png",
+        "https://i02.appmifile.com/505_operatorx_operatorx_xm/28/07/2026/234fd44188c84b21000b1002ea58d076.png",
+        "https://i02.appmifile.com/658_operatorx_operatorx_xm/28/07/2026/41251ff7845f3941b94563bc920725d6.png",
+        "https://i02.appmifile.com/830_operatorx_operatorx_xm/28/07/2026/14ea745722b43ae49bfb10612cb0d491.png"
+      ],
+      "title": "REDMI 17 4G Lotus Purple",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Lotus Purple"
+        },
+        {
+          "key": "Память",
+          "value": "6 ГБ ОЗУ / 128 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Lotus Purple.",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 4 256 nfc black~s3": {
+      "name": "Redmi 17 4G 4/256 NFC Black",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/?gid=4223729956",
+      "images": [
+        "https://i02.appmifile.com/432_operatorx_operatorx_xm/28/07/2026/4477d23324382b05663a065c83e499ad.png",
+        "https://i02.appmifile.com/5_operatorx_operatorx_xm/28/07/2026/a1523ae688e095134d3af8676a29c51d.png",
+        "https://i02.appmifile.com/88_operatorx_operatorx_xm/28/07/2026/e1685d7607533b9fb50fc4852c0ee212.png"
+      ],
+      "title": "REDMI 17 4G Black",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Black"
+        },
+        {
+          "key": "Память",
+          "value": "4 ГБ ОЗУ / 256 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Black.",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 4 256 nfc deep blue~s3": {
+      "name": "Redmi 17 4G 4/256 NFC Deep Blue",
+      "source_url": "https://www.mi.com/global/product/redmi-17/",
+      "images": [
+        "https://i02.appmifile.com/mi-com-product/fly-birds/redmi-17/pc/slider_1_png_.png"
+      ],
+      "title": "REDMI 17 4G Deep Blue",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Deep Blue"
+        },
+        {
+          "key": "Память",
+          "value": "4 ГБ ОЗУ / 256 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Deep Blue. Deep Blue в витрине mi.com (Малайзия) нет — фото с глобальной страницы модели (кадр с видом сбоку).",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 4 256 nfc purple~s3": {
+      "name": "Redmi 17 4G 4/256 NFC Purple",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/",
+      "images": [
+        "https://i02.appmifile.com/886_operatorx_operatorx_xm/28/07/2026/f9e4a0fa5ad8c7dfb69d0a51c077d0b6.png",
+        "https://i02.appmifile.com/505_operatorx_operatorx_xm/28/07/2026/234fd44188c84b21000b1002ea58d076.png",
+        "https://i02.appmifile.com/658_operatorx_operatorx_xm/28/07/2026/41251ff7845f3941b94563bc920725d6.png",
+        "https://i02.appmifile.com/830_operatorx_operatorx_xm/28/07/2026/14ea745722b43ae49bfb10612cb0d491.png"
+      ],
+      "title": "REDMI 17 4G Lotus Purple",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Lotus Purple"
+        },
+        {
+          "key": "Память",
+          "value": "4 ГБ ОЗУ / 256 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Lotus Purple. В прайсе «Purple»: у Redmi 17 4G всего четыре цвета (Black, Deep Blue, Lotus Purple, Oak Green), это Lotus Purple.",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 6 256 nfc oak green~s3": {
+      "name": "Redmi 17 4G 6/256 NFC Oak Green",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/?gid=4223729957",
+      "images": [
+        "https://i02.appmifile.com/869_operatorx_operatorx_xm/28/07/2026/39d2526faa9c55fb54799c031e4affa2.png",
+        "https://i02.appmifile.com/415_operatorx_operatorx_xm/28/07/2026/e0feab05f1df38bf4e7f07ce16671e72.png",
+        "https://i02.appmifile.com/120_operatorx_operatorx_xm/28/07/2026/fb02f89ccf7203551dbc0d09dd8c64ae.png"
+      ],
+      "title": "REDMI 17 4G Oak Green",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Oak Green"
+        },
+        {
+          "key": "Память",
+          "value": "6 ГБ ОЗУ / 256 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Oak Green.",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 6 256 nfc lotus purple~s3": {
+      "name": "Redmi 17 4G 6/256 NFC Lotus Purple",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/",
+      "images": [
+        "https://i02.appmifile.com/886_operatorx_operatorx_xm/28/07/2026/f9e4a0fa5ad8c7dfb69d0a51c077d0b6.png",
+        "https://i02.appmifile.com/505_operatorx_operatorx_xm/28/07/2026/234fd44188c84b21000b1002ea58d076.png",
+        "https://i02.appmifile.com/658_operatorx_operatorx_xm/28/07/2026/41251ff7845f3941b94563bc920725d6.png",
+        "https://i02.appmifile.com/830_operatorx_operatorx_xm/28/07/2026/14ea745722b43ae49bfb10612cb0d491.png"
+      ],
+      "title": "REDMI 17 4G Lotus Purple",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Lotus Purple"
+        },
+        {
+          "key": "Память",
+          "value": "6 ГБ ОЗУ / 256 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Lotus Purple.",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 8 256 nfc black~s3": {
+      "name": "Redmi 17 4G 8/256 NFC Black",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/?gid=4223729956",
+      "images": [
+        "https://i02.appmifile.com/432_operatorx_operatorx_xm/28/07/2026/4477d23324382b05663a065c83e499ad.png",
+        "https://i02.appmifile.com/5_operatorx_operatorx_xm/28/07/2026/a1523ae688e095134d3af8676a29c51d.png",
+        "https://i02.appmifile.com/88_operatorx_operatorx_xm/28/07/2026/e1685d7607533b9fb50fc4852c0ee212.png"
+      ],
+      "title": "REDMI 17 4G Black",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Black"
+        },
+        {
+          "key": "Память",
+          "value": "8 ГБ ОЗУ / 256 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Black.",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 8 256 nfc blue~s3": {
+      "name": "Redmi 17 4G 8/256 NFC Blue",
+      "source_url": "https://www.mi.com/global/product/redmi-17/",
+      "images": [
+        "https://i02.appmifile.com/mi-com-product/fly-birds/redmi-17/pc/slider_1_png_.png"
+      ],
+      "title": "REDMI 17 4G Deep Blue",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Deep Blue"
+        },
+        {
+          "key": "Память",
+          "value": "8 ГБ ОЗУ / 256 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Deep Blue. В прайсе «Blue»: у Redmi 17 4G всего четыре цвета (Black, Deep Blue, Lotus Purple, Oak Green), это Deep Blue. Deep Blue в витрине mi.com (Малайзия) нет — фото с глобальной страницы модели (кадр с видом сбоку).",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 8 256 nfc green~s3": {
+      "name": "Redmi 17 4G 8/256 NFC Green",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/?gid=4223729957",
+      "images": [
+        "https://i02.appmifile.com/869_operatorx_operatorx_xm/28/07/2026/39d2526faa9c55fb54799c031e4affa2.png",
+        "https://i02.appmifile.com/415_operatorx_operatorx_xm/28/07/2026/e0feab05f1df38bf4e7f07ce16671e72.png",
+        "https://i02.appmifile.com/120_operatorx_operatorx_xm/28/07/2026/fb02f89ccf7203551dbc0d09dd8c64ae.png"
+      ],
+      "title": "REDMI 17 4G Oak Green",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Oak Green"
+        },
+        {
+          "key": "Память",
+          "value": "8 ГБ ОЗУ / 256 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Oak Green. В прайсе «Green»: у Redmi 17 4G всего четыре цвета (Black, Deep Blue, Lotus Purple, Oak Green), это Oak Green.",
+      "checked": "2026-09-28"
+    },
+    "redmi 17 4g 8 256 nfc purple~s3": {
+      "name": "Redmi 17 4G 8/256 NFC Purple",
+      "source_url": "https://www.mi.com/my/product/redmi-17/buy/",
+      "images": [
+        "https://i02.appmifile.com/886_operatorx_operatorx_xm/28/07/2026/f9e4a0fa5ad8c7dfb69d0a51c077d0b6.png",
+        "https://i02.appmifile.com/505_operatorx_operatorx_xm/28/07/2026/234fd44188c84b21000b1002ea58d076.png",
+        "https://i02.appmifile.com/658_operatorx_operatorx_xm/28/07/2026/41251ff7845f3941b94563bc920725d6.png",
+        "https://i02.appmifile.com/830_operatorx_operatorx_xm/28/07/2026/14ea745722b43ae49bfb10612cb0d491.png"
+      ],
+      "title": "REDMI 17 4G Lotus Purple",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Lotus Purple"
+        },
+        {
+          "key": "Память",
+          "value": "8 ГБ ОЗУ / 256 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп, f/1.8"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "8 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP64"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Связь",
+          "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+        },
+        {
+          "key": "Разъёмы",
+          "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный сайт Xiaomi: REDMI 17 4G (Helio G91-Ultra), цвет Lotus Purple. В прайсе «Purple»: у Redmi 17 4G всего четыре цвета (Black, Deep Blue, Lotus Purple, Oak Green), это Lotus Purple.",
+      "checked": "2026-09-28"
+    },
+    "poco f9 pro 5g 12 512 black~s3": {
+      "name": "Poco F9 Pro 5G 12/512 Black",
+      "source_url": "https://www.mi.com/de/product/poco-f9-pro/buy/?gid=4223717829",
+      "images": [
+        "https://i02.appmifile.com/458_operatorx_operatorx_xm/21/08/2026/b7b738b3ba21b6e8a994c100cf27a402.png",
+        "https://i02.appmifile.com/579_operatorx_operatorx_xm/21/08/2026/7ada1a77560c5f3f7439e87cd6be433c.png",
+        "https://i02.appmifile.com/996_operatorx_operatorx_xm/21/08/2026/62b3b3e329f44a6180c3860599981b85.png",
+        "https://i02.appmifile.com/127_operatorx_operatorx_xm/21/08/2026/82de93673c54dec65fc72bccec1506a4.png"
+      ],
+      "title": "POCO F9 Pro Black",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Black"
+        },
+        {
+          "key": "Память",
+          "value": "12 ГБ ОЗУ / 512 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "Snapdragon 8 Elite Gen 5 (V-серия)"
+        },
+        {
+          "key": "Экран",
+          "value": "6,59\" AMOLED, до 185 Гц"
+        },
+        {
+          "key": "Основная камера",
+          "value": "200 Мп OIS + телеобъектив 50 Мп (60 мм) + широкоугольная 8 Мп"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "32 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "6330 мА·ч, 100 Вт, беспроводная 50 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP68"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "157,49 × 75,25 × 8,79 мм, 206 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный магазин Xiaomi (mi.com, Германия): POCO F9 Pro Black.",
+      "checked": "2026-09-28"
+    },
+    "poco f9 pro 5g 12 512 aurora green~s3": {
+      "name": "Poco F9 Pro 5G 12/512 Aurora Green",
+      "source_url": "https://www.mi.com/de/product/poco-f9-pro/buy/?gid=4223717830",
+      "images": [
+        "https://i02.appmifile.com/973_operatorx_operatorx_xm/21/08/2026/5921d9fa000f52c9517921faefce5377.png",
+        "https://i02.appmifile.com/528_operatorx_operatorx_xm/21/08/2026/a60249a2d8115063e6699616276bb8bb.png",
+        "https://i02.appmifile.com/204_operatorx_operatorx_xm/21/08/2026/e497a1126318cf906b9ec7be3ef32de5.png",
+        "https://i02.appmifile.com/978_operatorx_operatorx_xm/21/08/2026/1a7533756eb1b02e8c3317e0c8e56165.png"
+      ],
+      "title": "POCO F9 Pro Aurora Green",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Aurora Green"
+        },
+        {
+          "key": "Память",
+          "value": "12 ГБ ОЗУ / 512 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "Snapdragon 8 Elite Gen 5 (V-серия)"
+        },
+        {
+          "key": "Экран",
+          "value": "6,59\" AMOLED, до 185 Гц"
+        },
+        {
+          "key": "Основная камера",
+          "value": "200 Мп OIS + телеобъектив 50 Мп (60 мм) + широкоугольная 8 Мп"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "32 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "6330 мА·ч, 100 Вт, беспроводная 50 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP68"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "157,49 × 75,25 × 8,79 мм, 206 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный магазин Xiaomi (mi.com, Германия): POCO F9 Pro Aurora Green.",
+      "checked": "2026-09-28"
+    },
+    "poco f9 pro 5g 12 512 white~s3": {
+      "name": "Poco F9 Pro 5G 12/512 White",
+      "source_url": "https://www.mi.com/de/product/poco-f9-pro/buy/?gid=4223717831",
+      "images": [
+        "https://i02.appmifile.com/333_operatorx_operatorx_xm/21/08/2026/88982718cf9b95d5c259634a296b0fa0.png",
+        "https://i02.appmifile.com/23_operatorx_operatorx_xm/21/08/2026/834ef38010dfac7d016180e5735499b0.png",
+        "https://i02.appmifile.com/187_operatorx_operatorx_xm/21/08/2026/cb2506c5605d7e2e918a29a8aa34d970.png",
+        "https://i02.appmifile.com/483_operatorx_operatorx_xm/21/08/2026/5312621ddec1dfe81fa25c3fd9c738aa.png"
+      ],
+      "title": "POCO F9 Pro White",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "White"
+        },
+        {
+          "key": "Память",
+          "value": "12 ГБ ОЗУ / 512 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "Snapdragon 8 Elite Gen 5 (V-серия)"
+        },
+        {
+          "key": "Экран",
+          "value": "6,59\" AMOLED, до 185 Гц"
+        },
+        {
+          "key": "Основная камера",
+          "value": "200 Мп OIS + телеобъектив 50 Мп (60 мм) + широкоугольная 8 Мп"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "32 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "6330 мА·ч, 100 Вт, беспроводная 50 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP68"
+        },
+        {
+          "key": "NFC",
+          "value": "есть"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "157,49 × 75,25 × 8,79 мм, 206 г"
+        },
+        {
+          "key": "ОС",
+          "value": "Xiaomi HyperOS 3"
+        }
+      ],
+      "note": "Официальный магазин Xiaomi (mi.com, Германия): POCO F9 Pro White.",
+      "checked": "2026-09-28"
+    },
+    "poco f9 ultra 5g 16 512 black~s3": {
+      "name": "Poco F9 Ultra 5G 16/512 Black",
+      "source_url": "https://www.mi.com/de/product/poco-f9-ultra/buy/",
+      "images": [
+        "https://i02.appmifile.com/7_operatorx_operatorx_xm/21/08/2026/1b2a5ab6e18faf510b8565a88e6b60ff.png",
+        "https://i02.appmifile.com/117_operatorx_operatorx_xm/21/08/2026/6b25092993d65ae7019f80ba049c5c22.png",
+        "https://i02.appmifile.com/534_operatorx_operatorx_xm/21/08/2026/ca9511511fb7b7170df3cdb9335ff898.png",
+        "https://i02.appmifile.com/465_operatorx_operatorx_xm/21/08/2026/9c6b25b553b83a21546543cafa199a0f.png"
+      ],
+      "title": "POCO F9 Ultra Black",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Black"
+        },
+        {
+          "key": "Память",
+          "value": "16 ГБ ОЗУ / 512 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "Snapdragon 8 Elite Gen 5, 3 нм"
+        },
+        {
+          "key": "Экран",
+          "value": "6,9\" AMOLED, до 185 Гц"
+        },
+        {
+          "key": "Основная камера",
+          "value": "200 Мп OIS + перископ 50 Мп (120 мм) + широкоугольная 50 Мп"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "32 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "8050 мА·ч, 100 Вт, беспроводная 50 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP68"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "163,49 × 77,94 × 8,74 мм, 235 г"
+        }
+      ],
+      "note": "Официальный магазин Xiaomi (mi.com, Германия): POCO F9 Ultra Black.",
+      "checked": "2026-09-28"
+    },
+    "poco x8 pro 5g 12 512 black iron man edition~s3": {
+      "name": "Poco X8 Pro 5G 12/512 Black Iron Man Edition",
+      "source_url": "https://www.mi.com/de/product/poco-x8-pro/buy/",
+      "images": [
+        "https://i05.appmifile.com/715_item_de/16/03/2026/ec91bed1c600aa88150db43c250e7ffd.png",
+        "https://i05.appmifile.com/169_item_de/16/03/2026/74f663fe4c4e552c1d4f749f8bcd3f4a.png",
+        "https://i05.appmifile.com/744_item_de/16/03/2026/d010830d29c99783d0c205086312acf9.png"
+      ],
+      "title": "POCO X8 Pro Iron Man Edition",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Iron Man Edition"
+        },
+        {
+          "key": "Память",
+          "value": "12 ГБ ОЗУ / 512 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Dimensity 8500-Ultra, 4 нм"
+        },
+        {
+          "key": "Экран",
+          "value": "6,59\" AMOLED 1.5K, 120 Гц"
+        },
+        {
+          "key": "Основная камера",
+          "value": "50 Мп Sony IMX882, OIS + широкоугольная 8 Мп"
+        },
+        {
+          "key": "Фронтальная камера",
+          "value": "20 Мп"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "6500 мА·ч, 100 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP68"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "157,53 × 75,19 × 8,38 мм, 201 г"
+        },
+        {
+          "key": "Исполнение",
+          "value": "Iron Man Edition — чёрный корпус с рисунком Железного человека"
+        }
+      ],
+      "note": "Официальный магазин Xiaomi (mi.com, Германия): POCO X8 Pro Iron Man Edition. На mi.com вариант подписан «Iron Man Edition Gold» — корпус чёрный с золотым рисунком, другой расцветки Iron Man нет.",
+      "checked": "2026-09-28"
+    },
+    "xiaomi 15t pro 12 256 grey~s3": {
+      "name": "Xiaomi 15T Pro 12/256 Grey",
+      "source_url": "https://www.mi.com/de/product/xiaomi-15t-pro/buy/?gid=4223711907",
+      "images": [
+        "https://i05.appmifile.com/739_item_de/09/09/2025/5bb6fcc234dbf2f27c6ba9503a41f0da.png",
+        "https://i05.appmifile.com/455_item_de/09/09/2025/2b1e474b72d0805fab93ef3865c55a12.png",
+        "https://i05.appmifile.com/465_item_de/09/09/2025/322995a0fbfb333fa3060c14639d04df.png",
+        "https://i05.appmifile.com/157_item_de/09/09/2025/5db0c3d71e09131209b4db55285b264b.png"
+      ],
+      "title": "Xiaomi 15T Pro Gray",
+      "specs": [
+        {
+          "key": "Цвет",
+          "value": "Gray"
+        },
+        {
+          "key": "Память",
+          "value": "12 ГБ ОЗУ / 256 ГБ"
+        },
+        {
+          "key": "Процессор",
+          "value": "MediaTek Dimensity 9400+, 3 нм"
+        },
+        {
+          "key": "Экран",
+          "value": "6,83\" AMOLED, 144 Гц, Gorilla Glass 7i"
+        },
+        {
+          "key": "Камеры",
+          "value": "Leica, основная + телеобъектив + широкоугольная"
+        },
+        {
+          "key": "Аккумулятор",
+          "value": "5500 мА·ч, 90 Вт"
+        },
+        {
+          "key": "Защита",
+          "value": "IP68"
+        },
+        {
+          "key": "Размеры и вес",
+          "value": "162,7 × 77,9 × 7,96 мм, 210 г"
+        }
+      ],
+      "note": "Официальный магазин Xiaomi (mi.com, Германия): Xiaomi 15T Pro Gray. В прайсе «Grey», у Xiaomi цвет называется Gray.",
+      "checked": "2026-09-28"
+    },
+    "galaxy watch 9 40mm graphite~s3": {
+      "name": "Galaxy Watch 9 40mm Graphite",
+      "source_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-40mm-graphite-bluetooth-sku-sm-l340nzkaxaa/",
+      "images": [
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056551",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056558",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056653",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056683",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056712"
+      ],
+      "title": "Samsung Galaxy Watch9 40 мм Graphite",
+      "specs": [
+        {
+          "key": "Модель",
+          "value": "Samsung Galaxy Watch9"
+        },
+        {
+          "key": "Артикул",
+          "value": "SM-L340NZ"
+        },
+        {
+          "key": "Размер корпуса",
+          "value": "40 мм"
+        },
+        {
+          "key": "Цвет",
+          "value": "Graphite"
+        },
+        {
+          "key": "Связь",
+          "value": "Bluetooth"
+        }
+      ],
+      "note": "Официальный магазин Samsung (США), артикул SM-L340NZK: Galaxy Watch9 40мм Graphite, Bluetooth.",
+      "checked": "2026-09-28"
+    },
+    "galaxy watch 9 40mm cream~s3": {
+      "name": "Galaxy Watch 9 40mm Cream",
+      "source_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-40mm-cream-bluetooth-sku-sm-l340nzeaxaa/",
+      "images": [
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054538",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054548",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054777",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054876",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054883"
+      ],
+      "title": "Samsung Galaxy Watch9 40 мм Cream",
+      "specs": [
+        {
+          "key": "Модель",
+          "value": "Samsung Galaxy Watch9"
+        },
+        {
+          "key": "Артикул",
+          "value": "SM-L340NZ"
+        },
+        {
+          "key": "Размер корпуса",
+          "value": "40 мм"
+        },
+        {
+          "key": "Цвет",
+          "value": "Cream"
+        },
+        {
+          "key": "Связь",
+          "value": "Bluetooth"
+        }
+      ],
+      "note": "Официальный магазин Samsung (США), артикул SM-L340NZE: Galaxy Watch9 40мм Cream, Bluetooth.",
+      "checked": "2026-09-28"
+    },
+    "galaxy watch 9 44mm graphite~s3": {
+      "name": "Galaxy Watch 9 44mm Graphite",
+      "source_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-44mm-graphite-bluetooth-sku-sm-l350nzkaxaa/",
+      "images": [
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056107",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056109",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056111",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056113",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056115"
+      ],
+      "title": "Samsung Galaxy Watch9 44 мм Graphite",
+      "specs": [
+        {
+          "key": "Модель",
+          "value": "Samsung Galaxy Watch9"
+        },
+        {
+          "key": "Артикул",
+          "value": "SM-L350NZ"
+        },
+        {
+          "key": "Размер корпуса",
+          "value": "44 мм"
+        },
+        {
+          "key": "Цвет",
+          "value": "Graphite"
+        },
+        {
+          "key": "Связь",
+          "value": "Bluetooth"
+        }
+      ],
+      "note": "Официальный магазин Samsung (США), артикул SM-L350NZK: Galaxy Watch9 44мм Graphite, Bluetooth.",
+      "checked": "2026-09-28"
+    },
+    "galaxy watch 9 44mm silver~s3": {
+      "name": "Galaxy Watch 9 44mm Silver",
+      "source_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-44mm-silver-bluetooth-sku-sm-l350nzsaxaa/",
+      "images": [
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056335",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056337",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056340",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056342",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056345"
+      ],
+      "title": "Samsung Galaxy Watch9 44 мм Silver",
+      "specs": [
+        {
+          "key": "Модель",
+          "value": "Samsung Galaxy Watch9"
+        },
+        {
+          "key": "Артикул",
+          "value": "SM-L350NZ"
+        },
+        {
+          "key": "Размер корпуса",
+          "value": "44 мм"
+        },
+        {
+          "key": "Цвет",
+          "value": "Silver"
+        },
+        {
+          "key": "Связь",
+          "value": "Bluetooth"
+        }
+      ],
+      "note": "Официальный магазин Samsung (США), артикул SM-L350NZS: Galaxy Watch9 44мм Silver, Bluetooth. У Samsung цвет Silver идёт с зелёным ремешком — так на фото производителя.",
+      "checked": "2026-09-28"
+    },
+    "galaxy watch 9 40mm lte cream~s3": {
+      "name": "Galaxy Watch 9 40mm LTE Cream",
+      "source_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-40mm-cream-lte-sku-sm-l345uzeaxaa/",
+      "images": [
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054538",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054548",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054777",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054876",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054883"
+      ],
+      "title": "Samsung Galaxy Watch9 40 мм Cream",
+      "specs": [
+        {
+          "key": "Модель",
+          "value": "Samsung Galaxy Watch9"
+        },
+        {
+          "key": "Артикул",
+          "value": "SM-L345UZ"
+        },
+        {
+          "key": "Размер корпуса",
+          "value": "40 мм"
+        },
+        {
+          "key": "Цвет",
+          "value": "Cream"
+        },
+        {
+          "key": "Связь",
+          "value": "LTE (eSIM)"
+        }
+      ],
+      "note": "Официальный магазин Samsung (США), артикул SM-L345UZE: Galaxy Watch9 40мм Cream, LTE (eSIM). Фото — с карточки Bluetooth-версии того же размера и цвета: у Samsung это одни и те же снимки.",
+      "checked": "2026-09-28"
+    },
+    "galaxy watch 9 40mm lte graphite~s3": {
+      "name": "Galaxy Watch 9 40mm LTE Graphite",
+      "source_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-40mm-graphite-lte-sku-sm-l345uzkaxaa/",
+      "images": [
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056551",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056558",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056653",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056683",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056712"
+      ],
+      "title": "Samsung Galaxy Watch9 40 мм Graphite",
+      "specs": [
+        {
+          "key": "Модель",
+          "value": "Samsung Galaxy Watch9"
+        },
+        {
+          "key": "Артикул",
+          "value": "SM-L345UZ"
+        },
+        {
+          "key": "Размер корпуса",
+          "value": "40 мм"
+        },
+        {
+          "key": "Цвет",
+          "value": "Graphite"
+        },
+        {
+          "key": "Связь",
+          "value": "LTE (eSIM)"
+        }
+      ],
+      "note": "Официальный магазин Samsung (США), артикул SM-L345UZK: Galaxy Watch9 40мм Graphite, LTE (eSIM). Фото — с карточки Bluetooth-версии того же размера и цвета: у Samsung это одни и те же снимки.",
+      "checked": "2026-09-28"
+    },
+    "galaxy watch 9 44mm lte graphite~s3": {
+      "name": "Galaxy Watch 9 44mm LTE Graphite",
+      "source_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-44mm-graphite-lte-sku-sm-l355uzkaxaa/",
+      "images": [
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056107",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056109",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056111",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056113",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056115"
+      ],
+      "title": "Samsung Galaxy Watch9 44 мм Graphite",
+      "specs": [
+        {
+          "key": "Модель",
+          "value": "Samsung Galaxy Watch9"
+        },
+        {
+          "key": "Артикул",
+          "value": "SM-L355UZ"
+        },
+        {
+          "key": "Размер корпуса",
+          "value": "44 мм"
+        },
+        {
+          "key": "Цвет",
+          "value": "Graphite"
+        },
+        {
+          "key": "Связь",
+          "value": "LTE (eSIM)"
+        }
+      ],
+      "note": "Официальный магазин Samsung (США), артикул SM-L355UZK: Galaxy Watch9 44мм Graphite, LTE (eSIM). Фото — с карточки Bluetooth-версии того же размера и цвета: у Samsung это одни и те же снимки.",
+      "checked": "2026-09-28"
+    },
+    "galaxy watch 9 44mm lte silver~s3": {
+      "name": "Galaxy Watch 9 44mm LTE Silver",
+      "source_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-44mm-silver-lte-sku-sm-l355uzsaxaa/",
+      "images": [
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056335",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056337",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056340",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056342",
+        "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056345"
+      ],
+      "title": "Samsung Galaxy Watch9 44 мм Silver",
+      "specs": [
+        {
+          "key": "Модель",
+          "value": "Samsung Galaxy Watch9"
+        },
+        {
+          "key": "Артикул",
+          "value": "SM-L355UZ"
+        },
+        {
+          "key": "Размер корпуса",
+          "value": "44 мм"
+        },
+        {
+          "key": "Цвет",
+          "value": "Silver"
+        },
+        {
+          "key": "Связь",
+          "value": "LTE (eSIM)"
+        }
+      ],
+      "note": "Официальный магазин Samsung (США), артикул SM-L355UZS: Galaxy Watch9 44мм Silver, LTE (eSIM). У Samsung цвет Silver идёт с зелёным ремешком — так на фото производителя. Фото — с карточки Bluetooth-версии того же размера и цвета: у Samsung это одни и те же снимки.",
+      "checked": "2026-09-28"
+    },
+    "galaxy watch 7 44mm lte green~s3": {
+      "name": "Galaxy Watch 7 44mm LTE Green",
+      "catalog_url": "https://sochi.dr-store.ru/smart-watches/samsung-watch/galaxy-watch-7/samsung-galaxy-watch-7-44-green",
+      "note": "dr-store: Galaxy Watch 7 44mm, Green. У поставщика только версия без LTE — внешне LTE-версия такая же",
+      "checked": "2026-09-28"
     }
   }
 }

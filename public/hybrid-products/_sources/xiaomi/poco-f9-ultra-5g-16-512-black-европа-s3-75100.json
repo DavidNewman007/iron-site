@@ -1,0 +1,65 @@
+{
+  "product_id": "poco-f9-ultra-5g-16-512-black-европа-s3-75100",
+  "category": "xiaomi",
+  "file_slug": "poco-f9-ultra-5g-16-512-black-s3-75100",
+  "name": "Poco F9 Ultra 5G 16/512 Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 75100,
+  "catalog_url": "https://www.mi.com/de/product/poco-f9-ultra/buy/",
+  "catalog_title": "POCO F9 Ultra Black",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "Black"
+    },
+    {
+      "key": "Память",
+      "value": "16 ГБ ОЗУ / 512 ГБ"
+    },
+    {
+      "key": "Процессор",
+      "value": "Snapdragon 8 Elite Gen 5, 3 нм"
+    },
+    {
+      "key": "Экран",
+      "value": "6,9\" AMOLED, до 185 Гц"
+    },
+    {
+      "key": "Основная камера",
+      "value": "200 Мп OIS + перископ 50 Мп (120 мм) + широкоугольная 50 Мп"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "8050 мА·ч, 100 Вт, беспроводная 50 Вт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Размеры и вес",
+      "value": "163,49 × 77,94 × 8,74 мм, 235 г"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/7_operatorx_operatorx_xm/21/08/2026/1b2a5ab6e18faf510b8565a88e6b60ff.png",
+    "https://i02.appmifile.com/117_operatorx_operatorx_xm/21/08/2026/6b25092993d65ae7019f80ba049c5c22.png",
+    "https://i02.appmifile.com/534_operatorx_operatorx_xm/21/08/2026/ca9511511fb7b7170df3cdb9335ff898.png",
+    "https://i02.appmifile.com/465_operatorx_operatorx_xm/21/08/2026/9c6b25b553b83a21546543cafa199a0f.png"
+  ],
+  "images_local": [
+    "assets/product-images/4825622810443c627efb2222.jpg",
+    "assets/product-images/2192af6e855f00945fa5bb87.jpg",
+    "assets/product-images/451cb1106c28220445de21d2.jpg",
+    "assets/product-images/54301a3cb3fd44765a80a722.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco f9 ultra 5g 16 512 black~s3",
+  "photo_source": "https://www.mi.com/de/product/poco-f9-ultra/buy/",
+  "updated_at": "2026-09-28T20:54:54.757372Z"
+}

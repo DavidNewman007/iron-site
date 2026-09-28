@@ -1,0 +1,51 @@
+{
+  "product_id": "galaxy-watch-9-44mm-lte-silver-оаэ-s3-27900",
+  "category": "galaxy_watch",
+  "file_slug": "galaxy-watch-9-44mm-lte-silver-s3-27900",
+  "name": "Galaxy Watch 9 44mm LTE Silver",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S3)",
+  "price": 27900,
+  "catalog_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-44mm-silver-lte-sku-sm-l355uzsaxaa/",
+  "catalog_title": "Samsung Galaxy Watch9 44 мм Silver",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Samsung Galaxy Watch9"
+    },
+    {
+      "key": "Артикул",
+      "value": "SM-L355UZ"
+    },
+    {
+      "key": "Размер корпуса",
+      "value": "44 мм"
+    },
+    {
+      "key": "Цвет",
+      "value": "Silver"
+    },
+    {
+      "key": "Связь",
+      "value": "LTE (eSIM)"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056335",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056337",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056340",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056342",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056345"
+  ],
+  "images_local": [
+    "assets/product-images/38ef66404ce985fc45c51eef.jpg",
+    "assets/product-images/61ea06e67f241c43e17a37c8.jpg",
+    "assets/product-images/df64b192b2ca1a2da4126c8a.jpg",
+    "assets/product-images/5d9bf7e5e6b59c9ce2f4c5b7.jpg",
+    "assets/product-images/8f74ea70139dc9fe2a0fee03.jpg"
+  ],
+  "manual": true,
+  "manual_key": "galaxy watch 9 44mm lte silver~s3",
+  "photo_source": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-44mm-silver-lte-sku-sm-l355uzsaxaa/",
+  "updated_at": "2026-09-28T21:01:20.666275Z"
+}

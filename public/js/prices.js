@@ -1713,7 +1713,12 @@
     if (/galaxy\s*buds|galaxy\s*watch/i.test(name) || /galaxy\s*buds|galaxy\s*watch/i.test(section)) {
       return false;
     }
-    return /\bsamsung\b/i.test(name) || /^s\d/i.test(name) || /\bsamsung\b/i.test(section);
+    // «A37 8/128 GrayGreen» — так склад S2 пишет серию A, без слова Samsung и
+    // в разделе «🔘 Series A». Без /^a\d/ такие позиции не считались Samsung:
+    // карточка у них есть, а плитка в режиме «Все категории» шла без фото
+    // (12 плиток A37/A57, найдено 28.09.2026). Z Flip/Fold — на тот же случай.
+    return /\bsamsung\b/i.test(name) || /^[sa]\d/i.test(name) || /^z\s*(?:flip|fold)/i.test(name) ||
+      /\bsamsung\b/i.test(section);
   }
 
   function isHybridAccessoriesCandidate(product) {
