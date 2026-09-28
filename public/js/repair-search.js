@@ -744,6 +744,12 @@
       renderQualityGuide();
       renderOperationChips();
       renderDeviceOptions();
+      // Ссылка из ролика (28.09.2026): uslugi.html?q=батарея#repair-search — поиск заполнен сразу. Владелец: «QR и ссылки
+      // должны вести максимально на то, о чём ролик» (ролик про вздутую батарею ведёт на цены замены батареи).
+      try {
+        var q = new URLSearchParams(location.search).get("q");
+        if (q) input.value = q.slice(0, 60);
+      } catch (e) { /* старый браузер — без поиска из ссылки */ }
       status.textContent = EN
         ? t("loaded", "", { n: services.length })
         : "Прайс на " + services.length + " услуг. Начните вводить модель или что случилось.";
