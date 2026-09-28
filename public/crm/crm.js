@@ -1497,9 +1497,13 @@
         const r0 = slots[0].row, r1 = slots[N - 1].row;
         const probe = await api(`/values/${A1(1, r0, C.group, r1)}?valueRenderOption=FORMULA`)
           .catch(e => { throw /400/.test(e.message) ? new Error(`В листе закончились строки (нужна строка ${r1}) — добавьте строки внизу листа в таблице и повторите`) : e; });
-        const busyCell = v => { const t = String(v ?? "").trim(); return t !== "" && !t.startsWith("=") && t.toUpperCase() !== "FALSE"; };
+        // Занята ли строка: формулы, снятые галочки и одинокая дата приёма (B) — не занятость.
+        // 28.09.2026 в строке 7750 осталась только дата: заказ начали вводить в таблице и
+        // стёрли, а дату (её ставит OrderAutofill) — нет; новый заказ не сохранялся вовсе.
+        const busyCell = (v, i) => { const t = String(v ?? "").trim(); return i > 0 && t !== "" && !t.startsWith("=") && t.toUpperCase() !== "FALSE"; };
         const pv = probe.values || [];
-        if (pv.some(rw => (rw || []).some(busyCell))) throw new Error("Строки " + r0 + "–" + r1 + " уже заняты — обновите список (⟳) и повторите");
+        const busy = pv.flatMap((rw, k) => (rw || []).map((v, i) => busyCell(v, i) ? LETTER(i + 1) + (r0 + k) : null).filter(Boolean));
+        if (busy.length) throw new Error(`Строка ${r0}${N > 1 ? "–" + r1 : ""} занята (${busy.slice(0, 4).join(", ")}) — проверьте её в таблице и повторите`);
         slots.forEach((s, i) => { s.hasMargin = String(pv[i]?.[C.labor - 1] ?? "").trim().startsWith("="); });
         num0 = +slots[0].num;
       }
