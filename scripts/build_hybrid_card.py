@@ -22,6 +22,7 @@ from hybrid.eligibility import hybrid_skip_reason  # noqa: E402
 from hybrid.images import mirror_images  # noqa: E402
 from hybrid.existing import card_already_published  # noqa: E402
 from hybrid.manifest import load_manifest, load_source, save_source  # noqa: E402
+from hybrid.manual_sources import build_source_from_manual, find_manual_entry  # noqa: E402
 from hybrid.bot_index import save_bot_index  # noqa: E402
 from hybrid.price_parser import load_products_from_sheet  # noqa: E402
 from hybrid.image_selection import is_ui_swatch_image, keep_product_folder_images  # noqa: E402
@@ -104,6 +105,25 @@ def build_from_probe(
         if card_already_published(category, product_id) and not force_rebuild:
             continue
         try:
+            # Ручной источник (scripts/hybrid/manual_sources.json) важнее
+            # автоматического сопоставления: запись завёл человек, проверив
+            # модель и цвет. Проверяется ДО статуса сопоставления — иначе позиция,
+            # которой у dr-store нет, так и уходила бы в failed «catalog match
+            # status: unmatched», а позиция с ложным совпадением получала бы
+            # чужое фото (28.09.2026).
+            manual = find_manual_entry(product.name, product.warehouse) if product else None
+            if manual:
+                existing_manual = load_source(category, product_id)
+                if (
+                    existing_manual
+                    and existing_manual.get("manual_key") == manual[0]
+                    and existing_manual.get("images_local")
+                    and not refresh_match
+                ):
+                    built.append(build_card_from_source(existing_manual))
+                else:
+                    built.append(build_card_from_source(build_source_from_manual(product, *manual)))
+                continue
             if force_rebuild:
                 repaired = repair_or_bootstrap_source(category, product_id)
                 if repaired:

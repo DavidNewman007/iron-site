@@ -324,6 +324,15 @@ def bootstrap_source_from_sibling(category: str, product_id: str) -> dict[str, A
 
 def repair_or_bootstrap_source(category: str, product_id: str) -> dict[str, Any] | None:
     existing = load_source(category, product_id)
+    if existing and existing.get("manual"):
+        # Карточка из ручного источника (manual_sources.py): галерею подобрал
+        # человек со стороннего сайта. Правила отбора картинок dr-store и
+        # переразбор catalog_url её бы испортили — только докачиваем файлы.
+        from .manual_sources import mirror_manual_images
+
+        source = dict(existing)
+        source["images_local"] = mirror_manual_images(list(source.get("images_remote") or []))
+        return source
     if existing and (existing.get("images_remote") or existing.get("images_local")):
         source = repair_source_images(dict(existing))
     elif category == "accessories":

@@ -1,0 +1,59 @@
+{
+  "product_id": "pitaka-galaxy-watch-ultra-black-gray-carbon-s2-6000",
+  "category": "accessories",
+  "file_slug": "pitaka-galaxy-watch-ultra-black-gray-carbon-s2-6000",
+  "name": "Pitaka Galaxy Watch Ultra Black/Gray Carbon",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 6000,
+  "catalog_url": "https://www.ipitaka.com/products/carbon-fiber-watch-band-for-galaxy-watch?variant=42227031081030",
+  "catalog_title": "Pitaka Galaxy Watch Ultra Black/Gray Carbon",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "PITAKA"
+    },
+    {
+      "key": "Модель",
+      "value": "Carbon Fiber Watch Band"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Samsung Galaxy Watch Ultra"
+    },
+    {
+      "key": "Цвет",
+      "value": "Чёрный/серый карбон"
+    },
+    {
+      "key": "Материал",
+      "value": "Углеволокно"
+    },
+    {
+      "key": "Застёжка",
+      "value": "Магнитная"
+    },
+    {
+      "key": "Обхват запястья",
+      "value": "до 178 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "28 г"
+    }
+  ],
+  "images_remote": [
+    "https://cdn.shopify.com/s/files/1/1036/4113/files/galaxy-ultra-black-2_e07b1099-5bb9-4485-99f5-8134d241db19.webp?v=1729243796&width=1200",
+    "https://cdn.shopify.com/s/files/1/1036/4113/files/galaxy-ultra-black-1_25294eb8-793a-4868-8edb-d946dcf6103a.webp?v=1729243796&width=1200",
+    "https://cdn.shopify.com/s/files/1/1036/4113/files/galaxy-ultra-black-3_6faefef7-a6b5-4dd8-9107-9c8fcfea9327.webp?v=1729243796&width=1200"
+  ],
+  "images_local": [
+    "assets/product-images/67148fb95dd729886d7a751f.jpg",
+    "assets/product-images/3f9d1876328f125a49e2285c.jpg",
+    "assets/product-images/8b1b4d2569fa7f693d47329a.jpg"
+  ],
+  "manual": true,
+  "manual_key": "pitaka galaxy watch ultra black gray carbon~s2",
+  "photo_source": "https://www.ipitaka.com/products/carbon-fiber-watch-band-for-galaxy-watch?variant=42227031081030",
+  "updated_at": "2026-09-28T19:34:36.937452Z"
+}

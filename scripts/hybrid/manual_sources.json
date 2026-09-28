@@ -1,0 +1,553 @@
+{
+  "_readme": "Ручной источник фото и характеристик для позиций, которых нет у sochi.dr-store.ru или которые автоматическое сопоставление находит неверно. Ключ — имя без цены + склад (как bot_index_key без страны), «*» вместо склада — любой склад. Запись: images (+specs, title, source_url) — фото со стороннего сайта; или catalog_url — страница dr-store, которую надо разобрать обычным скрейпером. Подробности — scripts/hybrid/manual_sources.py.",
+  "items": {
+    "чехол pitaka для iphone 16 pro milky way~s2": {
+      "name": "Чехол PITAKA для iPhone 16 Pro, Milky Way",
+      "source_url": "https://www.ipitaka.com/products/starpeak-phone-cases?variant=43599276539974",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/i16-pro-milky-2_4b86432f-2327-47c8-9302-6c391a61e1b9.webp?v=1761805593&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/i16-pro-milky-1_25fb6013-905c-46ef-b3fb-23021fd00015.webp?v=1761805593&width=1200"
+      ],
+      "title": "Чехол PITAKA для iPhone 16 Pro, Milky Way",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Тип",
+          "value": "Чехол-накладка, ультратонкий (Edge Case)"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 16 Pro"
+        },
+        {
+          "key": "Узор",
+          "value": "Milky Way Galaxy"
+        },
+        {
+          "key": "Коллекция",
+          "value": "StarPeak"
+        },
+        {
+          "key": "Материал",
+          "value": "Арамидное волокно"
+        },
+        {
+          "key": "MagSafe",
+          "value": "Совместим, беспроводная зарядка без снятия чехла"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. Модель телефона и узор совпадают с названием; стиль чехла — Edge Case (тонкий), поставщик вариант не указывает. "
+    },
+    "чехол pitaka для iphone 16 pro moonrise~s2": {
+      "name": "Чехол PITAKA для iPhone 16 Pro, Moonrise",
+      "source_url": "https://www.ipitaka.com/products/sunset-moonrise-phone-cases?variant=43517308665926",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/i16-pro-moon-2.webp?v=1763023253&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/i16-pro-moon-1.webp?v=1763023253&width=1200"
+      ],
+      "title": "Чехол PITAKA для iPhone 16 Pro, Moonrise",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Тип",
+          "value": "Чехол-накладка, ультратонкий (Edge Case)"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 16 Pro"
+        },
+        {
+          "key": "Узор",
+          "value": "Moonrise"
+        },
+        {
+          "key": "Коллекция",
+          "value": "Sunset Moonrise"
+        },
+        {
+          "key": "Материал",
+          "value": "Арамидное волокно"
+        },
+        {
+          "key": "MagSafe",
+          "value": "Совместим, беспроводная зарядка без снятия чехла"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. Модель телефона и узор совпадают с названием; стиль чехла — Edge Case (тонкий), поставщик вариант не указывает. "
+    },
+    "чехол pitaka для iphone 17 pro milky way~s2": {
+      "name": "Чехол PITAKA для iPhone 17 Pro, Milky Way",
+      "source_url": "https://www.ipitaka.com/products/starpeak-phone-cases?variant=43774507221062",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/iPhone17pro-milky-slim_f43e0804-9a6f-47c4-b92d-aa89866f6bdd.webp?v=1761805593&width=1200"
+      ],
+      "title": "Чехол PITAKA для iPhone 17 Pro, Milky Way",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Тип",
+          "value": "Чехол-накладка, ультратонкий (Edge Case)"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 17 Pro"
+        },
+        {
+          "key": "Узор",
+          "value": "Milky Way Galaxy"
+        },
+        {
+          "key": "Коллекция",
+          "value": "StarPeak"
+        },
+        {
+          "key": "Материал",
+          "value": "Арамидное волокно"
+        },
+        {
+          "key": "MagSafe",
+          "value": "Совместим, беспроводная зарядка без снятия чехла"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. Модель телефона и узор совпадают с названием; стиль чехла — Edge Case (тонкий), поставщик вариант не указывает. у производителя один кадр Edge Case для 17 Pro"
+    },
+    "чехол pitaka для iphone 17 pro sunset~s2": {
+      "name": "Чехол PITAKA для iPhone 17 Pro, Sunset",
+      "source_url": "https://www.ipitaka.com/products/sunset-moonrise-phone-cases?variant=43774507057222",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/iPhone17pro-sunset-slim-3_718c1e64-ec1a-4b0e-84d8-0e6648e0f70c.webp?v=1787559539&width=1200"
+      ],
+      "title": "Чехол PITAKA для iPhone 17 Pro, Sunset",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Тип",
+          "value": "Чехол-накладка, ультратонкий (Edge Case)"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 17 Pro"
+        },
+        {
+          "key": "Узор",
+          "value": "Sunset"
+        },
+        {
+          "key": "Коллекция",
+          "value": "Sunset Moonrise"
+        },
+        {
+          "key": "Материал",
+          "value": "Арамидное волокно"
+        },
+        {
+          "key": "MagSafe",
+          "value": "Совместим, беспроводная зарядка без снятия чехла"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. Модель телефона и узор совпадают с названием; стиль чехла — Edge Case (тонкий), поставщик вариант не указывает. у производителя один чистый кадр Edge Case для 17 Pro (второй — инфографика)"
+    },
+    "чехол pitaka для iphone 17 pro moonrise~s2": {
+      "name": "Чехол PITAKA для iPhone 17 Pro, Moonrise",
+      "source_url": "https://www.ipitaka.com/products/sunset-moonrise-phone-cases?variant=43774507089990",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/iPhone17pro-moonrise-slim_d8989c54-2764-4d08-a484-1347595aa02e.webp?v=1763023276&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/iPhone17pro-moonrise-slim-n.webp?v=1763023253&width=1200"
+      ],
+      "title": "Чехол PITAKA для iPhone 17 Pro, Moonrise",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Тип",
+          "value": "Чехол-накладка, ультратонкий (Edge Case)"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 17 Pro"
+        },
+        {
+          "key": "Узор",
+          "value": "Moonrise"
+        },
+        {
+          "key": "Коллекция",
+          "value": "Sunset Moonrise"
+        },
+        {
+          "key": "Материал",
+          "value": "Арамидное волокно"
+        },
+        {
+          "key": "MagSafe",
+          "value": "Совместим, беспроводная зарядка без снятия чехла"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. Модель телефона и узор совпадают с названием; стиль чехла — Edge Case (тонкий), поставщик вариант не указывает. "
+    },
+    "чехол pitaka для iphone 17 pro black gray~s2": {
+      "name": "Чехол PITAKA для iPhone 17 Pro, Black/Gray",
+      "source_url": "https://www.ipitaka.com/products/classic-phone-cases?variant=43774437032006",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/iPhone17pro-black-slim_5c62968d-0870-4ed5-995e-74591cda7625.webp?v=1785405873&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/iPhone17pro-black-slim-3_f6ab0377-1fb3-4021-a449-4727f5da8ef2.webp?v=1763023129&width=1200"
+      ],
+      "title": "Чехол PITAKA для iPhone 17 Pro, Black/Gray",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Тип",
+          "value": "Чехол-накладка, ультратонкий (Edge Case)"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 17 Pro"
+        },
+        {
+          "key": "Узор",
+          "value": "Black/Grey (Twill), 600D"
+        },
+        {
+          "key": "Коллекция",
+          "value": "Classic"
+        },
+        {
+          "key": "Материал",
+          "value": "Арамидное волокно"
+        },
+        {
+          "key": "MagSafe",
+          "value": "Совместим, беспроводная зарядка без снятия чехла"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. Модель телефона и узор совпадают с названием; стиль чехла — Edge Case (тонкий), поставщик вариант не указывает. на главном фото мелкая приписка производителя про цвет рамки камеры"
+    },
+    "чехол pitaka для iphone 17 pro max golden glint~s2": {
+      "name": "Чехол PITAKA для iPhone 17 Pro Max, Golden Glint",
+      "source_url": "https://www.ipitaka.com/products/glints-of-gold-phone-cases?variant=43774503878726",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/iPhone17promax-gold-slim-2.webp?v=1765251522&width=1200"
+      ],
+      "title": "Чехол PITAKA для iPhone 17 Pro Max, Golden Glint",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Тип",
+          "value": "Чехол-накладка, ультратонкий (Edge Case)"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 17 Pro Max"
+        },
+        {
+          "key": "Узор",
+          "value": "Golden Glint"
+        },
+        {
+          "key": "Коллекция",
+          "value": "Glints of Gold"
+        },
+        {
+          "key": "Материал",
+          "value": "Арамидное волокно"
+        },
+        {
+          "key": "MagSafe",
+          "value": "Совместим, беспроводная зарядка без снятия чехла"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. Модель телефона и узор совпадают с названием; стиль чехла — Edge Case (тонкий), поставщик вариант не указывает. "
+    },
+    "чехол pitaka для iphone 17 pro max moonrise~s2": {
+      "name": "Чехол PITAKA для iPhone 17 Pro Max, Moonrise",
+      "source_url": "https://www.ipitaka.com/products/sunset-moonrise-phone-cases?variant=43774507155526",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/iPhone-17-pro-max-moonrise-edge.webp?v=1787732887&width=1200"
+      ],
+      "title": "Чехол PITAKA для iPhone 17 Pro Max, Moonrise",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Тип",
+          "value": "Чехол-накладка, ультратонкий (Edge Case)"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 17 Pro Max"
+        },
+        {
+          "key": "Узор",
+          "value": "Moonrise"
+        },
+        {
+          "key": "Коллекция",
+          "value": "Sunset Moonrise"
+        },
+        {
+          "key": "Материал",
+          "value": "Арамидное волокно"
+        },
+        {
+          "key": "MagSafe",
+          "value": "Совместим, беспроводная зарядка без снятия чехла"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. Модель телефона и узор совпадают с названием; стиль чехла — Edge Case (тонкий), поставщик вариант не указывает. чистого кадра 17 Pro Max Moonrise у производителя нет — взята его же картинка «See How It Pairs» с подписями"
+    },
+    "чехол pitaka для iphone 17 pro max lucid blue~s2": {
+      "name": "Чехол PITAKA для iPhone 17 Pro Max, Lucid Blue",
+      "source_url": "https://www.ipitaka.com/products/glints-of-gold-phone-cases?variant=43774503452742",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/iPhone17promax-blue-slim_a135fae2-5fd4-4a89-b655-95612c2ba46c.webp?v=1765251522&width=1200"
+      ],
+      "title": "Чехол PITAKA для iPhone 17 Pro Max, Lucid Blue",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Тип",
+          "value": "Чехол-накладка, ультратонкий (Edge Case)"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 17 Pro Max"
+        },
+        {
+          "key": "Узор",
+          "value": "Lucid Blue"
+        },
+        {
+          "key": "Коллекция",
+          "value": "Glints of Gold"
+        },
+        {
+          "key": "Материал",
+          "value": "Арамидное волокно"
+        },
+        {
+          "key": "MagSafe",
+          "value": "Совместим, беспроводная зарядка без снятия чехла"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. Модель телефона и узор совпадают с названием; стиль чехла — Edge Case (тонкий), поставщик вариант не указывает. "
+    },
+    "чехол бумажник pitaka magnetic woven wallet black~s2": {
+      "name": "Чехол-бумажник PITAKA Magnetic Woven Wallet, Black",
+      "source_url": "https://www.ipitaka.com/products/magsafe-woven-wallet?variant=42349720076358",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/wallet-black-2_fad3e464-a8d6-42d7-96ed-62d6756d995b.webp?v=1750845071&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/wallet-black-1_05c92e75-bb74-41a3-a28d-150addcbb6a1.webp?v=1750845071&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/wallet-black-2-2.webp?v=1750845071&width=1200"
+      ],
+      "title": "Чехол-бумажник PITAKA Magnetic Woven Wallet, Black",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Модель",
+          "value": "Magnetic Woven Wallet"
+        },
+        {
+          "key": "Цвет",
+          "value": "Black/Grey (Twill)"
+        },
+        {
+          "key": "Материал",
+          "value": "Cadmyra™ — арамидное волокно с покрытием под кожу"
+        },
+        {
+          "key": "Крепление",
+          "value": "MagSafe, магниты N52"
+        },
+        {
+          "key": "Вместимость",
+          "value": "1–2 карты"
+        },
+        {
+          "key": "Вес",
+          "value": "38 г"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 12 и новее"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. "
+    },
+    "чехол бумажник pitaka magnetic woven wallet moonrise~s2": {
+      "name": "Чехол-бумажник PITAKA Magnetic Woven Wallet, Moonrise",
+      "source_url": "https://www.ipitaka.com/products/magsafe-woven-wallet?variant=42349720207430",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/wallet-moon-2_6b6a4bbe-7414-4c8a-be5b-47dadd08660d.webp?v=1750845071&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/wallet-moon-1_f498a85a-81b8-47ea-a430-4a9107327650.webp?v=1750845071&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/wallet-moon-2-2.webp?v=1750845071&width=1200"
+      ],
+      "title": "Чехол-бумажник PITAKA Magnetic Woven Wallet, Moonrise",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Модель",
+          "value": "Magnetic Woven Wallet"
+        },
+        {
+          "key": "Цвет",
+          "value": "Moonrise"
+        },
+        {
+          "key": "Материал",
+          "value": "Cadmyra™ — арамидное волокно с покрытием под кожу"
+        },
+        {
+          "key": "Крепление",
+          "value": "MagSafe, магниты N52"
+        },
+        {
+          "key": "Вместимость",
+          "value": "1–2 карты"
+        },
+        {
+          "key": "Вес",
+          "value": "38 г"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 12 и новее"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. "
+    },
+    "чехол бумажник pitaka magnetic woven wallet sunset~s2": {
+      "name": "Чехол-бумажник PITAKA Magnetic Woven Wallet, Sunset",
+      "source_url": "https://www.ipitaka.com/products/magsafe-woven-wallet?variant=42349720109126",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/wallet-sun-2_f19fdf40-c09a-4f6f-b6e0-a26d4930ff7f.webp?v=1750845071&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/wallet-sun-1_1cd6405d-0b08-4ddd-afc3-d01964467edb.webp?v=1750845071&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/wallet-sun-2-2.webp?v=1750845071&width=1200"
+      ],
+      "title": "Чехол-бумажник PITAKA Magnetic Woven Wallet, Sunset",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Модель",
+          "value": "Magnetic Woven Wallet"
+        },
+        {
+          "key": "Цвет",
+          "value": "Sunset"
+        },
+        {
+          "key": "Материал",
+          "value": "Cadmyra™ — арамидное волокно с покрытием под кожу"
+        },
+        {
+          "key": "Крепление",
+          "value": "MagSafe, магниты N52"
+        },
+        {
+          "key": "Вместимость",
+          "value": "1–2 карты"
+        },
+        {
+          "key": "Вес",
+          "value": "38 г"
+        },
+        {
+          "key": "Совместимость",
+          "value": "iPhone 12 и новее"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. "
+    },
+    "pitaka galaxy watch ultra black gray carbon~s2": {
+      "name": "Pitaka Galaxy Watch Ultra Black/Gray Carbon",
+      "source_url": "https://www.ipitaka.com/products/carbon-fiber-watch-band-for-galaxy-watch?variant=42227031081030",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/galaxy-ultra-black-2_e07b1099-5bb9-4485-99f5-8134d241db19.webp?v=1729243796&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/galaxy-ultra-black-1_25294eb8-793a-4868-8edb-d946dcf6103a.webp?v=1729243796&width=1200",
+        "https://cdn.shopify.com/s/files/1/1036/4113/files/galaxy-ultra-black-3_6faefef7-a6b5-4dd8-9107-9c8fcfea9327.webp?v=1729243796&width=1200"
+      ],
+      "title": "Pitaka Galaxy Watch Ultra Black/Gray Carbon",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "PITAKA"
+        },
+        {
+          "key": "Модель",
+          "value": "Carbon Fiber Watch Band"
+        },
+        {
+          "key": "Совместимость",
+          "value": "Samsung Galaxy Watch Ultra"
+        },
+        {
+          "key": "Цвет",
+          "value": "Чёрный/серый карбон"
+        },
+        {
+          "key": "Материал",
+          "value": "Углеволокно"
+        },
+        {
+          "key": "Застёжка",
+          "value": "Магнитная"
+        },
+        {
+          "key": "Обхват запястья",
+          "value": "до 178 мм"
+        },
+        {
+          "key": "Вес",
+          "value": "28 г"
+        }
+      ],
+      "checked": "2026-09-28",
+      "note": "Официальный сайт PITAKA. ремешок, а не чехол: раздел прайса «Ремешки PITAKA»"
+    }
+  }
+}
