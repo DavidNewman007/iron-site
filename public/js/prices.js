@@ -476,6 +476,13 @@
   let catalogLoadState = "loading";
 
   async function init() {
+    // ССЫЛКА ИЗ РОЛИКА НА СЕРИЮ (28.09.2026): magazin.html?q=iPhone%2018%20Pro#tehnika — поиск заполнен сразу, и видна
+    // вся серия (18 Pro и 18 Pro Max). Владелец: «QR и ссылки должны вести максимально на то, о чём ролик». До этого
+    // магазин понимал только #tehnika / #zapchasti, и QR вёл на сайт вообще.
+    try {
+      const q = new URLSearchParams(location.search).get("q");
+      if (q && els.search) els.search.value = q.slice(0, 60);
+    } catch { /* старый браузер без URLSearchParams — просто без поиска */ }
     bindEvents();
     bindMobileCartCountSync();
     renderCart();
