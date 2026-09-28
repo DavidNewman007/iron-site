@@ -202,7 +202,8 @@
 
   const DEMO = new URLSearchParams(location.search).has("demo");
   const S = { token: null, email: "", rows: [], byNum: new Map(), gid: 0, loadedAt: 0, loading: false,
-    since: new Map(), tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [] };
+    since: new Map(), tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [],
+    parts: new Map(), svc: null, pp: null }; // parts: ключ карточки → строки запчастей; svc — прайс сайта; pp — окно «работа из прайса»
   const $app = document.getElementById("app");
   const $toast = document.getElementById("toast");
 
@@ -581,6 +582,227 @@
     return `Остаётся нам: <b>${m.toLocaleString("ru-RU")} ₽</b> <span class="note">(${how})</span>${extra}`;
   }
 
+  // ── типовые неисправности и работы (v18, 28.09.2026) ─────────────────────────
+  // Списки собраны из самой базы: самые частые формулировки колонок F и G за последние
+  // ~3000 заказов, без опечаток и дублей («не вкл» = «Не включается»). Чип дописывает
+  // фразу в поле через точку — так в базе и пишут («Не включается. Требуется
+  // диагностика»); повторное нажатие убирает фразу. Своё можно дописать руками, как раньше.
+  const FAMILIES = [
+    ["phone", /iphone|айфон|смартфон|телефон|samsung|galaxy|xiaomi|redmi|poco|honor|huawei|realme|oneplus|pixel|nokia|tecno|infinix|vivo|oppo/],
+    ["tablet", /ipad|айпад|планшет|tab\b|galaxy tab/],
+    ["watch", /watch|часы/],
+    ["audio", /airpods|наушник|колонк|jbl|marshall|beats/],
+    ["console", /playstation|ps ?[345]\b|xbox|nintendo|switch|джойстик|геймпад|dual ?sen|dualshock/],
+    ["desktop", /imac|аймак|mac ?mini|мак ?мини|системн|моноблок|\bпк\b|компьютер/],
+    ["laptop", /macbook|макбук|ноутбук|notebook|laptop|ультрабук|asus|acer|lenovo|\bhp\b|dell|msi|matebook|magicbook|thinkpad/],
+  ];
+  function familyOf(device) { const s = norm(device); return (FAMILIES.find(([, re]) => re.test(s)) || ["other"])[0]; }
+  const TYPICAL = {
+    issue: {
+      all: ["Не включается", "Требуется диагностика", "Не заряжается", "Попадание влаги", "Перезагружается", "Выключается", "Греется", "Нет изображения", "Нет звука", "Тормозит"],
+      phone: ["Разбит дисплей", "Разбито стекло дисплея", "Необходима замена АКБ", "Быстро разряжается", "Вздулся АКБ", "Разбита задняя крышка", "Разбито стекло камеры", "Не работает сенсор", "Полосы на дисплее", "Завис на яблоке", "Забыли пароль", "Не работает камера", "Не работает кнопка Home", "Не работает динамик", "Не работает микрофон", "Не ловит сеть"],
+      tablet: ["Разбит дисплей", "Разбито стекло дисплея", "Необходима замена АКБ", "Быстро разряжается", "Не работает сенсор", "Завис на яблоке", "Забыли пароль", "Не работает кнопка Home"],
+      laptop: ["Разбита матрица", "Не работает клавиатура", "Не работает тачпад", "Необходима замена АКБ", "Быстро разряжается", "Профилактика", "Шумит", "Нет подсветки", "Полосы на дисплее", "Переустановка ОС", "Необходима установка ПО", "Замена HDD на SSD", "Не грузится ОС"],
+      desktop: ["Профилактика", "Шумит", "Переустановка ОС", "Необходима установка ПО", "Замена HDD на SSD", "Не грузится ОС", "Нет подсветки"],
+      watch: ["Разбит дисплей", "Необходима замена АКБ", "Быстро разряжается", "Не работает сенсор"],
+      audio: ["Не заряжается кейс", "Не работает наушник", "Тихий звук", "Быстро разряжается"],
+      console: ["Дрейф стика", "Не работает кнопка", "Не читает диски", "Нет изображения", "Шумит"],
+      other: [],
+    },
+    work: {
+      all: ["Диагностика", "Без ремонта", "Ремонт нецелесообразен", "Восстановление после залития", "Ремонт платы"],
+      phone: ["Замена АКБ", "Замена дисплея (оригинал)", "Замена дисплея (копия)", "Замена стекла дисплея (переклейка)", "Замена задней крышки", "Замена стекла камеры", "Замена камеры", "Замена нижнего шлейфа", "Замена разъёма зарядки", "Замена динамика", "Замена кнопки Home", "Прошивка без потери данных", "Прошивка с потерей данных", "Чистка", "Защитное стекло в подарок"],
+      tablet: ["Замена АКБ", "Замена дисплея", "Замена сенсора", "Замена разъёма зарядки", "Прошивка", "Чистка"],
+      laptop: ["Профилактика (чистка и замена термопасты)", "Замена АКБ", "Замена матрицы", "Замена клавиатуры", "Замена топкейса", "Замена тачпада", "Замена кейкапов", "Замена HDD на SSD", "Установка ОС", "Установка ПО", "Увеличение памяти"],
+      desktop: ["Профилактика (чистка и замена термопасты)", "Замена HDD на SSD", "Установка ОС", "Установка ПО", "Увеличение памяти", "Замена блока питания"],
+      watch: ["Замена АКБ", "Замена дисплея", "Замена стекла"],
+      audio: ["Замена АКБ", "Чистка", "Замена наушника"],
+      console: ["Замена стика", "Чистка", "Профилактика (чистка и замена термопасты)", "Замена кнопки"],
+      other: ["Чистка", "Установка ПО"],
+    },
+  };
+  const cap = s => String(s ?? "").charAt(0).toUpperCase() + String(s ?? "").slice(1);
+  // Фразы поля: куски между точкой, «;» и переводом строки. Запятую не трогаем — ею перечисляют.
+  const sentences = text => String(text ?? "").split(/[.;\n]+/).map(s => s.trim()).filter(Boolean);
+  const hasPhrase = (text, p) => sentences(text).some(s => norm(s) === norm(p));
+  function addPhrase(text, p) { const t = String(text ?? "").trim().replace(/[.;,\s]+$/, ""); return t ? t + ". " + p : p; }
+  function removePhrase(text, p) {
+    const toks = String(text ?? "").split(/([.;\n]+\s*)/), out = [];
+    for (let i = 0; i < toks.length; i += 2) if (norm(toks[i]) !== norm(p)) out.push(toks[i] + (toks[i + 1] ?? ""));
+    return out.join("").replace(/^[.;\s]+/, "").replace(/[.;\s]+$/, "");
+  }
+  // Видны первые 8 (частые для этой техники) и уже выбранные; остальные — под «ещё».
+  const TIPS_SHOWN = 8;
+  function typicalHtml(kind, c, fam, text) {
+    const list = [...new Set([...(TYPICAL[kind][fam] || []), ...TYPICAL[kind].all])];
+    const open = S.tipsOpen?.has(c);
+    const more = list.filter((p, i) => i >= TIPS_SHOWN && !hasPhrase(text, p)).length;
+    return `<div class="tchips${open ? " is-open" : ""}">${list.map((p, i) => `<button type="button" class="tchip${i >= TIPS_SHOWN && !hasPhrase(text, p) ? " tchip--more" : ""}" data-tip="${c}" data-text="${esc(p)}" aria-pressed="${hasPhrase(text, p)}">${esc(p)}</button>`).join("")}${
+      more ? `<button type="button" class="tchip tchip--toggle" data-act="tmore" data-c="${c}">${open ? "свернуть" : "ещё " + more + " ▾"}</button>` : ""}</div>`;
+  }
+
+  // ── работы из прайса сайта ─────────────────────────────────────────────────
+  // Прайс ремонта уже лежит на сайте (/data/services.json, 1001 услуга): модель, работа,
+  // вариант запчасти, цена клиенту, закупка, поставщик, гарантия. Добавленная работа
+  // дописывается в «Выполненные работы», её цена прибавляется к «Итого», запчасть с
+  // поставщиком и закупкой встаёт строкой в «Запчасти», гарантия — если больше прежней.
+  const SRC_NAME = [[/mos-?lcd/i, "MosLCD"], [/wepro/i, "WePro"], [/macsuper/i, "MacSuper"], [/liberti/i, "Liberti"], [/partslog/i, "PartsLog"], [/detaliapple/i, "DetaliApple"]];
+  const OP_PART = { "замена дисплея": "Дисплейный модуль", "замена аккумулятора": "АКБ", "замена заднего стекла": "Задняя крышка", "замена стекла": "Стекло дисплея",
+    "замена стекла камеры": "Стекло камеры", "замена камеры": "Камера", "замена динамика": "Динамик", "замена клавиатуры": "Клавиатура", "замена корпуса": "Корпус",
+    "замена матрицы без крышки": "Матрица", "замена накопителя (ssd)": "SSD", "замена нижнего шлейфа": "Нижний шлейф", "замена разъёма зарядки": "Разъём зарядки",
+    "замена сенсора": "Тачскрин", "замена тачпада": "Трекпад", "замена шлейфа": "Шлейф", "замена материнской платы": "Материнская плата" };
+  async function loadServices() {
+    if (S.svc?.list || S.svc?.loading) return;
+    S.svc = { loading: true };
+    try {
+      const j = await fetch("/data/services.json", { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error("прайс не ответил (" + r.status + ")"); return r.json(); });
+      S.svc = { list: (j.services || []).filter(x => x.device && x.operation), devices: [...new Set((j.services || []).map(x => x.device))] };
+    } catch (e) { S.svc = { error: e.message }; }
+  }
+  // Модель из поля «Устройство»: самое длинное имя прайса, все слова которого есть в тексте
+  // («iPhone 13 Pro Max» → «iPhone 13 Pro Max», а не «iPhone 13»). Скобки с годами не в счёт.
+  function matchDevice(text) {
+    const s = " " + norm(text).replace(/["”]/g, "") + " ";
+    let best = null, bestLen = 0;
+    for (const d of S.svc?.devices || []) {
+      const words = norm(d.replace(/\(.*?\)/g, "")).replace(/["”]/g, "").split(/\s+/).filter(Boolean);
+      if (words.length && words.every(w => s.includes(" " + w + " ") || s.includes(" " + w)) && words.join(" ").length > bestLen) { best = d; bestLen = words.join(" ").length; }
+    }
+    if (best) return best;
+    const fam = familyOf(text);
+    return fam === "laptop" && !/mac/.test(norm(text)) ? "Ноутбуки на Windows" : fam === "phone" && !/iphone/.test(norm(text)) ? "Смартфон Android" : fam === "desktop" && !/mac/.test(norm(text)) ? "ПК / системный блок" : "";
+  }
+  function pricePickHtml(key, deviceText) {
+    const P = S.pp?.key === key ? S.pp : null;
+    if (!P?.open) return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppopen">📋 Работа из прайса</button>`;
+    if (!S.svc?.list) return `<div class="pp"><div class="note">${S.svc?.error ? "Прайс не загрузился: " + esc(S.svc.error) : "Загружаю прайс…"}</div></div>`;
+    const dev = P.dev ?? matchDevice(deviceText);
+    const items = S.svc.list.map((x, i) => ({ x, i })).filter(({ x }) => x.device === dev);
+    return `<div class="pp"><div class="pp__head"><select data-act="ppdev"><option value="">— модель из прайса —</option>${S.svc.devices.map(d => `<option ${d === dev ? "selected" : ""}>${esc(d)}</option>`).join("")}</select>
+      <button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>
+      ${dev ? (items.length ? `<div class="pp__list">${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
+        <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}</b>
+        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}</div>` : `<div class="note">Для этой модели в прайсе работ нет.</div>`)
+        : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка.</div>`}
+      <p class="note">Нажатие добавляет работу в «Выполненные работы», цену — к «Итого», запчасть — в список запчастей. Можно добавить несколько.</p></div>`;
+  }
+  function addService(key, r, i) {
+    const x = S.svc?.list?.[i]; if (!x) return;
+    const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+    const work = cap(x.operation) + (x.variant ? ` (${x.variant})` : "");
+    setDirty(key, C.work, addPhrase(val(C.work), work));
+    if (x.price) setDirty(key, C.total, String((toNum(val(C.total)) ?? 0) + x.price));
+    const partBase = OP_PART[norm(x.operation)];
+    if (partBase && (x.part_cost || x.variant)) {
+      const src = (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, ""])[1];
+      const list = partsOf(key, r).filter(p => p.name || p.src || p.cost);
+      list.push({ name: partBase + (x.variant ? ` (${x.variant})` : ""), src, cost: x.part_cost ? String(x.part_cost) : "" });
+      S.parts.set(key, list); syncParts(key);
+    }
+    const days = x.warranty_days, had = toNum(String(val(C.warranty)).match(/\d+/)?.[0]);
+    if (days && (had == null || days > had)) setDirty(key, C.warranty, days + " дней");
+    const y = window.scrollY; render(); window.scrollTo(0, y);
+    toast(`Добавлено: ${work}${x.price ? " — " + (x.price_is_from ? "от " : "") + money(x.price) + ". Итого " + money(val(C.total)) : ""}`, null, true);
+  }
+
+  // ── запчасти списком: название · откуда · закупка (v18) ─────────────────────
+  // В таблице по-прежнему три колонки: O «Запчасти» (уходит клиенту в отчёте — только
+  // названия), U «Откуда» и S «Стоимость (запчасть)». Одна запчасть пишется как раньше:
+  // O — название, U — источник, S — закупка. Несколько: O — названия через запятую,
+  // U — по строке на запчасть «название: источник, цена ₽», S — сумма закупок.
+  // Так видно, какая запчасть откуда, и клиент источников и закупки не видит.
+  function splitList(s) {
+    const out = []; let depth = 0, cur = "";
+    for (const ch of String(s ?? "")) {
+      if (ch === "(" || ch === "[") depth++;
+      if (ch === ")" || ch === "]") depth = Math.max(0, depth - 1);
+      if ((ch === "," || ch === "\n" || ch === ";") && !depth) { if (cur.trim()) out.push(cur.trim()); cur = ""; } else cur += ch;
+    }
+    if (cur.trim()) out.push(cur.trim());
+    return out;
+  }
+  function parseParts(O, U, Sv) {
+    const lines = String(U ?? "").split("\n").map(s => s.trim()).filter(Boolean);
+    const mapped = lines.map(l => l.match(/^(.+?):\s*(.*?)(?:,\s*([\d\s ]+)\s*₽)?$/));
+    if (lines.length > 1 && mapped.every(Boolean)) return mapped.map(m => ({ name: m[1].trim(), src: m[2].trim() === "?" ? "" : m[2].trim(), cost: m[3] ? String(toNum(m[3])) : "" }));
+    const names = splitList(O), srcs = splitList(U);
+    const rows = names.map((name, i) => ({ name, src: names.length === 1 ? String(U ?? "").trim() : srcs.length === names.length ? srcs[i] : srcs.length === 1 ? srcs[0] : "", cost: "" }));
+    if (!rows.length && (String(U ?? "").trim() || toNum(Sv) != null)) rows.push({ name: "", src: String(U ?? "").trim(), cost: "" });
+    if (rows.length === 1 && toNum(Sv) != null) rows[0].cost = String(toNum(Sv));
+    return rows;
+  }
+  function composeParts(list) {
+    const L = list.filter(p => String(p.name).trim() || String(p.src).trim() || toNum(p.cost) != null);
+    const O = L.map(p => String(p.name).trim()).filter(Boolean).join(", ");
+    const costs = L.map(p => toNum(p.cost)).filter(x => x != null);
+    let U;
+    if (L.length <= 1) U = String(L[0]?.src ?? "").trim();
+    else if (!costs.length && L.every(p => String(p.src).trim() === String(L[0].src).trim())) U = String(L[0].src).trim();
+    else U = L.map(p => `${String(p.name).trim() || "?"}: ${String(p.src).trim() || "?"}${toNum(p.cost) != null ? ", " + toNum(p.cost) + " ₽" : ""}`).join("\n");
+    return { O, U, S: costs.length ? String(costs.reduce((a, b) => a + b, 0)) : null };
+  }
+  function partsOf(key, r) {
+    if (!S.parts.has(key)) {
+      const v = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+      const list = parseParts(v(C.parts), v(C.partFrom), v(C.partCost));
+      S.parts.set(key, list.length ? list : [{ name: "", src: "", cost: "" }]);
+    }
+    return S.parts.get(key);
+  }
+  function syncParts(key) {
+    const { O, U, S: sum } = composeParts(S.parts.get(key) || []);
+    setDirty(key, C.parts, O); setDirty(key, C.partFrom, U);
+    if (sum != null) setDirty(key, C.partCost, sum);
+  }
+  function partsHtml(key, r) {
+    const list = partsOf(key, r);
+    const lock = !editable(C.parts, r) && key !== "new";
+    const dl = (c, id) => S.opts[c]?.length ? `<datalist id="${id}">${S.opts[c].map(o => `<option value="${esc(o)}">`).join("")}</datalist>` : "";
+    const { S: sum } = composeParts(list);
+    const tableS = r ? toNum(cell(r, C.partCost)) : null;
+    const note = sum == null && tableS != null && list.filter(p => p.name).length > 1 ? `Закупка всего в таблице: ${money(tableS)}, без разбивки — впишите по строкам, и сумма пересчитается.` : sum != null ? `Закупка всего: <b>${money(sum)}</b>` : "";
+    return `<div class="parts${lock ? " is-lock" : ""}"><div class="parts__head"><span>Запчасть</span><span>Откуда</span><span>Закупка, ₽</span><span></span></div>
+      ${list.map((p, i) => `<div class="parts__row">
+        <input data-part="${i}" data-pf="name" value="${esc(p.name)}" list="dl-pname" placeholder="Например, АКБ" spellcheck="true" lang="ru"${lock ? " disabled" : ""}>
+        <input data-part="${i}" data-pf="src" value="${esc(p.src)}" list="dl-psrc" placeholder="Откуда"${lock ? " disabled" : ""}>
+        <input data-part="${i}" data-pf="cost" value="${esc(p.cost)}" inputmode="decimal" placeholder="0"${lock ? " disabled" : ""}>
+        <button type="button" class="linkbtn" data-act="rmpart" data-i="${i}" title="Убрать"${lock ? " disabled" : ""}>✕</button></div>`).join("")}
+      <div class="parts__foot"><button type="button" class="btn btn--ghost btn--sm" data-act="addpart"${lock ? " disabled" : ""}>＋ Запчасть</button><span class="note" data-parts-note>${note}</span></div>
+      ${dl(C.parts, "dl-pname")}${dl(C.partFrom, "dl-psrc")}</div>`;
+  }
+
+  // ── без суммы заказ не закрыть (владелец, 28.09.2026) ────────────────────────
+  // «Выполнен» и закрытие продажи/выкупа/обмена — только с суммой. Без суммы можно:
+  // отказ от ремонта, ремонт невозможен, без ремонта (в т. ч. «оставили на запчасти»).
+  // 0 — это сумма (гарантийный ремонт), пусто — нет. То же правило стоит в таблице
+  // (OrderAutofill.js, orderCloseBlocked_): там статус без суммы откатывается.
+  const CLOSING = ["выполнен", "продан", "обмен оформлен", "выкуплен", "разобран"];
+  function sumColFor(status, dk) {
+    const s = norm(status);
+    if (!CLOSING.some(x => s.startsWith(x))) return null;
+    return ["buyback", "parts", "tradein"].includes(dk) ? C.buyback : C.total;
+  }
+  function needSum(status, dk, get) {
+    const col = sumColFor(status, dk);
+    return col != null && toNum(get(col)) == null ? col : null;
+  }
+  const NO_SUM_OK = ["отказ от ремонта", "ремонт невозможен", "без ремонта"];
+  // Итоговый отчёт — с суммой, кроме отказа и «без ремонта» (там отчёт о том, что ремонта не было).
+  function reportNeedsSum(r, get) {
+    if (NO_SUM_OK.some(x => norm(get(C.status)).startsWith(x))) return null;
+    const dk = dealKey(get(C.type)), col = ["buyback", "parts", "tradein"].includes(dk) ? C.buyback : C.total;
+    return toNum(get(col)) == null ? col : null;
+  }
+  // Подсказать, какую сумму вписать: сообщение и подсветка поля. soft — только подсказка.
+  function askSum(col, why, soft) {
+    const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), k = key + ":" + C.type;
+    const name = labelFor(col, dealKey(S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, C.type) : "")));
+    toast(`${why}: впишите «${name}»${soft ? " перед сохранением" : ""}`, null, true);
+    const inp = $app.querySelector(`[data-edit="${col}"]`); if (!inp) return;
+    inp.closest(".field")?.classList.add("is-need");
+    if (!soft) { inp.scrollIntoView({ block: "center", behavior: "smooth" }); inp.focus({ preventScroll: true }); }
+  }
+
   function cardBody(key, r, isNew) {
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const dk = dealKey(val(C.type));
@@ -628,11 +850,14 @@
       right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}</div>
         <div class="margin">${groupMoneySummary(dk)}</div></section>`);
     } else {
-    html += `<section class="block"><h3>${dk === "repair" || dk === "other" ? "Ремонт" : "Устройство"}</h3>
+    const rep = dk === "repair" || dk === "other", fam = familyOf(val(C.device));
+    const tips = (kind, c) => rep && (isNew || editable(c, r)) ? typicalHtml(kind, c, fam, val(c)) : "";
+    html += `<section class="block"><h3>${rep ? "Ремонт" : "Устройство"}</h3>
       ${multiBox}
       <div class="grid2">${fh(C.device)}${fh(C.imei)}</div>
-      <div class="grid2">${fh(C.issue)}${fh(C.work)}</div>
-      <div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>
+      <div class="grid2"><div>${fh(C.issue)}${tips("issue", C.issue)}</div><div>${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device)) : ""}</div></div>
+      ${rep ? `<div class="field field--parts"><span>Запчасти <small class="note">(клиенту в отчёте уходят только названия)</small></span>${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
+        : `<div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>`}
       ${dk === "sale_used" || String(r ? cell(r, C.linked) : "").trim() ? fh(C.linked) : ""}
       ${fh(C.master)}
       <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass)}</div>
@@ -640,8 +865,9 @@
     right += box(4, html); html = "";
 
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
-      : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : [C.total, C.labor, C.partCost, C.extra];
-    html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => fh(c)).join("")}</div>
+      : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : rep ? [C.total, C.labor, "parts", C.extra] : [C.total, C.labor, C.partCost, C.extra];
+    const partsRo = `<div class="field"><span>Запчасти (закуп), ₽ <small class="note">(из списка запчастей)</small></span><div class="ro" data-parts-sum>${esc(money(val(C.partCost)) || "—")}</div></div>`;
+    html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => c === "parts" ? partsRo : fh(c)).join("")}</div>
       <div class="margin">${moneySummary(dk, val, r)}</div></section>`;
     right += box(6, html); html = "";
     }
@@ -937,6 +1163,13 @@
       if (st) for (const x of gr.rows) if (x !== r && cell(x, C.status) !== st.v) add(x, { c: C.status, v: st.v, old: cell(x, C.status) });
       if (rep && gr.head !== r) { list.splice(list.indexOf(rep), 1); S.dirty.delete(key + ":" + C.report); add(gr.head, { c: C.report, v: rep.v, old: cell(gr.head, C.report) }); }
     }
+    // Без суммы не закрыть: этот заказ и (у выкупа/продажи группой) остальные устройства группы.
+    const get = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : cell(r, c); };
+    const stCh = list.find(ch => ch.c === C.status), repCh = list.find(ch => ch.c === C.report);
+    const miss = (stCh ? needSum(stCh.v, dealKey(get(C.type)), get) : null) ?? (repCh && isTrue(repCh.v) ? reportNeedsSum(r, get) : null);
+    if (miss != null) return askSum(miss, stCh && sumColFor(stCh.v, dealKey(get(C.type))) != null ? `Заказ №${num} не закрыть без суммы` : "Отчёт клиенту без суммы не отправить");
+    const lack = [...others].filter(([x, l]) => { const s2 = l.find(ch => ch.c === C.status); return s2 && needSum(s2.v, dealKey(cell(x, C.type)), c => cell(x, c)) != null; }).map(([x]) => "№" + cell(x, C.num));
+    if (lack.length) return toast(`Не закрыть группу: нет суммы у ${lack.join(", ")} — откройте эти заказы и впишите`, null, true);
     busy(true);
     try {
       const check = async x => {
@@ -947,6 +1180,7 @@
       await Promise.all([r, ...others.keys()].map(check));
       await Promise.all([list.length ? writeCells(r.row, list) : null, ...[...others].map(([x, l]) => writeCells(x.row, l))]);
       for (const ch of list) { r.cells[ch.c] = String(ch.w ?? ""); S.dirty.delete(key + ":" + ch.c); }
+      S.parts.delete(key); if (S.pp?.key === key) S.pp = null;
       for (const [x, l] of others) { for (const ch of l) x.cells[ch.c] = String(ch.w ?? ""); index(x); }
       const stamp = today().slice(0, 5) + today().slice(5);
       for (const [x, l] of [[r, list], ...others]) { const st = l.find(ch => ch.c === C.status); if (st) S.since.set(x.row, { ts: stamp, st: String(st.v) }); }
@@ -978,6 +1212,13 @@
         devices.push([...base, ...own]);
       }
       const N = devices.length;
+      const stNew = S.dirty.get("new:" + C.status) ?? CFG.newStatus, dkNew = dealKey(S.dirty.get("new:" + C.type));
+      const noSum = devices.map((fields, i) => needSum(stNew, dkNew, c => fields.find(ch => ch.c === c)?.v ?? "") != null ? i + 1 : 0).filter(Boolean);
+      if (noSum.length) {
+        busy(false); refreshSaveBar("new");
+        if (N === 1) return askSum(sumColFor(stNew, dkNew), `Со статусом «${stNew}» нужна сумма`);
+        return toast(`Со статусом «${stNew}» нужна сумма у каждого устройства — нет у ${noSum.map(i => "№" + i).join(", ")}`, null, true);
+      }
       let row0, num0;
       if (DEMO) {
         row0 = (S.rows.at(-1)?.row || 1) + 1; num0 = Math.max(0, ...S.rows.map(x => +cell(x, C.num) || 0)) + 1;
@@ -1030,7 +1271,7 @@
       }
       S.clients = null;
       for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-      S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null;
+      S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
       toast(DEMO ? nums + (N > 1 ? " созданы" : " создан") + " (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`, null, true);
@@ -1056,8 +1297,16 @@
     refreshing = signIn("", lastEmail()).catch(() => {}).finally(() => { refreshing = null; });
   }, true);
   document.addEventListener("click", async e => {
-    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp]"); if (!t) return;
+    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc]"); if (!t) return;
     if (t.dataset.imp != null) { takeImport(+t.dataset.imp); return; }
+    if (t.dataset.tip != null) {
+      const key = curKey(), c = +t.dataset.tip, box = $app.querySelector(`[data-edit="${c}"]`); if (key == null || !box) return;
+      const p = t.dataset.text, v = hasPhrase(box.value, p) ? removePhrase(box.value, p) : addPhrase(box.value, p);
+      box.value = v; setDirty(key, c, v); box.closest(".field")?.classList.toggle("is-dirty", S.dirty.has(key + ":" + c));
+      t.closest(".tchips").querySelectorAll("[data-tip]").forEach(b => b.setAttribute("aria-pressed", String(hasPhrase(v, b.dataset.text))));
+      refreshSaveBar(key); return;
+    }
+    if (t.dataset.svc != null) { const key = curKey(); addService(key, key === "new" ? null : S.byNum.get(location.hash.slice(2)), +t.dataset.svc); return; }
     if (t.dataset.q != null) { S.q = t.dataset.q; S.limit = 60; renderList(); return; }
     if (t.dataset.open) { location.hash = "#/" + t.dataset.open; return; }
     if (t.dataset.tab) { S.tab = t.dataset.tab; S.limit = 60; renderList(); return; }
@@ -1068,6 +1317,12 @@
       if (c === C.type && key !== "new" && dealKey(v) === "repair" && dealKey(orig) === "repair") S.dirty.delete(key + ":" + c);
       else setDirty(key, c, v);
       if (c === C.status && key === "new") S.newStatusTouched = true;
+      if (c === C.status) {
+        const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
+        const get = x => { const k = key + ":" + x; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, x) : ""); };
+        const miss = needSum(v, dealKey(get(C.type)), get);
+        if (miss != null && !(key === "new" && S.multi)) askSum(miss, `Для «${v}» нужна сумма`, true);
+      }
       if (c === C.type) {
         if (key === "new" && !S.newStatusTouched) S.dirty.set("new:" + C.status, TYPE_UI[dealKey(v)].start);
         const y = window.scrollY; render(); window.scrollTo(0, y); return; // подписи и поля меняются по типу
@@ -1093,9 +1348,23 @@
       t.setAttribute("aria-pressed", String(on)); t.textContent = on ? "✓ Напомнить об отзыве" : "⭐ Напомнить об отзыве";
       refreshSaveBar(key);
     }
-    else if (act === "report") { const key = curKey(); S.dirty.set(key + ":" + C.report, CFG.reportValue); t.textContent = "Отчёт уйдёт после «Сохранить»"; t.disabled = true; refreshSaveBar(key); }
+    else if (act === "report") {
+      const key = curKey(), r = S.byNum.get(location.hash.slice(2));
+      const miss = reportNeedsSum(r, c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : cell(r, c); });
+      if (miss != null) { askSum(miss, "Отчёт клиенту без суммы не отправить"); return; }
+      S.dirty.set(key + ":" + C.report, CFG.reportValue); t.textContent = "Отчёт уйдёт после «Сохранить»"; t.disabled = true; refreshSaveBar(key);
+    }
+    else if (act === "ppopen") { S.pp = { key: curKey(), open: true }; const y = window.scrollY; render(); window.scrollTo(0, y); loadServices().then(() => { if (S.pp?.open) { const y2 = window.scrollY; render(); window.scrollTo(0, y2); } }); }
+    else if (act === "tmore") { const c = +t.dataset.c; S.tipsOpen ||= new Set(); S.tipsOpen.has(c) ? S.tipsOpen.delete(c) : S.tipsOpen.add(c); const y = window.scrollY; render(); window.scrollTo(0, y); }
+    else if (act === "ppclose") { S.pp = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
+    else if (act === "addpart" || act === "rmpart") {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), list = partsOf(key, r);
+      if (act === "addpart") list.push({ name: "", src: "", cost: "" }); else { list.splice(+t.dataset.i, 1); if (!list.length) list.push({ name: "", src: "", cost: "" }); syncParts(key); }
+      const y = window.scrollY; render(); window.scrollTo(0, y);
+      if (act === "addpart") $app.querySelector(`[data-part="${list.length - 1}"][data-pf="name"]`)?.focus();
+    }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
@@ -1104,6 +1373,19 @@
       clearTimeout(onEdit.t);
       onEdit.t = setTimeout(() => { S.q = t.value; S.limit = 60; const pos = t.selectionStart; renderList(); const s = $app.querySelector(".search"); s.focus(); s.setSelectionRange(pos, pos); }, 120);
       return;
+    }
+    if (t.dataset.act === "ppdev") { if (e.type === "change" && S.pp) { S.pp.dev = t.value; const y = window.scrollY; render(); window.scrollTo(0, y); } return; }
+    if (t.dataset.part != null) {
+      const key = curKey(); if (key == null) return;
+      const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
+      partsOf(key, r)[+t.dataset.part][t.dataset.pf] = t.value;
+      syncParts(key);
+      const { S: sum } = composeParts(S.parts.get(key));
+      const note = $app.querySelector("[data-parts-note]"); if (note && sum != null) note.innerHTML = `Закупка всего: <b>${money(sum)}</b>`;
+      const ro = $app.querySelector("[data-parts-sum]"); if (ro && sum != null) ro.textContent = money(sum);
+      const val = x => { const k = key + ":" + x; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, x) : ""); };
+      const box = $app.querySelector(".margin"); if (box && !S.multi) box.innerHTML = moneySummary(dealKey(val(C.type)), val, r);
+      refreshSaveBar(key); return;
     }
     if (t.dataset.extra != null) {
       S.extra[+t.dataset.extra][+t.dataset.col] = t.value;
@@ -1116,6 +1398,8 @@
     const c = +t.dataset.edit, v = t.type === "checkbox" ? t.checked : t.value;
     setDirty(key, c, v);
     t.closest(".field")?.classList.toggle("is-dirty", S.dirty.has(key + ":" + c));
+    t.closest(".field")?.classList.remove("is-need");
+    if (c === C.issue || c === C.work) t.closest(".field")?.parentElement?.querySelectorAll(".tchips [data-tip]").forEach(b => b.setAttribute("aria-pressed", String(hasPhrase(v, b.dataset.text))));
     if (t.type === "checkbox") t.nextElementSibling.textContent = t.checked ? "Да" : "Нет";
     refreshSaveBar(key);
     if (key === "new" && (c === C.name || c === C.phone)) { clearTimeout(onEdit.ac); onEdit.ac = setTimeout(() => suggest(c, t.value), 120); }
