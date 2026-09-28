@@ -6,100 +6,100 @@
   "country": "🇦🇪 ОАЭ",
   "warehouse": "(S3)",
   "price": 67800,
-  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-s/galaxy-s26-plus/smartfon-samsung-galaxy-s26-plus-12-256gb-white",
-  "catalog_title": "Samsung Galaxy S26 Plus 12/256GB, White",
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-s/galaxy-s26/galaxy-s26-12-256gb-white",
+  "catalog_title": "Samsung Galaxy S26 12/256GB, White",
   "specs": [
     {
       "key": "Тип дисплея",
-      "value": "Dynamic LTPO AMOLED 2X"
+      "value": "Dynamic AMOLED 2X 120 Гц"
     },
     {
       "key": "Диагональ",
-      "value": "6.7\""
+      "value": "6.3\""
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "Always-on display"
     },
     {
       "key": "Разрешение",
-      "value": "3120 x 1440"
-    },
-    {
-      "key": "Яркость",
-      "value": "2600 кд/м² в пиковом режиме"
+      "value": "2340x1080 пикселей (FHD+)"
     },
     {
       "key": "Плотность пикселей",
-      "value": "516 пикселей/дюйм"
+      "value": "411 пикс/дюйм"
     },
     {
       "key": "Процессор",
-      "value": "Snapdragon"
+      "value": "Qualcomm Snapdragon 8 Elite Gen 5 (США/Китай), Samsung Exynos 2600 (Глобал)"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "Qualcomm Adreno 840 (США/Китай), Samsung Xclipse 960 (Глобал)"
     },
     {
       "key": "Оперативная память",
       "value": "12 ГБ"
     },
     {
-      "key": "Встроенная память",
-      "value": "256 ГБ"
-    },
-    {
       "key": "Разрешение основной камеры",
-      "value": "50 МП"
+      "value": "50 Мп, 10 Мп, 12 Мп"
     },
     {
       "key": "Диафрагма основной камеры",
-      "value": "f/1.8"
+      "value": "ƒ/1.8, ƒ/2.4, ƒ/2.2"
     },
     {
       "key": "Разрешение фронтальной камеры",
-      "value": "12 МП"
+      "value": "12 Мп"
     },
     {
       "key": "Диафрагма фронтальной камеры",
-      "value": "f/2.2"
+      "value": "ƒ/2.2"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 nano‑SIM, eSIM"
     },
     {
       "key": "Сотовая и беспроводная сеть",
-      "value": "GSM / CDMA / HSPA / EVDO / LTE / 5G, Bluetooth 6.0, Wi-Fi 802.11 a/b/g/n/ac/6e/7, NFC"
+      "value": "5G, LTE, Wi-Fi 6E, Wi-Fi Direct, Bluetooth v5.4"
     },
     {
       "key": "Спутниковая навигация",
-      "value": "GPS, GLONASS, BDS, GALILEO, QZSS"
+      "value": "GPS, ГЛОНАСС, Beidou, Galileo, QZSS"
     },
     {
       "key": "Интерфейсы",
-      "value": "USB Type-C"
+      "value": "USB 3.2 Gen 1"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Ion"
     },
     {
       "key": "Ёмкость аккумулятора",
-      "value": "4900 мАч"
-    },
-    {
-      "key": "Беспроводная зарядка",
-      "value": "есть"
+      "value": "4300 мАч"
     },
     {
       "key": "Материал",
-      "value": "Алюминий"
+      "value": "алюминиевая рамка Armor Aluminum, Gorilla Glass Victus 2"
     },
     {
       "key": "Ширина",
-      "value": "15,84 см"
+      "value": "71.7 мм"
     },
     {
       "key": "Высота",
-      "value": "7,58 см"
+      "value": "149.6 мм"
     },
     {
       "key": "Толщина",
-      "value": "0,73 см"
+      "value": "7.2 мм"
     },
     {
       "key": "Вес",
-      "value": "190 г"
-    },
-    {
-      "key": "Цвет",
-      "value": "Белый"
+      "value": "167 г"
     },
     {
       "key": "Стандарт влагозащиты",
@@ -107,29 +107,30 @@
     },
     {
       "key": "Операционная система",
-      "value": "Android"
+      "value": "Android 16, One UI 8.5"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "стерео динамики Tuned by AKG"
     },
     {
       "key": "Датчики",
-      "value": "акселерометр, гироскоп, датчик приближения, компас, барометр"
+      "value": "акселерометр, барометр, сканер отпечатка пальца, гироскопический датчик, геомагнитный датчик, датчик Холла, датчик освещенности, датчик приближения"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-white/smartfon-samsung-galaxy-s26-plus-12-256gb-white-01-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-white/smartfon-samsung-galaxy-s26-plus-12-256gb-white-02-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-white/smartfon-samsung-galaxy-s26-plus-12-256gb-white-03-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-white/smartfon-samsung-galaxy-s26-plus-12-256gb-white-04-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-white/smartfon-samsung-galaxy-s26-plus-12-256gb-white-05-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-white/smartfon-samsung-galaxy-s26-plus-12-256gb-white-06-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-white/smartfon-samsung-galaxy-s26-plus-12-256gb-white-07-1200x1200.png"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s26/galaxy-s26-dr-store-12-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s26/galaxy-s26-dr-store-9-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s26/galaxy-s26-dr-store-10-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s26/galaxy-s26-dr-store-11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s26/galaxy-s26-dr-store-all-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/2c7d6ab59241f84167f2be77.png",
-    "assets/product-images/561a21aca7fc39093d5f425c.png",
-    "assets/product-images/312f60dc7e40677578908578.png",
-    "assets/product-images/eea7ee2a957570479d968729.png",
-    "assets/product-images/dac2d1bef74ea470bf6ccaab.png",
-    "assets/product-images/06cd35a622fd61318675f3ea.png"
+    "assets/product-images/7f9d819006a638000ffe6302.jpg",
+    "assets/product-images/99b43562775f8ff926c693b0.jpg",
+    "assets/product-images/22a22fc0be965f3cda641a1b.jpg",
+    "assets/product-images/21cd2261e31b855e55305de9.jpg",
+    "assets/product-images/47b5b19edef3f1687bf17886.jpg"
   ],
-  "updated_at": "2026-09-28T14:42:29.250553Z"
+  "updated_at": "2026-09-28T21:10:41.346451Z"
 }

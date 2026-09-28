@@ -6,12 +6,12 @@
   "country": "🇦🇪 ОАЭ",
   "warehouse": "(S3)",
   "price": 42500,
-  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-s/galaxy-s26-plus/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue",
-  "catalog_title": "Samsung Galaxy S26 Plus 12/256GB, Sky Blue…",
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a57/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue",
+  "catalog_title": "Samsung Galaxy A57 5G 8/256GB, Awesome…",
   "specs": [
     {
       "key": "Тип дисплея",
-      "value": "Dynamic LTPO AMOLED 2X"
+      "value": "Super AMOLED+"
     },
     {
       "key": "Диагональ",
@@ -19,23 +19,23 @@
     },
     {
       "key": "Разрешение",
-      "value": "3120 x 1440"
-    },
-    {
-      "key": "Яркость",
-      "value": "2600 кд/м² в пиковом режиме"
+      "value": "2340x1080"
     },
     {
       "key": "Плотность пикселей",
-      "value": "516 пикселей/дюйм"
+      "value": "385 пикселей/дюйм"
+    },
+    {
+      "key": "Максимальная яркость",
+      "value": "1900 кд/м²"
     },
     {
       "key": "Процессор",
-      "value": "Snapdragon"
+      "value": "Exynos"
     },
     {
       "key": "Оперативная память",
-      "value": "12 ГБ"
+      "value": "8 ГБ"
     },
     {
       "key": "Встроенная память",
@@ -50,20 +50,16 @@
       "value": "f/1.8"
     },
     {
-      "key": "Разрешение фронтальной камеры",
-      "value": "12 МП"
-    },
-    {
-      "key": "Диафрагма фронтальной камеры",
-      "value": "f/2.2"
+      "key": "SIM-карта",
+      "value": "Nano SIM + Nano SIM | Nano SIM + eSIM | eSIM + eSIM"
     },
     {
       "key": "Сотовая и беспроводная сеть",
-      "value": "GSM / CDMA / HSPA / EVDO / LTE / 5G, Bluetooth 6.0, Wi-Fi 802.11 a/b/g/n/ac/6e/7, NFC"
+      "value": "GSM / HSPA / LTE / 5G, Wi-Fi 802.11 a/b/g/n/ac/6e, Bluetooth 6.0, NFC"
     },
     {
       "key": "Спутниковая навигация",
-      "value": "GPS, GLONASS, BDS, GALILEO, QZSS"
+      "value": "GPS, GALILEO, GLONASS, BDS, QZSS"
     },
     {
       "key": "Интерфейсы",
@@ -71,11 +67,11 @@
     },
     {
       "key": "Ёмкость аккумулятора",
-      "value": "4900 мАч"
+      "value": "5000 мАч"
     },
     {
       "key": "Беспроводная зарядка",
-      "value": "есть"
+      "value": "Нет"
     },
     {
       "key": "Материал",
@@ -83,19 +79,19 @@
     },
     {
       "key": "Ширина",
-      "value": "15,84 см"
+      "value": "16,15 см"
     },
     {
       "key": "Высота",
-      "value": "7,58 см"
+      "value": "7,68 см"
     },
     {
       "key": "Толщина",
-      "value": "0,73 см"
+      "value": "0,69 см"
     },
     {
       "key": "Вес",
-      "value": "190 г"
+      "value": "179 г"
     },
     {
       "key": "Цвет",
@@ -111,25 +107,28 @@
     },
     {
       "key": "Датчики",
-      "value": "акселерометр, гироскоп, датчик приближения, компас, барометр"
+      "value": "Акселерометр, гироскоп, датчик приближения, компас"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue-01-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue-02-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue-03-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue-04-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue-05-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue-06-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue/smartfon-samsung-galaxy-s26-plus-12-256gb-sky-blue-07-1200x1200.png"
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue-01-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue-02-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue-03-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue-04-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue-05-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue-06-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue-07-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue/smartfon-samsung-galaxy-a57-5g-8-256gb-awesome-icyblue-08-1200x1200.png"
   ],
   "images_local": [
-    "assets/product-images/382de86aec6c2024be2ceb91.png",
-    "assets/product-images/79b8419c0d331a4304c65cc9.png",
-    "assets/product-images/6e3ad67e01cd1578651d1797.png",
-    "assets/product-images/abddf49cd7e355e8732d061d.png",
-    "assets/product-images/56640879299e2fa7a856079d.png",
-    "assets/product-images/5706143af2331cc2c0111ce7.png"
+    "assets/product-images/bc788c784e382313eacce90f.png",
+    "assets/product-images/90da0c8c270cb406fe323822.png",
+    "assets/product-images/c7cd734cfd060ef00b576007.png",
+    "assets/product-images/5fd87f5a28f70e58256a898c.png",
+    "assets/product-images/e5559f911cf10cad4cc7f4e3.png",
+    "assets/product-images/950fcb52feeffc3fd9e0745c.png",
+    "assets/product-images/4da8a199a1ca688a50823ad5.jpg",
+    "assets/product-images/aaa07724392144d6379ee50f.jpg"
   ],
-  "updated_at": "2026-09-28T14:41:45.803745Z"
+  "updated_at": "2026-09-28T21:16:51.940298Z"
 }

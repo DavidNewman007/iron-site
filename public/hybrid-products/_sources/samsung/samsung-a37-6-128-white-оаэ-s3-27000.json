@@ -6,87 +6,145 @@
   "country": "🇦🇪 ОАЭ",
   "warehouse": "(S3)",
   "price": 27000,
-  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a26/Samsung_Galaxy_A26_6_128GB_Smartphone_White",
-  "catalog_title": "Samsung Galaxy A26 6/128GB, White",
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a37/galaxy-a37-8-128gb-white",
+  "catalog_title": "Samsung Galaxy A37 8/128GB White",
   "specs": [
     {
-      "key": "Производитель",
-      "value": "Samsung"
+      "key": "Разрешение видеосъемки",
+      "value": "UHD 4K (3840 x 2160) для 30 кадр./с"
+    },
+    {
+      "key": "Вес",
+      "value": "196 г"
     },
     {
       "key": "Тип дисплея",
-      "value": "AMOLED"
+      "value": "Super AMOLED 120 Гц"
     },
     {
       "key": "Диагональ",
-      "value": "6.56\""
+      "value": "6,7\""
     },
     {
       "key": "Разрешение",
-      "value": "2340x1080"
+      "value": "1080 x 2340 (FHD+)"
     },
     {
-      "key": "Частота обновления",
-      "value": "120 Гц"
+      "key": "Плотность пикселей",
+      "value": "385 пикс/дюйм"
     },
     {
       "key": "Процессор",
-      "value": "Samsung Exynos 1380"
+      "value": "Samsung Exynos 1480"
     },
     {
-      "key": "Количество ядер процессора",
-      "value": "8"
+      "key": "Частота процессора",
+      "value": "2,75 ГГц, 2 ГГц"
     },
     {
       "key": "Оперативная память",
-      "value": "6 Гб"
+      "value": "8 ГБ"
     },
     {
       "key": "Встроенная память",
-      "value": "128 Гб"
+      "value": "128 ГБ"
     },
     {
       "key": "Разрешение основной камеры",
-      "value": "50 МП/13 МП/5 МП"
+      "value": "50,0 MП + 8,0 MП + 5,0 MП"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "ƒ/1.8, ƒ/2.2, ƒ/2.4"
+    },
+    {
+      "key": "Оптическая стабилизация",
+      "value": "Да"
+    },
+    {
+      "key": "Замедленная видеосъемка",
+      "value": "240 кадр./с с HD разрешением"
     },
     {
       "key": "Разрешение фронтальной камеры",
-      "value": "16 МП"
+      "value": "12,0 MП"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "ƒ/2.2"
     },
     {
       "key": "SIM-карта",
-      "value": "2 Nano-Sim"
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "5G, LTE, 3G, 2G, Wi-Fi 6, Wi-Fi Direct, Bluetooth v5.3"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, ГЛОНАСС, Beidou, Galileo, QZSS"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Po"
     },
     {
       "key": "Ёмкость аккумулятора",
-      "value": "5160 мАч"
+      "value": "5000 мАч"
     },
     {
       "key": "Материал",
-      "value": "Пластик"
+      "value": "Металл, стекло"
     },
     {
-      "key": "Цвет",
-      "value": "Белый"
+      "key": "Ширина",
+      "value": "78.2 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "162.9 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "7.4 мм"
+    },
+    {
+      "key": "Влагозащищенный корпус",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android"
+    },
+    {
+      "key": "Датчики",
+      "value": "Акселерометр, сканер отпечатка пальца, гироскопический датчик, геомагнитный датчик, датчик освещенности, виртуальный датчик приближения"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_A26_6_128GB_Smartphone_White/Samsung_Galaxy_A26_6_128GB_Smartphone_White-1200x1200.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_A26_6_128GB_Smartphone_White/Samsung_Galaxy_A26_6_128GB_Smartphone_White-2-1200x1200.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_A26_6_128GB_Smartphone_White/Samsung_Galaxy_A26_6_128GB_Smartphone_White-3-1200x1200.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_A26_6_128GB_Smartphone_White/Samsung_Galaxy_A26_6_128GB_Smartphone_White-4-1200x1200.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_A26_6_128GB_Smartphone_White/Samsung_Galaxy_A26_6_128GB_Smartphone_White-5-1200x1200.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_A26_6_128GB_Smartphone_White/Samsung_Galaxy_A26_6_128GB_Smartphone_White-6-1200x1200.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_A26_6_128GB_Smartphone_White/Samsung_Galaxy_A26_6_128GB_Smartphone_White-7-1200x1200.jpeg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_A26_6_128GB_Smartphone_White/Samsung_Galaxy_A26_6_128GB_Smartphone_White-8-1200x1200.jpeg"
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Белый/s2umbj2yswb2cdadjivc9hln9desodut-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Белый/vff2uwptk11558ut2uukxmwn7syg9yms-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Белый/lw037itzab1mprfhw2kahr8nr1p3we0l-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Белый/02nwdfm8lzi3wqwixdt5l3dvafoosh16-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Белый/dh191dw56wkge4nw7jfv97k890wmft33-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Белый/x8cd6ljs20n0bb6tb9zf5sig4jddwsxb-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Белый/3nz8e49wta0y9yds5j9w5rbf3s8qs93x-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Белый/lu7gv0wk28pthsdtnqdg5w29mfnw3vxv-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/282f95bb471012e024a2639f.jpeg",
-    "assets/product-images/14d8f6f18f6860e68b067d03.jpeg",
-    "assets/product-images/4da44346a9c1c5bfdbcf05c1.jpeg",
-    "assets/product-images/4e766650da55cec657178b29.jpeg",
-    "assets/product-images/1741c56014a0d0a5392ac06b.jpeg",
-    "assets/product-images/e6cd27c45b9ab76add164702.jpeg"
+    "assets/product-images/3568c46a32bf21b03c8495c6.jpg",
+    "assets/product-images/a52f2c33a8f9b3a3799c22d8.jpg",
+    "assets/product-images/477ef02f257e68e8bf82e08a.jpg",
+    "assets/product-images/45c5872233e5303aa158737c.jpg",
+    "assets/product-images/023d90a30cb5f4176a340288.jpg",
+    "assets/product-images/bad287b5a4662c2ad7a0b16b.jpg",
+    "assets/product-images/05efb88aa1fc7000efbe1332.jpg",
+    "assets/product-images/20d38ac0712c391a4815fcd5.jpg"
   ],
-  "updated_at": "2026-09-27T13:07:14.184036Z"
+  "updated_at": "2026-09-28T21:10:10.845763Z"
 }

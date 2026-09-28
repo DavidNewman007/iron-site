@@ -6,12 +6,12 @@
   "country": "🇦🇪 ОАЭ",
   "warehouse": "(S3)",
   "price": 50800,
-  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-s/galaxy-s24-fe/galaxy-s24-fe-8-128gb-graphite",
-  "catalog_title": "Samsung Galaxy S24 FE 8/128GB, Graphite",
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-s/galaxy-s26-fe/smartfon-samsung-galaxy-s26-fe-8-128gb-graphite",
+  "catalog_title": "Samsung Galaxy S26 FE 8/128GB, Graphite",
   "specs": [
     {
       "key": "Тип дисплея",
-      "value": "Dynamic AMOLED 2X 120 Гц"
+      "value": "Dynamic AMOLED 2X"
     },
     {
       "key": "Диагональ",
@@ -19,110 +19,108 @@
     },
     {
       "key": "Разрешение",
-      "value": "2340x1080 пикселей (FHD+)"
+      "value": "2340x1080"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "382 пикс/дюйм"
     },
     {
       "key": "Процессор",
-      "value": "Samsung Exynos 2400e"
-    },
-    {
-      "key": "Графический процессор",
-      "value": "Xclipse 940"
+      "value": "Exynos 2000"
     },
     {
       "key": "Оперативная память",
       "value": "8 ГБ"
     },
     {
+      "key": "Встроенная память",
+      "value": "128 ГБ"
+    },
+    {
       "key": "Разрешение основной камеры",
-      "value": "50 Мп, 12 Мп, 8 Мп"
+      "value": "50,0 MП + 12,0 MП + 8,0 MП"
     },
     {
       "key": "Диафрагма основной камеры",
-      "value": "ƒ/1.8, ƒ/2.2, ƒ/2.4"
+      "value": "f/1.8, f/2.2, f/2.4"
     },
     {
       "key": "Разрешение фронтальной камеры",
-      "value": "10 Мп"
+      "value": "12,0 MП"
     },
     {
       "key": "Диафрагма фронтальной камеры",
-      "value": "ƒ/2.4"
+      "value": "f/2.2"
     },
     {
       "key": "SIM-карта",
-      "value": "2 nano‑SIM, eSIM"
+      "value": "2SIM + eSIM"
     },
     {
       "key": "Сотовая и беспроводная сеть",
-      "value": "5G, LTE, Wi-Fi 6E, Wi-Fi Direct, Bluetooth v5.3"
+      "value": "GSM, HSPA, LTE, 5G, Wi-Fi 802.11 a/b/g/n/ac/6e, Bluetooth 5.4, NFC"
     },
     {
       "key": "Спутниковая навигация",
-      "value": "GPS, Beidou, Galileo"
+      "value": "GPS, GALILEO, GLONASS, BDS, QZSS"
     },
     {
       "key": "Интерфейсы",
-      "value": "USB Type-C 3.2"
-    },
-    {
-      "key": "Тип аккумулятора",
-      "value": "Li-Ion"
+      "value": "USB Type-C"
     },
     {
       "key": "Ёмкость аккумулятора",
-      "value": "4700 мАч"
+      "value": "4900 мАч"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "Да"
     },
     {
       "key": "Материал",
-      "value": "алюминиевая рамка Armor Aluminum, Gorilla Victus+"
+      "value": "Алюминий"
     },
     {
       "key": "Ширина",
-      "value": "77.3 мм"
+      "value": "161,6 мм"
     },
     {
       "key": "Высота",
-      "value": "162 мм"
+      "value": "76,9 мм"
     },
     {
       "key": "Толщина",
-      "value": "8.0 мм"
-    },
-    {
-      "key": "Вес",
-      "value": "213 г"
+      "value": "7,4 мм"
     },
     {
       "key": "Стандарт влагозащиты",
       "value": "IP68"
     },
     {
-      "key": "Операционная система",
-      "value": "Android 14, One UI 6.1"
-    },
-    {
-      "key": "Аудиотехнологии",
-      "value": "Dolby Atmos, два динамика"
-    },
-    {
       "key": "Датчики",
-      "value": "акселерометр, барометр, сканер отпечатка пальца, гироскопический датчик, геомагнитный датчик, датчик Холла, датчик освещенности, виртуальный датчик приближения"
+      "value": "Акселерометр, Барометр, Сканер отпечатка пальца, Гироскопический датчик, Геомагнитный датчик, Датчик Холла, Датчик освещенности, Датчик приближения"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s24-fe/samsung-s24fe-dr-store-13-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s24-fe/samsung-s24fe-dr-store-5-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s24-fe/samsung-s24fe-dr-store-10-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s24-fe/samsung-s24fe-dr-store-3-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/s24-fe/samsung-s24fe-dr-store-4-1200x1200.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-graphite/smartfon-samsung-galaxy-s26-fe-graphite-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-graphite/smartfon-samsung-galaxy-s26-fe-graphite2-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-graphite/smartfon-samsung-galaxy-s26-fe-graphite3-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-graphite/smartfon-samsung-galaxy-s26-fe-graphite4-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-graphite/smartfon-samsung-galaxy-s26-fe-graphite5-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-graphite/smartfon-samsung-galaxy-s26-fe-graphite6-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-graphite/smartfon-samsung-galaxy-s26-fe-graphite7-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-graphite/smartfon-samsung-galaxy-s26-fe-graphite8-1200x1200.png"
   ],
   "images_local": [
-    "assets/product-images/737e9def6dfb73f52662d1b8.jpg",
-    "assets/product-images/89e761a007554ad3f0436c4f.jpg",
-    "assets/product-images/d99d2043d55727b9ad12b207.jpg",
-    "assets/product-images/6dcec8d4ae6ea21e7fbee361.jpg",
-    "assets/product-images/d198e03d758923fc772c3eaa.jpg"
+    "assets/product-images/518e771e692f1e74ce4315d8.png",
+    "assets/product-images/fdcfc1c2903812761a509d27.png",
+    "assets/product-images/2ec7b253916a9a57a0d4d23d.png",
+    "assets/product-images/a60d7c5bef32dfcd0f4f7b8e.png",
+    "assets/product-images/c23f421bf9fd053dde61ca30.png",
+    "assets/product-images/281a2670a3e9ef5428b0cf0e.png",
+    "assets/product-images/8bf47c7737ba2752d0e0def3.png",
+    "assets/product-images/6d8ffb248f7e111c5b3dfda4.png"
   ],
-  "updated_at": "2026-09-22T12:32:10.264418Z"
+  "updated_at": "2026-09-28T21:10:50.923374Z"
 }

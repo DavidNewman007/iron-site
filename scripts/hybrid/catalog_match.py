@@ -21,6 +21,7 @@ from .price_parser import Product
 from .product_match import (
     galaxy_watch_match_penalty,
     iphone_match_penalty,
+    samsung_match_penalty,
     watch_match_penalty,
     xiaomi_match_penalty,
 )
@@ -509,6 +510,9 @@ def score_product_url(product: Product, url: str) -> float:
 
     if product.category == "xiaomi":
         score *= xiaomi_match_penalty(product.name, url)
+
+    if product.category == "samsung":
+        score *= samsung_match_penalty(product.name, url)
 
     if product.category in GENERIC_MATCH_CATEGORIES:
         score *= generic_match_penalty(product.name, slug.replace("-", " "))

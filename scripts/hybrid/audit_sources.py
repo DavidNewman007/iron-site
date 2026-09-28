@@ -25,6 +25,7 @@ from .config import SOURCES_ROOT
 from .product_match import (
     galaxy_watch_match_penalty,
     iphone_match_penalty,
+    samsung_match_penalty,
     watch_match_penalty,
     xiaomi_match_penalty,
 )
@@ -50,6 +51,8 @@ def source_match_penalty(category: str, name: str, catalog_url: str) -> float:
         )
     if category == "iphone":
         return iphone_match_penalty(name, catalog_url)
+    if category == "samsung":
+        return samsung_match_penalty(name, catalog_url)
     if category in GENERIC_MATCH_CATEGORIES:
         slug = catalog_url.rsplit("/", 1)[-1].replace("-", " ")
         penalty = generic_match_penalty(name, slug)

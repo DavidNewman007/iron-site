@@ -6,249 +6,121 @@
   "country": "🇦🇪 ОАЭ",
   "warehouse": "(S3)",
   "price": 24400,
-  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a17/smartfon-samsung-galaxy-a17-6-128gb-blue",
-  "catalog_title": "Samsung Galaxy A17 6/128GB, Blue",
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a27/smartfon-samsung-galaxy-a27-5g-6-128gb-blue",
+  "catalog_title": "Samsung Galaxy A27 5G 6/128GB, Blue",
   "specs": [
     {
-      "key": "Тип устройства",
-      "value": "Смартфон"
-    },
-    {
-      "key": "Производитель",
-      "value": "Samsung"
-    },
-    {
-      "key": "Версия",
-      "value": "Международная"
+      "key": "Тип дисплея",
+      "value": "Super AMOLED"
     },
     {
       "key": "Диагональ",
-      "value": "6.7\""
+      "value": "6,7\""
     },
     {
       "key": "Разрешение",
       "value": "2340x1080"
     },
     {
-      "key": "Соотношение сторон",
-      "value": "19.5:9"
-    },
-    {
-      "key": "Тип матрицы",
-      "value": "Super AMOLED"
-    },
-    {
-      "key": "Частота обновления",
-      "value": "90 Гц"
-    },
-    {
       "key": "Плотность пикселей",
-      "value": "385 пикселей/дюйм"
-    },
-    {
-      "key": "Количество цветов экрана",
-      "value": "16 млн."
+      "value": "385 пикс/дюйм"
     },
     {
       "key": "Процессор",
-      "value": "Exynos 1330"
-    },
-    {
-      "key": "Техпроцесс",
-      "value": "5 нм"
-    },
-    {
-      "key": "Конфигурация процессора",
-      "value": "Octa-core (2x2.4 GHz Cortex-A78 & 6x2.0 GHz Cortex-A55)"
-    },
-    {
-      "key": "Количество ядер процессора",
-      "value": "8"
-    },
-    {
-      "key": "Графический процессор",
-      "value": "Mali-G68 MP2"
-    },
-    {
-      "key": "Частота процессора",
-      "value": "2.4 ГГц"
+      "value": "Snapdragon 6 Gen 3"
     },
     {
       "key": "Оперативная память",
-      "value": "6 Гб"
+      "value": "6 ГБ"
     },
     {
       "key": "Встроенная память",
-      "value": "128 Гб"
-    },
-    {
-      "key": "Слот для карты памяти",
-      "value": "есть (использует общий слот SIM-карты)"
-    },
-    {
-      "key": "Количество основных (тыловых) камер",
-      "value": "3"
+      "value": "128 ГБ"
     },
     {
       "key": "Разрешение основной камеры",
-      "value": "50 МП+5 МП+2 МП"
+      "value": "50,0 MП + 5,0 MП + 2,0 MП"
     },
     {
       "key": "Диафрагма основной камеры",
-      "value": "f/1.8, f/2.2, f/2.4"
-    },
-    {
-      "key": "Максимальное разрешение видео",
-      "value": "1080p"
-    },
-    {
-      "key": "Максимальная частота кадров видео при максимальном разрешении",
-      "value": "30 к/с"
-    },
-    {
-      "key": "Особенности и технологии тыловой оптики",
-      "value": "Широкоугольная съемка, Сверхширокоугольная съемка, Макро съемка"
-    },
-    {
-      "key": "Количество фронтальных камер",
-      "value": "1"
+      "value": "f/1.8"
     },
     {
       "key": "Разрешение фронтальной камеры",
-      "value": "13 МП"
+      "value": "12,0 MП"
     },
     {
       "key": "Диафрагма фронтальной камеры",
-      "value": "f/2.0"
-    },
-    {
-      "key": "Частота кадров записи фронтальной камеры",
-      "value": "30 к/с"
-    },
-    {
-      "key": "Функции фронтальной камеры",
-      "value": "Широкоугольная съемка"
+      "value": "F2.2"
     },
     {
       "key": "SIM-карта",
-      "value": "2 Nano-Sim"
+      "value": "Nano SIM + Nano SIM"
     },
     {
-      "key": "Беспроводные модули",
-      "value": "Wi-Fi 802.11 a/b/g/n/ac, Bluetooth 5.3, NFC"
+      "key": "Сотовая и беспроводная сеть",
+      "value": "GSM, HSPA, LTE, 5G, Wi-Fi 802.11 a/b/g/n/ac, Bluetooth 5.1, NFC"
     },
     {
       "key": "Спутниковая навигация",
       "value": "GPS, GALILEO, GLONASS, BDS, QZSS"
     },
     {
-      "key": "Стандарт сотовой связи",
-      "value": "GSM / HSPA / LTE / 5G"
-    },
-    {
-      "key": "Модуль NFC (бесконтактная оплата)",
-      "value": "есть"
-    },
-    {
-      "key": "Профили Bluetooth",
-      "value": "A2DP, LE"
-    },
-    {
-      "key": "Тип аккумулятора",
-      "value": "Li-Po"
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
     },
     {
       "key": "Ёмкость аккумулятора",
       "value": "5000 мАч"
     },
     {
-      "key": "Мощность",
-      "value": "25 Вт"
-    },
-    {
-      "key": "Время работы при воспроизведении видео",
-      "value": "15 ч"
-    },
-    {
-      "key": "Время работы при прослушивании музыки",
-      "value": "40 ч"
-    },
-    {
-      "key": "Разъём питания",
-      "value": "USB Type-C 2.0"
-    },
-    {
-      "key": "Быстрая зарядка",
-      "value": "есть"
-    },
-    {
       "key": "Беспроводная зарядка",
-      "value": "нет"
-    },
-    {
-      "key": "Беспроводная реверсивная зарядка",
-      "value": "нет"
+      "value": "Нет"
     },
     {
       "key": "Материал",
-      "value": "Стеклянная передняя часть, пластиковая рамка, стекловолокнистая задняя часть"
-    },
-    {
-      "key": "Длина",
-      "value": "164.4 мм"
+      "value": "Пластик, стекло"
     },
     {
       "key": "Ширина",
-      "value": "77.9 мм"
+      "value": "78,2 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "162,4 мм"
     },
     {
       "key": "Толщина",
-      "value": "7.5 мм"
-    },
-    {
-      "key": "Устойчивое к царапинам стекло",
-      "value": "Corning Gorilla Glass Victus"
+      "value": "7,8 мм"
     },
     {
       "key": "Вес",
-      "value": "192 г"
+      "value": "200 г"
     },
     {
-      "key": "Биометрическая защита",
-      "value": "Отпечаток пальца (боковой)"
-    },
-    {
-      "key": "Цвет",
-      "value": "Синий"
-    },
-    {
-      "key": "Операционная система",
-      "value": "Android"
-    },
-    {
-      "key": "Оболочка ОС",
-      "value": "One UI 7"
-    },
-    {
-      "key": "Датчики",
-      "value": "Отпечаток пальца (боковой), акселерометр, гироскоп, близость, компас"
-    },
-    {
-      "key": "Класс водонепроницаемости",
-      "value": "IP54"
+      "key": "Стандарт влагозащиты",
+      "value": "IP64"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-6-128gb-blue/smartfon-samsung-galaxy-a17-6-128gb-blue-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-6-128gb-blue/smartfon-samsung-galaxy-a17-6-128gb-blue-2-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-6-128gb-blue/smartfon-samsung-galaxy-a17-6-128gb-blue-3-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-6-128gb-blue/smartfon-samsung-galaxy-a17-6-128gb-blue-4-1200x1200.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a27-5g-6-128gb-blue/smartfon-samsung-galaxy-a27-5g-blue-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a27-5g-6-128gb-blue/smartfon-samsung-galaxy-a27-5g-blue2-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a27-5g-6-128gb-blue/smartfon-samsung-galaxy-a27-5g-blue3-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a27-5g-6-128gb-blue/smartfon-samsung-galaxy-a27-5g-blue4-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a27-5g-6-128gb-blue/smartfon-samsung-galaxy-a27-5g-blue5-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a27-5g-6-128gb-blue/smartfon-samsung-galaxy-a27-5g-blue6-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a27-5g-6-128gb-blue/smartfon-samsung-galaxy-a27-5g-blue7-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a27-5g-6-128gb-blue/smartfon-samsung-galaxy-a27-5g-blue8-1200x1200.png"
   ],
   "images_local": [
-    "assets/product-images/88785216339ca8d6dedb0f99.jpg",
-    "assets/product-images/b382d9ac9660c345c7665617.jpg",
-    "assets/product-images/8abe5cf7bdc00a8582dccb50.jpg",
-    "assets/product-images/5081b29c0080d14515ed789f.jpg"
+    "assets/product-images/b1688037964b413ab979c0dc.jpg",
+    "assets/product-images/f167b4dbe8b304f739243b9b.jpg",
+    "assets/product-images/d253b239adefd91d6a33031e.png",
+    "assets/product-images/f0183f6fe86ab21337158a7f.png",
+    "assets/product-images/000968a9eba632f2620aa015.png",
+    "assets/product-images/5cba77eb34c763dde9a8b88d.png",
+    "assets/product-images/00049f931b80c1e824def362.png",
+    "assets/product-images/8418f34741ba176f3ab37808.png"
   ],
-  "updated_at": "2026-09-21T13:43:05.303305Z"
+  "updated_at": "2026-09-28T21:10:00.472179Z"
 }

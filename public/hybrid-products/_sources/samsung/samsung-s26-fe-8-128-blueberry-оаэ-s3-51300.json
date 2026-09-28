@@ -6,8 +6,8 @@
   "country": "🇦🇪 ОАЭ",
   "warehouse": "(S3)",
   "price": 51300,
-  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-s/galaxy-s25-fe/smartfon-samsung-s25-fe-8-128gb-icy-blue",
-  "catalog_title": "Samsung S25 FE 8/128GB, Icy Blue",
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-s/galaxy-s26-fe/smartfon-samsung-galaxy-s26-fe-8-128gb-blueberry",
+  "catalog_title": "Samsung Galaxy S26 FE 8/128GB, Blueberry",
   "specs": [
     {
       "key": "Тип дисплея",
@@ -19,19 +19,15 @@
     },
     {
       "key": "Разрешение",
-      "value": "2340х1080"
-    },
-    {
-      "key": "Яркость",
-      "value": "1900 кд/м² в пиковом режиме"
+      "value": "2340x1080"
     },
     {
       "key": "Плотность пикселей",
-      "value": "385 пикселей/дюйм"
+      "value": "382 пикс/дюйм"
     },
     {
       "key": "Процессор",
-      "value": "Exynos"
+      "value": "Exynos 2000"
     },
     {
       "key": "Оперативная память",
@@ -42,20 +38,16 @@
       "value": "128 ГБ"
     },
     {
-      "key": "Количество основных (тыловых) камер",
-      "value": "3"
-    },
-    {
       "key": "Разрешение основной камеры",
-      "value": "50 МП"
+      "value": "50,0 MП + 12,0 MП + 8,0 MП"
     },
     {
       "key": "Диафрагма основной камеры",
-      "value": "f/1.8"
+      "value": "f/1.8, f/2.2, f/2.4"
     },
     {
       "key": "Разрешение фронтальной камеры",
-      "value": "12 МП"
+      "value": "12,0 MП"
     },
     {
       "key": "Диафрагма фронтальной камеры",
@@ -63,15 +55,15 @@
     },
     {
       "key": "SIM-карта",
-      "value": "2 Nano-SIM"
+      "value": "2SIM + eSIM"
     },
     {
       "key": "Сотовая и беспроводная сеть",
-      "value": "GSM / HSPA / LTE / 5G, Bluetooth, Wi-Fi, NFC"
+      "value": "GSM, HSPA, LTE, 5G, Wi-Fi 802.11 a/b/g/n/ac/6e, Bluetooth 5.4, NFC"
     },
     {
       "key": "Спутниковая навигация",
-      "value": "GPS, GLONASS, GALILEO, BDS"
+      "value": "GPS, GALILEO, GLONASS, BDS, QZSS"
     },
     {
       "key": "Интерфейсы",
@@ -83,7 +75,7 @@
     },
     {
       "key": "Беспроводная зарядка",
-      "value": "есть"
+      "value": "Да"
     },
     {
       "key": "Материал",
@@ -91,54 +83,44 @@
     },
     {
       "key": "Ширина",
-      "value": "16,13 см"
+      "value": "161,6 мм"
     },
     {
       "key": "Высота",
-      "value": "7,66 см"
+      "value": "76,9 мм"
     },
     {
       "key": "Толщина",
-      "value": "0,74 см"
-    },
-    {
-      "key": "Вес",
-      "value": "190 г"
-    },
-    {
-      "key": "Цвет",
-      "value": "Голубой"
+      "value": "7,4 мм"
     },
     {
       "key": "Стандарт влагозащиты",
       "value": "IP68"
     },
     {
-      "key": "Операционная система",
-      "value": "Andriod"
-    },
-    {
       "key": "Датчики",
-      "value": "Акселерометр, гироскоп, датчик приближения, компас"
+      "value": "Акселерометр, Барометр, Сканер отпечатка пальца, Гироскопический датчик, Геомагнитный датчик, Датчик Холла, Датчик освещенности, Датчик приближения"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-128gb-icy-blue/smartfon-samsung-s25-fe-8-128gb-icy-blue-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-128gb-icy-blue/smartfon-samsung-s25-fe-8-128gb-icy-blue-2-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-128gb-icy-blue/smartfon-samsung-s25-fe-8-128gb-icy-blue-3-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-128gb-icy-blue/smartfon-samsung-s25-fe-8-128gb-icy-blue-4-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-128gb-icy-blue/smartfon-samsung-s25-fe-8-128gb-icy-blue-5-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-128gb-icy-blue/smartfon-samsung-s25-fe-8-128gb-icy-blue-6-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-128gb-icy-blue/smartfon-samsung-s25-fe-8-128gb-icy-blue-7-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-128gb-icy-blue/smartfon-samsung-s25-fe-8-128gb-icy-blue-8-1200x1200.png"
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-blueberry/smartfon-samsung-galaxy-s26-fe-blueberry-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-blueberry/smartfon-samsung-galaxy-s26-fe-blueberry2-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-blueberry/smartfon-samsung-galaxy-s26-fe-blueberry3-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-blueberry/smartfon-samsung-galaxy-s26-fe-blueberry4-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-blueberry/smartfon-samsung-galaxy-s26-fe-blueberry5-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-blueberry/smartfon-samsung-galaxy-s26-fe-blueberry6-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-blueberry/smartfon-samsung-galaxy-s26-fe-blueberry7-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-fe-8-128gb-blueberry/smartfon-samsung-galaxy-s26-fe-blueberry8-1200x1200.png"
   ],
   "images_local": [
-    "assets/product-images/ad7ecb3c0305c987773f55d7.png",
-    "assets/product-images/fd4ce62236eba7b0606d84ed.png",
-    "assets/product-images/6acc38bc3ee30cf177b875a0.png",
-    "assets/product-images/6d3408087c9ec6bc2d3d632e.png",
-    "assets/product-images/8468a40ac0282b1bb057ffe1.png",
-    "assets/product-images/a09131fee442375e5aca7016.png"
+    "assets/product-images/3340c0d146e34890b26f14ee.jpg",
+    "assets/product-images/1946086acb6aa1a44edd34b8.png",
+    "assets/product-images/feec1119840b4802549e1317.png",
+    "assets/product-images/b3b1d18e5c74998f63234635.jpg",
+    "assets/product-images/e921006e7b47c5338c3166e9.png",
+    "assets/product-images/f6e58eb02a04c56962b4a9c8.png",
+    "assets/product-images/8332bec6cf295041299fa409.png",
+    "assets/product-images/816aa81ce613f5361653bd09.png"
   ],
-  "updated_at": "2026-09-22T12:32:13.525139Z"
+  "updated_at": "2026-09-28T21:10:49.601092Z"
 }

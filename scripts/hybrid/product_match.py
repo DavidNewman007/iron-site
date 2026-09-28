@@ -224,3 +224,40 @@ def galaxy_watch_match_penalty(name: str, url: str) -> float:
     if re.search(rf"\bwatch\s*{match.group(1)}\b", slug):
         return 1.0
     return 0.05
+
+
+# Samsung (29.09.2026). Та же беда, что была у Xiaomi: сверки модели не было, и
+# около сотни карточек стояли со страниц соседних моделей — «A37» с фото A26,
+# «S26 FE» с фото S24 FE и S25 FE, «S26 Ultra» с фото Z Fold8 Ultra. Модель —
+# всё до памяти, без марки и служебных слов, склеенная в одну строку: «Z Flip 8»
+# и «z-flip8» совпадают, «A37» и «A26» — нет.
+SAMSUNG_NOISE_TOKENS = frozenset(
+    {"samsung", "galaxy", "smartfon", "smartphone", "5g", "4g", "lte", "b", "ds", "dual", "sim", "nfc"}
+)
+
+
+def samsung_model_core(text: str) -> str:
+    value = normalize_match_text(text).replace("_", " ").replace("/", " ").replace("+", " ")
+    value = re.sub(r"\bsm\s*[a-z]\d{3,4}[a-z]*\b", " ", value)  # артикул SM-S948
+    tokens = value.split()
+    core: list[str] = []
+    for i, token in enumerate(tokens):
+        following = tokens[i + 1] if i + 1 < len(tokens) else ""
+        if _is_memory_start(token, following):
+            break
+        if token in SAMSUNG_NOISE_TOKENS:
+            continue
+        core.append(token)
+    return "".join(core)
+
+
+def samsung_match_penalty(name: str, url: str) -> float:
+    slug = str(url or "").rsplit("/", 1)[-1]
+    penalty = 1.0
+    name_core = samsung_model_core(name)
+    slug_core = samsung_model_core(slug)
+    if name_core and slug_core and name_core != slug_core:
+        penalty *= 0.05
+    if xiaomi_has_memory(name.replace("+", " ")) and not xiaomi_has_memory(slug):
+        penalty *= 0.3
+    return penalty

@@ -6,135 +6,145 @@
   "country": "🇦🇪 ОАЭ",
   "warehouse": "(S3)",
   "price": 32700,
-  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-z/z-fold8/smartfon-samsung-galaxy-z-fold8-12-256gb-lavender",
-  "catalog_title": "Samsung Galaxy Z Fold8 12/256GB, Lavender",
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a37/galaxy-a37-8-256gb-lavender",
+  "catalog_title": "Samsung Galaxy A37 5G",
   "specs": [
     {
-      "key": "Тип дисплея",
-      "value": "Dynamic AMOLED 2X"
-    },
-    {
-      "key": "Диагональ",
-      "value": "7.6\", внешний дисплей — 5.5\""
-    },
-    {
-      "key": "Технология дисплея",
-      "value": "складной дисплей, Vision Booster, антибликовое покрытие, адаптивная частота обновления от 1 до 120 Гц"
-    },
-    {
-      "key": "Разрешение",
-      "value": "1848x2448 пикселей, внешний дисплей — 1972x1248 пикселей"
-    },
-    {
-      "key": "Яркость",
-      "value": "до 3000 кд/м²"
-    },
-    {
-      "key": "Плотность пикселей",
-      "value": "404 пикс/дюйм, внешний дисплей — 424 пикс/дюйм"
-    },
-    {
-      "key": "Процессор",
-      "value": "Qualcomm Snapdragon 8 Elite Gen 5"
-    },
-    {
-      "key": "Графический процессор",
-      "value": "Qualcomm Adreno 840"
-    },
-    {
-      "key": "Оперативная память",
-      "value": "12 ГБ"
-    },
-    {
-      "key": "Разрешение основной камеры",
-      "value": "50 Мп, 50 Мп"
-    },
-    {
-      "key": "Диафрагма основной камеры",
-      "value": "основная: f/1.8, сверхширокоугольная: f/1.9"
-    },
-    {
-      "key": "Разрешение фронтальной камеры",
-      "value": "10 Мп, камера внешнего дисплея — 10 Мп"
-    },
-    {
-      "key": "Диафрагма фронтальной камеры",
-      "value": "f/2.2"
-    },
-    {
-      "key": "SIM-карта",
-      "value": "1 nano-SIM + eSIM или 2 eSIM"
-    },
-    {
-      "key": "Сотовая и беспроводная сеть",
-      "value": "5G (sub-6 ГГц), LTE, WCDMA, GSM, Wi-Fi 7 (802.11be), Wi-Fi Direct, Bluetooth 6.0, NFC, UWB"
-    },
-    {
-      "key": "Спутниковая навигация",
-      "value": "GPS, ГЛОНАСС, Galileo, QZSS, BeiDou"
-    },
-    {
-      "key": "Интерфейсы",
-      "value": "USB Type-C 3.2 Gen 1, Samsung DeX"
-    },
-    {
-      "key": "Тип аккумулятора",
-      "value": "Li-Ion, двойной, несъёмный"
-    },
-    {
-      "key": "Ёмкость аккумулятора",
-      "value": "4800 мАч"
-    },
-    {
-      "key": "Беспроводная зарядка",
-      "value": "есть, до 20 Вт, поддержка Wireless PowerShare"
-    },
-    {
-      "key": "Материал",
-      "value": "Armor Aluminum, Corning Gorilla Glass Ceramic 3, Corning Gorilla Glass Victus 2, Flex Titanium"
-    },
-    {
-      "key": "Ширина",
-      "value": "81.9 мм в сложенном виде, 161.4 мм в раскрытом виде"
-    },
-    {
-      "key": "Высота",
-      "value": "123.9 мм"
-    },
-    {
-      "key": "Толщина",
-      "value": "9.7 мм в сложенном виде, 4.5 мм в раскрытом виде"
+      "key": "Разрешение видеосъемки",
+      "value": "UHD 4K (3840 x 2160) для 30 кадр./с"
     },
     {
       "key": "Вес",
-      "value": "201 г"
+      "value": "196 г"
     },
     {
-      "key": "Стандарт влагозащиты",
-      "value": "IP48"
+      "key": "Тип дисплея",
+      "value": "Super AMOLED 120 Гц"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6,7\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "1080 x 2340 (FHD+)"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "385 пикс/дюйм"
+    },
+    {
+      "key": "Процессор",
+      "value": "Samsung Exynos 1480"
+    },
+    {
+      "key": "Частота процессора",
+      "value": "2,75 ГГц, 2 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50,0 MП + 8,0 MП + 5,0 MП"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "ƒ/1.8, ƒ/2.2, ƒ/2.4"
+    },
+    {
+      "key": "Оптическая стабилизация",
+      "value": "Да"
+    },
+    {
+      "key": "Замедленная видеосъемка",
+      "value": "240 кадр./с с HD разрешением"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "12,0 MП"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "ƒ/2.2"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "5G, LTE, 3G, 2G, Wi-Fi 6, Wi-Fi Direct, Bluetooth v5.3"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, ГЛОНАСС, Beidou, Galileo, QZSS"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Po"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "5000 мАч"
+    },
+    {
+      "key": "Материал",
+      "value": "Металл, стекло"
+    },
+    {
+      "key": "Ширина",
+      "value": "78.2 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "162.9 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "7.4 мм"
+    },
+    {
+      "key": "Влагозащищенный корпус",
+      "value": "IP68"
     },
     {
       "key": "Операционная система",
-      "value": "Android 17 с интерфейсом One UI 9 и поддержкой Galaxy AI"
+      "value": "Android"
     },
     {
-      "key": "Аудиотехнологии",
-      "value": "стереодинамики, Dolby Atmos"
+      "key": "Датчики",
+      "value": "Акселерометр, сканер отпечатка пальца, гироскопический датчик, геомагнитный датчик, датчик освещенности, виртуальный датчик приближения"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/fold8/fold-8-dr-store-28-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/fold8/fold-8-dr-store-8-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/fold8/fold-8-dr-store-10-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/fold8/fold-8-dr-store-13-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/fold8/fold-8-dr-store-12-1200x1200.png"
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Лавандовый /a906mrci21rid98m310zlqcgyw350c30-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Лавандовый /ehpyjxv5n63ebeh805np7oa99z0nzrk5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Лавандовый /l3pnetl4lqej10n55e3kdsoyh51gqo7r-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Лавандовый /ho2twfbyxrb2tqn18255m0xozhs9lpfg-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Лавандовый /lr4zaey1pjkq30occ18z8apsjz4r7mbu-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Лавандовый /ybyed6qz1c3sc02h75ehdtpxwcpdve2e-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Лавандовый /mgtlzxszvmzo13wmwtyc9rbp9ng0bq3y-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Samsung Galaxy A37 5G/Лавандовый /kkje2tbre3h3gdwe9t1q5ehspm06a4fr-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/b9e8454bde003550f4a8319f.png",
-    "assets/product-images/f82b5bffbf376691cbda1253.png",
-    "assets/product-images/438b3ccbe8d676ab577e2c42.png",
-    "assets/product-images/87d15405bdbc7254d307824f.png",
-    "assets/product-images/1bc750c1c36e8835b19e2b39.png"
+    "assets/product-images/d4d75f7097a2ad3365db9556.jpg",
+    "assets/product-images/aa1244c98498f39dec3f3db9.jpg",
+    "assets/product-images/705d6da725e56562581b464a.jpg",
+    "assets/product-images/649735259d15022b58a83c38.jpg",
+    "assets/product-images/3eecad0f202b7c04bb79b251.jpg",
+    "assets/product-images/0acab214e9017d899f522e4f.jpg",
+    "assets/product-images/61c43ecdd2026d95f4113317.jpg",
+    "assets/product-images/cd3662d9116b39c21f9d394c.jpg"
   ],
-  "updated_at": "2026-09-21T13:43:58.849519Z"
+  "updated_at": "2026-09-28T21:10:06.546857Z"
 }

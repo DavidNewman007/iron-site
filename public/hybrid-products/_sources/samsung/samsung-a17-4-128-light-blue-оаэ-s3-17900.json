@@ -6,148 +6,156 @@
   "country": "🇦🇪 ОАЭ",
   "warehouse": "(S3)",
   "price": 17900,
-  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a06/smartfon-samsung-galaxy-a06-4-128gb-light-blue",
-  "catalog_title": "Samsung Galaxy A06 4/128GB, Light Blue",
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a17/smartfon-samsung-galaxy-a17-4-128gb-blue",
+  "catalog_title": "Samsung Galaxy A17 4/128GB, Blue",
   "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Смартфон"
+    },
+    {
+      "key": "Производитель",
+      "value": "Samsung"
+    },
+    {
+      "key": "Версия",
+      "value": "Международная"
+    },
     {
       "key": "Диагональ",
       "value": "6.7\""
     },
     {
       "key": "Разрешение",
-      "value": "1600x720"
+      "value": "2340x1080"
     },
     {
       "key": "Соотношение сторон",
-      "value": "20:9"
+      "value": "19.5:9"
+    },
+    {
+      "key": "Тип матрицы",
+      "value": "Super AMOLED"
     },
     {
       "key": "Частота обновления",
-      "value": "60 Гц"
+      "value": "90 Гц"
     },
     {
       "key": "Плотность пикселей",
-      "value": "262 пикселей/дюйм"
+      "value": "385 пикселей/дюйм"
     },
     {
-      "key": "Автоматический поворот экрана",
-      "value": "есть"
+      "key": "Количество цветов экрана",
+      "value": "16 млн."
     },
     {
       "key": "Процессор",
-      "value": "Mediatek Helio G85"
+      "value": "Exynos 1330"
+    },
+    {
+      "key": "Техпроцесс",
+      "value": "5 нм"
+    },
+    {
+      "key": "Конфигурация процессора",
+      "value": "Octa-core (2x2.4 GHz Cortex-A78 & 6x2.0 GHz Cortex-A55)"
+    },
+    {
+      "key": "Количество ядер процессора",
+      "value": "8"
     },
     {
       "key": "Графический процессор",
-      "value": "Mali-G52 MC2"
+      "value": "Mali-G68 MP2"
+    },
+    {
+      "key": "Частота процессора",
+      "value": "2.4 ГГц"
     },
     {
       "key": "Оперативная память",
-      "value": "4 ГБ"
+      "value": "4 Гб"
     },
     {
       "key": "Встроенная память",
-      "value": "128 ГБ"
+      "value": "128 Гб"
     },
     {
       "key": "Слот для карты памяти",
-      "value": "есть"
-    },
-    {
-      "key": "Поддержка карт памяти",
-      "value": "microSDXC"
-    },
-    {
-      "key": "Встроенный динамик",
-      "value": "есть"
+      "value": "есть (использует общий слот SIM-карты)"
     },
     {
       "key": "Количество основных (тыловых) камер",
-      "value": "2"
+      "value": "3"
     },
     {
       "key": "Разрешение основной камеры",
-      "value": "50 МП"
+      "value": "50 МП+5 МП+2 МП"
     },
     {
       "key": "Диафрагма основной камеры",
-      "value": "ƒ/1.8"
+      "value": "f/1.8, f/2.2, f/2.4"
     },
     {
       "key": "Максимальное разрешение видео",
       "value": "1080p"
     },
     {
-      "key": "Тип вспышки",
-      "value": "тыльная, светодиодная"
-    },
-    {
       "key": "Максимальная частота кадров видео при максимальном разрешении",
-      "value": "60 к/c"
+      "value": "30 к/с"
     },
     {
-      "key": "Запись видеороликов",
-      "value": "есть"
+      "key": "Особенности и технологии тыловой оптики",
+      "value": "Широкоугольная съемка, Сверхширокоугольная съемка, Макро съемка"
+    },
+    {
+      "key": "Количество фронтальных камер",
+      "value": "1"
     },
     {
       "key": "Разрешение фронтальной камеры",
-      "value": "8 МП"
+      "value": "13 МП"
     },
     {
       "key": "Диафрагма фронтальной камеры",
-      "value": "ƒ/2.0"
+      "value": "f/2.0"
+    },
+    {
+      "key": "Частота кадров записи фронтальной камеры",
+      "value": "30 к/с"
+    },
+    {
+      "key": "Функции фронтальной камеры",
+      "value": "Широкоугольная съемка"
     },
     {
       "key": "SIM-карта",
-      "value": "2 Nano-SIM"
+      "value": "2 Nano-Sim"
     },
     {
       "key": "Беспроводные модули",
-      "value": "Bluetooth 5.3, Wi-Fi 802.11 a/b/g/n/ac"
+      "value": "Wi-Fi 802.11 a/b/g/n/ac, Bluetooth 5.3, NFC"
     },
     {
       "key": "Спутниковая навигация",
-      "value": "GPS, GLONASS, GALILEO, BDS"
-    },
-    {
-      "key": "Интерфейсы",
-      "value": "USB Type-C, mini-jack 3,5 мм"
+      "value": "GPS, GALILEO, GLONASS, BDS, QZSS"
     },
     {
       "key": "Стандарт сотовой связи",
-      "value": "GSM / HSPA / LTE"
+      "value": "GSM / HSPA / LTE / 5G"
     },
     {
       "key": "Модуль NFC (бесконтактная оплата)",
-      "value": "нет"
+      "value": "есть"
     },
     {
       "key": "Профили Bluetooth",
-      "value": "A2DP, Low Energy"
-    },
-    {
-      "key": "Режим работы нескольких SIM-карт",
-      "value": "попеременный"
-    },
-    {
-      "key": "Система A-GPS",
-      "value": "есть"
-    },
-    {
-      "key": "Режим полета",
-      "value": "есть"
-    },
-    {
-      "key": "Прочие технологии передачи данных",
-      "value": "Wi-Fi Direct"
-    },
-    {
-      "key": "Диапазоны частот 4G (LTE)",
-      "value": "1, 3, 5, 7, 8, 20, 28, 38, 40, 41"
+      "value": "A2DP, LE"
     },
     {
       "key": "Тип аккумулятора",
-      "value": "Li-Pol"
+      "value": "Li-Po"
     },
     {
       "key": "Ёмкость аккумулятора",
@@ -158,79 +166,89 @@
       "value": "25 Вт"
     },
     {
+      "key": "Время работы при воспроизведении видео",
+      "value": "15 ч"
+    },
+    {
+      "key": "Время работы при прослушивании музыки",
+      "value": "40 ч"
+    },
+    {
       "key": "Разъём питания",
-      "value": "USB Type-C"
+      "value": "USB Type-C 2.0"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "есть"
     },
     {
       "key": "Беспроводная зарядка",
       "value": "нет"
     },
     {
-      "key": "Реверсивная зарядка",
+      "key": "Беспроводная реверсивная зарядка",
       "value": "нет"
     },
     {
       "key": "Материал",
-      "value": "Пластик"
+      "value": "Стеклянная передняя часть, пластиковая рамка, стекловолокнистая задняя часть"
+    },
+    {
+      "key": "Длина",
+      "value": "164.4 мм"
     },
     {
       "key": "Ширина",
-      "value": "77.3 мм"
-    },
-    {
-      "key": "Высота",
-      "value": "167.3 мм"
+      "value": "77.9 мм"
     },
     {
       "key": "Толщина",
-      "value": "8.0 мм"
+      "value": "7.5 мм"
+    },
+    {
+      "key": "Устойчивое к царапинам стекло",
+      "value": "Corning Gorilla Glass Victus"
     },
     {
       "key": "Вес",
-      "value": "189 г"
+      "value": "192 г"
+    },
+    {
+      "key": "Биометрическая защита",
+      "value": "Отпечаток пальца (боковой)"
     },
     {
       "key": "Цвет",
-      "value": "Голубой"
-    },
-    {
-      "key": "Расположение сканера отпечатка пальца",
-      "value": "сбоку"
+      "value": "Синий"
     },
     {
       "key": "Операционная система",
-      "value": "Android 14"
+      "value": "Android"
     },
     {
-      "key": "Управление",
-      "value": "голосовой набор, голосовое управление"
+      "key": "Оболочка ОС",
+      "value": "One UI 7"
     },
     {
       "key": "Датчики",
-      "value": "Акселерометр, датчик приближения, компас"
+      "value": "Отпечаток пальца (боковой), акселерометр, гироскоп, близость, компас"
     },
     {
-      "key": "Страна производства",
-      "value": "Вьетнам"
+      "key": "Класс водонепроницаемости",
+      "value": "IP54"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a06-4-128gb-light-blue/smartfon-samsung-galaxy-a06-4-128gb-light-blue-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a06-4-128gb-light-blue/smartfon-samsung-galaxy-a06-4-128gb-light-blue-2-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a06-4-128gb-light-blue/smartfon-samsung-galaxy-a06-4-128gb-light-blue-3-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a06-4-128gb-light-blue/smartfon-samsung-galaxy-a06-4-128gb-light-blue-4-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a06-4-128gb-light-blue/smartfon-samsung-galaxy-a06-4-128gb-light-blue-5-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a06-4-128gb-light-blue/smartfon-samsung-galaxy-a06-4-128gb-light-blue-6-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a06-4-128gb-light-blue/smartfon-samsung-galaxy-a06-4-128gb-light-blue-7-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a06-4-128gb-light-blue/smartfon-samsung-galaxy-a06-4-128gb-light-blue-8-1200x1200.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-4-128gb-blue/smartfon-samsung-galaxy-a17-4-128gb-blue-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-4-128gb-blue/smartfon-samsung-galaxy-a17-4-128gb-blue-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-4-128gb-blue/smartfon-samsung-galaxy-a17-4-128gb-blue-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-a17-4-128gb-blue/smartfon-samsung-galaxy-a17-4-128gb-blue-4-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/76df81589a2c326348d45554.jpg",
-    "assets/product-images/5e373ef46f61d0e41959441e.jpg",
-    "assets/product-images/c734daa2e12efec4c0cab1b5.jpg",
-    "assets/product-images/60f0e938735a0f1acc6562d2.jpg",
-    "assets/product-images/da989a71f40bb3c50c91a043.jpg",
-    "assets/product-images/082035ab0ca2f6884bd0c29a.jpg"
+    "assets/product-images/1b27f1b9ba037ec7c936a219.jpg",
+    "assets/product-images/5fb2f9cf969351bcd7ac8da2.jpg",
+    "assets/product-images/7fd1efdb84d2fa569f2f70ce.jpg",
+    "assets/product-images/8e48c0ffbefc6499543ef5cd.jpg"
   ],
-  "updated_at": "2026-09-27T13:06:46.933197Z"
+  "updated_at": "2026-09-28T21:09:44.188963Z"
 }

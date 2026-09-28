@@ -6,139 +6,83 @@
   "country": "🇦🇪 ОАЭ",
   "warehouse": "(S3)",
   "price": 55300,
-  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-s/galaxy-s25-fe/smartfon-samsung-s25-fe-8-256gb-navy",
-  "catalog_title": "Samsung S25 FE 8/256GB, Navy",
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-s/galaxy-s25/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy",
+  "catalog_title": "Samsung Galaxy S25 12/512GB, Navy",
   "specs": [
+    {
+      "key": "Производитель",
+      "value": "Samsung"
+    },
     {
       "key": "Тип дисплея",
       "value": "Dynamic AMOLED 2X"
     },
     {
       "key": "Диагональ",
-      "value": "6.7\""
+      "value": "6.2\""
     },
     {
       "key": "Разрешение",
-      "value": "2340х1080"
+      "value": "2340x1080"
     },
     {
-      "key": "Яркость",
-      "value": "1900 кд/м² в пиковом режиме"
-    },
-    {
-      "key": "Плотность пикселей",
-      "value": "385 пикселей/дюйм"
+      "key": "Частота обновления",
+      "value": "120 Гц"
     },
     {
       "key": "Процессор",
-      "value": "Exynos"
+      "value": "Qualcomm Snapdragon 8 Elite 3"
     },
     {
       "key": "Оперативная память",
-      "value": "8 ГБ"
+      "value": "12 ГБ"
     },
     {
       "key": "Встроенная память",
-      "value": "256 ГБ"
-    },
-    {
-      "key": "Количество основных (тыловых) камер",
-      "value": "3"
+      "value": "512 Гб"
     },
     {
       "key": "Разрешение основной камеры",
-      "value": "50 МП"
-    },
-    {
-      "key": "Диафрагма основной камеры",
-      "value": "f/1.8"
+      "value": "50 МП/10 МП/12 МП"
     },
     {
       "key": "Разрешение фронтальной камеры",
-      "value": "12 МП"
-    },
-    {
-      "key": "Диафрагма фронтальной камеры",
-      "value": "f/2.2"
+      "value": "12 Мп"
     },
     {
       "key": "SIM-карта",
-      "value": "2 Nano-SIM"
-    },
-    {
-      "key": "Сотовая и беспроводная сеть",
-      "value": "GSM / HSPA / LTE / 5G, Bluetooth, Wi-Fi, NFC"
-    },
-    {
-      "key": "Спутниковая навигация",
-      "value": "GPS, GLONASS, GALILEO, BDS"
-    },
-    {
-      "key": "Интерфейсы",
-      "value": "USB Type-C"
+      "value": "2 nano‑SIM"
     },
     {
       "key": "Ёмкость аккумулятора",
-      "value": "4900 мАч"
-    },
-    {
-      "key": "Беспроводная зарядка",
-      "value": "есть"
+      "value": "4000 мАч"
     },
     {
       "key": "Материал",
-      "value": "Алюминий"
-    },
-    {
-      "key": "Ширина",
-      "value": "16,13 см"
-    },
-    {
-      "key": "Высота",
-      "value": "7,66 см"
-    },
-    {
-      "key": "Толщина",
-      "value": "0,74 см"
+      "value": "Алюминий и стекло"
     },
     {
       "key": "Вес",
-      "value": "190 г"
+      "value": "162 г"
     },
     {
       "key": "Цвет",
-      "value": "Синий"
-    },
-    {
-      "key": "Стандарт влагозащиты",
-      "value": "IP68"
-    },
-    {
-      "key": "Операционная система",
-      "value": "Andriod"
-    },
-    {
-      "key": "Датчики",
-      "value": "Акселерометр, гироскоп, датчик приближения, компас"
+      "value": "Тёмно-синий"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-256gb-navy/smartfon-samsung-s25-fe-8-256gb-navy-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-256gb-navy/smartfon-samsung-s25-fe-8-256gb-navy-2-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-256gb-navy/smartfon-samsung-s25-fe-8-256gb-navy-3-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-256gb-navy/smartfon-samsung-s25-fe-8-256gb-navy-4-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-256gb-navy/smartfon-samsung-s25-fe-8-256gb-navy-5-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-256gb-navy/smartfon-samsung-s25-fe-8-256gb-navy-6-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-256gb-navy/smartfon-samsung-s25-fe-8-256gb-navy-7-1200x1200.png",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-s25-fe-8-256gb-navy/smartfon-samsung-s25-fe-8-256gb-navy-8-1200x1200.png"
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy-2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy-3-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy-4-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy/Samsung_Galaxy_S25_12_512GB_Smartphone_Navy-5-1200x1200.jpeg"
   ],
   "images_local": [
-    "assets/product-images/9cf7d3dd8e635a5b2d643d59.png",
-    "assets/product-images/9c766d60634e5dd03cc3b699.png",
-    "assets/product-images/b2a50d66ee28a21ba9796280.png",
-    "assets/product-images/7adae5fd361aa007a34165e4.png",
-    "assets/product-images/446cc7c89cc20811c341215e.png",
-    "assets/product-images/87212a107ba8639f1b55d495.png"
+    "assets/product-images/d3173cc37e3a32eef2f47fa3.jpeg",
+    "assets/product-images/bd0630158cd3da32ee0852d0.jpeg",
+    "assets/product-images/36fc615a85f0a4f64bd31061.jpeg",
+    "assets/product-images/13f5d4e7028160637a1ce98b.jpeg",
+    "assets/product-images/c93f3dbfc5d4b87c64203e2a.jpeg"
   ],
-  "updated_at": "2026-09-27T13:08:06.246189Z"
+  "updated_at": "2026-09-28T21:10:25.712909Z"
 }
