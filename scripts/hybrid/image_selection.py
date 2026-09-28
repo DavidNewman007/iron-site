@@ -82,8 +82,9 @@ IMAGE_SIDE_RE = re.compile(r"-(\d{2,4})x(\d{2,4})\.(?:jpe?g|png|webp)$", re.I)
 # Категории, где товар — само устройство Apple/Samsung. Только у них картинку
 # с зарядкой, чехлом или подставкой надо выбрасывать как кросс-селл: в аудио,
 # gaming и dyson «stand», «charger» и «case» — это и есть товар (27.08.2026).
+# xiaomi — телефоны, как samsung (28.09.2026).
 DEVICE_CATEGORIES = frozenset(
-    {"iphone", "ipad", "macbook", "watch", "airpods", "samsung"}
+    {"iphone", "ipad", "macbook", "watch", "airpods", "samsung", "xiaomi"}
 )
 
 
@@ -189,7 +190,7 @@ def is_cross_sell_accessory_image(url: str) -> bool:
 
 
 def filter_phone_product_images(urls: list[str], category: str) -> list[str]:
-    if category not in ("iphone", "samsung"):
+    if category not in ("iphone", "samsung", "xiaomi"):
         return urls
     filtered = [url for url in urls if not is_cross_sell_accessory_image(url)]
     return filtered or urls
@@ -555,7 +556,7 @@ def select_product_images(
         result = demote_shared_lineup_tail(result)
         result = filter_phone_product_images(result, category)
 
-    if category == "samsung":
+    if category in ("samsung", "xiaomi"):
         result = filter_phone_product_images(result, category)
 
     if category == "macbook":

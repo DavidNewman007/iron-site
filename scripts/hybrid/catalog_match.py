@@ -18,7 +18,12 @@ from .config import (
     SITEMAP_URL,
 )
 from .price_parser import Product
-from .product_match import iphone_match_penalty, watch_match_penalty
+from .product_match import (
+    galaxy_watch_match_penalty,
+    iphone_match_penalty,
+    watch_match_penalty,
+    xiaomi_match_penalty,
+)
 from .scraper import scrape_catalog_product
 
 
@@ -84,6 +89,9 @@ def normalize_match_text(text: str) -> str:
     }
     for src, dst in replacements.items():
         value = value.replace(src, dst)
+    # «Co-Anda» у поставщика против «Coanda» в прайсе: дефис делал из одного
+    # слова два, и стайлеры HS09 не находили своих страниц (28.09.2026).
+    value = re.sub(r"\bco anda\b", "coanda", value)
     return value
 
 
@@ -156,6 +164,30 @@ TOKEN_SYNONYMS = {
     "ochki": "glasses",
     "fitnes": "fitness",
     "braslet": "bracelet",
+    # 28.09.2026 — опечатки и усечения поставщика и прайса, из-за которых
+    # правильная страница проигрывала: «Cremic_Pink», «Jusper_Plum» у
+    # dr-store, «Yellow Nicke» в прайсе.
+    "cremic": "ceramic",
+    "jusper": "jasper",
+    "nicke": "nickel",
+    # Цвета в женском роде: «Станция Лайт 2 Фиолетовая», «Станция MAX Бежевая».
+    # В словаре были только мужские формы, и цвет не узнавался вовсе.
+    "chernaya": "black",
+    "belaya": "white",
+    "seraya": "gray",
+    "sinyaya": "blue",
+    "golubaya": "blue",
+    "zelenaya": "green",
+    "fioletovaya": "purple",
+    "biryuzovaya": "turquoise",
+    "bezhevaya": "beige",
+    "oranzhevaya": "orange",
+    "krasnaya": "red",
+    "rozovaya": "pink",
+    "serebristaya": "silver",
+    "koralovyj": "coral",
+    "koralovaya": "coral",
+    "korallovyj": "coral",
 }
 
 
@@ -310,8 +342,10 @@ COLOR_TOKENS = frozenset(
 # ни штрафов вроде iphone_match_penalty, поэтому цвет и приставку «Pro» надо
 # сверять явно — иначе «Станция Мини 3 Про Зелёный» цепляет обычную Мини 3
 # зелёную, а «Мини 3 Бирюзовый» (такого цвета у поставщика нет) — серую.
+# xiaomi добавлен 28.09.2026: цвет и «Pro»/«Max» у телефонов сверяются так же;
+# модель вдобавок проверяет xiaomi_match_penalty.
 GENERIC_MATCH_CATEGORIES = frozenset(
-    {"audio", "gaming", "dyson", "gadgets", "galaxy_watch", "meta"}
+    {"audio", "gaming", "dyson", "gadgets", "galaxy_watch", "meta", "xiaomi"}
 )
 
 
@@ -330,6 +364,8 @@ GENERIC_NOISE_WORDS = frozenset(
         "zigbee", "yagpt",
         # приписки прайса: «+ годовая подписка», «Size C», «(Gen 2)»
         "godovaya", "podpiska", "size", "gen", "edition",
+        # «NFC» есть в каждом названии Redmi и ни в одном адресе (28.09.2026).
+        "nfc",
     }
 )
 
@@ -462,8 +498,17 @@ def score_product_url(product: Product, url: str) -> float:
     if product.category == "iphone":
         score *= iphone_match_penalty(product.name, url)
 
-    if product.category == "watch":
+    # galaxy_watch — те же поколение и размер (28.09.2026): без проверки
+    # «Galaxy Watch 9 40mm Graphite» садился на страницу Watch 8 — общие слова,
+    # цвет и размер совпадали, а номер 9 против 8 сверка чисел пропускала
+    # (у них общее «40»).
+    if product.category in ("watch", "galaxy_watch"):
         score *= watch_match_penalty(product.name, url)
+    if product.category == "galaxy_watch":
+        score *= galaxy_watch_match_penalty(product.name, url)
+
+    if product.category == "xiaomi":
+        score *= xiaomi_match_penalty(product.name, url)
 
     if product.category in GENERIC_MATCH_CATEGORIES:
         score *= generic_match_penalty(product.name, slug.replace("-", " "))
@@ -511,6 +556,9 @@ GUARDED_CATEGORIES = frozenset(
     {
         "iphone", "watch", "accessories",
         "audio", "gaming", "dyson", "gadgets", "galaxy_watch", "meta",
+        # xiaomi (28.09.2026) — чужую модель и цвет отсекают xiaomi_match_penalty
+        # и generic_match_penalty, поэтому планка та же, что у соседей.
+        "xiaomi",
     }
 )
 GUARDED_MIN_SCORE = 0.25

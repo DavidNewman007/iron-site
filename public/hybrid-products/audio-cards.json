@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T14:44:57.917Z",
-  "count": 75,
+  "generated_at": "2026-09-28T20:36:01.452Z",
+  "count": 82,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -601,6 +601,62 @@
       "name": "Buds 4 Pro Black",
       "warehouse": "(S3)",
       "price": 16000
+    },
+    "яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6400": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6400.html",
+      "cover": "assets/product-images/7aa34cfd2c7bd8ea4ee7a430.jpg",
+      "name": "Яндекс Станция Лайт 2 Фиолетовая (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6400
+    },
+    "яндекс-станция-лайт-2-кораловый-s2-7200": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-кораловый-s2-7200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-кораловый-s2-7200.html",
+      "cover": "assets/product-images/e841286e358136894a97628d.jpg",
+      "name": "Яндекс Станция Лайт 2 Кораловый",
+      "warehouse": "(S2)",
+      "price": 7200
+    },
+    "-яндекс-станция-max-бежевая-s2-32500": {
+      "url": "hybrid-products/audio/яндекс-станция-max-бежевая-s2-32500.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-бежевая-s2-32500.html",
+      "cover": "assets/product-images/6a0f79d69b1009dff0a3e465.jpeg",
+      "name": "🔈Яндекс Станция MAX Бежевая",
+      "warehouse": "(S2)",
+      "price": 32500
+    },
+    "-marshall-major-v-black-s2-7700": {
+      "url": "hybrid-products/audio/marshall-major-v-black-s2-7700.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-black-s2-7700.html",
+      "cover": "assets/product-images/e241f641411412a4e89d84fb.jpeg",
+      "name": "🎧Marshall Major V Black",
+      "warehouse": "(S2)",
+      "price": 7700
+    },
+    "яндекс-станция-стрит-черный-s2-13400": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-черный-s2-13400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-черный-s2-13400.html",
+      "cover": "assets/product-images/0115a93bee7eb333ed6ea597.jpg",
+      "name": "Яндекс Станция Стрит Черный",
+      "warehouse": "(S2)",
+      "price": 13400
+    },
+    "яндекс-станция-стрит-зеленый-s2-13400": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-зеленый-s2-13400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-зеленый-s2-13400.html",
+      "cover": "assets/product-images/c2915f101f9dd4ff3c1b2ca9.jpg",
+      "name": "Яндекс Станция Стрит Зеленый",
+      "warehouse": "(S2)",
+      "price": 13400
+    },
+    "-яндекс-станция-миди-малиновый-s2-17200": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-малиновый-s2-17200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-малиновый-s2-17200.html",
+      "cover": "assets/product-images/4e164c49778835f0aedc77c3.jpeg",
+      "name": "🔈Яндекс Станция Миди Малиновый",
+      "warehouse": "(S2)",
+      "price": 17200
     }
   }
 }

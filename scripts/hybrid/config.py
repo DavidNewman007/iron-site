@@ -49,6 +49,11 @@ HYBRID_CATEGORIES = [
     "gadgets",
     "galaxy_watch",
     "meta",
+    # xiaomi добавлен 28.09.2026: 80 телефонов Xiaomi/POCO/Redmi склада S3
+    # висели в магазине и боте без фото. Прайс-парсер их не узнавал вовсе
+    # (см. CATEGORY_RULES в price_parser.py), а без категории здесь конвейер не
+    # искал им страниц. У поставщика раздел есть: /smartfony/xiaomi/.
+    "xiaomi",
 ]
 
 CATEGORY_MANIFEST = {cat: HYBRID_ROOT / f"{cat}-cards.json" for cat in HYBRID_CATEGORIES}
@@ -75,6 +80,9 @@ CATEGORY_URL_PREFIXES: dict[str, list[str]] = {
     "gadgets": ["/foto-video/", "/gadgets/", "/smart-watches/fitness-bracelets/"],
     "galaxy_watch": ["/smart-watches/samsung-watch/", "/smart-watches/"],
     "meta": ["/gadgets/smart-glasses/"],
+    # Телефоны — /smartfony/xiaomi/{mi,poco,redmi}/…, планшеты Pad — отдельный
+    # раздел /tablets/xiaomi-tablets/ (28.09.2026).
+    "xiaomi": ["/smartfony/xiaomi/", "/tablets/xiaomi-tablets/"],
 }
 
 # Минимальная глубина ссылки товара в карте сайта. У Apple товар лежит на

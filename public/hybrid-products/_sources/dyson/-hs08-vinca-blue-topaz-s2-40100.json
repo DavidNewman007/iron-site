@@ -1,0 +1,61 @@
+{
+  "product_id": "-hs08-vinca-blue-topaz-s2-40100",
+  "category": "dyson",
+  "file_slug": "hs08-vinca-blue-topaz-s2-40100",
+  "name": "👱‍♀️HS08 Vinca Blue/Topaz",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 40100,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-styler/dyson-airwrap-hs08-box-blue-topaz",
+  "catalog_title": "стайлер Dyson Airwrap i.d. HS08 + подарочный футляр, Vinca Blue/Topaz",
+  "specs": [
+    {
+      "key": "Длина сетевого шнура",
+      "value": "2.7 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1300 Вт"
+    },
+    {
+      "key": "Материал",
+      "value": "алюминий/пластик"
+    },
+    {
+      "key": "Ширина",
+      "value": "48 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "272 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "41мм"
+    },
+    {
+      "key": "Вес",
+      "value": "600 г"
+    },
+    {
+      "key": "Ионизация",
+      "value": "Есть"
+    },
+    {
+      "key": "Скорость воздушного потока",
+      "value": "13.5 л/сек"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs08-blue-topaz/533671-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs08-blue-topaz/2_308FH_PDP-Gallery-Images-VIBLTRCTPOR-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/84a7d0d3df27cce4927bc6aa.jpg",
+    "assets/product-images/fd7c40d62d11d831085ca7fc.jpg"
+  ],
+  "manual": true,
+  "manual_key": "hs08 vinca blue topaz~s2",
+  "photo_source": "https://sochi.dr-store.ru/dyson/dyson-styler/dyson-airwrap-hs08-box-blue-topaz",
+  "updated_at": "2026-09-28T20:34:12.780401Z"
+}

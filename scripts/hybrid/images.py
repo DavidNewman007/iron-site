@@ -25,6 +25,25 @@ def prefer_large_image_url(url: str) -> str:
     return re.sub(r"-(\d+)x(\d+)\.", "-1200x1200.", url)
 
 
+def fallback_image_urls(url: str) -> list[str]:
+    """Запасные адреса той же картинки у dr-store (28.09.2026).
+
+    Кэш OpenCart хранит не все размеры: у новых товаров (Redmi Note 17, POCO X8
+    Pro) есть «-1000x1000» и «-500x500», а «-1200x1200», который просит галерея,
+    отдаёт 404. Скрейпер при этом галерею находил, а mirror_images не скачивал
+    ни одного файла — карточки выходили с характеристиками, но без фото. Сначала
+    пробуем 1000x1000, потом оригинал без кэша (/image/catalog/…, без размера).
+    """
+    match = re.search(r"-(\d+)x(\d+)(\.[a-z0-9]+)$", url, re.I)
+    if not match:
+        return []
+    result = [url[: match.start()] + "-1000x1000" + match.group(3)]
+    original = url[: match.start()] + match.group(3)
+    if "/image/cache/catalog/" in original:
+        result.append(original.replace("/image/cache/catalog/", "/image/catalog/", 1))
+    return result
+
+
 def mirror_images(
     remote_urls: list[str],
     *,
@@ -40,7 +59,7 @@ def mirror_images(
             continue
         large = prefer_large_image_url(remote)
         candidates: list[str] = []
-        for candidate in (large, remote):
+        for candidate in (large, remote, *fallback_image_urls(remote)):
             if candidate and candidate not in candidates:
                 candidates.append(candidate)
 

@@ -548,6 +548,207 @@
       ],
       "checked": "2026-09-28",
       "note": "Официальный сайт PITAKA. ремешок, а не чехол: раздел прайса «Ремешки PITAKA»"
+    },
+    "a37 8 128 charcoal~s2": {
+      "name": "A37 8/128 Charcoal",
+      "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a37/galaxy-a37-8-128gb-black",
+      "note": "dr-store: Galaxy A37 5G 8/128GB, Awesome Charcoal — тот же цвет и память",
+      "checked": "2026-09-28"
+    },
+    "a37 8 256 charcoal~s2": {
+      "name": "A37 8/256 Charcoal",
+      "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a37/galaxy-a37-8-256gb-black",
+      "note": "dr-store: Galaxy A37 5G 8/256GB, Awesome Charcoal",
+      "checked": "2026-09-28"
+    },
+    "samsung a37 6 128 charcoal~s3": {
+      "name": "Samsung A37 6/128 Charcoal",
+      "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a37/galaxy-a37-8-128gb-black",
+      "note": "dr-store: A37 Awesome Charcoal; страницы 6/128 нет — взята 8/128 (фото то же, память в характеристиках 8/128)",
+      "checked": "2026-09-28"
+    },
+    "samsung a37 12 256 charcoal~s3": {
+      "name": "Samsung A37 12/256 Charcoal",
+      "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a37/galaxy-a37-8-256gb-black",
+      "note": "dr-store: A37 Awesome Charcoal; страницы 12/256 нет — взята 8/256 (фото то же, память в характеристиках 8/256)",
+      "checked": "2026-09-28"
+    },
+    "samsung a37 12 256 graygreen~s3": {
+      "name": "Samsung A37 12/256 GrayGreen",
+      "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a37/galaxy-a37-8-256gb-gray-green",
+      "note": "dr-store: A37 Awesome Gray-Green; страницы 12/256 нет — взята 8/256",
+      "checked": "2026-09-28"
+    },
+    "samsung a27 6 128 pink~s3": {
+      "name": "Samsung A27 6/128 Pink",
+      "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a27/smartfon-samsung-galaxy-a27-5g-6-128gb-light-pink",
+      "note": "dr-store: Galaxy A27 5G 6/128GB, Light Pink",
+      "checked": "2026-09-28"
+    },
+    "samsung a27 8 256 pink~s3": {
+      "name": "Samsung A27 8/256 Pink",
+      "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a27/smartfon-samsung-galaxy-a27-5g-8-256gb-light-pink",
+      "note": "dr-store: Galaxy A27 5G 8/256GB, Light Pink",
+      "checked": "2026-09-28"
+    },
+    "hs08 vinca blue topaz~s2": {
+      "name": "👱‍♀️HS08 Vinca Blue/Topaz",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-styler/dyson-airwrap-hs08-box-blue-topaz",
+      "note": "dr-store: Airwrap i.d. HS08, Vinca Blue/Topaz",
+      "checked": "2026-09-28"
+    },
+    "hs09 co anda 2x ceramic pink rose gold~s2": {
+      "name": "👱‍♀️HS09 Co-Anda 2X Ceramic Pink/Rose Gold",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-styler/Dyson_Airwrap_HS09_Co-Anda_2X_styler_Cremic_Pink",
+      "note": "dr-store: Airwrap HS09 Co-Anda 2Х, Ceramic Pink/Rose Gold",
+      "checked": "2026-09-28"
+    },
+    "ht01 ceramic pink rose gold~s2": {
+      "name": "👩HT01 Ceramic Pink/Rose Gold",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-airstrait-ht01-pink-gold",
+      "note": "dr-store: Airstrait HT01, Ceramic Pink/Rose Gold",
+      "checked": "2026-09-28"
+    },
+    "ht01 prussian blue copper~s2": {
+      "name": "👩HT01 Prussian Blue/Copper",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-airstrait-ht01-blue-copper",
+      "note": "dr-store: Airstrait HT01, Prussian Blue/Copper",
+      "checked": "2026-09-28"
+    },
+    "dyson ht01 ceramic pink~s3": {
+      "name": "Dyson HT01 Ceramic Pink",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-airstrait-ht01-pink-gold",
+      "note": "dr-store: Airstrait HT01, Ceramic Pink/Rose Gold — у HT01 один цвет Ceramic Pink",
+      "checked": "2026-09-28"
+    },
+    "dyson ht01 prussian blue~s3": {
+      "name": "Dyson HT01 Prussian Blue",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-airstrait-ht01-blue-copper",
+      "note": "dr-store: Airstrait HT01, Prussian Blue/Copper — у HT01 один цвет Prussian Blue",
+      "checked": "2026-09-28"
+    },
+    "dyson hs08 red velvet без диффузора~s3": {
+      "name": "Dyson HS08 Red Velvet без диффузора",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-styler/dyson-airwrap-hs08-box-red-velvet-gold",
+      "note": "dr-store: Airwrap i.d. HS08, Red Velvet/Gold (без диффузора)",
+      "checked": "2026-09-28"
+    },
+    "dyson hs08 vinca blue with diffuse~s3": {
+      "name": "Dyson HS08 Vinca Blue with Diffuse",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-styler/dyson-airwrap-hs08-box-curly-blue-topaz",
+      "note": "dr-store: Airwrap i.d. HS08 (с диффузором), Vinca Blue/Topaz",
+      "checked": "2026-09-28"
+    },
+    "dyson hs09 coanda 2x amber silk with diffuse~s3": {
+      "name": "Dyson HS09 Coanda 2x Amber Silk with Diffuse",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-styler/stajler-dyson-airwrap-hs09-co-anda-2x-amber-silk",
+      "note": "dr-store: Airwrap HS09 Co-Anda 2Х, Amber Silk. ПОД ВОПРОСОМ: у нас «with Diffuse», у поставщика про диффузор не сказано",
+      "checked": "2026-09-28"
+    },
+    "dyson wash g1 black~s3": {
+      "name": "Dyson Wash G1 Black",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/dyson-wash-g1",
+      "note": "dr-store: Dyson Wash G1, Blue/Black. ПОД ВОПРОСОМ: у нас «Black»; у Wash G1 один цвет корпуса",
+      "checked": "2026-09-28"
+    },
+    "dyson cinetic big ball absolute 2 nickel red~s3": {
+      "name": "Dyson Cinetic Big Ball Absolute 2 Nickel/Red",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/dyson-big-ball-absolute-2",
+      "note": "dr-store: Dyson Cinetic Big Ball Absolute 2 (цвет в названии не указан, на фото — см. лист обложек)",
+      "checked": "2026-09-28"
+    },
+    "ps5 slim disk 1tb~s2": {
+      "name": "🎮PS5 Slim Disk 1TB",
+      "catalog_url": "https://sochi.dr-store.ru/gaming/playstation-5/sony-playstation-5-slim",
+      "note": "dr-store: Sony PlayStation 5 Slim 1TB (2 rev) — версия с дисководом (Digital Edition — отдельная страница)",
+      "checked": "2026-09-28"
+    },
+    "дисковод для ps5 pro~s2": {
+      "name": "Дисковод для PS5 Pro",
+      "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/diskovod-sony-playstation-5-disc-drive-for-ps5-slim-pro-digital-edition",
+      "note": "dr-store: Дисковод Sony PlayStation 5 Disc Drive for PS5 Slim/Pro Digital Edition",
+      "checked": "2026-09-28"
+    },
+    "marshall major v black~s2": {
+      "name": "🎧Marshall Major V Black",
+      "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/marshall-naushniki/marshall-major-v",
+      "note": "dr-store: Marshall Major V, Black",
+      "checked": "2026-09-28"
+    },
+    "яндекс станция стрит черный~s2": {
+      "name": "Яндекс Станция Стрит Черный",
+      "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-headphones-and-speakers/yandex-station-street/Portable_smart_speaker_Yandex_Street_Black",
+      "note": "dr-store: Яндекс Стрит, Черный",
+      "checked": "2026-09-28"
+    },
+    "яндекс станция стрит зеленый~s2": {
+      "name": "Яндекс Станция Стрит Зеленый",
+      "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-headphones-and-speakers/yandex-station-street/Portable_smart_speaker_Yandex_Street_Green",
+      "note": "dr-store: Яндекс Стрит, Зеленый",
+      "checked": "2026-09-28"
+    },
+    "яндекс станция миди малиновый~s2": {
+      "name": "🔈Яндекс Станция Миди Малиновый",
+      "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-headphones-and-speakers/yandex-station-midi/yandex-station-midi-pink",
+      "note": "dr-store: Яндекс Станция Миди, Малиновый (адрес …-pink, в названии страницы — Малиновый)",
+      "checked": "2026-09-28"
+    },
+    "iphone 15 pro max 256gb white sim esim~s3": {
+      "name": "iPhone 15 Pro Max 256Gb White (SIM + eSIM)",
+      "catalog_url": "https://sochi.dr-store.ru/iphone-15-pro-max-256gb-white-titanium",
+      "note": "dr-store: iPhone 15 Pro Max 256GB, White Titanium — лежит в корне сайта, поэтому автоматика не находила",
+      "checked": "2026-09-28"
+    },
+    "iphone 15 pro max 256gb natural sim esim~s3": {
+      "name": "iPhone 15 Pro Max 256Gb Natural (SIM + eSIM)",
+      "catalog_url": "https://sochi.dr-store.ru/iphone-15-pro-max-256gb-natural-titanium",
+      "note": "dr-store: iPhone 15 Pro Max 256GB, Natural Titanium — лежит в корне сайта",
+      "checked": "2026-09-28"
+    },
+    "oakley hstn black prizm black polarized 145 51 size c~s1": {
+      "name": "👓 Oakley HSTN Black Prizm Black Polarized 145 - 51 Size C",
+      "catalog_url": "https://sochi.dr-store.ru/gadgets/smart-glasses/oakley-smart-glasses/umnye-ochki-oakley-hstn-black-prizm-black-polarized",
+      "bot_names": [
+        "👓 Oakley HSTN Black Prizm Black Polarized 145 - 51 Size C 80020351"
+      ],
+      "note": "dr-store: OAKLEY HSTN, Black/Prizm Black Polarized. bot_names — имя из каталога бота с артикулом",
+      "checked": "2026-09-28"
+    },
+    "skyler gen 2 shiny black g15 green 150 52 size c 601~s1": {
+      "name": "👓 Skyler (Gen 2) Shiny Black G15 Green 150 - 52 Size C 601/",
+      "catalog_url": "https://sochi.dr-store.ru/gadgets/smart-glasses/ray-ban-smart-glasses/umnye-ochki-ray-ban-meta-skyler-gen-2-s52-shiny-black-g-15-green-rw4014",
+      "bot_names": [
+        "👓 Skyler (Gen 2) Shiny Black G15 Green 150 - 52 Size C 601/7152"
+      ],
+      "note": "dr-store: Ray-Ban Meta Skyler (Gen 2) S52, Shiny Black/G-15 Green",
+      "checked": "2026-09-28"
+    },
+    "wayfarer gen 2 shiny black g15 green 150 50 size c 601~s1": {
+      "name": "👓 Wayfarer (Gen 2) Shiny Black G15 Green 150 - 50 Size C 601/",
+      "catalog_url": "https://sochi.dr-store.ru/gadgets/smart-glasses/ray-ban-smart-glasses/umnye-ochki-ray-ban-meta-wayfarer-rw4012-s50-shiny-black-g15-green-gen-2",
+      "bot_names": [
+        "👓 Wayfarer (Gen 2) Shiny Black G15 Green 150 - 50 Size C 601/7150"
+      ],
+      "note": "dr-store: Ray-Ban Meta Wayfarer (Gen 2) S50, Shiny Black/G-15 Green",
+      "checked": "2026-09-28"
+    },
+    "wayfarer gen 2 shiny black transition graph green 150 50 size c 601 1m50~s1": {
+      "name": "👓 Wayfarer (Gen 2) Shiny Black Transition Graph. Green 150 - 50 Size C 601/1M50",
+      "catalog_url": "https://sochi.dr-store.ru/gadgets/smart-glasses/ray-ban-smart-glasses/umnye-ochki-ray-ban-meta-wayfarer-rw4012-s50-shiny-black-transitions-graphite-green-gen-2",
+      "note": "dr-store: Wayfarer (Gen 2) S50, Shiny Black/Transitions Graphite Green",
+      "checked": "2026-09-28"
+    },
+    "wayfarer gen 2 shiny black transition graph green 155 53 size c 601 1m53~s1": {
+      "name": "👓 Wayfarer (Gen 2) Shiny Black Transition Graph. Green 155 - 53 Size C 601/1M53",
+      "catalog_url": "https://sochi.dr-store.ru/gadgets/smart-glasses/ray-ban-smart-glasses/umnye-ochki-ray-ban-meta-wayfarer-rw4012-s53-shiny-black-transitions-graphite-green-gen-2",
+      "note": "dr-store: Wayfarer (Gen 2) S53, Shiny Black/Transitions Graphite Green",
+      "checked": "2026-09-28"
+    },
+    "wayfarer gen 2 shiny cosmic blue transitions sapphire 155 53 size c 6628mf53 уценка новые царапина на корпусе~s1": {
+      "name": "👓 Wayfarer (Gen 2) Shiny Cosmic Blue Transitions Sapphire 155 53 Size C 6628MF53 (уценка, новые, царапина на корпусе)",
+      "catalog_url": "https://sochi.dr-store.ru/gadgets/smart-glasses/ray-ban-smart-glasses/umnye-ochki-ray-ban-meta-wayfarer-rw4012-s53-shiny-cosmic-blue-transitions-sapphire-gen-2",
+      "note": "dr-store: Wayfarer (Gen 2) S53, Shiny Cosmic Blue/Transitions Sapphire. Позиция — уценка (царапина), фото нового",
+      "checked": "2026-09-28"
     }
   }
 }

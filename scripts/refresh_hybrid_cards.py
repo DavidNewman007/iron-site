@@ -17,7 +17,7 @@ from hybrid.audit import audit_all, missing_product_ids, save_audit_report  # no
 from hybrid.audit_images import audit_all_categories, find_cards_needing_repair  # noqa: E402
 from hybrid.config import HYBRID_CATEGORIES, PROBE_DIR  # noqa: E402
 from hybrid.eligibility import hybrid_skip_reason  # noqa: E402
-from hybrid.price_parser import load_products_from_sheet  # noqa: E402
+from hybrid.price_parser import load_products_from_sheet, unknown_section_headers  # noqa: E402
 
 
 def write_probe_ids_file(category: str, product_ids: list[str]) -> Path:
@@ -177,6 +177,10 @@ def main() -> int:
 
     products, updated_at = load_products_from_sheet()
     report["price_updated_at"] = updated_at
+    # Разделы прайса, которые price_parser не узнал: их позиции ушли в «other» и
+    # карточек не получат. Пусто — хорошо; непусто — дописать правило в
+    # CATEGORY_RULES (price_parser.py и prices.js) (28.09.2026).
+    report["unknown_sections"] = unknown_section_headers()
 
     image_audit_before = audit_all_categories(categories)
     report["image_audit_before"] = [

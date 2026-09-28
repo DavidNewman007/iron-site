@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import re
+import sys
+import unicodedata
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass
@@ -25,6 +27,10 @@ class Product:
     in_stock: bool
 
 
+# Порядок и регулярки зеркалят CATEGORY_RULES в public/js/prices.js — сайт
+# ищет карточку в манифесте СВОЕЙ категории, и если два разбора разойдутся,
+# карточка соберётся в одной папке, а искать её будут в другой. Меняешь здесь —
+# меняй и там (и наоборот).
 CATEGORY_RULES = [
     {
         "id": "accessories",
@@ -32,27 +38,47 @@ CATEGORY_RULES = [
             r"pencil|remax|pitaka|чехол|кейс|ремешк|wallet|сзу|charger|кабель|аксесс|accessories|magic mouse|airtag|smarttag",
             re.I,
         ),
+        # Dyson — не аксессуар, даже если в строке «с кейсом» или «Pencil»
+        # («Dyson HD16 … с кейсом», «Dyson PencilVac»). Без исключения фены и
+        # пылесосы уезжали в accessories, где их искали среди чехлов и стёкол,
+        # и три карточки фенов остались без обложки (28.09.2026).
+        "exclude": re.compile(r"dyson", re.I),
     },
     {"id": "iphone", "test": re.compile(r"iphone", re.I)},
     {"id": "ipad", "test": re.compile(r"ipad", re.I)},
     {"id": "airpods", "test": re.compile(r"airpods", re.I)},
     {
         "id": "gaming",
-        "test": re.compile(r"playstation|ps5|ps vr|vr2|gamepad|pulse|xbox|nintendo", re.I),
+        # \bgaming\b — ради заголовка «🎮 Gaming» (28.09.2026): его не узнавало
+        # ни одно правило, раздел наследовал категорию Dyson, и «Подставка Sony
+        # Vertical Stand» под подзаголовком «Sony» числилась феном.
+        "test": re.compile(r"playstation|ps5|ps vr|vr2|gamepad|pulse|xbox|nintendo|\bgaming\b", re.I),
     },
     {
         "id": "audio",
         "test": re.compile(
-            r"galaxy\s*buds|jbl|marshall|акустик|колонк|станци|speaker|street|дуо max|midi|max zigbee",
+            r"galaxy\s*buds|jbl|marshall|акустик|колонк|станци|speaker|street|дуо max|midi|max zigbee|\baudio\b",
             re.I,
         ),
+        # «Dyson V16S … + Док станция» — пылесос, а не «Станция» (28.09.2026).
+        "exclude": re.compile(r"dyson", re.I),
     },
     {"id": "dyson", "test": re.compile(r"dyson|\bhs\d{2}\b|\bhd\d{2}\b|\bht\d{2}\b", re.I)},
+    {
+        # Добавлено 28.09.2026. До этого конвейер Xiaomi не знал вовсе: заголовок
+        # «🤖 Xiaomi» не узнавался, раздел наследовал категорию предыдущего
+        # («Galaxy Watch»), и все 80 телефонов склада S3 искали себе страницу
+        # среди умных часов. Бот и магазин категорию знали давно.
+        "id": "xiaomi",
+        "test": re.compile(r"xiaomi|\bpoco\b|\bredmi\b", re.I),
+    },
     {
         "id": "gadgets",
         # fitbit добавлен 27.08.2026: из-за эмодзи ⌚️ он попадал в apple watch,
         # где у поставщика его, разумеется, нет, и карточка не собиралась.
-        "test": re.compile(r"whoop|gopro|instax|fujifilm|canon|dji|osmo|apple tv|fitbit", re.I),
+        # «фототехник|фитнес» — заголовки «🎥 Фототехника» и «🏃‍♂️ Фитнес-браслеты»
+        # (28.09.2026): раньше их не узнавало ни одно правило.
+        "test": re.compile(r"whoop|gopro|instax|fujifilm|canon|dji|osmo|apple tv|fitbit|фототехник|фитнес", re.I),
     },
     {"id": "macbook", "test": re.compile(r"macbook", re.I)},
     {
@@ -64,7 +90,8 @@ CATEGORY_RULES = [
         "id": "galaxy_watch",
         "test": re.compile(r"galaxy watch|^watch\s*(8|ultra|classic)\b", re.I),
     },
-    {"id": "meta", "test": re.compile(r"meta|oakley|wayfarer|skyler", re.I)},
+    # «умные очки» — заголовок «🕶️ Умные очки» (28.09.2026).
+    {"id": "meta", "test": re.compile(r"meta|oakley|wayfarer|skyler|умные\s*очки", re.I)},
     {
         "id": "watch",
         "test": re.compile(
@@ -75,6 +102,15 @@ CATEGORY_RULES = [
     },
     {"id": "other", "test": re.compile(r".", re.I)},
 ]
+
+# Заголовки разделов, которые не узнало ни одно правило (см. parse_sheet_json).
+# Копятся за весь процесс, чтобы прогон мог показать их в отчёте.
+_UNKNOWN_SECTIONS: set[str] = set()
+
+
+def unknown_section_headers() -> list[str]:
+    """Главные заголовки прайса, для которых не нашлось категории."""
+    return sorted(_UNKNOWN_SECTIONS)
 
 
 def parse_price(value: Any) -> int:
@@ -117,6 +153,25 @@ def detect_category(text: str) -> str | None:
 
 def is_category_row(name: str, warranty: str, country: str, qty: str, price_raw: str) -> bool:
     return bool(name and not warranty and not country and not qty and not price_raw)
+
+
+def is_subsection_label(section: str) -> bool:
+    """Подзаголовок внутри раздела, а не новый раздел.
+
+    Главный заголовок у обоих поставщиков начинается со своей картинки
+    («📱 Samsung», «🎮 Gaming», «🤖 Xiaomi»). Подзаголовок — либо с 🔘
+    («🔘 Series A», «🔘 Яндекс»), либо без картинки вовсе («Sony», «Oakley»,
+    «(С 🇷🇺 гравировкой клавиатуры)», «Coming Soon 🔜»). Подзаголовку законно
+    достаётся категория раздела, главному — нет.
+
+    Правило зеркалит isSubsectionLabel в public/js/prices.js: картинку
+    отличаем от буквы, цифры и знака препинания по категории Юникода, а не по
+    списку эмодзи — список устареет с первым новым разделом поставщика.
+    """
+    s = str(section or "").lstrip(" \t\ufe0f\u200d")
+    if not s or s.startswith("🔘"):
+        return True
+    return unicodedata.category(s[0])[0] in ("L", "N", "P")
 
 
 def normalize_section_label(section: str) -> str:
@@ -318,6 +373,22 @@ def parse_sheet_json(json_data: dict[str, Any]) -> tuple[list[Product], str]:
                 current_category = "watch"
             elif is_macbook_section_label(current_section):
                 current_category = "macbook"
+            elif not is_subsection_label(current_section):
+                # Новый главный раздел, которого правила не знают. Раньше он
+                # молча наследовал категорию ПРЕДЫДУЩЕГО раздела: так 80
+                # телефонов Xiaomi/POCO/Redmi числились часами Galaxy Watch, и
+                # карточки им искали среди умных часов (28.09.2026). Теперь —
+                # «other» (карточку не собираем) и предупреждение в stderr:
+                # stdout у сборщиков занят JSON-отчётом.
+                current_category = "other"
+                if current_section not in _UNKNOWN_SECTIONS:
+                    _UNKNOWN_SECTIONS.add(current_section)
+                    print(
+                        f"⚠️ price_parser: раздел «{current_section}» не узнан ни одним "
+                        "правилом CATEGORY_RULES — позиции без явной категории в "
+                        "названии уйдут в «other», карточки им не соберутся",
+                        file=sys.stderr,
+                    )
             continue
 
         qty, price_raw = normalize_product_fields(parsed["qty"], parsed["priceRaw"])

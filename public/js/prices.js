@@ -247,7 +247,7 @@
   const HYBRID_WATCH_MANIFEST_VERSION = "2026-06-26-2";
   const HYBRID_AIRPODS_MANIFEST_VERSION = "2026-06-26-2";
   const HYBRID_SAMSUNG_MANIFEST_VERSION = "2026-06-27-3";
-  const HYBRID_ACCESSORIES_MANIFEST_VERSION = "2026-06-27-1";
+  const HYBRID_ACCESSORIES_MANIFEST_VERSION = "2026-09-28-1"; // PITAKA из ручного источника
   /**
    * Категории без собственных правил сопоставления (27.08.2026).
    *
@@ -275,8 +275,13 @@
     "gadgets",
     "galaxy_watch",
     "meta",
+    // xiaomi (28.09.2026): категорию магазин знал давно, а манифеста не было —
+    // конвейер карточек Xiaomi не узнавал, и 80 телефонов S3 шли без фото.
+    "xiaomi",
   ];
-  const EXTRA_HYBRID_MANIFEST_VERSION = "2026-08-27-1";
+  // Поднимать при каждом изменении списка выше: иначе браузер отдаст манифесты
+  // из кэша, и новая категория останется без фото до его истечения.
+  const EXTRA_HYBRID_MANIFEST_VERSION = "2026-09-28-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
   const CART_KEY = "iron_cart";
   const CART_PRODUCT_ID_QUERY_PARAM = "pid";
@@ -294,6 +299,11 @@
     "тайвань",
     "россия"]);
 
+  // Порядок и регулярки — ОДНИ И ТЕ ЖЕ с CATEGORY_RULES в
+  // scripts/hybrid/price_parser.py (конвейер карточек). Карточка собирается в
+  // папку категории, которую назначил конвейер, а магазин ищет её в манифесте
+  // категории, которую назначил этот список: разойдутся — плитка без фото.
+  // Меняешь здесь — меняй и там.
   const CATEGORY_RULES = [
     // Accessories must come before iPhone/Samsung so that items like
     // "Защитное стекло 3D Remax для iPhone 14 Pro Max" land here, not in iPhone.
@@ -301,8 +311,10 @@
       id: "accessories",
       label: "Accessories",
       icon: "🔌",
+      // Dyson — не аксессуар, даже «с кейсом» или «PencilVac» (28.09.2026).
       test: (t) =>
-        /pencil|remax|pitaka|чехол|кейс|ремешк|wallet|сзу|charger|кабель|аксесс|accessories|magic mouse|airtag|smarttag/i.test(t),
+        /pencil|remax|pitaka|чехол|кейс|ремешк|wallet|сзу|charger|кабель|аксесс|accessories|magic mouse|airtag|smarttag/i.test(t) &&
+        !/dyson/i.test(t),
     },
     { id: "iphone", label: "iPhone", icon: "📱", test: (t) => /iphone/i.test(t) },
     { id: "ipad", label: "iPad", icon: "🔳", test: (t) => /ipad/i.test(t) },
@@ -316,16 +328,20 @@
       id: "gaming",
       label: "Gaming · Console",
       icon: "🎮",
-      test: (t) => /playstation|ps5|ps vr|vr2|gamepad|pulse|xbox|nintendo/i.test(t),
+      // \bgaming\b — заголовок «🎮 Gaming» (28.09.2026): раньше не узнавался,
+      // и раздел наследовал Dyson («Подставка Sony Vertical Stand» — в Dyson).
+      test: (t) => /playstation|ps5|ps vr|vr2|gamepad|pulse|xbox|nintendo|\bgaming\b/i.test(t),
     },
     {
       id: "audio",
       label: "Audio",
       icon: "🎵",
+      // \baudio\b — заголовок «🎵 Audio»; Dyson — «… + Док станция» это
+      // пылесос, а не «Станция» (оба 28.09.2026).
       test: (t) =>
-        /galaxy\s*buds|jbl|marshall|акустик|колонк|станци|speaker|street|дуо max|midi|max zigbee/i.test(
+        /galaxy\s*buds|jbl|marshall|акустик|колонк|станци|speaker|street|дуо max|midi|max zigbee|\baudio\b/i.test(
           t
-        ),
+        ) && !/dyson/i.test(t),
     },
     {
       id: "dyson",
@@ -349,7 +365,8 @@
       // magic mouse / airtag / smarttag moved to accessories
       // fitbit добавлен 27.08.2026: из-за эмодзи ⌚️ он попадал в apple watch
       // и искал карточку не в том манифесте (правило зеркалит price_parser.py).
-      test: (t) => /whoop|gopro|instax|fujifilm|canon|dji|osmo|apple tv|fitbit/i.test(t),
+      // «фототехник|фитнес» — заголовки «🎥 Фототехника», «🏃‍♂️ Фитнес-браслеты» (28.09.2026).
+      test: (t) => /whoop|gopro|instax|fujifilm|canon|dji|osmo|apple tv|fitbit|фототехник|фитнес/i.test(t),
     },
     {
       id: "macbook",
@@ -373,7 +390,8 @@
       id: "meta",
       label: "Meta",
       icon: "👓",
-      test: (t) => /meta|oakley|wayfarer|skyler/i.test(t),
+      // «умные очки» — заголовок «🕶️ Умные очки» (28.09.2026).
+      test: (t) => /meta|oakley|wayfarer|skyler|умные\s*очки/i.test(t),
     },
     // Apple Watch only (Galaxy Watch handled by galaxy_watch rule above).
     {
@@ -2099,6 +2117,13 @@
           currentCategory = "watch";
         } else if (isMacbookSectionLabel(currentSection)) {
           currentCategory = "macbook";
+        } else if (!isSubsectionLabel(currentSection)) {
+          // Новый главный раздел, которого правила не знают. Раньше он молча
+          // наследовал категорию предыдущего раздела (так Xiaomi числились
+          // часами Galaxy Watch у конвейера карточек). Теперь — «Прочее»,
+          // как в price_parser.py (28.09.2026).
+          currentCategory = "other";
+          console.warn(`[prices] раздел «${currentSection}» не узнан CATEGORY_RULES — позиции без категории в названии уйдут в «Прочее»`);
         }
         continue;
       }
@@ -2370,6 +2395,22 @@
 
   function isCategoryRow(name, warranty, country, qty, price) {
     return name && !warranty && !country && !qty && !price;
+  }
+
+  /**
+   * Подзаголовок внутри раздела, а не новый раздел (28.09.2026). То же правило,
+   * что is_subsection_label в scripts/hybrid/price_parser.py.
+   *
+   * Главный заголовок начинается со своей картинки («📱 Samsung», «🎮 Gaming»,
+   * «🤖 Xiaomi»); подзаголовок — с 🔘 («🔘 Series A») или без картинки вовсе
+   * («Sony», «(С 🇷🇺 гравировкой клавиатуры)»). Подзаголовку законно достаётся
+   * категория раздела, неузнанному главному — нет. Картинку отличаем от буквы,
+   * цифры и знака препинания по классу Юникода, а не по списку эмодзи.
+   */
+  function isSubsectionLabel(section) {
+    const s = String(section || "").replace(/^[\s\uFE0F\u200D]+/u, "");
+    if (!s || s.startsWith("🔘")) return true;
+    return /^[\p{L}\p{N}\p{P}]/u.test(s);
   }
 
   function detectCategory(text) {

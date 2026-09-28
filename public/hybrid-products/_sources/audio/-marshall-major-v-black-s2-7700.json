@@ -1,0 +1,43 @@
+{
+  "product_id": "-marshall-major-v-black-s2-7700",
+  "category": "audio",
+  "file_slug": "marshall-major-v-black-s2-7700",
+  "name": "🎧Marshall Major V Black",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 7700,
+  "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/marshall-naushniki/marshall-major-v",
+  "catalog_title": "беспроводные наушники Marshall Major V, Black",
+  "specs": [
+    {
+      "key": "Интерфейсы",
+      "value": "USB-C"
+    },
+    {
+      "key": "Время работы",
+      "value": "100 ч"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Вес",
+      "value": "186 г"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav-2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2-2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3-2-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/e241f641411412a4e89d84fb.jpeg",
+    "assets/product-images/69329fb3966c358727d331d3.jpeg",
+    "assets/product-images/4543e3941845880c6ac2d7f3.jpeg"
+  ],
+  "manual": true,
+  "manual_key": "marshall major v black~s2",
+  "photo_source": "https://sochi.dr-store.ru/audio/naushniki/marshall-naushniki/marshall-major-v",
+  "updated_at": "2026-09-28T20:35:15.725625Z"
+}

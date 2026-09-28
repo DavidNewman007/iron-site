@@ -30,6 +30,7 @@ const categories = [
   "gadgets",
   "galaxy_watch",
   "meta",
+  "xiaomi", // 28.09.2026
 ];
 
 const args = process.argv.slice(2);

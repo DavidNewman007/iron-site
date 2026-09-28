@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T14:44:57.921Z",
-  "count": 48,
+  "generated_at": "2026-09-28T20:36:01.402Z",
+  "count": 51,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -385,6 +385,30 @@
       "name": "🎮PS5 Slim Digital 825Gb",
       "warehouse": "(S2)",
       "price": 69800
+    },
+    "подставка-sony-vertical-stand-s2-3500": {
+      "url": "hybrid-products/gaming/подставка-sony-vertical-stand-s2-3500.html",
+      "url_en": "en/hybrid-products/gaming/подставка-sony-vertical-stand-s2-3500.html",
+      "cover": "assets/product-images/aeeaa9bf403cdc1cbdf75742.jpg",
+      "name": "Подставка Sony Vertical Stand",
+      "warehouse": "(S2)",
+      "price": 3500
+    },
+    "-ps5-slim-disk-1tb-s2-75800": {
+      "url": "hybrid-products/gaming/ps5-slim-disk-1tb-s2-75800.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-disk-1tb-s2-75800.html",
+      "cover": "assets/product-images/710d027896068006fabffb9c.jpg",
+      "name": "🎮PS5 Slim Disk 1TB",
+      "warehouse": "(S2)",
+      "price": 75800
+    },
+    "дисковод-для-ps5-pro-s2-11100": {
+      "url": "hybrid-products/gaming/дисковод-для-ps5-pro-s2-11100.html",
+      "url_en": "en/hybrid-products/gaming/дисковод-для-ps5-pro-s2-11100.html",
+      "cover": "assets/product-images/b69ddd0b1caaeea46a30c8f4.jpg",
+      "name": "Дисковод для PS5 Pro",
+      "warehouse": "(S2)",
+      "price": 11100
     }
   }
 }

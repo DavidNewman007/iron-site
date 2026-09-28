@@ -1,0 +1,67 @@
+{
+  "product_id": "dyson-ht01-ceramic-pink-великобритания-s3-32600",
+  "category": "dyson",
+  "file_slug": "dyson-ht01-ceramic-pink-s3-32600",
+  "name": "Dyson HT01 Ceramic Pink",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S3)",
+  "price": 32600,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-airstrait-ht01-pink-gold",
+  "catalog_title": "выпрямитель для волос Dyson Airstrait HT01, Ceramic Pink/Rose Gold",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Airstrait HT01"
+    },
+    {
+      "key": "Длина сетевого шнура",
+      "value": "2 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1600 Вт"
+    },
+    {
+      "key": "Ширина",
+      "value": "41 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "330 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "60 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "460 г"
+    },
+    {
+      "key": "Скорость воздушного потока",
+      "value": "11.9 л/с"
+    },
+    {
+      "key": "Технологии",
+      "value": "два режима укладки, авто-пауза, ЖК-дисплей, блокировка, интеллектуальная система контроля температур"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-rose-dr-store-10-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-rose-dr-store-11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-rose-dr-store-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-rose-dr-store-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-rose-dr-store-12-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/c8212a33a4debf5f171a68d0.jpg",
+    "assets/product-images/d39c92f1ec1a318616ff536d.jpg",
+    "assets/product-images/1db9bfef02b5b1824213d017.jpg",
+    "assets/product-images/0349e3df40ec3fd5dcd2658f.jpg",
+    "assets/product-images/9fe521baef1a922cba1eb6fe.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson ht01 ceramic pink~s3",
+  "photo_source": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-airstrait-ht01-pink-gold",
+  "updated_at": "2026-09-28T20:34:29.241256Z"
+}

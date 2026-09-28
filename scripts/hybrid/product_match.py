@@ -12,7 +12,11 @@ def normalize_match_text(text: str) -> str:
 
 
 IPHONE_MODEL_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
-    ("iphone-air", re.compile(r"\biphone\s+air\b", re.I)),
+    # «iPhone 17 Air» — так Air называет склад S3 (Dr.Store МСК). Без «17» в
+    # шаблоне модель определялась как iphone-17, и все карточки «iPhone 17 Air …»
+    # собрались со страниц обычного iPhone 17 и даже 17 Pro Deep Blue: чужой
+    # телефон на фото (найдено 28.09.2026).
+    ("iphone-air", re.compile(r"\biphone\s+(?:17\s+)?air\b", re.I)),
     ("iphone-17", re.compile(r"\biphone\s+17\b", re.I)),
     ("iphone-16", re.compile(r"\biphone\s+16\b", re.I)),
     ("iphone-15", re.compile(r"\biphone\s+15\b", re.I)),
@@ -147,3 +151,76 @@ def watch_match_penalty(product_name: str, url: str) -> float:
         penalty *= 0.15
 
     return penalty
+
+
+# Xiaomi / POCO / Redmi (28.09.2026).
+#
+# У телефонов всё решает модель: «Poco X8 Pro» и «Poco X8 Pro Max», «Redmi 17» и
+# «Redmi Note 17», «Xiaomi 17T» и «Xiaomi 17T Pro» — разные аппараты с похожими
+# словами, и общая сверка слов без этой проверки уводила «Poco F9 Pro» на
+# страницу X8 Pro Max, а «Redmi 17» — на Redmi Note 17. Модель — всё, что стоит в
+# названии ДО памяти («12/256», «12-256gb», «16/1TB»), без марки и служебных
+# слов. Совпасть она должна целиком.
+XIAOMI_NOISE_TOKENS = frozenset(
+    {"xiaomi", "smartfon", "smartphone", "planshet", "tablet", "5g", "4g", "nfc",
+     "wi", "fi", "wifi", "global", "version"}
+)
+_MEMORY_TOKEN_RE = re.compile(r"^\d+(?:gb|tb)$")
+
+
+def _is_memory_start(token: str, next_token: str) -> bool:
+    """«12 256» / «12 256gb» / «16 1tb» — оперативная память, за ней накопитель."""
+    if _MEMORY_TOKEN_RE.match(token):
+        return True
+    if not token.isdigit() or int(token) > 24:
+        return False
+    return bool(_MEMORY_TOKEN_RE.match(next_token)) or (next_token.isdigit() and int(next_token) >= 32)
+
+
+def xiaomi_model_core(text: str) -> tuple[str, ...]:
+    value = normalize_match_text(text).replace("_", " ").replace("/", " ")
+    tokens = value.split()
+    core: list[str] = []
+    for i, token in enumerate(tokens):
+        following = tokens[i + 1] if i + 1 < len(tokens) else ""
+        if _is_memory_start(token, following):
+            break
+        if token in XIAOMI_NOISE_TOKENS:
+            continue
+        core.append(token)
+    return tuple(core)
+
+
+def xiaomi_has_memory(text: str) -> bool:
+    tokens = normalize_match_text(text).replace("_", " ").replace("/", " ").split()
+    return any(_is_memory_start(t, tokens[i + 1] if i + 1 < len(tokens) else "") for i, t in enumerate(tokens))
+
+
+def xiaomi_match_penalty(name: str, url: str) -> float:
+    slug = str(url or "").rsplit("/", 1)[-1]
+    penalty = 1.0
+    name_core = xiaomi_model_core(name)
+    slug_core = xiaomi_model_core(slug)
+    if name_core and slug_core and name_core != slug_core:
+        penalty *= 0.05
+    # Страница без памяти в адресе — раздел модели («…/xiaomi-17t-pro»), а не товар.
+    if xiaomi_has_memory(name) and not xiaomi_has_memory(slug):
+        penalty *= 0.3
+    return penalty
+
+
+def galaxy_watch_match_penalty(name: str, url: str) -> float:
+    """Номер модели Galaxy Watch из названия должен быть и в адресе (28.09.2026).
+
+    watch_match_penalty сверяет поколение, только когда оно найдено с обеих
+    сторон. У Galaxy Watch 9 страницы у поставщика нет, и «Galaxy Watch 9 40mm
+    Graphite» садился на «Galaxy Fit 3 40mm Graphite» и «Galaxy Watch FE»:
+    цвет, размер и слово watch совпадали, а номера в адресе не было вовсе.
+    """
+    match = re.search(r"\bwatch\s*(\d{1,2})\b", normalize_match_text(name))
+    if not match:
+        return 1.0
+    slug = normalize_match_text(str(url or "").rsplit("/", 1)[-1].replace("_", " ").replace("-", " "))
+    if re.search(rf"\bwatch\s*{match.group(1)}\b", slug):
+        return 1.0
+    return 0.05

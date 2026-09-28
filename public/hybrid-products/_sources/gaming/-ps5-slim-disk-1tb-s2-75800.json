@@ -1,0 +1,67 @@
+{
+  "product_id": "-ps5-slim-disk-1tb-s2-75800",
+  "category": "gaming",
+  "file_slug": "ps5-slim-disk-1tb-s2-75800",
+  "name": "🎮PS5 Slim Disk 1TB",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 75800,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/playstation-5/sony-playstation-5-slim",
+  "catalog_title": "игровую приставку Sony PlayStation 5 Slim 1TB",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "AMD Ryzen Zen 2 (8-ядерный 3.50 МГц)"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "AMD Radeon RDNA 2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "1024 ГБ"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-A 3.0 2 шт., USB Type-C 2 шт., выход HDMI, Bluetooth 5.1, Wi-Fi, LAN"
+    },
+    {
+      "key": "Материал",
+      "value": "пластик"
+    },
+    {
+      "key": "Ширина",
+      "value": "96 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "358 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "216 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "3200 г"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5-slim/ps5-slim-dr-store-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5-slim/ps5-slim-dr-store-11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5-slim/ps5-slim-dr-store-10-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/710d027896068006fabffb9c.jpg",
+    "assets/product-images/d24f2f31780ed827384407d1.jpg",
+    "assets/product-images/d0517d7aad8402912d818f60.jpg"
+  ],
+  "manual": true,
+  "manual_key": "ps5 slim disk 1tb~s2",
+  "photo_source": "https://sochi.dr-store.ru/gaming/playstation-5/sony-playstation-5-slim",
+  "updated_at": "2026-09-28T20:35:04.282794Z"
+}

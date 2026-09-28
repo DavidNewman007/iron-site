@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T14:44:57.904Z",
-  "count": 991,
+  "generated_at": "2026-09-28T20:36:42.989239Z",
+  "count": 996,
   "byId": {
     "s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-южная-африка-s1-99300": {
       "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-s1-99300.html",
@@ -7589,7 +7589,7 @@
     "samsung-a27-6-128-pink-оаэ-s3-24400": {
       "url": "hybrid-products/samsung/samsung-a27-6-128-pink-s3-24400.html",
       "url_en": "en/hybrid-products/samsung/samsung-a27-6-128-pink-s3-24400.html",
-      "cover": "",
+      "cover": "assets/product-images/e3acc746270d2647c75370e6.jpg",
       "name": "Samsung A27 6/128 Pink",
       "warehouse": "(S3)",
       "price": 24400
@@ -7605,7 +7605,7 @@
     "samsung-a27-8-256-pink-оаэ-s3-28000": {
       "url": "hybrid-products/samsung/samsung-a27-8-256-pink-s3-28000.html",
       "url_en": "en/hybrid-products/samsung/samsung-a27-8-256-pink-s3-28000.html",
-      "cover": "",
+      "cover": "assets/product-images/e3acc746270d2647c75370e6.jpg",
       "name": "Samsung A27 8/256 Pink",
       "warehouse": "(S3)",
       "price": 28000
@@ -7929,6 +7929,46 @@
       "name": "Samsung Z Fold 8 12/512 Lavender",
       "warehouse": "(S3)",
       "price": 133400
+    },
+    "a37-8-128-charcoal-оаэ-s2-28300": {
+      "url": "hybrid-products/samsung/a37-8-128-charcoal-s2-28300.html",
+      "url_en": "en/hybrid-products/samsung/a37-8-128-charcoal-s2-28300.html",
+      "cover": "assets/product-images/944f196d4400814d6202f1d5.jpg",
+      "name": "A37 8/128 Charcoal",
+      "warehouse": "(S2)",
+      "price": 28300
+    },
+    "a37-8-256-charcoal-оаэ-s2-32500": {
+      "url": "hybrid-products/samsung/a37-8-256-charcoal-s2-32500.html",
+      "url_en": "en/hybrid-products/samsung/a37-8-256-charcoal-s2-32500.html",
+      "cover": "assets/product-images/944f196d4400814d6202f1d5.jpg",
+      "name": "A37 8/256 Charcoal",
+      "warehouse": "(S2)",
+      "price": 32500
+    },
+    "samsung-a37-6-128-charcoal-оаэ-s3-27000": {
+      "url": "hybrid-products/samsung/samsung-a37-6-128-charcoal-s3-27000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a37-6-128-charcoal-s3-27000.html",
+      "cover": "assets/product-images/944f196d4400814d6202f1d5.jpg",
+      "name": "Samsung A37 6/128 Charcoal",
+      "warehouse": "(S3)",
+      "price": 27000
+    },
+    "samsung-a37-12-256-charcoal-оаэ-s3-32700": {
+      "url": "hybrid-products/samsung/samsung-a37-12-256-charcoal-s3-32700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a37-12-256-charcoal-s3-32700.html",
+      "cover": "assets/product-images/944f196d4400814d6202f1d5.jpg",
+      "name": "Samsung A37 12/256 Charcoal",
+      "warehouse": "(S3)",
+      "price": 32700
+    },
+    "samsung-a37-12-256-graygreen-оаэ-s3-32500": {
+      "url": "hybrid-products/samsung/samsung-a37-12-256-graygreen-s3-32500.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a37-12-256-graygreen-s3-32500.html",
+      "cover": "assets/product-images/33eeeb98b44e8a360facb964.jpg",
+      "name": "Samsung A37 12/256 GrayGreen",
+      "warehouse": "(S3)",
+      "price": 32500
     }
   }
 }

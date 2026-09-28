@@ -65,6 +65,12 @@ def _score(source: dict[str, Any]) -> tuple[int, int, str]:
 
 
 def build_bot_index() -> dict[str, Any]:
+    from .manual_sources import load_manual_sources
+
+    manual_bot_names = {
+        key: [str(n) for n in (entry.get("bot_names") or [])]
+        for key, entry in load_manual_sources().items()
+    }
     best: dict[str, dict[str, Any]] = {}
     urls: dict[str, str] = {}
 
@@ -109,6 +115,12 @@ def build_bot_index() -> dict[str, Any]:
         name_key = normalize_key_part(source.get("name"))
         if name_key and name_key not in by_name:
             by_name[name_key] = key
+        # Бот ищет по имени из каталога Apps Script, а публичный лист прайса
+        # (его читает конвейер) у склада S1 отрезает артикул в конце: в боте
+        # «… Size C 80020351», в карточке «… Size C». Такие имена перечислены в
+        # ручной записи полем bot_names (manual_sources.json, 28.09.2026).
+        for bot_name in manual_bot_names.get(str(source.get("manual_key") or ""), []):
+            by_name.setdefault(normalize_key_part(bot_name), key)
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),

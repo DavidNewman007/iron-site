@@ -22,7 +22,12 @@ import json
 
 from .catalog_match import GENERIC_MATCH_CATEGORIES, generic_match_penalty
 from .config import SOURCES_ROOT
-from .product_match import iphone_match_penalty, watch_match_penalty
+from .product_match import (
+    galaxy_watch_match_penalty,
+    iphone_match_penalty,
+    watch_match_penalty,
+    xiaomi_match_penalty,
+)
 
 # Ниже этого штрафа страница у поставщика считается чужой. 0.5 — потому что все
 # проверки штрафуют кратно (0.4, 0.25, 0.15, 0.05): один сработавший запрет уже
@@ -36,11 +41,21 @@ def source_match_penalty(category: str, name: str, catalog_url: str) -> float:
         return 1.0
     if category == "watch":
         return watch_match_penalty(name, catalog_url)
+    if category == "galaxy_watch":
+        slug = catalog_url.rsplit("/", 1)[-1].replace("-", " ")
+        return (
+            generic_match_penalty(name, slug)
+            * watch_match_penalty(name, catalog_url)
+            * galaxy_watch_match_penalty(name, catalog_url)
+        )
     if category == "iphone":
         return iphone_match_penalty(name, catalog_url)
     if category in GENERIC_MATCH_CATEGORIES:
         slug = catalog_url.rsplit("/", 1)[-1].replace("-", " ")
-        return generic_match_penalty(name, slug)
+        penalty = generic_match_penalty(name, slug)
+        if category == "xiaomi":
+            penalty *= xiaomi_match_penalty(name, catalog_url)
+        return penalty
     return 1.0
 
 
@@ -60,7 +75,9 @@ def find_stale_matches(category: str) -> list[dict]:
     stale: list[dict] = []
     for _, source in iter_sources(category):
         url = str(source.get("catalog_url") or "")
-        if not url:
+        # Ручной источник: адрес — страница стороннего сайта, правила dr-store
+        # к ней неприменимы (manual_sources.py).
+        if not url or source.get("manual"):
             continue
         penalty = source_match_penalty(category, str(source.get("name") or ""), url)
         if penalty < STALE_MATCH_THRESHOLD:
@@ -79,7 +96,7 @@ def find_cards_missing_specs(category: str) -> list[dict]:
     """Карточки с пустой таблицей характеристик."""
     empty: list[dict] = []
     for _, source in iter_sources(category):
-        if source.get("specs"):
+        if source.get("specs") or source.get("manual"):
             continue
         empty.append(
             {
