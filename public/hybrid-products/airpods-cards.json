@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-27T13:12:46.328Z",
-  "count": 166,
+  "generated_at": "2026-09-28T14:44:57.816Z",
+  "count": 171,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -1329,6 +1329,46 @@
       "name": "AirPods MAX 2 (2026) Blue",
       "warehouse": "(S3)",
       "price": 45300
+    },
+    "-airpods-4-with-anc-mxp93-s1-14400": {
+      "url": "hybrid-products/airpods/airpods-4-with-anc-mxp93-s1-14400.html",
+      "url_en": "en/hybrid-products/airpods/airpods-4-with-anc-mxp93-s1-14400.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "🎧 AirPods 4 with ANC MXP93",
+      "warehouse": "(S1)",
+      "price": 14400
+    },
+    "-airpods-pro-3-mfhp4-s1-20900": {
+      "url": "hybrid-products/airpods/airpods-pro-3-mfhp4-s1-20900.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-3-mfhp4-s1-20900.html",
+      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
+      "name": "🎧 AirPods Pro 3 MFHP4",
+      "warehouse": "(S1)",
+      "price": 20900
+    },
+    "airpods-5-европа-s3-16000": {
+      "url": "hybrid-products/airpods/airpods-5-s3-16000.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-s3-16000.html",
+      "cover": "assets/product-images/03a5b60909df17ffaa449e5f.png",
+      "name": "AirPods 5",
+      "warehouse": "(S3)",
+      "price": 16000
+    },
+    "airpods-5-wireless-европа-s3-19300": {
+      "url": "hybrid-products/airpods/airpods-5-wireless-s3-19300.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s3-19300.html",
+      "cover": "assets/product-images/195fa35792fe5b33bbab7a98.jpg",
+      "name": "AirPods 5 Wireless",
+      "warehouse": "(S3)",
+      "price": 19300
+    },
+    "airpods-max-2-2026-purple-европа-s3-44100": {
+      "url": "hybrid-products/airpods/airpods-max-2-2026-purple-s3-44100.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-2026-purple-s3-44100.html",
+      "cover": "assets/product-images/ed05f9e1384c6ce6df3cef52.jpg",
+      "name": "AirPods Max 2 (2026) Purple",
+      "warehouse": "(S3)",
+      "price": 44100
     }
   }
 }

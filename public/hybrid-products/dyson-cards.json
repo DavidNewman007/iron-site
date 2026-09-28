@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-27T13:12:46.432Z",
-  "count": 131,
+  "generated_at": "2026-09-28T14:44:57.930Z",
+  "count": 135,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -1049,6 +1049,38 @@
       "name": "Dyson V16S Piston Animal SV53A MatBlack/Copp",
       "warehouse": "(S3)",
       "price": 74200
+    },
+    "dyson-hs08-ceramic-pink-великобритания-s3-38500": {
+      "url": "hybrid-products/dyson/dyson-hs08-ceramic-pink-s3-38500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-ceramic-pink-s3-38500.html",
+      "cover": "assets/product-images/cc30c5da38c09de41d16dd32.jpg",
+      "name": "Dyson HS08 Ceramic Pink",
+      "warehouse": "(S3)",
+      "price": 38500
+    },
+    "dyson-hs08-prussian-blue-великобритания-s3-38600": {
+      "url": "hybrid-products/dyson/dyson-hs08-prussian-blue-s3-38600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-prussian-blue-s3-38600.html",
+      "cover": "assets/product-images/0be37ad63e9c742ac751d335.jpg",
+      "name": "Dyson HS08 Prussian Blue",
+      "warehouse": "(S3)",
+      "price": 38600
+    },
+    "dyson-big-ball-absolute-2-iron-blue-европа-s3-39600": {
+      "url": "hybrid-products/dyson/dyson-big-ball-absolute-2-iron-blue-s3-39600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-big-ball-absolute-2-iron-blue-s3-39600.html",
+      "cover": "assets/product-images/d623cf3ff55cc49a883ef073.jpeg",
+      "name": "Dyson Big Ball Absolute 2 Iron/Blue",
+      "warehouse": "(S3)",
+      "price": 39600
+    },
+    "dyson-spot-scrub-ai-black-blue-европа-s3-96200": {
+      "url": "hybrid-products/dyson/dyson-spot-scrub-ai-black-blue-s3-96200.html",
+      "url_en": "en/hybrid-products/dyson/dyson-spot-scrub-ai-black-blue-s3-96200.html",
+      "cover": "assets/product-images/fe86ff3412160bf316c05dd5.jpg",
+      "name": "Dyson Spot+Scrub AI Black/Blue",
+      "warehouse": "(S3)",
+      "price": 96200
     }
   }
 }
