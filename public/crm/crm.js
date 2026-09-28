@@ -87,7 +87,7 @@
     [C.source]: { label: "Источник клиента" },
     [C.pass]: { label: "Пароль устройства 🔑" },
     [C.type]: { label: "Тип сделки", door: true },
-    [C.imei]: { label: "IMEI / серийный", door: true },
+    [C.imei]: { label: "IMEI / S\\N", door: true }, // AD1 в таблице — «IMEI / S\N» (28.09.2026)
     [C.buyback]: { label: "Выкуп / зачёт, ₽", num: true, door: true },
     [C.linked]: { label: "Связанная сделка №" },
     [C.group]: { label: "Группа" },
@@ -107,7 +107,7 @@
   // Подписи полей по типу: одна и та же колонка значит разное в ремонте, выкупе и продаже.
   // Пересмотрено 26.09.2026 по замечанию владельца: в продаже стояли ремонтные подписи.
   const LABELS = {
-    repair:   { [C.device]: "Устройство", [C.imei]: "IMEI / серийный (по желанию)", [C.issue]: "Неисправность / с чем пришёл", [C.work]: "Выполненные работы",
+    repair:   { [C.device]: "Устройство", [C.imei]: "IMEI / S\\N (по желанию)", [C.issue]: "Неисправность / с чем пришёл", [C.work]: "Выполненные работы",
                 [C.total]: "Итого, ₽ (платит клиент)", [C.date]: "Дата приёма", [C.issued]: "Дата выдачи" },
     buyback:  { [C.device]: "Что выкупаем", [C.issue]: "Дефекты", [C.work]: "Состояние и комплект (уйдёт клиенту в отчёте)",
                 [C.buyback]: "Сумма выкупа (платим клиенту), ₽", [C.extra]: "Прочие расходы, ₽", [C.date]: "Дата обращения", [C.issued]: "Дата выкупа" },
@@ -259,15 +259,25 @@
       if (!window.google?.accounts?.oauth2) return reject(new Error("Google ещё грузится — нажмите ещё раз через пару секунд"));
       tokenClient = tokenClient || google.accounts.oauth2.initTokenClient({ client_id: CFG.clientId, scope: CFG.scope, callback: () => {} });
       tokenClient.callback = r => {
-        if (r.error) return reject(new Error(r.error_description || r.error));
+        if (r.error) return reject(new Error(r.error === "access_denied" ? "Вход отменён: на экране Google нажали «Отмена» или закрыли его (access_denied)" : "Google не пустил: " + (r.error_description || r.error)));
+        // С 2024 года Google даёт снять галочку у каждой области. Без «таблиц» токен есть, а
+        // читать базу нельзя — раньше это выглядело как «нет доступа к базе» (28.09.2026, Артур).
+        if (!google.accounts.oauth2.hasGrantedAllScopes(r, "https://www.googleapis.com/auth/spreadsheets")) {
+          store.set("crm.consent", true);
+          return reject(new Error("Google не выдал доступ к таблицам: на экране входа нужно отметить галочку «Просматривать, изменять, создавать и удалять таблицы Google». Нажмите «Войти» ещё раз и отметьте её."));
+        }
+        store.del("crm.consent");
         S.token = r.access_token;
         store.set("crm.tok", { t: r.access_token, exp: Date.now() + (r.expires_in - 60) * 1000 });
         resolve();
       };
-      tokenClient.error_callback = e => reject(new Error(e?.type === "popup_closed" ? "Окно входа закрыли" : "Не удалось войти"));
-      tokenClient.requestAccessToken({ prompt: prompt ?? "", ...(hint ? { hint } : {}) });
+      tokenClient.error_callback = e => reject(new Error(e?.type === "popup_closed" ? "Окно входа закрыли" : e?.type === "popup_failed_to_open"
+        ? "Браузер не открыл окно входа Google — разрешите всплывающие окна для 1iron.ru" + (inApp() ? " или откройте ссылку в Safari/Chrome" : "") : "Не удалось войти" + (e?.type ? " (" + e.type + ")" : "")));
+      tokenClient.requestAccessToken({ prompt: store.get("crm.consent") ? "consent" : prompt ?? "", ...(hint ? { hint } : {}) });
     });
   }
+  // Встроенный браузер мессенджера: Google там вход запрещает (disallowed_useragent).
+  const inApp = () => /Telegram|WhatsApp|Instagram|FBAN|FBAV|Line\/|VKClient|; wv\)/i.test(navigator.userAgent);
   function signOut() {
     if (S.token && window.google?.accounts?.oauth2) google.accounts.oauth2.revoke(S.token, () => {});
     store.del("crm.tok"); store.del("crm.who");
@@ -279,9 +289,14 @@
       ...opts, headers: { Authorization: "Bearer " + S.token, "Content-Type": "application/json", ...(opts.headers || {}) },
     });
     if (r.status === 401) { store.del("crm.tok"); S.token = null; setTimeout(render, 0); throw Object.assign(new Error("Вход истёк — нажмите «Продолжить»"), { code: 401 }); }
-    if (r.status === 403) throw Object.assign(new Error(opts.method && opts.method !== "GET"
-      ? "Google не дал записать: у вашего аккаунта доступ к таблице только на просмотр"
-      : "У этого Google-аккаунта нет доступа к базе. Попросите владельца открыть доступ к таблице"), { code: 403 });
+    if (r.status === 403) {
+      const why = await r.json().catch(() => ({}));
+      const msg = String(why?.error?.message || ""), who = S.email ? ` Вы вошли как ${S.email}.` : "";
+      if (/scope/i.test(msg)) { store.set("crm.consent", true); throw Object.assign(new Error("Google не выдал доступ к таблицам: при входе нужно отметить галочку про таблицы Google. Нажмите «Войти другим аккаунтом» и отметьте её."), { code: 403 }); }
+      throw Object.assign(new Error(opts.method && opts.method !== "GET"
+        ? "Google не дал записать: у вашего аккаунта доступ к таблице только на просмотр." + who
+        : "У этого Google-аккаунта нет доступа к базе." + who + " Если доступ открыт на другой адрес — войдите им; иначе попросите владельца открыть доступ к таблице."), { code: 403 });
+    }
     if (!r.ok) throw new Error("Google ответил " + r.status);
     return r.json();
   }
@@ -296,11 +311,17 @@
         S.email = "демо"; S.gid = 0; setRows(rows.map((cells, i) => ({ row: i + 2, cells })));
         demoOptions();
       } else {
-        const [meta, who] = await Promise.all([
+        const [metaR, whoR] = await Promise.allSettled([
           api("?fields=sheets(properties(sheetId,title,gridProperties(rowCount)))"),
           fetch("https://www.googleapis.com/oauth2/v3/userinfo", { headers: { Authorization: "Bearer " + S.token } }).then(r => r.ok ? r.json() : {}),
         ]);
-        S.email = who.email || "";
+        S.email = whoR.value?.email || "";
+        if (metaR.status === "rejected") {
+          const e = metaR.reason;
+          if (e?.code === 403 && S.email && !e.message.includes(S.email)) e.message = e.message.replace("нет доступа к базе.", `нет доступа к базе. Вы вошли как ${S.email}.`);
+          throw e;
+        }
+        const meta = metaR.value;
         if (S.email) store.set("crm.who", S.email);
         const sh = meta.sheets.find(s => s.properties.title === CFG.sheet);
         if (!sh) throw new Error("В таблице нет листа «" + CFG.sheet + "»");
@@ -463,7 +484,8 @@
   function render() {
     if (!DEMO && !S.token) return renderLogin();
     if (S.loading && !S.rows.length) return renderShell(`<div class="spinner">Загружаю базу…</div>`);
-    if (S.error && !S.rows.length) return renderShell(`<div class="empty">${esc(S.error)}<div class="row" style="justify-content:center"><button class="btn" data-act="reload">Попробовать ещё раз</button></div></div>`);
+    if (S.error && !S.rows.length) return renderShell(`<div class="empty">${esc(S.error)}<div class="row" style="justify-content:center"><button class="btn" data-act="reload">Попробовать ещё раз</button>
+      <button class="btn btn--ghost" data-act="relogin">Войти другим аккаунтом</button></div></div>`);
     if (location.hash === "#/new") return renderNew();
     const m = location.hash.match(/^#\/(\d+)/);
     if (m) return renderCard(m[1]);
@@ -479,7 +501,8 @@
         <div class="row" style="justify-content:center"><button class="btn btn--ghost" data-act="login">Другой аккаунт</button></div>`
         : `<button class="btn btn--red" data-act="login">Войти через Google</button>`}
       ${S.error ? `<p class="note">${esc(S.error)}</p>` : ""}
-      <p class="note">При первом входе Google покажет «приложение не проверено» — нажмите «Дополнительно» → «Перейти».</p>
+      ${inApp() ? `<p class="note" style="color:var(--wait)">Похоже, страница открыта внутри мессенджера — там Google вход запрещает. Откройте ссылку в Safari или Chrome (⋯ → «Открыть в браузере»).</p>` : ""}
+      <p class="note">При первом входе Google покажет «приложение не проверено» — нажмите «Дополнительно» → «Перейти». На следующем экране <b>отметьте галочку доступа к таблицам Google</b>.</p>
     </div></main>`;
   }
 
@@ -1071,6 +1094,52 @@
   function refreshSaveBar(key) { $app.querySelector(".savebar")?.remove(); saveBar(key, location.hash === "#/new" ? 'data-new="1"' : `data-num="${esc(location.hash.slice(2))}"`); }
 
 
+
+  // IMEI и S\N, вписанные в «Устройство», — в свою колонку AD (28.09.2026, план 93 §11.22).
+  // Тот же разбор, что в scripts/move_device_serials.mjs, которым перенесли 2646 старых номеров.
+  var SER_LOOK = { "А": "A", "В": "B", "Е": "E", "К": "K", "М": "M", "Н": "H", "О": "O", "Р": "P", "С": "C", "Т": "T", "Х": "X", "У": "Y",
+    "а": "A", "в": "B", "е": "E", "к": "K", "м": "M", "н": "H", "о": "O", "р": "P", "с": "C", "т": "T", "х": "X", "у": "Y" };
+  var SER_NB = "(?<![a-zа-яё0-9])", SER_SEP = "[ \\t]*(?:№|#|:|\\.|-|—)?[ \\t]*";
+  function serialLine_(e) {
+    var found = [], touched = false;
+    var rest = e.replace(new RegExp(SER_NB + "(?:imei\\s*[12]?|имей|имэй|ime(?![a-zа-я]))" + SER_SEP + "(\\d[\\d \\-]{9,22}\\d)?", "giu"), function (m, v) {
+      if (v) { var d = v.replace(/\D/g, ""); if (d.length < 11) return m; found.push(d); }
+      touched = true; return " ";
+    });
+    rest = rest.replace(new RegExp(SER_NB + "(?:s\\s*[\\\\/|]\\s*n|snid|sn|с\\s*/\\s*н|серийн(?:ый|ик)(?:\\s+номер)?)(?![a-zа-яё])" + SER_SEP + "([0-9A-Za-zА-Яа-яЁё][0-9A-Za-zА-Яа-яЁё\\-]{3,24})?", "giu"), function (m, v) {
+      if (v) {
+        var s = v.replace(/^[-—]+|[-—]+$/g, "").split("").map(function (ch) { return SER_LOOK[ch] || ch; }).join("").toUpperCase();
+        if (!/^[0-9A-Z-]{5,25}$/.test(s) || !/\d/.test(s)) return m;
+        found.push(s);
+      }
+      touched = true; return " ";
+    });
+    rest = rest.replace(/(?<![\d\p{L}_])(\d{15})(?![\d\p{L}_])/gu, function (m, d) { found.push(d); touched = true; return " "; });
+    if (!touched) return { rest: e, found: found };
+    return { rest: rest.replace(/[ \t]{2,}/g, " ").replace(/^[ \t,;:\-—]+|[ \t,;:\-—]+$/g, ""), found: found };
+  }
+  /** → { rest: устройство без номеров, ad: номера для AD } или null, если номеров и подписей нет. */
+  function splitDeviceSerial_(e) {
+    var lines = String(e == null ? "" : e).split("\n"), keep = [], pairs = [], dev = "", touched = false;
+    lines.forEach(function (line) {
+      var p = serialLine_(line); if (p.rest !== line) touched = true;
+      var tidy = p.rest.replace(/[ \t]{2,}/g, " ").trim();
+      if (tidy) { keep.push(tidy); dev = tidy; }
+      p.found.forEach(function (f) { if (!pairs.some(function (x) { return x.v === f; })) pairs.push({ dev: dev, v: f }); });
+    });
+    if (!touched) return null;
+    var devs = {}; pairs.forEach(function (x) { if (x.dev) devs[x.dev] = 1; });
+    var many = Object.keys(devs).length > 1;
+    var ad = pairs.map(function (x) { return (many && x.dev ? x.dev + ": " : "") + x.v; }).join("; ");
+    var rest = keep.join("\n").trim();
+    return { rest: rest || (pairs.length ? String(e).trim() : ""), ad: ad };
+  }
+  function mergeSerials_(old, add) {
+    old = String(old == null ? "" : old).trim(); if (!add) return old; if (!old) return add;
+    var missing = add.split("; ").filter(function (x) { return old.indexOf(x.split(": ").pop()) === -1; });
+    return missing.length ? old + "; " + missing.join("; ") : old;
+  }
+
   // ── из карточки: новый заказ этому клиенту и гарантийный ремонт (v19) ──────────
   // Как «Скопировать заказ» и «Гарантийный заказ» в RemOnline/RepairShopr: данные клиента
   // не вводятся заново, а гарантийный заказ связан с исходным (AF «Связанная сделка №»).
@@ -1403,6 +1472,7 @@
     if (act === "login") {
       try { await signIn(t.dataset.hint ? "" : "select_account", t.dataset.hint); S.error = ""; await load(); } catch (err) { S.error = err.message; render(); }
     } else if (act === "logout") signOut();
+    else if (act === "relogin") { store.del("crm.tok"); store.del("crm.who"); S.token = null; S.error = ""; S.rows = []; render(); }
     else if (act === "reload") { if (!DEMO && !S.token) render(); else load(); }
     else if (act === "more") { S.limit += 100; renderList(); }
     else if (act === "impopen" || act === "imprecent") { S.imp = { open: true, mode: "recent" }; loadImports([dayISO(1), dayISO(0)]); }
@@ -1461,6 +1531,21 @@
       const val = x => { const k = key + ":" + x; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, x) : ""); };
       const box = $app.querySelector(".margin"); if (box && !S.multi) box.innerHTML = moneySummary(dealKey(val(C.type)), val, r);
       refreshSaveBar(key); return;
+    }
+    if (e.type === "change" && (t.dataset.edit === String(C.device) || (t.dataset.extra != null && t.dataset.col === String(C.device)))) {
+      const sp = splitDeviceSerial_(t.value);
+      if (sp && sp.rest !== t.value) {
+        t.value = sp.rest;
+        if (t.dataset.extra != null) { const x = S.extra[+t.dataset.extra]; x[C.device] = sp.rest; if (sp.ad) x[C.imei] = mergeSerials_(x[C.imei], sp.ad); }
+        else {
+          const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), k = key + ":" + C.imei;
+          setDirty(key, C.device, sp.rest);
+          if (sp.ad) setDirty(key, C.imei, mergeSerials_(S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, C.imei) : ""), sp.ad));
+        }
+        const y = window.scrollY; render(); window.scrollTo(0, y);
+        if (sp.ad) toast("IMEI / S\\N перенесён в своё поле: " + sp.ad, null, true);
+        return;
+      }
     }
     if (t.dataset.extra != null) {
       S.extra[+t.dataset.extra][+t.dataset.col] = t.value;
@@ -1521,7 +1606,7 @@
     else if (it.dataset.phone) { fillField(C.phone, it.dataset.phone); document.getElementById("ac-" + C.phone).innerHTML = ""; refreshSaveBar("new"); }
   });
   document.addEventListener("input", onEdit);
-  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.type === "checkbox" || e.target.dataset.act === "impdate") && e.target.dataset.act !== "multi") onEdit(e); });
+  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
   window.addEventListener("hashchange", () => { window.scrollTo(0, 0); render(); });
   window.addEventListener("beforeunload", e => { if ([...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
   document.addEventListener("visibilitychange", () => {
