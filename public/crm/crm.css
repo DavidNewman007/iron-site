@@ -364,3 +364,12 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .btn--sm small { font-family: var(--font-body); text-transform: none; letter-spacing: 0; margin-left: 6px; }
 .btn--silent { margin-top: 10px; }
 .btn--silent[aria-pressed="true"] { background: var(--done-bg); border-color: var(--done); color: var(--cream); }
+/* v23: устройства клиента в новом заказе */
+.cdevs { margin-top: 10px; }
+.cdevs__h { font-size: .85rem; color: var(--muted); font-weight: 700; margin: 8px 0 6px; }
+.cdevs__list { display: flex; flex-wrap: wrap; gap: 8px; }
+.cdev { display: grid; gap: 2px; text-align: left; border: 1px solid var(--line-strong); background: var(--surface-2); color: var(--text); border-radius: 10px; padding: 6px 12px; max-width: 100%; }
+.cdev:hover { border-color: var(--gold); }
+.cdev b { color: var(--cream); font-size: .95rem; }
+.cdev span { color: var(--muted); font-size: .8rem; }
+.ac-item b small { font-weight: 400; color: var(--muted); }

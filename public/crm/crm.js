@@ -367,18 +367,101 @@
 
   // Книга клиентов из самой базы: одно имя — один клиент, у клиента может быть несколько
   // телефонов. Свежие написание имени и телефоны — сверху.
+  // Книга клиентов из самой базы. Клиент = общий номер телефона (владелец, 28.09.2026:
+  // «если номер один — значит это один клиент»). Строки с общим номером склеиваются, даже
+  // если имя записано по-разному («Алексей Шишкин» / «Алексей чоп-чоп» — 626 таких номеров).
+  // Заказ без телефона присоединяется к клиенту с точно таким же именем, если такой клиент
+  // один; иначе такие заказы группируются между собой по имени.
+  // Раньше (v6–v22) клиентом было одно имя: разные люди с одинаковым именем склеивались
+  // («александр» — 18 разных номеров), а один человек с двумя написаниями — двоился.
   function clients() {
     if (S.clients) return S.clients;
-    const map = new Map();
+    const parent = new Map();
+    const find = x => { while (parent.get(x) !== x) { parent.set(x, parent.get(parent.get(x))); x = parent.get(x); } return x; };
+    const union = (a, b) => { a = find(a); b = find(b); if (a !== b) parent.set(a, b); };
+    const withPhone = [], noPhone = [], byPhone = new Map();
     for (const r of S.rows) {
-      if (!r.nameN) continue;
-      let c = map.get(r.nameN);
-      if (!c) map.set(r.nameN, c = { key: r.nameN, name: "", words: r.nameN.split(" "), phones: new Map(), count: 0, last: null });
-      c.count++; c.last = r;
-      c.name = String(cell(r, C.name)).split("\n")[0].trim() || c.name;
-      for (const p of phones(cell(r, C.phone))) c.phones.set(p.d, { text: p.text, d: p.d, row: r.row, date: cell(r, C.date) });
+      const ps = phones(cell(r, C.phone));
+      if (!ps.length && !r.nameN) continue;
+      parent.set(r, r);
+      if (!ps.length) { noPhone.push(r); continue; }
+      withPhone.push(r);
+      for (const p of ps) { if (byPhone.has(p.d)) union(r, byPhone.get(p.d)); else byPhone.set(p.d, r); }
+    }
+    const rootsByName = new Map();
+    for (const r of withPhone) if (r.nameN) { if (!rootsByName.has(r.nameN)) rootsByName.set(r.nameN, new Set()); rootsByName.get(r.nameN).add(find(r)); }
+    const lone = new Map();
+    for (const r of noPhone) {
+      const roots = rootsByName.get(r.nameN);
+      if (roots?.size === 1) union(r, [...roots][0]);
+      else if (lone.has(r.nameN)) union(r, lone.get(r.nameN)); else lone.set(r.nameN, r);
+    }
+    const map = new Map();
+    for (const r of parent.keys()) {
+      const root = find(r);
+      let c = map.get(root);
+      if (!c) map.set(root, c = { key: "c" + root.row, name: "", names: new Map(), words: new Set(), phones: new Map(), rows: [], count: 0, last: null });
+      c.rows.push(r);
+    }
+    for (const c of map.values()) {
+      c.rows.sort((a, b) => a.row - b.row);
+      c.count = c.rows.length; c.last = c.rows[c.rows.length - 1];
+      for (const r of c.rows) {
+        const nm = String(cell(r, C.name)).split("\n")[0].trim();
+        if (nm) { c.name = nm; c.names.set(r.nameN, nm); r.nameN.split(" ").forEach(w => w && c.words.add(w)); }
+        for (const p of phones(cell(r, C.phone))) c.phones.set(p.d, { text: p.text, d: p.d, row: r.row, date: cell(r, C.date) });
+      }
+      c.words = [...c.words];
+      c.aka = [...c.names.values()].filter(n => norm(n) !== norm(c.name));
     }
     return (S.clients = [...map.values()]);
+  }
+  const clientOfRow = r => clients().find(c => c.rows.includes(r));
+  function clientByPhone(text) {
+    const ds = phones(text).map(p => p.d); if (!ds.length) return null;
+    return clients().find(c => ds.some(d => c.phones.has(d))) || null;
+  }
+  // Устройства клиента из его заказов: одно устройство — одна строка (по IMEI / S\N, а без
+  // него — по названию), самое свежее сверху. Заказ на несколько устройств («iPhone 5s\niPhone
+  // SE», в AD «iPhone 5s: …; iPhone SE: …») раскладывается по устройствам.
+  function clientDevices(c) {
+    const seen = new Map();
+    for (const r of c.rows) {
+      const dev = String(cell(r, C.device)).trim(); if (!dev) continue;
+      const ad = String(cell(r, C.imei)).trim();
+      const lines = dev.split("\n").map(x => x.trim()).filter(Boolean);
+      const tagged = ad.split(/;\s*/).map(x => x.match(/^(.+?):\s*(.+)$/)).filter(Boolean);
+      const items = lines.length > 1 && tagged.length ? lines.map(l => ({ dev: l, imei: (tagged.find(m => norm(m[1]) === norm(l)) || [])[2] || "" }))
+        : [{ dev: lines.join(" · "), imei: ad }];
+      for (const it of items) {
+        const k = it.imei ? "i:" + norm(it.imei) : "d:" + norm(it.dev);
+        seen.set(k, { ...it, r });
+      }
+    }
+    return [...seen.values()].sort((a, b) => b.r.row - a.r.row);
+  }
+  function clientDevicesHtml(c) {
+    if (!c) return "";
+    const list = clientDevices(c);
+    const aka = c.aka.length ? ` · также записан как ${c.aka.slice(0, 3).map(esc).join(", ")}${c.aka.length > 3 ? "…" : ""}` : "";
+    return `<div class="cdevs"><div class="note">В базе: ${c.count} ${ordersWord(c.count)}${aka}</div>
+      ${list.length ? `<div class="cdevs__h">Устройства клиента — нажмите, чтобы подставить:</div><div class="cdevs__list">${list.slice(0, 12).map((x, i) =>
+        `<button type="button" class="cdev" data-cdev="${i}"><b>${esc(x.dev)}</b><span>${x.imei ? esc(x.imei) + " · " : ""}№${esc(cell(x.r, C.num))}, ${esc(String(cell(x.r, C.date)).slice(0, 10))}</span></button>`).join("")}</div>` : ""}</div>`;
+  }
+  function currentNewClient() {
+    if (S.newClient) { const c = clients().find(x => x.key === S.newClient); if (c) return c; }
+    return clientByPhone(S.dirty.get("new:" + C.phone) || "");
+  }
+  function pickDevice(i) {
+    const c = currentNewClient(), x = c && clientDevices(c)[i]; if (!x) return;
+    if (!S.multi || !String(S.dirty.get("new:" + C.device) ?? "").trim()) {
+      S.dirty.set("new:" + C.device, x.dev); if (x.imei) S.dirty.set("new:" + C.imei, x.imei); else S.dirty.delete("new:" + C.imei);
+    } else {
+      const slot = S.extra.find(e => !String(e[C.device] ?? "").trim()) || (S.extra.push(blankDevice()), S.extra[S.extra.length - 1]);
+      slot[C.device] = x.dev; slot[C.imei] = x.imei;
+    }
+    const y = window.scrollY; render(); window.scrollTo(0, y);
+    toast(`Подставлено: ${x.dev}${x.imei ? " · " + x.imei : ""}`);
   }
   function findClients(q, limit = 8) {
     let res;
@@ -451,6 +534,8 @@
   // комментарии, мастере, IMEI, типе и статусе; выше — где слово совпало с началом имени
   // или фамилии. При равенстве — свежие заказы выше.
   function search(q) {
+    // «все заказы клиента» — весь клиент целиком: все его номера и заказы без телефона
+    if (q.startsWith("@c")) { const c = clients().find(x => x.key === q.slice(1)); return c ? c.rows.slice().reverse() : []; }
     const tokens = q.split(" ").filter(Boolean);
     const d = normDigits(digits(q)), digitsOnly = isDigitQuery(q);
     const out = [];
@@ -522,7 +607,7 @@
         <button class="iconbtn" data-act="reload" title="Обновить">⟳</button>
         ${DEMO ? "" : `<button class="iconbtn" data-act="logout" title="Выйти">⎋</button>`}
       </div>
-      ${search ? `<input class="search" type="search" inputmode="search" placeholder="Номер, телефон, имя или устройство" value="${esc(S.q)}" data-act="search" autocomplete="off">` : ""}
+      ${search ? `<input class="search" type="search" inputmode="search" placeholder="Номер, телефон, имя или устройство" value="${esc(S.q.startsWith("@c") ? clients().find(x => x.key === S.q.slice(1))?.name || "" : S.q)}" data-act="search" autocomplete="off">` : ""}
       </header><main class="wrap">${body}</main>`;
   }
   const canCreate = () => DEMO || CFG.doors.length > 0;
@@ -547,10 +632,12 @@
     let body = S.q ? "" : `<nav class="tabs">${tabs.map(([k, t, c]) =>
       `<button class="tab" data-tab="${k}" aria-pressed="${S.tab === k}">${t}${c != null ? `<small>${c}</small>` : ""}</button>`).join("")}</nav>`;
     if (S.q) {
-      const found = !isDigitQuery(S.q) ? findClients(S.q, 3) : [];
-      body += `<div class="section"><h2>Найдено</h2><span>${list.length}</span></div>`;
+      const one = S.q.startsWith("@c") ? clients().find(x => x.key === S.q.slice(1)) : null;
+      const found = one ? [] : !isDigitQuery(S.q) ? findClients(S.q, 3) : [];
+      body += one ? `<div class="section"><h2>Все заказы клиента: ${esc(one.name)}</h2><span>${list.length}</span></div>`
+        : `<div class="section"><h2>Найдено</h2><span>${list.length}</span></div>`;
       if (found.length) body += `<div class="clients">${found.map(c => { const p = phonesOf(c)[0];
-        return `<button class="client" data-q="${esc(p ? p.d : c.name)}"><b>${mark(c.name)}</b><span>${c.count} ${ordersWord(c.count)}${p ? " · " + esc(p.text) : ""}${c.phones.size > 1 ? ` (+${c.phones.size - 1})` : ""}</span><em>все заказы клиента →</em></button>`; }).join("")}</div>`;
+        return `<button class="client" data-q="@${esc(c.key)}"><b>${mark(c.name)}</b><span>${c.count} ${ordersWord(c.count)}${p ? " · " + esc(p.text) : ""}${c.phones.size > 1 ? ` (+${c.phones.size - 1})` : ""}${c.aka.length ? " · также: " + esc(c.aka.slice(0, 2).join(", ")) : ""}</span><em>все заказы клиента →</em></button>`; }).join("")}</div>`;
     }
     if (!list.length) body += `<div class="empty">${S.q ? "Ничего не нашлось" : "Здесь пусто"}</div>`;
     else if (!S.q && S.tab === "work") {
@@ -881,6 +968,7 @@
 
     if (isNew && (dk === "sale_used" || dk === "sale_new")) left += box(2, importBlock());
     html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
+      ${isNew ? `<div id="client-devs">${clientDevicesHtml(currentNewClient())}</div>` : ""}
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
       ${!isNew && canCreate() ? clientActions(r, dk) : ""}
     </section>`;
@@ -1170,7 +1258,7 @@
   function startNewFrom(r, warranty) {
     for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
     S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
-    S.draft = true;
+    S.draft = true; S.newClient = clientOfRow(r)?.key || null;
     const set = (c, v) => { if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); };
     set(C.status, CFG.newStatus); set(C.date, today()); set(C.type, "Ремонт");
     set(C.name, cell(r, C.name)); set(C.phone, cell(r, C.phone)); set(C.source, "Постоянные");
@@ -1430,7 +1518,7 @@
       }
       S.clients = null;
       for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-      S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null; store.del("crm.draft");
+      S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null; S.newClient = null; store.del("crm.draft");
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
       toast(DEMO ? nums + (N > 1 ? " созданы" : " создан") + " (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`, null, true);
@@ -1456,7 +1544,8 @@
     refreshing = signIn("", lastEmail()).catch(() => {}).finally(() => { refreshing = null; });
   }, true);
   document.addEventListener("click", async e => {
-    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc]"); if (!t) return;
+    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc],[data-cdev]"); if (!t) return;
+    if (t.dataset.cdev != null) { pickDevice(+t.dataset.cdev); return; }
     if (t.dataset.imp != null) { takeImport(+t.dataset.imp); return; }
     if (t.dataset.tip != null) {
       const key = curKey(), c = +t.dataset.tip, box = $app.querySelector(`[data-edit="${c}"]`); if (key == null || !box) return;
@@ -1525,7 +1614,7 @@
       if (act === "addpart") $app.querySelector(`[data-part="${list.length - 1}"][data-pf="name"]`)?.focus();
     }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; store.del("crm.draft"); location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.newClient = null; store.del("crm.draft"); location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
@@ -1583,7 +1672,11 @@
     if (c === C.issue || c === C.work) t.closest(".field")?.parentElement?.querySelectorAll(".tchips [data-tip]").forEach(b => b.setAttribute("aria-pressed", String(hasPhrase(v, b.dataset.text))));
     if (t.type === "checkbox") t.nextElementSibling.textContent = t.checked ? "Да" : "Нет";
     refreshSaveBar(key);
-    if (key === "new" && (c === C.name || c === C.phone)) { clearTimeout(onEdit.ac); onEdit.ac = setTimeout(() => suggest(c, t.value), 120); }
+    if (key === "new" && (c === C.name || c === C.phone)) {
+      clearTimeout(onEdit.ac); onEdit.ac = setTimeout(() => suggest(c, t.value), 120);
+      if (c === C.phone && S.newClient) { const cl = clients().find(x => x.key === S.newClient), ds = phones(t.value).map(p => p.d);
+        if (cl && ds.length && !ds.some(d => cl.phones.has(d))) { S.newClient = null; const b = document.getElementById("client-devs"); if (b) b.innerHTML = clientDevicesHtml(currentNewClient()); } }
+    }
     if (key === "new" && S.multi && F[c]?.num) { const box = $app.querySelector(".margin"); if (box) box.innerHTML = groupMoneySummary(dealKey(S.dirty.get("new:" + C.type))); }
     else if (F[c]?.num || c === C.linked) {
       const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
@@ -1599,7 +1692,7 @@
     const list = findClients(value);
     box.innerHTML = list.map(cl => {
       const p = phonesOf(cl);
-      return `<button type="button" class="ac-item" data-client="${esc(cl.key)}" data-from="${c}"><b>${esc(cl.name)}</b>
+      return `<button type="button" class="ac-item" data-client="${esc(cl.key)}" data-from="${c}"><b>${esc(cl.name)}${cl.aka.length ? ` <small>(также: ${esc(cl.aka.slice(0, 2).join(", "))}${cl.aka.length > 2 ? "…" : ""})</small>` : ""}</b>
         <span>${cl.count} ${ordersWord(cl.count)} · ${p.length > 1 ? p.length + " телефона" : esc(p[0]?.text || "без телефона")} · последний: ${esc(cell(cl.last, C.device) || "—")}, ${esc(String(cell(cl.last, C.date)).slice(0, 10))}</span></button>`;
     }).join("");
   }
@@ -1609,6 +1702,7 @@
   }
   function pickClient(key, fromPhone) {
     const cl = clients().find(x => x.key === key); if (!cl) return;
+    S.newClient = cl.key;
     fillField(C.name, cl.name);
     const ps = phonesOf(cl), typed = normDigits(digits($app.querySelector(`[data-edit="${C.phone}"]`)?.value || ""));
     const byTyped = fromPhone && typed.length >= 4 ? ps.find(p => p.d.includes(typed)) : null;
@@ -1617,6 +1711,7 @@
     if (byTyped || ps.length === 1) { fillField(C.phone, (byTyped || ps[0]).text); phoneBox.innerHTML = ""; }
     else if (ps.length > 1) phoneBox.innerHTML = `<div class="ac-info">У клиента ${ps.length} телефона — выберите:</div>` +
       ps.map(p => `<button type="button" class="ac-item" data-phone="${esc(p.text)}"><b>📞 ${esc(p.text)}</b><span>последний раз ${esc(String(p.date).slice(0, 10))}</span></button>`).join("");
+    const box = document.getElementById("client-devs"); if (box) box.innerHTML = clientDevicesHtml(cl);
     refreshSaveBar("new");
   }
   // pointerdown, а не click: иначе поле теряет фокус раньше, чем выбор успевает сработать.
