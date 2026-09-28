@@ -362,3 +362,5 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .pp__q { width: 100%; margin-top: 8px; min-height: 44px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--field); padding: 6px 12px; }
 .pp__q:focus { outline: none; border-color: var(--gold); }
 .btn--sm small { font-family: var(--font-body); text-transform: none; letter-spacing: 0; margin-left: 6px; }
+.btn--silent { margin-top: 10px; }
+.btn--silent[aria-pressed="true"] { background: var(--done-bg); border-color: var(--done); color: var(--cream); }

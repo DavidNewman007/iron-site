@@ -167,7 +167,7 @@
   // Статусы, уместные для типа (текущий статус строки показывается всегда).
   const DEAL_FINAL = ["выкуплен", "разобран", "обмен оформлен", "продан"];
   function statusesFor(dk) {
-    const all = (S.opts[C.status] || []).filter(x => norm(x) !== "закрыт");
+    const all = (S.opts[C.status] || []).filter(x => !isSilent(x));
     const pick = names => all.filter(x => names.some(n => norm(x).startsWith(n)));
     if (dk === "repair") return all.filter(x => !DEAL_FINAL.some(n => norm(x).startsWith(n)));
     if (dk === "buyback") return pick(["на согл", "выкуплен"]);
@@ -192,6 +192,13 @@
   // пояснением. Кнопкой в оболочке не ставится; руками в таблице — клиенту ничего не уходит.
   const CLOSED_LABEL = "Закрыт по сроку давности — состояние неизвестно";
   const stLabel = st => norm(st) === "закрыт" ? CLOSED_LABEL : st;
+  // «Закрыт без уведомления» — то же тихое закрытие, но руками из карточки (владелец,
+  // 28.09.2026). Отдельное значение, чтобы не путать со старыми «по сроку давности».
+  // Суммы не требует. В дверь не уходит: у двери закреплена версия кода до 28.09, и она
+  // отправила бы клиенту сообщение — статус пишется напрямую, «Историю статусов» оболочка
+  // дополняет сама (как это делает onEditTrigger).
+  const SILENT = "Закрыт без уведомления";
+  const isSilent = st => norm(st).startsWith("закрыт");
   const ORDER = ["принят на диагностику", "ждем предоплату", "заказана запчасть", "готов"];
   const isFinal = s => FINAL.some(f => norm(s).startsWith(f));
   const isReady = s => norm(s).startsWith("готов");
@@ -861,7 +868,8 @@
     if (!isNew) {
       const reportSent = isTrue(cell(r, C.report));
       const statusBlock = editable(C.status, r)
-        ? `${choiceButtons(key, C.status, st, statusesFor(dk), statusKind)}<p class="note">Выберите статус и нажмите «Сохранить» внизу — клиенту уйдёт уведомление, как из таблицы.${groupOf(r)?.shared ? " <b>Статус поменяется у всех устройств группы.</b>" : ""}</p>`
+        ? `${choiceButtons(key, C.status, st, statusesFor(dk), statusKind)}<p class="note">Выберите статус и нажмите «Сохранить» внизу — клиенту уйдёт уведомление, как из таблицы.${groupOf(r)?.shared ? " <b>Статус поменяется у всех устройств группы.</b>" : ""}</p>
+          ${isSilent(st) ? "" : `<button type="button" class="btn btn--ghost btn--sm btn--silent" data-choice="${C.status}" data-value="${SILENT}" aria-pressed="${norm(S.dirty.get(key + ":" + C.status)) === norm(SILENT)}">🔕 Закрыть без уведомления</button>`}`
         : `<div class="big">${esc(stLabel(st) || "без статуса")}</div><div class="row"><a class="btn btn--red" href="${sheetLink(r.row, C.status)}" target="_blank" rel="noopener">Сменить статус в таблице ↗</a></div>`;
       const reportBtn = editable(C.report, r)
         ? `<button type="button" class="btn ${reportSent ? "btn--ghost" : ""}" data-act="report">${reportSent ? "Отчёт уже отправлен — отправить заново" : groupOf(r)?.shared ? "📨 Отправить общий отчёт" : "📨 Отправить итоговый отчёт клиенту"}</button>`
@@ -1079,12 +1087,13 @@
 
   function saveBar(key, attrs) {
     const ks = [...S.dirty.keys()].filter(k => k.startsWith(key + ":"));
-    const n = ks.length, notify = ks.some(k => F[+k.split(":")[1]]?.notify);
+    const n = ks.length, quietSt = isSilent(S.dirty.get(key + ":" + C.status) ?? "");
+    const notify = ks.some(k => F[+k.split(":")[1]]?.notify && !(quietSt && +k.split(":")[1] === C.status));
     const isNew = key === "new";
     if (isNew) saveDraft();
     $app.insertAdjacentHTML("beforeend", `<div class="savebar"><div class="savebar__in">
       <button class="btn btn--ghost" data-act="discard" ${n || isNew ? "" : "disabled"}>Отмена</button>
-      <button class="btn btn--red" data-act="save" ${attrs} ${n ? "" : "disabled"}>${isNew ? newLabel() : n ? (notify ? `Сохранить и уведомить (${n})` : `Сохранить (${n})`) : "Изменений нет"}</button>
+      <button class="btn btn--red" data-act="save" ${attrs} ${n ? "" : "disabled"}>${isNew ? newLabel() : n ? (notify ? `Сохранить и уведомить (${n})` : quietSt ? `Закрыть без уведомления (${n})` : `Сохранить (${n})`) : "Изменений нет"}</button>
     </div></div>`);
   }
   function newLabel() {
@@ -1245,6 +1254,14 @@
     if (entered.length) calls.push(api("/values:batchUpdate", { method: "POST", body: JSON.stringify({ valueInputOption: "USER_ENTERED", data: pack(entered) }) }));
     await Promise.all(calls);
   }
+  // Строки в «Историю статусов» — в том же виде, что пишет onEditTrigger (Contact.js).
+  async function logStatus(items) {
+    if (DEMO || !items.length) return;
+    const d = new Date(Date.now() + 3 * 3600e3), p = n => String(n).padStart(2, "0");
+    const ts = `${p(d.getUTCDate())}.${p(d.getUTCMonth() + 1)}.${d.getUTCFullYear()} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(d.getUTCSeconds())}`;
+    await api(`/values/${encodeURIComponent("'История статусов'!A:D")}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+      { method: "POST", body: JSON.stringify({ values: items.map(([row, old, v]) => [ts, "Строка " + row, String(old || "Пусто"), String(v)]) }) });
+  }
   async function door(row, num, list) {
     if (DEMO || !CFG.doors.length) return null;
     const body = JSON.stringify({ token: S.token, row, num, changes: list.map(ch => ({ col: ch.c + 1, value: String(ch.w ?? ch.v ?? ""), old: String(ch.old ?? "") })) });
@@ -1317,6 +1334,9 @@
       };
       await Promise.all([r, ...others.keys()].map(check));
       await Promise.all([list.length ? writeCells(r.row, list) : null, ...[...others].map(([x, l]) => writeCells(x.row, l))]);
+      // Тихое закрытие: дверь не зовём (клиенту ничего), историю пишем сами.
+      const quiet = [[r, list], ...others].filter(([, l]) => l.some(ch => ch.c === C.status && isSilent(ch.v)));
+      if (quiet.length) await logStatus(quiet.map(([x, l]) => { const ch = l.find(c => c.c === C.status); return [x.row, ch.old, ch.v]; }));
       for (const ch of list) { r.cells[ch.c] = String(ch.w ?? ""); S.dirty.delete(key + ":" + ch.c); }
       S.parts.delete(key); if (S.pp?.key === key) S.pp = null;
       for (const [x, l] of others) { for (const ch of l) x.cells[ch.c] = String(ch.w ?? ""); index(x); }
@@ -1324,8 +1344,9 @@
       for (const [x, l] of [[r, list], ...others]) { const st = l.find(ch => ch.c === C.status); if (st) S.since.set(x.row, { ts: stamp, st: String(st.v) }); }
       index(r); S.clients = null;
       render();
+      for (const [, l] of quiet) { const i = l.findIndex(ch => ch.c === C.status); if (i >= 0) l.splice(i, 1); } // тихий статус — мимо двери
       const all = [...list, ...[...others.values()].flat()];
-      toast(DEMO ? "Сохранено (демо — в таблицу не пишется)" : all.some(ch => F[ch.c]?.door) ? `Сохранено ✓${others.size ? ` (и у ${others.size} устр. группы)` : ""} Уведомления отправляются…` : "Сохранено ✓", null, true);
+      toast(DEMO ? "Сохранено (демо — в таблицу не пишется)" : quiet.length && !all.some(ch => F[ch.c]?.door) ? "Закрыт без уведомления ✓ Клиенту ничего не отправлено" : all.some(ch => F[ch.c]?.door) ? `Сохранено ✓${others.size ? ` (и у ${others.size} устр. группы)` : ""} Уведомления отправляются…` : "Сохранено ✓", null, true);
       // Двери по очереди: сначала эта строка, потом остальные строки группы.
       [[r, list], ...others].reduce((p, [x, l]) => p.then(() => l.length ? doorInBackground(x, String(cell(x, C.num)).trim(), l) : null), Promise.resolve());
     } catch (e) { busy(false); toast(e.message, null, true); }
