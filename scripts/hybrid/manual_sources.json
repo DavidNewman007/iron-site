@@ -3375,6 +3375,140 @@
       ],
       "note": "Решение владельца 29.09.2026: Гонконг продаёт только Fluffycones, цена поставщика 48 700 ₽ ближе к Fluffycones (dr-store 49 990) — ставим Fluffycones",
       "checked": "2026-09-29"
+    },
+    "poco f8 pro 5g 12 256 black slim~s3": {
+      "name": "Poco F8 Pro 5G 12/256 Black Slim",
+      "catalog_url": "https://sochi.dr-store.ru/smartfony/xiaomi/poco/poco-f8-pro/smartfon-poco-f8-pro-12-256gb-black",
+      "note": "Решение владельца 29.09.2026: «похожий цвет, который есть» — «Black Slim» поставщика = F8 Pro 12/256 Black",
+      "checked": "2026-09-29"
+    },
+    "poco f8 pro 5g 12 256 blue slim~s3": {
+      "name": "Poco F8 Pro 5G 12/256 Blue Slim",
+      "catalog_url": "https://sochi.dr-store.ru/smartfony/xiaomi/poco/poco-f8-pro/smartfon-poco-f8-pro-12-256gb-blue",
+      "note": "Решение владельца 29.09.2026: «похожий цвет, который есть» — «Blue Slim» поставщика = F8 Pro 12/256 Blue",
+      "checked": "2026-09-29"
+    },
+    "buds core graphite~s3": {
+      "name": "Buds Core Graphite",
+      "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/samsung-buds/Samsung_Galaxy_Buds_Core_Black_Wireless_Headphones",
+      "note": "Решение владельца 29.09.2026: «похожий цвет, который есть» — у Galaxy Buds Core цвета Black и White, Graphite = Black",
+      "checked": "2026-09-29"
+    },
+    "poco x8 pro 5g 8 256 yellow~s3": {
+      "name": "Poco X8 Pro 5G 8/256 Yellow",
+      "source_url": "https://www.mi.com/global/product/poco-x8-pro/",
+      "images": [
+        "https://i02.appmifile.com/mi-com-product/fly-birds/poco-x8-pro/pc/pc30_yellow_pic1.png"
+      ],
+      "title": "POCO X8 Pro 8/256GB, Bold Yellow",
+      "specs": [
+        {
+          "key": "Тип дисплея",
+          "value": "AMOLED"
+        },
+        {
+          "key": "Диагональ",
+          "value": "6,59“"
+        },
+        {
+          "key": "Разрешение",
+          "value": "2756x1268"
+        },
+        {
+          "key": "Яркость",
+          "value": "800 кд/м²| 2000 кд/м² HBM | 3500 кд/м² в пиковом режиме"
+        },
+        {
+          "key": "Плотность пикселей",
+          "value": "460 пикселей/дюйм"
+        },
+        {
+          "key": "Процессор",
+          "value": "Mediatek"
+        },
+        {
+          "key": "Оперативная память",
+          "value": "8 ГБ"
+        },
+        {
+          "key": "Встроенная память",
+          "value": "256 ГБ"
+        },
+        {
+          "key": "Разрешение основной камеры",
+          "value": "50 МП"
+        },
+        {
+          "key": "Диафрагма основной камеры",
+          "value": "f/1.5"
+        },
+        {
+          "key": "Разрешение фронтальной камеры",
+          "value": "20 МП"
+        },
+        {
+          "key": "Диафрагма фронтальной камеры",
+          "value": "f/2.2"
+        },
+        {
+          "key": "SIM-карта",
+          "value": "2 Nano-SIM"
+        },
+        {
+          "key": "Сотовая и беспроводная сеть",
+          "value": "GSM / HSPA / LTE / 5G, Bluetooth 6.0, Wi-Fi 802.11 a/b/g/n/ac/6, NFC"
+        },
+        {
+          "key": "Спутниковая навигация",
+          "value": "GPS, BDS, GALILEO, QZSS, NavIC, GLONASS"
+        },
+        {
+          "key": "Интерфейсы",
+          "value": "USB Type-C"
+        },
+        {
+          "key": "Ёмкость аккумулятора",
+          "value": "6500 мАч"
+        },
+        {
+          "key": "Материал",
+          "value": "Алюминий"
+        },
+        {
+          "key": "Ширина",
+          "value": "15,75 см"
+        },
+        {
+          "key": "Высота",
+          "value": "7,52 см"
+        },
+        {
+          "key": "Толщина",
+          "value": "0,84 см"
+        },
+        {
+          "key": "Вес",
+          "value": "201,5 г"
+        },
+        {
+          "key": "Цвет",
+          "value": "Bold Yellow (жёлтый)"
+        },
+        {
+          "key": "Стандарт влагозащиты",
+          "value": "IP68"
+        },
+        {
+          "key": "Операционная система",
+          "value": "Android"
+        },
+        {
+          "key": "Датчики",
+          "value": "акселерометр, гироскоп, компас, датчик приближения"
+        }
+      ],
+      "note": "29.09.2026: Bold Yellow — официальный цвет X8 Pro (есть 8/256), фото с mi.com; характеристики — с карточки X8 Pro 8/256 Black (dr-store), цвет заменён",
+      "checked": "2026-09-29"
     }
   }
 }

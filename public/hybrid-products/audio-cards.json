@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-29T06:47:44.369Z",
-  "count": 87,
+  "generated_at": "2026-09-29T07:10:03.034Z",
+  "count": 88,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -697,6 +697,14 @@
       "name": "🎧Marshall Major V Pitch Black",
       "warehouse": "(S2)",
       "price": 7700
+    },
+    "buds-core-graphite-оаэ-s3-5400": {
+      "url": "hybrid-products/audio/buds-core-graphite-s3-5400.html",
+      "url_en": "en/hybrid-products/audio/buds-core-graphite-s3-5400.html",
+      "cover": "assets/product-images/de7e5559665f154b7f89ee7a.jpg",
+      "name": "Buds Core Graphite",
+      "warehouse": "(S3)",
+      "price": 5400
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T20:55:07.521Z",
-  "count": 77,
+  "generated_at": "2026-09-29T07:10:03.076Z",
+  "count": 80,
   "byId": {
     "xiaomi-15-5g-12-256-green-европа-s3-53000": {
       "url": "hybrid-products/xiaomi/xiaomi-15-5g-12-256-green-s3-53000.html",
@@ -617,6 +617,30 @@
       "name": "Redmi 17 4G 8/256 NFC Purple",
       "warehouse": "(S3)",
       "price": 22700
+    },
+    "poco-f8-pro-5g-12-256-black-slim-европа-s3-44400": {
+      "url": "hybrid-products/xiaomi/poco-f8-pro-5g-12-256-black-slim-s3-44400.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-f8-pro-5g-12-256-black-slim-s3-44400.html",
+      "cover": "assets/product-images/a29792849822a4db14cf9bd3.jpg",
+      "name": "Poco F8 Pro 5G 12/256 Black Slim",
+      "warehouse": "(S3)",
+      "price": 44400
+    },
+    "poco-f8-pro-5g-12-256-blue-slim-европа-s3-43900": {
+      "url": "hybrid-products/xiaomi/poco-f8-pro-5g-12-256-blue-slim-s3-43900.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-f8-pro-5g-12-256-blue-slim-s3-43900.html",
+      "cover": "assets/product-images/0820bea2753d0e9ce26f10c8.jpg",
+      "name": "Poco F8 Pro 5G 12/256 Blue Slim",
+      "warehouse": "(S3)",
+      "price": 43900
+    },
+    "poco-x8-pro-5g-8-256-yellow-европа-s3-36300": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-5g-8-256-yellow-s3-36300.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-5g-8-256-yellow-s3-36300.html",
+      "cover": "assets/product-images/373e7340b0b9221a7ee05027.jpg",
+      "name": "Poco X8 Pro 5G 8/256 Yellow",
+      "warehouse": "(S3)",
+      "price": 36300
     }
   }
 }
