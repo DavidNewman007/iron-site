@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T23:57:15.879Z",
-  "count": 34,
+  "generated_at": "2026-09-29T06:47:44.404Z",
+  "count": 35,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -273,6 +273,14 @@
       "name": "⌚️Google Fitbit Air Stephen Curry",
       "warehouse": "(S2)",
       "price": 20400
+    },
+    "картридж-fujifilm-instax-mini-twin-pack-10шт-s2-2300": {
+      "url": "hybrid-products/gadgets/картридж-fujifilm-instax-mini-twin-pack-10шт-s2-2300.html",
+      "url_en": "en/hybrid-products/gadgets/картридж-fujifilm-instax-mini-twin-pack-10шт-s2-2300.html",
+      "cover": "assets/product-images/c96508b496dbe2a6b9f35773.jpg",
+      "name": "Картридж Fujifilm Instax Mini Twin Pack 10шт",
+      "warehouse": "(S2)",
+      "price": 2300
     }
   }
 }

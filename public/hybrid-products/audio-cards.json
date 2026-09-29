@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T23:56:53.364Z",
-  "count": 86,
+  "generated_at": "2026-09-29T06:47:44.369Z",
+  "count": 87,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -689,6 +689,14 @@
       "name": "Яндекс Станция Мини 3 Про Зеленый",
       "warehouse": "(S2)",
       "price": 13400
+    },
+    "-marshall-major-v-pitch-black-s2-7700": {
+      "url": "hybrid-products/audio/marshall-major-v-pitch-black-s2-7700.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-pitch-black-s2-7700.html",
+      "cover": "assets/product-images/e241f641411412a4e89d84fb.jpeg",
+      "name": "🎧Marshall Major V Pitch Black",
+      "warehouse": "(S2)",
+      "price": 7700
     }
   }
 }

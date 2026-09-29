@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T23:57:53.453Z",
-  "count": 162,
+  "generated_at": "2026-09-29T06:47:44.624Z",
+  "count": 163,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -1297,6 +1297,14 @@
       "name": "Dyson V16S Piston Animal SV53A MatBlack/Copp (наша вилка) + Док станция Re. 495992-01",
       "warehouse": "(S3)",
       "price": 104400
+    },
+    "dyson-pencilvac-fluffy-black-гонконг-s3-48700": {
+      "url": "hybrid-products/dyson/dyson-pencilvac-fluffy-black-s3-48700.html",
+      "url_en": "en/hybrid-products/dyson/dyson-pencilvac-fluffy-black-s3-48700.html",
+      "cover": "assets/product-images/cc1e15e5facb52614075e133.jpg",
+      "name": "Dyson PencilVac Fluffy Black",
+      "warehouse": "(S3)",
+      "price": 48700
     }
   }
 }

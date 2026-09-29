@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T21:16:51.998850Z",
-  "count": 813,
+  "generated_at": "2026-09-29T06:47:44.570Z",
+  "count": 814,
   "byId": {
     "s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-южная-африка-s1-99300": {
       "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-s1-99300.html",
@@ -6505,6 +6505,14 @@
       "name": "Samsung Z Fold 8 12/256 Graphite",
       "warehouse": "(S3)",
       "price": 124500
+    },
+    "samsung-z-fold-8-12-512-violet-оаэ-s3-132300": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-12-512-violet-s3-132300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-12-512-violet-s3-132300.html",
+      "cover": "assets/product-images/b9e8454bde003550f4a8319f.png",
+      "name": "Samsung Z Fold 8 12/512 Violet",
+      "warehouse": "(S3)",
+      "price": 132300
     }
   }
 }

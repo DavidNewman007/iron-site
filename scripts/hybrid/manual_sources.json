@@ -3282,6 +3282,99 @@
       "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/besprovodnoj-pylesos-dyson-piston-ds60-v16-animal-submarine-black-copper",
       "note": "dr-store: «Dyson V16 Piston Animal Submarine DS60, Black/Copper», код SV53A. 495992-01 у поставщика — артикул Piston Animal Submarine EU, поэтому страница Submarine, а не обычного Piston Animal.",
       "checked": "2026-09-29"
+    },
+    "samsung z fold 8 12 512 violet~s3": {
+      "name": "Samsung Z Fold 8 12/512 Violet",
+      "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-z/z-fold8/smartfon-samsung-galaxy-z-fold8-12-512gb-lavender",
+      "note": "Решение владельца 29.09.2026 после сверки цены: 132 300 ₽ ≈ Z Fold 8 12/512 Lavender (133 400), а Ultra 12/512 — 141 800–147 000. «Violet» поставщика — лавандовый цвет обычного Fold 8 (у Fold 8 нет Violet, у Ultra есть)",
+      "checked": "2026-09-29"
+    },
+    "marshall major v pitch black~s2": {
+      "name": "🎧Marshall Major V Pitch Black",
+      "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/marshall-naushniki/marshall-major-v",
+      "note": "Решение владельца 29.09.2026: у Major V нет цвета «Pitch Black» — ставим фото Black (есть у поставщика)",
+      "checked": "2026-09-29"
+    },
+    "картридж fujifilm instax mini twin pack 10шт~s2": {
+      "name": "Картридж Fujifilm Instax Mini Twin Pack 10шт",
+      "source_url": "https://www.instaxus.com/film/mini-white-film/",
+      "images": [
+        "https://www.instaxus.com/wp-content/uploads/2022/10/product-mini-hover.png",
+        "https://www.instaxus.com/wp-content/uploads/2022/10/product-mini.png",
+        "https://www.instaxus.com/wp-content/uploads/2022/10/Twin-Pack-White-Ilust_Desktop_MINI-3.png"
+      ],
+      "title": "Картридж Fujifilm instax mini Twin Pack, 20 снимков (2 кассеты по 10)",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Fujifilm instax"
+        },
+        {
+          "key": "Тип",
+          "value": "Плёнка моментальной печати instax mini, белая рамка"
+        },
+        {
+          "key": "Количество",
+          "value": "20 снимков (2 кассеты по 10)"
+        },
+        {
+          "key": "Размер плёнки",
+          "value": "86 × 54 мм"
+        },
+        {
+          "key": "Размер изображения",
+          "value": "62 × 46 мм"
+        },
+        {
+          "key": "Проявка",
+          "value": "Около 90 секунд"
+        },
+        {
+          "key": "Рабочая температура",
+          "value": "+5…+40 °C"
+        },
+        {
+          "key": "Совместимость",
+          "value": "Камеры, гибриды и принтеры instax mini"
+        }
+      ],
+      "note": "Решение 29.09.2026 (владелец поручил сверить по цене): 2 300 ₽ = цена Twin Pack из 2 кассет по 10 снимков (instax.ru — 2 350 ₽ за 20 снимков; одна кассета на 10 — 690–1 150 ₽). «10шт» поставщика — снимков в кассете",
+      "checked": "2026-09-29"
+    },
+    "dyson pencilvac fluffy black~s3": {
+      "name": "Dyson PencilVac Fluffy Black",
+      "source_url": "https://www.dyson.com.au/dyson-pencilvac-fluffycones-492714-01-black",
+      "images": [
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/vacuum-cleaners/power-broom/pencilvac/fluffy-cones/pdp/gallery/683-PDP-Fluffycones-Gallery-1.jpg",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/vacuum-cleaners/power-broom/pencilvac/fluffy-cones/pdp/gallery/683-PDP-Fluffycones-Gallery-2.jpg",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/vacuum-cleaners/power-broom/pencilvac/fluffy-cones/pdp/gallery/683-PDP-Fluffycones-Gallery-3.jpg",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/vacuum-cleaners/power-broom/pencilvac/fluffy-cones/pdp/gallery/683-PDP-Fluffycones-Gallery-4.jpg"
+      ],
+      "title": "Dyson PencilVac Fluffycones, Black",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "PencilVac Fluffycones"
+        },
+        {
+          "key": "Тип",
+          "value": "Беспроводной пылесос для твёрдых полов"
+        },
+        {
+          "key": "Цвет",
+          "value": "Black"
+        },
+        {
+          "key": "Артикул",
+          "value": "492714-01"
+        }
+      ],
+      "note": "Решение владельца 29.09.2026: Гонконг продаёт только Fluffycones, цена поставщика 48 700 ₽ ближе к Fluffycones (dr-store 49 990) — ставим Fluffycones",
+      "checked": "2026-09-29"
     }
   }
 }
