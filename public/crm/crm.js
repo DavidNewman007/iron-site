@@ -1279,6 +1279,87 @@
     return missing.length ? old + "; " + missing.join("; ") : old;
   }
 
+
+  // ── автоисправление опечаток, как на клавиатуре телефона (v27, 29.09.2026) ──────
+  // Владелец: подчёркивание есть, а правой кнопкой не исправляется. Подсказки правой кнопкой
+  // даёт проверка орфографии самой macOS, оболочка на неё не влияет. Поэтому исправляем
+  // сами через Яндекс.Спеллер (бесплатный, CORS открыт): дописал слово и поставил пробел
+  // или знак — опечатка заменяется сразу, под полем «исправлено: … · вернуть». «Вернуть»
+  // запоминает слово на этом устройстве. Уходит в Яндекс только само слово; при выходе из
+  // «Неисправности» и «Работ» — текст поля целиком, оставшиеся ошибки — кнопками.
+  // 29.09.2026 через спеллер прогнали 1003 частых слова базы: 77 помечены, почти все —
+  // настоящие опечатки («необходма» ×76, «соглосовано» ×43, «профилкатика» ×34). Жаргон и
+  // имена, которые он путает, — в SPELL_KEEP.
+  const SPELL_URL = "https://speller.yandex.net/services/spellservice.json/checkText";
+  const SPELL_COLS = [C.issue, C.work, C.comment, C.warranty];
+  const SPELL_KEEP = new Set(["пробит", "оригчип", "скаймоби", "диспа", "дисп", "симкарту", "симкарта", "вайфай", "витали", "виталя", "тинькоф", "вотсапп", "ватсап",
+    "вебкамеры", "вебкамера", "партслог", "либерти", "педант", "флорид", "тристар", "тайпси", "магсейф", "буткамп", "лвдс", "хдд", "ссд", "озу", "гпу", "юсб",
+    "мульта", "матплаты", "матплата", "материнки", "материнка", "проца", "клава", "клавы", "видос", "видоса", "ноут", "комп", "биток", "тачбар", "айклауд",
+    "ребол", "реболл", "аудиокодек", "аудиокодека", "подменный", "ремакс", "мосэлсиди"]);
+  const spellMine = () => new Set(store.get("crm.spell.keep") || []);
+  const spellCache = new Map(); // слово → исправление ("" — слово верное)
+  const SPELL_SEP = /[\s.,;:!?)»"]/;
+  async function spellWord(w) {
+    const k = w.toLowerCase();
+    if (spellCache.has(k)) return spellCache.get(k);
+    const j = await fetch(SPELL_URL + "?lang=ru,en&options=518&text=" + encodeURIComponent(w)).then(r => r.json()).catch(() => null);
+    const fix = j?.[0]?.s?.[0] || "";
+    spellCache.set(k, fix);
+    return fix;
+  }
+  function spellSkip(w) {
+    const k = w.toLowerCase().replace(/ё/g, "е");
+    return w.length < 4 || /\d/.test(w) || (w === w.toUpperCase() && /[A-ZА-ЯЁ]/.test(w)) || SPELL_KEEP.has(k) || spellMine().has(k);
+  }
+  // Заменить кусок текста в поле, не ломая Ctrl+Z: execCommand делает правку «как набранную».
+  function spellReplace(el, start, end, text) {
+    const caret = el.selectionStart, delta = text.length - (end - start);
+    el.focus({ preventScroll: true }); el.setSelectionRange(start, end);
+    if (!document.execCommand("insertText", false, text)) { el.setRangeText(text, start, end, "end"); el.dispatchEvent(new Event("input", { bubbles: true })); }
+    const pos = caret >= end ? caret + delta : caret; el.setSelectionRange(pos, pos);
+  }
+  const matchCase = (orig, fix) => orig[0] === orig[0].toUpperCase() && orig[0] !== orig[0].toLowerCase() ? fix[0].toUpperCase() + fix.slice(1) : fix;
+  function spellNote(el, html) {
+    const host = el.closest(".field") || el.parentElement; if (!host) return;
+    let n = host.querySelector(":scope > .spellnote");
+    if (!html) { n?.remove(); return; }
+    if (!n) { n = document.createElement("div"); n.className = "spellnote"; host.appendChild(n); }
+    n.innerHTML = html;
+  }
+  const isSpellField = el => (el.tagName === "TEXTAREA" || el.tagName === "INPUT") && (SPELL_COLS.includes(+el.dataset.edit) || (el.dataset.extra != null && SPELL_COLS.includes(+el.dataset.col)) || el.dataset.pf === "name");
+  document.addEventListener("input", async e => {
+    const el = e.target;
+    if (!isSpellField(el) || el.dataset.edit === undefined && el.dataset.extra === undefined && el.dataset.pf !== "name") return;
+    if (!((e.inputType === "insertText" && e.data && SPELL_SEP.test(e.data.slice(-1))) || e.inputType === "insertLineBreak" || e.inputType === "insertParagraph")) return;
+    const before = el.value.slice(0, el.selectionStart - 1);
+    const m = before.match(/([A-Za-zА-Яа-яЁё]+(?:-[A-Za-zА-Яа-яЁё]+)?)$/); if (!m) return;
+    const w = m[1], start = before.length - w.length, end = before.length;
+    if (spellSkip(w)) return;
+    const fix = await spellWord(w);
+    if (!fix || fix.toLowerCase() === w.toLowerCase() || el.value.slice(start, end) !== w) return;
+    const put = matchCase(w, fix);
+    spellReplace(el, start, end, put);
+    spellNote(el, `исправлено: <s>${esc(w)}</s> → <b>${esc(put)}</b> <button type="button" class="linkbtn" data-act="spellundo" data-w="${esc(w)}" data-fix="${esc(put)}" data-at="${start}">вернуть</button>`);
+  });
+  // Выход из поля: всё, что осталось с ошибками (вставленный текст, слово в конце строки),
+  // — кнопками «исправить». Сами не меняем: текст может быть чужим и старым.
+  document.addEventListener("focusout", async e => {
+    const el = e.target;
+    if (!(el.tagName === "TEXTAREA" && [C.issue, C.work].includes(+(el.dataset.edit ?? el.dataset.col)))) return;
+    const text = el.value.trim(); if (text.length < 4) return spellNote(el, "");
+    const j = await fetch(SPELL_URL, { method: "POST", body: new URLSearchParams({ lang: "ru,en", options: "518", text }) }).then(r => r.json()).catch(() => null);
+    const errs = (j || []).filter(x => x.s?.[0] && !spellSkip(x.word)).slice(0, 8);
+    if (!errs.length || !document.body.contains(el)) return;
+    spellNote(el, `Возможно, опечатки: ${errs.map(x => `<button type="button" class="spellfix" data-act="spellfix" data-w="${esc(x.word)}" data-fix="${esc(matchCase(x.word, x.s[0]))}">${esc(x.word)} → ${esc(matchCase(x.word, x.s[0]))}</button>`).join(" ")}
+      ${errs.length > 1 ? `<button type="button" class="linkbtn" data-act="spellfixall">исправить всё</button>` : ""}`);
+  });
+  function spellFieldOf(btn) { return btn.closest(".field")?.querySelector("textarea, input") || btn.closest(".spellnote")?.parentElement?.querySelector("textarea, input"); }
+  function spellApply(el, w, fix) {
+    const re = new RegExp("(^|[^A-Za-zА-Яа-яЁё])" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?![A-Za-zА-Яа-яЁё])"), m = el.value.match(re);
+    if (!m) return false;
+    const start = m.index + m[1].length; spellReplace(el, start, start + w.length, fix); return true;
+  }
+
   // ── из карточки: новый заказ этому клиенту и гарантийный ремонт (v19) ──────────
   // Как «Скопировать заказ» и «Гарантийный заказ» в RemOnline/RepairShopr: данные клиента
   // не вводятся заново, а гарантийный заказ связан с исходным (AF «Связанная сделка №»).
@@ -1656,6 +1737,20 @@
       S.discUnit = { ...(S.discUnit || {}), [key]: t.dataset.u };
       const inp = $app.querySelector("[data-disc]"); if (inp && inp.value.trim()) applyDiscount(key, r, inp.value, t.dataset.u);
       const y = window.scrollY; render(); window.scrollTo(0, y);
+    }
+    else if (act === "spellundo") {
+      const el = spellFieldOf(t); if (!el) return;
+      const at = +t.dataset.at, fix = t.dataset.fix;
+      if (el.value.slice(at, at + fix.length) === fix) spellReplace(el, at, at + fix.length, t.dataset.w); else spellApply(el, fix, t.dataset.w);
+      const keep = spellMine(); keep.add(t.dataset.w.toLowerCase().replace(/ё/g, "е")); store.set("crm.spell.keep", [...keep]);
+      spellNote(el, `«${esc(t.dataset.w)}» больше не исправляю`);
+    }
+    else if (act === "spellfix" || act === "spellfixall") {
+      const el = spellFieldOf(t); if (!el) return;
+      const btns = act === "spellfixall" ? [...t.closest(".spellnote").querySelectorAll("[data-act=spellfix]")] : [t];
+      for (const b of btns) spellApply(el, b.dataset.w, b.dataset.fix);
+      btns.forEach(b => b.remove());
+      if (!el.closest(".field")?.querySelector("[data-act=spellfix]")) spellNote(el, "");
     }
     else if (act === "tmore") { const c = +t.dataset.c; S.tipsOpen ||= new Set(); S.tipsOpen.has(c) ? S.tipsOpen.delete(c) : S.tipsOpen.add(c); const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "ppclose") { S.pp = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
