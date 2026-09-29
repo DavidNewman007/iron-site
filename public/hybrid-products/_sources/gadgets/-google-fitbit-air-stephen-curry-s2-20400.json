@@ -1,0 +1,57 @@
+{
+  "product_id": "-google-fitbit-air-stephen-curry-s2-20400",
+  "category": "gadgets",
+  "file_slug": "google-fitbit-air-stephen-curry-s2-20400",
+  "name": "⌚️Google Fitbit Air Stephen Curry",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 20400,
+  "catalog_url": "https://store.google.com/us/product/google_fitbit_air?hl=en-US",
+  "catalog_title": "Фитнес-трекер Google Fitbit Air, Special Edition Stephen Curry (Rye)",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Google Fitbit"
+    },
+    {
+      "key": "Модель",
+      "value": "Fitbit Air, Special Edition Stephen Curry"
+    },
+    {
+      "key": "Цвет",
+      "value": "Rye — коричневый с оранжевым"
+    },
+    {
+      "key": "Тип",
+      "value": "Фитнес-трекер без экрана"
+    },
+    {
+      "key": "Автономность",
+      "value": "До недели"
+    },
+    {
+      "key": "Ремешок",
+      "value": "Тканый, водоотталкивающий; фирменная бирка и номер 30 Карри"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Android 11+ и iOS 16.4+, приложение Google Health"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/ZLOd_SNAgU-uIY6ELtLV4zCcAaOtSka4mAatrr_WYG7QhP8n7sWZoB0hxqosk4ArJXFxc6LYuPmWdJtknEMTPCKPy6TWRiuAfw=w1200-h1200",
+    "https://lh3.googleusercontent.com/1nnCHd2Joq7uWx77wEeDrdrflK95lS-IeUdyzeqZXZkrZW4KNvVO1GG5a77_Bh_dd2ut2AdpsOSD1J1_SEBJI87sF0n0lxwF30I=w1200-h1200",
+    "https://lh3.googleusercontent.com/j-3FFnoSTJ6tH9JiBB9EwMV52mADBim8cnbgGJrQVXO7dqRNDv2bPpKEm1Ctc0d22UbFS_vlWxom40-5Qq3TmVFM_BO5U58dICI=w1200-h1200",
+    "https://lh3.googleusercontent.com/4pCKiQgIg08TKFtvGbvkNhQgKHFqbv2fgi0e_XHpLCgVpyzWo209ZdiothJXN_1lNMvbxtyE3G5OgKD8fi6KgXXBl-nkN1wSAo8j=w1200-h1200"
+  ],
+  "images_local": [
+    "assets/product-images/f164b529146e45e72f8976fa.jpg",
+    "assets/product-images/90d07b575d00f8adb5e78d0b.jpg",
+    "assets/product-images/695ed7f35bfd736f29b0bd48.jpg",
+    "assets/product-images/cfd605ca877757832984afc9.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google fitbit air stephen curry~s2",
+  "photo_source": "https://store.google.com/us/product/google_fitbit_air?hl=en-US",
+  "updated_at": "2026-09-28T23:57:15.836432Z"
+}

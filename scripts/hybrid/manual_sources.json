@@ -2295,6 +2295,993 @@
       "catalog_url": "https://sochi.dr-store.ru/smart-watches/samsung-watch/galaxy-watch-7/samsung-galaxy-watch-7-44-green",
       "note": "dr-store: Galaxy Watch 7 44mm, Green. У поставщика только версия без LTE — внешне LTE-версия такая же",
       "checked": "2026-09-28"
+    },
+    "ps5 pulse elite black~s2": {
+      "name": "🎧PS5 Pulse Elite Black",
+      "source_url": "https://direct.playstation.com/en-us/buy-accessories/pulse-elite-wireless-headset-midnight-black-ps5",
+      "images": [
+        "https://media.direct.playstation.com/is/image/sierialto/Elite-black-Hero-1?wid=1200&hei=1200&fmt=jpg",
+        "https://media.direct.playstation.com/is/image/sierialto/elite-black-mic-extended?wid=1200&hei=1200&fmt=jpg",
+        "https://media.direct.playstation.com/is/image/sierialto/Elite-black-Hero-4?wid=1200&hei=1200&fmt=jpg",
+        "https://media.direct.playstation.com/is/image/sierialto/Elite-black-Hero-5?wid=1200&hei=1200&fmt=jpg",
+        "https://media.direct.playstation.com/is/image/sierialto/Elite-black-Hero-2?wid=1200&hei=1200&fmt=jpg",
+        "https://media.direct.playstation.com/is/image/sierialto/elite-black-beautyshot?wid=1200&hei=1200&fmt=jpg"
+      ],
+      "title": "Беспроводная гарнитура PlayStation PULSE Elite, Midnight Black",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Sony PlayStation"
+        },
+        {
+          "key": "Модель",
+          "value": "PULSE Elite"
+        },
+        {
+          "key": "Цвет",
+          "value": "Midnight Black (чёрный)"
+        },
+        {
+          "key": "Тип",
+          "value": "Беспроводная гарнитура с выдвижным микрофоном"
+        },
+        {
+          "key": "Излучатели",
+          "value": "Планарно-магнитные"
+        },
+        {
+          "key": "Подключение",
+          "value": "PlayStation Link (USB-адаптер в комплекте), Bluetooth"
+        },
+        {
+          "key": "Совместимость",
+          "value": "PS5, PC, Mac, PlayStation Portal"
+        },
+        {
+          "key": "Микрофон",
+          "value": "Выдвижной, шумоподавление с ИИ"
+        },
+        {
+          "key": "Автономность",
+          "value": "До 30 ч, быстрая зарядка"
+        },
+        {
+          "key": "Комплектация",
+          "value": "Гарнитура, USB-адаптер PlayStation Link, зарядная подставка-вешалка, монтажная пластина, USB-кабель, инструкция"
+        }
+      ],
+      "note": "Официальный магазин PlayStation (direct.playstation.com), страница цвета Midnight Black.",
+      "checked": "2026-09-29"
+    },
+    "marshall motif ii black~s2": {
+      "name": "Marshall Motif II Black",
+      "source_url": "https://www.citilink.ru/product/naushniki-vnutrikanalnye-marshall-motif-ii-anc-chernyi-besprovodnye-bl-1986017/",
+      "images": [
+        "https://cdn.citilink.ru/mjMNI9YKU_brwOKfZZTONcqJbeO3GcdC1dBa8Gn1NMA/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/700abdbf-599a-4444-8541-e9210471a0ea.jpg",
+        "https://cdn.citilink.ru/kOzdbaMlvC9JgOz7GksRedwhqROQHPXK6Q3L3uX01V0/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/9d5b8c7a-7029-48e3-be68-ba662d3377df.jpg",
+        "https://cdn.citilink.ru/lsVnQbOmBO6HJ6kxIKI5srYoJcnZ-k6J8i3rjdW7u00/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/7dbdd05c-85a9-4148-8030-fcd09536ecc3.jpg",
+        "https://cdn.citilink.ru/rfTjLxiOZek5EbooefdNxurUU4Ai5BxHta2U1Twvz4A/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/9d13811d-b04f-486c-85b0-d409d25bd5bb.jpg",
+        "https://cdn.citilink.ru/7xXar1M682WmpUxW05P5TEmwN3TgS9FKjt1hy6x6JAc/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/959f0e58-a758-4cd1-8e8c-3cd34ace8814.jpg"
+      ],
+      "title": "Наушники Marshall Motif II ANC, чёрные",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Marshall"
+        },
+        {
+          "key": "Модель",
+          "value": "Motif II A.N.C."
+        },
+        {
+          "key": "Цвет",
+          "value": "Чёрный"
+        },
+        {
+          "key": "Тип",
+          "value": "Беспроводные внутриканальные TWS"
+        },
+        {
+          "key": "Шумоподавление",
+          "value": "Активное (ANC), режим прозрачности"
+        },
+        {
+          "key": "Защита",
+          "value": "IPX5"
+        },
+        {
+          "key": "Динамики",
+          "value": "6 мм, 16 Ом, 108 дБ, 20 Гц – 20 кГц"
+        },
+        {
+          "key": "Bluetooth",
+          "value": "5.3"
+        },
+        {
+          "key": "Автономность",
+          "value": "До 9 ч, с кейсом до 43 ч"
+        },
+        {
+          "key": "Зарядка",
+          "value": "USB Type-C, 1,5 ч"
+        },
+        {
+          "key": "Комплектация",
+          "value": "Наушники, зарядный кейс, запасные амбушюры"
+        }
+      ],
+      "note": "Ситилинк. На marshall.com фото того же чёрного цвета; взяли Ситилинк — там характеристики по-русски.",
+      "checked": "2026-09-29"
+    },
+    "яндекс станция лайт 2 розовый без часов~s2": {
+      "name": "Яндекс Станция Лайт 2 Розовый (Без часов)",
+      "source_url": "https://www.citilink.ru/product/umnaya-kolonka-yandex-stanciya-lait-2-bez-chasov-golos-p-alisa-rozovyi-2128380/",
+      "images": [
+        "https://cdn.citilink.ru/nQIcnk7lKCreWYLmIBCoO7CXDEbVj9d3v0m9lAF89zU/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/5be9f5cb-3584-4efb-96ca-dd2ce30d0aeb.jpg",
+        "https://cdn.citilink.ru/OpCVaGP0_bbchu266BNNTEmbMQcfv-SHepKkMsS6AR8/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/59f856ac-027f-4cc9-ae25-1b6191de33a7.jpg",
+        "https://cdn.citilink.ru/VSC8iU-8M7dT2zg8-fyJcLXa-OUVPtl9T3B0C-ltnJg/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/d857e4de-4a5e-4ff0-bf3d-dee83ca8930d.jpg",
+        "https://cdn.citilink.ru/LwtwSo93WiOvzkZIuotlI2DfJwL_VG7Ab6OPmH3Dp6o/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/d4c4a62f-7e55-4aa2-8752-7b13775bd3b8.jpg"
+      ],
+      "title": "Умная колонка Яндекс Станция Лайт 2 без часов, розовый",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Яндекс"
+        },
+        {
+          "key": "Модель",
+          "value": "Станция Лайт 2 без часов (YNDX-00028)"
+        },
+        {
+          "key": "Цвет",
+          "value": "Розовый"
+        },
+        {
+          "key": "Голосовой помощник",
+          "value": "Алиса"
+        },
+        {
+          "key": "Мощность",
+          "value": "6 Вт"
+        },
+        {
+          "key": "Частоты",
+          "value": "120 Гц – 16 кГц"
+        },
+        {
+          "key": "Подключение",
+          "value": "Wi-Fi 802.11 b/g/n/ac, Bluetooth 5.0 BLE"
+        },
+        {
+          "key": "Питание",
+          "value": "USB Type-C / сеть; внешний аккумулятор YNDX-00651 — отдельно"
+        },
+        {
+          "key": "Размеры",
+          "value": "90 × 65 × 90 мм"
+        },
+        {
+          "key": "Вес",
+          "value": "350 г"
+        },
+        {
+          "key": "Комплектация",
+          "value": "Колонка, адаптер питания, инструкция, стикеры"
+        }
+      ],
+      "note": "Ситилинк. На alice.yandex.ru на странице только версии с часами, эта — без часов.",
+      "checked": "2026-09-29"
+    },
+    "яндекс станция лайт 2 кораловый без часов~s2": {
+      "name": "Яндекс Станция Лайт 2 Кораловый (Без часов)",
+      "source_url": "https://www.citilink.ru/product/umnaya-kolonka-yandex-stanciya-lait-2-bez-chasov-golos-p-alisa-coral-6-2128156/",
+      "images": [
+        "https://cdn.citilink.ru/Swm1yydQOHt0rPgFsMVu8WE94LBJ-HgB7Qz2yRcameo/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/55c45b03-4e3b-43f3-88a7-581385348ee9.jpg",
+        "https://cdn.citilink.ru/ZKt5NJkt_bwJVOfYEq3I2LR52Zz38vze7S6zGWe0CAs/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/3376b446-e9e1-4cb2-89a2-00315252e414.jpg",
+        "https://cdn.citilink.ru/pVX6fokkNvwVGnCPGtNZmSWPmbqrz0jMQbG3KtUUzws/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/1c434c75-266b-4083-9aa7-afd2b9f4573f.jpg",
+        "https://cdn.citilink.ru/5rAf8WWubv20pIMgzyB9XyjuygDyBxL26cdA2si7kgM/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/71524546-bed1-439b-9c60-4c8a83eeafd3.jpg"
+      ],
+      "title": "Умная колонка Яндекс Станция Лайт 2 без часов, коралловый",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Яндекс"
+        },
+        {
+          "key": "Модель",
+          "value": "Станция Лайт 2 без часов (YNDX-00028)"
+        },
+        {
+          "key": "Цвет",
+          "value": "Коралловый"
+        },
+        {
+          "key": "Голосовой помощник",
+          "value": "Алиса"
+        },
+        {
+          "key": "Мощность",
+          "value": "6 Вт"
+        },
+        {
+          "key": "Частоты",
+          "value": "120 Гц – 16 кГц"
+        },
+        {
+          "key": "Подключение",
+          "value": "Wi-Fi 802.11 b/g/n/ac, Bluetooth 5.0 BLE"
+        },
+        {
+          "key": "Питание",
+          "value": "USB Type-C / сеть; внешний аккумулятор YNDX-00651 — отдельно"
+        },
+        {
+          "key": "Размеры",
+          "value": "90 × 65 × 90 мм"
+        },
+        {
+          "key": "Вес",
+          "value": "350 г"
+        },
+        {
+          "key": "Комплектация",
+          "value": "Колонка, адаптер питания, инструкция, стикеры"
+        }
+      ],
+      "note": "Ситилинк. На alice.yandex.ru на странице только версии с часами, эта — без часов.",
+      "checked": "2026-09-29"
+    },
+    "яндекс станция мини 3 про зеленый~s2": {
+      "name": "Яндекс Станция Мини 3 Про Зеленый",
+      "source_url": "https://www.citilink.ru/product/umnaya-kolonka-yandex-stanciya-mini-3-pro-yndx-00059-golos-p-alisa-zel-2150310/",
+      "images": [
+        "https://cdn.citilink.ru/Qyu_a43NpLn09d_R2I9x_5vlzBoWwVz72wcNlzveUz4/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/e969fcdd-2786-42d1-8d75-2e8b48d46aeb.jpg",
+        "https://cdn.citilink.ru/bQOkW57zXaPr1fpvcH2-iK-Fr46YWvQAfCPDL1sdB-o/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/91580bed-38e9-4876-818e-c3d322acfbb4.jpg",
+        "https://cdn.citilink.ru/I-s8jMnnQ4OrhDNCunLSMOyYYmv_wSWlpekjX4JrmnY/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/df6e508c-6838-4179-ba5e-e06bf37c0212.jpg",
+        "https://cdn.citilink.ru/3kW_KvdzHOaaaX128w1VS8woJGPVOI1H4zQ7QUt_mhk/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/2dd0d84c-0dc7-42a4-9507-5ea4379fefa9.jpg",
+        "https://cdn.citilink.ru/y8qJ2q45Op59Fwkv9xaIOuLUTwyuOFzRsJJcMe_xx5I/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/2262e229-c536-45d8-9722-a4ee75ac2315.jpg",
+        "https://cdn.citilink.ru/WGuJX-Ljztmrrs1LhNVmqUg5T3z6pSwpRCKp_s-Xj0k/resizing_type:fit/gravity:sm/width:1200/height:750/plain/product-images/e167785a-74e2-4777-a500-438fb4e3a94f.jpg"
+      ],
+      "title": "Умная колонка Яндекс Станция Мини 3 Про, зелёная",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Яндекс"
+        },
+        {
+          "key": "Модель",
+          "value": "Станция Мини 3 Про (YNDX-00059)"
+        },
+        {
+          "key": "Цвет",
+          "value": "Зелёный"
+        },
+        {
+          "key": "Голосовой помощник",
+          "value": "Алиса"
+        },
+        {
+          "key": "Мощность",
+          "value": "18 Вт"
+        },
+        {
+          "key": "Частоты",
+          "value": "90 Гц – 16 кГц"
+        },
+        {
+          "key": "Подключение",
+          "value": "Wi-Fi 802.11 b/g/n/ac, Bluetooth 5.1, Zigbee, Matter"
+        },
+        {
+          "key": "Особенности",
+          "value": "Часы на корпусе, многоцветная подсветка"
+        },
+        {
+          "key": "Размеры",
+          "value": "102 × 71 × 102 мм"
+        },
+        {
+          "key": "Вес",
+          "value": "438 г"
+        },
+        {
+          "key": "Комплектация",
+          "value": "Колонка, блок питания, кабель USB Type-C – USB Type-C, документация"
+        }
+      ],
+      "note": "Ситилинк, зелёный цвет [yndx-00059grn].",
+      "checked": "2026-09-29"
+    },
+    "instax mini 13 white~s2": {
+      "name": "📸instax mini 13 White",
+      "source_url": "https://www.instaxus.com/cameras/instax-mini-13/",
+      "images": [
+        "https://www.instaxus.com/wp-content/uploads/2026/03/mini-11-purple-front-prod-page-1-1-1.png",
+        "https://www.instaxus.com/wp-content/uploads/2026/03/mini-11-purple-back-prod-page-1-1.png",
+        "https://www.instaxus.com/wp-content/uploads/2026/03/mini-11-purple-front-prod-page-1-1-1-1.png",
+        "https://www.instaxus.com/wp-content/uploads/2026/03/mini-11-feature-selfie-mode-1.png"
+      ],
+      "title": "Камера моментальной печати instax mini 13, Clay White",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Fujifilm instax"
+        },
+        {
+          "key": "Модель",
+          "value": "instax mini 13"
+        },
+        {
+          "key": "Цвет",
+          "value": "Clay White (белый)"
+        },
+        {
+          "key": "Тип",
+          "value": "Аналоговая камера моментальной печати"
+        },
+        {
+          "key": "Плёнка",
+          "value": "instax mini"
+        },
+        {
+          "key": "Возможности",
+          "value": "Автоэкспозиция, автоспуск, зеркало для селфи, режим съёмки крупным планом"
+        }
+      ],
+      "note": "Официальный сайт instax (Fujifilm, США), цвет Clay White выбран на странице. Имена файлов у производителя «mini-11-purple…», на снимках — белая mini 13.",
+      "checked": "2026-09-29"
+    },
+    "instax mini 13 blue~s2": {
+      "name": "📸instax mini 13 Blue",
+      "source_url": "https://www.instaxus.com/cameras/instax-mini-13/",
+      "images": [
+        "https://www.instaxus.com/wp-content/uploads/2026/03/Group-307-1-1.png",
+        "https://www.instaxus.com/wp-content/uploads/2026/03/Group-240-1.png",
+        "https://www.instaxus.com/wp-content/uploads/2026/03/Group-308-1.png",
+        "https://www.instaxus.com/wp-content/uploads/2026/03/mini-11-feature-selfie-mode-1-1-1.png"
+      ],
+      "title": "Камера моментальной печати instax mini 13, Frost Blue",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Fujifilm instax"
+        },
+        {
+          "key": "Модель",
+          "value": "instax mini 13"
+        },
+        {
+          "key": "Цвет",
+          "value": "Frost Blue (голубой)"
+        },
+        {
+          "key": "Тип",
+          "value": "Аналоговая камера моментальной печати"
+        },
+        {
+          "key": "Плёнка",
+          "value": "instax mini"
+        },
+        {
+          "key": "Возможности",
+          "value": "Автоэкспозиция, автоспуск, зеркало для селфи, режим съёмки крупным планом"
+        }
+      ],
+      "note": "Официальный сайт instax (Fujifilm, США), цвет Frost Blue выбран на странице.",
+      "checked": "2026-09-29"
+    },
+    "картридж fujifilm instax mini twin pack 20шт~s2": {
+      "name": "Картридж Fujifilm Instax Mini Twin Pack 20шт",
+      "source_url": "https://www.instaxus.com/film/mini-white-film/",
+      "images": [
+        "https://www.instaxus.com/wp-content/uploads/2022/10/product-mini-hover.png",
+        "https://www.instaxus.com/wp-content/uploads/2022/10/product-mini.png",
+        "https://www.instaxus.com/wp-content/uploads/2022/10/Twin-Pack-White-Ilust_Desktop_MINI-3.png"
+      ],
+      "title": "Картридж Fujifilm instax mini Twin Pack, 20 снимков",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Fujifilm instax"
+        },
+        {
+          "key": "Тип",
+          "value": "Плёнка моментальной печати instax mini, белая рамка"
+        },
+        {
+          "key": "Количество",
+          "value": "20 снимков (2 кассеты по 10)"
+        },
+        {
+          "key": "Размер плёнки",
+          "value": "86 × 54 мм"
+        },
+        {
+          "key": "Размер изображения",
+          "value": "62 × 46 мм"
+        },
+        {
+          "key": "Проявка",
+          "value": "Около 90 секунд"
+        },
+        {
+          "key": "Рабочая температура",
+          "value": "+5…+40 °C"
+        },
+        {
+          "key": "Совместимость",
+          "value": "Камеры, гибриды и принтеры instax mini"
+        }
+      ],
+      "note": "Официальный сайт instax, «mini Twin Film Pack (20 sheets)».",
+      "checked": "2026-09-29"
+    },
+    "google fitbit air stephen curry~s2": {
+      "name": "⌚️Google Fitbit Air Stephen Curry",
+      "source_url": "https://store.google.com/us/product/google_fitbit_air?hl=en-US",
+      "images": [
+        "https://lh3.googleusercontent.com/ZLOd_SNAgU-uIY6ELtLV4zCcAaOtSka4mAatrr_WYG7QhP8n7sWZoB0hxqosk4ArJXFxc6LYuPmWdJtknEMTPCKPy6TWRiuAfw=w1200-h1200",
+        "https://lh3.googleusercontent.com/1nnCHd2Joq7uWx77wEeDrdrflK95lS-IeUdyzeqZXZkrZW4KNvVO1GG5a77_Bh_dd2ut2AdpsOSD1J1_SEBJI87sF0n0lxwF30I=w1200-h1200",
+        "https://lh3.googleusercontent.com/j-3FFnoSTJ6tH9JiBB9EwMV52mADBim8cnbgGJrQVXO7dqRNDv2bPpKEm1Ctc0d22UbFS_vlWxom40-5Qq3TmVFM_BO5U58dICI=w1200-h1200",
+        "https://lh3.googleusercontent.com/4pCKiQgIg08TKFtvGbvkNhQgKHFqbv2fgi0e_XHpLCgVpyzWo209ZdiothJXN_1lNMvbxtyE3G5OgKD8fi6KgXXBl-nkN1wSAo8j=w1200-h1200"
+      ],
+      "title": "Фитнес-трекер Google Fitbit Air, Special Edition Stephen Curry (Rye)",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Google Fitbit"
+        },
+        {
+          "key": "Модель",
+          "value": "Fitbit Air, Special Edition Stephen Curry"
+        },
+        {
+          "key": "Цвет",
+          "value": "Rye — коричневый с оранжевым"
+        },
+        {
+          "key": "Тип",
+          "value": "Фитнес-трекер без экрана"
+        },
+        {
+          "key": "Автономность",
+          "value": "До недели"
+        },
+        {
+          "key": "Ремешок",
+          "value": "Тканый, водоотталкивающий; фирменная бирка и номер 30 Карри"
+        },
+        {
+          "key": "Совместимость",
+          "value": "Android 11+ и iOS 16.4+, приложение Google Health"
+        }
+      ],
+      "note": "Google Store (США): вариант «Stephen Curry», цвет Rye.",
+      "checked": "2026-09-29"
+    },
+    "dyson hd08 nickel copper наша вилка~s3": {
+      "name": "Dyson HD08 Nickel/Copper (наша вилка)",
+      "source_url": "https://re-store.ru/catalog/389928-01/",
+      "images": [
+        "https://static.re-store.ru/upload/iblock/fdd/ul4jpbxr25i0tt2ufp6ogav8m1cghkoz.jpg",
+        "https://static.re-store.ru/upload/iblock/732/xjzx0arukpsq97gtdsh0ca47m40vldcq.jpg",
+        "https://static.re-store.ru/upload/iblock/49e/k4hjerc4105jugbsrbdqc8rq972cf84p.jpg"
+      ],
+      "title": "Фен Dyson Supersonic HD08, никель/медь",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "Supersonic HD08"
+        },
+        {
+          "key": "Цвет",
+          "value": "Никель/медь (Nickel/Copper)"
+        },
+        {
+          "key": "Мотор",
+          "value": "Dyson V9, до 110 000 об/мин"
+        },
+        {
+          "key": "Режимы",
+          "value": "3 скорости, 4 температуры, холодный обдув"
+        },
+        {
+          "key": "Контроль нагрева",
+          "value": "Замер температуры воздуха более 40 раз в секунду"
+        },
+        {
+          "key": "Насадки",
+          "value": "Магнитные"
+        }
+      ],
+      "note": "re-store (сеть фирменных магазинов): «Фен Dyson Supersonic HD08, 4 насадки, никель/медь». На dyson.co.uk тот же цвет — это HD07, европейская версия; взяли страницу с HD08.",
+      "checked": "2026-09-29"
+    },
+    "dyson hd08 prussian blue наша вилка~s3": {
+      "name": "Dyson HD08 Prussian Blue (наша вилка)",
+      "source_url": "https://www.dyson.com/hair-care/hair-dryers/supersonic/prussian-blue-rich-copper",
+      "images": [
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/113306-01.png?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/beauty/hair-dryers/supersonic/prussian-blue-rich-copper/Web-605C-T3-T4-PDP-Gallery-Images-7.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/gallery/us/hair-care/supersonic/412522-01/updates/SS_COM_Prussian-Blue_3.jpg?wid=1400"
+      ],
+      "title": "Фен Dyson Supersonic HD08, берлинская лазурь/медь",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "Supersonic HD08"
+        },
+        {
+          "key": "Цвет",
+          "value": "Берлинская лазурь/медь (Prussian Blue/Rich Copper)"
+        },
+        {
+          "key": "Мотор",
+          "value": "Dyson V9, до 110 000 об/мин"
+        },
+        {
+          "key": "Режимы",
+          "value": "3 скорости, 4 температуры, холодный обдув"
+        },
+        {
+          "key": "Контроль нагрева",
+          "value": "Замер температуры воздуха более 40 раз в секунду"
+        }
+      ],
+      "note": "dyson.com (США): Supersonic Prussian Blue/Rich Copper, серия 605C (HD08; HD15 — серия 605J). Взяты только снимки фена этого цвета, фото с никелевым феном отброшены.",
+      "checked": "2026-09-29"
+    },
+    "dyson hd15 prussian blue наша вилка~s3": {
+      "name": "Dyson HD15 Prussian Blue (наша вилка)",
+      "source_url": "https://www.dyson.co.kr/dyson-supersonic-hd15-hair-dryer-blue-copper",
+      "images": [
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/hero/hc/ss/KR-hero-blue-copper.png?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/personal-care/q4-gifting/pdp/supersonic-pdp/Variant-page-Spec-image-supersonic-assets-DKBLCO-480x360.png",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/direct-journey/products/hair-care/supersonic/carousel/Supersonic-pdp-mod-5-carousel-1-copper.jpg?wid=1400"
+      ],
+      "title": "Фен Dyson Supersonic HD15, берлинская лазурь/медь",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "Supersonic HD15"
+        },
+        {
+          "key": "Цвет",
+          "value": "Берлинская лазурь/медь (Prussian Blue/Copper)"
+        },
+        {
+          "key": "Мощность",
+          "value": "1600 Вт"
+        },
+        {
+          "key": "Воздушный поток",
+          "value": "До 13,3 л/с"
+        },
+        {
+          "key": "Скорости",
+          "value": "3"
+        },
+        {
+          "key": "Ионизация",
+          "value": "Снижает статическое электричество"
+        },
+        {
+          "key": "Размеры",
+          "value": "245 × 78 × 97 мм"
+        },
+        {
+          "key": "Вес",
+          "value": "0,66 кг"
+        },
+        {
+          "key": "Насадки",
+          "value": "Насадка для гладкости, концентратор, насадка для бережной сушки, Flyaway Smoother"
+        }
+      ],
+      "note": "Официальный сайт Dyson Кореи (позиция из Кореи): «슈퍼소닉 HD15 블루/코퍼». Фото с никелевым феном из галереи отброшены.",
+      "checked": "2026-09-29"
+    },
+    "dyson hd17 red velvet~s3": {
+      "name": "Dyson HD17 Red Velvet",
+      "source_url": "https://roxbeauty.com/dyson-supersonic-hd17-red-velvet-gold-straight-plus-wavy.html",
+      "images": [
+        "https://roxbeauty.com/media/catalog/product/cache/95aa96d5d3f32bbfb6186d7b4c9cb5c2/5/0/5025155133071-dyson-supersonic-r-red-velvet_69afda75179de_650xr.png",
+        "https://roxbeauty.com/media/catalog/product/cache/95aa96d5d3f32bbfb6186d7b4c9cb5c2/d/y/dyson_supersonic_r_hd17_4.png",
+        "https://roxbeauty.com/media/catalog/product/cache/95aa96d5d3f32bbfb6186d7b4c9cb5c2/d/y/dyson_supersonic_r_hd17_3.png"
+      ],
+      "title": "Фен Dyson Supersonic r HD17, Red Velvet/Gold",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "Supersonic r HD17 (Straight+Wavy)"
+        },
+        {
+          "key": "Цвет",
+          "value": "Красный бархат/золото (Red Velvet/Gold)"
+        },
+        {
+          "key": "Мотор",
+          "value": "Dyson Hyperdymium, до 110 000 об/мин"
+        },
+        {
+          "key": "Насадки",
+          "value": "5 интеллектуальных насадок с RFID"
+        },
+        {
+          "key": "Ионизация",
+          "value": "До 46% меньше выбивающихся волос"
+        },
+        {
+          "key": "Размеры",
+          "value": "276,9 × 38 × 77 мм"
+        },
+        {
+          "key": "Вес",
+          "value": "0,33 кг"
+        },
+        {
+          "key": "Шнур",
+          "value": "2,7 м"
+        },
+        {
+          "key": "Напряжение",
+          "value": "230 В"
+        },
+        {
+          "key": "Воздушный поток",
+          "value": "12,5 л/с"
+        },
+        {
+          "key": "Шум",
+          "value": "78 дБА"
+        }
+      ],
+      "note": "На dyson.com Red Velvet есть только у Supersonic Nural (HD16), у r (HD17) — нет. Взят магазин roxbeauty.com (ЕС); артикул Dyson 493118-01 = HD17 Red Velvet/Gold EU (проверено по каталогу запчастей).",
+      "checked": "2026-09-29"
+    },
+    "dyson cy26 multifloor 2 iron yellow~s3": {
+      "name": "Dyson CY26 Multifloor 2 Iron/Yellow",
+      "source_url": "https://www.dyson.co.uk/vacuum-cleaners/cylinders/big-ball-cylinder-2/multi-floor-2",
+      "images": [
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/232573-01.png?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/gallery/gb-i/floorcare/cylinder-vacuums/big-ball/multi-floor-2/232573-01/232573-01-gallery-img-3.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cylinders/big-ball-cylinder-2/Cylinders_Gallery_02.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cylinders/big-ball-cylinder-2/Cylinders_Gallery_03.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cylinders/big-ball-cylinder-2/Cylinders_Gallery_04.jpg?wid=1400"
+      ],
+      "title": "Пылесос Dyson Big Ball Multifloor 2 (CY26), сталь/жёлтый",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "Big Ball Multifloor 2 (CY26)"
+        },
+        {
+          "key": "Цвет",
+          "value": "Сталь/жёлтый (Iron/Yellow)"
+        },
+        {
+          "key": "Тип",
+          "value": "Проводной пылесос с контейнером"
+        },
+        {
+          "key": "Особенности",
+          "value": "Сам поднимается при опрокидывании, трубка поворачивается на 360°, насадка сама подстраивается под покрытие"
+        },
+        {
+          "key": "Комплектация",
+          "value": "Пневматическая насадка Musclehead, насадка для лестниц, комбинированная насадка"
+        }
+      ],
+      "note": "Официальный сайт Dyson Великобритании, Big Ball Multi Floor 2 (Iron/Yellow). Снимок красного Big Ball из галереи отброшен.",
+      "checked": "2026-09-29"
+    },
+    "dyson cy28 parquet 2 iron purple~s3": {
+      "name": "Dyson CY28 Parquet 2 Iron/Purple",
+      "source_url": "https://www.coolblue.de/en/product/840775/dyson-big-ball-parquet-2.html",
+      "images": [
+        "https://image.coolblue.de/max/1400xauto/products/1450167",
+        "https://image.coolblue.de/max/1400xauto/products/1450171",
+        "https://image.coolblue.de/max/1400xauto/products/1450178",
+        "https://image.coolblue.de/max/1400xauto/products/1450175",
+        "https://image.coolblue.de/max/1400xauto/products/1450185"
+      ],
+      "title": "Пылесос Dyson Big Ball Parquet 2 (CY28), сталь/фиолетовый",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "Big Ball Parquet 2 (CY28), артикул 228566-01"
+        },
+        {
+          "key": "Цвет",
+          "value": "Сталь/фиолетовый (Iron/Purple)"
+        },
+        {
+          "key": "Тип",
+          "value": "Проводной пылесос с контейнером"
+        },
+        {
+          "key": "Мощность",
+          "value": "600 Вт"
+        },
+        {
+          "key": "Контейнер",
+          "value": "1,5 л"
+        },
+        {
+          "key": "Шум",
+          "value": "До 80 дБ"
+        },
+        {
+          "key": "Шнур",
+          "value": "6,6 м, радиус действия 9,7 м"
+        },
+        {
+          "key": "Вес",
+          "value": "7,9 кг"
+        },
+        {
+          "key": "Размеры",
+          "value": "34,7 × 29,5 × 38,3 см"
+        },
+        {
+          "key": "Насадки",
+          "value": "Щелевая, универсальная, для паркета, мягкая щётка, для мебели"
+        }
+      ],
+      "note": "На сайтах Dyson страницы Parquet 2 уже нет; взят Coolblue (крупный магазин ЕС). Код 228566-01, цвет по фото — сталь/фиолетовый.",
+      "checked": "2026-09-29"
+    },
+    "dyson pencil wash wr 04~s3": {
+      "name": "Dyson Pencil Wash WR 04",
+      "source_url": "https://www.dyson.co.uk/floor-cleaners/wet/pencilwash/copper",
+      "images": [
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/637218-01.png?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/wet-cleaners/pencilwash/Web_PDP_Gallery_970A-KV-3.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/wet-cleaners/pencilwash/Web_PDP_Gallery_970A-wet-dry-4.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/wet-cleaners/pencilwash/Web_PDP_Gallery_970A-manoevurable-6.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/wet-cleaners/pencilwash/Web_PDP_Gallery_970A-motor-7.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/wet-cleaners/pencilwash/Web_PDP_Gallery_970A-clean-9.jpg?wid=1400"
+      ],
+      "title": "Моющий пылесос Dyson PencilWash (WR04)",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "PencilWash (WR04)"
+        },
+        {
+          "key": "Цвет",
+          "value": "Медный/чёрный"
+        },
+        {
+          "key": "Тип",
+          "value": "Беспроводной моющий пылесос для твёрдых полов"
+        },
+        {
+          "key": "Ручка",
+          "value": "Диаметр 38 мм, 380 г в руке"
+        },
+        {
+          "key": "Наклон",
+          "value": "До 170°, моет под мебелью"
+        },
+        {
+          "key": "Валик",
+          "value": "Микрофибра высокой плотности, увлажняется чистой водой при каждом обороте"
+        },
+        {
+          "key": "Покрытия",
+          "value": "Плитка, мрамор, винил, ламинат, герметизированное дерево"
+        }
+      ],
+      "note": "Официальный сайт Dyson Великобритании. WR04 — единственное исполнение PencilWash.",
+      "checked": "2026-09-29"
+    },
+    "dyson v8 total clean black~s3": {
+      "name": "Dyson V8 Total Clean Black",
+      "source_url": "https://www.dyson.co.uk/vacuum-cleaners/cordless/v8/total-clean-black",
+      "images": [
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/443094-01.png?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cordless/v8/advanced/silver-nickel/V8_PDP_Gallery_(FIXED)_04.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cordless/v8/advanced/silver-nickel/V8_PDP_Gallery_(FIXED)_05.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cordless/v8/advanced/silver-nickel/V8_PDP_Gallery_(FIXED)_06.jpg?wid=1400"
+      ],
+      "title": "Беспроводной пылесос Dyson V8 Total Clean, чёрный",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "V8 Total Clean"
+        },
+        {
+          "key": "Цвет",
+          "value": "Чёрный"
+        },
+        {
+          "key": "Мотор",
+          "value": "Dyson V8, до 110 000 об/мин"
+        },
+        {
+          "key": "Время работы",
+          "value": "До 40 мин"
+        },
+        {
+          "key": "Зарядка",
+          "value": "5 ч"
+        },
+        {
+          "key": "Контейнер",
+          "value": "0,54 л"
+        },
+        {
+          "key": "Фильтрация",
+          "value": "Задерживает 99,99% частиц от 0,3 мкм"
+        },
+        {
+          "key": "Вес",
+          "value": "2,5 кг"
+        },
+        {
+          "key": "Размеры",
+          "value": "1256 × 221 × 250 мм"
+        },
+        {
+          "key": "Комплектация",
+          "value": "Насадки Fluffy и Motorbar, щелевая, комбинированная, переходник для низких мест, зарядное устройство"
+        }
+      ],
+      "note": "Официальный сайт Dyson Великобритании. Кроме главного снимка — только схемы мотора/батареи/фильтра; снимки серебристого V8 из галереи отброшены.",
+      "checked": "2026-09-29"
+    },
+    "dyson v10 cyclone sv12 red iron наша вилка~s3": {
+      "name": "Dyson V10 Cyclone SV12 Red/Iron (наша вилка)",
+      "source_url": "https://www.dyson.co.kr/dyson-cyclone-v10",
+      "images": [
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/markets/korea/products/floorcare/sticks/v10/variants/v10-fluffy/V10-fluffy-centre-image-hero-2.png?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/markets/korea/products/floorcare/sticks/v10/variants/v10-fluffy/nickel-red/v10-snkred-gallery-image-1.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/markets/korea/products/floorcare/sticks/v10/variants/v10-fluffy/nickel-red/v10-snkred-gallery-image-2.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/markets/korea/products/floorcare/sticks/v10/variants/v10-fluffy/nickel-red/v10-snkred-gallery-image-5.jpg?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/korea/floorcare/cord-free/v10/variant-fluffy/floorcare-cordfree-v10-nickel-red-variant-feature-hygienic-bin-emptying.jpg?wid=1400"
+      ],
+      "title": "Беспроводной пылесос Dyson Cyclone V10 (SV12), красный/сталь",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "Cyclone V10 (SV12)"
+        },
+        {
+          "key": "Цвет",
+          "value": "Красный/сталь"
+        },
+        {
+          "key": "Циклоны",
+          "value": "14 концентрических"
+        },
+        {
+          "key": "Мощность всасывания",
+          "value": "151 аВт"
+        },
+        {
+          "key": "Контейнер",
+          "value": "0,5 л"
+        },
+        {
+          "key": "Время работы",
+          "value": "С насадкой Fluffy до 35 мин, в ручном режиме до 60 мин"
+        },
+        {
+          "key": "Зарядка",
+          "value": "3,5 ч"
+        },
+        {
+          "key": "Вес",
+          "value": "2,5 кг"
+        },
+        {
+          "key": "Размеры",
+          "value": "242 × 250 × 1238 мм"
+        }
+      ],
+      "note": "Официальный сайт Dyson Кореи (позиция из Кореи), модель SV12. Dyson называет цвет «레드/레드», галерея — «nickel-red»: красная трубка, стальной корпус — то же, что «Red/Iron» у поставщика.",
+      "checked": "2026-09-29"
+    },
+    "dyson v11 fluffy sv15 nickel red~s3": {
+      "name": "Dyson V11 Fluffy SV15 Nickel Red",
+      "source_url": "https://www.dyson.my/dyson-v11-fluffy-nickel-red",
+      "images": [
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/dynamic-media/vacuums/sticks/248-l-j/primary/primary-red-sb.png?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/floorcare/sticks/248l-j/variants/gallery-images/N248L_Gallery_9.png?wid=1400",
+        "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/floorcare/sticks/248l-j/variants/gallery-images/N248L_Gallery_4.png?wid=1400"
+      ],
+      "title": "Беспроводной пылесос Dyson V11 Fluffy (SV15), никель/красный",
+      "specs": [
+        {
+          "key": "Бренд",
+          "value": "Dyson"
+        },
+        {
+          "key": "Модель",
+          "value": "V11 Fluffy (SV15)"
+        },
+        {
+          "key": "Цвет",
+          "value": "Никель/красный (Nickel/Red)"
+        },
+        {
+          "key": "Циклоны",
+          "value": "14"
+        },
+        {
+          "key": "Мощность всасывания",
+          "value": "185 аВт"
+        },
+        {
+          "key": "Контейнер",
+          "value": "0,54 л"
+        },
+        {
+          "key": "Насадка",
+          "value": "Soft Roller (Fluffy)"
+        },
+        {
+          "key": "Время работы",
+          "value": "До 60 мин"
+        },
+        {
+          "key": "Зарядка",
+          "value": "4,5 ч"
+        },
+        {
+          "key": "Вес",
+          "value": "2,7 кг"
+        },
+        {
+          "key": "Размеры",
+          "value": "261 × 1248 × 250 мм"
+        }
+      ],
+      "note": "Официальный сайт Dyson Малайзии: V11 Fluffy (Nickel/Red). Снимки с синей трубкой из галереи отброшены.",
+      "checked": "2026-09-29"
+    },
+    "dyson v16s piston animal sv53a matblack copp наша вилка док станция re 495992 01~s3": {
+      "name": "Dyson V16S Piston Animal SV53A MatBlack/Copp (наша вилка) + Док станция Re. 495992-01",
+      "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/besprovodnoj-pylesos-dyson-piston-ds60-v16-animal-submarine-black-copper",
+      "note": "dr-store: «Dyson V16 Piston Animal Submarine DS60, Black/Copper», код SV53A. 495992-01 у поставщика — артикул Piston Animal Submarine EU, поэтому страница Submarine, а не обычного Piston Animal.",
+      "checked": "2026-09-29"
     }
   }
 }

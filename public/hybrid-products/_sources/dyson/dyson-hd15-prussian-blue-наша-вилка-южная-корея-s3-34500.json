@@ -1,0 +1,67 @@
+{
+  "product_id": "dyson-hd15-prussian-blue-наша-вилка-южная-корея-s3-34500",
+  "category": "dyson",
+  "file_slug": "dyson-hd15-prussian-blue-наша-вилка-s3-34500",
+  "name": "Dyson HD15 Prussian Blue (наша вилка)",
+  "country": "🇰🇷 Южная Корея",
+  "warehouse": "(S3)",
+  "price": 34500,
+  "catalog_url": "https://www.dyson.co.kr/dyson-supersonic-hd15-hair-dryer-blue-copper",
+  "catalog_title": "Фен Dyson Supersonic HD15, берлинская лазурь/медь",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "Supersonic HD15"
+    },
+    {
+      "key": "Цвет",
+      "value": "Берлинская лазурь/медь (Prussian Blue/Copper)"
+    },
+    {
+      "key": "Мощность",
+      "value": "1600 Вт"
+    },
+    {
+      "key": "Воздушный поток",
+      "value": "До 13,3 л/с"
+    },
+    {
+      "key": "Скорости",
+      "value": "3"
+    },
+    {
+      "key": "Ионизация",
+      "value": "Снижает статическое электричество"
+    },
+    {
+      "key": "Размеры",
+      "value": "245 × 78 × 97 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "0,66 кг"
+    },
+    {
+      "key": "Насадки",
+      "value": "Насадка для гладкости, концентратор, насадка для бережной сушки, Flyaway Smoother"
+    }
+  ],
+  "images_remote": [
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/hero/hc/ss/KR-hero-blue-copper.png?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/personal-care/q4-gifting/pdp/supersonic-pdp/Variant-page-Spec-image-supersonic-assets-DKBLCO-480x360.png",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/direct-journey/products/hair-care/supersonic/carousel/Supersonic-pdp-mod-5-carousel-1-copper.jpg?wid=1400"
+  ],
+  "images_local": [
+    "assets/product-images/fb4864c4232d6609d02dd466.jpg",
+    "assets/product-images/3261c4d98cf327da16562f2c.jpg",
+    "assets/product-images/da2eede2a1086b975e386b0c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson hd15 prussian blue наша вилка~s3",
+  "photo_source": "https://www.dyson.co.kr/dyson-supersonic-hd15-hair-dryer-blue-copper",
+  "updated_at": "2026-09-28T23:57:31.239701Z"
+}

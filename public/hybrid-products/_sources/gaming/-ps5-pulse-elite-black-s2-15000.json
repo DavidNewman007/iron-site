@@ -1,0 +1,73 @@
+{
+  "product_id": "-ps5-pulse-elite-black-s2-15000",
+  "category": "gaming",
+  "file_slug": "ps5-pulse-elite-black-s2-15000",
+  "name": "🎧PS5 Pulse Elite Black",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 15000,
+  "catalog_url": "https://direct.playstation.com/en-us/buy-accessories/pulse-elite-wireless-headset-midnight-black-ps5",
+  "catalog_title": "Беспроводная гарнитура PlayStation PULSE Elite, Midnight Black",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Sony PlayStation"
+    },
+    {
+      "key": "Модель",
+      "value": "PULSE Elite"
+    },
+    {
+      "key": "Цвет",
+      "value": "Midnight Black (чёрный)"
+    },
+    {
+      "key": "Тип",
+      "value": "Беспроводная гарнитура с выдвижным микрофоном"
+    },
+    {
+      "key": "Излучатели",
+      "value": "Планарно-магнитные"
+    },
+    {
+      "key": "Подключение",
+      "value": "PlayStation Link (USB-адаптер в комплекте), Bluetooth"
+    },
+    {
+      "key": "Совместимость",
+      "value": "PS5, PC, Mac, PlayStation Portal"
+    },
+    {
+      "key": "Микрофон",
+      "value": "Выдвижной, шумоподавление с ИИ"
+    },
+    {
+      "key": "Автономность",
+      "value": "До 30 ч, быстрая зарядка"
+    },
+    {
+      "key": "Комплектация",
+      "value": "Гарнитура, USB-адаптер PlayStation Link, зарядная подставка-вешалка, монтажная пластина, USB-кабель, инструкция"
+    }
+  ],
+  "images_remote": [
+    "https://media.direct.playstation.com/is/image/sierialto/Elite-black-Hero-1?wid=1200&hei=1200&fmt=jpg",
+    "https://media.direct.playstation.com/is/image/sierialto/elite-black-mic-extended?wid=1200&hei=1200&fmt=jpg",
+    "https://media.direct.playstation.com/is/image/sierialto/Elite-black-Hero-4?wid=1200&hei=1200&fmt=jpg",
+    "https://media.direct.playstation.com/is/image/sierialto/Elite-black-Hero-5?wid=1200&hei=1200&fmt=jpg",
+    "https://media.direct.playstation.com/is/image/sierialto/Elite-black-Hero-2?wid=1200&hei=1200&fmt=jpg",
+    "https://media.direct.playstation.com/is/image/sierialto/elite-black-beautyshot?wid=1200&hei=1200&fmt=jpg"
+  ],
+  "images_local": [
+    "assets/product-images/1c6b07009a03764fbea721cd.jpg",
+    "assets/product-images/57b5d73c5059fc48d61c0ad1.jpg",
+    "assets/product-images/eaca91f6ee3bb252b7e4e27c.jpg",
+    "assets/product-images/ff80f0ba8f4fa0fd94d8744f.jpg",
+    "assets/product-images/7819a89427943b20de257e86.jpg",
+    "assets/product-images/dfb774cb885196ef72ecb3cd.jpg"
+  ],
+  "manual": true,
+  "manual_key": "ps5 pulse elite black~s2",
+  "photo_source": "https://direct.playstation.com/en-us/buy-accessories/pulse-elite-wireless-headset-midnight-black-ps5",
+  "updated_at": "2026-09-28T23:56:25.628093Z"
+}

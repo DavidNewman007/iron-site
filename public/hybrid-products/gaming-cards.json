@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T20:36:01.402Z",
-  "count": 51,
+  "generated_at": "2026-09-28T23:56:25.671Z",
+  "count": 52,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -409,6 +409,14 @@
       "name": "Дисковод для PS5 Pro",
       "warehouse": "(S2)",
       "price": 11100
+    },
+    "-ps5-pulse-elite-black-s2-15000": {
+      "url": "hybrid-products/gaming/ps5-pulse-elite-black-s2-15000.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pulse-elite-black-s2-15000.html",
+      "cover": "assets/product-images/1c6b07009a03764fbea721cd.jpg",
+      "name": "🎧PS5 Pulse Elite Black",
+      "warehouse": "(S2)",
+      "price": 15000
     }
   }
 }

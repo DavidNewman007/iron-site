@@ -1,0 +1,59 @@
+{
+  "product_id": "картридж-fujifilm-instax-mini-twin-pack-20шт-s2-3200",
+  "category": "gadgets",
+  "file_slug": "картридж-fujifilm-instax-mini-twin-pack-20шт-s2-3200",
+  "name": "Картридж Fujifilm Instax Mini Twin Pack 20шт",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 3200,
+  "catalog_url": "https://www.instaxus.com/film/mini-white-film/",
+  "catalog_title": "Картридж Fujifilm instax mini Twin Pack, 20 снимков",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Fujifilm instax"
+    },
+    {
+      "key": "Тип",
+      "value": "Плёнка моментальной печати instax mini, белая рамка"
+    },
+    {
+      "key": "Количество",
+      "value": "20 снимков (2 кассеты по 10)"
+    },
+    {
+      "key": "Размер плёнки",
+      "value": "86 × 54 мм"
+    },
+    {
+      "key": "Размер изображения",
+      "value": "62 × 46 мм"
+    },
+    {
+      "key": "Проявка",
+      "value": "Около 90 секунд"
+    },
+    {
+      "key": "Рабочая температура",
+      "value": "+5…+40 °C"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Камеры, гибриды и принтеры instax mini"
+    }
+  ],
+  "images_remote": [
+    "https://www.instaxus.com/wp-content/uploads/2022/10/product-mini-hover.png",
+    "https://www.instaxus.com/wp-content/uploads/2022/10/product-mini.png",
+    "https://www.instaxus.com/wp-content/uploads/2022/10/Twin-Pack-White-Ilust_Desktop_MINI-3.png"
+  ],
+  "images_local": [
+    "assets/product-images/c96508b496dbe2a6b9f35773.jpg",
+    "assets/product-images/56a6d78ce0f881106858751d.jpg",
+    "assets/product-images/47b129122e639c547ed40379.jpg"
+  ],
+  "manual": true,
+  "manual_key": "картридж fujifilm instax mini twin pack 20шт~s2",
+  "photo_source": "https://www.instaxus.com/film/mini-white-film/",
+  "updated_at": "2026-09-28T23:57:12.906231Z"
+}

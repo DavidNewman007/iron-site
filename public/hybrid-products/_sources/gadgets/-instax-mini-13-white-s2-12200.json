@@ -1,0 +1,53 @@
+{
+  "product_id": "-instax-mini-13-white-s2-12200",
+  "category": "gadgets",
+  "file_slug": "instax-mini-13-white-s2-12200",
+  "name": "📸instax mini 13 White",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 12200,
+  "catalog_url": "https://www.instaxus.com/cameras/instax-mini-13/",
+  "catalog_title": "Камера моментальной печати instax mini 13, Clay White",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Fujifilm instax"
+    },
+    {
+      "key": "Модель",
+      "value": "instax mini 13"
+    },
+    {
+      "key": "Цвет",
+      "value": "Clay White (белый)"
+    },
+    {
+      "key": "Тип",
+      "value": "Аналоговая камера моментальной печати"
+    },
+    {
+      "key": "Плёнка",
+      "value": "instax mini"
+    },
+    {
+      "key": "Возможности",
+      "value": "Автоэкспозиция, автоспуск, зеркало для селфи, режим съёмки крупным планом"
+    }
+  ],
+  "images_remote": [
+    "https://www.instaxus.com/wp-content/uploads/2026/03/mini-11-purple-front-prod-page-1-1-1.png",
+    "https://www.instaxus.com/wp-content/uploads/2026/03/mini-11-purple-back-prod-page-1-1.png",
+    "https://www.instaxus.com/wp-content/uploads/2026/03/mini-11-purple-front-prod-page-1-1-1-1.png",
+    "https://www.instaxus.com/wp-content/uploads/2026/03/mini-11-feature-selfie-mode-1.png"
+  ],
+  "images_local": [
+    "assets/product-images/2463d3d659ca16d6d8f9fe95.jpg",
+    "assets/product-images/4b0a8d49c551c5209ce749b7.jpg",
+    "assets/product-images/3a62f82168a02be3ca824e13.jpg",
+    "assets/product-images/e01b55db2e76a08e41f5e04e.jpg"
+  ],
+  "manual": true,
+  "manual_key": "instax mini 13 white~s2",
+  "photo_source": "https://www.instaxus.com/cameras/instax-mini-13/",
+  "updated_at": "2026-09-28T23:57:06.278849Z"
+}

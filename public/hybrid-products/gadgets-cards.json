@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T14:44:57.933Z",
-  "count": 30,
+  "generated_at": "2026-09-28T23:57:15.879Z",
+  "count": 34,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -241,6 +241,38 @@
       "name": "📷Canon PowerShot G7 X Mark III, Silver",
       "warehouse": "(S2)",
       "price": 107200
+    },
+    "-instax-mini-13-white-s2-12200": {
+      "url": "hybrid-products/gadgets/instax-mini-13-white-s2-12200.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-13-white-s2-12200.html",
+      "cover": "assets/product-images/2463d3d659ca16d6d8f9fe95.jpg",
+      "name": "📸instax mini 13 White",
+      "warehouse": "(S2)",
+      "price": 12200
+    },
+    "-instax-mini-13-blue-s2-12200": {
+      "url": "hybrid-products/gadgets/instax-mini-13-blue-s2-12200.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-13-blue-s2-12200.html",
+      "cover": "assets/product-images/fb799ea13d8db59767a815f6.jpg",
+      "name": "📸instax mini 13 Blue",
+      "warehouse": "(S2)",
+      "price": 12200
+    },
+    "картридж-fujifilm-instax-mini-twin-pack-20шт-s2-3200": {
+      "url": "hybrid-products/gadgets/картридж-fujifilm-instax-mini-twin-pack-20шт-s2-3200.html",
+      "url_en": "en/hybrid-products/gadgets/картридж-fujifilm-instax-mini-twin-pack-20шт-s2-3200.html",
+      "cover": "assets/product-images/c96508b496dbe2a6b9f35773.jpg",
+      "name": "Картридж Fujifilm Instax Mini Twin Pack 20шт",
+      "warehouse": "(S2)",
+      "price": 3200
+    },
+    "-google-fitbit-air-stephen-curry-s2-20400": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-stephen-curry-s2-20400.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-stephen-curry-s2-20400.html",
+      "cover": "assets/product-images/f164b529146e45e72f8976fa.jpg",
+      "name": "⌚️Google Fitbit Air Stephen Curry",
+      "warehouse": "(S2)",
+      "price": 20400
     }
   }
 }

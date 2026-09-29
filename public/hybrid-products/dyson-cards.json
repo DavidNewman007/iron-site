@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T20:36:42.943765Z",
-  "count": 151,
+  "generated_at": "2026-09-28T23:57:53.453Z",
+  "count": 162,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -1209,6 +1209,94 @@
       "name": "Dyson Wash G1 Black",
       "warehouse": "(S3)",
       "price": 36000
+    },
+    "dyson-hd08-nickel-copper-наша-вилка-южная-корея-s3-31900": {
+      "url": "hybrid-products/dyson/dyson-hd08-nickel-copper-наша-вилка-s3-31900.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd08-nickel-copper-наша-вилка-s3-31900.html",
+      "cover": "assets/product-images/8ef31a60de0433202b48e4ef.jpg",
+      "name": "Dyson HD08 Nickel/Copper (наша вилка)",
+      "warehouse": "(S3)",
+      "price": 31900
+    },
+    "dyson-hd08-prussian-blue-наша-вилка-южная-корея-s3-31900": {
+      "url": "hybrid-products/dyson/dyson-hd08-prussian-blue-наша-вилка-s3-31900.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd08-prussian-blue-наша-вилка-s3-31900.html",
+      "cover": "assets/product-images/182871ef8a04e5dd17fd2f6d.jpg",
+      "name": "Dyson HD08 Prussian Blue (наша вилка)",
+      "warehouse": "(S3)",
+      "price": 31900
+    },
+    "dyson-hd15-prussian-blue-наша-вилка-южная-корея-s3-34500": {
+      "url": "hybrid-products/dyson/dyson-hd15-prussian-blue-наша-вилка-s3-34500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd15-prussian-blue-наша-вилка-s3-34500.html",
+      "cover": "assets/product-images/fb4864c4232d6609d02dd466.jpg",
+      "name": "Dyson HD15 Prussian Blue (наша вилка)",
+      "warehouse": "(S3)",
+      "price": 34500
+    },
+    "dyson-hd17-red-velvet-европа-s3-39300": {
+      "url": "hybrid-products/dyson/dyson-hd17-red-velvet-s3-39300.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd17-red-velvet-s3-39300.html",
+      "cover": "assets/product-images/9140dd733f9188135b708421.jpg",
+      "name": "Dyson HD17 Red Velvet",
+      "warehouse": "(S3)",
+      "price": 39300
+    },
+    "dyson-cy26-multifloor-2-iron-yellow-европа-s3-38100": {
+      "url": "hybrid-products/dyson/dyson-cy26-multifloor-2-iron-yellow-s3-38100.html",
+      "url_en": "en/hybrid-products/dyson/dyson-cy26-multifloor-2-iron-yellow-s3-38100.html",
+      "cover": "assets/product-images/6315e43551826724ab9e282a.jpg",
+      "name": "Dyson CY26 Multifloor 2 Iron/Yellow",
+      "warehouse": "(S3)",
+      "price": 38100
+    },
+    "dyson-cy28-parquet-2-iron-purple-европа-s3-37900": {
+      "url": "hybrid-products/dyson/dyson-cy28-parquet-2-iron-purple-s3-37900.html",
+      "url_en": "en/hybrid-products/dyson/dyson-cy28-parquet-2-iron-purple-s3-37900.html",
+      "cover": "assets/product-images/1fb5a3352643b86068af7c0b.jpg",
+      "name": "Dyson CY28 Parquet 2 Iron/Purple",
+      "warehouse": "(S3)",
+      "price": 37900
+    },
+    "dyson-pencil-wash-wr-04-европа-s3-43000": {
+      "url": "hybrid-products/dyson/dyson-pencil-wash-wr-04-s3-43000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-pencil-wash-wr-04-s3-43000.html",
+      "cover": "assets/product-images/c944e2666b1858bc1f122547.jpg",
+      "name": "Dyson Pencil Wash WR 04",
+      "warehouse": "(S3)",
+      "price": 43000
+    },
+    "dyson-v8-total-clean-black-европа-s3-36900": {
+      "url": "hybrid-products/dyson/dyson-v8-total-clean-black-s3-36900.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v8-total-clean-black-s3-36900.html",
+      "cover": "assets/product-images/ce9e378d146b5665d242f8a1.jpg",
+      "name": "Dyson V8 Total Clean Black",
+      "warehouse": "(S3)",
+      "price": 36900
+    },
+    "dyson-v10-cyclone-sv12-red-iron-наша-вилка-южная-корея-s3-34100": {
+      "url": "hybrid-products/dyson/dyson-v10-cyclone-sv12-red-iron-наша-вилка-s3-34100.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v10-cyclone-sv12-red-iron-наша-вилка-s3-34100.html",
+      "cover": "assets/product-images/13f1a2d60aee7c59469f0c6e.jpg",
+      "name": "Dyson V10 Cyclone SV12 Red/Iron (наша вилка)",
+      "warehouse": "(S3)",
+      "price": 34100
+    },
+    "dyson-v11-fluffy-sv15-nickel-red-европа-s3-42500": {
+      "url": "hybrid-products/dyson/dyson-v11-fluffy-sv15-nickel-red-s3-42500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v11-fluffy-sv15-nickel-red-s3-42500.html",
+      "cover": "assets/product-images/37819f41766c7d75388e2960.jpg",
+      "name": "Dyson V11 Fluffy SV15 Nickel Red",
+      "warehouse": "(S3)",
+      "price": 42500
+    },
+    "dyson-v16s-piston-animal-sv53a-matblack-copp-наша-вилка-док-станция-re-495992-01": {
+      "url": "hybrid-products/dyson/dyson-v16s-piston-animal-sv53a-matblack-copp-наша-вилка-док-станция-re-49-104400.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v16s-piston-animal-sv53a-matblack-copp-наша-вилка-док-станция-re-49-104400.html",
+      "cover": "assets/product-images/2c08d2666490f5b66268d6a7.jpg",
+      "name": "Dyson V16S Piston Animal SV53A MatBlack/Copp (наша вилка) + Док станция Re. 495992-01",
+      "warehouse": "(S3)",
+      "price": 104400
     }
   }
 }

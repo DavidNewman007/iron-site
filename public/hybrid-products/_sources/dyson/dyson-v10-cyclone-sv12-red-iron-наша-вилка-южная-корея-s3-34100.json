@@ -1,0 +1,71 @@
+{
+  "product_id": "dyson-v10-cyclone-sv12-red-iron-наша-вилка-южная-корея-s3-34100",
+  "category": "dyson",
+  "file_slug": "dyson-v10-cyclone-sv12-red-iron-наша-вилка-s3-34100",
+  "name": "Dyson V10 Cyclone SV12 Red/Iron (наша вилка)",
+  "country": "🇰🇷 Южная Корея",
+  "warehouse": "(S3)",
+  "price": 34100,
+  "catalog_url": "https://www.dyson.co.kr/dyson-cyclone-v10",
+  "catalog_title": "Беспроводной пылесос Dyson Cyclone V10 (SV12), красный/сталь",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "Cyclone V10 (SV12)"
+    },
+    {
+      "key": "Цвет",
+      "value": "Красный/сталь"
+    },
+    {
+      "key": "Циклоны",
+      "value": "14 концентрических"
+    },
+    {
+      "key": "Мощность всасывания",
+      "value": "151 аВт"
+    },
+    {
+      "key": "Контейнер",
+      "value": "0,5 л"
+    },
+    {
+      "key": "Время работы",
+      "value": "С насадкой Fluffy до 35 мин, в ручном режиме до 60 мин"
+    },
+    {
+      "key": "Зарядка",
+      "value": "3,5 ч"
+    },
+    {
+      "key": "Вес",
+      "value": "2,5 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "242 × 250 × 1238 мм"
+    }
+  ],
+  "images_remote": [
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/markets/korea/products/floorcare/sticks/v10/variants/v10-fluffy/V10-fluffy-centre-image-hero-2.png?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/markets/korea/products/floorcare/sticks/v10/variants/v10-fluffy/nickel-red/v10-snkred-gallery-image-1.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/markets/korea/products/floorcare/sticks/v10/variants/v10-fluffy/nickel-red/v10-snkred-gallery-image-2.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/markets/korea/products/floorcare/sticks/v10/variants/v10-fluffy/nickel-red/v10-snkred-gallery-image-5.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/korea/floorcare/cord-free/v10/variant-fluffy/floorcare-cordfree-v10-nickel-red-variant-feature-hygienic-bin-emptying.jpg?wid=1400"
+  ],
+  "images_local": [
+    "assets/product-images/13f1a2d60aee7c59469f0c6e.jpg",
+    "assets/product-images/a781878eca5fe23ee21adb85.jpg",
+    "assets/product-images/39930dd09fad092afe95fe79.jpg",
+    "assets/product-images/c7355d531248a23f308ac637.jpg",
+    "assets/product-images/4ac181707bcf59ca69b0fe19.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson v10 cyclone sv12 red iron наша вилка~s3",
+  "photo_source": "https://www.dyson.co.kr/dyson-cyclone-v10",
+  "updated_at": "2026-09-28T23:57:50.146128Z"
+}

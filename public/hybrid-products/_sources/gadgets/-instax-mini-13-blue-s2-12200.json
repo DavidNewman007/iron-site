@@ -1,0 +1,53 @@
+{
+  "product_id": "-instax-mini-13-blue-s2-12200",
+  "category": "gadgets",
+  "file_slug": "instax-mini-13-blue-s2-12200",
+  "name": "📸instax mini 13 Blue",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 12200,
+  "catalog_url": "https://www.instaxus.com/cameras/instax-mini-13/",
+  "catalog_title": "Камера моментальной печати instax mini 13, Frost Blue",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Fujifilm instax"
+    },
+    {
+      "key": "Модель",
+      "value": "instax mini 13"
+    },
+    {
+      "key": "Цвет",
+      "value": "Frost Blue (голубой)"
+    },
+    {
+      "key": "Тип",
+      "value": "Аналоговая камера моментальной печати"
+    },
+    {
+      "key": "Плёнка",
+      "value": "instax mini"
+    },
+    {
+      "key": "Возможности",
+      "value": "Автоэкспозиция, автоспуск, зеркало для селфи, режим съёмки крупным планом"
+    }
+  ],
+  "images_remote": [
+    "https://www.instaxus.com/wp-content/uploads/2026/03/Group-307-1-1.png",
+    "https://www.instaxus.com/wp-content/uploads/2026/03/Group-240-1.png",
+    "https://www.instaxus.com/wp-content/uploads/2026/03/Group-308-1.png",
+    "https://www.instaxus.com/wp-content/uploads/2026/03/mini-11-feature-selfie-mode-1-1-1.png"
+  ],
+  "images_local": [
+    "assets/product-images/fb799ea13d8db59767a815f6.jpg",
+    "assets/product-images/dfa392f1761d1179860531ac.jpg",
+    "assets/product-images/52d17345551761a12fdef914.jpg",
+    "assets/product-images/3233ef9e514b46c9b4f1f58c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "instax mini 13 blue~s2",
+  "photo_source": "https://www.instaxus.com/cameras/instax-mini-13/",
+  "updated_at": "2026-09-28T23:57:09.955700Z"
+}

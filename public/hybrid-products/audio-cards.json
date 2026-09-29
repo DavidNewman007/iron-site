@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T20:36:01.452Z",
-  "count": 82,
+  "generated_at": "2026-09-28T23:56:53.364Z",
+  "count": 86,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -657,6 +657,38 @@
       "name": "🔈Яндекс Станция Миди Малиновый",
       "warehouse": "(S2)",
       "price": 17200
+    },
+    "marshall-motif-ii-black-s2-12800": {
+      "url": "hybrid-products/audio/marshall-motif-ii-black-s2-12800.html",
+      "url_en": "en/hybrid-products/audio/marshall-motif-ii-black-s2-12800.html",
+      "cover": "assets/product-images/9e914e611e651369fc46d450.jpg",
+      "name": "Marshall Motif II Black",
+      "warehouse": "(S2)",
+      "price": 12800
+    },
+    "яндекс-станция-лайт-2-розовый-без-часов-s2-6400": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-розовый-без-часов-s2-6400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-розовый-без-часов-s2-6400.html",
+      "cover": "assets/product-images/95065d12adfd718e29eda5a3.jpg",
+      "name": "Яндекс Станция Лайт 2 Розовый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6400
+    },
+    "яндекс-станция-лайт-2-кораловый-без-часов-s2-6400": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-кораловый-без-часов-s2-6400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-кораловый-без-часов-s2-6400.html",
+      "cover": "assets/product-images/674ea8c697dae4dc71233a07.jpg",
+      "name": "Яндекс Станция Лайт 2 Кораловый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6400
+    },
+    "яндекс-станция-мини-3-про-зеленый-s2-13400": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-про-зеленый-s2-13400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-про-зеленый-s2-13400.html",
+      "cover": "assets/product-images/7164275bd3559bfd709c4c78.jpg",
+      "name": "Яндекс Станция Мини 3 Про Зеленый",
+      "warehouse": "(S2)",
+      "price": 13400
     }
   }
 }
