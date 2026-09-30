@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-29T06:47:44.624Z",
-  "count": 163,
+  "generated_at": "2026-09-30T13:37:06.786Z",
+  "count": 175,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -1305,6 +1305,102 @@
       "name": "Dyson PencilVac Fluffy Black",
       "warehouse": "(S3)",
       "price": 48700
+    },
+    "dyson-hd16-ceramic-pink-rose-gold-европа-s3-36600": {
+      "url": "hybrid-products/dyson/dyson-hd16-ceramic-pink-rose-gold-s3-36600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd16-ceramic-pink-rose-gold-s3-36600.html",
+      "cover": "assets/product-images/642c6166727ce1cde83f1885.jpg",
+      "name": "Dyson HD16 (Ceramic Pink/Rose Gold)",
+      "warehouse": "(S3)",
+      "price": 36600
+    },
+    "dyson-hd17-apricot-topaz-великобритания-s3-36000": {
+      "url": "hybrid-products/dyson/dyson-hd17-apricot-topaz-s3-36000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd17-apricot-topaz-s3-36000.html",
+      "cover": "assets/product-images/49c5844fc9874055352cd773.png",
+      "name": "Dyson HD17 (Apricot Topaz)",
+      "warehouse": "(S3)",
+      "price": 36000
+    },
+    "dyson-hd19-ceramic-pink-европа-s3-26500": {
+      "url": "hybrid-products/dyson/dyson-hd19-ceramic-pink-s3-26500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd19-ceramic-pink-s3-26500.html",
+      "cover": "assets/product-images/57f5764224f8503f6b8d153e.jpg",
+      "name": "Dyson HD19 (Ceramic Pink)",
+      "warehouse": "(S3)",
+      "price": 26500
+    },
+    "dyson-hs08-red-velvet-гонконг-s3-40000": {
+      "url": "hybrid-products/dyson/dyson-hs08-red-velvet-s3-40000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-red-velvet-s3-40000.html",
+      "cover": "assets/product-images/3d055f96e29fd2c24f4fda49.jpg",
+      "name": "Dyson HS08 (Red Velvet)",
+      "warehouse": "(S3)",
+      "price": 40000
+    },
+    "dyson-hs09-coanda-2x-amber-silk-with-diffuse-европа-s3-52400": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-amber-silk-with-diffuse-s3-52400.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-amber-silk-with-diffuse-s3-52400.html",
+      "cover": "assets/product-images/cbab21acd88e068de26cd006.jpg",
+      "name": "Dyson HS09 Coanda 2x (Amber Silk with Diffuse)",
+      "warehouse": "(S3)",
+      "price": 52400
+    },
+    "dyson-hs09-coanda-2x-ceramic-pink-европа-s3-50300": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-ceramic-pink-s3-50300.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-ceramic-pink-s3-50300.html",
+      "cover": "assets/product-images/3cc99ad2cd24f0f15570eae6.jpg",
+      "name": "Dyson HS09 Coanda 2x (Ceramic Pink)",
+      "warehouse": "(S3)",
+      "price": 50300
+    },
+    "dyson-hs09-coanda-2x-jasper-plum-европа-s3-49800": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-jasper-plum-s3-49800.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-jasper-plum-s3-49800.html",
+      "cover": "assets/product-images/436d73c15f3360ad305a0147.jpg",
+      "name": "Dyson HS09 Coanda 2x (Jasper Plum)",
+      "warehouse": "(S3)",
+      "price": 49800
+    },
+    "dyson-hs09-coanda-2x-red-velvet-великобритания-s3-56600": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-red-velvet-s3-56600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-red-velvet-s3-56600.html",
+      "cover": "assets/product-images/1338d3c531149141d3d15462.jpg",
+      "name": "Dyson HS09 Coanda 2x (Red Velvet)",
+      "warehouse": "(S3)",
+      "price": 56600
+    },
+    "dyson-gen5-purple-европа-s3-67000": {
+      "url": "hybrid-products/dyson/dyson-gen5-purple-s3-67000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-gen5-purple-s3-67000.html",
+      "cover": "assets/product-images/8c325f9a31ee5f8d54991b19.jpeg",
+      "name": "Dyson Gen5 (Purple)",
+      "warehouse": "(S3)",
+      "price": 67000
+    },
+    "dyson-gen5-purple-великобритания-s3-66600": {
+      "url": "hybrid-products/dyson/dyson-gen5-purple-s3-66600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-gen5-purple-s3-66600.html",
+      "cover": "assets/product-images/8c325f9a31ee5f8d54991b19.jpeg",
+      "name": "Dyson Gen5 (Purple)",
+      "warehouse": "(S3)",
+      "price": 66600
+    },
+    "dyson-spot-scrub-ai-black-blue-европа-s3-96100": {
+      "url": "hybrid-products/dyson/dyson-spot-scrub-ai-black-blue-s3-96100.html",
+      "url_en": "en/hybrid-products/dyson/dyson-spot-scrub-ai-black-blue-s3-96100.html",
+      "cover": "assets/product-images/fe86ff3412160bf316c05dd5.jpg",
+      "name": "Dyson Spot+Scrub AI (Black/Blue)",
+      "warehouse": "(S3)",
+      "price": 96100
+    },
+    "dyson-v16s-piston-animal-sv53a-matblack-copp-европа-s3-74000": {
+      "url": "hybrid-products/dyson/dyson-v16s-piston-animal-sv53a-matblack-copp-s3-74000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v16s-piston-animal-sv53a-matblack-copp-s3-74000.html",
+      "cover": "assets/product-images/2c08d2666490f5b66268d6a7.jpg",
+      "name": "Dyson V16S Piston Animal SV53A (MatBlack/Copp)",
+      "warehouse": "(S3)",
+      "price": 74000
     }
   }
 }

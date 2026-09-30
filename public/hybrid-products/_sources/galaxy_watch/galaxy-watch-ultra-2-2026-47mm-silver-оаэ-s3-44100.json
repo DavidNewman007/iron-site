@@ -1,0 +1,46 @@
+{
+  "product_id": "galaxy-watch-ultra-2-2026-47mm-silver-оаэ-s3-44100",
+  "category": "galaxy_watch",
+  "file_slug": "galaxy-watch-ultra-2-2026-47mm-silver-s3-44100",
+  "name": "Galaxy Watch Ultra 2 (2026) 47mm Silver",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S3)",
+  "price": 44100,
+  "catalog_url": "https://sochi.dr-store.ru/smart-watches/samsung-watch/samsung-galaxy-watch-ultra-47mm-silver",
+  "catalog_title": "умные часы Samsung Galaxy Watch Ultra 47mm, Silver",
+  "specs": [
+    {
+      "key": "Совместимость",
+      "value": "Android и iOS"
+    },
+    {
+      "key": "Разрешение",
+      "value": "502x502 пикселей"
+    },
+    {
+      "key": "Процессор",
+      "value": "Exynos W920"
+    },
+    {
+      "key": "Время работы",
+      "value": "До 72 часов работы без подзарядки"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Wear OS"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav_11zon-11-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2_11zon-11-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3_11zon-11-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/4_11zon-10-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/c8d772970b745ddf6dcf6604.jpeg",
+    "assets/product-images/bddc2f0363ee4bd0eeb05e10.jpeg",
+    "assets/product-images/0000a61c44e8d76d93e718b3.jpeg",
+    "assets/product-images/9707e809e85d04bf8a5631ca.jpeg"
+  ],
+  "updated_at": "2026-09-30T13:34:05.520589Z"
+}

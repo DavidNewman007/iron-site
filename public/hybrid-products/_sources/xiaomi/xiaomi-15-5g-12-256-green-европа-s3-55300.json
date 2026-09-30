@@ -1,0 +1,334 @@
+{
+  "product_id": "xiaomi-15-5g-12-256-green-европа-s3-55300",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-15-5g-12-256-green-s3-55300",
+  "name": "Xiaomi 15 5G 12/256 Green",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 55300,
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/xiaomi/mi/Xiaomi_15_12_256GB_Green",
+  "catalog_title": "Xiaomi 15 12/256GB, Green",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Смартфон"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6.36\""
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "AMOLED"
+    },
+    {
+      "key": "Разрешение",
+      "value": "2670х1200"
+    },
+    {
+      "key": "Соотношение сторон",
+      "value": "20:9"
+    },
+    {
+      "key": "Яркость",
+      "value": "3200 кд/м²"
+    },
+    {
+      "key": "Частота обновления",
+      "value": "120 Гц"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "460 пикселей/дюйм"
+    },
+    {
+      "key": "Автоматический поворот экрана",
+      "value": "есть"
+    },
+    {
+      "key": "Поддержка HDR",
+      "value": "есть"
+    },
+    {
+      "key": "Количество цветов экрана",
+      "value": "68 млрд"
+    },
+    {
+      "key": "Особенности экрана",
+      "value": "безрамочный"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Elite"
+    },
+    {
+      "key": "Максимальная частота процессора",
+      "value": "4.32 ГГц"
+    },
+    {
+      "key": "Конфигурация процессора",
+      "value": "2x Oryon Prime 4.32 ГГц, 6x Oryon Performance 3.53 ГГц"
+    },
+    {
+      "key": "Количество ядер процессора",
+      "value": "8"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "Adreno 830"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ"
+    },
+    {
+      "key": "Слот для карты памяти",
+      "value": "нет"
+    },
+    {
+      "key": "Встроенный динамик",
+      "value": "стереодинамики"
+    },
+    {
+      "key": "Количество основных (тыловых) камер",
+      "value": "3"
+    },
+    {
+      "key": "Размер пикселя",
+      "value": "1.2 µm"
+    },
+    {
+      "key": "Размер фотоматрицы",
+      "value": "1/1.31\""
+    },
+    {
+      "key": "Сверхширокоугольная камера",
+      "value": "50 МП, f/2.2, 14 мм, 115˚, 1/2.76\", 0.64µm"
+    },
+    {
+      "key": "Телефото-камера",
+      "value": "50 МП, f/2.0, 60 мм, 1/2.76\", 0.64µm"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50 мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "f/1.6"
+    },
+    {
+      "key": "Формат видеосъемки",
+      "value": "Ultra HD 8K"
+    },
+    {
+      "key": "Угол обзора",
+      "value": "115°"
+    },
+    {
+      "key": "Максимальная частота кадров видеосъёмки",
+      "value": "1920 к/с, 30 к/с при максимальном разрешении"
+    },
+    {
+      "key": "Тип модулей камеры",
+      "value": "широкоугольный, сверхширокоугольный, телеобъектив, перископ"
+    },
+    {
+      "key": "Тип вспышки",
+      "value": "тыльная, светодиодная"
+    },
+    {
+      "key": "Фокусное расстояние объектива",
+      "value": "23 мм"
+    },
+    {
+      "key": "Запись видеороликов",
+      "value": "есть"
+    },
+    {
+      "key": "Режимы и функции фотосъемки",
+      "value": "автофокус, оптическая стабилизация"
+    },
+    {
+      "key": "Режимы и функции видеосъемки",
+      "value": "Сверхзамедленная съёмка 240/960/1920 к/c"
+    },
+    {
+      "key": "Количество фронтальных камер",
+      "value": "1"
+    },
+    {
+      "key": "Размер пикселя фронтальной камеры",
+      "value": "0.7 µm"
+    },
+    {
+      "key": "Фокусное расстояние объектива фронтальной камеры",
+      "value": "21 мм"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "32 мп"
+    },
+    {
+      "key": "Разрешение снимков фронтальной камеры",
+      "value": "3840x2160"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "f/2.0"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 Nano-SIM + eSim"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "GSM / HSPA / LTE / 5G, Wi-Fi 802.11 a/b/g/n/ac/6e/7, Bluetooth 6.0"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "ИК-порт",
+      "value": "есть"
+    },
+    {
+      "key": "Модуль NFC (бесконтактная оплата)",
+      "value": "есть"
+    },
+    {
+      "key": "Режим работы нескольких SIM-карт",
+      "value": "попеременный"
+    },
+    {
+      "key": "Системы навигации",
+      "value": "A-GPS, GLONASS, BDS, GALILEO, QZSS"
+    },
+    {
+      "key": "Режим полета",
+      "value": "есть"
+    },
+    {
+      "key": "Диапазоны частот 5G",
+      "value": "1, 2, 3, 5, 7, 8, 12, 20, 25, 26, 28, 38, 40, 41, 48, 66, 75, 77, 78 SA/NSA"
+    },
+    {
+      "key": "Диапазоны частот 4G (LTE)",
+      "value": "1, 2, 3, 4, 5, 7, 8, 12, 13, 17, 18, 19, 20, 25, 26, 28, 32, 38, 39, 40, 41, 42, 48, 66"
+    },
+    {
+      "key": "Диапазоны частот 3G",
+      "value": "UMTS 850 (B5), UMTS 900 (B8), UMTS 1700 (B4), UMTS 1900 (B2), UMTS 2100 (B1)"
+    },
+    {
+      "key": "Диапазоны частот 2G",
+      "value": "GSM 850 (B5), GSM 900 (B8), GSM 1800 (B3), GSM 1900 (B2)"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "5240 мАч"
+    },
+    {
+      "key": "Напряжение питания ЗУ",
+      "value": "100-240 В/50-60 Гц"
+    },
+    {
+      "key": "Мощность",
+      "value": "90 Вт"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Стандарты быстрой зарядки",
+      "value": "Hyper Charge 90W"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Реверсивная зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Материал",
+      "value": "Aлюминий, Устойчивое к царапинам стекло Xiaomi Shield Glass"
+    },
+    {
+      "key": "Ширина",
+      "value": "7,12 см"
+    },
+    {
+      "key": "Высота",
+      "value": "15,23 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "0,81 см"
+    },
+    {
+      "key": "Вес",
+      "value": "189 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Зеленый"
+    },
+    {
+      "key": "Расположение сканера отпечатка пальца",
+      "value": "дисплей"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15"
+    },
+    {
+      "key": "Технологии",
+      "value": "Bluetooth A2DP, LE, aptX HD, aptX Adaptive, LHDC 5"
+    },
+    {
+      "key": "Датчики",
+      "value": "акселерометр, датчик приближения, гироскоп, компас, барометр"
+    },
+    {
+      "key": "Дополнительно",
+      "value": "голосовой набор, голосовое управление"
+    },
+    {
+      "key": "Страна производства",
+      "value": "Китай"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_12_256GB_Green/Xiaomi_15_12_256GB_Green-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_12_256GB_Green/Xiaomi_15_12_256GB_Green-2-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_12_256GB_Green/Xiaomi_15_12_256GB_Green-3-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_12_256GB_Green/Xiaomi_15_12_256GB_Green-4-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_12_256GB_Green/Xiaomi_15_12_256GB_Green-5-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_12_256GB_Green/Xiaomi_15_12_256GB_Green-6-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_12_256GB_Green/Xiaomi_15_12_256GB_Green-7-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_12_256GB_Green/Xiaomi_15_12_256GB_Green-8-1200x1200.png"
+  ],
+  "images_local": [
+    "assets/product-images/f7889189e64cb6d5832946bd.jpg",
+    "assets/product-images/90abecea695d48623ee32af7.jpg",
+    "assets/product-images/c90b03995f4386500bcdca53.jpg",
+    "assets/product-images/d1d8439e2ee442d43789a52c.jpg",
+    "assets/product-images/8851c38d4874aa220c00d157.jpg",
+    "assets/product-images/e31a8616853770e1371bace1.jpg",
+    "assets/product-images/4d6c31fdde48a5f49e7f2d6e.png",
+    "assets/product-images/6818c90830a17d14d9f49adf.png"
+  ],
+  "updated_at": "2026-09-30T13:34:24.974163Z"
+}

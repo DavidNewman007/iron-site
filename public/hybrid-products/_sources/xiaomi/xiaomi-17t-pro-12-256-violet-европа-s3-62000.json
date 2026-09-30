@@ -1,0 +1,206 @@
+{
+  "product_id": "xiaomi-17t-pro-12-256-violet-европа-s3-62000",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-17t-pro-12-256-violet-s3-62000",
+  "name": "Xiaomi 17T Pro 12/256 Violet",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 62000,
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/xiaomi/mi/xiaomi-17t-pro/xiaomi-17t-pro-12-256gb-deep-violet",
+  "catalog_title": "Xiaomi 17T Pro 12/256GB, Deep Violet",
+  "specs": [
+    {
+      "key": "Диагональ",
+      "value": "6.83\""
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "AMOLED"
+    },
+    {
+      "key": "Разрешение",
+      "value": "2776×1280"
+    },
+    {
+      "key": "Соотношение сторон",
+      "value": "19.5:9"
+    },
+    {
+      "key": "Частота обновления",
+      "value": "144 Гц"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "447 пикс/дюйм"
+    },
+    {
+      "key": "Поддержка HDR",
+      "value": "Есть"
+    },
+    {
+      "key": "Тип HDR",
+      "value": "HDR10+, Dolby Vision"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 9500"
+    },
+    {
+      "key": "Максимальная частота процессора",
+      "value": "4.21 ГГц"
+    },
+    {
+      "key": "Конфигурация процессора",
+      "value": "1х C1-Ultra 4,21 ГГц, 3х C1-Premium 3,5 ГГц, 4х C1-Pro 2,7 ГГц"
+    },
+    {
+      "key": "Количество ядер процессора",
+      "value": "8 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ"
+    },
+    {
+      "key": "Количество основных (тыловых) камер",
+      "value": "3"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50+50+12 Мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "ƒ/1.77 + ƒ/3.05 + ƒ/2.2"
+    },
+    {
+      "key": "Формат видеосъемки",
+      "value": "Full HD, HD, Ultra HD 4K, Ultra HD 8K"
+    },
+    {
+      "key": "Максимальное разрешение фото",
+      "value": "8190x6120 пикс"
+    },
+    {
+      "key": "Максимальное разрешение видео",
+      "value": "7680×4320 пикс"
+    },
+    {
+      "key": "Максимальная частота кадров видеосъёмки",
+      "value": "960 кадр/сек"
+    },
+    {
+      "key": "Тип модулей камеры",
+      "value": "Широкоугольный, Сверхширокоугольный, Телеобъектив, Перископ"
+    },
+    {
+      "key": "Тип вспышки",
+      "value": "Светодиодная"
+    },
+    {
+      "key": "Максимальная частота кадров видео при максимальном разрешении",
+      "value": "30 кадр/сек"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "32 Мп"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "f/2.2"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 Nano-SIM + eSIM"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Bluetooth 6.0, Wi-Fi 802.11 a/b/g/n/ac/6e"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "NFC, Wi-Fi Direct, Wi-Fi 802.11 a/b/g/n/ac/6e, Bluetooth 6.0"
+    },
+    {
+      "key": "Стандарт сотовой связи",
+      "value": "3G, EDGE, HSPA+, LTE, Wi-Fi, 5G"
+    },
+    {
+      "key": "Системы навигации",
+      "value": "A-GPS, BeiDou, GPS, Galileo, ГЛОНАСС, QZSS, NavIC"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Ion"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "7000 мАч"
+    },
+    {
+      "key": "Мощность",
+      "value": "100 Вт"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "Есть"
+    },
+    {
+      "key": "Материал",
+      "value": "Стекло, Алюминий, Стекловолокно"
+    },
+    {
+      "key": "Ширина",
+      "value": "77.5 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "162.2 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "8.25 мм"
+    },
+    {
+      "key": "Влагозащищенный корпус",
+      "value": "IP68"
+    },
+    {
+      "key": "Вес",
+      "value": "219 г"
+    },
+    {
+      "key": "Операционная система",
+      "value": "HyperOS 3"
+    },
+    {
+      "key": "Страна производства",
+      "value": "Китай"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Смартфон Xiaomi 17T Pro/Фиолетовый/Group 597-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Смартфон Xiaomi 17T Pro/Фиолетовый/Group 598-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Смартфон Xiaomi 17T Pro/Фиолетовый/Group 599-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Смартфон Xiaomi 17T Pro/Фиолетовый/Group 600-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Смартфон Xiaomi 17T Pro/Фиолетовый/Group 601-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Смартфон Xiaomi 17T Pro/Фиолетовый/Group 602-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Смартфон Xiaomi 17T Pro/Фиолетовый/Group 603-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Смартфон Xiaomi 17T Pro/Фиолетовый/Group 604-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/3e10e6fbfeeb4f0f36061f53.jpg",
+    "assets/product-images/63af08407172e9414cc15eb5.jpg",
+    "assets/product-images/43ea769b64304756f94be8a4.jpg",
+    "assets/product-images/5bf8e41b5c93ec24101bd4bb.jpg",
+    "assets/product-images/1c0478bcb55f38956798ad27.jpg",
+    "assets/product-images/f2c24bd8ebe51fb255706d64.jpg",
+    "assets/product-images/5447d6b07fb9093805b2a8d7.jpg",
+    "assets/product-images/83ea3f5d743bf965012d8cc6.jpg"
+  ],
+  "updated_at": "2026-09-30T13:35:05.764296Z"
+}

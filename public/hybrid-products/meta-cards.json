@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T20:36:01.054Z",
-  "count": 53,
+  "generated_at": "2026-09-30T13:37:06.799Z",
+  "count": 58,
   "byId": {
     "-oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100": {
       "url": "hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100.html",
@@ -425,6 +425,46 @@
       "name": "👓 Wayfarer (Gen 2) Shiny Cosmic Blue Transitions Sapphire 155 53 Size C 6628MF53 (уценка, новые, царапина на корпусе)",
       "warehouse": "(S1)",
       "price": 34600
+    },
+    "-wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-41100": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-41100.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-41100.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 150 - 50 Size C 601S1Z50",
+      "warehouse": "(S1)",
+      "price": 41100
+    },
+    "-wayfarer-gen-2-shiny-black-transition-graph-green-155-53-size-c-601-1m53-s1-408": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-shiny-black-transition-graph-green-155-53-size-c-601-1m53-s-40800.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-shiny-black-transition-graph-green-155-53-size-c-601-1m53-s-40800.html",
+      "cover": "assets/product-images/846d5d1b9ee7966a229efadb.jpg",
+      "name": "👓 Wayfarer (Gen 2) Shiny Black Transition Graph. Green 155 - 53 Size C 601/1M53",
+      "warehouse": "(S1)",
+      "price": 40800
+    },
+    "-wayfarer-gen-2-matte-black-gradient-graphite-155-53-size-c-601st353-s1-38000": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-gradient-graphite-155-53-size-c-601st353-s1-38000.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-gradient-graphite-155-53-size-c-601st353-s1-38000.html",
+      "cover": "assets/product-images/adede315e00c0ea89966a40f.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Gradient Graphite 155 - 53 Size C 601ST353",
+      "warehouse": "(S1)",
+      "price": 38000
+    },
+    "-meta-starfire-kylie-edition-s48-classic-black-transitions-grey-s2-58700": {
+      "url": "hybrid-products/meta/meta-starfire-kylie-edition-s48-classic-black-transitions-grey-s2-58700.html",
+      "url_en": "en/hybrid-products/meta/meta-starfire-kylie-edition-s48-classic-black-transitions-grey-s2-58700.html",
+      "cover": "assets/product-images/6f2411ad0d9f6a6e90d76c57.jpg",
+      "name": "🕶Meta Starfire Kylie Edition S48, Classic Black/Transitions Grey",
+      "warehouse": "(S2)",
+      "price": 58700
+    },
+    "-wayfarer-gen-2-s53-shiny-black-transitions-graphite-green-rw4012-s2-40700": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-s53-shiny-black-transitions-graphite-green-rw4012-s2-40700.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-s53-shiny-black-transitions-graphite-green-rw4012-s2-40700.html",
+      "cover": "assets/product-images/846d5d1b9ee7966a229efadb.jpg",
+      "name": "🕶Wayfarer (Gen 2) S53, Shiny Black/Transitions Graphite Green (RW4012)",
+      "warehouse": "(S2)",
+      "price": 40700
     }
   }
 }

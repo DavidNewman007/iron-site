@@ -1,0 +1,64 @@
+{
+  "product_id": "samsung-a16-4-128-green-оаэ-s3-17100",
+  "category": "samsung",
+  "file_slug": "samsung-a16-4-128-green-s3-17100",
+  "name": "Samsung A16 4/128 Green",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S3)",
+  "price": 17100,
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/samsung/galaxy-a/galaxy-a16/samsung-galaxy-a16-4-128gb-light-green",
+  "catalog_title": "Samsung Galaxy A16 4/128GB, Light Green",
+  "specs": [
+    {
+      "key": "Тип дисплея",
+      "value": "PLS TFT"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6.7"
+    },
+    {
+      "key": "Разрешение",
+      "value": "1600×720 (HD+)"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G85"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "48 МП (широкоугольная) + 8 МП (ультраширокоугольная) + 2 МП (макро)"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "13 МП"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "Dual SIM + microSD"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 14 с One UI 6"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/111.jpg_11zon-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/fm0s0bevic0ii73wqtn1yn0aneyk3ta7-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/nji214w91r8t3wb330iv5394mq2zg9cq-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/6kirv22tezlha1sex45j9012bqr2lkzs-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/0j9k63dngbqccze42gq2lucfs10ssicm-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/88db81ff33cec0be7f88fe11.jpeg",
+    "assets/product-images/81bc08d083c90af25aeff166.jpg",
+    "assets/product-images/e7b80fa5eec599ea0b357dc8.jpg",
+    "assets/product-images/8d8c3f592a344a116070eadb.jpg",
+    "assets/product-images/e8f8416a579300976eaaa12f.jpg"
+  ],
+  "updated_at": "2026-09-30T13:29:34.004901Z"
+}

@@ -114,7 +114,14 @@
       "value": "акселерометр, гироскоп, датчик приближения, компас, барометр"
     }
   ],
-  "images_remote": [],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow-01-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow-02-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow-03-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow-04-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow-05-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow/smartfon-samsung-galaxy-s26-plus-12-256gb-silver-shadow-06-1200x1200.png"
+  ],
   "images_local": [
     "assets/product-images/97ff5ae6e3071d8f2797b4bb.png",
     "assets/product-images/0c20d90728668df8dc4751b7.png",
@@ -124,5 +131,5 @@
     "assets/product-images/e7217f2e6b0b82c4314506f0.png"
   ],
   "recovered_from_html": true,
-  "updated_at": "2026-08-28T10:29:32.518230Z"
+  "updated_at": "2026-09-30T13:32:55.597265Z"
 }
