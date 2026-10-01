@@ -244,7 +244,7 @@
     $toast.innerHTML = `<span>${esc(text)}</span>` + (action ? `<button type="button">${esc(action.label)}</button>` : "");
     $toast.hidden = false;
     if (action) $toast.querySelector("button").onclick = () => { $toast.hidden = true; action.run(); };
-    clearTimeout(toast.t); toast.t = setTimeout(() => { $toast.hidden = true; }, action || long ? 9000 : 3500);
+    clearTimeout(toast.t); toast.t = setTimeout(() => { $toast.hidden = true; }, typeof long === "number" ? long : action || long ? 9000 : 3500);
   }
   function sheetLink(row, col) { return `https://docs.google.com/spreadsheets/d/${CFG.sheetId}/edit#gid=${S.gid}&range=${LETTER(col)}${row}`; }
 
@@ -1586,8 +1586,18 @@
     const body = JSON.stringify({ token: S.token, row, num, changes: list.map(ch => ({ col: ch.c + 1, value: String(ch.w ?? ch.v ?? ""), old: String(ch.old ?? "") })) });
     const all = { ok: true, results: [], statusBackground: "", issued: null };
     for (const url of CFG.doors) {
-      const r = await fetch(url + "?action=crm-door", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body });
-      const j = await r.json().catch(() => ({ ok: false, error: "дверь ответила не JSON (" + r.status + ")" }));
+      // «Дверь занята» — дверь держит один запрос за раз (замок на 25 с). Когда в оболочке
+      // работают двое или идут уведомления по нескольким заказам, второй запрос получал
+      // отказ, и сообщения клиенту молча терялись (01.10.2026: отчёты №7782 и №7785).
+      // Теперь повторяем с растущей паузой — до ~1,5 минут. keepalive: запрос доживает,
+      // даже если вкладку закроют.
+      let j;
+      for (let tries = 0; ; tries++) {
+        const r = await fetch(url + "?action=crm-door", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body, keepalive: body.length < 60000 });
+        j = await r.json().catch(() => ({ ok: false, error: "дверь ответила не JSON (" + r.status + ")" }));
+        if (j.ok || !/занята/.test(j.error || "") || tries >= 5) break;
+        await new Promise(res => setTimeout(res, 3000 * (tries + 1)));
+      }
       if (!j.ok) throw new Error(j.error || "дверь не ответила");
       all.results.push(...(j.results || []));
       all.statusBackground = j.statusBackground || all.statusBackground; // последняя дверь шлёт статус и красит H
@@ -1614,13 +1624,14 @@
     if (DEMO || !CFG.doors.length) return;
     const notify = list.some(ch => F[ch.c]?.door);
     if (!notify) return;
-    return door(r.row, num, list).then(j => {
+    S.pendingDoors = (S.pendingDoors || 0) + 1;
+    return door(r.row, num, list).finally(() => { S.pendingDoors--; }).then(j => {
       if (j?.issued != null && j.issued !== cell(r, C.issued)) {
         r.cells[C.issued] = j.issued;
         if (location.hash === "#/" + num && ![...S.dirty.keys()].some(k => k.startsWith(r.row + ":"))) renderCard(num);
       }
       toast(`№${num}: ${doorReport(j, list)}`, null, true);
-    }).catch(e => toast(`№${num}: записано в таблицу, но уведомления не ушли — ${e.message}`, null, true));
+    }).catch(e => toast(`№${num}: записано в таблицу, но уведомления НЕ ушли — ${e.message}`, { label: "Повторить", run: () => doorInBackground(r, num, list) }, 60000));
   }
 
   async function save(num) {
@@ -2008,7 +2019,7 @@
   document.addEventListener("input", onEdit);
   document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
   window.addEventListener("hashchange", () => { window.scrollTo(0, 0); render(); });
-  window.addEventListener("beforeunload", e => { if ([...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
+  window.addEventListener("beforeunload", e => { if (S.pendingDoors > 0 || [...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
   // Новая версия на сайте. GitHub Pages отдаёт страницу с кэшем на 10 минут, и 28.09.2026
   // владелец полчаса смотрел прошлую версию, решив, что правка не работает. Раз в 10 минут
   // (и при возврате на вкладку) сверяем номер версии в свежей странице с нашим.
@@ -2018,7 +2029,7 @@
     try {
       const html = await fetch(location.pathname + "?nocache=" + Date.now(), { cache: "no-store" }).then(r => r.text());
       const v = +(html.match(/crm\.js\?v=(\d+)/)?.[1] || 0);
-      if (v > VERSION) toast(`Вышла новая версия оболочки (v${v})`, { label: "Обновить", run: () => location.reload() });
+      if (v > VERSION && !(S.pendingDoors > 0)) toast(`Вышла новая версия оболочки (v${v})`, { label: "Обновить", run: () => S.pendingDoors > 0 ? toast("Подождите — ещё отправляются уведомления клиенту") : location.reload() });
     } catch {}
   }
   setInterval(checkUpdate, 600e3); setTimeout(checkUpdate, 5000);
