@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-30T13:37:06.768Z",
-  "count": 92,
+  "generated_at": "2026-10-01T14:19:27.526Z",
+  "count": 96,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -737,6 +737,38 @@
       "name": "Buds 4 Pro Pink",
       "warehouse": "(S3)",
       "price": 18300
+    },
+    "buds-3-fe-black-оаэ-s3-9700": {
+      "url": "hybrid-products/audio/buds-3-fe-black-s3-9700.html",
+      "url_en": "en/hybrid-products/audio/buds-3-fe-black-s3-9700.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Buds 3 FE Black",
+      "warehouse": "(S3)",
+      "price": 9700
+    },
+    "buds-3-pro-silver-оаэ-s3-14000": {
+      "url": "hybrid-products/audio/buds-3-pro-silver-s3-14000.html",
+      "url_en": "en/hybrid-products/audio/buds-3-pro-silver-s3-14000.html",
+      "cover": "assets/product-images/9022d9cab6ca8a2548b24a40.jpeg",
+      "name": "Buds 3 Pro Silver",
+      "warehouse": "(S3)",
+      "price": 14000
+    },
+    "buds-3-pro-white-оаэ-s3-14200": {
+      "url": "hybrid-products/audio/buds-3-pro-white-s3-14200.html",
+      "url_en": "en/hybrid-products/audio/buds-3-pro-white-s3-14200.html",
+      "cover": "assets/product-images/0f083f8c1eeddced428e1d3f.jpeg",
+      "name": "Buds 3 Pro White",
+      "warehouse": "(S3)",
+      "price": 14200
+    },
+    "buds-4-white-оаэ-s3-13100": {
+      "url": "hybrid-products/audio/buds-4-white-s3-13100.html",
+      "url_en": "en/hybrid-products/audio/buds-4-white-s3-13100.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Buds 4 White",
+      "warehouse": "(S3)",
+      "price": 13100
     }
   }
 }

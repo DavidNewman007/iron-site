@@ -1,0 +1,91 @@
+{
+  "product_id": "dyson-hs09-coanda-2x-amber-silk-with-diffuse-s3-51900",
+  "category": "dyson",
+  "file_slug": "dyson-hs09-coanda-2x-amber-silk-with-diffuse-s3-51900",
+  "name": "Dyson HS09 Coanda 2x (Amber Silk with Diffuse) 🇪🇺",
+  "country": "",
+  "warehouse": "(S3)",
+  "price": 51900,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-styler/stajler-dyson-airwrap-hs09-co-anda-2x-amber-silk",
+  "catalog_title": "Стайлер Dyson Airwrap HS09 Co-Anda 2Х, Amber Silk",
+  "specs": [
+    {
+      "key": "Производитель",
+      "value": "Dyson"
+    },
+    {
+      "key": "Количество скоростей",
+      "value": "3"
+    },
+    {
+      "key": "Количество температурных режимов",
+      "value": "3"
+    },
+    {
+      "key": "Тип питания",
+      "value": "от сети"
+    },
+    {
+      "key": "Длина сетевого шнура",
+      "value": "2 м"
+    },
+    {
+      "key": "Максимальная потребляемая мощность",
+      "value": "1700 Вт"
+    },
+    {
+      "key": "Материал",
+      "value": "Керамика, пластик"
+    },
+    {
+      "key": "Ширина",
+      "value": "44 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "272 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "38 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "410 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Розово-золотой"
+    },
+    {
+      "key": "Ионизация",
+      "value": "нет"
+    },
+    {
+      "key": "Подача холодного воздуха",
+      "value": "есть"
+    },
+    {
+      "key": "Датчики",
+      "value": "Датчик контроля температуры"
+    },
+    {
+      "key": "Страна производства",
+      "value": "Филиппины"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs09-silk/Web_590_T1_T3_Dynamic_primary_machine_Bundle_Comb-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs09-silk/Web_590_T1_T2_Gallery_Card_3_1-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs09-silk/Web_605_East_Gallery_Card_2_1-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/cbab21acd88e068de26cd006.jpg",
+    "assets/product-images/021ede4b5de285e0debabaf5.jpg",
+    "assets/product-images/079d4a82f8283b5fccfa5fb7.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson hs09 coanda 2x amber silk with diffuse~s3",
+  "photo_source": "https://sochi.dr-store.ru/dyson/dyson-styler/stajler-dyson-airwrap-hs09-co-anda-2x-amber-silk",
+  "updated_at": "2026-10-01T14:17:49.949134Z"
+}

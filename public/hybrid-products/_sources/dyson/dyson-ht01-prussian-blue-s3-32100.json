@@ -1,0 +1,69 @@
+{
+  "product_id": "dyson-ht01-prussian-blue-s3-32100",
+  "category": "dyson",
+  "file_slug": "dyson-ht01-prussian-blue-s3-32100",
+  "name": "Dyson HT01 (Prussian Blue) 🇬🇧",
+  "country": "",
+  "warehouse": "(S3)",
+  "price": 32100,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-airstrait-ht01-blue-copper",
+  "catalog_title": "выпрямитель для волос Dyson Airstrait HT01, Prussian Blue/Copper",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Airstrait HT01"
+    },
+    {
+      "key": "Длина сетевого шнура",
+      "value": "2 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1600 Вт"
+    },
+    {
+      "key": "Ширина",
+      "value": "41 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "330 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "60 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "460 г"
+    },
+    {
+      "key": "Скорость воздушного потока",
+      "value": "11.9 л/с"
+    },
+    {
+      "key": "Технологии",
+      "value": "два режима укладки, авто-пауза, ЖК-дисплей, блокировка, интеллектуальная система контроля температур"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-blue-dr-store-17-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-blue-dr-store-13-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-blue-dr-store-16-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-blue-dr-store-10-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-blue-dr-store-11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/ht01/dyson-ht01-blue-dr-store-14-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/a943b8f7d9da186f03984e66.jpg",
+    "assets/product-images/a8718b15ff7610938cd72ada.jpg",
+    "assets/product-images/13edabdb80f95b409fb1f830.jpg",
+    "assets/product-images/9f67ca1f4fc8637b8089f164.jpg",
+    "assets/product-images/19de78ec15b8e35a1fd5e37c.jpg",
+    "assets/product-images/f127b181808234a29df514fc.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson ht01 prussian blue~s3",
+  "photo_source": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-airstrait-ht01-blue-copper",
+  "updated_at": "2026-10-01T14:17:44.386958Z"
+}

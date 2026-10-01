@@ -1,0 +1,71 @@
+{
+  "product_id": "dyson-v11-fluffy-sv15-nickel-red-s3-41700",
+  "category": "dyson",
+  "file_slug": "dyson-v11-fluffy-sv15-nickel-red-s3-41700",
+  "name": "Dyson V11 Fluffy SV15 (Nickel Red) 🇪🇺",
+  "country": "",
+  "warehouse": "(S3)",
+  "price": 41700,
+  "catalog_url": "https://www.dyson.my/dyson-v11-fluffy-nickel-red",
+  "catalog_title": "Беспроводной пылесос Dyson V11 Fluffy (SV15), никель/красный",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "V11 Fluffy (SV15)"
+    },
+    {
+      "key": "Цвет",
+      "value": "Никель/красный (Nickel/Red)"
+    },
+    {
+      "key": "Циклоны",
+      "value": "14"
+    },
+    {
+      "key": "Мощность всасывания",
+      "value": "185 аВт"
+    },
+    {
+      "key": "Контейнер",
+      "value": "0,54 л"
+    },
+    {
+      "key": "Насадка",
+      "value": "Soft Roller (Fluffy)"
+    },
+    {
+      "key": "Время работы",
+      "value": "До 60 мин"
+    },
+    {
+      "key": "Зарядка",
+      "value": "4,5 ч"
+    },
+    {
+      "key": "Вес",
+      "value": "2,7 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "261 × 1248 × 250 мм"
+    }
+  ],
+  "images_remote": [
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/dynamic-media/vacuums/sticks/248-l-j/primary/primary-red-sb.png?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/floorcare/sticks/248l-j/variants/gallery-images/N248L_Gallery_9.png?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/floorcare/sticks/248l-j/variants/gallery-images/N248L_Gallery_4.png?wid=1400"
+  ],
+  "images_local": [
+    "assets/product-images/37819f41766c7d75388e2960.jpg",
+    "assets/product-images/28d0ef0f72810da180e17aa7.jpg",
+    "assets/product-images/63ca6db86aa0ec4cd04deded.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson v11 fluffy sv15 nickel red~s3",
+  "photo_source": "https://www.dyson.my/dyson-v11-fluffy-nickel-red",
+  "updated_at": "2026-10-01T14:18:02.277096Z"
+}

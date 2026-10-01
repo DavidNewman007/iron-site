@@ -1,0 +1,73 @@
+{
+  "product_id": "poco-f9-pro-5g-12-512-white-европа-s3-62200",
+  "category": "xiaomi",
+  "file_slug": "poco-f9-pro-5g-12-512-white-s3-62200",
+  "name": "POCO F9 Pro 5G 12/512 White",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 62200,
+  "catalog_url": "https://www.mi.com/de/product/poco-f9-pro/buy/?gid=4223717831",
+  "catalog_title": "POCO F9 Pro White",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "White"
+    },
+    {
+      "key": "Память",
+      "value": "12 ГБ ОЗУ / 512 ГБ"
+    },
+    {
+      "key": "Процессор",
+      "value": "Snapdragon 8 Elite Gen 5 (V-серия)"
+    },
+    {
+      "key": "Экран",
+      "value": "6,59\" AMOLED, до 185 Гц"
+    },
+    {
+      "key": "Основная камера",
+      "value": "200 Мп OIS + телеобъектив 50 Мп (60 мм) + широкоугольная 8 Мп"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6330 мА·ч, 100 Вт, беспроводная 50 Вт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "NFC",
+      "value": "есть"
+    },
+    {
+      "key": "Размеры и вес",
+      "value": "157,49 × 75,25 × 8,79 мм, 206 г"
+    },
+    {
+      "key": "ОС",
+      "value": "Xiaomi HyperOS 3"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/333_operatorx_operatorx_xm/21/08/2026/88982718cf9b95d5c259634a296b0fa0.png",
+    "https://i02.appmifile.com/23_operatorx_operatorx_xm/21/08/2026/834ef38010dfac7d016180e5735499b0.png",
+    "https://i02.appmifile.com/187_operatorx_operatorx_xm/21/08/2026/cb2506c5605d7e2e918a29a8aa34d970.png",
+    "https://i02.appmifile.com/483_operatorx_operatorx_xm/21/08/2026/5312621ddec1dfe81fa25c3fd9c738aa.png"
+  ],
+  "images_local": [
+    "assets/product-images/de4469c5e1591e9a7d3bd73e.jpg",
+    "assets/product-images/f3fb430db3adc187a1cdf356.jpg",
+    "assets/product-images/d4621b0aaa0c77c2a438555f.jpg",
+    "assets/product-images/5786daffb10b30383bf06f1a.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco f9 pro 5g 12 512 white~s3",
+  "photo_source": "https://www.mi.com/de/product/poco-f9-pro/buy/?gid=4223717831",
+  "updated_at": "2026-10-01T14:19:04.693583Z"
+}

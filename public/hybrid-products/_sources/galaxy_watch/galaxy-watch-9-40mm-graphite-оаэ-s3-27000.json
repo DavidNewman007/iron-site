@@ -1,0 +1,51 @@
+{
+  "product_id": "galaxy-watch-9-40mm-graphite-оаэ-s3-27000",
+  "category": "galaxy_watch",
+  "file_slug": "galaxy-watch-9-40mm-graphite-s3-27000",
+  "name": "Galaxy Watch 9 40mm Graphite",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S3)",
+  "price": 27000,
+  "catalog_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-40mm-graphite-bluetooth-sku-sm-l340nzkaxaa/",
+  "catalog_title": "Samsung Galaxy Watch9 40 мм Graphite",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Samsung Galaxy Watch9"
+    },
+    {
+      "key": "Артикул",
+      "value": "SM-L340NZ"
+    },
+    {
+      "key": "Размер корпуса",
+      "value": "40 мм"
+    },
+    {
+      "key": "Цвет",
+      "value": "Graphite"
+    },
+    {
+      "key": "Связь",
+      "value": "Bluetooth"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056551",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056558",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056653",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056683",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkaxaa-554056712"
+  ],
+  "images_local": [
+    "assets/product-images/39082b0a13590a07ad2c953f.jpg",
+    "assets/product-images/22b3fbd846e5c962346765e0.jpg",
+    "assets/product-images/5c759dd6185882ce2da3797e.jpg",
+    "assets/product-images/323861db715ec90c24401fd6.jpg",
+    "assets/product-images/d3803a74a813bd21089e41f0.jpg"
+  ],
+  "manual": true,
+  "manual_key": "galaxy watch 9 40mm graphite~s3",
+  "photo_source": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-40mm-graphite-bluetooth-sku-sm-l340nzkaxaa/",
+  "updated_at": "2026-10-01T14:18:12.138341Z"
+}

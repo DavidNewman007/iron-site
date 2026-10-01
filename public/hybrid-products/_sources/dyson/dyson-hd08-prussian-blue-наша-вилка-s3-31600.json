@@ -1,0 +1,51 @@
+{
+  "product_id": "dyson-hd08-prussian-blue-наша-вилка-s3-31600",
+  "category": "dyson",
+  "file_slug": "dyson-hd08-prussian-blue-наша-вилка-s3-31600",
+  "name": "Dyson HD08 (Prussian Blue) 🇰🇷 (наша вилка)",
+  "country": "",
+  "warehouse": "(S3)",
+  "price": 31600,
+  "catalog_url": "https://www.dyson.com/hair-care/hair-dryers/supersonic/prussian-blue-rich-copper",
+  "catalog_title": "Фен Dyson Supersonic HD08, берлинская лазурь/медь",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "Supersonic HD08"
+    },
+    {
+      "key": "Цвет",
+      "value": "Берлинская лазурь/медь (Prussian Blue/Rich Copper)"
+    },
+    {
+      "key": "Мотор",
+      "value": "Dyson V9, до 110 000 об/мин"
+    },
+    {
+      "key": "Режимы",
+      "value": "3 скорости, 4 температуры, холодный обдув"
+    },
+    {
+      "key": "Контроль нагрева",
+      "value": "Замер температуры воздуха более 40 раз в секунду"
+    }
+  ],
+  "images_remote": [
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/113306-01.png?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/beauty/hair-dryers/supersonic/prussian-blue-rich-copper/Web-605C-T3-T4-PDP-Gallery-Images-7.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/gallery/us/hair-care/supersonic/412522-01/updates/SS_COM_Prussian-Blue_3.jpg?wid=1400"
+  ],
+  "images_local": [
+    "assets/product-images/182871ef8a04e5dd17fd2f6d.jpg",
+    "assets/product-images/6d6c26812202c48baf62ef67.jpg",
+    "assets/product-images/508c2b374e99a54572721eb5.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson hd08 prussian blue наша вилка~s3",
+  "photo_source": "https://www.dyson.com/hair-care/hair-dryers/supersonic/prussian-blue-rich-copper",
+  "updated_at": "2026-10-01T14:17:29.642264Z"
+}

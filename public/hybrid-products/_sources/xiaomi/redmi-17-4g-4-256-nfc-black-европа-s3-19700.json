@@ -1,0 +1,79 @@
+{
+  "product_id": "redmi-17-4g-4-256-nfc-black-европа-s3-19700",
+  "category": "xiaomi",
+  "file_slug": "redmi-17-4g-4-256-nfc-black-s3-19700",
+  "name": "Redmi 17 4G 4/256 NFC Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 19700,
+  "catalog_url": "https://www.mi.com/my/product/redmi-17/buy/?gid=4223729956",
+  "catalog_title": "REDMI 17 4G Black",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "Black"
+    },
+    {
+      "key": "Память",
+      "value": "4 ГБ ОЗУ / 256 ГБ"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+    },
+    {
+      "key": "Экран",
+      "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп, f/1.8"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64"
+    },
+    {
+      "key": "NFC",
+      "value": "есть"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+    },
+    {
+      "key": "Размеры и вес",
+      "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+    },
+    {
+      "key": "ОС",
+      "value": "Xiaomi HyperOS 3"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/432_operatorx_operatorx_xm/28/07/2026/4477d23324382b05663a065c83e499ad.png",
+    "https://i02.appmifile.com/5_operatorx_operatorx_xm/28/07/2026/a1523ae688e095134d3af8676a29c51d.png",
+    "https://i02.appmifile.com/88_operatorx_operatorx_xm/28/07/2026/e1685d7607533b9fb50fc4852c0ee212.png"
+  ],
+  "images_local": [
+    "assets/product-images/fa53e7d2f661684335848fd5.jpg",
+    "assets/product-images/06fcf711d8ae186466d23e24.jpg",
+    "assets/product-images/b65d80ce490ac5f99ce5be14.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi 17 4g 4 256 nfc black~s3",
+  "photo_source": "https://www.mi.com/my/product/redmi-17/buy/?gid=4223729956",
+  "updated_at": "2026-10-01T14:19:04.715998Z"
+}
