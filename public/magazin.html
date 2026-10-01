@@ -95,6 +95,19 @@
         <span><a href="#dostavka">Доставка по России</a></span>
         <span class="shop-board__accent"><a href="#zapchasti">Запчасти — уже доступны</a></span>
       </div>
+      <!--
+        Строка акции «Подписчикам канала — 3000 ₽» (план 100, 01.10.2026) — ОТДЕЛЬНОЙ строкой,
+        а не пунктом в ряду выше: ряд уже заполнен впритык (см. комментарий над табло), лишний
+        пункт снова вытолкнул бы «Запчасти — уже доступны» за правый край. Стили — атрибутом
+        style, чтобы не трогать shop.css ради временной строки; text-transform снят, иначе
+        iPhone превращается в «IPHONE».
+        data-promo-sub: по нему js/main.js не дублирует здесь общую полосу акции, а после
+        15.10.2026 сам прячет эту строку. Из разметки убрать при следующей правке после акции.
+        В Telegram mini-app строка не видна: там скрыта вся .shop-board (shop.css, .tg-miniapp).
+      -->
+      <div class="container shop-board__inner" data-promo-sub style="border-top:1px solid rgba(212,160,18,.22);white-space:normal;justify-content:center;text-align:center;text-transform:none;letter-spacing:.04em;min-height:32px;padding:4px 0">
+        <a href="podpiska.html?src=site">🎁 Подписчикам канала — 3000 ₽ на новый iPhone и MacBook · получить&nbsp;код&nbsp;→</a>
+      </div>
     </div>
 
     <!--

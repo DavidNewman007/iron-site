@@ -44,6 +44,14 @@
   a.card b{display:block;font-family:Oswald,sans-serif;font-weight:600;font-size:17px;letter-spacing:.02em}
   a.card span{display:block;color:var(--muted);font-size:15px}
   .lead{background:linear-gradient(180deg,rgba(212,160,18,.16),rgba(212,160,18,.06));border-color:var(--gold)}
+  /* Акция «Подписчикам канала — 3000 ₽» (план 100, 01.10.2026). Карточка временная: убрать вместе с
+     блоком ниже после 15.10.2026 — тогда же гаснет полоса акции на сайте (js/main.js). */
+  /* a.card.promo, а не .promo: у a.card специфичность выше, и простой класс не перебил бы его фон
+     и рамку (по этой причине у .lead выше золотая рамка и фон сейчас не видны). */
+  a.card.promo{background:linear-gradient(135deg,rgba(194,44,44,.38),rgba(212,160,18,.12));border-color:var(--gold)}
+  .promo b{color:var(--cream)}
+  .promo-note{margin:-2px 0 0;padding:0 4px;color:var(--muted);font-size:14px;text-align:center}
+  .promo-note a{color:var(--gold)}
   ul.bot{list-style:none;padding:0;margin:0 0 10px}
   ul.bot li{padding:9px 0 9px 26px;position:relative;border-bottom:1px dashed rgba(255,246,223,.1);font-size:16px}
   ul.bot li:last-child{border-bottom:0}
@@ -67,6 +75,15 @@
       <span class="badge">Московская, 5</span>
     </div>
   </header>
+
+  <!-- Акция «Подписчикам канала — 3000 ₽» (план 100). Источник для бота — ig. Убрать после 15.10.2026. -->
+  <h2>Подписчикам канала</h2>
+
+  <a class="card lead promo" href="https://t.me/IRON_SERVICE_ORDER_bot?start=sub_ig">
+    <span class="ico">🎁</span>
+    <span><b>3000 ₽ на новый iPhone или MacBook</b><span>Подпишитесь на наш Telegram-канал — бот выдаст именной промокод. От 50 000 ₽, код действует 14&nbsp;дней</span></span>
+  </a>
+  <p class="promo-note">Условия — <a href="https://1iron.ru/podpiska.html?src=ig">1iron.ru/podpiska.html</a></p>
 
   <h2>Узнать цену</h2>
 

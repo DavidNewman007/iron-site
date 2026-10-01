@@ -108,3 +108,136 @@
     }
   });
 })();
+
+/* >>> IRON-SUBBAR START — полоса акции «Подписчикам канала — 3000 ₽» (план 100, 01.10.2026) >>> */
+/*
+ * Вставлено скриптом scripts/podpiska/применить-сайт.sh (репозиторий iron-automation).
+ * Править блок там, в сайт/main-js-вставка.js, и применять заново: скрипт заменяет
+ * всё между маркерами START/END, повторный запуск ничего не дублирует.
+ *
+ * Отдельный IIFE в конце файла, а не внутри основного: основной выходит по
+ * `if (!form) return;` на всех страницах без формы заявки, и код после этой
+ * строки там бы не выполнился.
+ *
+ * Где полоса НЕ показывается:
+ *  - после SUBBAR_UNTIL (дата строкой, по локальному времени посетителя) — сама,
+ *    без нового деплоя; заодно прячет строки акции, вписанные в страницы
+ *    (элементы с атрибутом data-promo-sub, например в табло magazin.html);
+ *  - в Telegram mini-app (magazin.html, открытая кнопкой бота): там корзина бота
+ *    и так под рукой. Признаки те же, что у js/telegram-miniapp.js, плюс правило
+ *    CSS на класс .tg-miniapp — SDK Telegram может догрузиться позже main.js;
+ *  - на самой podpiska.html и на страницах, где строка акции уже есть в разметке
+ *    (data-promo-sub), — чтобы не повторяться;
+ *  - на английской версии (<html lang="en">): текст акции только русский;
+ *  - если посетитель закрыл полосу крестиком (localStorage, ключ с месяцем акции).
+ * Внешних ресурсов нет: стиль — <style> из этого же скрипта (style-src
+ * 'unsafe-inline' есть на всех 110 страницах с main.js, проверено 01.10.2026).
+ */
+(function () {
+  "use strict";
+  var SUBBAR_UNTIL = "2026-10-15"; // последний день показа (выдача кодов — до 15.10 включительно); с 16.10 полосы нет
+  var STORE_KEY = "iron-subbar-2026-10";
+  var HREF = "/podpiska.html?src=site";
+
+  function pad(n) {
+    return (n < 10 ? "0" : "") + n;
+  }
+  var now = new Date();
+  var today = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
+  var doc = document.documentElement;
+
+  if (today > SUBBAR_UNTIL) {
+    var rows = document.querySelectorAll("[data-promo-sub]");
+    // style.display, а не только hidden: у строки в табло magazin.html свой display:flex
+    // из shop.css, и атрибут hidden его не перебивает.
+    for (var i = 0; i < rows.length; i++) {
+      rows[i].hidden = true;
+      rows[i].style.display = "none";
+    }
+    return;
+  }
+  if ((doc.getAttribute("lang") || "ru").slice(0, 2) !== "ru") return;
+  if (/\/podpiska(\.html)?$/.test(window.location.pathname)) return;
+  if (document.querySelector("[data-promo-sub]")) return;
+  if (document.getElementById("iron-subbar")) return;
+
+  function isMiniApp() {
+    if (doc.classList.contains("tg-miniapp")) return true;
+    if (/tgWebAppData|tgWebAppPlatform/.test(window.location.hash || "")) return true;
+    var twa = window.Telegram && window.Telegram.WebApp;
+    if (!twa) return false;
+    if (twa.initData) return true;
+    if (twa.platform && twa.platform !== "unknown") return true;
+    return false;
+  }
+  if (isMiniApp()) return;
+
+  try {
+    if (window.localStorage.getItem(STORE_KEY) === "closed") return;
+  } catch (e) {
+    /* хранилище недоступно (приватный режим, запрет) — просто показываем */
+  }
+
+  var css =
+    ".iron-subbar{position:relative;z-index:101;background:linear-gradient(90deg,#8f2e2e,#c22c2c 45%,#8f2e2e);" +
+    "border-bottom:1px solid rgba(212,160,18,.6);color:#f5e6c8;" +
+    "font-family:Oswald,'Arial Narrow',sans-serif;font-size:14px;line-height:1.3;letter-spacing:.02em}" +
+    ".iron-subbar__inner{box-sizing:border-box;max-width:1200px;margin:0 auto;min-height:36px;" +
+    "padding:6px 40px 6px 12px;display:flex;align-items:center;justify-content:center}" +
+    ".iron-subbar__link{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;" +
+    "gap:10px;color:#f5e6c8;text-decoration:none;text-align:center;min-width:0}" +
+    ".iron-subbar__text{min-width:0}" +
+    ".iron-subbar__link:hover,.iron-subbar__link:focus-visible{color:#fff}" +
+    ".iron-subbar__cta{display:inline-block;background:#d4a012;color:#141414;border-radius:999px;" +
+    "padding:2px 10px;font-weight:600;white-space:nowrap;flex:none}" +
+    ".iron-subbar__link:hover .iron-subbar__cta{background:#f5e6c8}" +
+    ".iron-subbar__close{position:absolute;top:50%;right:6px;transform:translateY(-50%);" +
+    "width:30px;height:30px;padding:0;border:0;border-radius:50%;background:transparent;" +
+    "color:#f5e6c8;font:20px/30px Arial,sans-serif;cursor:pointer;opacity:.85}" +
+    ".iron-subbar__close:hover,.iron-subbar__close:focus-visible{opacity:1;background:rgba(0,0,0,.2)}" +
+    // На телефоне — не больше двух строк: текст слева переносится, кнопка справа не переносится
+    // (замер 01.10.2026 на 375px: по центру с переносом полоса выходила в три строки, 72px).
+    "@media (max-width:600px){.iron-subbar{font-size:13px;line-height:1.25}" +
+    ".iron-subbar__inner{padding:6px 38px 6px 10px}" +
+    ".iron-subbar__link{width:100%;justify-content:space-between;text-align:left;gap:8px}" +
+    ".iron-subbar__cta{padding:3px 9px}}" +
+    ".tg-miniapp .iron-subbar{display:none!important}";
+
+  function mount() {
+    if (!document.body || document.getElementById("iron-subbar")) return;
+    var style = document.createElement("style");
+    style.id = "iron-subbar-css";
+    style.textContent = css;
+    document.head.appendChild(style);
+
+    var bar = document.createElement("div");
+    bar.id = "iron-subbar";
+    bar.className = "iron-subbar";
+    bar.setAttribute("role", "region");
+    bar.setAttribute("aria-label", "Акция для подписчиков канала");
+    bar.innerHTML =
+      '<div class="iron-subbar__inner">' +
+      '<a class="iron-subbar__link" href="' + HREF + '">' +
+      '<span class="iron-subbar__text">🎁 Подписчикам канала — 3000 ₽ на новый iPhone и MacBook</span>' +
+      '<span class="iron-subbar__cta">Получить код →</span>' +
+      "</a>" +
+      '<button type="button" class="iron-subbar__close" aria-label="Скрыть">×</button>' +
+      "</div>";
+    bar.querySelector(".iron-subbar__close").addEventListener("click", function () {
+      bar.parentNode && bar.parentNode.removeChild(bar);
+      try {
+        window.localStorage.setItem(STORE_KEY, "closed");
+      } catch (e) {
+        /* не запомнили — полоса вернётся на следующей странице, это не поломка */
+      }
+    });
+    document.body.insertBefore(bar, document.body.firstChild);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mount);
+  } else {
+    mount();
+  }
+})();
+/* <<< IRON-SUBBAR END <<< */
