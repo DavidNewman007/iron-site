@@ -470,3 +470,11 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
   .item__name { white-space: normal; flex-basis: 0; min-width: 55%; }
   .item__top .chip { max-width: 100%; }
 }
+/* v30: цены поставщиков под запчастью */
+.psup { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: -2px 0 6px; padding-left: 2px; }
+.psup .note { font-size: .78rem; }
+.psup__c { border: 1px solid var(--line-strong); background: var(--surface-2); color: var(--text); border-radius: 999px; padding: 3px 10px; font-size: .8rem; font-family: var(--font-body); }
+.psup__c b { color: var(--gold); font-weight: 700; }
+.psup__c:hover { border-color: var(--gold); }
+.psup__c.is-on { background: var(--wait-bg); border-color: var(--gold); }
+.pp__item em.note { font-style: normal; color: var(--muted); font-size: .82rem; }

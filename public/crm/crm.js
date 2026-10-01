@@ -855,7 +855,7 @@
       <input class="pp__q" data-act="ppq" value="${esc(P.q || "")}" placeholder="Поиск: дисплей, акб, oled…" autocomplete="off">
       ${dev || q.length >= 2 ? (items.length ? `<div class="pp__list">${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
         <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}${dev ? "" : ` <span class="note">· ${esc(x.device)}</span>`}</b>
-        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
+        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_cost)}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
         : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка или ищите по всему прайсу.</div>`}
       <p class="note">Нажатие добавляет работу в «Выполненные работы», цену — к «Итого», запчасть — в список запчастей. Можно добавить несколько.</p></div>`;
   }
@@ -872,7 +872,7 @@
     if (partBase && (x.part_cost || x.variant)) {
       const src = (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, ""])[1];
       const list = partsOf(key, r).filter(p => p.name || p.src || p.cost);
-      list.push({ name: partBase + (x.variant ? ` (${x.variant})` : ""), src, cost: x.part_cost ? String(x.part_cost) : "" });
+      list.push({ name: partBase + (x.variant ? ` (${x.variant})` : ""), src, cost: x.part_cost ? String(x.part_cost) : "", dev: x.device, op: x.operation, var: x.variant || "", fromSvc: true });
       S.parts.set(key, list); syncParts(key);
     }
     const days = x.warranty_days, had = toNum(String(val(C.warranty)).match(/\d+/)?.[0]);
@@ -932,6 +932,7 @@
   }
   function partsHtml(key, r) {
     const list = partsOf(key, r);
+    if (!S.supp && !S.suppTried) { S.suppTried = true; Promise.all([loadServices(), loadSupplierPrices()]).then(() => { if (location.hash === "#/new" || /^#\/\d+/.test(location.hash)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }); }
     const lock = !editable(C.parts, r) && key !== "new";
     const dl = (c, id) => S.opts[c]?.length ? `<datalist id="${id}">${S.opts[c].map(o => `<option value="${esc(o)}">`).join("")}</datalist>` : "";
     const { S: sum } = composeParts(list);
@@ -942,7 +943,7 @@
         <input data-part="${i}" data-pf="name" value="${esc(p.name)}" list="dl-pname" placeholder="Например, АКБ" spellcheck="true" lang="ru"${lock ? " disabled" : ""}>
         <input data-part="${i}" data-pf="src" value="${esc(p.src)}" list="dl-psrc" placeholder="Откуда"${lock ? " disabled" : ""}>
         <input data-part="${i}" data-pf="cost" value="${esc(p.cost)}" inputmode="decimal" placeholder="0"${lock ? " disabled" : ""}>
-        <button type="button" class="linkbtn" data-act="rmpart" data-i="${i}" title="Убрать"${lock ? " disabled" : ""}>✕</button></div>`).join("")}
+        <button type="button" class="linkbtn" data-act="rmpart" data-i="${i}" title="Убрать"${lock ? " disabled" : ""}>✕</button></div>${lock ? "" : supplierChipsHtml(key, r, p, i)}`).join("")}
       <div class="parts__foot"><button type="button" class="btn btn--ghost btn--sm" data-act="addpart"${lock ? " disabled" : ""}>＋ Запчасть</button><span class="note" data-parts-note>${note}</span></div>
       ${dl(C.parts, "dl-pname")}${dl(C.partFrom, "dl-psrc")}</div>`;
   }
@@ -979,6 +980,78 @@
     setDirty(key, C.discount, d ? (d.pct != null ? d.pct + "%" : d.rub + " ₽") : "");
     if (base != null) setDirty(key, C.total, String(Math.max(0, base - discRub(d, base))));
     return base;
+  }
+
+
+  // ── цены поставщиков на запчасть (v30, 01.10.2026) ─────────────────────────────
+  // Владелец: «автоматическое заполнение цен на работу и на запчасть при выборе ремонта
+  // из бота, если модель известна и поставлен поставщик». Индекс «модель × работа ×
+  // поставщик → закупка» собирает scripts/crm_supplier_prices.py из тех же прайсов, что
+  // и прайс ремонта (MOS-LCD, Виталя, wepro, macsuper, detaliapple, partslog, liberti),
+  // и кладёт на скрытый лист «CRM — цены поставщиков» книги БАЗА — оболочка читает его
+  // входом пользователя; на сайт закупочные цены не выкладываются.
+  // Под запчастью — цена у каждого поставщика кнопкой; выбор (или ввод имени поставщика)
+  // подставляет закупку. Если запчасть пришла из «Работы из прайса», меняется и «Итого»:
+  // цена клиенту = закупка + работа, поэтому разница закупок переходит в итог.
+  const SUPP_SHEET = "CRM — цены поставщиков";
+  const PART_OP = [[/диспле|экран|матриц/, "замена дисплея"], [/акб|аккумул|батаре/, "замена аккумулятора"], [/стекло камер/, "замена стекла камеры"],
+    [/задн|крышк/, "замена заднего стекла"], [/камер/, "замена камеры"], [/нижн.*шлейф/, "замена нижнего шлейфа"], [/шлейф/, "замена шлейфа"],
+    [/корпус/, "замена корпуса"], [/тачскрин|сенсор/, "замена сенсора"], [/клавиатур|топкейс/, "замена клавиатуры"], [/тачпад|трекпад/, "замена тачпада"],
+    [/ssd|накопител/, "замена накопителя (SSD)"], [/динамик/, "замена динамика"], [/разъ[её]м|зарядк/, "замена разъёма зарядки"], [/материнск|плата/, "замена материнской платы"]];
+  const opOfPart = name => (PART_OP.find(([re]) => re.test(norm(name))) || [])[1] || "";
+  async function loadSupplierPrices() {
+    if (S.supp?.map || S.supp?.loading) return;
+    S.supp = { loading: true };
+    try {
+      const map = new Map(), put = (d, o, x) => { const k = d + "|" + o; if (!map.has(k)) map.set(k, []); map.get(k).push(x); };
+      if (DEMO) {
+        await loadServices();
+        for (const x of S.svc?.list || []) if (x.part_cost) put(x.device, x.operation, { s: (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, "MosLCD"])[1], t: x.variant || "", c: x.part_cost });
+      } else {
+        const v = await api(`/values/${encodeURIComponent(`'${SUPP_SHEET}'!A2:F`)}`);
+        for (const [d, o, sp, t, c, when] of v.values || []) if (toNum(c)) put(d, o, { s: sp, t, c: toNum(c), when });
+      }
+      S.supp = { map };
+    } catch (e) { S.supp = { error: e.message, map: new Map() }; }
+  }
+  // Лучшая позиция у каждого поставщика: совпадение слов варианта, иначе самая дешёвая.
+  function supplierOffers(dev, op, variant) {
+    const list = S.supp?.map?.get(dev + "|" + op) || [];
+    const words = norm(variant).split(/[^a-zа-я0-9%]+/).filter(w => w.length > 1);
+    const score = t => words.filter(w => norm(t).includes(w)).length;
+    const best = new Map();
+    for (const x of list) {
+      const b = best.get(x.s), sc = score(x.t);
+      if (!b || sc > b.sc || (sc === b.sc && x.c < b.x.c)) best.set(x.s, { x, sc });
+    }
+    return [...best.values()].map(b => b.x).sort((a, b) => a.c - b.c);
+  }
+  function partMeta(p, key, r) {
+    const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+    const dev = p.dev || (S.svc?.devices ? matchDevice(val(C.device)) : "");
+    const op = p.op || opOfPart(p.name);
+    const variant = p.var || (String(p.name).match(/\(([^)]+)\)/) || [])[1] || p.name;
+    return { dev, op, variant };
+  }
+  function supplierChipsHtml(key, r, p, i) {
+    if (!S.supp?.map || !String(p.name).trim()) return "";
+    const { dev, op, variant } = partMeta(p, key, r);
+    if (!dev || !op) return "";
+    const offers = supplierOffers(dev, op, variant);
+    if (!offers.length) return "";
+    return `<div class="psup"><span class="note">${esc(dev)}:</span>${offers.map(x => `<button type="button" class="psup__c${norm(x.s) === norm(p.src) ? " is-on" : ""}" data-psup="${i}" data-s="${esc(x.s)}" data-c="${x.c}" title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">${esc(x.s)} <b>${money(x.c)}</b></button>`).join("")}</div>`;
+  }
+  // Поставщик выбран: закупка — из индекса; у запчасти из прайса — и итог на разницу.
+  function applySupplier(key, r, i, supplier, cost) {
+    const list = partsOf(key, r), p = list[i]; if (!p) return;
+    const old = toNum(p.cost) ?? 0;
+    p.src = supplier; p.cost = String(cost);
+    if (p.fromSvc) {
+      const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+      const d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
+      if (q != null) { const base = baseOf(q, d) + (cost - old); setDirty(key, C.total, String(Math.max(0, base - discRub(d, base)))); }
+    }
+    syncParts(key);
   }
 
   // ── без суммы заказ не закрыть (владелец, 28.09.2026) ────────────────────────
@@ -1795,8 +1868,15 @@
   }, true);
   document.addEventListener("keydown", e => { if (e.key === "Escape" && S.ddOpen) { S.ddOpen = null; const y = window.scrollY; render(); window.scrollTo(0, y); } });
   document.addEventListener("click", async e => {
-    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc],[data-cdev]"); if (!t) return;
+    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc],[data-cdev],[data-psup]"); if (!t) return;
     if (t.dataset.cdev != null) { pickDevice(+t.dataset.cdev); return; }
+    if (t.dataset.psup != null) {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
+      applySupplier(key, r, +t.dataset.psup, t.dataset.s, +t.dataset.c);
+      const y = window.scrollY; render(); window.scrollTo(0, y);
+      toast(`${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[+t.dataset.psup]?.fromSvc ? " · итог пересчитан" : ""}`);
+      return;
+    }
     if (t.dataset.imp != null) { takeImport(+t.dataset.imp); return; }
     if (t.dataset.tip != null) {
       const key = curKey(), c = +t.dataset.tip, box = $app.querySelector(`[data-edit="${c}"]`); if (key == null || !box) return;
@@ -1929,6 +2009,11 @@
       const key = curKey(); if (key == null) return;
       const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
       partsOf(key, r)[+t.dataset.part][t.dataset.pf] = t.value;
+      if (t.dataset.pf === "src" && S.supp?.map) {
+        const p = partsOf(key, r)[+t.dataset.part], m = partMeta(p, key, r);
+        const hit = m.dev && m.op ? supplierOffers(m.dev, m.op, m.variant).find(x => norm(x.s) === norm(t.value)) : null;
+        if (hit && String(hit.c) !== String(p.cost)) { applySupplier(key, r, +t.dataset.part, hit.s, hit.c); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+      }
       syncParts(key);
       const { S: sum } = composeParts(S.parts.get(key));
       const note = $app.querySelector("[data-parts-note]"); if (note && sum != null) note.innerHTML = `Закупка всего: <b>${money(sum)}</b>`;
