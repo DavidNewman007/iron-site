@@ -221,7 +221,7 @@
   const S = { token: null, email: "", rows: [], byNum: new Map(), gid: 0, loadedAt: 0, loading: false,
     since: new Map(), tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [],
     parts: new Map(), svc: null, pp: null, view: null, // parts: ключ карточки → строки запчастей; svc — прайс сайта; pp — окно «работа из прайса»
-    stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", only: null, limit: 150 } }; // склад Витали (v31)
+    stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", only: null, limit: 150 } }; // склад Витали (v31)
   const $app = document.getElementById("app");
   const $toast = document.getElementById("toast");
 
@@ -1297,6 +1297,19 @@
   const skSerRank = s => { const n = s.match(/^iPhone (\d+)$/); return n ? -n[1] : { "iPhone X / XS / XR": -10.5, "iPhone SE": -7.5, "iPhone, другие": 0, "Apple Watch": 50, "MacBook": 60, "Аксессуары": 70 }[s] ?? 80; };
   const SK_SYN = { "про": "pro", "макс": "max", "мини": "mini", "плюс": "plus", "эйр": "air", "аир": "air", "се": "se", "экран": "диспле", "дисплей": "диспле",
     "аккумулятор": "акб", "батарея": "акб", "крышка": "задн", "камера": "камер", "часы": "watch", "макбук": "macbook", "черный": "black", "белый": "white" };
+  // Качество (v32, 02.10.2026, владелец: «добавь фильтр по типам качества»). У Витали 46 вариантов
+  // качества («Тир», колонка P) — одним рядом не читается. Поэтому два уровня, как группа → узел:
+  // класс (оригинал / копия-аналог / б/у и переклей), внутри — точные варианты. У камер, шлейфов,
+  // динамиков класса нет — там вариант один на модель, и выбор класса их скрывает.
+  const SK_CLASSES = [["orig", "Оригинал"], ["copy", "Копия / аналог"], ["bu", "Б/у и переклей"]];
+  function skClass(tier) {
+    const t = norm(tier);
+    if (/б\/у|переклей|снят/.test(t)) return "bu";
+    if (/оригинал|original|orig\b|service pack/.test(t)) return "orig";
+    if (/tft|oled|копия|банка/.test(t)) return "copy";
+    return "";
+  }
+  const skClassRank = t => { const i = SK_CLASSES.findIndex(c => c[0] === skClass(t)); return i < 0 ? 9 : i; };
   const skOnly = () => S.sk.only ?? S.stock.rows.some(x => x.qty > 0);
   function skFilter(skip = {}) {
     const f = S.sk, words = skWords(f.q).split(" ").filter(Boolean).map(w => SK_SYN[w] || w), only = skOnly();
@@ -1304,6 +1317,8 @@
       if (!skip.grp && f.grp && skGroup(x.node) !== f.grp) return false;
       if (!skip.node && f.node && x.node !== f.node) return false;
       if (!skip.ser && f.ser && skSeries(x.model) !== f.ser) return false;
+      if (!skip.cls && f.cls && skClass(x.tier) !== f.cls) return false;
+      if (!skip.tier && f.tier && x.tier !== f.tier) return false;
       if (only && !(x.qty > 0 || S.skDirty.has(x.key))) return false;
       if (words.length) { const t = skWords(`${x.node} ${x.model} ${x.variant} ${x.color}`); if (!words.every(w => t.includes(w))) return false; }
       return true;
@@ -1339,6 +1354,13 @@
         const nC = by(skFilter({ node: 1 }), x => x.node);
         body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="sknode" data-v="" aria-pressed="${!f.node}">Все узлы</button>${nodes.map(n => `<button type="button" class="tchip" data-act="sknode" data-v="${esc(n)}" aria-pressed="${f.node === n}">${esc(cap(n))} <small>${nC.get(n) || 0}</small></button>`).join("")}</div>`;
       }
+    }
+    const cC = by(skFilter({ cls: 1, tier: 1 }), x => skClass(x.tier));
+    body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skcls" data-v="" aria-pressed="${!f.cls}">Любое качество</button>${SK_CLASSES.map(([k, t]) => `<button type="button" class="tchip" data-act="skcls" data-v="${k}" aria-pressed="${f.cls === k}">${esc(t)} <small>${cC.get(k) || 0}</small></button>`).join("")}</div>`;
+    if (f.grp || f.cls || f.tier) { // все 46 вариантов разом — только шум, поэтому после выбора группы или класса
+      const tC = by(skFilter({ tier: 1 }), x => x.tier);
+      const tiers = [...tC.keys()].concat(f.tier && !tC.has(f.tier) ? [f.tier] : []).filter(Boolean).sort((a, b) => skClassRank(a) - skClassRank(b) || (tC.get(b) || 0) - (tC.get(a) || 0));
+      if (tiers.length > 1 || f.tier) body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="sktier" data-v="" aria-pressed="${!f.tier}">Все варианты</button>${tiers.map(t => `<button type="button" class="tchip" data-act="sktier" data-v="${esc(t)}" aria-pressed="${f.tier === t}">${esc(t)} <small>${tC.get(t) || 0}</small></button>`).join("")}</div>`;
     }
     const sC = by(skFilter({ ser: 1 }), x => skSeries(x.model));
     const series = [...sC.keys()].concat(f.ser && !sC.has(f.ser) ? [f.ser] : []).sort((a, b) => skSerRank(a) - skSerRank(b));
@@ -1404,9 +1426,11 @@
   // Клики склада: и на экране «Склад», и в карточке заказа. true — клик обработан.
   async function stockClick(act, t) {
     const rerender = () => { const y = window.scrollY; render(); window.scrollTo(0, y); };
-    const prefs = () => store.set("crm.sk", { grp: S.sk.grp, node: S.sk.node, ser: S.sk.ser, only: S.sk.only });
-    if (act === "skgrp") { S.sk.grp = t.dataset.v; S.sk.node = ""; S.sk.limit = 150; prefs(); rerender(); }
-    else if (act === "sknode") { S.sk.node = t.dataset.v; S.sk.limit = 150; prefs(); rerender(); }
+    const prefs = () => store.set("crm.sk", { grp: S.sk.grp, node: S.sk.node, ser: S.sk.ser, cls: S.sk.cls, tier: S.sk.tier, only: S.sk.only });
+    if (act === "skgrp") { S.sk.grp = t.dataset.v; S.sk.node = ""; S.sk.tier = ""; S.sk.limit = 150; prefs(); rerender(); }
+    else if (act === "sknode") { S.sk.node = t.dataset.v; S.sk.tier = ""; S.sk.limit = 150; prefs(); rerender(); }
+    else if (act === "skcls") { S.sk.cls = t.dataset.v; S.sk.tier = ""; S.sk.limit = 150; prefs(); rerender(); }
+    else if (act === "sktier") { S.sk.tier = t.dataset.v; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skser") { S.sk.ser = t.dataset.v; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skonly") { S.sk.only = !skOnly(); S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skmore") { S.sk.limit += 150; rerender(); }
