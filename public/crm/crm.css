@@ -478,3 +478,47 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .psup__c:hover { border-color: var(--gold); }
 .psup__c.is-on { background: var(--wait-bg); border-color: var(--gold); }
 .pp__item em.note { font-style: normal; color: var(--muted); font-size: .82rem; }
+/* v31: склад запчастей Витали — в карточке заказа и экран «Склад» */
+.psk { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: -2px 0 6px; padding-left: 2px; font-size: .85rem; }
+.psk .note { font-size: .78rem; margin: 0; }
+.psk.is-on { color: var(--ready); }
+.psk.is-on b { color: var(--cream); }
+.psk-done, .psk-fail { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; margin-top: 8px; padding: 8px 12px; border-radius: 10px; font-size: .88rem; }
+.psk-done { background: var(--ready-bg); color: var(--ready); }
+.psk-done span { color: var(--cream); }
+.psk-fail { background: var(--stop-bg); color: var(--stop); }
+.sk-links { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.sk-links .btn--sm { margin-top: 0; }
+.sk-sum { margin-top: 12px; color: var(--muted); }
+.sk-sum b { color: var(--cream); }
+.sk-q { margin-top: 10px; }
+.sk-chips { margin-top: 6px; }
+.tchip small { color: var(--gold); font-weight: 700; margin-left: 2px; }
+.sk-opts { align-items: center; }
+.sk-opts .btn--sm { margin-top: 0; }
+.sk-model { padding-top: 10px; padding-bottom: 6px; }
+.sk-model h3 { justify-content: flex-start; margin-bottom: 4px; text-transform: none; letter-spacing: .04em; font-size: 1rem; }
+.sk-have { margin-left: auto; color: var(--ready); font-family: var(--font-body); letter-spacing: 0; font-size: .85rem; }
+.sk__row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 6px 0; border-top: 1px solid var(--line); }
+.sk__name b { font-weight: 700; color: var(--text); }
+.sk__name span { display: block; color: var(--muted); font-size: .88rem; line-height: 1.2; }
+.sk__row.is-in .sk__name b { color: var(--ready); }
+.sk__cost { color: var(--muted); font-size: .88rem; white-space: nowrap; }
+.sk__qty { display: flex; align-items: center; gap: 4px; }
+.sk__qty button { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--surface-2); color: var(--cream); font-size: 1.35rem; line-height: 1; }
+.sk__qty button:active { background: rgba(255, 255, 255, .14); }
+.sk__qty input { width: 58px; height: 44px; text-align: center; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--field); color: var(--text); font-size: 1.1rem; font-weight: 700; }
+.sk__qty input:focus { outline: none; border-color: var(--gold); }
+.sk__row.is-dirty .sk__qty input { border-color: var(--gold); background: #231f14; color: var(--gold); }
+@media (max-width: 560px) {
+  .sk__row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 2px; }
+  .sk__cost { grid-column: 1; grid-row: 2; }
+  .sk__qty { grid-column: 2; grid-row: 1 / span 2; }
+  .sk-links { margin-left: 0; width: 100%; }
+}
+/* v31: в шапке стало четыре кнопки (＋ 📦 ⟳ ⎋) — на телефоне ужимаем, чтобы не было прокрутки вбок */
+@media (max-width: 420px) {
+  .top__row { gap: 8px; }
+  .top .iconbtn { min-width: 40px; padding: 0 8px; }
+  .brand b, .who { display: none; }
+}
