@@ -1102,7 +1102,7 @@
   const skStr = v => String(v ?? "").trim();
   const skQty = v => Math.max(0, Math.round(toNum(v) ?? 0));
   function skLedgerRow(v) {
-    return { ts: String(v[0] ?? ""), key: String(v[1] ?? ""), node: String(v[2] ?? ""), model: String(v[3] ?? ""), variant: String(v[4] ?? ""),
+    return { ts: String(v[0] ?? ""), key: skStr(v[1]), node: String(v[2] ?? ""), model: String(v[3] ?? ""), variant: String(v[4] ?? ""),
       color: String(v[5] ?? ""), d: toNum(v[6]) ?? 0, order: String(v[7] ?? "").trim(), who: String(v[8] ?? ""), note: String(v[9] ?? ""), src: String(v[10] ?? "") };
   }
   function loadStock(force) {
@@ -1130,7 +1130,7 @@
           catch (e) { if (!/400/.test(e.message)) throw e; g = await get(ranges.slice(0, 2)); S.ownMissing = true; } // листа своих позиций ещё нет — заведём при первом добавлении
           rows = (g.valueRanges?.[0]?.values || []).map((v, i) => ({ row: i + 2, sheet: CFG.stock.sheet, node: skStr(v[SK.node]), model: skStr(v[SK.model]),
             variant: skStr(v[SK.variant]), color: skStr(v[SK.color]), src: CFG.stock.supplier, cost: toNum(v[SK.cost]), price: toNum(v[SK.price]), qty: skQty(v[SK.qty]),
-            had: String(v[SK.qty] ?? "") !== "", tier: skStr(v[SK.tier]), key: String(v[SK.key] ?? "") })).filter(x => x.key && x.model);
+            had: String(v[SK.qty] ?? "") !== "", tier: skStr(v[SK.tier]), key: skStr(v[SK.key]) })).filter(x => x.key && x.model);
           ledger = (g.valueRanges?.[1]?.values || []).map(skLedgerRow).filter(x => x.key);
           own = (g.valueRanges?.[2]?.values || []).map((v, i) => ({ row: i + 2, sheet: CFG.stock.own, own: true, node: skStr(v[SKO.node]), model: skStr(v[SKO.model]),
             variant: skStr(v[SKO.variant]), color: skStr(v[SKO.color]), src: skStr(v[SKO.src]), cost: toNum(v[SKO.cost]), note: skStr(v[SKO.note]),
@@ -1219,6 +1219,9 @@
     return [...net].filter(([, d]) => d < 0).map(([key, d]) => ({ key, n: -d, x: S.stock.byKey?.get(key) || S.stock.ledger.find(l => l.key === key) }));
   }
 
+  // Ключ позиции везде сравнивается ОБРЕЗАННЫМ: у позиций Витали без цвета ключ кончается
+  // пробелом («дисплей | … | »). В v33 при записи ключ из листа обрезался, а в загруженном списке —
+  // нет, и −/+ по таким позициям отвечал «позиции нет в листе» (исправлено 02.10.2026, v35).
   // Запись остатков. ops: { key, d } — сдвиг (списание −1, возврат +1) или { key, set, base } —
   // число со склада, base — что было при загрузке. Если в листе уже не base (кто-то успел
   // списать), число не пишем, а просим проверить. В минус остаток не уходит: списали, а в листе
@@ -1363,11 +1366,34 @@
     try {
       const x = a.edit ? await skEditOwn(a.edit, g) : await skAddOwn(g);
       S.skAdd = null;
-      toast(DEMO ? "Сохранено (демо — в таблицу не пишется)" : `${a.edit ? "Позиция поправлена" : "Добавлено на склад"} ✓ ${skShort(x)}${skFrom(x)}${a.edit ? "" : ` — ${x.qty} шт`}`, null, true);
+      const hid = skReveal(x);
+      toast((DEMO ? "Сохранено (демо — в таблицу не пишется)" : `${a.edit ? "Позиция поправлена" : "Добавлено на склад"} ✓ ${skShort(x)}${skFrom(x)}${a.edit ? "" : ` — ${x.qty} шт`}`)
+        + (hid.length ? ` · сняты фильтры, которые её прятали: ${hid.join(", ")}` : ""), null, true);
+      renderStock();
+      const el = $app.querySelector(`[data-skrow="${CSS.escape(x.key)}"]`);
+      if (el) { el.scrollIntoView({ block: "center" }); el.classList.add("is-new"); return; }
     } catch (e) { toast(e.message, null, true); }
     renderStock(); window.scrollTo(0, y);
   }
 
+  // Владелец 02.10.2026: «добавлял АКБ 13 Pro снятый оригинал — сохранилось, но на складе не
+  // отображается». Позиция легла в лист, а на экране её прятали фильтры, оставшиеся с прошлого
+  // раза («Оригинал»: «снятый» — это класс «б/у»). Теперь после добавления снимаются ровно те
+  // фильтры, что прячут новую позицию, и об этом говорится в сообщении.
+  function skReveal(x) {
+    const f = S.sk, hid = [];
+    if (f.grp && skGroup(x.node) !== f.grp) { hid.push(f.grp); f.grp = ""; f.node = ""; }
+    if (f.node && x.node !== f.node) { hid.push(cap(f.node)); f.node = ""; }
+    if (f.cls && skClass(x.tier) !== f.cls) { hid.push(SK_CLASSES.find(c => c[0] === f.cls)?.[1] || f.cls); f.cls = ""; }
+    if (f.tier && x.tier !== f.tier) { hid.push(f.tier); f.tier = ""; }
+    if (f.src && skSrcKind(x.src) !== f.src) { hid.push(SK_SRC.find(c => c[0] === f.src)?.[1] || f.src); f.src = ""; }
+    if (f.ser && skSeries(x.model) !== f.ser) { hid.push(f.ser); f.ser = ""; }
+    if (f.q) { const t = skWords(`${x.node} ${x.model} ${x.variant} ${x.color} ${x.src} ${x.note}`); if (!skWords(f.q).split(" ").filter(Boolean).map(w => SK_SYN[w] || w).every(w => t.includes(w))) { hid.push("поиск"); f.q = ""; } }
+    if (skOnly() && !(x.qty > 0)) { hid.push("только в наличии"); f.only = false; }
+    f.limit = Math.max(f.limit, 150);
+    store.set("crm.sk", { grp: f.grp, node: f.node, ser: f.ser, cls: f.cls, tier: f.tier, src: f.src, only: f.only });
+    return hid;
+  }
   // Строка запчасти в заказе: со склада она или можно взять со склада.
   function stockPartHtml(key, r, p, i) {
     if (!S.stock?.rows) return "";
@@ -1465,6 +1491,14 @@
       return true;
     });
   }
+  // Какие фильтры сейчас сужают список — одной строкой, со сбросом. Фильтры помнятся на устройстве,
+  // и без этой строки легко забыть, что вчерашний «iPhone 13 · Оригинал» прячет всё остальное.
+  function skActiveHtml(list) {
+    const f = S.sk, on = [f.grp, f.node && cap(f.node), f.cls && SK_CLASSES.find(c => c[0] === f.cls)?.[1], f.tier, f.src && SK_SRC.find(c => c[0] === f.src)?.[1], f.ser, f.q && `«${f.q}»`].filter(Boolean);
+    if (!on.length) return "";
+    const inStock = S.stock.rows.filter(x => x.qty > 0).length, shownIn = list.filter(x => x.qty > 0).length;
+    return `<div class="sk-active">Фильтры: <b>${on.map(esc).join(" · ")}</b>${inStock > shownIn ? ` — скрыто из наличия: <b>${inStock - shownIn}</b> поз.` : ""}<button type="button" class="linkbtn" data-act="skreset">✕ сбросить все</button></div>`;
+  }
   function skRowHtml(x) {
     const d = S.skDirty.has(x.key), v = d ? S.skDirty.get(x.key) : x.qty || "";
     const from = x.own ? `<em class="sk-src sk-src--${skSrcKind(x.src)}">${esc(isDonor(x.src) ? "🔧 донор" : isVitalya(x.src) ? "свой вариант · Виталя" : x.src)}</em>` : "";
@@ -1512,10 +1546,12 @@
       if (tiers.length > 1 || f.tier) body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="sktier" data-v="" aria-pressed="${!f.tier}">Все варианты</button>${tiers.map(t => `<button type="button" class="tchip" data-act="sktier" data-v="${esc(t)}" aria-pressed="${f.tier === t}">${esc(t)} <small>${tC.get(t) || 0}</small></button>`).join("")}</div>`;
     }
     const oC = by(skFilter({ src: 1 }), x => skSrcKind(x.src));
+    const list0 = skFilter();
     body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skfrom" data-v="" aria-pressed="${!f.src}">Любой поставщик</button>${SK_SRC.map(([k, t]) => `<button type="button" class="tchip" data-act="skfrom" data-v="${k}" aria-pressed="${f.src === k}">${esc(t)} <small>${oC.get(k) || 0}</small></button>`).join("")}</div>`;
     const sC = by(skFilter({ ser: 1 }), x => skSeries(x.model));
     const series = [...sC.keys()].concat(f.ser && !sC.has(f.ser) ? [f.ser] : []).sort((a, b) => skSerRank(a) - skSerRank(b));
     body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skser" data-v="" aria-pressed="${!f.ser}">Все модели</button>${series.map(s => `<button type="button" class="tchip" data-act="skser" data-v="${esc(s)}" aria-pressed="${f.ser === s}">${esc(s)} <small>${sC.get(s) || 0}</small></button>`).join("")}</div>
+      ${skActiveHtml(list0)}
       <div class="row sk-opts"><button type="button" class="btn btn--toggle btn--sm" data-act="skonly" aria-pressed="${skOnly()}">${skOnly() ? "✓ " : ""}Только в наличии</button><button type="button" class="btn btn--ghost btn--sm" data-act="skadd" data-node="${esc(f.node || "")}" data-model="">＋ Своя запчасть (другая модель)</button>${S.skDirty.size ? `<span class="note">Изменено: <b>${S.skDirty.size}</b> — не забудьте сохранить</span>` : ""}</div>`;
     if (S.skAdd?.at === "top") body += `<section class="block">${skAddHtml()}</section>`;
     // Порядок моделей — как в прайсе Витали; своя позиция встаёт в конец раздела своей модели,
@@ -1593,6 +1629,7 @@
     else if (act === "skser") { S.sk.ser = t.dataset.v; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skonly") { S.sk.only = !skOnly(); S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skmore") { S.sk.limit += 150; rerender(); }
+    else if (act === "skreset") { Object.assign(S.sk, { grp: "", node: "", ser: "", cls: "", tier: "", src: "", q: "", limit: 150 }); prefs(); rerender(); }
     else if (act === "skreload") { await loadStock(true); rerender(); }
     else if (act === "skstep") {
       const k = t.dataset.k, x = S.stock?.byKey?.get(k); if (!x) return true;

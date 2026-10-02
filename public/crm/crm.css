@@ -540,3 +540,8 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .sk__cost small { display: block; font-size: .8rem; color: var(--muted); }
 .sk__cost { text-align: right; }
 .sk-add .grid2, .sk-add .grid3 { align-items: end; }
+/* v35: видно, какие фильтры сужают склад; новая позиция подсвечена */
+.sk-active { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 10px; padding: 8px 12px; border-radius: 10px; background: var(--wait-bg); color: var(--muted); font-size: .9rem; }
+.sk-active b { color: var(--wait); }
+.sk__row.is-new { animation: sk-new 2.4s ease-out 1; }
+@keyframes sk-new { 0%, 40% { background: rgba(60, 170, 100, .35); } 100% { background: transparent; } }
