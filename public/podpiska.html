@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>3000 ₽ подписчикам канала на новый iPhone и MacBook — IRON SERVICE Сочи</title>
-  <meta name="description" content="Подпишитесь на Telegram-канал IRON SERVICE SOCHI — бот выдаст именной промокод: минус 3000 ₽ на новый iPhone или MacBook от 50 000 ₽. Код действует 14 дней.">
+  <title>Подарок подписчикам канала: −3000 ₽ на iPhone или стекло к ремонту — IRON SERVICE Сочи</title>
+  <meta name="description" content="Подпишитесь на Telegram-канал IRON SERVICE SOCHI — бот выдаст именной код: минус 3000 ₽ на новый iPhone или MacBook от 50 000 ₽ или защитное стекло с поклейкой в подарок к любому ремонту. Код действует 14 дней.">
   <link rel="canonical" href="https://1iron.ru/podpiska.html">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://1iron.ru/podpiska.html">
-  <meta property="og:title" content="3000 ₽ подписчикам канала — на новый iPhone и MacBook">
-  <meta property="og:description" content="Подпишитесь на канал IRON SERVICE SOCHI — бот выдаст именной промокод на 3000 ₽. Новый iPhone или MacBook от 50 000 ₽, код действует 14 дней.">
+  <meta property="og:title" content="Подарок подписчикам канала IRON SERVICE">
+  <meta property="og:description" content="Минус 3000 ₽ на новый iPhone или MacBook или защитное стекло с поклейкой в подарок к ремонту. Именной код выдаёт бот, действует 14 дней.">
   <meta property="og:locale" content="ru_RU">
   <meta property="og:image" content="https://1iron.ru/assets/logo-horizontal.png">
   <link rel="icon" href="assets/logo-icon.png" type="image/png">
@@ -19,7 +19,9 @@
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=2026-08-19-3">
   <!--
-    Страница акции «Подписчикам канала — 3000 ₽» (план 100, 01.10.2026).
+    Страница акции «Подарок подписчикам канала» (план 100, 01.10.2026; с 02.10.2026 по решению
+    владельца у кода два подарка на выбор: −3000 ₽ на новый iPhone/MacBook или стекло с поклейкой
+    к любому ремонту — за первые сутки код не взял никто, а приходят в основном чиниться).
     Стили страницы — здесь, а не в styles.css: акция временная, и после неё
     страницу проще убрать одним файлом, не трогая общий стиль сайта.
     Основа — те же приёмы, что у garantiya.html (крупная цифра с золотой
@@ -35,23 +37,55 @@
       border: 2px solid var(--gold);
       border-radius: 16px;
     }
-    .sub-hero__sum {
+    .sub-hero__kicker {
       font-family: var(--font-display);
-      font-size: clamp(3.6rem, 14vw, 7rem);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 0 0 1.25rem;
+    }
+    .sub-gifts {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 1rem;
+      margin: 0 0 1.5rem;
+    }
+    .sub-gift {
+      padding: 1.25rem 1rem;
+      border: 1px solid rgba(212, 160, 18, 0.45);
+      border-radius: 12px;
+      background: rgba(20, 20, 20, 0.35);
+    }
+    .sub-gift__big {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 8vw, 4.6rem);
       font-weight: 700;
       color: var(--red);
       line-height: 1;
       text-shadow: 3px 3px 0 var(--gold);
       white-space: nowrap;
     }
-    /* Без text-transform: uppercase — иначе iPhone и MacBook превращаются в IPHONE и MACBOOK. */
-    .sub-hero__what {
+    .sub-gift__what {
       font-family: var(--font-display);
-      font-size: clamp(1.3rem, 3.8vw, 1.9rem);
-      letter-spacing: 0.04em;
-      margin: 0.75rem 0 0.4rem;
+      font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+      letter-spacing: 0.03em;
+      margin: 0.7rem 0 0.25rem;
       color: var(--cream);
     }
+    .sub-gift__note {
+      margin: 0;
+      color: var(--text-muted);
+    }
+    .sub-gifts__or {
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      font-size: 1.1rem;
+    }
+    /* У подписей подарков нет text-transform: uppercase — иначе iPhone и MacBook превращаются
+       в IPHONE и MACBOOK. */
     .sub-hero__note {
       color: var(--text-muted);
       margin: 0 0 1.75rem;
@@ -116,6 +150,10 @@
       .sub-hero {
         padding: 1.75rem 1rem 1.5rem;
       }
+      .sub-gifts {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+      }
       .sub-actions .btn {
         width: 100%;
       }
@@ -156,17 +194,29 @@
   <main>
     <div class="page-hero">
       <div class="container">
-        <h1>3000 ₽ подписчикам канала</h1>
-        <p>Подпишитесь на наш Telegram-канал — бот выдаст именной промокод на новый iPhone или MacBook.</p>
+        <h1>Подарок подписчикам канала</h1>
+        <p>Подпишитесь на наш Telegram-канал — бот выдаст именной код. По нему на выбор: −3000 ₽ на новый iPhone или MacBook или защитное стекло с поклейкой в подарок к ремонту.</p>
       </div>
     </div>
 
     <section>
       <div class="container">
         <div class="sub-hero">
-          <div class="sub-hero__sum">−3000 ₽</div>
-          <p class="sub-hero__what">на новый iPhone или MacBook</p>
-          <p class="sub-hero__note">от 50 000 ₽ · код действует 14 дней</p>
+          <p class="sub-hero__kicker">Один код — подарок на выбор</p>
+          <div class="sub-gifts">
+            <div class="sub-gift">
+              <div class="sub-gift__big">−3000 ₽</div>
+              <p class="sub-gift__what">на новый iPhone или MacBook</p>
+              <p class="sub-gift__note">при покупке от 50 000 ₽</p>
+            </div>
+            <div class="sub-gifts__or">или</div>
+            <div class="sub-gift">
+              <div class="sub-gift__big">Стекло</div>
+              <p class="sub-gift__what">защитное, с поклейкой</p>
+              <p class="sub-gift__note">в подарок к любому ремонту</p>
+            </div>
+          </div>
+          <p class="sub-hero__note">код действует 14 дней · выдаём до 15 октября включительно</p>
           <div class="sub-actions">
             <a class="btn btn-primary" data-bot-start href="https://t.me/IRON_SERVICE_ORDER_bot?start=sub_site" target="_blank" rel="noopener">Получить код в Telegram</a>
             <a class="btn btn-secondary" href="https://t.me/ironservice" target="_blank" rel="noopener">Открыть канал</a>
@@ -194,20 +244,20 @@
             <span class="trust-year">03</span>
             <div>
               <strong>Получите именной код</strong><br>
-              Бот пришлёт промокод вида SUB-XXXXXX. Примените его в корзине бота при заказе или назовите на приёмке в мастерской на Московской, 5.
+              Бот пришлёт промокод вида SUB-XXXXXX. Сдаёте технику в ремонт — назовите код на приёмке, стекло поклеим в подарок. Покупаете новый iPhone или MacBook — примените код в корзине бота или назовите на приёмке на Московской, 5.
             </div>
           </li>
         </ul>
 
         <h2 class="section-title" style="margin-top:3rem">Условия</h2>
         <ul class="sub-terms">
-          <li>Скидка 3000 ₽ на новый iPhone или MacBook.</li>
-          <li>Сумма таких позиций в заказе — от 50 000 ₽.</li>
+          <li>Код даёт подарок на выбор: −3000 ₽ на новый iPhone или MacBook или защитное стекло с поклейкой в подарок к любому ремонту.</li>
+          <li>Скидка 3000 ₽ — на новый iPhone или MacBook, сумма таких позиций в заказе — от 50 000 ₽. Скидка не действует на «товар дня» по спеццене и не суммируется с другими промокодами.</li>
+          <li>Стекло с поклейкой — к любому ремонту в нашей мастерской, одно на код.</li>
           <li>Код действует 14 дней с момента получения. Получить код можно до 15 октября 2026 года включительно.</li>
           <li>Один код на человека. Код именной — погасить его можно только с того Telegram-аккаунта, на который он выдан.</li>
           <li>Код работает, пока вы подписаны на канал: при оформлении бот проверяет подписку ещё раз.</li>
-          <li>Не действует на «товар дня» по спеццене и не суммируется с другими промокодами.</li>
-          <li>Применить код можно в корзине бота при заказе или назвать на приёмке в мастерской.</li>
+          <li>Скидку можно применить в корзине бота при заказе или на приёмке в мастерской; стекло — назовите код на приёмке, когда сдаёте технику в ремонт.</li>
         </ul>
 
         <h2 class="section-title" style="margin-top:3rem">Вопросы</h2>
@@ -221,8 +271,12 @@
             <p>Да, акция для всех подписчиков канала, не только новых. Откройте бота — он проверит подписку и выдаст код.</p>
           </details>
           <details>
+            <summary>Какой подарок выбрать?</summary>
+            <p>Тот, что нужен сейчас. Сдаёте технику в ремонт — защитное стекло с поклейкой в подарок. Покупаете новый iPhone или MacBook от 50 000 ₽ — скидка 3000 ₽.</p>
+          </details>
+          <details>
             <summary>Как применить код?</summary>
-            <p>Положите новый iPhone или MacBook в корзину бота и введите код при оформлении заказа. Покупаете в мастерской — назовите код на приёмке.</p>
+            <p>Ремонт — назовите код на приёмке в мастерской, стекло поклеим в подарок. Покупка — положите новый iPhone или MacBook в корзину бота и введите код при оформлении заказа или назовите код на приёмке.</p>
           </details>
           <details>
             <summary>Можно передать код другу?</summary>
@@ -234,7 +288,7 @@
           </details>
           <details>
             <summary>На что код не действует?</summary>
-            <p>На «товар дня» по спеццене и на заказы, где новых iPhone и MacBook меньше чем на 50 000 ₽. С другими промокодами код не суммируется.</p>
+            <p>Скидка 3000 ₽ не действует на «товар дня» по спеццене и на заказы, где новых iPhone и MacBook меньше чем на 50 000 ₽, и не суммируется с другими промокодами. Стекло с поклейкой — к любому ремонту, одно на код.</p>
           </details>
         </div>
       </div>

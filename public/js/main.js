@@ -109,9 +109,12 @@
   });
 })();
 
-/* >>> IRON-SUBBAR START — полоса акции «Подписчикам канала — 3000 ₽» (план 100, 01.10.2026) >>> */
+/* >>> IRON-SUBBAR START — полоса акции «Подарок подписчикам канала» (план 100, 01.10.2026; v2 — 02.10.2026) >>> */
 /*
  * Вставлено скриптом scripts/podpiska/применить-сайт.sh (репозиторий iron-automation).
+ * v2 (02.10.2026): у кода два подарка на выбор — −3000 ₽ на новый iPhone/MacBook или стекло с
+ * поклейкой к ремонту (решение владельца: за первые сутки код не взял никто, а приходят чиниться).
+ * Ключ закрытия сменён на «-v2»: кто закрыл полосу первой версии, увидит новое предложение один раз.
  * Править блок там, в сайт/main-js-вставка.js, и применять заново: скрипт заменяет
  * всё между маркерами START/END, повторный запуск ничего не дублирует.
  *
@@ -136,7 +139,7 @@
 (function () {
   "use strict";
   var SUBBAR_UNTIL = "2026-10-15"; // последний день показа (выдача кодов — до 15.10 включительно); с 16.10 полосы нет
-  var STORE_KEY = "iron-subbar-2026-10";
+  var STORE_KEY = "iron-subbar-2026-10-v2";
   var HREF = "/podpiska.html?src=site";
 
   function pad(n) {
@@ -197,7 +200,10 @@
     ".iron-subbar__close:hover,.iron-subbar__close:focus-visible{opacity:1;background:rgba(0,0,0,.2)}" +
     // На телефоне — не больше двух строк: текст слева переносится, кнопка справа не переносится
     // (замер 01.10.2026 на 375px: по центру с переносом полоса выходила в три строки, 72px).
+    ".iron-subbar__short{display:none}" +
+    // На телефоне — короткий текст: длинный с двумя подарками выходил в три строки.
     "@media (max-width:600px){.iron-subbar{font-size:13px;line-height:1.25}" +
+    ".iron-subbar__long{display:none}.iron-subbar__short{display:inline}" +
     ".iron-subbar__inner{padding:6px 38px 6px 10px}" +
     ".iron-subbar__link{width:100%;justify-content:space-between;text-align:left;gap:8px}" +
     ".iron-subbar__cta{padding:3px 9px}}" +
@@ -218,7 +224,10 @@
     bar.innerHTML =
       '<div class="iron-subbar__inner">' +
       '<a class="iron-subbar__link" href="' + HREF + '">' +
-      '<span class="iron-subbar__text">🎁 Подписчикам канала — 3000 ₽ на новый iPhone и MacBook</span>' +
+      '<span class="iron-subbar__text">' +
+      '<span class="iron-subbar__long">🎁 Подписчикам канала: −3000 ₽ на iPhone/MacBook или стекло в подарок к ремонту</span>' +
+      '<span class="iron-subbar__short">🎁 Подписчикам: −3000 ₽ на iPhone/MacBook или стекло к ремонту</span>' +
+      "</span>" +
       '<span class="iron-subbar__cta">Получить код →</span>' +
       "</a>" +
       '<button type="button" class="iron-subbar__close" aria-label="Скрыть">×</button>' +
