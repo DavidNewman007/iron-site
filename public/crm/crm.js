@@ -1012,7 +1012,7 @@
         <input data-part="${i}" data-pf="name" value="${esc(p.name)}" list="dl-pname" placeholder="Например, АКБ" spellcheck="true" lang="ru"${lock ? " disabled" : ""}>
         <input data-part="${i}" data-pf="src" value="${esc(p.src)}" list="dl-psrc" placeholder="Откуда"${lock ? " disabled" : ""}>
         <input data-part="${i}" data-pf="cost" value="${esc(p.cost)}" inputmode="decimal" placeholder="0"${lock ? " disabled" : ""}>
-        <button type="button" class="linkbtn" data-act="rmpart" data-i="${i}" title="Убрать"${lock ? " disabled" : ""}>✕</button></div>${lock ? "" : supplierChipsHtml(key, r, p, i) + stockPartHtml(key, r, p, i)}`).join("")}
+        <button type="button" class="linkbtn" data-act="rmpart" data-i="${i}" title="Убрать"${lock ? " disabled" : ""}>✕</button></div>${lock ? "" : supplierChipsHtml(key, r, p, i) + stockPartHtml(key, r, p, i) + compareHtml(key, r, p, i)}`).join("")}
       <div class="parts__foot"><button type="button" class="btn btn--ghost btn--sm" data-act="addpart"${lock ? " disabled" : ""}>＋ Запчасть</button><span class="note" data-parts-note>${note}</span></div>
       ${stockOrderHtml(r, lock)}
       ${dl(C.parts, "dl-pname")}${dl(C.partFrom, "dl-psrc")}</div>`;
@@ -1113,6 +1113,45 @@
     if (!offers.length) return "";
     return `<div class="psup"><span class="note">${esc(dev)}:</span>${offers.map(x => `<button type="button" class="psup__c${norm(x.s) === norm(p.src) ? " is-on" : ""}" data-psup="${i}" data-s="${esc(x.s)}" data-c="${x.c}" data-t="${esc(x.t)}" title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">${esc(x.s)} <b>${money(x.c)}</b>${suppHere(x.t) ? ` <span class="psup__here">в Сочи</span>` : ""}</button>`).join("")}</div>`;
   }
+  // ── «Сравнить склады» по одной запчасти (v38, 02.10.2026) ──────────────────────────
+  // Владелец: «ещё бы хорошо иметь кнопку „сравнить склады“ по определённой запчасти». Чипы
+  // показывают у каждого поставщика одну, лучшую позицию; здесь — ВСЕ варианты этой детали для
+  // этой модели: наша полка (любой поставщик, только что лежит), MOS, Виталя, Liberti, магазины
+  // макбуков — с закупкой и наличием, дешевле выше, с фильтром по словам («soft», «оригинал»).
+  // Нажатие строки — как чип: поставщик и закупка в строку запчасти (у запчасти из прайса итог
+  // пересчитывается), позиция с полки привязывается и спишется при сохранении.
+  const cmpWhere = (s, t) => {
+    const m = String(t || "").match(/в Сочи (\d+ шт|есть)/);
+    if (m) return { a: m[0], here: true };
+    if (/под заказ/.test(t)) return { a: "под заказ", here: false };
+    if (isVitalya(s)) return { a: "Ростов, 2–4 дня", here: false };
+    return { a: "", here: false };
+  };
+  function compareHtml(key, r, p, i) {
+    const open = S.cmp?.key === key && S.cmp.i === i;
+    const { dev, op, variant } = partMeta(p, key, r);
+    const stock = skCandidates(key, r, p, true) || [];
+    const supp = (dev && op && S.supp?.map?.get(dev + "|" + op)) || [];
+    if (!open) return (stock.length + supp.length) > 1 ? `<div class="cmp-open"><button type="button" class="linkbtn" data-act="cmp" data-i="${i}">⚖️ Сравнить склады${dev ? "" : ""} <span class="note">(${stock.length + supp.length})</span></button></div>` : "";
+    const words = norm(S.cmp.q || "").split(/\s+/).filter(Boolean);
+    const vw = norm(variant).split(/[^a-zа-я0-9%]+/).filter(w => w.length > 1);
+    const rows = [
+      ...stock.map(x => ({ k: x.key, s: "📦 Наш склад" + (isVitalya(x.src) ? " · Виталя" : isDonor(x.src) ? " · донор" : x.src ? " · " + x.src : ""), src: x.src, t: skShort(x), c: x.cost, a: `на полке ${x.free} шт`, here: true, stock: true })),
+      ...supp.map(o => { const w = cmpWhere(o.s, o.t); return { s: o.s, src: o.s, t: String(o.t).replace(/\s*·\s*(в Сочи|под заказ).*$/, ""), c: o.c, a: w.a, here: w.here, when: o.when }; }),
+    ].filter(x => !words.length || words.every(w => norm(x.s + " " + x.t).includes(w)))
+      .sort((a, b) => (a.c ?? 1e9) - (b.c ?? 1e9));
+    const cur = x => norm(x.src) === norm(p.src) && String(x.c) === String(toNum(p.cost)) && (!x.stock || p.stock === x.k);
+    const like = x => vw.length && vw.filter(w => norm(x.t).includes(w)).length >= Math.min(2, vw.length);
+    const shops = new Set(rows.map(x => x.stock ? "склад" : x.s)).size;
+    return `<div class="cmp"><div class="cmp__head"><b>⚖️ ${esc(dev || "модель не узнана")}${op ? " · " + esc(op) : ""}</b>
+      <input class="cmp__q" data-act="cmpq" data-i="${i}" value="${esc(S.cmp.q || "")}" placeholder="Фильтр: soft, оригинал, 3750…" autocomplete="off">
+      <button type="button" class="linkbtn" data-act="cmp" data-i="${i}">закрыть</button></div>
+      ${rows.length ? `<div class="cmp__list">${rows.slice(0, 150).map(x => `<button type="button" class="cmp__row${x.here ? " is-here" : ""}${cur(x) ? " is-on" : ""}${like(x) ? " is-like" : ""}" data-act="cmppick" data-i="${i}" data-s="${esc(x.src || "")}" data-c="${x.c ?? ""}"${x.stock ? ` data-k="${esc(x.k)}"` : ""} title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">
+        <span class="cmp__s">${esc(x.s)}</span><span class="cmp__t">${esc(x.t)}</span><span class="cmp__a">${esc(x.a)}</span><b>${x.c != null ? money(x.c) : "—"}</b></button>`).join("")}</div>
+      <p class="note">${rows.length} вариант(ов) у ${shops} источник(ов) · дешевле всего: <b>${esc(rows[0].s)}</b> ${rows[0].c != null ? money(rows[0].c) : ""}${vw.length ? " · подходящие по названию варианта подсвечены" : ""}</p>`
+      : `<div class="note">${words.length ? "По фильтру ничего не нашлось." : dev ? "Для этой детали предложений нет." : "Не узнал модель по полю «Устройство»."}</div>`}</div>`;
+  }
+
   // Поставщик выбран: закупка — из индекса; у запчасти из прайса — и итог на разницу.
   function applySupplier(key, r, i, supplier, cost) {
     const list = partsOf(key, r), p = list[i]; if (!p) return;
@@ -2575,6 +2614,17 @@
   document.addEventListener("click", async e => {
     const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc],[data-svx],[data-cdev],[data-psup]"); if (!t) return;
     if (t.dataset.cdev != null) { pickDevice(+t.dataset.cdev); return; }
+    if (t.dataset.act === "cmp") {
+      const key = curKey(), i = +t.dataset.i;
+      S.cmp = S.cmp?.key === key && S.cmp.i === i ? null : { key, i, q: "" };
+      const y = window.scrollY; render(); window.scrollTo(0, y); return;
+    }
+    if (t.dataset.act === "cmppick") {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), i = +t.dataset.i;
+      if (t.dataset.k) { const x = skBind(key, r, i, t.dataset.k); if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`); }
+      else if (t.dataset.c) { applySupplier(key, r, i, t.dataset.s, +t.dataset.c); toast(`${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[i]?.fromSvc ? " · итог пересчитан" : ""}`); }
+      S.cmp = null; const y = window.scrollY; render(); window.scrollTo(0, y); return;
+    }
     if (t.dataset.psup != null) {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
       applySupplier(key, r, +t.dataset.psup, t.dataset.s, +t.dataset.c);
@@ -2713,6 +2763,11 @@
       const val = x => { const k = key + ":" + x; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, x) : ""); };
       const box = $app.querySelector(".margin"); if (box && !S.multi) box.innerHTML = moneySummary(dealKey(val(C.type)), val, r);
       refreshSaveBar(key); return;
+    }
+    if (t.dataset.act === "cmpq") {
+      if (!S.cmp) return; S.cmp.q = t.value; const pos = t.selectionStart, y = window.scrollY;
+      clearTimeout(onEdit.cq); onEdit.cq = setTimeout(() => { render(); window.scrollTo(0, y); const q = $app.querySelector(".cmp__q"); if (q) { q.focus({ preventScroll: true }); q.setSelectionRange(pos, pos); } }, 150);
+      return;
     }
     if (t.dataset.act === "ppq") {
       if (!S.pp) return; S.pp.q = t.value; const pos = t.selectionStart, y = window.scrollY;
