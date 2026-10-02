@@ -367,6 +367,7 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .pp__list { display: grid; gap: 6px; margin-top: 8px; max-height: 330px; overflow-y: auto; }
 .pp__item { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; text-align: left; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--text); padding: 8px 12px; }
 .pp__item:hover { border-color: var(--gold); }
+.pp__sub { margin: 6px 2px 0; color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; border-top: 1px dashed var(--line-strong); padding-top: 8px; } /* v37: склад и другие поставщики в «Работе из прайса» */
 .pp__item b { color: var(--cream); font-size: .98rem; }
 .pp__item b .note { font-weight: 400; }
 .pp__item span { color: var(--gold); font-size: .9rem; grid-column: 1; }

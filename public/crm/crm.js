@@ -857,17 +857,73 @@
     // Поиск: слова запроса ищутся в работе и варианте; без модели — по всему прайсу (с моделью в строке).
     const hit = x => { const t = norm(x.operation + " " + (x.variant || "") + (dev ? "" : " " + x.device)); return !q || q.split(" ").every(w => (PP_SYN.find(([re]) => re.test(w))?.[1] || [w]).some(a => t.includes(a))); };
     const items = S.svc.list.map((x, i) => ({ x, i })).filter(({ x }) => (dev ? x.device === dev : q.length >= 2) && hit(x)).slice(0, 80);
+    const hitX = x => !q || q.split(" ").every(w => (PP_SYN.find(([re]) => re.test(w))?.[1] || [w]).some(a => norm(x.operation + " " + x.variant + " " + x.src + " " + (x.title || "") + (x.kind === "stock" ? " склад наличие" : "")).includes(a)));
+    const extras = dev ? ppExtras(dev).filter(hitX).slice(0, 60) : [];
+    P.extra = extras; // для нажатия: data-svx — номер в этом списке
     return `<div class="pp"><div class="pp__head"><select data-act="ppdev"><option value="">— модель из прайса —</option>${S.svc.devices.map(d => `<option ${d === dev ? "selected" : ""}>${esc(d)}</option>`).join("")}</select>
       <button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>
       <input class="pp__q" data-act="ppq" value="${esc(P.q || "")}" placeholder="Поиск: дисплей, акб, oled…" autocomplete="off">
-      ${dev || q.length >= 2 ? (items.length ? `<div class="pp__list">${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
+      ${dev || q.length >= 2 ? (items.length || extras.length ? `<div class="pp__list">${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
         <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}${dev ? "" : ` <span class="note">· ${esc(x.device)}</span>`}</b>
-        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_cost)}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
+        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_cost)}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${extras.length ? `<div class="pp__sub">Наш склад и другие поставщики</div>` + extras.map((x, j) => `<button type="button" class="pp__item" data-svx="${j}">
+        <b>${esc(cap(x.operation))} <span class="note">${x.kind === "stock" ? "📦 наш склад" : esc(x.src)} · ${esc(x.variant)}</span>${x.here ? ` <span class="psup__here">в Сочи</span>` : ""}</b>
+        <span>${money(x.price)} <em class="note">= работа ${money(x.work)} + запчасть ${money(x.cost)}${x.kind === "stock" ? ` · на полке ${x.qty} шт` + (isVitalya(x.src) ? " (Виталя)" : isDonor(x.src) ? " (донор)" : x.src ? " (" + esc(x.src) + ")" : "") : ""}</em>${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("") : ""}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
         : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка или ищите по всему прайсу.</div>`}
       <p class="note">Нажатие добавляет работу в «Выполненные работы», цену — к «Итого», запчасть — в список запчастей. Можно добавить несколько.</p></div>`;
   }
+  // ── «Работа из прайса» — и наш склад, и другие поставщики (v37, 02.10.2026) ─────────────
+  // Владелец: «пока не выдаёт работы с запчастями от других поставщиков, кроме мосов». Прайс ремонта
+  // по iPhone собран из MOS-LCD, поэтому в списке были только его детали (в v36 Виталя и Liberti
+  // появлялись лишь чипами под запчастью ПОСЛЕ добавления работы). Теперь под работами прайса —
+  // те же работы с деталью с нашей полки (📦, только что лежит) и от поставщиков из индекса цен,
+  // кроме MOS (он уже в прайсе). Цена = работа этой модели из прайса + закупка, вверх до 100 ₽.
+  // Работа — самая частая у этой модели и работы (у дисплеев 5000 у четырёх вариантов из пяти).
+  const OP_STOCK = { "замена дисплея": ["дисплей"], "замена аккумулятора": ["акб"], "замена заднего стекла": ["заднее стекло"],
+    "замена стекла камеры": ["стекло камеры"], "замена камеры": ["камера", "фронтальная камера"], "замена корпуса": ["корпус"],
+    "замена нижнего шлейфа": ["нижний шлейф"], "замена разъёма зарядки": ["нижний шлейф"], "замена шлейфа": ["шлейф кнопок", "шлейф датчика приближения", "шлейф вспышки"],
+    "замена динамика": ["слуховой динамик", "полифонический динамик"] };
+  function ppWorkOf(dev, op) {
+    const list = S.svc.list.filter(x => x.device === dev && x.operation === op && x.work);
+    if (!list.length) return null;
+    const cnt = new Map(); for (const x of list) cnt.set(x.work, (cnt.get(x.work) || 0) + 1);
+    const work = [...cnt].sort((a, b) => b[1] - a[1] || b[0] - a[0])[0][0];
+    return { work, warranty_days: list.find(x => x.work === work)?.warranty_days || null };
+  }
+  // Название детали поставщика без «для Apple iPhone 13 (черный)» и хвоста наличия — его увидит
+  // клиент в «Выполненных работах» и «Запчастях», поэтому коротко и без поставщика.
+  function ppShort(t, dev) {
+    let s = String(t || "").replace(/\s*·\s*(в Сочи|под заказ).*$/, "");
+    if (s.includes(" · ")) s = s.split(" · ").slice(1).join(" · "); // Виталя: «Аккумуляторы · Оригинал (без привязки)»
+    const at = dev ? s.toLowerCase().indexOf(dev.toLowerCase()) : -1;
+    if (at >= 0) s = s.slice(at + dev.length).replace(/^(\/[^\s/]+(\s(pro|max|plus|mini))*)+/i, "").replace(/^\s*\([^)]*\)/, "");
+    s = s.replace(/^[\s,.-]+/, "").trim();
+    return (s || String(t || "")).slice(0, 60);
+  }
+  function ppExtras(dev) {
+    const ops = [...new Set(S.svc.list.filter(x => x.device === dev && OP_PART[norm(x.operation)]).map(x => x.operation))];
+    const out = [];
+    for (const op of ops) {
+      const w = ppWorkOf(dev, op); if (!w) continue;
+      const nodes = OP_STOCK[norm(op)], models = S.stock?.rows ? skModelsFor(dev) : [];
+      if (nodes && models.length) for (const x of S.stock.rows)
+        if (x.qty > 0 && x.cost != null && models.includes(x.model) && nodes.includes(norm(x.node)))
+          out.push({ kind: "stock", operation: op, variant: x.variant + (x.color ? ", " + skColor(x.color) : ""), src: x.src, cost: x.cost, stock: x.key, qty: x.qty, ...w });
+      for (const o of S.supp?.map?.get(dev + "|" + op) || []) if (norm(o.s) !== "moslcd")
+        out.push({ kind: "supp", operation: op, variant: ppShort(o.t, dev), title: o.t, src: o.s, cost: o.c, here: suppHere(o.t), ...w });
+    }
+    for (const x of out) { x.device = dev; x.price = Math.ceil((x.work + x.cost) / 100) * 100; }
+    const rank = x => x.kind === "stock" ? 0 : x.here ? 1 : 2;
+    return out.sort((a, b) => ops.indexOf(a.operation) - ops.indexOf(b.operation) || rank(a) - rank(b) || a.cost - b.cost);
+  }
+  function addExtra(key, r, j) {
+    const x = S.pp?.extra?.[j]; if (!x) return;
+    addServiceObj(key, r, { device: x.device, operation: x.operation, variant: x.variant, price: x.price, warranty_days: x.warranty_days },
+      { src: x.src, cost: x.cost, stock: x.stock || null });
+  }
   function addService(key, r, i) {
-    const x = S.svc?.list?.[i]; if (!x) return;
+    const x = S.svc?.list?.[i]; if (x) addServiceObj(key, r, x, null);
+  }
+  function addServiceObj(key, r, x, part) {
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const work = cap(x.operation) + (x.variant ? ` (${x.variant})` : "");
     setDirty(key, C.work, addPhrase(val(C.work), work));
@@ -876,10 +932,13 @@
       setDirty(key, C.total, String(Math.max(0, base - discRub(d, base))));
     }
     const partBase = OP_PART[norm(x.operation)];
-    if (partBase && (x.part_cost || x.variant)) {
-      const src = (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, ""])[1];
+    if (partBase && (part || x.part_cost || x.variant)) {
+      const src = part ? part.src : (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, ""])[1];
+      const cost = part ? part.cost : x.part_cost;
       const list = partsOf(key, r).filter(p => p.name || p.src || p.cost);
-      list.push({ name: partBase + (x.variant ? ` (${x.variant})` : ""), src, cost: x.part_cost ? String(x.part_cost) : "", dev: x.device, op: x.operation, var: x.variant || "", fromSvc: true });
+      const row = { name: partBase + (x.variant ? ` (${x.variant})` : ""), src, cost: cost ? String(cost) : "", dev: x.device, op: x.operation, var: x.variant || "", fromSvc: true };
+      if (part?.stock) row.stock = part.stock; // с нашей полки — спишется при сохранении, как кнопка «взять со склада»
+      list.push(row);
       S.parts.set(key, list); syncParts(key);
     }
     const days = x.warranty_days, had = toNum(String(val(C.warranty)).match(/\d+/)?.[0]);
@@ -2514,7 +2573,7 @@
   }, true);
   document.addEventListener("keydown", e => { if (e.key === "Escape" && S.ddOpen) { S.ddOpen = null; const y = window.scrollY; render(); window.scrollTo(0, y); } });
   document.addEventListener("click", async e => {
-    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc],[data-cdev],[data-psup]"); if (!t) return;
+    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc],[data-svx],[data-cdev],[data-psup]"); if (!t) return;
     if (t.dataset.cdev != null) { pickDevice(+t.dataset.cdev); return; }
     if (t.dataset.psup != null) {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
@@ -2533,6 +2592,7 @@
       refreshSaveBar(key); return;
     }
     if (t.dataset.svc != null) { const key = curKey(); addService(key, key === "new" ? null : S.byNum.get(location.hash.slice(2)), +t.dataset.svc); return; }
+    if (t.dataset.svx != null) { const key = curKey(); addExtra(key, key === "new" ? null : S.byNum.get(location.hash.slice(2)), +t.dataset.svx); return; }
     if (t.dataset.q != null) { S.q = t.dataset.q; S.limit = 60; renderList(); return; }
     if (t.dataset.open) { location.hash = "#/" + t.dataset.open; return; }
     if (t.dataset.tab) { S.tab = t.dataset.tab; S.limit = 60; renderList(); return; }
@@ -2593,7 +2653,7 @@
       if (miss != null) { askSum(miss, "Отчёт клиенту без суммы не отправить"); return; }
       S.dirty.set(key + ":" + C.report, CFG.reportValue); t.textContent = "Отчёт уйдёт после «Сохранить»"; t.disabled = true; refreshSaveBar(key);
     }
-    else if (act === "ppopen") { S.pp = { key: curKey(), open: true }; const y = window.scrollY; render(); window.scrollTo(0, y); loadServices().then(() => { if (S.pp?.open) { const y2 = window.scrollY; render(); window.scrollTo(0, y2); } }); }
+    else if (act === "ppopen") { S.pp = { key: curKey(), open: true }; const y = window.scrollY; render(); window.scrollTo(0, y); Promise.all([loadServices(), loadSupplierPrices(), loadStock()]).then(() => { if (S.pp?.open) { const y2 = window.scrollY; render(); window.scrollTo(0, y2); } }); }
     else if (act === "newfor" || act === "warranty") { const r = S.byNum.get(location.hash.slice(2)); if (r) startNewFrom(r, act === "warranty"); }
     else if (act === "discunit") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); if (key == null) return;
