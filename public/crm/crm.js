@@ -43,7 +43,8 @@
     reportValue: "Ok",
     // Склад запчастей Витали (v31, 02.10.2026): остатки — колонка I листа «Запчасти Витали»,
     // журнал — «Запчасти — движение». publicUrl — публичная таблица для Витали (только остатки).
-    stock: { sheet: "Запчасти Витали", gid: 1838809765, ledger: "Запчасти — движение", supplier: "Виталя Ростов", publicUrl: "" },
+    stock: { sheet: "Запчасти Витали", gid: 1838809765, ledger: "Запчасти — движение", supplier: "Виталя Ростов", publicUrl: "",
+      own: "Склад — свои позиции", ownGid: 1960400593 }, // v33: всё, что добавлено руками (свои варианты Витали, другие поставщики, доноры)
   };
 
   // Колонки «Листа заказов» (0 = A). Сверено с шапкой листа 25.09.2026.
@@ -221,7 +222,7 @@
   const S = { token: null, email: "", rows: [], byNum: new Map(), gid: 0, loadedAt: 0, loading: false,
     since: new Map(), tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [],
     parts: new Map(), svc: null, pp: null, view: null, // parts: ключ карточки → строки запчастей; svc — прайс сайта; pp — окно «работа из прайса»
-    stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", only: null, limit: 150 } }; // склад Витали (v31)
+    stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", src: "", only: null, limit: 150 }, skAdd: null }; // склад Витали (v31)
   const $app = document.getElementById("app");
   const $toast = document.getElementById("toast");
 
@@ -1056,7 +1057,7 @@
     const list = partsOf(key, r), p = list[i]; if (!p) return;
     const old = toNum(p.cost) ?? 0;
     p.src = supplier; p.cost = String(cost);
-    if (!isVitalya(supplier)) delete p.stock; // сменили поставщика — со склада Витали уже не берём
+    if (p.stock && !skSrcMatch(supplier, S.stock?.byKey?.get(p.stock))) delete p.stock; // сменили поставщика — эта позиция склада уже не подходит
     if (p.fromSvc) {
       const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
       const d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
@@ -1065,42 +1066,82 @@
     syncParts(key);
   }
 
-  // ── склад запчастей Витали (v31, 02.10.2026; план 67, задача A) ────────────────────
+  // ── склад запчастей (v31–v33, 02.10.2026; план 66 §15, план 67 задача A) ───────────
   // Владелец: «где проставить остатки запчастей от Витали… когда в заказе выставляю виталину
-  // запчасть — чтобы количество списывалось» и «встрой ввод остатков в оболочку, по группам и
-  // с фильтрами». Остаток живёт там же, где жил: лист «Запчасти Витали», колонка I «В наличии,
-  // шт». Её читают витрина сайта и бота, ночная пересборка листа переносит её по ключу (Q),
-  // публичная таблица для Витали копирует её каждые 10 минут (scripts/vitalya_public_stock.mjs).
-  // Каждое изменение — строкой в «Запчасти — движение»: приход и правка со склада, списание в
-  // заказ, возврат. Строку позиции ищем по ключу заново перед каждой записью: ночная пересборка
-  // переставляет строки, и номер строки из загрузки мог устареть.
-  const SK = { node: 0, model: 1, variant: 2, color: 3, cost: 5, qty: 8, tier: 15, key: 16 };
+  // запчасть — чтобы количество списывалось», «встрой ввод остатков в оболочку, по группам и с
+  // фильтрами», и следом (v33): «добавь возможность вписать свой вариант запчасти… и самое важное —
+  // ставить на склад запчасти не от Витали: откуда закуплена, по какой цене или снята с донора,
+  // цена закупки и продажи; Витале в таблицу остатков их не отдаём, держим у себя на отдельном листе».
+  //
+  // Склад — два листа книги БАЗА:
+  //  • «Запчасти Витали» — прайс Витали, его каждую ночь пересобирает vitalya_sheet.mjs; остаток —
+  //    колонка I, ночная пересборка переносит её по ключу (Q). Свои строки сюда класть нельзя —
+  //    пересборка их стёрла бы.
+  //  • «Склад — свои позиции» — всё, что добавлено руками: и свои варианты для Витали (поставщик
+  //    «Виталя …»), и запчасти от других поставщиков и с доноров. Колонки повторяют лист Витали там,
+  //    где смысл тот же (A–D, F закупка, H продажа, I остаток). Публичная таблица для Витали
+  //    (scripts/vitalya_public_stock.mjs) берёт отсюда ТОЛЬКО строки с поставщиком «Виталя».
+  // Каждое изменение остатка — строкой в «Запчасти — движение» (K — поставщик). Строку позиции ищем
+  // по ключу заново перед каждой записью: ночная пересборка переставляет строки листа Витали.
+  const SK = { node: 0, model: 1, variant: 2, color: 3, cost: 5, price: 7, qty: 8, tier: 15, key: 16 };
+  const SKO = { node: 0, model: 1, variant: 2, color: 3, src: 4, cost: 5, note: 6, price: 7, qty: 8, added: 9, who: 10, key: 11 };
+  const SKO_HEAD = ["Узел", "Модель", "Вариант (качество)", "Цвет", "Поставщик", "Закупка ₽", "Заметка (донор, откуда)", "Цена продажи ₽", "В наличии, шт", "Добавлено", "Кто добавил", "Ключ"];
   const isVitalya = s => norm(s).includes("витал");
+  const isDonor = s => norm(s).includes("донор");
+  const skSrcKind = s => isVitalya(s) ? "vit" : isDonor(s) ? "donor" : "other";
+  // Подходит ли позиция склада к «Откуда» строки запчасти: пусто — любая; Виталя — Виталины
+  // (и из прайса, и свои варианты); донор — с донора; иначе — тот же поставщик по имени.
+  function skSrcMatch(src, x) {
+    if (!x) return false;
+    const s = norm(src); if (!s) return true;
+    const k = skSrcKind(src); if (k !== "other") return k === skSrcKind(x.src);
+    const xs = norm(x.src);
+    return skSrcKind(x.src) === "other" && !!xs && (xs === s || xs.includes(s) || s.includes(xs));
+  }
+  const skNewKey = () => "свой | " + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  const skStr = v => String(v ?? "").trim();
+  const skQty = v => Math.max(0, Math.round(toNum(v) ?? 0));
   function skLedgerRow(v) {
     return { ts: String(v[0] ?? ""), key: String(v[1] ?? ""), node: String(v[2] ?? ""), model: String(v[3] ?? ""), variant: String(v[4] ?? ""),
-      color: String(v[5] ?? ""), d: toNum(v[6]) ?? 0, order: String(v[7] ?? "").trim(), who: String(v[8] ?? ""), note: String(v[9] ?? "") };
+      color: String(v[5] ?? ""), d: toNum(v[6]) ?? 0, order: String(v[7] ?? "").trim(), who: String(v[8] ?? ""), note: String(v[9] ?? ""), src: String(v[10] ?? "") };
   }
   function loadStock(force) {
     if (!force && (S.stock?.rows || S.stock?.wait)) return S.stock.wait || Promise.resolve();
     const wait = (async () => {
       try {
-        let rows, ledger = [];
+        let rows, own = [], ledger = [];
         if (DEMO) {
           // Демо: позиции с витрины сайта, остатки выдуманы — у части АКБ и задних стёкол.
+          const keep = (S.stock?.rows || []).filter(x => x.own); // свои позиции демо живут до перезагрузки страницы
+          ledger = S.stock?.ledger || [];
           const j = await fetch("/data/parts.json", { cache: "no-cache" }).then(r => r.json());
           rows = (j.позиции || []).map((x, i) => {
             const h = parseInt(x.id.slice(0, 4), 16);
             const qty = ["АКБ", "заднее стекло"].includes(x.узел) && /iPhone 1[1-5]/.test(x.модель) && h % 4 === 0 ? 1 + h % 3 : 0;
-            return { row: i + 2, node: x.узел, model: x.модель, variant: x.вариант, color: x.цвет || "", cost: Math.round(x.цена / 1.25 / 50) * 50, qty, had: qty > 0, tier: x.вариант, key: x.id };
+            return { row: i + 2, sheet: CFG.stock.sheet, node: x.узел, model: x.модель, variant: x.вариант, color: x.цвет || "", src: CFG.stock.supplier,
+              cost: Math.round(x.цена / 1.25 / 50) * 50, price: x.цена, qty, had: qty > 0, tier: x.вариант, key: x.id };
           });
+          own = keep;
         } else {
-          const q = [`'${CFG.stock.sheet}'!A2:Q`, `'${CFG.stock.ledger}'!A2:J`].map(x => "ranges=" + encodeURIComponent(x)).join("&");
-          const g = await api(`/values:batchGet?${q}&valueRenderOption=UNFORMATTED_VALUE`);
-          rows = (g.valueRanges?.[0]?.values || []).map((v, i) => ({ row: i + 2, node: String(v[SK.node] ?? ""), model: String(v[SK.model] ?? ""),
-            variant: String(v[SK.variant] ?? ""), color: String(v[SK.color] ?? ""), cost: toNum(v[SK.cost]), qty: Math.max(0, Math.round(toNum(v[SK.qty]) ?? 0)),
-            had: String(v[SK.qty] ?? "") !== "", tier: String(v[SK.tier] ?? ""), key: String(v[SK.key] ?? "") })).filter(x => x.key && x.model);
+          const ranges = [`'${CFG.stock.sheet}'!A2:Q`, `'${CFG.stock.ledger}'!A2:K`, `'${CFG.stock.own}'!A2:L`];
+          const get = list => api(`/values:batchGet?${list.map(x => "ranges=" + encodeURIComponent(x)).join("&")}&valueRenderOption=UNFORMATTED_VALUE`);
+          let g;
+          try { g = await get(ranges); S.ownMissing = false; }
+          catch (e) { if (!/400/.test(e.message)) throw e; g = await get(ranges.slice(0, 2)); S.ownMissing = true; } // листа своих позиций ещё нет — заведём при первом добавлении
+          rows = (g.valueRanges?.[0]?.values || []).map((v, i) => ({ row: i + 2, sheet: CFG.stock.sheet, node: skStr(v[SK.node]), model: skStr(v[SK.model]),
+            variant: skStr(v[SK.variant]), color: skStr(v[SK.color]), src: CFG.stock.supplier, cost: toNum(v[SK.cost]), price: toNum(v[SK.price]), qty: skQty(v[SK.qty]),
+            had: String(v[SK.qty] ?? "") !== "", tier: skStr(v[SK.tier]), key: String(v[SK.key] ?? "") })).filter(x => x.key && x.model);
           ledger = (g.valueRanges?.[1]?.values || []).map(skLedgerRow).filter(x => x.key);
+          own = (g.valueRanges?.[2]?.values || []).map((v, i) => ({ row: i + 2, sheet: CFG.stock.own, own: true, node: skStr(v[SKO.node]), model: skStr(v[SKO.model]),
+            variant: skStr(v[SKO.variant]), color: skStr(v[SKO.color]), src: skStr(v[SKO.src]), cost: toNum(v[SKO.cost]), note: skStr(v[SKO.note]),
+            price: toNum(v[SKO.price]), qty: skQty(v[SKO.qty]), had: String(v[SKO.qty] ?? "") !== "", tier: skStr(v[SKO.variant]), key: skStr(v[SKO.key]) })).filter(x => x.node && x.model);
+          // Строку вписали в лист руками, без ключа — даём ключ здесь, иначе её не найти при записи.
+          const nokey = own.filter(x => !x.key);
+          for (const x of nokey) x.key = skNewKey();
+          if (nokey.length) await api("/values:batchUpdate", { method: "POST", body: JSON.stringify({ valueInputOption: "RAW",
+            data: nokey.map(x => ({ range: `'${CFG.stock.own}'!L${x.row}`, values: [[x.key]] })) }) }).catch(() => {});
         }
+        rows = rows.concat(own);
         S.stock = { rows, ledger, byKey: new Map(rows.map(x => [x.key, x])), at: Date.now() };
       } catch (e) { S.stock = { error: e.message }; }
     })();
@@ -1109,7 +1150,7 @@
   }
   const skStale = () => S.stock?.at && !S.stock.wait && Date.now() - S.stock.at > 300e3;
 
-  // Модель листа по полю «Устройство»: самая длинная, все слова которой есть в тексте
+  // Модель склада по полю «Устройство»: самая длинная, все слова которой есть в тексте
   // («iPhone 13 Pro Max», а не «iPhone 13»), плюс «iPhone 13 серия» — общие детали линейки.
   const skWords = s => norm(s).replace(/айфон/g, "iphone").replace(/[^a-zа-я0-9]+/g, " ").trim();
   function skModelsFor(text, hint) {
@@ -1135,9 +1176,10 @@
   const skNodesOf = name => ((SK_NODE.find(([re]) => re.test(norm(name))) || [])[1] || null)?.map(norm) || null;
   const skColor = c => String(c || "").split(" · ").pop();
   const skShort = x => `${cap(x.node)} ${x.variant}${x.color ? ", " + skColor(x.color) : ""}`;
+  const skFrom = x => isVitalya(x.src) ? "" : ` · ${isDonor(x.src) ? "донор" : x.src}`;
 
-  // Что лежит на полке для этой строки запчасти: та же модель, тот же узел, с учётом того,
-  // что уже выбрано другими строками этой карточки. null — модель не узнали.
+  // Что лежит на полке для этой строки запчасти: та же модель, тот же узел, тот же поставщик (если
+  // он вписан), с учётом того, что уже выбрано другими строками этой карточки. null — модель не узнали.
   function skCandidates(key, r, p) {
     if (!S.stock?.rows) return null;
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
@@ -1145,22 +1187,22 @@
     if (!models.length) return null;
     const nodes = skNodesOf(p.name), taken = new Map();
     for (const q of partsOf(key, r)) if (q !== p && q.stock) taken.set(q.stock, (taken.get(q.stock) || 0) + 1);
-    return S.stock.rows.filter(x => models.includes(x.model) && (!nodes || nodes.includes(norm(x.node))))
+    return S.stock.rows.filter(x => models.includes(x.model) && (!nodes || nodes.includes(norm(x.node))) && skSrcMatch(p.src, x))
       .map(x => ({ ...x, free: x.qty - (taken.get(x.key) || 0) })).filter(x => x.free > 0);
   }
   function skBind(key, r, i, k) {
     const p = partsOf(key, r)[i], x = S.stock?.byKey?.get(k); if (!p || !x) return null;
     if (!String(p.name).trim()) p.name = skShort(x);
-    if (x.cost != null) applySupplier(key, r, i, CFG.stock.supplier, x.cost); else { p.src = CFG.stock.supplier; syncParts(key); }
+    if (x.cost != null) applySupplier(key, r, i, x.src, x.cost); else { p.src = x.src; syncParts(key); }
     p.stock = k;
     return x;
   }
-  // Поставщиком выбрали Виталю: на полке ровно одна подходящая позиция — берём её сразу
+  // Выбрали поставщика: на полке ровно одна подходящая позиция от него — берём её сразу
   // (владелец: «автоматически списывалась»), несколько — выбирают кнопкой. Если поставщика
   // выбрали кнопкой с качеством, берём только то же качество: иначе под «Сервисный оригинал»
   // молча списался бы TFT, который лежит на полке.
   function skAuto(key, r, i, hint) {
-    const p = partsOf(key, r)[i]; if (!p || p.stock) return null;
+    const p = partsOf(key, r)[i]; if (!p || p.stock || !norm(p.src)) return null;
     let c = skCandidates(key, r, p); if (!c?.length) return null;
     // Подпись в индексе — «Аккумуляторы · Оригинал (без привязки)», бывает и с хвостом «· SIM/eSIM».
     if (hint) c = c.filter(x => x.tier && String(hint).split(" · ").some(seg => norm(seg) === norm(x.tier)));
@@ -1168,7 +1210,7 @@
     if (r && skWrittenOff(cell(r, C.num)).some(w => w.key === c[0].key)) return null; // уже списывали в этот заказ — пусть решат кнопкой
     return skBind(key, r, i, c[0].key);
   }
-  const skPending = key => (S.parts.get(key) || []).filter(p => p.stock && isVitalya(p.src)).map(p => ({ key: p.stock, name: String(p.name).trim() }));
+  const skPending = key => (S.parts.get(key) || []).filter(p => p.stock && skSrcMatch(p.src, S.stock?.byKey?.get(p.stock))).map(p => ({ key: p.stock, name: String(p.name).trim() }));
   // Сколько каждой позиции списано в заказ: сумма движения по номеру заказа.
   function skWrittenOff(num) {
     const n = String(num ?? "").trim(), net = new Map();
@@ -1186,34 +1228,38 @@
     if (!ops.length) return { done, skipped };
     const ts = mskStamp().slice(0, 16), who = S.email || "";
     let at;
-    if (DEMO) at = new Map(S.stock.rows.map(x => [x.key, { row: x.row, qty: x.qty }]));
+    if (DEMO) at = new Map(S.stock.rows.map(x => [x.key, { sheet: x.sheet, row: x.row, qty: x.qty }]));
     else {
-      const q = ["Q2:Q", "I2:I"].map(x => "ranges=" + encodeURIComponent(`'${CFG.stock.sheet}'!${x}`)).join("&");
+      const R = [[CFG.stock.sheet, "Q2:Q"], ...(S.ownMissing ? [] : [[CFG.stock.own, "L2:L"]])];
+      const q = R.flatMap(([sh, k]) => [k, "I2:I"].map(x => "ranges=" + encodeURIComponent(`'${sh}'!${x}`))).join("&");
       const g = await api(`/values:batchGet?${q}&valueRenderOption=UNFORMATTED_VALUE`);
-      const keys = g.valueRanges?.[0]?.values || [], qs = g.valueRanges?.[1]?.values || [];
       at = new Map();
-      keys.forEach((v, i) => { const k = String(v?.[0] ?? ""); if (k) at.set(k, { row: i + 2, qty: Math.max(0, Math.round(toNum(qs[i]?.[0]) ?? 0)) }); });
+      R.forEach(([sh], j) => {
+        const keys = g.valueRanges?.[2 * j]?.values || [], qs = g.valueRanges?.[2 * j + 1]?.values || [];
+        keys.forEach((v, i) => { const k = String(v?.[0] ?? "").trim(); if (k && !at.has(k)) at.set(k, { sheet: sh, row: i + 2, qty: skQty(qs[i]?.[0]) }); });
+      });
     }
     const cells = new Map(), log = [];
     for (const op of ops) {
       const cur = at.get(op.key), m = S.stock?.byKey?.get(op.key) || {};
-      if (!cur) { skipped.push({ op, why: "позиции нет в листе — прайс Витали пересобран, обновите склад" }); continue; }
+      if (!cur) { skipped.push({ op, why: "позиции нет в листе — прайс Витали пересобран или строку удалили, обновите склад" }); continue; }
       if (op.set != null && op.base != null && cur.qty !== op.base) { skipped.push({ op, why: `пока правили, в листе стало ${cur.qty} шт` }); continue; }
       const from = cur.qty, to = Math.max(0, op.set != null ? op.set : from + op.d), d = op.set != null ? to - from : op.d;
       if (!d) continue;
-      cur.qty = to; cells.set(cur.row, to);
+      cur.qty = to; cells.set(cur.sheet + "!" + cur.row, { sheet: cur.sheet, row: cur.row, v: to });
       const note = (op.note || `${d > 0 ? "Приход" : "Правка остатка"} (склад в CRM)`) + `: было ${from} → стало ${to}` + (d < 0 && from === 0 ? " · в листе было 0 — проверьте полку" : "");
-      log.push([ts, op.key, m.node || "", m.model || "", m.variant || "", m.color || "", d, op.order || "", who, note]);
+      log.push([ts, op.key, m.node || "", m.model || "", m.variant || "", m.color || "", d, op.order || "", who, note, m.src || ""]);
       done.push({ op, from, to, d });
     }
     if (!DEMO && cells.size) await api("/values:batchUpdate", { method: "POST", body: JSON.stringify({ valueInputOption: "RAW",
-      data: [...cells].map(([row, v]) => ({ range: `'${CFG.stock.sheet}'!I${row}`, values: [[v]] })) }) });
-    if (!DEMO && log.length) await api(`/values/${encodeURIComponent(`'${CFG.stock.ledger}'!A:J`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
-      { method: "POST", body: JSON.stringify({ values: log }) });
+      data: [...cells.values()].map(c => ({ range: `'${c.sheet}'!I${c.row}`, values: [[c.v]] })) }) });
+    if (!DEMO && log.length) await skLog(log);
     for (const x of done) { const s = S.stock?.byKey?.get(x.op.key); if (s) { s.qty = x.to; s.had = true; } }
     if (S.stock?.ledger) S.stock.ledger.push(...log.map(skLedgerRow));
     return { done, skipped };
   }
+  const skLog = log => api(`/values/${encodeURIComponent(`'${CFG.stock.ledger}'!A:K`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+    { method: "POST", body: JSON.stringify({ values: log }) });
   // Списание при сохранении заказа — по строке движения на каждую запчасть со склада. Не вышло —
   // в карточке остаётся «⚠️ не списано» с «Повторить»: заказ уже записан, а молча потерять
   // списание нельзя (остаток на сайте и у Витали врал бы).
@@ -1230,29 +1276,120 @@
     }
   }
 
-  // Строка запчасти: со склада она или можно взять со склада.
+  // ── свои позиции: добавить и поправить (v33) ───────────────────────────────────
+  async function skEnsureOwn() {
+    if (DEMO || !S.ownMissing) return;
+    await api(":batchUpdate", { method: "POST", body: JSON.stringify({ requests: [{ addSheet: { properties: { title: CFG.stock.own, gridProperties: { frozenRowCount: 1 } } } }] }) });
+    await api(`/values/${encodeURIComponent(`'${CFG.stock.own}'!A1`)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [SKO_HEAD] }) });
+    S.ownMissing = false;
+  }
+  // f: { node, model, variant, color, src, cost, price, qty, note }. Остаток пишется сразу в строку,
+  // приход — строкой в журнал движения.
+  async function skAddOwn(f) {
+    await skEnsureOwn();
+    const key = skNewKey(), ts = mskStamp().slice(0, 16), who = S.email || "";
+    const cells = [f.node, f.model, f.variant, f.color, f.src, f.cost ?? "", f.note, f.price ?? "", f.qty, ts, who, key];
+    let row = Math.max(1, ...S.stock.rows.filter(x => x.own).map(x => x.row)) + 1;
+    const log = f.qty ? [[ts, key, f.node, f.model, f.variant, f.color, f.qty, "", who, `Новая позиция (склад в CRM): было 0 → стало ${f.qty}`, f.src]] : [];
+    if (!DEMO) {
+      const res = await api(`/values/${encodeURIComponent(`'${CFG.stock.own}'!A:L`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+        { method: "POST", body: JSON.stringify({ values: [cells] }) });
+      row = +(String(res.updates?.updatedRange || "").match(/![A-Z]+(\d+)/)?.[1] || row);
+      if (log.length) await skLog(log);
+    }
+    const x = { row, sheet: CFG.stock.own, own: true, node: f.node, model: f.model, variant: f.variant, color: f.color, src: f.src, cost: f.cost, note: f.note,
+      price: f.price, qty: f.qty, had: true, tier: f.variant, key };
+    S.stock.rows.push(x); S.stock.byKey.set(key, x); S.stock.ledger.push(...log.map(skLedgerRow));
+    return x;
+  }
+  // Правка своей позиции: качество, цвет, поставщик, закупка, заметка, продажа (C–H). Остаток —
+  // кнопками −/+ в списке, через журнал, как у всех.
+  async function skEditOwn(k, f) {
+    const x = S.stock.byKey.get(k); if (!x) throw new Error("позиция не найдена — обновите склад");
+    let row = x.row;
+    if (!DEMO) {
+      const g = await api(`/values/${encodeURIComponent(`'${CFG.stock.own}'!L2:L`)}`);
+      const i = (g.values || []).findIndex(v => String(v?.[0] ?? "").trim() === k);
+      if (i < 0) throw new Error("строки позиции больше нет в листе — обновите склад");
+      row = i + 2;
+      await api(`/values/${encodeURIComponent(`'${CFG.stock.own}'!C${row}:H${row}`)}?valueInputOption=RAW`,
+        { method: "PUT", body: JSON.stringify({ values: [[f.variant, f.color, f.src, f.cost ?? "", f.note, f.price ?? ""]] }) });
+    }
+    Object.assign(x, { row, variant: f.variant, tier: f.variant, color: f.color, src: f.src, cost: f.cost, note: f.note, price: f.price });
+    return x;
+  }
+  // Поставщики для формы: Виталя и донор первыми, дальше — список колонки «Откуда» базы.
+  function skSuppliers() {
+    const out = [CFG.stock.supplier, "Донор", "MosLCD", "Liberti", "Скай Моби", "OZON", "AliExpress"];
+    for (const s of S.opts[C.partFrom] || []) if (!out.some(o => norm(o) === norm(s))) out.push(s);
+    return out;
+  }
+  // Форма добавления/правки. Название позиции — общее, из узла и раздела-модели, где нажали
+  // кнопку; качество, поставщика, цены и количество человек проставляет сам.
+  function skAddHtml() {
+    const a = S.skAdd, f = a.f, dk = skSrcKind(f.src), sup = skSuppliers();
+    const nodes = [...new Set(S.stock.rows.map(x => x.node))], models = [...new Set(S.stock.rows.map(x => x.model))];
+    const tiers = [...new Set(S.stock.rows.filter(x => !f.node || norm(x.node) === norm(f.node)).map(x => x.variant))].slice(0, 60);
+    const colors = [...new Set(S.stock.rows.filter(x => x.model === f.model && x.color).map(x => x.color))];
+    const inp = (k, label, extra = "") => `<label class="field"><span>${label}</span><input data-skf="${k}" value="${esc(f[k] ?? "")}"${extra}></label>`;
+    const title = a.lockModel ? `<b>${esc(cap(f.node))} · ${esc(f.model)}</b>` : "своя позиция";
+    return `<div class="sk-add" id="sk-add">
+      <div class="sk-add__title">${a.edit ? "✎ Правка" : "＋ Новая запчасть"}: ${title}</div>
+      ${a.lockModel ? "" : `<div class="grid2">${inp("node", "Деталь (узел)", ` list="dl-sknode" placeholder="например, АКБ"`)}${inp("model", "Модель", ` list="dl-skmodel" placeholder="например, iPhone 13 Pro"`)}</div>`}
+      <div class="field"><span>Откуда</span><div class="tchips sk-src">${sup.slice(0, 7).map(s => `<button type="button" class="tchip" data-act="sksrc" data-v="${esc(s)}" aria-pressed="${norm(s) === norm(f.src)}">${esc(isDonor(s) ? "🔧 Снята с донора" : s)}</button>`).join("")}</div>
+        <input data-skf="src" value="${esc(f.src)}" list="dl-sksrc" placeholder="или впишите поставщика"></div>
+      <div class="grid2">${inp("variant", "Качество (вариант)", ` list="dl-sktier" placeholder="например, Оригинал (без привязки)"`)}${inp("color", "Цвет <small class=\"note\">(если важен)</small>", ` list="dl-skcolor"`)}</div>
+      <div class="grid3">${inp("cost", dk === "donor" ? "Себестоимость, ₽ <small class=\"note\">(можно 0)</small>" : "Закупка, ₽", ` inputmode="decimal" placeholder="0"`)}${inp("price", dk === "vit" ? "Цена продажи, ₽ <small class=\"note\">(можно пусто)</small>" : "Цена продажи, ₽", ` inputmode="decimal" placeholder="0"`)}${a.edit ? "" : inp("qty", "Количество, шт", ` inputmode="numeric" placeholder="1"`)}</div>
+      ${inp("note", dk === "donor" ? "С какого устройства снята <small class=\"note\">(модель, заказ №)</small>" : "Заметка", ` placeholder="${dk === "donor" ? "например, iPhone 13 Pro, заказ №7790" : ""}"`)}
+      <div class="row"><button type="button" class="btn btn--red btn--sm" data-act="skaddsave">${a.edit ? "Сохранить позицию" : "Добавить на склад"}</button><button type="button" class="btn btn--ghost btn--sm" data-act="skaddcancel">Отмена</button></div>
+      <p class="note">${dk === "vit" ? "Поставщик — Виталя: позиция попадёт и в его таблицу остатков." : "Не от Витали: в его таблицу остатков не попадает, хранится только у нас на листе «" + esc(CFG.stock.own) + "»."}</p>
+      <datalist id="dl-sksrc">${sup.map(s => `<option value="${esc(s)}">`).join("")}</datalist>
+      <datalist id="dl-sktier">${tiers.map(s => `<option value="${esc(s)}">`).join("")}</datalist>
+      <datalist id="dl-skcolor">${colors.map(s => `<option value="${esc(s)}">`).join("")}</datalist>
+      <datalist id="dl-sknode">${nodes.map(s => `<option value="${esc(s)}">`).join("")}</datalist>
+      <datalist id="dl-skmodel">${models.map(s => `<option value="${esc(s)}">`).join("")}</datalist>
+    </div>`;
+  }
+  async function skAddSave(btn) {
+    const a = S.skAdd, f = a.f;
+    const g = { node: skStr(f.node), model: skStr(f.model), variant: skStr(f.variant), color: skStr(f.color), src: skStr(f.src), note: skStr(f.note),
+      cost: toNum(f.cost), price: toNum(f.price), qty: String(f.qty ?? "").trim() === "" ? 1 : Math.round(toNum(f.qty) ?? NaN) };
+    const miss = !g.node ? "деталь (узел)" : !g.model ? "модель" : !g.src ? "откуда (поставщик или донор)" : !g.variant ? "качество" : !a.edit && !(g.qty >= 0) ? "количество" : "";
+    if (miss) return toast("Заполните: " + miss);
+    if (!a.edit && S.stock.rows.some(x => x.own && x.model === g.model && norm(x.node) === norm(g.node) && norm(x.variant) === norm(g.variant) && norm(x.color) === norm(g.color) && norm(x.src) === norm(g.src)))
+      return toast("Такая позиция уже есть — поправьте её остаток кнопками −/+");
+    btn.disabled = true; btn.textContent = "Сохраняю…";
+    const y = window.scrollY;
+    try {
+      const x = a.edit ? await skEditOwn(a.edit, g) : await skAddOwn(g);
+      S.skAdd = null;
+      toast(DEMO ? "Сохранено (демо — в таблицу не пишется)" : `${a.edit ? "Позиция поправлена" : "Добавлено на склад"} ✓ ${skShort(x)}${skFrom(x)}${a.edit ? "" : ` — ${x.qty} шт`}`, null, true);
+    } catch (e) { toast(e.message, null, true); }
+    renderStock(); window.scrollTo(0, y);
+  }
+
+  // Строка запчасти в заказе: со склада она или можно взять со склада.
   function stockPartHtml(key, r, p, i) {
     if (!S.stock?.rows) return "";
-    if (p.stock && isVitalya(p.src)) {
-      const x = S.stock.byKey.get(p.stock);
-      return `<div class="psk is-on">📦 Со склада: <b>${esc(x ? skShort(x) : p.stock)}</b> — спишется при сохранении<button type="button" class="linkbtn" data-act="skunbind" data-i="${i}">не со склада</button></div>`;
-    }
-    if (!isVitalya(p.src)) return "";
+    const bound = p.stock && S.stock.byKey.get(p.stock);
+    if (bound && skSrcMatch(p.src, bound))
+      return `<div class="psk is-on">📦 Со склада: <b>${esc(skShort(bound) + skFrom(bound))}</b> — спишется при сохранении<button type="button" class="linkbtn" data-act="skunbind" data-i="${i}">не со склада</button></div>`;
+    if (!norm(p.src) && !String(p.name).trim()) return ""; // пустая строка — не подсказываем
     if (skCovered(key, r).has(i)) return `<div class="psk is-on"><span>📦 уже списана со склада</span></div>`;
     const c = skCandidates(key, r, p);
     if (c == null) return "";
-    if (!c.length) return `<div class="psk"><span class="note">📦 На складе такой нет — под заказ, списывать нечего</span></div>`;
-    return `<div class="psk"><span class="note">📦 Есть на складе, взять:</span>${c.map(x => `<button type="button" class="psup__c" data-act="skbind" data-i="${i}" data-k="${esc(x.key)}">${esc(skShort(x))} <b>${x.free} шт</b></button>`).join("")}</div>`;
+    if (!c.length) return isVitalya(p.src) ? `<div class="psk"><span class="note">📦 На складе такой нет — под заказ, списывать нечего</span></div>` : "";
+    return `<div class="psk"><span class="note">📦 ${norm(p.src) ? "Есть на складе, взять" : "На складе есть"}:</span>${c.map(x => `<button type="button" class="psup__c" data-act="skbind" data-i="${i}" data-k="${esc(x.key)}">${esc(skShort(x) + skFrom(x))} <b>${x.free} шт</b></button>`).join("")}</div>`;
   }
   // Какие строки запчастей уже покрыты списанием в этот заказ (после сохранения привязка
-  // к позиции склада не хранится — она в журнале): списанное раздаём строкам «Витали» по узлу,
-  // чтобы под ними не предлагать «взять со склада» второй раз.
+  // к позиции склада не хранится — она в журнале): списанное раздаём строкам того же поставщика
+  // по узлу, чтобы под ними не предлагать «взять со склада» второй раз.
   function skCovered(key, r) {
     const out = new Set(); if (!r) return out;
     const w = skWrittenOff(cell(r, C.num)).flatMap(x => Array(x.n).fill(x));
     partsOf(key, r).forEach((p, i) => {
-      if (p.stock || !isVitalya(p.src) || !w.length) return;
-      const nodes = skNodesOf(p.name), j = w.findIndex(x => !nodes || nodes.includes(norm(x.x?.node)));
+      if (p.stock || !norm(p.src) || !w.length) return;
+      const nodes = skNodesOf(p.name), j = w.findIndex(x => skSrcMatch(p.src, x.x) && (!nodes || nodes.includes(norm(x.x?.node))));
       if (j >= 0) { out.add(i); w.splice(j, 1); }
     });
     return out;
@@ -1263,16 +1400,17 @@
     if (!num || !S.stock?.rows) return "";
     const w = skWrittenOff(num), f = S.skFailed?.num === num ? S.skFailed : null;
     let h = "";
-    if (w.length) h += `<div class="psk-done"><b>📦 Списано со склада в этот заказ:</b>${w.map(x => `<span>${esc(x.x ? skShort(x.x) : x.key)}${x.n > 1 ? " ×" + x.n : ""}${lock ? "" : `<button type="button" class="linkbtn" data-act="skret" data-k="${esc(x.key)}">↩ вернуть на склад</button>`}</span>`).join("")}</div>`;
+    if (w.length) h += `<div class="psk-done"><b>📦 Списано со склада в этот заказ:</b>${w.map(x => `<span>${esc(x.x ? skShort(x.x) + skFrom(x.x) : x.key)}${x.n > 1 ? " ×" + x.n : ""}${lock ? "" : `<button type="button" class="linkbtn" data-act="skret" data-k="${esc(x.key)}">↩ вернуть на склад</button>`}</span>`).join("")}</div>`;
     if (f) h += `<div class="psk-fail">⚠️ Со склада не списано (${esc(f.ops.map(o => o.name || o.key).join(", "))}): ${esc(f.why)}<button type="button" class="linkbtn" data-act="skretry">Повторить</button><button type="button" class="linkbtn" data-act="skforget">Не списывать</button></div>`;
     return h;
   }
 
   // ── экран «Склад»: остатки по группам и с фильтрами ─────────────────────────────
-  // Группа → подгруппа (узел) → серия → модель. 923 позиции не помещаются одним списком,
-  // поэтому по умолчанию — «только в наличии» (если на полке что-то есть), а остальное
-  // открывается фильтрами и поиском («13 про акб»). Правка — кнопками −/+ или числом,
+  // Группа → подгруппа (узел) → качество → поставщик → серия → модель. 923 позиции не помещаются
+  // одним списком, поэтому по умолчанию — «только в наличии» (если на полке что-то есть), а
+  // остальное открывается фильтрами и поиском («13 про акб»). Правка — кнопками −/+ или числом,
   // запись одной кнопкой «Сохранить остатки», каждое изменение — строкой в журнал движения.
+  // Под каждой моделью — «＋ Добавить запчасть» (своя позиция с узлом и моделью этого раздела).
   const SK_GROUPS = [
     ["АКБ", ["АКБ"]], ["Дисплеи", ["дисплей"]],
     ["Корпус и стёкла", ["заднее стекло", "корпус", "стекло камеры", "проклейка", "магнит MagSafe"]],
@@ -1288,13 +1426,13 @@
     const m = skWords(model); let x;
     if (m.includes("watch")) return "Apple Watch";
     if (m.includes("macbook")) return "MacBook";
-    if (!m.includes("iphone")) return "Аксессуары";
+    if (!m.includes("iphone")) return "Другие устройства и аксессуары";
     if ((x = m.match(/iphone (\d{1,2})(?:s|e)?\b/))) return "iPhone " + x[1];
     if (/iphone (x|xs|xr)\b/.test(m)) return "iPhone X / XS / XR";
     if (m.includes("iphone se")) return "iPhone SE";
     return "iPhone, другие";
   }
-  const skSerRank = s => { const n = s.match(/^iPhone (\d+)$/); return n ? -n[1] : { "iPhone X / XS / XR": -10.5, "iPhone SE": -7.5, "iPhone, другие": 0, "Apple Watch": 50, "MacBook": 60, "Аксессуары": 70 }[s] ?? 80; };
+  const skSerRank = s => { const n = s.match(/^iPhone (\d+)$/); return n ? -n[1] : { "iPhone X / XS / XR": -10.5, "iPhone SE": -7.5, "iPhone, другие": 0, "Apple Watch": 50, "MacBook": 60, "Другие устройства и аксессуары": 70 }[s] ?? 80; };
   const SK_SYN = { "про": "pro", "макс": "max", "мини": "mini", "плюс": "plus", "эйр": "air", "аир": "air", "се": "se", "экран": "диспле", "дисплей": "диспле",
     "аккумулятор": "акб", "батарея": "акб", "крышка": "задн", "камера": "камер", "часы": "watch", "макбук": "macbook", "черный": "black", "белый": "white" };
   // Качество (v32, 02.10.2026, владелец: «добавь фильтр по типам качества»). У Витали 46 вариантов
@@ -1310,6 +1448,8 @@
     return "";
   }
   const skClassRank = t => { const i = SK_CLASSES.findIndex(c => c[0] === skClass(t)); return i < 0 ? 9 : i; };
+  // Откуда (v33): Виталя (прайс и свои варианты) / другие поставщики / с донора.
+  const SK_SRC = [["vit", "Виталя"], ["other", "Другие поставщики"], ["donor", "С донора"]];
   const skOnly = () => S.sk.only ?? S.stock.rows.some(x => x.qty > 0);
   function skFilter(skip = {}) {
     const f = S.sk, words = skWords(f.q).split(" ").filter(Boolean).map(w => SK_SYN[w] || w), only = skOnly();
@@ -1319,33 +1459,42 @@
       if (!skip.ser && f.ser && skSeries(x.model) !== f.ser) return false;
       if (!skip.cls && f.cls && skClass(x.tier) !== f.cls) return false;
       if (!skip.tier && f.tier && x.tier !== f.tier) return false;
+      if (!skip.src && f.src && skSrcKind(x.src) !== f.src) return false;
       if (only && !(x.qty > 0 || S.skDirty.has(x.key))) return false;
-      if (words.length) { const t = skWords(`${x.node} ${x.model} ${x.variant} ${x.color}`); if (!words.every(w => t.includes(w))) return false; }
+      if (words.length) { const t = skWords(`${x.node} ${x.model} ${x.variant} ${x.color} ${x.own ? x.src + " " + x.note : ""}`); if (!words.every(w => t.includes(w))) return false; }
       return true;
     });
   }
   function skRowHtml(x) {
     const d = S.skDirty.has(x.key), v = d ? S.skDirty.get(x.key) : x.qty || "";
-    return `<div class="sk__row${x.qty > 0 ? " is-in" : ""}${d ? " is-dirty" : ""}" data-skrow="${esc(x.key)}">
-      <div class="sk__name"><b>${esc(x.variant)}</b>${x.color ? `<span>${esc(x.color)}</span>` : ""}</div>
-      <div class="sk__cost">${x.cost != null ? money(x.cost) : ""}</div>
+    const from = x.own ? `<em class="sk-src sk-src--${skSrcKind(x.src)}">${esc(isDonor(x.src) ? "🔧 донор" : isVitalya(x.src) ? "свой вариант · Виталя" : x.src)}</em>` : "";
+    const sub = [x.color, x.note].filter(Boolean).map(esc).join(" · ");
+    return `<div class="sk__row${x.qty > 0 ? " is-in" : ""}${d ? " is-dirty" : ""}${x.own ? " is-own" : ""}" data-skrow="${esc(x.key)}">
+      <div class="sk__name"><b>${esc(x.variant)}</b>${from}${x.own ? `<button type="button" class="linkbtn sk-edit" data-act="skedit" data-k="${esc(x.key)}" title="Поправить позицию">✎</button>` : ""}${sub ? `<span>${sub}</span>` : ""}</div>
+      <div class="sk__cost">${x.cost != null ? money(x.cost) : ""}${x.price != null ? `<small>прод. ${money(x.price)}</small>` : ""}</div>
       <div class="sk__qty"><button type="button" data-act="skstep" data-d="-1" data-k="${esc(x.key)}" aria-label="Меньше">−</button><input data-skq="${esc(x.key)}" value="${esc(v)}" placeholder="0" inputmode="numeric" autocomplete="off" aria-label="Остаток, шт"><button type="button" data-act="skstep" data-d="1" data-k="${esc(x.key)}" aria-label="Больше">+</button></div>
     </div>`;
   }
+  // Кнопка «＋ Добавить запчасть» под разделом модели — или сама форма, если нажата здесь.
+  const skAt = (node, model) => node + "|" + model;
+  const skAddSlot = (node, model) => S.skAdd?.at === skAt(node, model) ? skAddHtml()
+    : `<button type="button" class="sk-addbtn" data-act="skadd" data-node="${esc(node)}" data-model="${esc(model)}">＋ Добавить запчасть: ${esc(cap(node))} · ${esc(model)}</button>`;
   function renderStock() {
     if (!S.stock?.rows && !S.stock?.error && !S.stock?.wait) loadStock().then(() => { if (location.hash === "#/sklad") renderStock(); });
-    const head = `<div class="card-head" style="margin-top:12px"><a class="iconbtn" href="#" aria-label="Назад">←</a><h1>Склад</h1><span class="head-meta">запчасти Витали</span>
-      <span class="sk-links">${CFG.stock.publicUrl ? `<a class="btn btn--ghost btn--sm" href="${esc(CFG.stock.publicUrl)}" target="_blank" rel="noopener">Таблица для Витали ↗</a>` : ""}${DEMO ? "" : `<a class="btn btn--ghost btn--sm" href="https://docs.google.com/spreadsheets/d/${CFG.sheetId}/edit#gid=${CFG.stock.gid}" target="_blank" rel="noopener">Лист в базе ↗</a>`}</span></div>`;
+    const sheetUrl = gid => `https://docs.google.com/spreadsheets/d/${CFG.sheetId}/edit#gid=${gid}`;
+    const head = `<div class="card-head" style="margin-top:12px"><a class="iconbtn" href="#" aria-label="Назад">←</a><h1>Склад</h1><span class="head-meta">Виталя и свои запчасти</span>
+      <span class="sk-links">${CFG.stock.publicUrl ? `<a class="btn btn--ghost btn--sm" href="${esc(CFG.stock.publicUrl)}" target="_blank" rel="noopener">Таблица для Витали ↗</a>` : ""}${DEMO ? "" : `<a class="btn btn--ghost btn--sm" href="${sheetUrl(CFG.stock.gid)}" target="_blank" rel="noopener">Лист Витали ↗</a>${CFG.stock.ownGid != null ? `<a class="btn btn--ghost btn--sm" href="${sheetUrl(CFG.stock.ownGid)}" target="_blank" rel="noopener">Свои позиции ↗</a>` : ""}`}</span></div>`;
     if (!S.stock?.rows) {
       renderShell(head + (S.stock?.error ? `<div class="empty">Склад не загрузился: ${esc(S.stock.error)}<div class="row" style="justify-content:center"><button class="btn" data-act="skreload">Попробовать ещё раз</button></div></div>` : `<div class="spinner">Загружаю склад…</div>`), { search: false });
       return;
     }
     const f = S.sk, all = S.stock.rows, inStock = all.filter(x => x.qty > 0);
     const pcs = inStock.reduce((a, x) => a + x.qty, 0), sum = inStock.reduce((a, x) => a + x.qty * (x.cost || 0), 0);
+    const ownN = inStock.filter(x => !isVitalya(x.src)).length;
     const by = (rows, fn) => { const m = new Map(); for (const x of rows) { const k = fn(x); m.set(k, (m.get(k) || 0) + 1); } return m; };
     const gC = by(skFilter({ grp: 1, node: 1 }), x => skGroup(x.node));
     const groups = [...new Set([...SK_GROUPS.map(g => g[0]), ...all.map(x => skGroup(x.node))])].filter(g => all.some(x => skGroup(x.node) === g));
-    let body = `<div class="sk-sum">На полке: <b>${inStock.length}</b> поз. · <b>${pcs}</b> шт${sum ? ` · закупка на <b>${money(sum)}</b>` : ""}</div>
+    let body = `<div class="sk-sum">На полке: <b>${inStock.length}</b> поз. · <b>${pcs}</b> шт${sum ? ` · закупка на <b>${money(sum)}</b>` : ""}${ownN ? ` · не от Витали: <b>${ownN}</b> поз.` : ""}</div>
       <input class="search sk-q" type="search" data-act="sksearch" value="${esc(f.q)}" placeholder="Модель, деталь, качество, цвет — например «13 про акб»" autocomplete="off">
       <nav class="tabs"><button class="tab" data-act="skgrp" data-v="" aria-pressed="${!f.grp}">Все</button>${groups.map(g => `<button class="tab" data-act="skgrp" data-v="${esc(g)}" aria-pressed="${f.grp === g}">${esc(g)}<small>${gC.get(g) || 0}</small></button>`).join("")}</nav>`;
     if (f.grp) {
@@ -1362,33 +1511,42 @@
       const tiers = [...tC.keys()].concat(f.tier && !tC.has(f.tier) ? [f.tier] : []).filter(Boolean).sort((a, b) => skClassRank(a) - skClassRank(b) || (tC.get(b) || 0) - (tC.get(a) || 0));
       if (tiers.length > 1 || f.tier) body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="sktier" data-v="" aria-pressed="${!f.tier}">Все варианты</button>${tiers.map(t => `<button type="button" class="tchip" data-act="sktier" data-v="${esc(t)}" aria-pressed="${f.tier === t}">${esc(t)} <small>${tC.get(t) || 0}</small></button>`).join("")}</div>`;
     }
+    const oC = by(skFilter({ src: 1 }), x => skSrcKind(x.src));
+    body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skfrom" data-v="" aria-pressed="${!f.src}">Любой поставщик</button>${SK_SRC.map(([k, t]) => `<button type="button" class="tchip" data-act="skfrom" data-v="${k}" aria-pressed="${f.src === k}">${esc(t)} <small>${oC.get(k) || 0}</small></button>`).join("")}</div>`;
     const sC = by(skFilter({ ser: 1 }), x => skSeries(x.model));
     const series = [...sC.keys()].concat(f.ser && !sC.has(f.ser) ? [f.ser] : []).sort((a, b) => skSerRank(a) - skSerRank(b));
     body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skser" data-v="" aria-pressed="${!f.ser}">Все модели</button>${series.map(s => `<button type="button" class="tchip" data-act="skser" data-v="${esc(s)}" aria-pressed="${f.ser === s}">${esc(s)} <small>${sC.get(s) || 0}</small></button>`).join("")}</div>
-      <div class="row sk-opts"><button type="button" class="btn btn--toggle btn--sm" data-act="skonly" aria-pressed="${skOnly()}">${skOnly() ? "✓ " : ""}Только в наличии</button>${S.skDirty.size ? `<span class="note">Изменено: <b>${S.skDirty.size}</b> — не забудьте сохранить</span>` : ""}</div>`;
+      <div class="row sk-opts"><button type="button" class="btn btn--toggle btn--sm" data-act="skonly" aria-pressed="${skOnly()}">${skOnly() ? "✓ " : ""}Только в наличии</button><button type="button" class="btn btn--ghost btn--sm" data-act="skadd" data-node="${esc(f.node || "")}" data-model="">＋ Своя запчасть (другая модель)</button>${S.skDirty.size ? `<span class="note">Изменено: <b>${S.skDirty.size}</b> — не забудьте сохранить</span>` : ""}</div>`;
+    if (S.skAdd?.at === "top") body += `<section class="block">${skAddHtml()}</section>`;
+    // Порядок моделей — как в прайсе Витали; своя позиция встаёт в конец раздела своей модели,
+    // а модель, которой у Витали нет, — после его моделей той же серии.
+    const ord = x => (x.own ? 1e6 : 0) + x.row, mFirst = new Map();
+    for (const x of all) { const k = x.node + "|" + x.model; if (!mFirst.has(k) || ord(x) < mFirst.get(k)) mFirst.set(k, ord(x)); }
     const list = skFilter().sort((a, b) => skGroupRank(skGroup(a.node)) - skGroupRank(skGroup(b.node)) || skNodeRank(a.node) - skNodeRank(b.node) || a.node.localeCompare(b.node)
-      || skSerRank(skSeries(a.model)) - skSerRank(skSeries(b.model)) || a.row - b.row);
-    if (!list.length) body += `<div class="empty">${skOnly() && !inStock.length ? "На полке пока ничего не отмечено. Снимите «Только в наличии», найдите деталь и поставьте количество." : skOnly() ? "В наличии ничего не нашлось — снимите «Только в наличии»." : "Ничего не нашлось"}</div>`;
+      || skSerRank(skSeries(a.model)) - skSerRank(skSeries(b.model)) || mFirst.get(a.node + "|" + a.model) - mFirst.get(b.node + "|" + b.model) || ord(a) - ord(b));
+    if (!list.length) body += `<div class="empty">${skOnly() && !inStock.length ? "На полке пока ничего не отмечено. Снимите «Только в наличии», найдите деталь и поставьте количество — или добавьте свою кнопкой «＋ Своя запчасть»." : skOnly() ? "В наличии ничего не нашлось — снимите «Только в наличии»." : "Ничего не нашлось"}</div>`;
     const shown = list.slice(0, f.limit);
+    // Свои позиции модели держатся рядом с Виталиными той же модели: сортировка выше ставит их в конец раздела.
     let node = null, model = null, open = false;
+    const close = () => { if (open) body += skAddSlot(node, model) + `</section>`; open = false; };
     for (const x of shown) {
       if (x.node !== node) {
-        if (open) { body += `</section>`; open = false; }
+        close();
         const nodeRows = list.filter(y => y.node === x.node), q = nodeRows.reduce((a, y) => a + y.qty, 0);
         body += `<div class="section"><h2>${esc(cap(x.node))}</h2><span>${nodeRows.length} поз.${q ? ` · на полке ${q} шт` : ""}</span></div>`;
         node = x.node; model = null;
       }
       if (x.model !== model) {
-        if (open) body += `</section>`;
+        close();
         const q = list.filter(y => y.node === x.node && y.model === x.model).reduce((a, y) => a + y.qty, 0);
         body += `<section class="block sk-model"><h3 class="h3-row"><span>${esc(x.model)}</span>${q ? `<small class="sk-have">на полке ${q} шт</small>` : ""}</h3>`;
         model = x.model; open = true;
       }
       body += skRowHtml(x);
     }
-    if (open) body += `</section>`;
+    close();
     if (list.length > shown.length) body += `<button class="more" data-act="skmore">Показать ещё (${list.length - shown.length})</button>`;
-    body += `<p class="note">Цена — закупка у Витали из прайса. Каждое изменение пишется в лист «${esc(CFG.stock.ledger)}». На сайте и в боте остатки обновляются ночью, в таблице для Витали — в течение 10 минут.</p>`;
+    body += `<p class="note">Цена — закупка (у Витали — из его прайса), «прод.» — цена продажи. Каждое изменение пишется в лист «${esc(CFG.stock.ledger)}». Свои позиции хранятся на листе «${esc(CFG.stock.own)}»; Витале в таблицу уходят только позиции с поставщиком «Виталя», в течение 10 минут. На сайте и в боте остатки Витали обновляются ночью.</p>`;
     renderShell(head + body, { search: false });
     skSaveBar();
   }
@@ -1426,11 +1584,12 @@
   // Клики склада: и на экране «Склад», и в карточке заказа. true — клик обработан.
   async function stockClick(act, t) {
     const rerender = () => { const y = window.scrollY; render(); window.scrollTo(0, y); };
-    const prefs = () => store.set("crm.sk", { grp: S.sk.grp, node: S.sk.node, ser: S.sk.ser, cls: S.sk.cls, tier: S.sk.tier, only: S.sk.only });
+    const prefs = () => store.set("crm.sk", { grp: S.sk.grp, node: S.sk.node, ser: S.sk.ser, cls: S.sk.cls, tier: S.sk.tier, src: S.sk.src, only: S.sk.only });
     if (act === "skgrp") { S.sk.grp = t.dataset.v; S.sk.node = ""; S.sk.tier = ""; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "sknode") { S.sk.node = t.dataset.v; S.sk.tier = ""; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skcls") { S.sk.cls = t.dataset.v; S.sk.tier = ""; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "sktier") { S.sk.tier = t.dataset.v; S.sk.limit = 150; prefs(); rerender(); }
+    else if (act === "skfrom") { S.sk.src = t.dataset.v; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skser") { S.sk.ser = t.dataset.v; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skonly") { S.sk.only = !skOnly(); S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skmore") { S.sk.limit += 150; rerender(); }
@@ -1442,9 +1601,26 @@
     }
     else if (act === "sksave") skSave(t);
     else if (act === "skdiscard") { S.skDirty.clear(); rerender(); }
+    else if (act === "skadd" || act === "skedit") {
+      // Форма открывается на месте нажатия: под разделом модели или сверху («другая модель»).
+      if (act === "skedit") {
+        const x = S.stock?.byKey?.get(t.dataset.k); if (!x) return true;
+        S.skAdd = { at: skAt(x.node, x.model), edit: x.key, lockModel: true, f: { node: x.node, model: x.model, variant: x.variant, color: x.color, src: x.src, cost: x.cost ?? "", price: x.price ?? "", note: x.note || "" } };
+      } else {
+        const model = t.dataset.model || "", node = t.dataset.node || "";
+        // «Свой вариант для Витали» под его разделом, но поставщика человек меняет сам.
+        S.skAdd = { at: model ? skAt(node, model) : "top", lockModel: !!model, f: { node, model, variant: "", color: "", src: model ? CFG.stock.supplier : "", cost: "", price: "", qty: "1", note: "" } };
+      }
+      rerender();
+      document.getElementById("sk-add")?.scrollIntoView({ block: "nearest" });
+      $app.querySelector('#sk-add [data-skf="' + (S.skAdd.lockModel ? "variant" : "node") + '"]')?.focus({ preventScroll: true });
+    }
+    else if (act === "sksrc") { if (S.skAdd) { S.skAdd.f.src = t.dataset.v; rerender(); } }
+    else if (act === "skaddcancel") { S.skAdd = null; rerender(); }
+    else if (act === "skaddsave") skAddSave(t);
     else if (act === "skbind" || act === "skunbind") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), i = +t.dataset.i;
-      if (act === "skbind") { const x = skBind(key, r, i, t.dataset.k); if (x) toast(`📦 Со склада: ${skShort(x)} — спишется при сохранении`); }
+      if (act === "skbind") { const x = skBind(key, r, i, t.dataset.k); if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`); }
       else { const p = partsOf(key, r)[i]; if (p) delete p.stock; }
       rerender();
     }
@@ -2294,9 +2470,9 @@
     if (t.dataset.psup != null) {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
       applySupplier(key, r, +t.dataset.psup, t.dataset.s, +t.dataset.c);
-      const sk = isVitalya(t.dataset.s) ? skAuto(key, r, +t.dataset.psup, t.dataset.t) : null;
+      const sk = skAuto(key, r, +t.dataset.psup, t.dataset.t);
       const y = window.scrollY; render(); window.scrollTo(0, y);
-      toast(sk ? `📦 Со склада: ${skShort(sk)} — спишется при сохранении` : `${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[+t.dataset.psup]?.fromSvc ? " · итог пересчитан" : ""}`);
+      toast(sk ? `📦 Со склада: ${skShort(sk)}${skFrom(sk)} — спишется при сохранении` : `${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[+t.dataset.psup]?.fromSvc ? " · итог пересчитан" : ""}`);
       return;
     }
     if (t.dataset.imp != null) { takeImport(+t.dataset.imp); return; }
@@ -2404,6 +2580,7 @@
   function onEdit(e) {
     const t = e.target;
     if (t.dataset.skq != null) { skSet(t.dataset.skq, t.value); return; }
+    if (t.dataset.skf != null) { if (S.skAdd) S.skAdd.f[t.dataset.skf] = t.value; return; }
     if (t.dataset.act === "sksearch") {
       clearTimeout(onEdit.sk);
       onEdit.sk = setTimeout(() => { S.sk.q = t.value; S.sk.limit = 150; const pos = t.selectionStart; renderStock(); const s = $app.querySelector(".sk-q"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } }, 150);
@@ -2438,15 +2615,15 @@
       const key = curKey(); if (key == null) return;
       const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
       partsOf(key, r)[+t.dataset.part][t.dataset.pf] = t.value;
-      if (t.dataset.pf === "src" && !isVitalya(t.value)) delete partsOf(key, r)[+t.dataset.part].stock;
+      if (t.dataset.pf === "src") { const pp = partsOf(key, r)[+t.dataset.part]; if (pp.stock && !skSrcMatch(t.value, S.stock?.byKey?.get(pp.stock))) delete pp.stock; }
       if (t.dataset.pf === "src" && S.supp?.map) {
         const p = partsOf(key, r)[+t.dataset.part], m = partMeta(p, key, r);
         const hit = m.dev && m.op ? supplierOffers(m.dev, m.op, m.variant).find(x => norm(x.s) === norm(t.value)) : null;
         if (hit && String(hit.c) !== String(p.cost)) {
           applySupplier(key, r, +t.dataset.part, hit.s, hit.c);
-          const sk = isVitalya(hit.s) ? skAuto(key, r, +t.dataset.part, hit.t) : null;
+          const sk = skAuto(key, r, +t.dataset.part, hit.t);
           const y = window.scrollY; render(); window.scrollTo(0, y);
-          if (sk) toast(`📦 Со склада: ${skShort(sk)} — спишется при сохранении`);
+          if (sk) toast(`📦 Со склада: ${skShort(sk)}${skFrom(sk)} — спишется при сохранении`);
           return;
         }
       }
@@ -2538,13 +2715,19 @@
     else if (it.dataset.phone) { fillField(C.phone, it.dataset.phone); document.getElementById("ac-" + C.phone).innerHTML = ""; refreshSaveBar("new"); }
   });
   document.addEventListener("input", onEdit);
+  // Форма своей позиции: поставщика вписали руками — перерисовать подписи (донор → «с какого
+  // устройства», Виталя → «попадёт в его таблицу») и подсветку кнопок.
+  document.addEventListener("change", e => {
+    if (e.target.dataset.skf !== "src" || !S.skAdd) return;
+    setTimeout(() => { const y = window.scrollY; const a = document.activeElement?.dataset?.skf; render(); window.scrollTo(0, y); if (a) $app.querySelector(`#sk-add [data-skf="${a}"]`)?.focus({ preventScroll: true }); }, 0);
+  });
   // Поставщика вписали руками (или выбрали из подсказок) и ушли из поля: если это Виталя —
   // показать, что есть на складе, а единственную подходящую позицию взять сразу.
   document.addEventListener("change", e => {
     const t = e.target; if (t.dataset.pf !== "src" || t.dataset.part == null || !S.stock?.rows) return;
     const key = curKey(); if (key == null) return;
     const r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), i = +t.dataset.part, p = partsOf(key, r)[i];
-    if (!p || !isVitalya(p.src)) return;
+    if (!p || !norm(p.src)) return;
     const x = p.stock ? null : skAuto(key, r, i, null);
     // Перерисовка — после того, как фокус ушёл в следующее поле, и с возвратом фокуса туда.
     setTimeout(() => {
@@ -2552,7 +2735,7 @@
       const sel = d.part != null ? `[data-part="${d.part}"][data-pf="${d.pf}"]` : d.edit != null ? `[data-edit="${d.edit}"]` : null;
       const y = window.scrollY; render(); window.scrollTo(0, y);
       if (sel) $app.querySelector(sel)?.focus({ preventScroll: true });
-      if (x) toast(`📦 Со склада: ${skShort(x)} — спишется при сохранении`);
+      if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`);
     }, 0);
   });
   document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });

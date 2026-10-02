@@ -522,3 +522,21 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
   .top .iconbtn { min-width: 40px; padding: 0 8px; }
   .brand b, .who { display: none; }
 }
+/* v33: свои позиции склада — кнопка под разделом модели, форма, метка поставщика */
+.sk-addbtn { display: block; width: 100%; margin-top: 8px; padding: 10px 12px; border-radius: 10px; border: 1px dashed var(--line-strong); background: transparent; color: var(--gold); font-family: var(--font-body); font-size: .9rem; text-align: left; }
+.sk-addbtn:hover { border-color: var(--gold); background: rgba(212, 160, 18, .06); }
+.sk-add { margin-top: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--gold); background: rgba(212, 160, 18, .07); }
+.sk-add__title { font-size: .95rem; color: var(--muted); }
+.sk-add__title b { color: var(--cream); }
+.sk-add .field input { width: 100%; }
+.sk-add .row { margin-top: 10px; }
+.sk-add .row .btn--sm { margin-top: 0; }
+.sk-src { margin: 0 0 6px; }
+.sk-src--vit, .sk-src--other, .sk-src--donor { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px; font-style: normal; font-size: .78rem; font-weight: 700; vertical-align: 1px; }
+.sk-src--vit { background: var(--new-bg); color: var(--new); }
+.sk-src--other { background: var(--wait-bg); color: var(--wait); }
+.sk-src--donor { background: var(--stop-bg); color: var(--stop); }
+.sk-edit { padding: 0 6px; font-size: .9rem; color: var(--gold); }
+.sk__cost small { display: block; font-size: .8rem; color: var(--muted); }
+.sk__cost { text-align: right; }
+.sk-add .grid2, .sk-add .grid3 { align-items: end; }
