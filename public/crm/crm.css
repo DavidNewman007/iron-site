@@ -476,6 +476,7 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .psup__c { border: 1px solid var(--line-strong); background: var(--surface-2); color: var(--text); border-radius: 999px; padding: 3px 10px; font-size: .8rem; font-family: var(--font-body); }
 .psup__c b { color: var(--gold); font-weight: 700; }
 .psup__c:hover { border-color: var(--gold); }
+.psup__here { color: var(--ready); background: var(--ready-bg); border-radius: 999px; padding: 0 6px; font-size: .72rem; margin-left: 2px; } /* v36: Liberti — лежит на складе в Сочи */
 .psup__c.is-on { background: var(--wait-bg); border-color: var(--gold); }
 .pp__item em.note { font-style: normal; color: var(--muted); font-size: .82rem; }
 /* v31: склад запчастей Витали — в карточке заказа и экран «Склад» */

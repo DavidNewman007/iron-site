@@ -1025,15 +1025,17 @@
       S.supp = { map };
     } catch (e) { S.supp = { error: e.message, map: new Map() }; }
   }
-  // Лучшая позиция у каждого поставщика: совпадение слов варианта, иначе самая дешёвая.
+  // Лучшая позиция у каждого поставщика: совпадение слов варианта; при равном — та, что лежит
+  // в Сочи (Liberti пишет в названии «· в Сочи N шт» / «· под заказ», v36), иначе самая дешёвая.
+  const suppHere = t => /· в Сочи (\d+ шт|есть)/.test(String(t || ""));
   function supplierOffers(dev, op, variant) {
     const list = S.supp?.map?.get(dev + "|" + op) || [];
     const words = norm(variant).split(/[^a-zа-я0-9%]+/).filter(w => w.length > 1);
     const score = t => words.filter(w => norm(t).includes(w)).length;
     const best = new Map();
     for (const x of list) {
-      const b = best.get(x.s), sc = score(x.t);
-      if (!b || sc > b.sc || (sc === b.sc && x.c < b.x.c)) best.set(x.s, { x, sc });
+      const b = best.get(x.s), sc = score(x.t), here = suppHere(x.t);
+      if (!b || sc > b.sc || (sc === b.sc && (here > b.here || (here === b.here && x.c < b.x.c)))) best.set(x.s, { x, sc, here });
     }
     return [...best.values()].map(b => b.x).sort((a, b) => a.c - b.c);
   }
@@ -1050,7 +1052,7 @@
     if (!dev || !op) return "";
     const offers = supplierOffers(dev, op, variant);
     if (!offers.length) return "";
-    return `<div class="psup"><span class="note">${esc(dev)}:</span>${offers.map(x => `<button type="button" class="psup__c${norm(x.s) === norm(p.src) ? " is-on" : ""}" data-psup="${i}" data-s="${esc(x.s)}" data-c="${x.c}" data-t="${esc(x.t)}" title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">${esc(x.s)} <b>${money(x.c)}</b></button>`).join("")}</div>`;
+    return `<div class="psup"><span class="note">${esc(dev)}:</span>${offers.map(x => `<button type="button" class="psup__c${norm(x.s) === norm(p.src) ? " is-on" : ""}" data-psup="${i}" data-s="${esc(x.s)}" data-c="${x.c}" data-t="${esc(x.t)}" title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">${esc(x.s)} <b>${money(x.c)}</b>${suppHere(x.t) ? ` <span class="psup__here">в Сочи</span>` : ""}</button>`).join("")}</div>`;
   }
   // Поставщик выбран: закупка — из индекса; у запчасти из прайса — и итог на разницу.
   function applySupplier(key, r, i, supplier, cost) {
@@ -1180,14 +1182,15 @@
 
   // Что лежит на полке для этой строки запчасти: та же модель, тот же узел, тот же поставщик (если
   // он вписан), с учётом того, что уже выбрано другими строками этой карточки. null — модель не узнали.
-  function skCandidates(key, r, p) {
+  // anySrc (v36) — не смотреть на «Откуда» строки: показать всё, что лежит на полке для этой модели и узла.
+  function skCandidates(key, r, p, anySrc) {
     if (!S.stock?.rows) return null;
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const models = skModelsFor(val(C.device), p.dev);
     if (!models.length) return null;
     const nodes = skNodesOf(p.name), taken = new Map();
     for (const q of partsOf(key, r)) if (q !== p && q.stock) taken.set(q.stock, (taken.get(q.stock) || 0) + 1);
-    return S.stock.rows.filter(x => models.includes(x.model) && (!nodes || nodes.includes(norm(x.node))) && skSrcMatch(p.src, x))
+    return S.stock.rows.filter(x => models.includes(x.model) && (!nodes || nodes.includes(norm(x.node))) && (anySrc || skSrcMatch(p.src, x)))
       .map(x => ({ ...x, free: x.qty - (taken.get(x.key) || 0) })).filter(x => x.free > 0);
   }
   function skBind(key, r, i, k) {
@@ -1404,8 +1407,17 @@
     if (skCovered(key, r).has(i)) return `<div class="psk is-on"><span>📦 уже списана со склада</span></div>`;
     const c = skCandidates(key, r, p);
     if (c == null) return "";
-    if (!c.length) return isVitalya(p.src) ? `<div class="psk"><span class="note">📦 На складе такой нет — под заказ, списывать нечего</span></div>` : "";
-    return `<div class="psk"><span class="note">📦 ${norm(p.src) ? "Есть на складе, взять" : "На складе есть"}:</span>${c.map(x => `<button type="button" class="psup__c" data-act="skbind" data-i="${i}" data-k="${esc(x.key)}">${esc(skShort(x) + skFrom(x))} <b>${x.free} шт</b></button>`).join("")}</div>`;
+    // Наше от других поставщиков (v36). Владелец 02.10.2026: «при добавлении работы предлагал запчасти
+    // не только от мосов, но и наши в наличии». Запчасть из прайса приходит с поставщиком MosLCD, и
+    // раньше полка показывалась только того же поставщика — Виталина или своя деталь на полке не была
+    // видна. Кнопка берёт позицию со склада: поставщик и закупка строки меняются на её.
+    const other = norm(p.src) ? skCandidates(key, r, p, true).filter(x => !c.some(y => y.key === x.key)) : [];
+    const chips = list => list.map(x => `<button type="button" class="psup__c" data-act="skbind" data-i="${i}" data-k="${esc(x.key)}">${esc(skShort(x) + skFrom(x) + (isVitalya(x.src) && !isVitalya(p.src) ? " · Виталя" : ""))} <b>${x.free} шт</b>${x.cost != null ? ` · ${money(x.cost)}` : ""}</button>`).join("");
+    let h = "";
+    if (c.length) h += `<div class="psk"><span class="note">📦 ${norm(p.src) ? "Есть на складе, взять" : "На складе есть"}:</span>${chips(c)}</div>`;
+    else if (isVitalya(p.src) && !other.length) h += `<div class="psk"><span class="note">📦 На складе такой нет — под заказ, списывать нечего</span></div>`;
+    if (other.length) h += `<div class="psk"><span class="note">📦 У нас на складе (другой поставщик):</span>${chips(other)}</div>`;
+    return h;
   }
   // Какие строки запчастей уже покрыты списанием в этот заказ (после сохранения привязка
   // к позиции склада не хранится — она в журнале): списанное раздаём строкам того же поставщика
