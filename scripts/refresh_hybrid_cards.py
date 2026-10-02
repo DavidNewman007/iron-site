@@ -7,6 +7,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -129,9 +130,38 @@ def git_publish(message: str, *, push: bool) -> dict:
             text=True,
             check=True,
         ).stdout.strip()
-        run(["git", "push", "-u", "origin", branch])
+        push_with_rebase(branch)
         pushed = True
     return {"committed": True, "pushed": pushed}
+
+
+def push_with_rebase(branch: str, attempts: int = 5) -> None:
+    """Пуш с подтягиванием чужих коммитов.
+
+    ⚠️ Зачем (02.10.2026): прогон идёт 20–50 минут, и за это время в `main`
+    успевают уехать другие коммиты — правки CRM и сайта из локальных сессий.
+    Простой `git push` тогда отклоняется («fetch first»), и вся работа прогона
+    пропадает: карточки собраны, но не закоммичены на сервер и не выложены.
+    Так упали прогоны 26.09, 29.09 и 02.10. Прогон трогает только свои папки
+    (`hybrid-products`, `product-images`, карту картинок, словарь поиска),
+    поэтому rebase поверх чужих коммитов почти всегда проходит без конфликта.
+    При конфликте rebase отменяется и прогон падает с понятной ошибкой — молча
+    перезаписывать чужое нельзя.
+    """
+    for attempt in range(1, attempts + 1):
+        print(f"$ git push -u origin {branch}  (попытка {attempt}/{attempts})")
+        if subprocess.run(["git", "push", "-u", "origin", branch], cwd=ROOT).returncode == 0:
+            return
+        print("$ git pull --rebase origin", branch)
+        pull = subprocess.run(["git", "pull", "--rebase", "origin", branch], cwd=ROOT)
+        if pull.returncode != 0:
+            subprocess.run(["git", "rebase", "--abort"], cwd=ROOT)
+            raise SystemExit(
+                "Пуш не прошёл: rebase поверх свежего main дал конфликт. "
+                "Кто-то правил те же файлы, что и прогон карточек, — разобрать руками."
+            )
+        time.sleep(5 * attempt)
+    raise SystemExit(f"Пуш не прошёл за {attempts} попыток: main всё время уходил вперёд.")
 
 
 def main() -> int:
