@@ -596,3 +596,10 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .btn--resend { margin-top: 10px; margin-left: 8px; max-width: 100%; text-align: left; padding-top: 6px; padding-bottom: 6px; }
 @media (max-width: 560px) { .btn--resend { margin-left: 0; } }
 .btn--resend[data-armed] { border-color: var(--wait); color: var(--wait); }
+
+/* Несколько номеров у одного контакта (v42, 03.10.2026): по полю на номер, в клетке — с новой строки */
+.tel__row { display: flex; align-items: center; gap: 8px; }
+.tel__row + .tel__row { margin-top: 6px; }
+.tel__row input { flex: 1; min-width: 0; }
+.tel__rm { flex: none; min-width: 40px; min-height: 40px; }
+.tel__add { align-self: flex-start; margin-top: 6px; }

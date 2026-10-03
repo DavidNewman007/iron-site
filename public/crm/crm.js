@@ -753,6 +753,8 @@
       return `<div class="field${dirty ? " is-dirty" : ""}"><span>${esc(label)}</span>${ddHtml(key, c, String(v ?? ""), S.opts[c])}</div>`;
     } else if (f.area) {
       input = `<textarea data-edit="${c}" rows="3"${spell}>${esc(v)}</textarea>`;
+    } else if (f.tel) {
+      return telFieldHtml(c, label, v, dirty);
     } else {
       const shown = f.num && !dirty ? String(toNum(v) ?? v) : v;
       const dl = f.free && S.opts[c]?.length ? ` list="dl-${c}"` : "";
@@ -762,6 +764,32 @@
     return `<label class="field${dirty ? " is-dirty" : ""}"><span>${esc(label)}</span>${input}</label>`;
   }
 
+
+  // ── несколько номеров у одного контакта (v42, 03.10.2026) ──────────────────────────
+  // Владелец: «добавь возможность записать второй номер на один контакт прям в заявке». Номера
+  // лежат в ОДНОЙ клетке (D у клиента, AI у того, кто на связи) с новой строки — так в базе уже
+  // записаны 166 заказов, и это понимают все: уведомления шлют на каждый номер
+  // (parsePhonesFromCell), Google Контакты кладут оба номера в контакт (processMultiplePhones),
+  // книга клиентов оболочки склеивает клиента по любому из них. Здесь — только удобство ввода:
+  // каждый номер своим полем и «＋ второй номер». Клетку с одним номером и пояснением вроде
+  // «писать на вотсап» не дробим — делим, только когда номеров в ней два и больше.
+  const telParts = v => phones(v).length >= 2 ? String(v ?? "").split(/\r?\n|[,;/\\]+|\s{2,}/).map(x => x.trim()).filter(Boolean) : [String(v ?? "")];
+  const telNorm = v => telParts(v).map(x => x.trim()).filter(Boolean).join("\n");
+  const telRow = (c, i, value) => `<div class="tel__row"><input data-edit="${c}" data-i="${i}" value="${esc(value)}" inputmode="tel" spellcheck="false" autocorrect="off" autocapitalize="off"${i ? ' placeholder="второй номер"' : ""}>${i ? `<button type="button" class="linkbtn tel__rm" data-act="telrm" data-c="${c}" title="Убрать этот номер">✕</button>` : ""}</div>`;
+  function telFieldHtml(c, label, v, dirty) {
+    const parts = telParts(v);
+    return `<div class="field tel${dirty ? " is-dirty" : ""}"><span>${esc(label)}</span>${parts.map((x, i) => telRow(c, i, x)).join("")}
+      <button type="button" class="linkbtn tel__add" data-act="teladd" data-c="${c}">＋ ${parts.length > 1 ? "ещё номер" : "второй номер"}</button></div>`;
+  }
+  // Значение клетки из всех полей номера: по строке на номер.
+  const telJoin = c => [...$app.querySelectorAll(`[data-edit="${c}"]`)].map(i => i.value.trim()).filter(Boolean).join("\n");
+  // Подставить номер целиком (выбор клиента из подсказок): лишние поля убрать.
+  function telSet(c, v) {
+    const rows = [...$app.querySelectorAll(`[data-edit="${c}"]`)];
+    rows.slice(1).forEach(i => i.closest(".tel__row")?.remove());
+    if (rows[0]) rows[0].value = v;
+    const add = $app.querySelector(`[data-act="teladd"][data-c="${c}"]`); if (add) add.textContent = "＋ второй номер";
+  }
 
   // ── выпадающие списки в стиле оболочки (v28, 01.10.2026) ─────────────────────
   // Владелец: «статусы лучше укомпоновать в выпадающем списке… все всплывающие списки
@@ -2716,7 +2744,7 @@
   const curVal = (key, c) => key === "new" ? "" : cell(S.byNum.get(location.hash.slice(2)), c);
   function setDirty(key, c, v) {
     const orig = curVal(key, c);
-    const same = S.bools.has(c) ? isTrue(v) === isTrue(orig) : F[c]?.num ? toNum(v) === toNum(orig) && String(v).trim() !== "" : String(v) === String(orig);
+    const same = S.bools.has(c) ? isTrue(v) === isTrue(orig) : F[c]?.num ? toNum(v) === toNum(orig) && String(v).trim() !== "" : F[c]?.tel ? telNorm(v) === telNorm(orig) : String(v) === String(orig);
     const keepNew = key === "new" && [C.status, C.date, C.type].includes(c);
     if (same && !keepNew) S.dirty.delete(key + ":" + c); else S.dirty.set(key + ":" + c, v);
   }
@@ -2820,6 +2848,18 @@
       setDirty(key, C.review, on);
       t.setAttribute("aria-pressed", String(on)); t.textContent = on ? "✓ Напомнить об отзыве" : "⭐ Напомнить об отзыве";
       refreshSaveBar(key);
+    }
+    else if (act === "teladd") {
+      const c = +t.dataset.c, n = $app.querySelectorAll(`[data-edit="${c}"]`).length;
+      t.insertAdjacentHTML("beforebegin", telRow(c, n, ""));
+      t.textContent = "＋ ещё номер";
+      t.previousElementSibling.querySelector("input")?.focus();
+    }
+    else if (act === "telrm") {
+      const key = curKey(), c = +t.dataset.c; if (key == null) return;
+      const field = t.closest(".field"); t.closest(".tel__row")?.remove();
+      setDirty(key, c, telJoin(c)); field?.classList.toggle("is-dirty", S.dirty.has(key + ":" + c)); refreshSaveBar(key);
+      if ($app.querySelectorAll(`[data-edit="${c}"]`).length < 2) { const a = field?.querySelector("[data-act=teladd]"); if (a) a.textContent = "＋ второй номер"; }
     }
     else if (act === "proxyon") { S.proxyOpen = curKey(); const y = window.scrollY; render(); window.scrollTo(0, y); $app.querySelector(`[data-edit="${C.contactName}"]`)?.focus({ preventScroll: true }); }
     else if (act === "resend") {
@@ -2960,7 +3000,7 @@
     }
     if (t.dataset.edit == null) return;
     const key = curKey(); if (key == null) return;
-    const c = +t.dataset.edit, v = t.type === "checkbox" ? t.checked : t.value;
+    const c = +t.dataset.edit, v = t.type === "checkbox" ? t.checked : F[c]?.tel ? telJoin(c) : t.value;
     setDirty(key, c, v);
     t.closest(".field")?.classList.toggle("is-dirty", S.dirty.has(key + ":" + c));
     t.closest(".field")?.classList.remove("is-need");
@@ -2993,6 +3033,7 @@
     }).join("");
   }
   function fillField(c, v) {
+    if (F[c]?.tel) telSet(c, v);
     const inp = $app.querySelector(`[data-edit="${c}"]`); if (inp) inp.value = v;
     setDirty("new", c, v); inp?.closest(".field")?.classList.add("is-dirty");
   }
@@ -3043,6 +3084,7 @@
         <span>был на связи в №${esc(x.num)}${x.owner ? " (за " + esc(x.owner) + ")" : ""} · ${esc(x.phone)}</span></button>`).join("");
   }
   function fillFor(key, c, v) {
+    if (F[c]?.tel) telSet(c, v);
     const inp = $app.querySelector(`[data-edit="${c}"]`); if (inp) inp.value = v;
     setDirty(key, c, v); inp?.closest(".field")?.classList.toggle("is-dirty", S.dirty.has(key + ":" + c));
   }
