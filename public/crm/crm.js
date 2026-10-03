@@ -33,8 +33,8 @@
     // остальное (сообщения клиенту, отчёт, мастер). Каждая дверь исполняет только свои
     // триггеры. Порядок как у ручной правки по смыслу: сначала контакт и дата, потом сообщения.
     doors: [
-      "https://script.google.com/macros/s/AKfycbwHC5_EA-wndVqLcRW0ehkZ_r56Hcji1cqmwGgfCF7vY7a13_35T4ckh5n6YE-GoXO7/exec", // ironsapple, v66
-      "https://script.google.com/macros/s/AKfycbyOtzn7cQARc_H9heNEvukPwMhsOapCMc8BNNLi1IBZ9zLABBpb2wJvePbHnpQLPKbr/exec", // личный, v65
+      "https://script.google.com/macros/s/AKfycbwHC5_EA-wndVqLcRW0ehkZ_r56Hcji1cqmwGgfCF7vY7a13_35T4ckh5n6YE-GoXO7/exec", // ironsapple, v73 (с 03.10.2026 выкладывается `clasp -u ironsapple`)
+      "https://script.google.com/macros/s/AKfycbyOtzn7cQARc_H9heNEvukPwMhsOapCMc8BNNLi1IBZ9zLABBpb2wJvePbHnpQLPKbr/exec", // личный, v72
     ],
     newStatus: "Принят на диагностику",
     // Заказы бота для «Продажи» (план 93 §11.17): бот пишет их в D1 с 26.09.2026.
