@@ -570,3 +570,20 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
   .cmp__a { grid-column: 1; grid-row: 3; }
   .cmp__row b { grid-row: 1; grid-column: 2; }
 }
+
+/* v39: статус прямо из списка; элемент списка — div role=button */
+.item, .ritem { cursor: pointer; }
+.item:focus-visible, .ritem:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.lst { position: relative; flex: none; max-width: 52%; display: inline-flex; }
+.ri__st .lst { max-width: 100%; }
+.lst__btn { border: 0; font-family: var(--font-body); font-weight: 700; cursor: pointer; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 24px; }
+.lst__btn:hover { filter: brightness(1.15); }
+.lst__menu {
+  position: absolute; z-index: 40; right: 0; top: calc(100% + 6px); width: min(280px, 86vw); max-height: 360px; overflow-y: auto;
+  display: grid; gap: 4px; padding: 6px; border: 1px solid var(--line-strong); border-radius: 12px;
+  background: #1b1b1b; box-shadow: 0 14px 34px rgba(0, 0, 0, .55); cursor: default; text-align: left;
+}
+.lst__menu p { margin: 4px 6px 8px; color: var(--text); font-size: .92rem; white-space: normal; }
+.lst__row { display: flex; gap: 8px; padding: 0 4px 4px; }
+.item__top .lst .chip { max-width: 100%; }
+.item.has-menu, .ritem.has-menu { overflow: visible; position: relative; z-index: 6; }

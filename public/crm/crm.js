@@ -630,16 +630,16 @@
     const old = !isFinal(st) && age != null && age > 14;
     const dk = dealKey(cell(r, C.type)), date = String(cell(r, C.date)).slice(0, 10);
     const ageTxt = age == null ? "" : age === 0 ? "сегодня" : age + " дн.";
-    const stChip = `<span class="chip chip--${statusKind(st)}">${esc(stLabel(st) || "без статуса")}</span>`;
-    if (S.view === "rows") return `<button class="ritem" data-open="${esc(cell(r, C.num))}">
+    const stChip = lstHtml(r, st), menu = S.lst?.num === String(cell(r, C.num)).trim() ? " has-menu" : ""; // у элемента overflow:hidden — меню иначе обрежется
+    if (S.view === "rows") return `<div class="ritem${menu}" role="button" tabindex="0" data-open="${esc(cell(r, C.num))}">
       <span class="ri__num">№${mark(cell(r, C.num))}</span>
       <span class="ri__date">${esc(date.slice(0, 5))}<small${old ? ' class="is-old"' : ""}>${esc(ageTxt)}</small></span>
       <span class="ri__name">${mark(cell(r, C.name) || "без имени")}${S.q && cell(r, C.phone) ? `<small>${mark(cell(r, C.phone))}</small>` : ""}</span>
       <span class="ri__dev">${mark(cell(r, C.device) || "—")}${dk !== "repair" ? ` <small>${esc(cell(r, C.type))}</small>` : ""}</span>
       <span class="ri__st">${stChip}</span>
       <span class="ri__sum">${money(cell(r, C.total))}</span>
-    </button>`;
-    return `<button class="item" data-open="${esc(cell(r, C.num))}">
+    </div>`;
+    return `<div class="item${menu}" role="button" tabindex="0" data-open="${esc(cell(r, C.num))}">
       <div class="item__top"><span class="item__num">№${mark(cell(r, C.num))}</span><span class="item__name">${mark(cell(r, C.name) || "без имени")}</span>${stChip}</div>
       <div class="item__dev">${mark(cell(r, C.device) || "—")}${cell(r, C.issue) ? `<span class="item__issue"> · ${mark(cell(r, C.issue))}</span>` : ""}</div>
       <div class="item__meta"><span class="item__date">📅 ${esc(date || "—")}${ageTxt ? ` <em class="${old ? "is-old" : ""}">${esc(ageTxt)}</em>` : ""}</span>
@@ -647,7 +647,51 @@
         ${cell(r, C.master) ? `<span>🔧 ${mark(cell(r, C.master))}</span>` : ""}
         ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}
         <span class="item__sum">${money(cell(r, C.total))}</span></div>
-    </button>`;
+    </div>`;
+  }
+  // ── статус прямо из списка (v39, 03.10.2026) ──────────────────────────────────────
+  // Владелец: «сделай возможным изменение статуса прямо из списка». Тап по статусу открывает тот же
+  // цветной список, что в карточке (статусы по типу сделки); выбор просит подтверждения — статус
+  // уходит клиенту уведомлением, случайный тап в списке не должен ничего отправить. Дальше — та же
+  // запись, что «Сохранить» в карточке (save): группы, история, двери, уведомления. Если для статуса
+  // нужна сумма или в заказе есть несохранённые правки — открывается карточка со статусом наготове.
+  // Элемент списка стал <div role="button"> вместо <button>: кнопка внутри кнопки — невалидная разметка.
+  function lstHtml(r, st) {
+    const num = String(cell(r, C.num)).trim();
+    const chip = `<span class="chip chip--${statusKind(st)}">${esc(stLabel(st) || "без статуса")}</span>`;
+    if (!editable(C.status, r) || isSilent(st)) return chip;
+    const open = S.lst?.num === num;
+    const list = statusesFor(dealKey(cell(r, C.type)));
+    const opts = list.includes(st) || !st ? list : [st, ...list];
+    const menu = !open ? "" : S.lst.v
+      ? `<div class="lst__menu"><p>«${esc(stLabel(S.lst.v))}» — клиенту уйдёт уведомление${groupOf(r)?.shared ? ", статус сменится у всех устройств группы" : ""}.</p>
+        <div class="lst__row"><button type="button" class="btn btn--sm" data-act="lstsave" data-num="${esc(num)}">Сохранить</button><button type="button" class="btn btn--ghost btn--sm" data-act="lstback" data-num="${esc(num)}">Назад</button></div></div>`
+      : `<div class="lst__menu" role="listbox">${opts.map(o => `<button type="button" class="dd__opt ${toneOf(C.status, o)}" data-act="lstpick" data-num="${esc(num)}" data-value="${esc(o)}" aria-pressed="${o === st}">${esc(stLabel(o))}</button>`).join("")}</div>`;
+    return `<span class="lst${open ? " is-open" : ""}"><button type="button" class="chip chip--${statusKind(st)} lst__btn" data-act="lst" data-num="${esc(num)}" title="Сменить статус">${esc(stLabel(st) || "без статуса")} ▾</button>${menu}</span>`;
+  }
+  async function lstAct(act, t) {
+    const num = t.dataset.num, r = S.byNum.get(num);
+    const again = () => { const y = window.scrollY; render(); window.scrollTo(0, y); };
+    if (act === "lst") { S.lst = S.lst?.num === num ? null : { num }; return again(); }
+    if (act === "lstback") { S.lst = { num }; return again(); }
+    if (!r) { S.lst = null; return again(); }
+    if (act === "lstpick") {
+      const v = t.dataset.value;
+      if (v === cell(r, C.status)) { S.lst = null; return again(); }
+      const other = [...S.dirty.keys()].some(k => k.startsWith(r.row + ":") && k !== r.row + ":" + C.status);
+      const miss = needSum(v, dealKey(cell(r, C.type)), c => cell(r, c));
+      if (other || miss != null) { // в карточку: там видно, что ещё не сохранено, и куда вписать сумму
+        S.dirty.set(r.row + ":" + C.status, v); S.lst = null; location.hash = "#/" + num; // setDirty сверяет с открытой карточкой — в списке её нет
+        setTimeout(() => miss != null ? askSum(miss, `Для «${v}» нужна сумма`) : toast(`№${num}: есть несохранённые правки — проверьте и нажмите «Сохранить»`, null, true), 300);
+        return;
+      }
+      S.lst = { num, v }; return again();
+    }
+    if (act === "lstsave") {
+      const v = S.lst?.num === num ? S.lst.v : null; if (!v) return;
+      S.lst = null; S.dirty.set(r.row + ":" + C.status, v);
+      await save(num);
+    }
   }
   const listCls = () => "list" + (S.view === "rows" ? " list--rows" : "");
   const viewToggle = () => `<span class="viewtog"><button type="button" data-act="view" data-v="cards" aria-pressed="${S.view !== "rows"}" title="Карточками">▦</button><button type="button" data-act="view" data-v="rows" aria-pressed="${S.view === "rows"}" title="Строками, как в таблице">☰</button></span>`;
@@ -2388,11 +2432,20 @@
     await api(`/values/${encodeURIComponent("'История статусов'!A:D")}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
       { method: "POST", body: JSON.stringify({ values: items.map(([row, old, v]) => [ts, "Строка " + row, String(old || "Пусто"), String(v)]) }) });
   }
-  async function door(row, num, list) {
+  // only — номера дверей, которые звать (кнопка «Повторить» зовёт только упавшие).
+  // v39 (03.10.2026): двери идут независимо — раньше сбой первой обрывал цикл, и вторая (сообщения
+  // клиенту) не звалась вовсе; обрыв сети («Failed to fetch») повторяется, как «дверь занята»; в
+  // ошибке видно, какая дверь не ответила. Поводом стал №7760: личная дверь отдавала страницу
+  // ошибки Google (у аккаунта отозвали разрешение script.external_request), без CORS-заголовка —
+  // браузер видит это только как «Failed to fetch».
+  const DOOR_NAME = i => ["рабочая дверь (ironsapple)", "личная дверь"][i] || "дверь " + (i + 1);
+  async function door(row, num, list, only) {
     if (DEMO || !CFG.doors.length) return null;
     const body = JSON.stringify({ token: S.token, row, num, changes: list.map(ch => ({ col: ch.c + 1, value: String(ch.w ?? ch.v ?? ""), old: String(ch.old ?? "") })) });
-    const all = { ok: true, results: [], statusBackground: "", issued: null };
-    for (const url of CFG.doors) {
+    const all = { ok: true, results: [], statusBackground: "", issued: null, failed: [] };
+    for (const [di, url] of CFG.doors.entries()) {
+      if (only && !only.includes(di)) continue;
+      try {
       // «Дверь занята» — дверь держит один запрос за раз (замок на 25 с). Когда в оболочке
       // работают двое или идут уведомления по нескольким заказам, второй запрос получал
       // отказ, и сообщения клиенту молча терялись (01.10.2026: отчёты №7782 и №7785).
@@ -2400,16 +2453,23 @@
       // даже если вкладку закроют.
       let j;
       for (let tries = 0; ; tries++) {
-        const r = await fetch(url + "?action=crm-door", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body, keepalive: body.length < 60000 });
-        j = await r.json().catch(() => ({ ok: false, error: "дверь ответила не JSON (" + r.status + ")" }));
-        if (j.ok || !/занята/.test(j.error || "") || tries >= 5) break;
+        let net = false;
+        try {
+          const r = await fetch(url + "?action=crm-door", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body, keepalive: body.length < 60000 });
+          const text = await r.text();
+          try { j = JSON.parse(text); }
+          catch { j = { ok: false, error: (text.match(/Exception:[^<]{0,160}/) || [])[0] || "ответила не JSON (" + r.status + ")" }; }
+        } catch (e) { net = true; j = { ok: false, error: "не ответила — сеть или Google вернул ошибку (например, у аккаунта отозваны разрешения скрипта)" }; }
+        if (j.ok || !(net || /занята/.test(j.error || "")) || tries >= (net ? 2 : 5)) break;
         await new Promise(res => setTimeout(res, 3000 * (tries + 1)));
       }
-      if (!j.ok) throw new Error(j.error || "дверь не ответила");
+      if (!j.ok) throw new Error(j.error || "не ответила");
       all.results.push(...(j.results || []));
       all.statusBackground = j.statusBackground || all.statusBackground; // последняя дверь шлёт статус и красит H
       if (j.issued != null) all.issued = j.issued;
+      } catch (e) { all.failed.push({ i: di, why: DOOR_NAME(di) + ": " + e.message }); }
     }
+    if (all.failed.length) { const err = new Error(all.failed.map(f => f.why).join("; ")); err.failed = all.failed.map(f => f.i); err.partial = all; throw err; }
     return all;
   }
   function doorReport(j, list) {
@@ -2427,18 +2487,18 @@
   }
   // Уведомления — в фоне: человек видит «Сохранено» сразу после записи в таблицу (~1 с),
   // а не ждёт, пока обе двери разошлют сообщения (раньше это было ~5 с).
-  function doorInBackground(r, num, list) {
+  function doorInBackground(r, num, list, only) {
     if (DEMO || !CFG.doors.length) return;
     const notify = list.some(ch => F[ch.c]?.door);
     if (!notify) return;
     S.pendingDoors = (S.pendingDoors || 0) + 1;
-    return door(r.row, num, list).finally(() => { S.pendingDoors--; }).then(j => {
+    return door(r.row, num, list, only).finally(() => { S.pendingDoors--; }).then(j => {
       if (j?.issued != null && j.issued !== cell(r, C.issued)) {
         r.cells[C.issued] = j.issued;
         if (location.hash === "#/" + num && ![...S.dirty.keys()].some(k => k.startsWith(r.row + ":"))) renderCard(num);
       }
       toast(`№${num}: ${doorReport(j, list)}`, null, true);
-    }).catch(e => toast(`№${num}: записано в таблицу, но уведомления НЕ ушли — ${e.message}`, { label: "Повторить", run: () => doorInBackground(r, num, list) }, 60000));
+    }).catch(e => toast(`№${num}: записано в таблицу, но ${e.failed?.includes(1) || !e.failed ? "уведомления НЕ ушли" : "часть обработки не прошла"} — ${e.message}`, { label: "Повторить", run: () => doorInBackground(r, num, list, e.failed) }, 60000));
   }
 
   async function save(num) {
@@ -2609,8 +2669,11 @@
   // Открытый список закрывается кликом мимо него и клавишей Escape.
   document.addEventListener("click", e => {
     if (S.ddOpen && !e.target.closest(".dd")) { S.ddOpen = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
+    if (S.lst && !e.target.closest(".lst")) { S.lst = null; const y = window.scrollY; render(); window.scrollTo(0, y); if (e.target.closest("[data-open]")) e.stopImmediatePropagation(); }
   }, true);
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && S.ddOpen) { S.ddOpen = null; const y = window.scrollY; render(); window.scrollTo(0, y); } });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && (S.ddOpen || S.lst)) { S.ddOpen = null; S.lst = null; const y = window.scrollY; render(); window.scrollTo(0, y); } });
+  // Элемент списка теперь <div role="button"> — Enter/пробел открывают заказ, как раньше у <button>.
+  document.addEventListener("keydown", e => { const it = e.target.closest?.("[data-open][role=button]"); if (it && e.target === it && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); location.hash = "#/" + it.dataset.open; } });
   document.addEventListener("click", async e => {
     const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc],[data-svx],[data-cdev],[data-psup]"); if (!t) return;
     if (t.dataset.cdev != null) { pickDevice(+t.dataset.cdev); return; }
@@ -2674,6 +2737,7 @@
       refreshSaveBar(key); return;
     }
     const act = t.dataset.act;
+    if (act?.startsWith("lst")) { await lstAct(act, t); return; }
     if (act?.startsWith("sk") && await stockClick(act, t)) return;
     if (act === "dd") { const k = curKey() + ":" + t.dataset.c; S.ddOpen = S.ddOpen === k ? null : k; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
     if (act === "login") {
