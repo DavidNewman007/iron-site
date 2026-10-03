@@ -59,7 +59,8 @@
     group: 32, // AG — «Группа»: № первого заказа, если устройств у клиента несколько (26.09.2026)
     // AH–AI «На связи» (03.10.2026, план 93 §11.38): телефон клиента в ремонте — уведомления
     // уходят этому человеку, а заказ остаётся за клиентом (C/D). Логика — ContactPerson.js.
-    contactName: 33, contactPhone: 34 };
+    contactName: 33, contactPhone: 34,
+    gcontact: 23 }; // X «Google Contact ID» — пишет оболочка, если контакт заведён заранее (v45)
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -180,8 +181,18 @@
   };
   // Статусы, уместные для типа (текущий статус строки показывается всегда).
   const DEAL_FINAL = ["выкуплен", "разобран", "обмен оформлен", "продан"];
+  // «Выполнен» — сразу под «Готов ожидает клиента» (владелец, 03.10.2026). В списке таблицы он
+  // 13-й, после пяти отказов, и в оболочке приходилось тянуться вниз мимо них. Порядок в самой
+  // таблице не меняем — только здесь; остальные статусы стоят, как стояли.
+  function doneAfterReady(list) {
+    const out = list.slice(), i = out.findIndex(x => norm(x).startsWith("выполнен"));
+    if (i < 0) return out;
+    const [done] = out.splice(i, 1), j = out.findIndex(x => norm(x).startsWith("готов"));
+    out.splice(j < 0 ? i : j + 1, 0, done);
+    return out;
+  }
   function statusesFor(dk) {
-    const all = (S.opts[C.status] || []).filter(x => !isSilent(x));
+    const all = doneAfterReady((S.opts[C.status] || []).filter(x => !isSilent(x)));
     const pick = names => all.filter(x => names.some(n => norm(x).startsWith(n)));
     if (dk === "repair") return all.filter(x => !DEAL_FINAL.some(n => norm(x).startsWith(n)));
     if (dk === "buyback") return pick(["на согл", "выкуплен"]);
@@ -2008,7 +2019,7 @@
 
     if (isNew && (dk === "sale_used" || dk === "sale_new")) left += box(2, importBlock());
     html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
-      ${isNew ? `<div id="client-devs">${clientDevicesHtml(currentNewClient())}</div>` : ""}
+      ${isNew ? `<div id="pre-contact" class="note pre-contact">${preNoteText()}</div><div id="client-devs">${clientDevicesHtml(currentNewClient())}</div>` : ""}
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
       ${proxyHtml(key, r, isNew, val, fh)}
       ${!isNew && canCreate() ? clientActions(r, dk) : ""}
@@ -2737,6 +2748,12 @@
       // Список полей на каждое устройство: первое — из основных полей формы, остальные —
       // общие поля клиента и сделки плюс свои поля устройства.
       const shared = [...S.dirty].filter(([k]) => k.startsWith("new:")).map(([k, v]) => ({ c: +k.split(":")[1], v, old: "" }));
+      // Контакт, заведённый заранее (v45): ждём ответ до 8 с и пишем его ID в X.
+      const px = preSig();
+      if (S.pre && px && S.pre.sig === px.sig) {
+        const j = await Promise.race([S.pre.promise, new Promise(res => setTimeout(() => res(null), 8000))]);
+        if (j?.ok && j.id && !shared.some(ch => ch.c === C.gcontact)) shared.push({ c: C.gcontact, v: j.id, old: "" });
+      }
       const devices = [shared];
       const perDev = PER_DEVICE[dealKey(S.dirty.get("new:" + C.type))];
       if (S.multi) for (const x of S.extra) {
@@ -3103,6 +3120,43 @@
       const box = $app.querySelector(".margin"); if (box) box.innerHTML = moneySummary(dealKey(val(C.type)), val, r);
     }
   }
+  // ── Google-контакт заранее (v45, 03.10.2026) ───────────────────────────────────────
+  // Владелец: «новый заказ — в WhatsApp у меня „Неизвестный пользователь“: синхронизация Google с
+  // айфоном не успела. Раньше через таблицу контакт успевал создаться до отправки статуса». С v44
+  // сообщение уходит первым, а контакт рабочая дверь заводила следом. Теперь — как только в новом
+  // заказе есть имя и правильный номер и человек ушёл из поля: к «Сохранить» контакт уже в книге
+  // ironsapple и успевает доехать до телефона. Дверь — только рабочая (CrmDoor.js, crm-contact).
+  // При сохранении его ID ложится в X, и onEditTrigger обновляет этот контакт, а не ищет его заново.
+  function preSig() {
+    const name = String(S.dirty.get("new:" + C.name) || "").split("\n")[0].trim(), ph = phones(S.dirty.get("new:" + C.phone));
+    if (!/[a-zа-яё]/i.test(name) || !ph.length || ph.some(p => p.d.length < 11)) return null;
+    return { sig: norm(name) + "|" + ph.map(p => p.d).join(","), name, phone: ph.map(p => p.text).join("\n") };
+  }
+  function precontact() {
+    if (DEMO || !CFG.doors[0] || !S.token || location.hash !== "#/new") return;
+    const x = preSig(); if (!x || S.pre?.sig === x.sig) return;
+    const pre = S.pre = { sig: x.sig, state: "wait" };
+    pre.promise = fetch(CFG.doors[0] + "?action=crm-contact", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ token: S.token, name: x.name, phone: x.phone }) })
+      .then(r => r.text()).then(t => { try { return JSON.parse(t); } catch { return { ok: false, error: (t.match(/Exception:[^<]{0,120}/) || [])[0] || "дверь ответила не JSON" }; } })
+      .catch(e => ({ ok: false, error: e.message }))
+      .then(j => { Object.assign(pre, { state: j.ok ? "ok" : "err", id: j.id || "", existed: !!j.existed, err: j.error || "" }); if (S.pre === pre) preNote(); return j; });
+    preNote();
+  }
+  function preNoteText() {
+    const p = S.pre, x = preSig();
+    if (!p || !x || p.sig !== x.sig) return "";
+    return p.state === "wait" ? "📇 Заводим контакт в Google…" : p.state === "ok"
+      ? (p.existed ? "📇 Контакт с этим номером уже есть в Google" : "📇 Контакт заведён в Google — успеет попасть в телефон до отправки")
+      : `📇 Контакт заранее не завёлся (${esc(p.err)}) — заведётся при сохранении`;
+  }
+  function preNote() { const el = document.getElementById("pre-contact"); if (el) el.innerHTML = preNoteText(); }
+  // Ушли из поля имени или телефона нового заказа — пора заводить контакт.
+  document.addEventListener("change", e => {
+    const c = +e.target.dataset?.edit;
+    if ((c === C.name || c === C.phone) && curKey() === "new") precontact();
+  });
+
   // ── подсказки клиента в новом заказе ─────────────────────
   // Набрал 3+ буквы имени или фамилии (или 4+ цифры телефона) — список клиентов из базы.
   // Выбрал клиента: один телефон — подставился сам; несколько — выбираешь номер вторым шагом.
@@ -3133,6 +3187,7 @@
       ps.map(p => `<button type="button" class="ac-item" data-phone="${esc(p.text)}"><b>📞 ${esc(p.text)}</b><span>последний раз ${esc(String(p.date).slice(0, 10))}</span></button>`).join("");
     const box = document.getElementById("client-devs"); if (box) box.innerHTML = clientDevicesHtml(cl);
     refreshSaveBar("new");
+    precontact();
   }
   // ── подсказки «на связи» (v41, 03.10.2026) ─────────────────────────────────────────
   // Владелец: «пытаюсь добавить человека для связи в готовом заказе — не выдаёт список поиска».
