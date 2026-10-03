@@ -603,3 +603,13 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .tel__row input { flex: 1; min-width: 0; }
 .tel__rm { flex: none; min-width: 40px; min-height: 40px; }
 .tel__add { align-self: flex-start; margin-top: 6px; }
+
+/* Брак на складе (v43, 03.10.2026): отдельный счётчик позиции, Витале — в таблицу остатков */
+.sk-bad { font-style: normal; font-size: .82rem; font-weight: 700; color: #ffb36b; background: rgba(255, 150, 60, .14); border: 1px solid rgba(255, 150, 60, .45); border-radius: 8px; padding: 1px 7px; margin-left: 6px; white-space: nowrap; }
+.sk-defbtn { padding: 2px 6px; font-size: .95rem; opacity: .55; }
+.sk-defbtn:hover, .sk-defbtn[aria-expanded="true"] { opacity: 1; }
+.sk__row.has-bad { box-shadow: inset 3px 0 0 rgba(255, 150, 60, .7); }
+.sk-def { margin: 4px 0 10px; padding: 10px 12px; border: 1px solid rgba(255, 150, 60, .45); border-radius: 12px; background: rgba(255, 150, 60, .07); }
+.sk-def__note { width: 100%; min-height: 44px; background: var(--field); color: var(--cream); border: 1px solid var(--line-strong); border-radius: 10px; padding: 6px 12px; font: inherit; }
+.sk-def .row { flex-wrap: wrap; gap: 6px 8px; }
+.sk-def .note { margin: 6px 0 0; }
