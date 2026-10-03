@@ -31,10 +31,12 @@
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
     // остальное (сообщения клиенту, отчёт, мастер). Каждая дверь исполняет только свои
-    // триггеры. Порядок как у ручной правки по смыслу: сначала контакт и дата, потом сообщения.
+    // триггеры. Порядок — doorOrder(): с v44 (03.10.2026) личная первой, чтобы сообщение клиенту не
+    // ждало ~45 с Google-контакта; рабочая первой — только для отчёта (L) и отзыва (J), им нужна дата
+    // выдачи. Раньше было «всегда рабочая, потом личная».
     doors: [
-      "https://script.google.com/macros/s/AKfycbwHC5_EA-wndVqLcRW0ehkZ_r56Hcji1cqmwGgfCF7vY7a13_35T4ckh5n6YE-GoXO7/exec", // ironsapple, v73 (с 03.10.2026 выкладывается `clasp -u ironsapple`)
-      "https://script.google.com/macros/s/AKfycbyOtzn7cQARc_H9heNEvukPwMhsOapCMc8BNNLi1IBZ9zLABBpb2wJvePbHnpQLPKbr/exec", // личный, v72
+      "https://script.google.com/macros/s/AKfycbwHC5_EA-wndVqLcRW0ehkZ_r56Hcji1cqmwGgfCF7vY7a13_35T4ckh5n6YE-GoXO7/exec", // ironsapple, v75 (с 03.10.2026 выкладывается `clasp -u ironsapple`)
+      "https://script.google.com/macros/s/AKfycbyOtzn7cQARc_H9heNEvukPwMhsOapCMc8BNNLi1IBZ9zLABBpb2wJvePbHnpQLPKbr/exec", // личный, v77
     ],
     newStatus: "Принят на диагностику",
     // Заказы бота для «Продажи» (план 93 §11.17): бот пишет их в D1 с 26.09.2026.
@@ -2585,14 +2587,23 @@
   // ошибки Google (у аккаунта отозвали разрешение script.external_request), без CORS-заголовка —
   // браузер видит это только как «Failed to fetch».
   const DOOR_NAME = i => ["рабочая дверь (ironsapple)", "личная дверь"][i] || "дверь " + (i + 1);
-  async function door(row, num, list, only) {
+  // Порядок дверей (v44, 03.10.2026). Владелец: «зарегистрировал заказ — уведомление что-то долго».
+  // Двери шли строго «рабочая → личная»: рабочая заводит Google-контакт, пушит имя в Telegram и
+  // WhatsApp, пишет «Историю статусов» — ~45 с на новый заказ, и только потом личная слала
+  // клиенту сообщение (№7795: статус в 16:11:31, сообщение — в 16:11:44–50, тост ещё позже). Сообщению
+  // о статусе рабочая дверь не нужна. Нужна она только отчёту (L) и напоминанию об отзыве (J): в
+  // отчёте «Дата выдачи», а её ставит рабочая дверь по закрывающему статусу. Поэтому личная — первой,
+  // кроме сохранений с L или J. onDone — итог каждой двери сразу, не дожидаясь второй.
+  const doorOrder = list => list.some(ch => ch.c === C.report || ch.c === C.review) ? [0, 1] : [1, 0];
+  async function door(row, num, list, only, onDone) {
     if (DEMO || !CFG.doors.length) return null;
     // force — «отправить ещё раз»: статус кнопкой resend и отчёт поверх уже отправленного (Ok → Ok).
     // Без него дверь пропустила бы то же значение как «уже обработано» в течение 10 минут.
     const force = list.filter(ch => ch.force || (ch.c === C.report && isTrue(ch.old) && isTrue(ch.v))).map(ch => ch.c + 1);
     const body = JSON.stringify({ token: S.token, row, num, force, changes: list.map(ch => ({ col: ch.c + 1, value: String(ch.w ?? ch.v ?? ""), old: String(ch.old ?? "") })) });
     const all = { ok: true, results: [], statusBackground: "", issued: null, failed: [] };
-    for (const [di, url] of CFG.doors.entries()) {
+    for (const di of doorOrder(list)) {
+      const url = CFG.doors[di]; if (!url) continue;
       if (only && !only.includes(di)) continue;
       try {
       // «Дверь занята» — дверь держит один запрос за раз (замок на 25 с). Когда в оболочке
@@ -2614,8 +2625,10 @@
       }
       if (!j.ok) throw new Error(j.error || "не ответила");
       all.results.push(...(j.results || []));
-      all.statusBackground = j.statusBackground || all.statusBackground; // последняя дверь шлёт статус и красит H
+      // Цвет H ставит личная дверь (итог отправки клиенту); рабочая отдаёт его же, прочитав клетку.
+      if (di === 1 || !all.statusBackground) all.statusBackground = j.statusBackground || all.statusBackground;
       if (j.issued != null) all.issued = j.issued;
+      try { onDone?.(di, j); } catch { /* подсказка — не повод ронять дверь */ }
       } catch (e) { all.failed.push({ i: di, why: DOOR_NAME(di) + ": " + e.message }); }
     }
     if (all.failed.length) { const err = new Error(all.failed.map(f => f.why).join("; ")); err.failed = all.failed.map(f => f.i); err.partial = all; throw err; }
@@ -2642,12 +2655,16 @@
     const notify = list.some(ch => F[ch.c]?.door);
     if (!notify) return;
     S.pendingDoors = (S.pendingDoors || 0) + 1;
-    return door(r.row, num, list, only).finally(() => { S.pendingDoors--; }).then(j => {
+    // Итог для клиента — как только ответила личная дверь (она шлёт сообщения), не дожидаясь рабочей.
+    let told = false;
+    const early = (di, j) => { if (di === 1 && doorOrder(list)[0] === 1) { told = true; toast(`№${num}: ${doorReport({ ...j, results: j.results || [] }, list, r)}`, null, true); } };
+    return door(r.row, num, list, only, early).finally(() => { S.pendingDoors--; }).then(j => {
       if (j?.issued != null && j.issued !== cell(r, C.issued)) {
         r.cells[C.issued] = j.issued;
         if (location.hash === "#/" + num && ![...S.dirty.keys()].some(k => k.startsWith(r.row + ":"))) renderCard(num);
       }
-      toast(`№${num}: ${doorReport(j, list, r)}`, null, true);
+      const errs = (j?.results || []).flatMap(x => x.errors || []);
+      if (!told || errs.length) toast(`№${num}: ${doorReport(j, list, r)}`, null, true);
     }).catch(e => toast(`№${num}: записано в таблицу, но ${e.failed?.includes(1) || !e.failed ? "уведомления НЕ ушли" : "часть обработки не прошла"} — ${e.message}`, { label: "Повторить", run: () => doorInBackground(r, num, list, e.failed) }, 60000));
   }
 
