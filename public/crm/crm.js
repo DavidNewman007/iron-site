@@ -26,7 +26,7 @@
     scope: "openid email https://www.googleapis.com/auth/spreadsheets",
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
-    lastCol: "AG",
+    lastCol: "AI", // AH–AI «На связи» (03.10.2026); до этого — AG
     // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
@@ -54,7 +54,10 @@
     discount: 22, // W «Скидка» — «500 ₽» или «10%»; Q «Итого» уже со скидкой (28.09.2026)
     // Добавлены 25.09.2026 (план 93 §11.3): K «Пароль», AC–AF — тип сделки и её данные.
     pass: 10, type: 28, imei: 29, buyback: 30, linked: 31,
-    group: 32 }; // AG — «Группа»: № первого заказа, если устройств у клиента несколько (26.09.2026)
+    group: 32, // AG — «Группа»: № первого заказа, если устройств у клиента несколько (26.09.2026)
+    // AH–AI «На связи» (03.10.2026, план 93 §11.38): телефон клиента в ремонте — уведомления
+    // уходят этому человеку, а заказ остаётся за клиентом (C/D). Логика — ContactPerson.js.
+    contactName: 33, contactPhone: 34 };
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -90,6 +93,9 @@
     [C.extra]: { label: "Сторонний мастер / расходы, ₽", num: true },
     [C.partFrom]: { label: "Откуда запчасть" },
     [C.source]: { label: "Источник клиента" },
+    // Без door: сама правка ничего не шлёт. Отправить на новый номер — кнопкой «Отправить статус ещё раз».
+    [C.contactName]: { label: "Имя того, кто на связи" },
+    [C.contactPhone]: { label: "Телефон того, кто на связи", tel: true },
     [C.pass]: { label: "Пароль устройства 🔑" },
     [C.type]: { label: "Тип сделки", door: true },
     [C.imei]: { label: "IMEI / S\\N", door: true }, // AD1 в таблице — «IMEI / S\N» (28.09.2026)
@@ -365,8 +371,11 @@
   // Поисковые ключи строки считаются один раз при загрузке (и после правки строки), а не
   // на каждое нажатие клавиши: по 7–8 тысячам строк поиск так идёт за миллисекунды.
   function index(r) {
-    r.hay = norm([C.num, C.name, C.phone, C.device, C.issue, C.work, C.parts, C.comment, C.master, C.imei, C.type, C.status].map(c => c === C.status ? stLabel(r.cells[c] ?? "") : r.cells[c] ?? "").join(" "));
+    r.hay = norm([C.num, C.name, C.phone, C.contactName, C.contactPhone, C.device, C.issue, C.work, C.parts, C.comment, C.master, C.imei, C.type, C.status].map(c => c === C.status ? stLabel(r.cells[c] ?? "") : r.cells[c] ?? "").join(" "));
     r.ph = phones(r.cells[C.phone]).map(p => p.d);
+    // Номер «на связи» — только для поиска (звонит дочь: «я по папиному телефону»). В r.ph его
+    // класть нельзя: по r.ph склеивается книга клиентов, и владелец слился бы с человеком на связи.
+    r.ph2 = phones(r.cells[C.contactPhone]).map(p => p.d);
     r.nameN = norm(String(r.cells[C.name] ?? "").split("\n")[0]);
   }
   function normDigits(d) { return d.length === 11 && d[0] === "8" ? "7" + d.slice(1) : d; }
@@ -552,6 +561,7 @@
         const num = String(cell(r, C.num)).trim();
         if (num === d) score = 1000;
         else if (d.length >= 4 && r.ph.some(p => p.includes(d))) score = 400;
+        else if (d.length >= 4 && r.ph2.some(p => p.includes(d))) score = 350;
         else if (d.length >= 4 && digits(cell(r, C.imei)).includes(d)) score = 300;
         else if (num.startsWith(d)) score = 200;
         else continue;
@@ -634,7 +644,7 @@
     if (S.view === "rows") return `<div class="ritem${menu}" role="button" tabindex="0" data-open="${esc(cell(r, C.num))}">
       <span class="ri__num">№${mark(cell(r, C.num))}</span>
       <span class="ri__date">${esc(date.slice(0, 5))}<small${old ? ' class="is-old"' : ""}>${esc(ageTxt)}</small></span>
-      <span class="ri__name">${mark(cell(r, C.name) || "без имени")}${S.q && cell(r, C.phone) ? `<small>${mark(cell(r, C.phone))}</small>` : ""}</span>
+      <span class="ri__name">${mark(cell(r, C.name) || "без имени")}${S.q && cell(r, C.phone) ? `<small>${mark(cell(r, C.phone))}</small>` : ""}${String(cell(r, C.contactPhone) ?? "").trim() ? `<small title="Уведомления уходят человеку на связи">📲 ${mark(cell(r, C.contactName) || cell(r, C.contactPhone))}</small>` : ""}</span>
       <span class="ri__dev">${mark(cell(r, C.device) || "—")}${dk !== "repair" ? ` <small>${esc(cell(r, C.type))}</small>` : ""}</span>
       <span class="ri__st">${stChip}</span>
       <span class="ri__sum">${money(cell(r, C.total))}</span>
@@ -644,6 +654,7 @@
       <div class="item__dev">${mark(cell(r, C.device) || "—")}${cell(r, C.issue) ? `<span class="item__issue"> · ${mark(cell(r, C.issue))}</span>` : ""}</div>
       <div class="item__meta"><span class="item__date">📅 ${esc(date || "—")}${ageTxt ? ` <em class="${old ? "is-old" : ""}">${esc(ageTxt)}</em>` : ""}</span>
         ${S.q && cell(r, C.phone) ? `<span>📞 ${mark(cell(r, C.phone))}</span>` : ""}
+        ${String(cell(r, C.contactPhone) ?? "").trim() ? `<span title="Уведомления уходят человеку на связи">📲 ${mark(cell(r, C.contactName) || cell(r, C.contactPhone))}</span>` : ""}
         ${cell(r, C.master) ? `<span>🔧 ${mark(cell(r, C.master))}</span>` : ""}
         ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}
         <span class="item__sum">${money(cell(r, C.total))}</span></div>
@@ -1888,7 +1899,8 @@
       const reportSent = isTrue(cell(r, C.report));
       const statusBlock = editable(C.status, r)
         ? `${ddHtml(key, C.status, S.dirty.has(key + ":" + C.status) ? S.dirty.get(key + ":" + C.status) : st, statusesFor(dk), { allowEmpty: false })}<p class="note">Выберите статус и нажмите «Сохранить» внизу — клиенту уйдёт уведомление, как из таблицы.${groupOf(r)?.shared ? " <b>Статус поменяется у всех устройств группы.</b>" : ""}</p>
-          ${isSilent(st) ? "" : `<button type="button" class="btn btn--ghost btn--sm btn--silent" data-choice="${C.status}" data-value="${SILENT}" aria-pressed="${norm(S.dirty.get(key + ":" + C.status)) === norm(SILENT)}">🔕 Закрыть без уведомления</button>`}`
+          ${isSilent(st) ? "" : `<button type="button" class="btn btn--ghost btn--sm btn--silent" data-choice="${C.status}" data-value="${SILENT}" aria-pressed="${norm(S.dirty.get(key + ":" + C.status)) === norm(SILENT)}">🔕 Закрыть без уведомления</button>`}
+          ${resendBtn(r, st)}`
         : `<div class="big">${esc(stLabel(st) || "без статуса")}</div><div class="row"><a class="btn btn--red" href="${sheetLink(r.row, C.status)}" target="_blank" rel="noopener">Сменить статус в таблице ↗</a></div>`;
       const reportBtn = editable(C.report, r)
         ? `<button type="button" class="btn ${reportSent ? "btn--ghost" : ""}" data-act="report">${reportSent ? "Отчёт уже отправлен — отправить заново" : groupOf(r)?.shared ? "📨 Отправить общий отчёт" : "📨 Отправить итоговый отчёт клиенту"}</button>`
@@ -1902,6 +1914,7 @@
     html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
       ${isNew ? `<div id="client-devs">${clientDevicesHtml(currentNewClient())}</div>` : ""}
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
+      ${proxyHtml(key, r, isNew, val, fh)}
       ${!isNew && canCreate() ? clientActions(r, dk) : ""}
     </section>`;
     left += box(3, html); html = "";
@@ -1943,6 +1956,45 @@
       ${!isNew ? `<div class="row">${deleteBox(r)}</div>` : ""}</section>`;
     left += box(7, html);
     return `<div class="card-grid"><div class="col">${left}</div><div class="col">${right}</div></div>`;
+  }
+
+  // ── «На связи другой человек» (03.10.2026, план 93 §11.38) ──────────────────────────
+  // Владелец: «человек сдаёт в ремонт свой единственный телефон и остаётся без связи —
+  // оставляет контакт того, кто на связи». AH/AI: имя и телефон этого человека. Пока телефон
+  // вписан, ВСЕ уведомления по заказу уходят ему (ContactPerson.js в таблице), в каждом —
+  // «👤 Владелец: … — ваш номер оставили для связи». Заказ, Google-контакт, книга клиентов,
+  // история — по-прежнему за C/D. Очистил телефон — сообщения снова идут клиенту.
+  function proxyHtml(key, r, isNew, val, fh) {
+    const has = String(val(C.contactPhone) ?? "").trim() || String(val(C.contactName) ?? "").trim();
+    if (!isNew && !editable(C.contactPhone, r)) {
+      return has ? `<div class="proxy"><div class="proxy__head">📲 На связи: ${esc(val(C.contactName))} ${esc(val(C.contactPhone))}</div></div>` : "";
+    }
+    if (!has && S.proxyOpen !== key) {
+      return `<div class="row row--proxy"><button type="button" class="btn btn--ghost btn--sm" data-act="proxyon">📲 На связи другой человек</button><small class="note">если телефон клиента остаётся у нас в ремонте</small></div>`;
+    }
+    const ctel = phones(val(C.contactPhone));
+    return `<div class="proxy">
+      <div class="proxy__head">📲 На связи другой человек</div>
+      <div class="grid2">${fh(C.contactName)}${fh(C.contactPhone)}</div>
+      <p class="note">Все уведомления по заказу — статусы, итоговый отчёт, напоминание об отзыве — уйдут на этот номер с пометкой, чьё это устройство. Заказ, контакт и история остаются за клиентом. Сотрите телефон — сообщения снова пойдут клиенту.${isNew ? "" : " Уже идущему заказу — впишите номер и нажмите «Отправить статус ещё раз»."}</p>
+      ${ctel.length ? `<div class="row">${ctel.map(p => `<a class="btn btn--sm" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost btn--sm" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost btn--sm" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
+    </div>`;
+  }
+  // Повторная отправка текущего статуса (03.10.2026). Раньше для этого стирали статус и ставили
+  // заново — лишняя запись в «Историю статусов» и ещё одно сообщение с пустым статусом не
+  // уходило только потому, что пустой статус не шлётся. Теперь дверь получает тот же статус с
+  // флагом force (в обход 10-минутной защиты от дублей); история не пишется (old = value).
+  function resendBtn(r, st) {
+    if (!r || !st || isSilent(st) || !editable(C.status, r)) return "";
+    const to = phones(cell(r, C.contactPhone));
+    if (!to.length && !phones(cell(r, C.phone)).length) return "";
+    return `<button type="button" class="btn btn--ghost btn--sm btn--resend" data-act="resend">${to.length ? "📨 Отправить статус на номер для связи" : "↻ Отправить статус ещё раз"}</button>`;
+  }
+  function resendStatus(r) {
+    const num = String(cell(r, C.num)).trim(), st = cell(r, C.status);
+    const to = phones(cell(r, C.contactPhone));
+    toast(`№${num}: отправляю «${st}» ${to.length ? "на номер для связи " + to[0].text : "клиенту"}…`);
+    return doorInBackground(r, num, [{ c: C.status, v: st, old: st, force: true }]);
   }
 
   // Группа — заказы одного клиента, созданные одной формой (колонка AG = № первого заказа).
@@ -2441,7 +2493,10 @@
   const DOOR_NAME = i => ["рабочая дверь (ironsapple)", "личная дверь"][i] || "дверь " + (i + 1);
   async function door(row, num, list, only) {
     if (DEMO || !CFG.doors.length) return null;
-    const body = JSON.stringify({ token: S.token, row, num, changes: list.map(ch => ({ col: ch.c + 1, value: String(ch.w ?? ch.v ?? ""), old: String(ch.old ?? "") })) });
+    // force — «отправить ещё раз»: статус кнопкой resend и отчёт поверх уже отправленного (Ok → Ok).
+    // Без него дверь пропустила бы то же значение как «уже обработано» в течение 10 минут.
+    const force = list.filter(ch => ch.force || (ch.c === C.report && isTrue(ch.old) && isTrue(ch.v))).map(ch => ch.c + 1);
+    const body = JSON.stringify({ token: S.token, row, num, force, changes: list.map(ch => ({ col: ch.c + 1, value: String(ch.w ?? ch.v ?? ""), old: String(ch.old ?? "") })) });
     const all = { ok: true, results: [], statusBackground: "", issued: null, failed: [] };
     for (const [di, url] of CFG.doors.entries()) {
       if (only && !only.includes(di)) continue;
@@ -2472,17 +2527,18 @@
     if (all.failed.length) { const err = new Error(all.failed.map(f => f.why).join("; ")); err.failed = all.failed.map(f => f.i); err.partial = all; throw err; }
     return all;
   }
-  function doorReport(j, list) {
+  function doorReport(j, list, r) {
     if (!j) return "";
+    const px = r && phones(cell(r, C.contactPhone)).length;
     const errs = (j.results || []).flatMap(x => x.errors || []);
     if (errs.length) return "Записано, но обработчик споткнулся: " + errs[0];
     if (list.some(ch => ch.c === C.status)) {
       const bg = String(j.statusBackground || "").toLowerCase();
-      if (bg === "#00bfff") return "Клиенту отправлено ✓";
+      if (bg === "#00bfff") return px ? "Отправлено человеку на связи ✓" : "Клиенту отправлено ✓";
       if (bg === "#ffff00") return "Статус сохранён. Клиента нет в Telegram — ушло в MAX/WhatsApp, если он там есть";
-      if (bg === "#ff0000") return "Статус сохранён, но отправка клиенту не удалась — проверьте номер";
+      if (bg === "#ff0000") return px ? "Отправка на номер для связи не удалась — проверьте номер" : "Статус сохранён, но отправка клиенту не удалась — проверьте номер";
     }
-    if (list.some(ch => ch.c === C.report && isTrue(ch.v))) return "Отчёт клиенту отправлен ✓";
+    if (list.some(ch => ch.c === C.report && isTrue(ch.v))) return px ? "Отчёт отправлен человеку на связи ✓" : "Отчёт клиенту отправлен ✓";
     return "Уведомления обработаны ✓";
   }
   // Уведомления — в фоне: человек видит «Сохранено» сразу после записи в таблицу (~1 с),
@@ -2497,7 +2553,7 @@
         r.cells[C.issued] = j.issued;
         if (location.hash === "#/" + num && ![...S.dirty.keys()].some(k => k.startsWith(r.row + ":"))) renderCard(num);
       }
-      toast(`№${num}: ${doorReport(j, list)}`, null, true);
+      toast(`№${num}: ${doorReport(j, list, r)}`, null, true);
     }).catch(e => toast(`№${num}: записано в таблицу, но ${e.failed?.includes(1) || !e.failed ? "уведомления НЕ ушли" : "часть обработки не прошла"} — ${e.message}`, { label: "Повторить", run: () => doorInBackground(r, num, list, e.failed) }, 60000));
   }
 
@@ -2552,6 +2608,10 @@
       for (const [, l] of quiet) { const i = l.findIndex(ch => ch.c === C.status); if (i >= 0) l.splice(i, 1); } // тихий статус — мимо двери
       const all = [...list, ...[...others.values()].flat()];
       toast((DEMO ? "Сохранено (демо — в таблицу не пишется)" : quiet.length && !all.some(ch => F[ch.c]?.door) ? "Закрыт без уведомления ✓ Клиенту ничего не отправлено" : all.some(ch => F[ch.c]?.door) ? `Сохранено ✓${others.size ? ` (и у ${others.size} устр. группы)` : ""} Уведомления отправляются…` : "Сохранено ✓") + skMsg, null, true);
+      // Вписали номер на связи в идущий заказ и статус не меняли — предложить отправить ему статус.
+      const cp = list.find(ch => ch.c === C.contactPhone);
+      if (cp && phones(cp.v).length && !stCh && !isSilent(cell(r, C.status)) && !all.some(ch => F[ch.c]?.door))
+        toast(`№${num}: номер на связи сохранён — дальше уведомления по заказу пойдут ему`, { label: "Отправить ему текущий статус", run: () => resendStatus(r) }, 20000);
       // Двери по очереди: сначала эта строка, потом остальные строки группы.
       [[r, list], ...others].reduce((p, [x, l]) => p.then(() => l.length ? doorInBackground(x, String(cell(x, C.num)).trim(), l) : null), Promise.resolve());
     } catch (e) { busy(false); toast(e.message, null, true); }
@@ -2760,6 +2820,20 @@
       setDirty(key, C.review, on);
       t.setAttribute("aria-pressed", String(on)); t.textContent = on ? "✓ Напомнить об отзыве" : "⭐ Напомнить об отзыве";
       refreshSaveBar(key);
+    }
+    else if (act === "proxyon") { S.proxyOpen = curKey(); const y = window.scrollY; render(); window.scrollTo(0, y); $app.querySelector(`[data-edit="${C.contactName}"]`)?.focus({ preventScroll: true }); }
+    else if (act === "resend") {
+      const key = curKey(), r = S.byNum.get(location.hash.slice(2)); if (!r) return;
+      if (S.dirty.has(key + ":" + C.status)) return toast("Статус изменён — он уйдёт при «Сохранить»");
+      // Два нажатия: сообщение уходит клиенту, случайный тап ничего не должен отправить.
+      if (!t.dataset.armed) { t.dataset.armed = "1"; t.textContent = "Точно отправить? Нажмите ещё раз"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.outerHTML = resendBtn(r, cell(r, C.status)); } }, 5000); return; }
+      t.disabled = true;
+      // Несохранённые правки (обычно — только что вписанный номер на связи) — сначала в таблицу.
+      if ([...S.dirty.keys()].some(k => k.startsWith(key + ":"))) {
+        await save(String(cell(r, C.num)).trim());
+        if ([...S.dirty.keys()].some(k => k.startsWith(key + ":"))) return; // не сохранилось — не шлём
+      }
+      resendStatus(r);
     }
     else if (act === "report") {
       const key = curKey(), r = S.byNum.get(location.hash.slice(2));

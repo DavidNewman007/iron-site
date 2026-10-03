@@ -587,3 +587,12 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .lst__row { display: flex; gap: 8px; padding: 0 4px 4px; }
 .item__top .lst .chip { max-width: 100%; }
 .item.has-menu, .ritem.has-menu { overflow: visible; position: relative; z-index: 6; }
+
+/* «На связи другой человек» (v40, 03.10.2026): уведомления — ему, заказ — за клиентом */
+.row--proxy { align-items: center; gap: 8px 12px; }
+.proxy { margin-top: 12px; padding: 12px 14px; border: 1px solid var(--new); border-radius: 12px; background: var(--new-bg); }
+.proxy__head { font-family: var(--font-display); letter-spacing: .04em; color: var(--new); margin-bottom: 8px; }
+.proxy .note { margin: 6px 0 0; }
+.btn--resend { margin-top: 10px; margin-left: 8px; max-width: 100%; text-align: left; padding-top: 6px; padding-bottom: 6px; }
+@media (max-width: 560px) { .btn--resend { margin-left: 0; } }
+.btn--resend[data-armed] { border-color: var(--wait); color: var(--wait); }
