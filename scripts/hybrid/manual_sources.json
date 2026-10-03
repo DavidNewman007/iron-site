@@ -3509,6 +3509,12 @@
       ],
       "note": "29.09.2026: Bold Yellow — официальный цвет X8 Pro (есть 8/256), фото с mi.com; характеристики — с карточки X8 Pro 8/256 Black (dr-store), цвет заменён",
       "checked": "2026-09-29"
+    },
+    "airpods 5 wireless~*": {
+      "name": "AirPods 5 Wireless",
+      "catalog_url": "https://sochi.dr-store.ru/apple/airpods/airpods-5/airpods-5-mkft4",
+      "note": "«Wireless» — кейс с беспроводной зарядкой: у поставщика это AirPods 5 Wireless Charging Case (MKFT4). Автосопоставление по адресу ставило AirPods Max (27–30.09), после правки 03.10 выбрало бы соседнюю MKFW4, где у поставщика фото AirPods 4.",
+      "checked": "2026-10-03"
     }
   }
 }

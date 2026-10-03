@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import json
 
-from .catalog_match import GENERIC_MATCH_CATEGORIES, generic_match_penalty
+from .catalog_match import GENERIC_MATCH_CATEGORIES, airpods_match_penalty, generic_match_penalty
 from .config import SOURCES_ROOT
 from .product_match import (
     galaxy_watch_match_penalty,
@@ -53,6 +53,9 @@ def source_match_penalty(category: str, name: str, catalog_url: str) -> float:
         return iphone_match_penalty(name, catalog_url)
     if category == "samsung":
         return samsung_match_penalty(name, catalog_url)
+    # 03.10.2026: без этой ветки аудит отвечал AirPods «1.0» на любой адрес — «AirPods 5 Wireless» на странице Max не ловил.
+    if category == "airpods":
+        return airpods_match_penalty(name, catalog_url)
     if category in GENERIC_MATCH_CATEGORIES:
         slug = catalog_url.rsplit("/", 1)[-1].replace("-", " ")
         penalty = generic_match_penalty(name, slug)

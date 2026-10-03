@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-01T14:19:27.418Z",
+  "generated_at": "2026-10-03T13:45:35.060308Z",
   "count": 200,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
@@ -162,14 +162,6 @@
       "warehouse": "(S2)",
       "price": 16700
     },
-    "-airpods-pro-2-s2-16300": {
-      "url": "hybrid-products/airpods/airpods-pro-2-s2-16300.html",
-      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-16300.html",
-      "cover": "assets/product-images/f18c678e855168c501f10533.jpg",
-      "name": "🔈AirPods Pro 2",
-      "warehouse": "(S2)",
-      "price": 16300
-    },
     "-airpods-pro-3-s2-19600": {
       "url": "hybrid-products/airpods/airpods-pro-3-s2-19600.html",
       "url_en": "en/hybrid-products/airpods/airpods-pro-3-s2-19600.html",
@@ -266,14 +258,6 @@
       "warehouse": "(S2)",
       "price": 16300
     },
-    "-airpods-pro-2-s2-16200": {
-      "url": "hybrid-products/airpods/airpods-pro-2-s2-16200.html",
-      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-16200.html",
-      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
-      "name": "🔈AirPods Pro 2",
-      "warehouse": "(S2)",
-      "price": 16200
-    },
     "-airpods-pro-3-s2-19500": {
       "url": "hybrid-products/airpods/airpods-pro-3-s2-19500.html",
       "url_en": "en/hybrid-products/airpods/airpods-pro-3-s2-19500.html",
@@ -330,14 +314,6 @@
       "warehouse": "(S1)",
       "price": 16800
     },
-    "-airpods-pro-2-s2-16100": {
-      "url": "hybrid-products/airpods/airpods-pro-2-s2-16100.html",
-      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-16100.html",
-      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
-      "name": "🔈AirPods Pro 2",
-      "warehouse": "(S2)",
-      "price": 16100
-    },
     "-airpods-pro-3-s2-19300": {
       "url": "hybrid-products/airpods/airpods-pro-3-s2-19300.html",
       "url_en": "en/hybrid-products/airpods/airpods-pro-3-s2-19300.html",
@@ -353,14 +329,6 @@
       "name": "🎧 AirPods 4 with ANC MXP93",
       "warehouse": "(S1)",
       "price": 16600
-    },
-    "-airpods-pro-2-s2-15900": {
-      "url": "hybrid-products/airpods/airpods-pro-2-s2-15900.html",
-      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-15900.html",
-      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
-      "name": "🔈AirPods Pro 2",
-      "warehouse": "(S2)",
-      "price": 15900
     },
     "-airpods-4-mxp63-s1-11300": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-11300.html",
@@ -409,14 +377,6 @@
       "name": "🔈Airpods 4",
       "warehouse": "(S2)",
       "price": 11900
-    },
-    "-airpods-pro-2-s2-15800": {
-      "url": "hybrid-products/airpods/airpods-pro-2-s2-15800.html",
-      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-15800.html",
-      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
-      "name": "🔈AirPods Pro 2",
-      "warehouse": "(S2)",
-      "price": 15800
     },
     "-airpods-pro-3-s2-19000": {
       "url": "hybrid-products/airpods/airpods-pro-3-s2-19000.html",
@@ -495,14 +455,6 @@
       "url_en": "en/hybrid-products/airpods/airpods-4-anc-s2-16000.html",
       "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
       "name": "🔈AirPods 4 ANC",
-      "warehouse": "(S2)",
-      "price": 16000
-    },
-    "-airpods-pro-2-s2-16000": {
-      "url": "hybrid-products/airpods/airpods-pro-2-s2-16000.html",
-      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-16000.html",
-      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
-      "name": "🔈AirPods Pro 2",
       "warehouse": "(S2)",
       "price": 16000
     },
@@ -591,14 +543,6 @@
       "url_en": "en/hybrid-products/airpods/airpods-4-anc-s3-16200.html",
       "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
       "name": "AirPods 4 ANC",
-      "warehouse": "(S3)",
-      "price": 16200
-    },
-    "airpods-pro-2-usb-c-европа-s3-16200": {
-      "url": "hybrid-products/airpods/airpods-pro-2-usb-c-s3-16200.html",
-      "url_en": "en/hybrid-products/airpods/airpods-pro-2-usb-c-s3-16200.html",
-      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
-      "name": "AirPods Pro 2 USB-C",
       "warehouse": "(S3)",
       "price": 16200
     },
@@ -769,14 +713,6 @@
       "name": "AirPods 4 ANC",
       "warehouse": "(S3)",
       "price": 15100
-    },
-    "airpods-pro-2-usb-c-европа-s3-20700": {
-      "url": "hybrid-products/airpods/airpods-pro-2-usb-c-s3-20700.html",
-      "url_en": "en/hybrid-products/airpods/airpods-pro-2-usb-c-s3-20700.html",
-      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
-      "name": "AirPods Pro 2 (USB-C)",
-      "warehouse": "(S3)",
-      "price": 20700
     },
     "airpods-pro-3-европа-s3-20700": {
       "url": "hybrid-products/airpods/airpods-pro-3-s3-20700.html",
@@ -1274,14 +1210,6 @@
       "warehouse": "(S3)",
       "price": 16200
     },
-    "airpods-5-wireless-европа-s3-19200": {
-      "url": "hybrid-products/airpods/airpods-5-wireless-s3-19200.html",
-      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s3-19200.html",
-      "cover": "assets/product-images/195fa35792fe5b33bbab7a98.jpg",
-      "name": "AirPods 5 Wireless",
-      "warehouse": "(S3)",
-      "price": 19200
-    },
     "airpods-pro-3-европа-s3-21200": {
       "url": "hybrid-products/airpods/airpods-pro-3-s3-21200.html",
       "url_en": "en/hybrid-products/airpods/airpods-pro-3-s3-21200.html",
@@ -1354,14 +1282,6 @@
       "warehouse": "(S3)",
       "price": 16000
     },
-    "airpods-5-wireless-европа-s3-19300": {
-      "url": "hybrid-products/airpods/airpods-5-wireless-s3-19300.html",
-      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s3-19300.html",
-      "cover": "assets/product-images/195fa35792fe5b33bbab7a98.jpg",
-      "name": "AirPods 5 Wireless",
-      "warehouse": "(S3)",
-      "price": 19300
-    },
     "airpods-max-2-2026-purple-европа-s3-44100": {
       "url": "hybrid-products/airpods/airpods-max-2-2026-purple-s3-44100.html",
       "url_en": "en/hybrid-products/airpods/airpods-max-2-2026-purple-s3-44100.html",
@@ -1409,14 +1329,6 @@
       "name": "🔈AirPods 5",
       "warehouse": "(S2)",
       "price": 15800
-    },
-    "-airpods-5-wireless-s2-19400": {
-      "url": "hybrid-products/airpods/airpods-5-wireless-s2-19400.html",
-      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s2-19400.html",
-      "cover": "assets/product-images/195fa35792fe5b33bbab7a98.jpg",
-      "name": "🔈AirPods 5 Wireless",
-      "warehouse": "(S2)",
-      "price": 19400
     },
     "airpods-4-европа-s3-13000": {
       "url": "hybrid-products/airpods/airpods-4-s3-13000.html",
@@ -1506,14 +1418,6 @@
       "warehouse": "(S2)",
       "price": 15300
     },
-    "-airpods-5-wireless-s2-19200": {
-      "url": "hybrid-products/airpods/airpods-5-wireless-s2-19200.html",
-      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s2-19200.html",
-      "cover": "assets/product-images/195fa35792fe5b33bbab7a98.jpg",
-      "name": "🔈AirPods 5 Wireless",
-      "warehouse": "(S2)",
-      "price": 19200
-    },
     "-airpods-pro-3-s2-20900": {
       "url": "hybrid-products/airpods/airpods-pro-3-s2-20900.html",
       "url_en": "en/hybrid-products/airpods/airpods-pro-3-s2-20900.html",
@@ -1601,6 +1505,102 @@
       "name": "AirPods MAX 2 (2026) Purple",
       "warehouse": "(S3)",
       "price": 43600
+    },
+    "-airpods-5-wireless-s2-19400": {
+      "url": "hybrid-products/airpods/airpods-5-wireless-s2-19400.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s2-19400.html",
+      "cover": "assets/product-images/b971cee99de17a92f4f0ca43.png",
+      "name": "🔈AirPods 5 Wireless",
+      "warehouse": "(S2)",
+      "price": 19400
+    },
+    "airpods-5-wireless-европа-s3-19300": {
+      "url": "hybrid-products/airpods/airpods-5-wireless-s3-19300.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s3-19300.html",
+      "cover": "assets/product-images/b971cee99de17a92f4f0ca43.png",
+      "name": "AirPods 5 Wireless",
+      "warehouse": "(S3)",
+      "price": 19300
+    },
+    "-airpods-5-wireless-s2-19200": {
+      "url": "hybrid-products/airpods/airpods-5-wireless-s2-19200.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s2-19200.html",
+      "cover": "assets/product-images/b971cee99de17a92f4f0ca43.png",
+      "name": "🔈AirPods 5 Wireless",
+      "warehouse": "(S2)",
+      "price": 19200
+    },
+    "-airpods-pro-2-s2-15800": {
+      "url": "hybrid-products/airpods/airpods-pro-2-s2-15800.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-15800.html",
+      "cover": "assets/product-images/05aa29355b95c6b52db8a052.jpg",
+      "name": "🔈AirPods Pro 2",
+      "warehouse": "(S2)",
+      "price": 15800
+    },
+    "-airpods-pro-2-s2-15900": {
+      "url": "hybrid-products/airpods/airpods-pro-2-s2-15900.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-15900.html",
+      "cover": "assets/product-images/05aa29355b95c6b52db8a052.jpg",
+      "name": "🔈AirPods Pro 2",
+      "warehouse": "(S2)",
+      "price": 15900
+    },
+    "-airpods-pro-2-s2-16000": {
+      "url": "hybrid-products/airpods/airpods-pro-2-s2-16000.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-16000.html",
+      "cover": "assets/product-images/05aa29355b95c6b52db8a052.jpg",
+      "name": "🔈AirPods Pro 2",
+      "warehouse": "(S2)",
+      "price": 16000
+    },
+    "-airpods-pro-2-s2-16100": {
+      "url": "hybrid-products/airpods/airpods-pro-2-s2-16100.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-16100.html",
+      "cover": "assets/product-images/05aa29355b95c6b52db8a052.jpg",
+      "name": "🔈AirPods Pro 2",
+      "warehouse": "(S2)",
+      "price": 16100
+    },
+    "-airpods-pro-2-s2-16200": {
+      "url": "hybrid-products/airpods/airpods-pro-2-s2-16200.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-16200.html",
+      "cover": "assets/product-images/05aa29355b95c6b52db8a052.jpg",
+      "name": "🔈AirPods Pro 2",
+      "warehouse": "(S2)",
+      "price": 16200
+    },
+    "-airpods-pro-2-s2-16300": {
+      "url": "hybrid-products/airpods/airpods-pro-2-s2-16300.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-2-s2-16300.html",
+      "cover": "assets/product-images/05aa29355b95c6b52db8a052.jpg",
+      "name": "🔈AirPods Pro 2",
+      "warehouse": "(S2)",
+      "price": 16300
+    },
+    "airpods-5-wireless-европа-s3-19200": {
+      "url": "hybrid-products/airpods/airpods-5-wireless-s3-19200.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s3-19200.html",
+      "cover": "assets/product-images/b971cee99de17a92f4f0ca43.png",
+      "name": "AirPods 5 Wireless",
+      "warehouse": "(S3)",
+      "price": 19200
+    },
+    "airpods-pro-2-usb-c-европа-s3-16200": {
+      "url": "hybrid-products/airpods/airpods-pro-2-usb-c-s3-16200.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-2-usb-c-s3-16200.html",
+      "cover": "assets/product-images/05aa29355b95c6b52db8a052.jpg",
+      "name": "AirPods Pro 2 USB-C",
+      "warehouse": "(S3)",
+      "price": 16200
+    },
+    "airpods-pro-2-usb-c-европа-s3-20700": {
+      "url": "hybrid-products/airpods/airpods-pro-2-usb-c-s3-20700.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-2-usb-c-s3-20700.html",
+      "cover": "assets/product-images/05aa29355b95c6b52db8a052.jpg",
+      "name": "AirPods Pro 2 (USB-C)",
+      "warehouse": "(S3)",
+      "price": 20700
     }
   }
 }

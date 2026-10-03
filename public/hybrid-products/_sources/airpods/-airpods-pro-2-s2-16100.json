@@ -6,12 +6,13 @@
   "country": "",
   "warehouse": "(S2)",
   "price": 16100,
-  "catalog_url": "https://sochi.dr-store.ru/apple/airpods/airpods-pro/airpods-pro-3",
-  "catalog_title": "беспроводные наушники Apple AirPods Pro 3 , Сочи, Ростове-на-Дону и Москве",
+  "catalog_url": "https://sochi.dr-store.ru/apple/airpods/airpods-pro/airpods-pro2-MTJV3",
+  "updated_at": "2026-10-03T13:45:26.017696Z",
+  "catalog_title": "Airpods Pro 2: купить наушники Apple AirPods Pro 2 USB-C с доставкой",
   "specs": [
     {
       "key": "Процессор",
-      "value": "в наушниках Apple H2; в кейсе Apple U2"
+      "value": "в наушниках Apple H2; в кейсе Apple U1"
     },
     {
       "key": "Сотовая и беспроводная сеть",
@@ -23,7 +24,7 @@
     },
     {
       "key": "Время работы",
-      "value": "до 10 часов прослушивания в режиме прозрачности, до 24 часов прослушивания с включенной функцией активного шумоподавления"
+      "value": "до 30 часов прослушивания, до 24 часов работы в режиме разговора"
     },
     {
       "key": "Беспроводная зарядка",
@@ -31,23 +32,23 @@
     },
     {
       "key": "Ширина",
-      "value": "Наушник: 19.2 мм; Кейс: 62.2 мм"
+      "value": "Наушник: 21.8 мм; Кейс: 60.6 мм"
     },
     {
       "key": "Высота",
-      "value": "Наушник: 27 мм; Кейс: 47.2 мм"
+      "value": "Наушник: 30.9 мм; Кейс: 45.2 мм"
     },
     {
       "key": "Толщина",
-      "value": "Наушник: 27 мм; Кейс: 21.8 мм"
+      "value": "Наушник: 24.0 мм; Кейс: 21.7 мм"
     },
     {
       "key": "Вес",
-      "value": "Наушник: 5.55 г; Кейс: 43.99 г"
+      "value": "Наушник: 5.3 г; Кейс: 50.8 г"
     },
     {
       "key": "Стандарт влагозащиты",
-      "value": "IP57"
+      "value": "IP54"
     },
     {
       "key": "Аудиотехнологии",
@@ -55,18 +56,23 @@
     },
     {
       "key": "Датчики",
-      "value": "датчик частоты сердечных сокращений для тренировок, датчик распознавания уха, акселерометр для определения движения, акселерометр для распознавания речи, сенсорное управление"
+      "value": "микрофоны с двойным формированием луча, микрофон, обращенный внутрь, датчик распознавания уха, акселерометр для определения движения, акселерометр для распознавания речи, сенсорное управление"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-3/airpods-pro-3-dr-store-3-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-3/airpods-pro-3-dr-store-1-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-3/airpods-pro-3-dr-store-2-1200x1200.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-12-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-15-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-14-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/airpods/airpods-pro-2/airpods-pro-2-dr-store-MTJV3-13-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/eb7b97539c279270915a05a4.jpg",
-    "assets/product-images/f18c678e855168c501f10533.jpg",
-    "assets/product-images/da706973a25c455e481f06a0.jpg"
-  ],
-  "updated_at": "2026-08-28T10:29:18.965165Z"
+    "assets/product-images/05aa29355b95c6b52db8a052.jpg",
+    "assets/product-images/84948ca3c6260bafed6f5540.jpg",
+    "assets/product-images/417685172e9e621d0e4f6881.jpg",
+    "assets/product-images/faf6ee4758aa19449dd5d240.jpg",
+    "assets/product-images/79d0df22a8dffa301318379c.jpg",
+    "assets/product-images/706ebf8b3879cee1feed71b7.jpg"
+  ]
 }

@@ -455,6 +455,33 @@ def generic_match_penalty(name: str, slug: str) -> float:
     return penalty
 
 
+# AIRPODS — ЛИНЕЙКА И ПОКОЛЕНИЕ (03.10.2026). «AirPods 5 Wireless» (4 карточки, 27–30.09) сели на страницу
+# «AirPods Max (Green)»: `token_set` выбрасывает цифры, от названия остаются {airpods, wireless}, со всеми страницами
+# AirPods совпадает одно слово, и ничью решала похожесть строк — «airpods max green» оказалась ближе (0.565 против
+# 0.537 у верной MKFT4). Своих проверок у AirPods не было вовсе, поэтому и аудит `find_stale_matches` такие привязки не
+# видел. Фото Max ушло в товар дня, и локальная модель нарисовала герою накладные наушники вместо вкладышей.
+_AIRPODS_GEN = re.compile(r"airpods\s*(?:pro\s*)?(\d)(?!\d)")
+
+
+def airpods_match_penalty(name: str, url: str) -> float:
+    """AirPods: Max/Pro в названии и в адресе — в обе стороны; номер поколения (AirPods 4 / 5, Pro 2 / 3)."""
+    slug = url.rsplit("/", 1)[-1].lower()
+    name_words = _generic_words(name)
+    slug_words = _generic_words(slug.replace("-", " "))
+    penalty = 1.0
+    for marker in ("max", "pro"):
+        if (marker in name_words) != (marker in slug_words):
+            penalty *= 0.2
+    name_gen = _AIRPODS_GEN.search(normalize_match_text(name))
+    slug_gen = _AIRPODS_GEN.search(slug.replace("-", " "))
+    if name_gen and slug_gen and name_gen.group(1) != slug_gen.group(1):
+        penalty *= 0.15
+    elif name_gen and not slug_gen:
+        # «AirPods 5» на странице без номера поколения — раздел или Max, а не этот товар.
+        penalty *= 0.4
+    return penalty
+
+
 def score_product_url(product: Product, url: str) -> float:
     slug = url.rsplit("/", 1)[-1].lower()
     name_norm = normalize_match_text(product.name)
@@ -481,6 +508,8 @@ def score_product_url(product: Product, url: str) -> float:
         score *= 0.3
     if product.category == "airpods" and "airpods" not in slug:
         score *= 0.2
+    if product.category == "airpods":
+        score *= airpods_match_penalty(product.name, url)
     if product.category == "accessories":
         score = score_accessory_url(name_norm, slug, url, score)
 
