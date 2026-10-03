@@ -6,8 +6,9 @@
   "country": "🇺🇸 США",
   "warehouse": "(S3)",
   "price": 92100,
-  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-air/ipad-air-13-m4/ipad-air-13-2026-wifi-128gb-space-gray",
-  "catalog_title": "планшет Apple iPad Air 13\" (2026, M4) Wi-Fi 128GB Space Gray , цена",
+  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-air/ipad-air-13-m4/ipad-air-13-2026-wifi-cellular-128gb-space-gray",
+  "updated_at": "2026-10-03T14:06:42.715395Z",
+  "catalog_title": "iPad Air 13'' M4 (2026) Wi-Fi + Cellular 128GB Space…",
   "specs": [
     {
       "key": "Тип дисплея",
@@ -58,8 +59,12 @@
       "value": "ƒ/2.0"
     },
     {
+      "key": "SIM-карта",
+      "value": "e-SIM"
+    },
+    {
       "key": "Сотовая и беспроводная сеть",
-      "value": "DisplayPort, Wi-Fi Direct, Wi-Fi 802.11 a/b/g/n/ac/ax/be, Bluetooth 6.0"
+      "value": "DisplayPort, Wi-Fi Direct, Wi-Fi 802.11 a/b/g/n/ac/ax/be, Bluetooth 6.0, Gigabit Class LTE, 5G NR, FDD‑LTE,TD‑LTE, GSM/EDGE, UMTS/HSPA/​HSPA+/​DC-HSDPA"
     },
     {
       "key": "Интерфейсы",
@@ -125,6 +130,5 @@
     "assets/product-images/6033965a106fb1cc48cc188b.png",
     "assets/product-images/afee4076a7415da7ba13916d.png",
     "assets/product-images/48d5dd6bd40362820cca5f8b.png"
-  ],
-  "updated_at": "2026-09-25T12:17:40.332617Z"
+  ]
 }

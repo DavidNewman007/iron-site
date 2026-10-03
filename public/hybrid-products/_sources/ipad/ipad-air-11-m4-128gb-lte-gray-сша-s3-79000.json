@@ -6,8 +6,9 @@
   "country": "🇺🇸 США",
   "warehouse": "(S3)",
   "price": 79000,
-  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-air/ipad-air-11-2024/ipad-air-11-2024-lte-128gb-space-gray",
-  "catalog_title": "планшет Apple iPad Air 11\" M2 (2024) Wi-Fi + Cellular 128GB, Space Gray",
+  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-air/ipad-air-11-m4/ipad-air-11-2026-lte-128gb-space-gray",
+  "updated_at": "2026-10-03T13:59:56.543286Z",
+  "catalog_title": "планшет Apple iPad Air 11\" M4 (2026) Wi-Fi + Cellular 128GB, Space Gray",
   "specs": [
     {
       "key": "Тип дисплея",
@@ -27,7 +28,7 @@
     },
     {
       "key": "Процессор",
-      "value": "Apple M2"
+      "value": "Apple M4"
     },
     {
       "key": "Графический процессор",
@@ -35,7 +36,7 @@
     },
     {
       "key": "Оперативная память",
-      "value": "8 ГБ"
+      "value": "12 ГБ"
     },
     {
       "key": "Разрешение основной камеры",
@@ -55,7 +56,7 @@
     },
     {
       "key": "Сотовая и беспроводная сеть",
-      "value": "5G (sub‑6 GHz), Gigabit LTE, eSIM, Wi-Fi 6E (802.11a/​b/​g/​n/​ac 2,4 ГГц и 5 ГГц), MIMO, Bluetooth 5.3"
+      "value": "5G (sub‑6 GHz), Gigabit LTE, eSIM, Wi-Fi 7 (802.11a/​b/​g/​n/​ac 2,4 ГГц и 5 ГГц), MIMO, Bluetooth 6"
     },
     {
       "key": "Интерфейсы",
@@ -67,7 +68,7 @@
     },
     {
       "key": "Ёмкость аккумулятора",
-      "value": "8900 мАч"
+      "value": "7606 мАч"
     },
     {
       "key": "Время работы",
@@ -91,7 +92,7 @@
     },
     {
       "key": "Вес",
-      "value": "462 г"
+      "value": "465 г"
     },
     {
       "key": "Операционная система",
@@ -121,6 +122,5 @@
     "assets/product-images/2f1f3b33371aa615ea3d44db.jpg",
     "assets/product-images/ee33014a893c0251126e8ce4.jpg",
     "assets/product-images/c9fb4249c4c239ded243b502.jpg"
-  ],
-  "updated_at": "2026-09-25T12:17:32.244514Z"
+  ]
 }

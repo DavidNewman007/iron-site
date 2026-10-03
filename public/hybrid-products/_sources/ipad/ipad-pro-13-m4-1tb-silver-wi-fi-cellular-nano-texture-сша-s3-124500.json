@@ -6,8 +6,9 @@
   "country": "🇺🇸 США",
   "warehouse": "(S3)",
   "price": 124500,
-  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-pro/ipad-pro-13-2024/ipad-pro-13-2024-512gb-silver",
-  "catalog_title": "планшет Apple iPad Pro 13'' (2024) Wi-Fi 512GB,…",
+  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-pro/ipad-pro-13-2024/ipad-pro-13-2024-lte-256gb-silver",
+  "updated_at": "2026-10-03T14:07:21.108713Z",
+  "catalog_title": "Планшет Apple iPad Pro 13' (A2926)",
   "specs": [
     {
       "key": "Тип дисплея",
@@ -59,7 +60,7 @@
     },
     {
       "key": "Сотовая и беспроводная сеть",
-      "value": "Wi-Fi 6E (802.11ax), MIMO, Bluetooth 5.3"
+      "value": "5G (sub‑6 GHz), Gigabit LTE, eSIM, Wi-Fi 6E (802.11ax), MIMO, Bluetooth 5.3"
     },
     {
       "key": "Интерфейсы",
@@ -95,7 +96,7 @@
     },
     {
       "key": "Вес",
-      "value": "579 г"
+      "value": "582 г"
     },
     {
       "key": "Операционная система",
@@ -125,6 +126,5 @@
     "assets/product-images/64c05fdfa66fdf4993e38a14.jpg",
     "assets/product-images/db4f879d65ab0e9704b1e872.jpg",
     "assets/product-images/1cde36c5e345c2640452c8b8.jpg"
-  ],
-  "updated_at": "2026-09-20T12:08:45.718750Z"
+  ]
 }

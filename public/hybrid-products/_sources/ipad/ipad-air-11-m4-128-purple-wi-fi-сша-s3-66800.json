@@ -6,12 +6,13 @@
   "country": "🇺🇸 США",
   "warehouse": "(S3)",
   "price": 66800,
-  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-air/iPad-Air-11-M3-2025/planshet-apple-ipad-air-11-m3-2025-wi-fi-128gb-purple",
-  "catalog_title": "Планшет Apple iPad Air 11'",
+  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-air/ipad-air-11-m4/ipad-air-11-2026-128gb-purple",
+  "updated_at": "2026-10-03T13:59:11.041430Z",
+  "catalog_title": "планшет Apple iPad Air 11\" M4 (2026) Wi-Fi 128GB, Purple",
   "specs": [
     {
       "key": "Тип дисплея",
-      "value": "Liquid Retina"
+      "value": "Liquid Retina IPS LCD"
     },
     {
       "key": "Диагональ",
@@ -19,15 +20,15 @@
     },
     {
       "key": "Разрешение",
-      "value": "2360×1640"
+      "value": "2360x1640 пикселей"
     },
     {
       "key": "Плотность пикселей",
-      "value": "264"
+      "value": "264 пикс/дюйм"
     },
     {
       "key": "Процессор",
-      "value": "Apple A16 Bionic"
+      "value": "Apple M4"
     },
     {
       "key": "Графический процессор",
@@ -35,35 +36,39 @@
     },
     {
       "key": "Оперативная память",
-      "value": "8"
+      "value": "12 ГБ"
     },
     {
       "key": "Разрешение основной камеры",
-      "value": "12 МП"
+      "value": "12 Мп"
     },
     {
       "key": "Диафрагма основной камеры",
-      "value": "-"
+      "value": "ƒ/1.8"
     },
     {
       "key": "Разрешение фронтальной камеры",
-      "value": "12 МП"
+      "value": "12 Мп"
     },
     {
       "key": "Диафрагма фронтальной камеры",
-      "value": "-"
+      "value": "ƒ/2.4"
     },
     {
       "key": "Сотовая и беспроводная сеть",
-      "value": "Wi-Fi, Bluetooth"
+      "value": "Wi-Fi 7 (802.11a/​b/​g/​n/​ac 2,4 ГГц и 5 ГГц), MIMO, Bluetooth 6"
     },
     {
       "key": "Интерфейсы",
-      "value": "USB Type-C"
+      "value": "USB‑C"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "Li-Pol"
     },
     {
       "key": "Ёмкость аккумулятора",
-      "value": "28.93 вТч"
+      "value": "7606 мАч"
     },
     {
       "key": "Время работы",
@@ -71,52 +76,51 @@
     },
     {
       "key": "Материал",
-      "value": "Алюминий"
+      "value": "алюминий"
     },
     {
       "key": "Ширина",
-      "value": "17,95"
+      "value": "178.5 мм"
     },
     {
       "key": "Высота",
-      "value": "24,86"
+      "value": "247.6 мм"
     },
     {
       "key": "Толщина",
-      "value": "0,7"
+      "value": "6.1 мм"
     },
     {
       "key": "Вес",
-      "value": "477"
+      "value": "464 г"
     },
     {
       "key": "Операционная система",
-      "value": "IPadOS 18"
+      "value": "iPadOS"
     },
     {
       "key": "Аудиотехнологии",
-      "value": "Стереодинамики"
+      "value": "стерео динамики"
     },
     {
       "key": "Поддержка",
-      "value": "9 ядер"
+      "value": "стилус Apple Pencil Pro, стилус Apple Pencil (USB-C), клавиатура Magic Keyboard"
     },
     {
       "key": "Датчики",
-      "value": "Touch ID, Трехосевой гироскоп, Акселерометр, Барометр, Датчик внешней освещенности"
+      "value": "Touch ID, трёхосевой гироскоп, акселерометр, барометр, датчик внешней освещённости"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/ipadnewimg/iPad Air 11 2025 A3266/Apple iPad Air 11''2025Purple/главная-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/ipadnewimg/iPad Air 11 2025 A3266/Apple iPad Air 11''2025Purple/2-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/ipadnewimg/iPad Air 11 2025 A3266/Apple iPad Air 11''2025Purple/3-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/ipadnewimg/iPad Air 11 2025 A3266/Apple iPad Air 11''2025Purple/4-1200x1200.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-11-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-1-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-m2-dr-store-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-air-11-2024/ipad-air-11-all-wf-dr-store-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/cd54a774d5e25785d840ad96.jpg",
-    "assets/product-images/1a968a3e31171c6fb8bd7e3e.jpg",
-    "assets/product-images/34c8cbb4d754df739fd54c79.jpg",
-    "assets/product-images/9a13c1482c6733f324de39ac.jpg"
-  ],
-  "updated_at": "2026-09-21T13:39:58.174107Z"
+    "assets/product-images/7d16c56cca0192a21b02abfb.jpg",
+    "assets/product-images/12ecff5a5b984c7c348c2b68.jpg",
+    "assets/product-images/57e34dc246594a488798d8e8.jpg",
+    "assets/product-images/dc43fccd78af8c74d2f38d05.jpg"
+  ]
 }

@@ -6,40 +6,41 @@
   "country": "🇺🇸 США",
   "warehouse": "(S3)",
   "price": 56400,
-  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-9-2021/ipad-9-wi-fi-256gb-space-gray",
-  "catalog_title": "планшет Apple iPad 9 (2021) Wi-Fi 256GB, Space Gray…",
+  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-mini/ipad-mini-2024/ipad-mini-7-wf-128gb-space-gray",
+  "updated_at": "2026-10-03T14:03:00.885808Z",
+  "catalog_title": "планшет Apple iPad mini (2024) Wi-Fi 128GB, Space…",
   "specs": [
     {
       "key": "Тип дисплея",
-      "value": "Retina IPS LCD"
+      "value": "Liquid Retina IPS LCD"
     },
     {
       "key": "Диагональ",
-      "value": "10.2\""
+      "value": "8.3\""
     },
     {
       "key": "Разрешение",
-      "value": "2160x1620 пикселей"
+      "value": "2266x1488 пикселей"
     },
     {
       "key": "Плотность пикселей",
-      "value": "264 пикс/дюйм"
+      "value": "326 пикс/дюйм"
     },
     {
       "key": "Процессор",
-      "value": "A13 Bionic"
+      "value": "Apple A17 Pro"
     },
     {
       "key": "Оперативная память",
-      "value": "4 ГБ"
+      "value": "8 ГБ"
     },
     {
       "key": "Разрешение основной камеры",
-      "value": "8 Мп"
+      "value": "12 Мп"
     },
     {
       "key": "Диафрагма основной камеры",
-      "value": "ƒ/2.4"
+      "value": "ƒ/1.8"
     },
     {
       "key": "Разрешение фронтальной камеры",
@@ -51,7 +52,11 @@
     },
     {
       "key": "Сотовая и беспроводная сеть",
-      "value": "Wi-Fi (802.11a/​b/​g/​n/​ac 2,4 ГГц и 5 ГГц), MIMO, Bluetooth 4.2"
+      "value": "Wi-Fi (802.11a/​b/​g/​n/​ac 2,4 ГГц и 5 ГГц), MIMO, Bluetooth 5.3"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB‑C"
     },
     {
       "key": "Тип аккумулятора",
@@ -59,7 +64,11 @@
     },
     {
       "key": "Ёмкость аккумулятора",
-      "value": "8557 мАч"
+      "value": "5078 мАч"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 10 часов"
     },
     {
       "key": "Материал",
@@ -67,23 +76,23 @@
     },
     {
       "key": "Ширина",
-      "value": "174.1 мм"
+      "value": "134.8 мм"
     },
     {
       "key": "Высота",
-      "value": "250.6 мм"
+      "value": "195.4 мм"
     },
     {
       "key": "Толщина",
-      "value": "7.5 мм"
+      "value": "6.3 мм"
     },
     {
       "key": "Вес",
-      "value": "487 г"
+      "value": "293 г"
     },
     {
       "key": "Операционная система",
-      "value": "iPadOS"
+      "value": "iPadOS 18"
     },
     {
       "key": "Аудиотехнологии",
@@ -91,22 +100,23 @@
     },
     {
       "key": "Поддержка",
-      "value": "стилус Apple Pencil (1-го поколения), клавиатура Smart Keyboard"
+      "value": "стилус Apple Pencil Pro, Apple Pencil (USB-C), Bluetooth-клавиатура"
     },
     {
       "key": "Датчики",
-      "value": "Touch ID , трёхосевой гироскоп, акселерометр, барометр, датчик внешней освещённости"
+      "value": "Touch ID, трёхосевой гироскоп, акселерометр, барометр, датчик внешней освещённости"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-9/ipad-9-2021-1-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-9/ipad-9-2021-5-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-9/ipad-9-2021-dr-13-1200x1200.png"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-mini-7/ipad-mini-7-dr-store-12-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-mini-7/ipad-mini-7-dr-store-8-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-mini-7/ipad-mini-7-dr-store-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-mini-7/ipad-mini-7-dr-store-1-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/83839880fa8d90a86b6bbf69.jpg",
-    "assets/product-images/b68d0744765dd5f4de364c36.jpg",
-    "assets/product-images/c48fe854cfc407d48def745c.png"
-  ],
-  "updated_at": "2026-09-25T12:17:11.622698Z"
+    "assets/product-images/c3d47cafb0df7d82ebd399db.jpg",
+    "assets/product-images/e3815a5dc77d8cd5cf816cbe.jpg",
+    "assets/product-images/97f6030f29a0d3670b76046d.jpg",
+    "assets/product-images/c9c0bec17d5f60ad51d60171.jpg"
+  ]
 }

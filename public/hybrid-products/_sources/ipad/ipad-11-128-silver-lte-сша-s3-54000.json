@@ -6,129 +6,79 @@
   "country": "🇺🇸 США",
   "warehouse": "(S3)",
   "price": 54000,
-  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-pro/ipad-pro-11-2025/ipad-pro-11-m5-512gb-lte-silver",
-  "catalog_title": "Планшет Apple iPad Pro 11'' M5 (2025) Wi-Fi + Cellular 512GB, Silver",
+  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-11/ipad-11-2025/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Silver",
+  "updated_at": "2026-10-03T14:05:43.698862Z",
+  "catalog_title": "Планшет Apple iPad 11 (2025) Wi-Fi + Cellular 128GB,…",
   "specs": [
     {
+      "key": "Производитель",
+      "value": "Apple"
+    },
+    {
       "key": "Тип дисплея",
-      "value": "Ultra Retina XDR Display, Tandem OLED"
+      "value": "Liquid Retina"
     },
     {
       "key": "Диагональ",
       "value": "11\""
     },
     {
-      "key": "Технология дисплея",
-      "value": "ProMotion Technology"
-    },
-    {
       "key": "Разрешение",
-      "value": "2420x1668 пикселей"
-    },
-    {
-      "key": "Плотность пикселей",
-      "value": "264 пикс/дюйм"
+      "value": "2360x1640"
     },
     {
       "key": "Процессор",
-      "value": "Apple M5"
+      "value": "Apple A16 Bionic"
     },
     {
-      "key": "Графический процессор",
-      "value": "10 ядер"
-    },
-    {
-      "key": "Оперативная память",
-      "value": "12 ГБ"
+      "key": "Количество ядер процессора",
+      "value": "5"
     },
     {
       "key": "Встроенная память",
-      "value": "512 ГБ"
+      "value": "128 Гб"
     },
     {
       "key": "Разрешение основной камеры",
-      "value": "12 Мп"
+      "value": "12 МП"
     },
     {
-      "key": "Диафрагма основной камеры",
-      "value": "ƒ/1.8"
-    },
-    {
-      "key": "Разрешение фронтальной камеры",
-      "value": "12 Мп"
-    },
-    {
-      "key": "Диафрагма фронтальной камеры",
-      "value": "ƒ/2.0"
-    },
-    {
-      "key": "Сотовая и беспроводная сеть",
-      "value": "LTE, 5G NR, MIMO, Bluetooth 6.0, Wi-Fi 7 (802.11be)"
-    },
-    {
-      "key": "Интерфейсы",
-      "value": "USB‑C, поддержка Thunderbolt / USB 4"
-    },
-    {
-      "key": "Тип аккумулятора",
-      "value": "Li-Pol"
-    },
-    {
-      "key": "Ёмкость аккумулятора",
-      "value": "8160 мАч"
-    },
-    {
-      "key": "Время работы",
-      "value": "До 10 часов"
+      "key": "SIM-карта",
+      "value": "eSim"
     },
     {
       "key": "Материал",
       "value": "Алюминий"
     },
     {
-      "key": "Ширина",
-      "value": "177.5 мм"
+      "key": "Длина",
+      "value": "17.9 см"
     },
     {
-      "key": "Высота",
-      "value": "249.7 мм"
+      "key": "Ширина",
+      "value": "24.8 см"
     },
     {
       "key": "Толщина",
-      "value": "5.3 мм"
+      "value": "0.7 см"
     },
     {
       "key": "Вес",
-      "value": "444 г"
+      "value": "481 г"
     },
     {
-      "key": "Операционная система",
-      "value": "iPadOS"
-    },
-    {
-      "key": "Аудиотехнологии",
-      "value": "4 динамика"
-    },
-    {
-      "key": "Поддержка",
-      "value": "Стилус Apple Pencil Pro, Стилус Apple Pencil (USB-C), Клавиатура Magic Keyboard"
-    },
-    {
-      "key": "Датчики",
-      "value": "Face ID, Трёхосевой гироскоп, Акселерометр, Барометр, Датчик внешней освещённости"
+      "key": "Цвет",
+      "value": "Серебристый"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-12-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-10-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-8-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-13-1200x1200.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Silver/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Silver-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Silver/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Silver-2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Silver/Apple_iPad_11_Tablet_2025_Wi-Fi_Cellular_128GB_Silver-3-1200x1200.jpeg"
   ],
   "images_local": [
-    "assets/product-images/ea149c1f4e7a414c71940fa3.jpg",
-    "assets/product-images/64c05fdfa66fdf4993e38a14.jpg",
-    "assets/product-images/db4f879d65ab0e9704b1e872.jpg",
-    "assets/product-images/1cde36c5e345c2640452c8b8.jpg"
-  ],
-  "updated_at": "2026-09-22T12:24:03.070036Z"
+    "assets/product-images/c779d970c4d580e353c01469.jpeg",
+    "assets/product-images/e39a7687743a69c8e6157130.jpeg",
+    "assets/product-images/8a9fc994e61aa20a45e36d47.jpeg"
+  ]
 }

@@ -6,12 +6,13 @@
   "country": "🇺🇸 США",
   "warehouse": "(S3)",
   "price": 133900,
-  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-pro/ipad-pro-13-2025/ipad-pro-13-m5-2025-lte-256gb-silver",
-  "catalog_title": "Планшет Apple iPad Pro 13'' M5 (2025) Wi-Fi + Cellular 256GB, Silver",
+  "catalog_url": "https://sochi.dr-store.ru/apple/ipad/ipad-pro/ipad-pro-13-2024/ipad-pro-13-2024-lte-256gb-silver",
+  "updated_at": "2026-10-03T14:04:50.492457Z",
+  "catalog_title": "Планшет Apple iPad Pro 13' (A2926)",
   "specs": [
     {
       "key": "Тип дисплея",
-      "value": "Ultra Retina XDR"
+      "value": "Ultra Retina XDR Display, Tandem OLED"
     },
     {
       "key": "Диагональ",
@@ -19,11 +20,11 @@
     },
     {
       "key": "Технология дисплея",
-      "value": "Tandem OLED"
+      "value": "ProMotion Technology"
     },
     {
       "key": "Разрешение",
-      "value": "2752x2064"
+      "value": "2752x2064 пикселей"
     },
     {
       "key": "Плотность пикселей",
@@ -31,7 +32,7 @@
     },
     {
       "key": "Процессор",
-      "value": "Apple M5"
+      "value": "Apple M4"
     },
     {
       "key": "Графический процессор",
@@ -39,11 +40,7 @@
     },
     {
       "key": "Оперативная память",
-      "value": "12 ГБ"
-    },
-    {
-      "key": "Встроенная память",
-      "value": "256 ГБ"
+      "value": "8 ГБ"
     },
     {
       "key": "Разрешение основной камеры",
@@ -59,15 +56,15 @@
     },
     {
       "key": "Диафрагма фронтальной камеры",
-      "value": "ƒ/2.0"
+      "value": "ƒ/2"
     },
     {
       "key": "Сотовая и беспроводная сеть",
-      "value": "LTE, 5G NR, MIMO, Bluetooth 6.0, Wi-Fi 7 (802.11be)"
+      "value": "5G (sub‑6 GHz), Gigabit LTE, eSIM, Wi-Fi 6E (802.11ax), MIMO, Bluetooth 5.3"
     },
     {
       "key": "Интерфейсы",
-      "value": "USB-C, Thunderbolt/ USB 4"
+      "value": "USB‑C, поддержка Thunderbolt / USB 4"
     },
     {
       "key": "Тип аккумулятора",
@@ -79,11 +76,11 @@
     },
     {
       "key": "Время работы",
-      "value": "До 10 часов"
+      "value": "до 10 часов"
     },
     {
       "key": "Материал",
-      "value": "Алюминий"
+      "value": "алюминий"
     },
     {
       "key": "Ширина",
@@ -95,11 +92,11 @@
     },
     {
       "key": "Толщина",
-      "value": "5.1 мм"
+      "value": "5.1мм"
     },
     {
       "key": "Вес",
-      "value": "579 г"
+      "value": "582 г"
     },
     {
       "key": "Операционная система",
@@ -111,24 +108,23 @@
     },
     {
       "key": "Поддержка",
-      "value": "Стилус Apple Pencil Pro, Стилус Apple Pencil (USB‑C), Клавиатура Magic Keyboard"
+      "value": "стилус Apple Pencil Pro, стилус Apple Pencil (USB-C), клавиатура Magic Keyboard"
     },
     {
       "key": "Датчики",
-      "value": "Face ID, Сканер LiDAR, Трёхосевой гироскоп, Акселерометр, Барометр, Датчик внешней освещённости"
+      "value": "Face ID, трёхосевой гироскоп, акселерометр, барометр, датчик внешней освещённости"
     }
   ],
   "images_remote": [
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/ Apple iPad Pro 13'' M5 (2025)/Серебристый/Group 352-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/ Apple iPad Pro 13'' M5 (2025)/Серебристый/Group 351-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/ Apple iPad Pro 13'' M5 (2025)/Серебристый/Group 350-1200x1200.jpg",
-    "https://sochi.dr-store.ru/image/cache/catalog/new products/ Apple iPad Pro 13'' M5 (2025)/Серебристый/Group 349-1200x1200.jpg"
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-12-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-10-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-8-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/ipad/ipad-pro-2024/ipad-pro-m4-dr-store-13-1200x1200.jpg"
   ],
   "images_local": [
-    "assets/product-images/3c3b549762f772d1c034e317.jpg",
-    "assets/product-images/dfa9597aaeef5dbd18d7c10e.jpg",
-    "assets/product-images/9ccc44c591ea4119ddc11da1.jpg",
-    "assets/product-images/5748818e5a652e247cfd7a13.jpg"
-  ],
-  "updated_at": "2026-09-27T13:02:05.654805Z"
+    "assets/product-images/ea149c1f4e7a414c71940fa3.jpg",
+    "assets/product-images/64c05fdfa66fdf4993e38a14.jpg",
+    "assets/product-images/db4f879d65ab0e9704b1e872.jpg",
+    "assets/product-images/1cde36c5e345c2640452c8b8.jpg"
+  ]
 }

@@ -482,6 +482,69 @@ def airpods_match_penalty(name: str, url: str) -> float:
     return penalty
 
 
+# IPAD — ЛИНЕЙКА, ДИАГОНАЛЬ/ПОКОЛЕНИЕ И ЧИП (03.10.2026). Та же болезнь, что у AirPods выше: своих проверок у iPad не
+# было, и аудит отвечал «1.0». Нашлось: обычный «iPad 11» на странице iPad Pro 11 M5 512 ГБ и на iPad Air, «iPad mini 7» на
+# iPad 9, 116 «iPad Air M4» на страницах Air M3 (фото те же, в характеристиках чужой чип). Чип у поставщика часто не в
+# адресе, а в годе: Air 2024 — M2, 2025 — M3, 2026 — M4; Pro 2024 — M4, 2025 — M5.
+_IPAD_LINES = ("air", "pro", "mini")
+_IPAD_YEAR_CHIP = {"air": {"2024": "2", "2025": "3", "2026": "4"}, "pro": {"2024": "4", "2025": "5"}}
+
+
+def _ipad_parts(text: str) -> tuple[str, str, str]:
+    """(линейка, диагональ или поколение, чип) из названия или адреса."""
+    t = normalize_match_text(text).replace("_", " ").replace("-", " ")
+    t = re.sub(r"\b\d+\s*(?:gb|tb|гб|тб)\b", " ", t)
+    line = next((w for w in _IPAD_LINES if re.search(rf"\b{w}\b", t)), "")
+    num = re.search(rf"\bipad\s+{line}\s*(\d{{1,2}})(?!\d)" if line else r"\bipad\s*(\d{1,2})(?!\d)", t)
+    chip = re.search(r"\bm([1-6])\b", t)
+    year = re.search(r"\b(202\d)\b", t)
+    chip_value = chip.group(1) if chip else (_IPAD_YEAR_CHIP.get(line, {}).get(year.group(1), "") if year else "")
+    return line, (num.group(1) if num else ""), chip_value
+
+
+def ipad_match_penalty(name: str, url: str) -> float:
+    name_line, name_num, name_chip = _ipad_parts(name)
+    slug_line, slug_num, slug_chip = _ipad_parts(url.rsplit("/", 1)[-1])
+    penalty = 1.0
+    if name_line != slug_line:
+        penalty *= 0.2
+    if name_num and slug_num and name_num != slug_num:
+        penalty *= 0.15
+    if name_chip and slug_chip and name_chip != slug_chip:
+        penalty *= 0.15
+    # Связь: «iPad 11 LTE» садился на страницу Wi-Fi — фото то же, характеристики нет. Штраф мягкий (выше порога аудита
+    # 0.5): решает ничью в пользу страницы с Cellular, но старую привязку не объявляет чужой.
+    name_cell = bool(re.search(r"\b(lte|cellular|5g)\b", normalize_match_text(name)))
+    slug_cell = bool(re.search(r"(lte|cellular)", url.rsplit("/", 1)[-1].lower()))
+    if name_cell != slug_cell:
+        penalty *= 0.6
+    return penalty
+
+
+# MACBOOK — ЛИНЕЙКА, ДИАГОНАЛЬ, ЧИП (03.10.2026). Ошибок на 03.10 нет, но и проверок не было никаких — та же дыра, что
+# дала AirPods 5 с фото Max и iPad 11 со страницей iPad Pro. Ставим заранее, чтобы новые позиции не садились на соседей.
+def _macbook_parts(text: str) -> tuple[str, str, str]:
+    t = normalize_match_text(text).replace("_", " ").replace("-", " ")
+    t = re.sub(r"\b\d+\s*(?:gb|tb|гб|тб)\b", " ", t)
+    line = re.search(r"\bmacbook\s+(air|pro|neo)\b", t)
+    size = re.search(r"\bmacbook\s+(?:air|pro|neo)\s+(1[3-6])(?:\.\d)?\b", t)
+    chip = re.search(r"\bm([1-6])\b", t)
+    return (line.group(1) if line else ""), (size.group(1) if size else ""), (chip.group(1) if chip else "")
+
+
+def macbook_match_penalty(name: str, url: str) -> float:
+    name_line, name_size, name_chip = _macbook_parts(name)
+    slug_line, slug_size, slug_chip = _macbook_parts(url.rsplit("/", 1)[-1])
+    penalty = 1.0
+    if name_line and slug_line and name_line != slug_line:
+        penalty *= 0.2
+    if name_size and slug_size and name_size != slug_size:
+        penalty *= 0.15
+    if name_chip and slug_chip and name_chip != slug_chip:
+        penalty *= 0.15
+    return penalty
+
+
 def score_product_url(product: Product, url: str) -> float:
     slug = url.rsplit("/", 1)[-1].lower()
     name_norm = normalize_match_text(product.name)
@@ -510,6 +573,10 @@ def score_product_url(product: Product, url: str) -> float:
         score *= 0.2
     if product.category == "airpods":
         score *= airpods_match_penalty(product.name, url)
+    if product.category == "ipad":
+        score *= ipad_match_penalty(product.name, url)
+    if product.category == "macbook":
+        score *= macbook_match_penalty(product.name, url)
     if product.category == "accessories":
         score = score_accessory_url(name_norm, slug, url, score)
 
