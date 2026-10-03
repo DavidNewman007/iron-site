@@ -1975,7 +1975,7 @@
     const ctel = phones(val(C.contactPhone));
     return `<div class="proxy">
       <div class="proxy__head">📲 На связи другой человек</div>
-      <div class="grid2">${fh(C.contactName)}${fh(C.contactPhone)}</div>
+      <div class="grid2"><div>${fh(C.contactName)}<div class="ac" id="ac-${C.contactName}"></div></div><div>${fh(C.contactPhone)}<div class="ac" id="ac-${C.contactPhone}"></div></div></div>
       <p class="note">Все уведомления по заказу — статусы, итоговый отчёт, напоминание об отзыве — уйдут на этот номер с пометкой, чьё это устройство. Заказ, контакт и история остаются за клиентом. Сотрите телефон — сообщения снова пойдут клиенту.${isNew ? "" : " Уже идущему заказу — впишите номер и нажмите «Отправить статус ещё раз»."}</p>
       ${ctel.length ? `<div class="row">${ctel.map(p => `<a class="btn btn--sm" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost btn--sm" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost btn--sm" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
     </div>`;
@@ -2972,6 +2972,7 @@
       if (c === C.phone && S.newClient) { const cl = clients().find(x => x.key === S.newClient), ds = phones(t.value).map(p => p.d);
         if (cl && ds.length && !ds.some(d => cl.phones.has(d))) { S.newClient = null; const b = document.getElementById("client-devs"); if (b) b.innerHTML = clientDevicesHtml(currentNewClient()); } }
     }
+    if (c === C.contactName || c === C.contactPhone) { clearTimeout(onEdit.px); onEdit.px = setTimeout(() => suggestProxy(key, c, t.value), 120); }
     if (key === "new" && S.multi && F[c]?.num) { const box = $app.querySelector(".margin"); if (box) box.innerHTML = groupMoneySummary(dealKey(S.dirty.get("new:" + C.type))); }
     else if (F[c]?.num || c === C.linked) {
       const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
@@ -3009,10 +3010,66 @@
     const box = document.getElementById("client-devs"); if (box) box.innerHTML = clientDevicesHtml(cl);
     refreshSaveBar("new");
   }
+  // ── подсказки «на связи» (v41, 03.10.2026) ─────────────────────────────────────────
+  // Владелец: «пытаюсь добавить человека для связи в готовом заказе — не выдаёт список поиска».
+  // В v40 подсказки были только у имени и телефона клиента в НОВОМ заказе. Теперь у обоих полей
+  // «на связи» в любом заказе: клиенты из базы (та же книга, что у нового заказа) и люди, которые
+  // уже бывали «на связи» в других заказах (они могут и не быть клиентами). Самого владельца
+  // заказа не предлагаем. Выбор заполняет и имя, и телефон; у клиента несколько номеров — вторым шагом.
+  function pastContacts(q) {
+    const isD = isDigitQuery(q), d = normDigits(digits(q)), tokens = norm(q).split(" ").filter(Boolean);
+    if (isD ? d.length < 4 : tokens.join("").length < 3) return [];
+    const seen = new Map();
+    for (let i = S.rows.length - 1; i >= 0; i--) {
+      const r = S.rows[i], ps = phones(cell(r, C.contactPhone)); if (!ps.length) continue;
+      const name = String(cell(r, C.contactName)).trim(), words = norm(name).split(" ");
+      const hit = isD ? ps.some(p => p.d.includes(d)) : tokens.every(t => words.some(w => w.startsWith(t)));
+      if (hit && !seen.has(ps[0].d)) seen.set(ps[0].d, { name, phone: ps[0].text, d: ps[0].d, num: cell(r, C.num), owner: String(cell(r, C.name)).split("\n")[0] });
+    }
+    return [...seen.values()].slice(0, 5);
+  }
+  function suggestProxy(key, c, value) {
+    const box = document.getElementById("ac-" + c); if (!box) return;
+    const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
+    const own = new Set(phones(r ? cell(r, C.phone) : S.dirty.get("new:" + C.phone)).map(p => p.d));
+    const cls = findClients(value).filter(cl => ![...cl.phones.keys()].some(d => own.has(d)));
+    const known = new Set(cls.flatMap(cl => [...cl.phones.keys()]));
+    const past = pastContacts(value).filter(x => !known.has(x.d) && !own.has(x.d));
+    box.innerHTML = cls.map(cl => {
+      const p = phonesOf(cl);
+      return `<button type="button" class="ac-item" data-pxclient="${esc(cl.key)}" data-from="${c}"><b>${esc(cl.name)}</b>
+        <span>клиент · ${cl.count} ${ordersWord(cl.count)} · ${p.length > 1 ? p.length + " телефона" : esc(p[0]?.text || "без телефона")}</span></button>`;
+    }).join("") + past.map(x => `<button type="button" class="ac-item" data-pxname="${esc(x.name)}" data-pxphone="${esc(x.phone)}"><b>${esc(x.name || x.phone)}</b>
+        <span>был на связи в №${esc(x.num)}${x.owner ? " (за " + esc(x.owner) + ")" : ""} · ${esc(x.phone)}</span></button>`).join("");
+  }
+  function fillFor(key, c, v) {
+    const inp = $app.querySelector(`[data-edit="${c}"]`); if (inp) inp.value = v;
+    setDirty(key, c, v); inp?.closest(".field")?.classList.toggle("is-dirty", S.dirty.has(key + ":" + c));
+  }
+  function pickProxy(it) {
+    const key = curKey(); if (key == null) return;
+    const clear = () => [C.contactName, C.contactPhone].forEach(c => { const b = document.getElementById("ac-" + c); if (b) b.innerHTML = ""; });
+    if (it.dataset.pxclient) {
+      const cl = clients().find(x => x.key === it.dataset.pxclient); if (!cl) return;
+      fillFor(key, C.contactName, cl.name);
+      const ps = phonesOf(cl), typed = normDigits(digits($app.querySelector(`[data-edit="${C.contactPhone}"]`)?.value || ""));
+      const byTyped = it.dataset.from === String(C.contactPhone) && typed.length >= 4 ? ps.find(p => p.d.includes(typed)) : null;
+      clear();
+      if (byTyped || ps.length === 1) fillFor(key, C.contactPhone, (byTyped || ps[0]).text);
+      else if (ps.length > 1) document.getElementById("ac-" + C.contactPhone).innerHTML = `<div class="ac-info">У ${esc(cl.name)} ${ps.length} телефона — выберите:</div>` +
+        ps.map(p => `<button type="button" class="ac-item" data-pxphone="${esc(p.text)}"><b>📞 ${esc(p.text)}</b><span>последний раз ${esc(String(p.date).slice(0, 10))}</span></button>`).join("");
+    } else {
+      if (it.dataset.pxname != null && it.dataset.pxname !== "") fillFor(key, C.contactName, it.dataset.pxname);
+      fillFor(key, C.contactPhone, it.dataset.pxphone);
+      clear();
+    }
+    refreshSaveBar(key);
+  }
   // pointerdown, а не click: иначе поле теряет фокус раньше, чем выбор успевает сработать.
   document.addEventListener("pointerdown", e => {
     const it = e.target.closest(".ac-item"); if (!it) return;
     e.preventDefault();
+    if (it.dataset.pxclient || it.dataset.pxphone) return pickProxy(it);
     if (it.dataset.client) pickClient(it.dataset.client, it.dataset.from === String(C.phone));
     else if (it.dataset.phone) { fillField(C.phone, it.dataset.phone); document.getElementById("ac-" + C.phone).innerHTML = ""; refreshSaveBar("new"); }
   });
