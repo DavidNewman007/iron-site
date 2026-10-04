@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-01T14:19:27.526Z",
-  "count": 96,
+  "generated_at": "2026-10-04T13:21:25.408Z",
+  "count": 101,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -769,6 +769,46 @@
       "name": "Buds 4 White",
       "warehouse": "(S3)",
       "price": 13100
+    },
+    "buds-3-fe-grey-оаэ-s3-9700": {
+      "url": "hybrid-products/audio/buds-3-fe-grey-s3-9700.html",
+      "url_en": "en/hybrid-products/audio/buds-3-fe-grey-s3-9700.html",
+      "cover": "assets/product-images/c8795cac0cd4a068475011bd.jpg",
+      "name": "Buds 3 FE Grey",
+      "warehouse": "(S3)",
+      "price": 9700
+    },
+    "buds-4-black-оаэ-s3-12500": {
+      "url": "hybrid-products/audio/buds-4-black-s3-12500.html",
+      "url_en": "en/hybrid-products/audio/buds-4-black-s3-12500.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Buds 4 Black",
+      "warehouse": "(S3)",
+      "price": 12500
+    },
+    "buds-4-white-оаэ-s3-12700": {
+      "url": "hybrid-products/audio/buds-4-white-s3-12700.html",
+      "url_en": "en/hybrid-products/audio/buds-4-white-s3-12700.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Buds 4 White",
+      "warehouse": "(S3)",
+      "price": 12700
+    },
+    "buds-4-pro-white-оаэ-s3-16300": {
+      "url": "hybrid-products/audio/buds-4-pro-white-s3-16300.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-white-s3-16300.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Buds 4 Pro White",
+      "warehouse": "(S3)",
+      "price": 16300
+    },
+    "buds-4-pro-pink-оаэ-s3-18200": {
+      "url": "hybrid-products/audio/buds-4-pro-pink-s3-18200.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-pink-s3-18200.html",
+      "cover": "assets/product-images/9c24473bcf3b07c8103dfb49.jpg",
+      "name": "Buds 4 Pro Pink",
+      "warehouse": "(S3)",
+      "price": 18200
     }
   }
 }

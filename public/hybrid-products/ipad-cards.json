@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-03T14:07:28.562490Z",
-  "count": 413,
+  "generated_at": "2026-10-04T13:21:25.182Z",
+  "count": 429,
   "byId": {
     "ipad-11-a16-wi-fi-128gb-blue-j-a-япония-s1-31600": {
       "url": "hybrid-products/ipad/ipad-11-a16-wi-fi-128gb-blue-j-a-s1-31600.html",
@@ -3305,6 +3305,134 @@
       "name": "iPad Pro 11 M5 256 Silver Wi-Fi",
       "warehouse": "(S3)",
       "price": 104600
+    },
+    "ipad-11-128-silver-wi-fi-сша-s3-44100": {
+      "url": "hybrid-products/ipad/ipad-11-128-silver-wi-fi-s3-44100.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-128-silver-wi-fi-s3-44100.html",
+      "cover": "assets/product-images/583a2d3c9183b1410db105a8.jpg",
+      "name": "iPad 11 128 Silver Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 44100
+    },
+    "ipad-11-128-blue-wi-fi-сша-s3-42300": {
+      "url": "hybrid-products/ipad/ipad-11-128-blue-wi-fi-s3-42300.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-128-blue-wi-fi-s3-42300.html",
+      "cover": "assets/product-images/78c2bd95ca973a781df329e3.jpg",
+      "name": "iPad 11 128 Blue Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 42300
+    },
+    "ipad-11-256-silver-wi-fi-сша-s3-52500": {
+      "url": "hybrid-products/ipad/ipad-11-256-silver-wi-fi-s3-52500.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-256-silver-wi-fi-s3-52500.html",
+      "cover": "assets/product-images/583a2d3c9183b1410db105a8.jpg",
+      "name": "iPad 11 256 Silver Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 52500
+    },
+    "ipad-11-256-pink-wi-fi-сша-s3-53500": {
+      "url": "hybrid-products/ipad/ipad-11-256-pink-wi-fi-s3-53500.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-256-pink-wi-fi-s3-53500.html",
+      "cover": "assets/product-images/106bcc4b2cba9216a4ff8d4b.jpg",
+      "name": "iPad 11 256 Pink Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 53500
+    },
+    "ipad-11-256-yellow-wi-fi-сша-s3-53000": {
+      "url": "hybrid-products/ipad/ipad-11-256-yellow-wi-fi-s3-53000.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-256-yellow-wi-fi-s3-53000.html",
+      "cover": "assets/product-images/12ab0e68554cce9cf2f0341c.jpg",
+      "name": "iPad 11 256 Yellow Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 53000
+    },
+    "ipad-air-11-m3-128-gray-wi-fi-сша-s3-63700": {
+      "url": "hybrid-products/ipad/ipad-air-11-m3-128-gray-wi-fi-s3-63700.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m3-128-gray-wi-fi-s3-63700.html",
+      "cover": "assets/product-images/a09349f30c0b837086196cfc.jpg",
+      "name": "iPad Air 11 M3 128 Gray Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 63700
+    },
+    "ipad-air-11-m3-128-starlight-wi-fi-сша-s3-63700": {
+      "url": "hybrid-products/ipad/ipad-air-11-m3-128-starlight-wi-fi-s3-63700.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m3-128-starlight-wi-fi-s3-63700.html",
+      "cover": "assets/product-images/fb7630407a8aee1ab9ffee57.jpg",
+      "name": "iPad Air 11 M3 128 Starlight Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 63700
+    },
+    "ipad-air-11-m3-128-purple-wi-fi-сша-s3-63700": {
+      "url": "hybrid-products/ipad/ipad-air-11-m3-128-purple-wi-fi-s3-63700.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m3-128-purple-wi-fi-s3-63700.html",
+      "cover": "assets/product-images/cd54a774d5e25785d840ad96.jpg",
+      "name": "iPad Air 11 M3 128 Purple Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 63700
+    },
+    "ipad-air-11-m3-256-gray-wi-fi-сша-s3-73300": {
+      "url": "hybrid-products/ipad/ipad-air-11-m3-256-gray-wi-fi-s3-73300.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m3-256-gray-wi-fi-s3-73300.html",
+      "cover": "assets/product-images/a09349f30c0b837086196cfc.jpg",
+      "name": "iPad Air 11 M3 256 Gray Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 73300
+    },
+    "ipad-air-11-m3-256-blue-wi-fi-сша-s3-73300": {
+      "url": "hybrid-products/ipad/ipad-air-11-m3-256-blue-wi-fi-s3-73300.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m3-256-blue-wi-fi-s3-73300.html",
+      "cover": "assets/product-images/25b0e6302ffb3858b2cd86cf.jpg",
+      "name": "iPad Air 11 M3 256 Blue Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 73300
+    },
+    "ipad-air-11-m3-256-purple-wi-fi-сша-s3-73300": {
+      "url": "hybrid-products/ipad/ipad-air-11-m3-256-purple-wi-fi-s3-73300.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m3-256-purple-wi-fi-s3-73300.html",
+      "cover": "assets/product-images/cd54a774d5e25785d840ad96.jpg",
+      "name": "iPad Air 11 M3 256 Purple Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 73300
+    },
+    "ipad-air-11-m3-512-purple-wi-fi-сша-s3-84700": {
+      "url": "hybrid-products/ipad/ipad-air-11-m3-512-purple-wi-fi-s3-84700.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m3-512-purple-wi-fi-s3-84700.html",
+      "cover": "assets/product-images/cd54a774d5e25785d840ad96.jpg",
+      "name": "iPad Air 11 M3 512 Purple Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 84700
+    },
+    "ipad-air-11-m4-256-gray-wi-fi-сша-s3-74100": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-256-gray-wi-fi-s3-74100.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m4-256-gray-wi-fi-s3-74100.html",
+      "cover": "assets/product-images/1015822120f43a1d16bf70b2.jpg",
+      "name": "iPad Air 11 M4 256 Gray Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 74100
+    },
+    "ipad-air-11-m4-256-starlight-wi-fi-сша-s3-75100": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-256-starlight-wi-fi-s3-75100.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m4-256-starlight-wi-fi-s3-75100.html",
+      "cover": "assets/product-images/6f26c4cb4de3f1a635ecfafe.jpg",
+      "name": "iPad Air 11 M4 256 Starlight Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 75100
+    },
+    "ipad-air-11-m4-256-purple-wi-fi-сша-s3-76200": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-256-purple-wi-fi-s3-76200.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m4-256-purple-wi-fi-s3-76200.html",
+      "cover": "assets/product-images/7d16c56cca0192a21b02abfb.jpg",
+      "name": "iPad Air 11 M4 256 Purple Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 76200
+    },
+    "ipad-air-11-m4-256-blue-wi-fi-сша-s3-74100": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-256-blue-wi-fi-s3-74100.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m4-256-blue-wi-fi-s3-74100.html",
+      "cover": "assets/product-images/df510e99e4da1424247ed7b3.jpg",
+      "name": "iPad Air 11 M4 256 Blue Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 74100
     }
   }
 }

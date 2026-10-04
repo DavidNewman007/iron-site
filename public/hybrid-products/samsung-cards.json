@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-01T14:19:27.510Z",
-  "count": 1010,
+  "generated_at": "2026-10-04T13:21:25.393Z",
+  "count": 1143,
   "byId": {
     "s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-южная-африка-s1-99300": {
       "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-s1-99300.html",
@@ -8081,6 +8081,1070 @@
       "name": "Samsung Z Fold 8 Ultra 16/1TB Graphite",
       "warehouse": "(S3)",
       "price": 195900
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-black-py-парагвай-s1-98000": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-black-py-s1-98000.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-black-py-s1-98000.html",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Black PY",
+      "warehouse": "(S1)",
+      "price": 98000
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-violet-th-таиланд-s1-98400": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-violet-th-s1-98400.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-violet-th-s1-98400.html",
+      "cover": "assets/product-images/c17451a7debc4f88556e468c.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Violet TH",
+      "warehouse": "(S1)",
+      "price": 98400
+    },
+    "s26-ultra-sm-s948-b-ds-12-256gb-violet-uae-оаэ-s1-99400": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-256gb-violet-uae-s1-99400.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-256gb-violet-uae-s1-99400.html",
+      "cover": "assets/product-images/c17451a7debc4f88556e468c.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 256Gb Violet UAE",
+      "warehouse": "(S1)",
+      "price": 99400
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-white-py-парагвай-s1-97000": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-white-py-s1-97000.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-white-py-s1-97000.html",
+      "cover": "assets/product-images/14c630d31d07eaa515c7dccf.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb White PY",
+      "warehouse": "(S1)",
+      "price": 97000
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-white-th-таиланд-s1-98000": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-white-th-s1-98000.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-white-th-s1-98000.html",
+      "cover": "assets/product-images/14c630d31d07eaa515c7dccf.png",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb White TH",
+      "warehouse": "(S1)",
+      "price": 98000
+    },
+    "a57-8-128-gray-оаэ-s2-34500": {
+      "url": "hybrid-products/samsung/a57-8-128-gray-s2-34500.html",
+      "url_en": "en/hybrid-products/samsung/a57-8-128-gray-s2-34500.html",
+      "cover": "assets/product-images/35c1d5ca79e04cdcb1bf8836.png",
+      "name": "A57 8/128 Gray",
+      "warehouse": "(S2)",
+      "price": 34500
+    },
+    "a57-8-128-lilac-оаэ-s2-35500": {
+      "url": "hybrid-products/samsung/a57-8-128-lilac-s2-35500.html",
+      "url_en": "en/hybrid-products/samsung/a57-8-128-lilac-s2-35500.html",
+      "cover": "assets/product-images/42b4eb4b92154e91f7766f07.png",
+      "name": "A57 8/128 Lilac",
+      "warehouse": "(S2)",
+      "price": 35500
+    },
+    "s25-ultra-12-256-black-оаэ-s2-72300": {
+      "url": "hybrid-products/samsung/s25-ultra-12-256-black-s2-72300.html",
+      "url_en": "en/hybrid-products/samsung/s25-ultra-12-256-black-s2-72300.html",
+      "cover": "assets/product-images/7767bb2eee5d8f6e2a3dda2e.jpg",
+      "name": "S25 Ultra 12/256 Black",
+      "warehouse": "(S2)",
+      "price": 72300
+    },
+    "s26-12-256-white-оаэ-s2-68300": {
+      "url": "hybrid-products/samsung/s26-12-256-white-s2-68300.html",
+      "url_en": "en/hybrid-products/samsung/s26-12-256-white-s2-68300.html",
+      "cover": "assets/product-images/7f9d819006a638000ffe6302.jpg",
+      "name": "S26 12/256 White",
+      "warehouse": "(S2)",
+      "price": 68300
+    },
+    "s26-plus-12-256-blue-оаэ-s2-73300": {
+      "url": "hybrid-products/samsung/s26-plus-12-256-blue-s2-73300.html",
+      "url_en": "en/hybrid-products/samsung/s26-plus-12-256-blue-s2-73300.html",
+      "cover": "assets/product-images/382de86aec6c2024be2ceb91.png",
+      "name": "S26 Plus 12/256 Blue",
+      "warehouse": "(S2)",
+      "price": 73300
+    },
+    "s26-ultra-12-512-blue-оаэ-s2-95200": {
+      "url": "hybrid-products/samsung/s26-ultra-12-512-blue-s2-95200.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-12-512-blue-s2-95200.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.png",
+      "name": "S26 Ultra 12/512 Blue",
+      "warehouse": "(S2)",
+      "price": 95200
+    },
+    "s26-ultra-16-1tb-black-оаэ-s2-124000": {
+      "url": "hybrid-products/samsung/s26-ultra-16-1tb-black-s2-124000.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-16-1tb-black-s2-124000.html",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.png",
+      "name": "S26 Ultra 16/1Tb Black",
+      "warehouse": "(S2)",
+      "price": 124000
+    },
+    "s26-ultra-16-1tb-violet-оаэ-s2-121900": {
+      "url": "hybrid-products/samsung/s26-ultra-16-1tb-violet-s2-121900.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-16-1tb-violet-s2-121900.html",
+      "cover": "assets/product-images/c17451a7debc4f88556e468c.png",
+      "name": "S26 Ultra 16/1Tb Violet",
+      "warehouse": "(S2)",
+      "price": 121900
+    },
+    "samsung-a17-4-128-black-оаэ-s3-17800": {
+      "url": "hybrid-products/samsung/samsung-a17-4-128-black-s3-17800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a17-4-128-black-s3-17800.html",
+      "cover": "assets/product-images/dc27ee92e546902f937baade.jpg",
+      "name": "Samsung A17 4/128 Black",
+      "warehouse": "(S3)",
+      "price": 17800
+    },
+    "samsung-a17-4-128-gray-оаэ-s3-17800": {
+      "url": "hybrid-products/samsung/samsung-a17-4-128-gray-s3-17800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a17-4-128-gray-s3-17800.html",
+      "cover": "assets/product-images/bd30915f720c25d5c047b2a3.jpg",
+      "name": "Samsung A17 4/128 Gray",
+      "warehouse": "(S3)",
+      "price": 17800
+    },
+    "samsung-a17-4-128-light-blue-оаэ-s3-17800": {
+      "url": "hybrid-products/samsung/samsung-a17-4-128-light-blue-s3-17800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a17-4-128-light-blue-s3-17800.html",
+      "cover": "assets/product-images/1b27f1b9ba037ec7c936a219.jpg",
+      "name": "Samsung A17 4/128 Light Blue",
+      "warehouse": "(S3)",
+      "price": 17800
+    },
+    "samsung-a17-8-256-black-оаэ-s3-22500": {
+      "url": "hybrid-products/samsung/samsung-a17-8-256-black-s3-22500.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a17-8-256-black-s3-22500.html",
+      "cover": "assets/product-images/0bbaac7094724044104f20ff.jpg",
+      "name": "Samsung A17 8/256 Black",
+      "warehouse": "(S3)",
+      "price": 22500
+    },
+    "samsung-a17-8-256-gray-оаэ-s3-22500": {
+      "url": "hybrid-products/samsung/samsung-a17-8-256-gray-s3-22500.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a17-8-256-gray-s3-22500.html",
+      "cover": "assets/product-images/50d8788634230160e44edd2b.jpg",
+      "name": "Samsung A17 8/256 Gray",
+      "warehouse": "(S3)",
+      "price": 22500
+    },
+    "samsung-a17-8-256-light-blue-оаэ-s3-22500": {
+      "url": "hybrid-products/samsung/samsung-a17-8-256-light-blue-s3-22500.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a17-8-256-light-blue-s3-22500.html",
+      "cover": "assets/product-images/2e1f2738b4da7e17837bf0f0.jpg",
+      "name": "Samsung A17 8/256 Light Blue",
+      "warehouse": "(S3)",
+      "price": 22500
+    },
+    "samsung-a27-6-128-light-green-оаэ-s3-24600": {
+      "url": "hybrid-products/samsung/samsung-a27-6-128-light-green-s3-24600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a27-6-128-light-green-s3-24600.html",
+      "cover": "assets/product-images/818f396ead23495f869ac79a.png",
+      "name": "Samsung A27 6/128 Light Green",
+      "warehouse": "(S3)",
+      "price": 24600
+    },
+    "samsung-a27-6-128-light-pink-оаэ-s3-24600": {
+      "url": "hybrid-products/samsung/samsung-a27-6-128-light-pink-s3-24600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a27-6-128-light-pink-s3-24600.html",
+      "cover": "assets/product-images/e3acc746270d2647c75370e6.jpg",
+      "name": "Samsung A27 6/128 Light Pink",
+      "warehouse": "(S3)",
+      "price": 24600
+    },
+    "samsung-a27-8-256-black-оаэ-s3-28100": {
+      "url": "hybrid-products/samsung/samsung-a27-8-256-black-s3-28100.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a27-8-256-black-s3-28100.html",
+      "cover": "assets/product-images/174fde63a21dfdd339a0409b.jpg",
+      "name": "Samsung A27 8/256 Black",
+      "warehouse": "(S3)",
+      "price": 28100
+    },
+    "samsung-a27-8-256-light-pink-оаэ-s3-27900": {
+      "url": "hybrid-products/samsung/samsung-a27-8-256-light-pink-s3-27900.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a27-8-256-light-pink-s3-27900.html",
+      "cover": "assets/product-images/e3acc746270d2647c75370e6.jpg",
+      "name": "Samsung A27 8/256 Light Pink",
+      "warehouse": "(S3)",
+      "price": 27900
+    },
+    "samsung-a36-8-128-black-оаэ-s3-26600": {
+      "url": "hybrid-products/samsung/samsung-a36-8-128-black-s3-26600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a36-8-128-black-s3-26600.html",
+      "cover": "assets/product-images/8e4c0ec5988e297e66607224.jpg",
+      "name": "Samsung A36 8/128 Black",
+      "warehouse": "(S3)",
+      "price": 26600
+    },
+    "samsung-a37-8-128-white-оаэ-s3-28700": {
+      "url": "hybrid-products/samsung/samsung-a37-8-128-white-s3-28700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a37-8-128-white-s3-28700.html",
+      "cover": "assets/product-images/3568c46a32bf21b03c8495c6.jpg",
+      "name": "Samsung A37 8/128 White",
+      "warehouse": "(S3)",
+      "price": 28700
+    },
+    "samsung-a37-8-256-graygreen-оаэ-s3-32000": {
+      "url": "hybrid-products/samsung/samsung-a37-8-256-graygreen-s3-32000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a37-8-256-graygreen-s3-32000.html",
+      "cover": "assets/product-images/33eeeb98b44e8a360facb964.jpg",
+      "name": "Samsung A37 8/256 Graygreen",
+      "warehouse": "(S3)",
+      "price": 32000
+    },
+    "samsung-a37-8-256-lavender-оаэ-s3-32100": {
+      "url": "hybrid-products/samsung/samsung-a37-8-256-lavender-s3-32100.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a37-8-256-lavender-s3-32100.html",
+      "cover": "assets/product-images/d4d75f7097a2ad3365db9556.jpg",
+      "name": "Samsung A37 8/256 Lavender",
+      "warehouse": "(S3)",
+      "price": 32100
+    },
+    "samsung-a37-12-256-charcoal-оаэ-s3-32000": {
+      "url": "hybrid-products/samsung/samsung-a37-12-256-charcoal-s3-32000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a37-12-256-charcoal-s3-32000.html",
+      "cover": "assets/product-images/944f196d4400814d6202f1d5.jpg",
+      "name": "Samsung A37 12/256 Charcoal",
+      "warehouse": "(S3)",
+      "price": 32000
+    },
+    "samsung-a37-12-256-graygreen-оаэ-s3-32000": {
+      "url": "hybrid-products/samsung/samsung-a37-12-256-graygreen-s3-32000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a37-12-256-graygreen-s3-32000.html",
+      "cover": "assets/product-images/33eeeb98b44e8a360facb964.jpg",
+      "name": "Samsung A37 12/256 Graygreen",
+      "warehouse": "(S3)",
+      "price": 32000
+    },
+    "samsung-a37-12-256-lavender-оаэ-s3-32200": {
+      "url": "hybrid-products/samsung/samsung-a37-12-256-lavender-s3-32200.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a37-12-256-lavender-s3-32200.html",
+      "cover": "assets/product-images/d4d75f7097a2ad3365db9556.jpg",
+      "name": "Samsung A37 12/256 Lavender",
+      "warehouse": "(S3)",
+      "price": 32200
+    },
+    "samsung-a56-8-128-graphite-оаэ-s3-31700": {
+      "url": "hybrid-products/samsung/samsung-a56-8-128-graphite-s3-31700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a56-8-128-graphite-s3-31700.html",
+      "cover": "assets/product-images/3bca2cbceab19d69516899eb.jpeg",
+      "name": "Samsung A56 8/128 Graphite",
+      "warehouse": "(S3)",
+      "price": 31700
+    },
+    "samsung-a56-12-256-light-gray-оаэ-s3-38900": {
+      "url": "hybrid-products/samsung/samsung-a56-12-256-light-gray-s3-38900.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a56-12-256-light-gray-s3-38900.html",
+      "cover": "assets/product-images/ac0af1f40c344119d1ecffc0.jpeg",
+      "name": "Samsung A56 12/256 Light Gray",
+      "warehouse": "(S3)",
+      "price": 38900
+    },
+    "samsung-a57-8-128-gray-оаэ-s3-34100": {
+      "url": "hybrid-products/samsung/samsung-a57-8-128-gray-s3-34100.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-8-128-gray-s3-34100.html",
+      "cover": "assets/product-images/35c1d5ca79e04cdcb1bf8836.png",
+      "name": "Samsung A57 8/128 Gray",
+      "warehouse": "(S3)",
+      "price": 34100
+    },
+    "samsung-a57-8-128-navy-оаэ-s3-34000": {
+      "url": "hybrid-products/samsung/samsung-a57-8-128-navy-s3-34000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-8-128-navy-s3-34000.html",
+      "cover": "assets/product-images/5aa23b6a4f3bdd77f1f1578f.png",
+      "name": "Samsung A57 8/128 Navy",
+      "warehouse": "(S3)",
+      "price": 34000
+    },
+    "samsung-a57-8-256-gray-оаэ-s3-36700": {
+      "url": "hybrid-products/samsung/samsung-a57-8-256-gray-s3-36700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-8-256-gray-s3-36700.html",
+      "cover": "assets/product-images/a7f6773ce45859bbe84b1e35.png",
+      "name": "Samsung A57 8/256 Gray",
+      "warehouse": "(S3)",
+      "price": 36700
+    },
+    "samsung-a57-8-256-icyblue-оаэ-s3-36400": {
+      "url": "hybrid-products/samsung/samsung-a57-8-256-icyblue-s3-36400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-8-256-icyblue-s3-36400.html",
+      "cover": "assets/product-images/bc788c784e382313eacce90f.png",
+      "name": "Samsung A57 8/256 Icyblue",
+      "warehouse": "(S3)",
+      "price": 36400
+    },
+    "samsung-a57-8-256-lilac-оаэ-s3-36400": {
+      "url": "hybrid-products/samsung/samsung-a57-8-256-lilac-s3-36400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-8-256-lilac-s3-36400.html",
+      "cover": "assets/product-images/14242afb0914aa5dcacba187.png",
+      "name": "Samsung A57 8/256 Lilac",
+      "warehouse": "(S3)",
+      "price": 36400
+    },
+    "samsung-a57-8-256-navy-оаэ-s3-36400": {
+      "url": "hybrid-products/samsung/samsung-a57-8-256-navy-s3-36400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-8-256-navy-s3-36400.html",
+      "cover": "assets/product-images/90599021597223fade2049e8.png",
+      "name": "Samsung A57 8/256 Navy",
+      "warehouse": "(S3)",
+      "price": 36400
+    },
+    "samsung-a57-12-256-gray-оаэ-s3-40800": {
+      "url": "hybrid-products/samsung/samsung-a57-12-256-gray-s3-40800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-12-256-gray-s3-40800.html",
+      "cover": "assets/product-images/a7f6773ce45859bbe84b1e35.png",
+      "name": "Samsung A57 12/256 Gray",
+      "warehouse": "(S3)",
+      "price": 40800
+    },
+    "samsung-a57-12-256-icyblue-оаэ-s3-40700": {
+      "url": "hybrid-products/samsung/samsung-a57-12-256-icyblue-s3-40700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-12-256-icyblue-s3-40700.html",
+      "cover": "assets/product-images/bc788c784e382313eacce90f.png",
+      "name": "Samsung A57 12/256 Icyblue",
+      "warehouse": "(S3)",
+      "price": 40700
+    },
+    "samsung-a57-12-256-lilac-оаэ-s3-41000": {
+      "url": "hybrid-products/samsung/samsung-a57-12-256-lilac-s3-41000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-12-256-lilac-s3-41000.html",
+      "cover": "assets/product-images/14242afb0914aa5dcacba187.png",
+      "name": "Samsung A57 12/256 Lilac",
+      "warehouse": "(S3)",
+      "price": 41000
+    },
+    "samsung-a57-12-256-navy-оаэ-s3-40700": {
+      "url": "hybrid-products/samsung/samsung-a57-12-256-navy-s3-40700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-12-256-navy-s3-40700.html",
+      "cover": "assets/product-images/90599021597223fade2049e8.png",
+      "name": "Samsung A57 12/256 Navy",
+      "warehouse": "(S3)",
+      "price": 40700
+    },
+    "samsung-a57-12-512-gray-оаэ-s3-42700": {
+      "url": "hybrid-products/samsung/samsung-a57-12-512-gray-s3-42700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-12-512-gray-s3-42700.html",
+      "cover": "assets/product-images/04a65db86bb4ed5ff71a79b8.png",
+      "name": "Samsung A57 12/512 Gray",
+      "warehouse": "(S3)",
+      "price": 42700
+    },
+    "samsung-a57-12-512-icyblue-оаэ-s3-43600": {
+      "url": "hybrid-products/samsung/samsung-a57-12-512-icyblue-s3-43600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-12-512-icyblue-s3-43600.html",
+      "cover": "assets/product-images/2ef981a30eb9385b28879dd2.png",
+      "name": "Samsung A57 12/512 Icyblue",
+      "warehouse": "(S3)",
+      "price": 43600
+    },
+    "samsung-a57-12-512-navy-оаэ-s3-42700": {
+      "url": "hybrid-products/samsung/samsung-a57-12-512-navy-s3-42700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-a57-12-512-navy-s3-42700.html",
+      "cover": "assets/product-images/7e442c1da65c28dcf6ee2a2f.png",
+      "name": "Samsung A57 12/512 Navy",
+      "warehouse": "(S3)",
+      "price": 42700
+    },
+    "samsung-s25-12-128-navy-европа-s3-52200": {
+      "url": "hybrid-products/samsung/samsung-s25-12-128-navy-s3-52200.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-12-128-navy-s3-52200.html",
+      "cover": "assets/product-images/d3173cc37e3a32eef2f47fa3.jpeg",
+      "name": "Samsung S25 12/128 Navy",
+      "warehouse": "(S3)",
+      "price": 52200
+    },
+    "samsung-s25-12-128-silver-shadow-европа-s3-51500": {
+      "url": "hybrid-products/samsung/samsung-s25-12-128-silver-shadow-s3-51500.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-12-128-silver-shadow-s3-51500.html",
+      "cover": "assets/product-images/ca9916d85d3f10184da3c68a.jpeg",
+      "name": "Samsung S25 12/128 Silver Shadow",
+      "warehouse": "(S3)",
+      "price": 51500
+    },
+    "samsung-s25-12-256-mint-индия-s3-55300": {
+      "url": "hybrid-products/samsung/samsung-s25-12-256-mint-s3-55300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-12-256-mint-s3-55300.html",
+      "cover": "assets/product-images/a79e3d95a76cfc9a3e651bf3.jpeg",
+      "name": "Samsung S25 12/256 Mint",
+      "warehouse": "(S3)",
+      "price": 55300
+    },
+    "samsung-s25-12-256-navy-гонконг-s3-55600": {
+      "url": "hybrid-products/samsung/samsung-s25-12-256-navy-s3-55600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-12-256-navy-s3-55600.html",
+      "cover": "assets/product-images/d3173cc37e3a32eef2f47fa3.jpeg",
+      "name": "Samsung S25 12/256 Navy",
+      "warehouse": "(S3)",
+      "price": 55600
+    },
+    "samsung-s25-12-256-icyblue-индия-s3-56000": {
+      "url": "hybrid-products/samsung/samsung-s25-12-256-icyblue-s3-56000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-12-256-icyblue-s3-56000.html",
+      "cover": "assets/product-images/bfaf52438291ccec83eb65a8.jpeg",
+      "name": "Samsung S25 12/256 Icyblue",
+      "warehouse": "(S3)",
+      "price": 56000
+    },
+    "samsung-s25-12-256-silver-shadow-индия-s3-58100": {
+      "url": "hybrid-products/samsung/samsung-s25-12-256-silver-shadow-s3-58100.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-12-256-silver-shadow-s3-58100.html",
+      "cover": "assets/product-images/ca9916d85d3f10184da3c68a.jpeg",
+      "name": "Samsung S25 12/256 Silver Shadow",
+      "warehouse": "(S3)",
+      "price": 58100
+    },
+    "samsung-s25-fe-8-128-jet-black-индия-s3-41200": {
+      "url": "hybrid-products/samsung/samsung-s25-fe-8-128-jet-black-s3-41200.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-fe-8-128-jet-black-s3-41200.html",
+      "cover": "assets/product-images/25add48c4fa8964891e6bd5d.png",
+      "name": "Samsung S25 FE 8/128 Jet Black",
+      "warehouse": "(S3)",
+      "price": 41200
+    },
+    "samsung-s25-fe-8-256-iceblue-s3-47700": {
+      "url": "hybrid-products/samsung/samsung-s25-fe-8-256-iceblue-s3-47700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-fe-8-256-iceblue-s3-47700.html",
+      "cover": "assets/product-images/b99ca93e4ace4f330eb68d08.png",
+      "name": "Samsung S25 FE 8/256 Iceblue",
+      "warehouse": "(S3)",
+      "price": 47700
+    },
+    "samsung-s25-fe-8-256-jet-black-индия-s3-48300": {
+      "url": "hybrid-products/samsung/samsung-s25-fe-8-256-jet-black-s3-48300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-fe-8-256-jet-black-s3-48300.html",
+      "cover": "assets/product-images/57f5c7f970b171b13a42085b.png",
+      "name": "Samsung S25 FE 8/256 Jet Black",
+      "warehouse": "(S3)",
+      "price": 48300
+    },
+    "samsung-s25-fe-8-256-navy-оаэ-s3-48000": {
+      "url": "hybrid-products/samsung/samsung-s25-fe-8-256-navy-s3-48000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-fe-8-256-navy-s3-48000.html",
+      "cover": "assets/product-images/9cf7d3dd8e635a5b2d643d59.png",
+      "name": "Samsung S25 FE 8/256 Navy",
+      "warehouse": "(S3)",
+      "price": 48000
+    },
+    "samsung-s25-fe-8-256-white-индия-s3-49300": {
+      "url": "hybrid-products/samsung/samsung-s25-fe-8-256-white-s3-49300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-fe-8-256-white-s3-49300.html",
+      "cover": "assets/product-images/ff9186bddaf92cf14353c137.png",
+      "name": "Samsung S25 FE 8/256 White",
+      "warehouse": "(S3)",
+      "price": 49300
+    },
+    "samsung-s25-12-256-icyblue-оаэ-s3-68300": {
+      "url": "hybrid-products/samsung/samsung-s25-12-256-icyblue-s3-68300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-12-256-icyblue-s3-68300.html",
+      "cover": "assets/product-images/bfaf52438291ccec83eb65a8.jpeg",
+      "name": "Samsung S25+ 12/256 Icyblue",
+      "warehouse": "(S3)",
+      "price": 68300
+    },
+    "samsung-s25-12-512-icyblue-оаэ-s3-77400": {
+      "url": "hybrid-products/samsung/samsung-s25-12-512-icyblue-s3-77400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-12-512-icyblue-s3-77400.html",
+      "cover": "assets/product-images/bfaf52438291ccec83eb65a8.jpeg",
+      "name": "Samsung S25+ 12/512 Icyblue",
+      "warehouse": "(S3)",
+      "price": 77400
+    },
+    "samsung-s25-12-512-mint-оаэ-s3-77400": {
+      "url": "hybrid-products/samsung/samsung-s25-12-512-mint-s3-77400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-12-512-mint-s3-77400.html",
+      "cover": "assets/product-images/a79e3d95a76cfc9a3e651bf3.jpeg",
+      "name": "Samsung S25+ 12/512 Mint",
+      "warehouse": "(S3)",
+      "price": 77400
+    },
+    "samsung-s25-12-512-silver-shadow-оаэ-s3-77400": {
+      "url": "hybrid-products/samsung/samsung-s25-12-512-silver-shadow-s3-77400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-12-512-silver-shadow-s3-77400.html",
+      "cover": "assets/product-images/ca9916d85d3f10184da3c68a.jpeg",
+      "name": "Samsung S25+ 12/512 Silver Shadow",
+      "warehouse": "(S3)",
+      "price": 77400
+    },
+    "samsung-s25-edge-12-256-icyblue-европа-s3-54100": {
+      "url": "hybrid-products/samsung/samsung-s25-edge-12-256-icyblue-s3-54100.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-edge-12-256-icyblue-s3-54100.html",
+      "cover": "assets/product-images/79252ec2dc2f3efaaed0c916.jpg",
+      "name": "Samsung S25 Edge 12/256 Icyblue",
+      "warehouse": "(S3)",
+      "price": 54100
+    },
+    "samsung-s25-ultra-12-256-black-оаэ-s3-70000": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-256-black-s3-70000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-256-black-s3-70000.html",
+      "cover": "assets/product-images/7767bb2eee5d8f6e2a3dda2e.jpg",
+      "name": "Samsung S25 Ultra 12/256 Black",
+      "warehouse": "(S3)",
+      "price": 70000
+    },
+    "samsung-s25-ultra-12-256-gray-оаэ-s3-69600": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-256-gray-s3-69600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-256-gray-s3-69600.html",
+      "cover": "assets/product-images/13af538be156dd6897a70c37.jpg",
+      "name": "Samsung S25 Ultra 12/256 Gray",
+      "warehouse": "(S3)",
+      "price": 69600
+    },
+    "samsung-s25-ultra-12-256-jet-black-оаэ-s3-71000": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-256-jet-black-s3-71000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-256-jet-black-s3-71000.html",
+      "cover": "assets/product-images/7767bb2eee5d8f6e2a3dda2e.jpg",
+      "name": "Samsung S25 Ultra 12/256 Jet Black",
+      "warehouse": "(S3)",
+      "price": 71000
+    },
+    "samsung-s25-ultra-12-256-silver-blue-оаэ-s3-70300": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-256-silver-blue-s3-70300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-256-silver-blue-s3-70300.html",
+      "cover": "assets/product-images/0ef9feeaffd7140e0772ebeb.jpg",
+      "name": "Samsung S25 Ultra 12/256 Silver Blue",
+      "warehouse": "(S3)",
+      "price": 70300
+    },
+    "samsung-s25-ultra-12-512-black-панама-s3-75900": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-512-black-s3-75900.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-512-black-s3-75900.html",
+      "cover": "assets/product-images/7767bb2eee5d8f6e2a3dda2e.jpg",
+      "name": "Samsung S25 Ultra 12/512 Black",
+      "warehouse": "(S3)",
+      "price": 75900
+    },
+    "samsung-s25-ultra-12-512-gray-панама-s3-75900": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-512-gray-s3-75900.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-512-gray-s3-75900.html",
+      "cover": "assets/product-images/13af538be156dd6897a70c37.jpg",
+      "name": "Samsung S25 Ultra 12/512 Gray",
+      "warehouse": "(S3)",
+      "price": 75900
+    },
+    "samsung-s25-ultra-12-512-jet-black-оаэ-s3-80700": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-512-jet-black-s3-80700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-512-jet-black-s3-80700.html",
+      "cover": "assets/product-images/c0256e06d7dc19912d683da6.jpg",
+      "name": "Samsung S25 Ultra 12/512 Jet Black",
+      "warehouse": "(S3)",
+      "price": 80700
+    },
+    "samsung-s25-ultra-12-512-silver-blue-малайзия-s3-78400": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-512-silver-blue-s3-78400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-512-silver-blue-s3-78400.html",
+      "cover": "assets/product-images/0ef9feeaffd7140e0772ebeb.jpg",
+      "name": "Samsung S25 Ultra 12/512 Silver Blue",
+      "warehouse": "(S3)",
+      "price": 78400
+    },
+    "samsung-s25-ultra-12-512-white-silver-панама-s3-77900": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-512-white-silver-s3-77900.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-512-white-silver-s3-77900.html",
+      "cover": "assets/product-images/eb3735df033f946b0421e3b5.jpg",
+      "name": "Samsung S25 Ultra 12/512 White Silver",
+      "warehouse": "(S3)",
+      "price": 77900
+    },
+    "samsung-s25-ultra-12-1tb-gray-панама-s3-85500": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-1tb-gray-s3-85500.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-1tb-gray-s3-85500.html",
+      "cover": "assets/product-images/13af538be156dd6897a70c37.jpg",
+      "name": "Samsung S25 Ultra 12/1TB Gray",
+      "warehouse": "(S3)",
+      "price": 85500
+    },
+    "samsung-s25-ultra-12-1tb-black-чили-s3-85800": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-1tb-black-s3-85800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-1tb-black-s3-85800.html",
+      "cover": "assets/product-images/7767bb2eee5d8f6e2a3dda2e.jpg",
+      "name": "Samsung S25 Ultra 12/1TB Black",
+      "warehouse": "(S3)",
+      "price": 85800
+    },
+    "samsung-s25-ultra-12-1tb-blue-чили-s3-85800": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-1tb-blue-s3-85800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-1tb-blue-s3-85800.html",
+      "cover": "assets/product-images/0ef9feeaffd7140e0772ebeb.jpg",
+      "name": "Samsung S25 Ultra 12/1TB Blue",
+      "warehouse": "(S3)",
+      "price": 85800
+    },
+    "samsung-s25-ultra-12-1tb-white-silver-панама-s3-85200": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-1tb-white-silver-s3-85200.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-1tb-white-silver-s3-85200.html",
+      "cover": "assets/product-images/eb3735df033f946b0421e3b5.jpg",
+      "name": "Samsung S25 Ultra 12/1TB White Silver",
+      "warehouse": "(S3)",
+      "price": 85200
+    },
+    "samsung-s25-ultra-12-1tb-jet-black-оаэ-s3-86800": {
+      "url": "hybrid-products/samsung/samsung-s25-ultra-12-1tb-jet-black-s3-86800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s25-ultra-12-1tb-jet-black-s3-86800.html",
+      "cover": "assets/product-images/7767bb2eee5d8f6e2a3dda2e.jpg",
+      "name": "Samsung S25 Ultra 12/1TB Jet Black",
+      "warehouse": "(S3)",
+      "price": 86800
+    },
+    "samsung-s26-fe-8-128-graphite-юар-s3-50400": {
+      "url": "hybrid-products/samsung/samsung-s26-fe-8-128-graphite-s3-50400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-fe-8-128-graphite-s3-50400.html",
+      "cover": "assets/product-images/518e771e692f1e74ce4315d8.png",
+      "name": "Samsung S26 FE 8/128 Graphite",
+      "warehouse": "(S3)",
+      "price": 50400
+    },
+    "samsung-s26-fe-8-128-blueberry-казахстан-s3-50400": {
+      "url": "hybrid-products/samsung/samsung-s26-fe-8-128-blueberry-s3-50400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-fe-8-128-blueberry-s3-50400.html",
+      "cover": "assets/product-images/3340c0d146e34890b26f14ee.jpg",
+      "name": "Samsung S26 FE 8/128 Blueberry",
+      "warehouse": "(S3)",
+      "price": 50400
+    },
+    "samsung-s26-fe-8-128-pistachio-казахстан-s3-50400": {
+      "url": "hybrid-products/samsung/samsung-s26-fe-8-128-pistachio-s3-50400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-fe-8-128-pistachio-s3-50400.html",
+      "cover": "assets/product-images/3ff532749ca5e23d98c12e02.png",
+      "name": "Samsung S26 FE 8/128 Pistachio",
+      "warehouse": "(S3)",
+      "price": 50400
+    },
+    "samsung-s26-fe-8-256-graphite-юар-s3-53400": {
+      "url": "hybrid-products/samsung/samsung-s26-fe-8-256-graphite-s3-53400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-fe-8-256-graphite-s3-53400.html",
+      "cover": "assets/product-images/518e771e692f1e74ce4315d8.png",
+      "name": "Samsung S26 FE 8/256 Graphite",
+      "warehouse": "(S3)",
+      "price": 53400
+    },
+    "samsung-s26-fe-8-256-blueberry-оаэ-s3-53800": {
+      "url": "hybrid-products/samsung/samsung-s26-fe-8-256-blueberry-s3-53800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-fe-8-256-blueberry-s3-53800.html",
+      "cover": "assets/product-images/3340c0d146e34890b26f14ee.jpg",
+      "name": "Samsung S26 FE 8/256 Blueberry",
+      "warehouse": "(S3)",
+      "price": 53800
+    },
+    "samsung-s26-fe-8-256-pistachio-юар-s3-53400": {
+      "url": "hybrid-products/samsung/samsung-s26-fe-8-256-pistachio-s3-53400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-fe-8-256-pistachio-s3-53400.html",
+      "cover": "assets/product-images/3ff532749ca5e23d98c12e02.png",
+      "name": "Samsung S26 FE 8/256 Pistachio",
+      "warehouse": "(S3)",
+      "price": 53400
+    },
+    "samsung-s26-fe-8-512-graphite-оаэ-s3-72300": {
+      "url": "hybrid-products/samsung/samsung-s26-fe-8-512-graphite-s3-72300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-fe-8-512-graphite-s3-72300.html",
+      "cover": "assets/product-images/518e771e692f1e74ce4315d8.png",
+      "name": "Samsung S26 FE 8/512 Graphite",
+      "warehouse": "(S3)",
+      "price": 72300
+    },
+    "samsung-s26-fe-8-512-blueberry-оаэ-s3-72300": {
+      "url": "hybrid-products/samsung/samsung-s26-fe-8-512-blueberry-s3-72300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-fe-8-512-blueberry-s3-72300.html",
+      "cover": "assets/product-images/3340c0d146e34890b26f14ee.jpg",
+      "name": "Samsung S26 FE 8/512 Blueberry",
+      "warehouse": "(S3)",
+      "price": 72300
+    },
+    "samsung-s26-fe-8-512-pistachio-оаэ-s3-72300": {
+      "url": "hybrid-products/samsung/samsung-s26-fe-8-512-pistachio-s3-72300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-fe-8-512-pistachio-s3-72300.html",
+      "cover": "assets/product-images/3ff532749ca5e23d98c12e02.png",
+      "name": "Samsung S26 FE 8/512 Pistachio",
+      "warehouse": "(S3)",
+      "price": 72300
+    },
+    "samsung-s26-12-128-black-европа-s3-62200": {
+      "url": "hybrid-products/samsung/samsung-s26-12-128-black-s3-62200.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-128-black-s3-62200.html",
+      "cover": "assets/product-images/07ce1e95a73e093ae20100a1.jpg",
+      "name": "Samsung S26 12/128 Black",
+      "warehouse": "(S3)",
+      "price": 62200
+    },
+    "samsung-s26-12-128-cobalt-violet-европа-s3-61200": {
+      "url": "hybrid-products/samsung/samsung-s26-12-128-cobalt-violet-s3-61200.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-128-cobalt-violet-s3-61200.html",
+      "cover": "assets/product-images/ba8d2b290196278cf3a10fec.jpg",
+      "name": "Samsung S26 12/128 Cobalt Violet",
+      "warehouse": "(S3)",
+      "price": 61200
+    },
+    "samsung-s26-12-256-black-юар-s3-66800": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-black-s3-66800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-black-s3-66800.html",
+      "cover": "assets/product-images/07ce1e95a73e093ae20100a1.jpg",
+      "name": "Samsung S26 12/256 Black",
+      "warehouse": "(S3)",
+      "price": 66800
+    },
+    "samsung-s26-12-256-white-индия-s3-67800": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-white-s3-67800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-white-s3-67800.html",
+      "cover": "assets/product-images/7f9d819006a638000ffe6302.jpg",
+      "name": "Samsung S26 12/256 White",
+      "warehouse": "(S3)",
+      "price": 67800
+    },
+    "samsung-s26-12-256-cobalt-violet-юар-s3-66600": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-cobalt-violet-s3-66600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-cobalt-violet-s3-66600.html",
+      "cover": "assets/product-images/ba8d2b290196278cf3a10fec.jpg",
+      "name": "Samsung S26 12/256 Cobalt Violet",
+      "warehouse": "(S3)",
+      "price": 66600
+    },
+    "samsung-s26-12-256-pink-gold-индия-s3-67800": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-pink-gold-s3-67800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-pink-gold-s3-67800.html",
+      "cover": "assets/product-images/9b98962a77a95433c2bdd1ce.jpg",
+      "name": "Samsung S26 12/256 Pink Gold",
+      "warehouse": "(S3)",
+      "price": 67800
+    },
+    "samsung-s26-12-256-sky-blue-парагвай-s3-66000": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-sky-blue-s3-66000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-sky-blue-s3-66000.html",
+      "cover": "assets/product-images/b112d157f7d22cd72cee57e9.jpg",
+      "name": "Samsung S26 12/256 Sky Blue",
+      "warehouse": "(S3)",
+      "price": 66000
+    },
+    "samsung-s26-12-256-silver-shadow-индия-s3-68800": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-silver-shadow-s3-68800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-silver-shadow-s3-68800.html",
+      "cover": "assets/product-images/3ee4e2880384d1263a555180.jpg",
+      "name": "Samsung S26 12/256 Silver Shadow",
+      "warehouse": "(S3)",
+      "price": 68800
+    },
+    "samsung-s26-12-256-black-sm-s-гонконг-s3-66800": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-black-sm-s-s3-66800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-black-sm-s-s3-66800.html",
+      "cover": "assets/product-images/07ce1e95a73e093ae20100a1.jpg",
+      "name": "Samsung S26 12/256 Black SM-S",
+      "warehouse": "(S3)",
+      "price": 66800
+    },
+    "samsung-s26-12-256-cobalt-violet-sm-s-гонконг-s3-66800": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-cobalt-violet-sm-s-s3-66800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-cobalt-violet-sm-s-s3-66800.html",
+      "cover": "assets/product-images/ba8d2b290196278cf3a10fec.jpg",
+      "name": "Samsung S26 12/256 Cobalt Violet SM-S",
+      "warehouse": "(S3)",
+      "price": 66800
+    },
+    "samsung-s26-12-256-sky-blue-sm-s-гонконг-s3-65600": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-sky-blue-sm-s-s3-65600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-sky-blue-sm-s-s3-65600.html",
+      "cover": "assets/product-images/b112d157f7d22cd72cee57e9.jpg",
+      "name": "Samsung S26 12/256 Sky Blue SM-S",
+      "warehouse": "(S3)",
+      "price": 65600
+    },
+    "samsung-s26-12-512-white-парагвай-s3-75600": {
+      "url": "hybrid-products/samsung/samsung-s26-12-512-white-s3-75600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-512-white-s3-75600.html",
+      "cover": "assets/product-images/7f9d819006a638000ffe6302.jpg",
+      "name": "Samsung S26 12/512 White",
+      "warehouse": "(S3)",
+      "price": 75600
+    },
+    "samsung-s26-12-512-cobalt-violet-чили-s3-75200": {
+      "url": "hybrid-products/samsung/samsung-s26-12-512-cobalt-violet-s3-75200.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-512-cobalt-violet-s3-75200.html",
+      "cover": "assets/product-images/ba8d2b290196278cf3a10fec.jpg",
+      "name": "Samsung S26 12/512 Cobalt Violet",
+      "warehouse": "(S3)",
+      "price": 75200
+    },
+    "samsung-s26-12-512-sky-blue-чили-s3-74300": {
+      "url": "hybrid-products/samsung/samsung-s26-12-512-sky-blue-s3-74300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-512-sky-blue-s3-74300.html",
+      "cover": "assets/product-images/b112d157f7d22cd72cee57e9.jpg",
+      "name": "Samsung S26 12/512 Sky Blue",
+      "warehouse": "(S3)",
+      "price": 74300
+    },
+    "samsung-s26-12-512-silver-shadow-вьетнам-s3-80000": {
+      "url": "hybrid-products/samsung/samsung-s26-12-512-silver-shadow-s3-80000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-512-silver-shadow-s3-80000.html",
+      "cover": "assets/product-images/3ee4e2880384d1263a555180.jpg",
+      "name": "Samsung S26 12/512 Silver Shadow",
+      "warehouse": "(S3)",
+      "price": 80000
+    },
+    "samsung-s26-12-512-pink-gold-парагвай-s3-80000": {
+      "url": "hybrid-products/samsung/samsung-s26-12-512-pink-gold-s3-80000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-512-pink-gold-s3-80000.html",
+      "cover": "assets/product-images/9b98962a77a95433c2bdd1ce.jpg",
+      "name": "Samsung S26 12/512 Pink Gold",
+      "warehouse": "(S3)",
+      "price": 80000
+    },
+    "samsung-s26-12-256-sky-blue-казахстан-s3-72600": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-sky-blue-s3-72600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-sky-blue-s3-72600.html",
+      "cover": "assets/product-images/b112d157f7d22cd72cee57e9.jpg",
+      "name": "Samsung S26+ 12/256 Sky Blue",
+      "warehouse": "(S3)",
+      "price": 72600
+    },
+    "samsung-s26-12-256-silver-shadow-оаэ-s3-78400": {
+      "url": "hybrid-products/samsung/samsung-s26-12-256-silver-shadow-s3-78400.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-256-silver-shadow-s3-78400.html",
+      "cover": "assets/product-images/3ee4e2880384d1263a555180.jpg",
+      "name": "Samsung S26+ 12/256 Silver Shadow",
+      "warehouse": "(S3)",
+      "price": 78400
+    },
+    "samsung-s26-12-512-sky-blue-s3-81100": {
+      "url": "hybrid-products/samsung/samsung-s26-12-512-sky-blue-s3-81100.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-12-512-sky-blue-s3-81100.html",
+      "cover": "assets/product-images/b112d157f7d22cd72cee57e9.jpg",
+      "name": "Samsung S26+ 12/512 Sky Blue",
+      "warehouse": "(S3)",
+      "price": 81100
+    },
+    "samsung-s26-ultra-12-256-black-оаэ-s3-81100": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-256-black-s3-81100.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-12-256-black-s3-81100.html",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.png",
+      "name": "Samsung S26 Ultra 12/256 Black",
+      "warehouse": "(S3)",
+      "price": 81100
+    },
+    "samsung-s26-ultra-12-256-cobalt-violet-оаэ-s3-80700": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-256-cobalt-violet-s3-80700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-12-256-cobalt-violet-s3-80700.html",
+      "cover": "assets/product-images/c17451a7debc4f88556e468c.png",
+      "name": "Samsung S26 Ultra 12/256 Cobalt Violet",
+      "warehouse": "(S3)",
+      "price": 80700
+    },
+    "samsung-s26-ultra-12-256-sky-blue-казахстан-s3-80500": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-256-sky-blue-s3-80500.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-12-256-sky-blue-s3-80500.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.png",
+      "name": "Samsung S26 Ultra 12/256 Sky Blue",
+      "warehouse": "(S3)",
+      "price": 80500
+    },
+    "samsung-s26-ultra-12-512-black-чили-s3-97800": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-512-black-s3-97800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-12-512-black-s3-97800.html",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.png",
+      "name": "Samsung S26 Ultra 12/512 Black",
+      "warehouse": "(S3)",
+      "price": 97800
+    },
+    "samsung-s26-ultra-12-512-white-казахстан-s3-96000": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-512-white-s3-96000.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-12-512-white-s3-96000.html",
+      "cover": "assets/product-images/14c630d31d07eaa515c7dccf.png",
+      "name": "Samsung S26 Ultra 12/512 White",
+      "warehouse": "(S3)",
+      "price": 96000
+    },
+    "samsung-s26-ultra-12-512-cobalt-violet-чили-s3-97800": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-512-cobalt-violet-s3-97800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-12-512-cobalt-violet-s3-97800.html",
+      "cover": "assets/product-images/c17451a7debc4f88556e468c.png",
+      "name": "Samsung S26 Ultra 12/512 Cobalt Violet",
+      "warehouse": "(S3)",
+      "price": 97800
+    },
+    "samsung-s26-ultra-12-512-sky-blue-чили-s3-94700": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-12-512-sky-blue-s3-94700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-12-512-sky-blue-s3-94700.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.png",
+      "name": "Samsung S26 Ultra 12/512 Sky Blue",
+      "warehouse": "(S3)",
+      "price": 94700
+    },
+    "samsung-s26-ultra-16-1tb-black-чили-s3-121600": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-16-1tb-black-s3-121600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-16-1tb-black-s3-121600.html",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.png",
+      "name": "Samsung S26 Ultra 16/1TB Black",
+      "warehouse": "(S3)",
+      "price": 121600
+    },
+    "samsung-s26-ultra-16-1tb-white-чили-s3-122200": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-16-1tb-white-s3-122200.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-16-1tb-white-s3-122200.html",
+      "cover": "assets/product-images/14c630d31d07eaa515c7dccf.png",
+      "name": "Samsung S26 Ultra 16/1TB White",
+      "warehouse": "(S3)",
+      "price": 122200
+    },
+    "samsung-s26-ultra-16-1tb-cobalt-violet-чили-s3-121100": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-16-1tb-cobalt-violet-s3-121100.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-16-1tb-cobalt-violet-s3-121100.html",
+      "cover": "assets/product-images/c17451a7debc4f88556e468c.png",
+      "name": "Samsung S26 Ultra 16/1TB Cobalt Violet",
+      "warehouse": "(S3)",
+      "price": 121100
+    },
+    "samsung-s26-ultra-16-1tb-sky-blue-s3-121300": {
+      "url": "hybrid-products/samsung/samsung-s26-ultra-16-1tb-sky-blue-s3-121300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-s26-ultra-16-1tb-sky-blue-s3-121300.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.png",
+      "name": "Samsung S26 Ultra 16/1TB Sky Blue",
+      "warehouse": "(S3)",
+      "price": 121300
+    },
+    "samsung-z-flip7-fe-8-256-black-чили-s3-65800": {
+      "url": "hybrid-products/samsung/samsung-z-flip7-fe-8-256-black-s3-65800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-flip7-fe-8-256-black-s3-65800.html",
+      "cover": "assets/product-images/0a86a53e226a39d9a58b5801.jpeg",
+      "name": "Samsung Z Flip7 FE 8/256 Black",
+      "warehouse": "(S3)",
+      "price": 65800
+    },
+    "samsung-z-flip7-fe-8-256-white-чили-s3-65800": {
+      "url": "hybrid-products/samsung/samsung-z-flip7-fe-8-256-white-s3-65800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-flip7-fe-8-256-white-s3-65800.html",
+      "cover": "assets/product-images/05a4ad150fe2c22234429818.jpeg",
+      "name": "Samsung Z Flip7 FE 8/256 White",
+      "warehouse": "(S3)",
+      "price": 65800
+    },
+    "samsung-z-flip-8-12-256-graphite-европа-s3-72800": {
+      "url": "hybrid-products/samsung/samsung-z-flip-8-12-256-graphite-s3-72800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-flip-8-12-256-graphite-s3-72800.html",
+      "cover": "assets/product-images/2534a6af84ae640b7753408d.png",
+      "name": "Samsung Z Flip 8 12/256 Graphite",
+      "warehouse": "(S3)",
+      "price": 72800
+    },
+    "samsung-z-flip-8-12-256-cream-таиланд-s3-74300": {
+      "url": "hybrid-products/samsung/samsung-z-flip-8-12-256-cream-s3-74300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-flip-8-12-256-cream-s3-74300.html",
+      "cover": "assets/product-images/8f0a082ba04857915f213543.png",
+      "name": "Samsung Z Flip 8 12/256 Cream",
+      "warehouse": "(S3)",
+      "price": 74300
+    },
+    "samsung-z-flip-8-12-256-pink-европа-s3-81300": {
+      "url": "hybrid-products/samsung/samsung-z-flip-8-12-256-pink-s3-81300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-flip-8-12-256-pink-s3-81300.html",
+      "cover": "assets/product-images/4c0e5ad2b9e52471409b0bf8.png",
+      "name": "Samsung Z Flip 8 12/256 Pink",
+      "warehouse": "(S3)",
+      "price": 81300
+    },
+    "samsung-z-flip-8-12-512-graphite-таиланд-s3-83700": {
+      "url": "hybrid-products/samsung/samsung-z-flip-8-12-512-graphite-s3-83700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-flip-8-12-512-graphite-s3-83700.html",
+      "cover": "assets/product-images/2534a6af84ae640b7753408d.png",
+      "name": "Samsung Z Flip 8 12/512 Graphite",
+      "warehouse": "(S3)",
+      "price": 83700
+    },
+    "samsung-z-flip-8-12-512-cream-оаэ-s3-84700": {
+      "url": "hybrid-products/samsung/samsung-z-flip-8-12-512-cream-s3-84700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-flip-8-12-512-cream-s3-84700.html",
+      "cover": "assets/product-images/8f0a082ba04857915f213543.png",
+      "name": "Samsung Z Flip 8 12/512 Cream",
+      "warehouse": "(S3)",
+      "price": 84700
+    },
+    "samsung-z-fold-8-12-256-cream-юар-s3-120800": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-12-256-cream-s3-120800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-12-256-cream-s3-120800.html",
+      "cover": "assets/product-images/19133f3de8bde3b0ec88c8c9.jpg",
+      "name": "Samsung Z Fold 8 12/256 Cream",
+      "warehouse": "(S3)",
+      "price": 120800
+    },
+    "samsung-z-fold-8-12-256-lavender-таиланд-s3-120800": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-12-256-lavender-s3-120800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-12-256-lavender-s3-120800.html",
+      "cover": "assets/product-images/b9e8454bde003550f4a8319f.png",
+      "name": "Samsung Z Fold 8 12/256 Lavender",
+      "warehouse": "(S3)",
+      "price": 120800
+    },
+    "samsung-z-fold-8-12-256-graphite-юар-s3-123600": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-12-256-graphite-s3-123600.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-12-256-graphite-s3-123600.html",
+      "cover": "assets/product-images/2cf1c741dd188e3a4fe44b46.jpg",
+      "name": "Samsung Z Fold 8 12/256 Graphite",
+      "warehouse": "(S3)",
+      "price": 123600
+    },
+    "samsung-z-fold-8-12-512-cream-оаэ-s3-131800": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-12-512-cream-s3-131800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-12-512-cream-s3-131800.html",
+      "cover": "assets/product-images/19133f3de8bde3b0ec88c8c9.jpg",
+      "name": "Samsung Z Fold 8 12/512 Cream",
+      "warehouse": "(S3)",
+      "price": 131800
+    },
+    "samsung-z-fold-8-12-512-violet-оаэ-s3-131300": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-12-512-violet-s3-131300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-12-512-violet-s3-131300.html",
+      "cover": "assets/product-images/b9e8454bde003550f4a8319f.png",
+      "name": "Samsung Z Fold 8 12/512 Violet",
+      "warehouse": "(S3)",
+      "price": 131300
+    },
+    "samsung-z-fold-8-12-512-lavender-s3-131800": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-12-512-lavender-s3-131800.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-12-512-lavender-s3-131800.html",
+      "cover": "assets/product-images/b9e8454bde003550f4a8319f.png",
+      "name": "Samsung Z Fold 8 12/512 Lavender",
+      "warehouse": "(S3)",
+      "price": 131800
+    },
+    "samsung-z-fold-8-16-1tb-cream-европа-s3-178900": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-16-1tb-cream-s3-178900.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-16-1tb-cream-s3-178900.html",
+      "cover": "assets/product-images/19133f3de8bde3b0ec88c8c9.jpg",
+      "name": "Samsung Z Fold 8 16/1TB Cream",
+      "warehouse": "(S3)",
+      "price": 178900
+    },
+    "samsung-z-fold-8-ultra-12-256-cream-казахстан-s3-128200": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-ultra-12-256-cream-s3-128200.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-ultra-12-256-cream-s3-128200.html",
+      "cover": "assets/product-images/34c4f109e96eb83c3cdb364c.png",
+      "name": "Samsung Z Fold 8 Ultra 12/256 Cream",
+      "warehouse": "(S3)",
+      "price": 128200
+    },
+    "samsung-z-fold-8-ultra-12-256-graphite-европа-s3-130300": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-ultra-12-256-graphite-s3-130300.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-ultra-12-256-graphite-s3-130300.html",
+      "cover": "assets/product-images/3d4cfbbaf3946580695e1486.png",
+      "name": "Samsung Z Fold 8 Ultra 12/256 Graphite",
+      "warehouse": "(S3)",
+      "price": 130300
+    },
+    "samsung-z-fold-8-ultra-12-256-violet-оаэ-s3-132900": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-ultra-12-256-violet-s3-132900.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-ultra-12-256-violet-s3-132900.html",
+      "cover": "assets/product-images/02dbf59a69244643c03e5367.png",
+      "name": "Samsung Z Fold 8 Ultra 12/256 Violet",
+      "warehouse": "(S3)",
+      "price": 132900
+    },
+    "samsung-z-fold-8-ultra-12-512-cream-оаэ-s3-140700": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-ultra-12-512-cream-s3-140700.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-ultra-12-512-cream-s3-140700.html",
+      "cover": "assets/product-images/34c4f109e96eb83c3cdb364c.png",
+      "name": "Samsung Z Fold 8 Ultra 12/512 Cream",
+      "warehouse": "(S3)",
+      "price": 140700
+    },
+    "samsung-z-fold-8-ultra-16-1tb-graphite-европа-s3-191900": {
+      "url": "hybrid-products/samsung/samsung-z-fold-8-ultra-16-1tb-graphite-s3-191900.html",
+      "url_en": "en/hybrid-products/samsung/samsung-z-fold-8-ultra-16-1tb-graphite-s3-191900.html",
+      "cover": "assets/product-images/3d4cfbbaf3946580695e1486.png",
+      "name": "Samsung Z Fold 8 Ultra 16/1TB Graphite",
+      "warehouse": "(S3)",
+      "price": 191900
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-01T14:19:27.545Z",
-  "count": 215,
+  "generated_at": "2026-10-04T13:21:25.428Z",
+  "count": 216,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -1721,6 +1721,14 @@
       "name": "Dyson Wash G1 (Black) 🇦🇺",
       "warehouse": "(S3)",
       "price": 35700
+    },
+    "-hs09-co-anda-2x-ceramic-pink-rose-gold-s2-50500": {
+      "url": "hybrid-products/dyson/hs09-co-anda-2x-ceramic-pink-rose-gold-s2-50500.html",
+      "url_en": "en/hybrid-products/dyson/hs09-co-anda-2x-ceramic-pink-rose-gold-s2-50500.html",
+      "cover": "assets/product-images/3cc99ad2cd24f0f15570eae6.jpg",
+      "name": "👱‍♀️HS09 Co-Anda 2X Ceramic Pink/Rose Gold",
+      "warehouse": "(S2)",
+      "price": 50500
     }
   }
 }

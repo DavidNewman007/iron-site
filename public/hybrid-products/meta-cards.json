@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-01T14:19:27.560Z",
-  "count": 64,
+  "generated_at": "2026-10-04T13:21:25.444Z",
+  "count": 66,
   "byId": {
     "-oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100": {
       "url": "hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100.html",
@@ -513,6 +513,22 @@
       "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 155 - 53 Size C 601S1Z53",
       "warehouse": "(S1)",
       "price": 40700
+    },
+    "-wayfarer-gen-2-shiny-black-g15-green-150-50-size-c-601-s1-39500": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-shiny-black-g15-green-150-50-size-c-601-s1-39500.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-shiny-black-g15-green-150-50-size-c-601-s1-39500.html",
+      "cover": "assets/product-images/533b99892bcc0c54268d7851.jpg",
+      "name": "👓 Wayfarer (Gen 2) Shiny Black G15 Green 150 - 50 Size C 601/",
+      "warehouse": "(S1)",
+      "price": 39500
+    },
+    "-wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-40000": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-40000.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-40000.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 150 - 50 Size C 601S1Z50",
+      "warehouse": "(S1)",
+      "price": 40000
     }
   }
 }

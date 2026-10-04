@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-01T14:19:27.577Z",
-  "count": 179,
+  "generated_at": "2026-10-04T13:21:25.461Z",
+  "count": 180,
   "byId": {
     "xiaomi-15-5g-12-256-green-европа-s3-53000": {
       "url": "hybrid-products/xiaomi/xiaomi-15-5g-12-256-green-s3-53000.html",
@@ -1433,6 +1433,14 @@
       "name": "Redmi Note 17 Pro Max 5G 8/512 NFC Purple",
       "warehouse": "(S3)",
       "price": 43300
+    },
+    "poco-f9-pro-5g-12-512-black-европа-s3-63200": {
+      "url": "hybrid-products/xiaomi/poco-f9-pro-5g-12-512-black-s3-63200.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-f9-pro-5g-12-512-black-s3-63200.html",
+      "cover": "assets/product-images/2314d4600d0d0c308e74db40.jpg",
+      "name": "POCO F9 Pro 5G 12/512 Black",
+      "warehouse": "(S3)",
+      "price": 63200
     }
   }
 }
