@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-04T13:21:25.431Z",
-  "count": 35,
+  "generated_at": "2026-10-05T15:55:08.378Z",
+  "count": 36,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -281,6 +281,14 @@
       "name": "Картридж Fujifilm Instax Mini Twin Pack 10шт",
       "warehouse": "(S2)",
       "price": 2300
+    },
+    "-canon-powershot-g7-x-mark-iii-black-s2-106200": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-black-s2-106200.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-black-s2-106200.html",
+      "cover": "assets/product-images/333874f719a026e25cd64d37.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Black",
+      "warehouse": "(S2)",
+      "price": 106200
     }
   }
 }

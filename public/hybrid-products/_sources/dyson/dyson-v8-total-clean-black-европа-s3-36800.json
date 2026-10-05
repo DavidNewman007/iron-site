@@ -1,0 +1,73 @@
+{
+  "product_id": "dyson-v8-total-clean-black-европа-s3-36800",
+  "category": "dyson",
+  "file_slug": "dyson-v8-total-clean-black-s3-36800",
+  "name": "Dyson V8 Total Clean (Black)",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 36800,
+  "catalog_url": "https://www.dyson.co.uk/vacuum-cleaners/cordless/v8/total-clean-black",
+  "catalog_title": "Беспроводной пылесос Dyson V8 Total Clean, чёрный",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "V8 Total Clean"
+    },
+    {
+      "key": "Цвет",
+      "value": "Чёрный"
+    },
+    {
+      "key": "Мотор",
+      "value": "Dyson V8, до 110 000 об/мин"
+    },
+    {
+      "key": "Время работы",
+      "value": "До 40 мин"
+    },
+    {
+      "key": "Зарядка",
+      "value": "5 ч"
+    },
+    {
+      "key": "Контейнер",
+      "value": "0,54 л"
+    },
+    {
+      "key": "Фильтрация",
+      "value": "Задерживает 99,99% частиц от 0,3 мкм"
+    },
+    {
+      "key": "Вес",
+      "value": "2,5 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "1256 × 221 × 250 мм"
+    },
+    {
+      "key": "Комплектация",
+      "value": "Насадки Fluffy и Motorbar, щелевая, комбинированная, переходник для низких мест, зарядное устройство"
+    }
+  ],
+  "images_remote": [
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/443094-01.png?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cordless/v8/advanced/silver-nickel/V8_PDP_Gallery_(FIXED)_04.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cordless/v8/advanced/silver-nickel/V8_PDP_Gallery_(FIXED)_05.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cordless/v8/advanced/silver-nickel/V8_PDP_Gallery_(FIXED)_06.jpg?wid=1400"
+  ],
+  "images_local": [
+    "assets/product-images/ce9e378d146b5665d242f8a1.jpg",
+    "assets/product-images/19fbb97b75cf34d800ddfc36.jpg",
+    "assets/product-images/5fa5073f597afc4dbd19bede.jpg",
+    "assets/product-images/411d2cce83e47ab35e91f701.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson v8 total clean black~s3",
+  "photo_source": "https://www.dyson.co.uk/vacuum-cleaners/cordless/v8/total-clean-black",
+  "updated_at": "2026-10-05T15:51:27.764107Z"
+}

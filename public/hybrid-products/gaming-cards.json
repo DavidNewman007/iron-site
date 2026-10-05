@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-04T13:21:25.412Z",
-  "count": 56,
+  "generated_at": "2026-10-05T15:55:08.357Z",
+  "count": 60,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -449,6 +449,38 @@
       "name": "🎮PS5 Slim Digital 825Gb",
       "warehouse": "(S2)",
       "price": 70800
+    },
+    "-ps5-pro-2tb-s2-128700": {
+      "url": "hybrid-products/gaming/ps5-pro-2tb-s2-128700.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-2tb-s2-128700.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro 2Tb",
+      "warehouse": "(S2)",
+      "price": 128700
+    },
+    "-ps5-slim-digital-825gb-s2-70300": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-70300.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-825gb-s2-70300.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "🎮PS5 Slim Digital 825Gb",
+      "warehouse": "(S2)",
+      "price": 70300
+    },
+    "portal-ps5-черный-s2-26700": {
+      "url": "hybrid-products/gaming/portal-ps5-черный-s2-26700.html",
+      "url_en": "en/hybrid-products/gaming/portal-ps5-черный-s2-26700.html",
+      "cover": "assets/product-images/807f53163a7f14597ff54836.jpg",
+      "name": "Portal PS5 Черный",
+      "warehouse": "(S2)",
+      "price": 26700
+    },
+    "portal-ps5-белый-s2-26700": {
+      "url": "hybrid-products/gaming/portal-ps5-белый-s2-26700.html",
+      "url_en": "en/hybrid-products/gaming/portal-ps5-белый-s2-26700.html",
+      "cover": "assets/product-images/9e175dd37be85181eac35fa5.jpg",
+      "name": "Portal PS5 Белый",
+      "warehouse": "(S2)",
+      "price": 26700
     }
   }
 }

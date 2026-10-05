@@ -1,0 +1,61 @@
+{
+  "product_id": "dyson-wash-g1-black-австралия-s3-33900",
+  "category": "dyson",
+  "file_slug": "dyson-wash-g1-black-s3-33900",
+  "name": "Dyson Wash G1 (Black)",
+  "country": "🇦🇺 Австралия",
+  "warehouse": "(S3)",
+  "price": 33900,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/dyson-wash-g1",
+  "catalog_title": "Пылесос беспроводной Dyson Wash G1, Blue/Black",
+  "specs": [
+    {
+      "key": "Тип уборки",
+      "value": "влажная"
+    },
+    {
+      "key": "Модель",
+      "value": "Wash G1"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 35 мин"
+    },
+    {
+      "key": "Объем пылесборника",
+      "value": "760 мл"
+    },
+    {
+      "key": "Ширина",
+      "value": "300 см"
+    },
+    {
+      "key": "Высота",
+      "value": "114 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "225 см"
+    },
+    {
+      "key": "Вес",
+      "value": "4.9 кг"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/wash-g1/wash-g1-dr-store-8-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/wash-g1/wash-g1-dr-store-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/wash-g1/wash-g1-dr-store-7-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/wash-g1/wash-g1-dr-store-6-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/521514c19e98620a015133d2.jpg",
+    "assets/product-images/0baf1d69c8df231333186327.jpg",
+    "assets/product-images/3ac111c3ac378f6eea72b210.jpg",
+    "assets/product-images/d447d98e3a83d25c475e383e.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson wash g1 black~s3",
+  "photo_source": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/dyson-wash-g1",
+  "updated_at": "2026-10-05T15:51:44.737605Z"
+}
