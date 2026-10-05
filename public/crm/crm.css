@@ -662,3 +662,11 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .sup .note { margin: 8px 0 0; }
 .longbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 10px 0 0; padding: 8px 12px; border: 1px solid var(--gold); border-radius: 12px; background: rgba(212, 160, 18, .07); font-size: .9rem; }
 .longbar .btn--sm { margin-top: 0; }
+
+/* Своя цена продажи (v52, 05.10.2026) */
+.sk__cost .sk-price { display: block; margin-left: auto; padding: 2px 0; font-size: .8rem; font-weight: 400; color: var(--muted); text-decoration: underline dotted; }
+.sk__cost .sk-price.is-own { color: var(--gold); font-weight: 700; }
+.sk-pr { border-color: rgba(212, 160, 18, .55); background: rgba(212, 160, 18, .06); }
+.sk-pr .sk-def__top { align-items: flex-end; flex-wrap: wrap; }
+.sk-pr .sk-def__n input { width: 110px; }
+.sk-pr .row { margin-top: 0; }
