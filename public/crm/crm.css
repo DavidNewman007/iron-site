@@ -619,6 +619,7 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .sk-def__top .sk-def__note { flex: 1; min-width: 0; }
 .sk-def__n { display: flex; flex-direction: column; font-size: .78rem; color: var(--muted); }
 .sk-def__n input, .sk-pick__n input { width: 64px; height: 44px; text-align: center; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--field); color: var(--text); font-size: 1.05rem; font-weight: 700; }
+.sk-sumbad { padding: 0 2px; font-size: inherit; color: #ffb36b; text-decoration: underline dotted; }
 .sk-pick { display: inline-flex; align-items: center; gap: 6px; margin: 6px 12px 0 0; font-size: .88rem; color: #ffb36b; font-weight: 700; cursor: pointer; }
 .sk-pick input { width: 22px; height: 22px; accent-color: #ff963c; }
 .sk-pick__n { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-size: .85rem; color: var(--muted); }
