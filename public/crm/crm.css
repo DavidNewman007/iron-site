@@ -613,3 +613,11 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .sk-def__note { width: 100%; min-height: 44px; background: var(--field); color: var(--cream); border: 1px solid var(--line-strong); border-radius: 10px; padding: 6px 12px; font: inherit; }
 .sk-def .row { flex-wrap: wrap; gap: 6px 8px; }
 .sk-def .note { margin: 6px 0 0; }
+
+/* Товар из бота в «Продажу» (v47, 05.10.2026) */
+.g-item { display: grid; grid-template-columns: 1fr; }
+.g-item img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; float: left; margin-right: 10px; }
+.g-item.is-sold, .g-item[disabled] { opacity: .5; cursor: default; }
+.g-q { flex: 1; min-width: 0; }
+.g-picked { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+.g-picked .chip { display: inline-flex; align-items: center; gap: 4px; }

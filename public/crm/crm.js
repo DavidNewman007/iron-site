@@ -41,6 +41,9 @@
     newStatus: "Принят на диагностику",
     // Заказы бота для «Продажи» (план 93 §11.17): бот пишет их в D1 с 26.09.2026.
     botOrders: "https://order-bot.4489530.workers.dev/crm/orders",
+    // Товары для «Продажи» (v47): каталог новых и б/у из бота; «продано» для б/у после оформления.
+    botGoods: "https://order-bot.4489530.workers.dev/crm/goods",
+    botUsedSold: "https://order-bot.4489530.workers.dev/crm/used/sold",
     siteOrdersSheet: "заказы с сайта",
     reportValue: "Ok",
     // Склад запчастей Витали (v31, 02.10.2026): остатки — колонка I листа «Запчасти Витали»,
@@ -2022,7 +2025,7 @@
     }
     left += box(2, html); html = "";
 
-    if (isNew && (dk === "sale_used" || dk === "sale_new")) left += box(2, importBlock());
+    if (isNew && (dk === "sale_used" || dk === "sale_new")) left += box(2, goodsBlock(dk) + importBlock());
     html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
       ${isNew ? `<div id="pre-contact" class="note pre-contact">${preNoteText()}</div><div id="client-devs">${clientDevicesHtml(currentNewClient())}</div>` : ""}
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
@@ -2183,6 +2186,115 @@
     }
     const n = location.hash.match(/^#\/(\d+)/)?.[1];
     if (n && ![...S.dirty.keys()].length) render();
+  }
+
+  // ── товар из бота в новую «Продажу» (v47, 05.10.2026) ─────────────────────────────
+  // Владелец: «сделай возможным подтянуть из бота б/у товар для оформления продажи б/у; и новый товар в
+  // сделку продажи нового — полный цикл без оформления в боте, прямо в оболочке». Раньше в продажу
+  // можно было подгрузить только ГОТОВЫЙ заказ бота или сайта; продажу в салоне вписывали руками —
+  // без закупки, с опечатками в названии. Теперь: б/у — список раздела «♻️ Б/у» бота (R2), новый —
+  // поиск по каталогу бота (те же цены, закупка с доставкой у «под заказ», склад, гарантия). Выбор
+  // заполняет устройство, цену, закупку, гарантию (у б/у — IMEI из характеристик и состояние);
+  // второй товар — вторым устройством сделки. После «Создать заказ» б/у в боте помечается «Продано»
+  // с номером сделки (/crm/used/sold) — чтобы его не купили второй раз.
+  const warrantyShort = w => { const m = String(w || "").match(/(\d+\s*(?:год[а]?|лет|мес\S*|дн\S*|недел\S*))/i); return m ? m[1] : String(w || "").replace(/[🛡️]/gu, "").trim(); };
+  const imeiOf = x => (x.specs || []).find(s => /imei|серийн|s\/?n/i.test(s.k))?.v || "";
+  async function loadGoods(force) {
+    if (S.goods?.items && !force) { S.goods.open = true; return rerenderKeep(); }
+    S.goods = { ...(S.goods || {}), open: true, loading: true, error: "" }; rerenderKeep();
+    try {
+      let j;
+      if (DEMO) j = { ok: true, items: [
+          { name: "iPhone 17 128Gb Black", country: "🇺🇸 США", price: 61900, purchase: 57000, warranty: "🛡️ Гарантия 1 год включена", source: "S1", category: "iPhone", order: false },
+          { name: "iPhone 17 256Gb Lavender", country: "🇪🇺 Европа", price: 80300, purchase: 76300, warranty: "", source: "S3", category: "iPhone", order: true, eta: "1–2 дня" },
+          { name: "AirPods Pro 3", country: "🇺🇸 США", price: 24990, purchase: 21000, warranty: "1 год", source: "S1", category: "AirPods", order: false }],
+        used: [
+          { id: "demo1", name: "iPhone 13 Pro 256Gb Graphite", price: 52000, warranty: "30 дней", condition: "отличное, АКБ 89%", kit: "коробка, кабель", specs: [{ k: "IMEI", v: "356000000000001" }], sold: false, photo: "" },
+          { id: "demo2", name: "iPad 9 64Gb", price: 18000, warranty: "", condition: "", kit: "", specs: [], sold: true, deal: "7790", photo: "" }] };
+      else {
+        const r = await fetch(CFG.botGoods, { headers: { Authorization: "Bearer " + S.token } });
+        j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.ok) throw new Error(j.error || "бот не ответил (" + r.status + ")");
+      }
+      Object.assign(S.goods, { items: j.items || [], used: j.used || [], at: Date.now() });
+    } catch (e) { S.goods.error = "Не удалось загрузить товары: " + e.message; }
+    S.goods.loading = false; rerenderKeep();
+  }
+  function rerenderKeep() { const y = window.scrollY, a = document.activeElement?.dataset?.act, pos = document.activeElement?.selectionStart; render(); window.scrollTo(0, y);
+    if (a === "gq") { const q = $app.querySelector('[data-act="gq"]'); if (q) { q.focus({ preventScroll: true }); try { q.setSelectionRange(pos, pos); } catch {} } } }
+  function goodsList(dk) {
+    const G = S.goods, used = dk === "sale_used", words = norm(G["q_" + (used ? "used" : "new")] || "").split(/\s+/).filter(Boolean);
+    const hit = t => words.every(w => norm(t).includes(w));
+    if (used) {
+      const list = (G.used || []).filter(x => hit(`${x.name} ${x.condition} ${(x.specs || []).map(s => s.v).join(" ")}`))
+        .sort((a, b) => (a.sold - b.sold) || String(b.created || "").localeCompare(String(a.created || "")));
+      if (!list.length) return `<div class="note">${G.used?.length ? "Ничего не нашлось" : "В разделе «♻️ Б/у» бота пока пусто"}</div>`;
+      return `<div class="imp-list">${list.map(x => { const i = G.used.indexOf(x), taken = (S.gpicks || []).some(p => p.id === x.id);
+        return `<button type="button" class="imp-item g-item${x.sold ? " is-sold" : ""}" data-gpick="${i}" data-kind="used"${x.sold || taken ? " disabled" : ""}>
+          ${x.photo ? `<img src="${esc(x.photo)}" alt="" loading="lazy">` : ""}<b>${esc(x.name)}${x.price ? " — " + money(x.price) : " — цена не задана"}</b>
+          <span>${esc([x.condition, x.kit && "комплект: " + x.kit, x.warranty && "гарантия " + x.warranty, imeiOf(x) && "IMEI " + imeiOf(x)].filter(Boolean).join(" · ") || "—")}</span>
+          <em>${x.sold ? `продано${x.deal ? " · сделка №" + esc(x.deal) : ""}` : taken ? "уже в этой сделке" : "в продаже · " + esc(x.id)}</em></button>`; }).join("")}</div>`;
+    }
+    if (!words.length) return `<div class="note">Начните вводить: модель, память, цвет — например «17 pro 256 синий». В каталоге ${(G.items || []).length} позиций.</div>`;
+    const list = (G.items || []).filter(x => hit(`${x.name} ${x.country} ${x.category} ${x.sub} ${x.source}`)).slice(0, 40);
+    if (!list.length) return `<div class="note">Ничего не нашлось</div>`;
+    return `<div class="imp-list">${list.map(x => `<button type="button" class="imp-item g-item" data-gpick="${G.items.indexOf(x)}" data-kind="new">
+        <b>${esc(x.name)}${x.country ? " " + esc(x.country) : ""} — ${money(x.price)}</b>
+        <span>закупка ${x.purchase != null ? money(x.purchase) : "—"}${x.purchase != null ? ` · нам ${money(x.price - x.purchase)}` : ""}${x.warranty ? " · " + esc(warrantyShort(x.warranty)) : ""}</span>
+        <em>${esc(x.source)} · ${x.order ? "под заказ" + (x.eta ? ", " + esc(x.eta) : "") : "в наличии"}</em></button>`).join("")}</div>`;
+  }
+  function goodsBlock(dk) {
+    const used = dk === "sale_used", G = S.goods || {};
+    const picks = (S.gpicks || []).filter(p => p.kind === (used ? "used" : "new"));
+    const chips = picks.length ? `<div class="g-picked">${picks.map(p => `<span class="chip">${esc(p.device)}<button type="button" class="linkbtn" data-act="gunpick" data-device="${esc(p.device)}" title="Убрать из сделки">✕</button></span>`).join("")}</div>` : "";
+    if (!G.open) return `<section class="block"><h3>${used ? "♻️ Б/у из бота" : "🛍 Новый товар из каталога"}</h3>${chips}
+      <button type="button" class="btn" data-act="gopen">${used ? "♻️ Выбрать б/у из бота" : "🛍 Выбрать из каталога"}</button>
+      <p class="note">${used ? "Аппараты из раздела «♻️ Б/у» бота — цена, гарантия, IMEI, состояние. После оформления в боте он отметится «Продано»." : "Тот же каталог, что в боте и на сайте: цена, закупка (у «под заказ» — с доставкой), склад, гарантия. Можно добавить несколько товаров — каждый станет устройством сделки."}</p></section>`;
+    return `<section class="block"><h3 class="h3-row">${used ? "♻️ Б/у из бота" : "🛍 Новый товар из каталога"}<button type="button" class="linkbtn" data-act="gclose">закрыть</button></h3>${chips}
+      <div class="row" style="margin-top:0"><input class="search g-q" type="search" data-act="gq" data-kind="${used ? "used" : "new"}" value="${esc(G["q_" + (used ? "used" : "new")] || "")}" placeholder="${used ? "Поиск по б/у: модель, IMEI" : "Модель, память, цвет — например «17 pro 256»"}" autocomplete="off">
+      <button type="button" class="btn btn--ghost btn--sm" data-act="greload" title="Перечитать из бота">⟳</button></div>
+      ${G.loading ? `<div class="note">Загружаю…</div>` : G.error ? `<div class="note">${esc(G.error)}</div>` : goodsList(dk)}</section>`;
+  }
+  // Выбранный товар → устройство сделки: первый — в основные поля, следующие — «ещё устройство».
+  function addGood(kind, i) {
+    const x = kind === "used" ? S.goods?.used?.[i] : S.goods?.items?.[i]; if (!x) return;
+    const f = kind === "used"
+      ? { [C.device]: x.name, [C.total]: x.price ?? "", [C.warranty]: x.warranty || "", [C.imei]: imeiOf(x),
+          [C.issue]: [x.condition && "состояние: " + x.condition, x.kit && "комплект: " + x.kit].filter(Boolean).join("; ") }
+      : { [C.device]: x.name + (x.country ? " " + x.country : ""), [C.total]: x.price ?? "", [C.partCost]: x.purchase ?? "", [C.warranty]: warrantyShort(x.warranty) };
+    const note = kind === "used" ? `♻️ б/у из бота ${x.id}` : `каталог ${x.source}${x.order ? ", под заказ" + (x.eta ? " " + x.eta : "") : ""}`;
+    const mainEmpty = !String(S.dirty.get("new:" + C.device) || "").trim();
+    if (mainEmpty) { for (const [c, v] of Object.entries(f)) if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); else S.dirty.delete("new:" + c); }
+    else { S.extra.push(Object.fromEntries(Object.entries(f).map(([c, v]) => [c, String(v ?? "")]))); S.multi = true; }
+    const com = String(S.dirty.get("new:" + C.comment) || "").trim();
+    S.dirty.set("new:" + C.comment, com ? com + "; " + note : note);
+    (S.gpicks ||= []).push({ kind, id: x.id || "", device: f[C.device] });
+    S.draft = true; saveDraft();
+    rerenderKeep();
+    toast(`${mainEmpty ? "В сделку" : "Ещё одним устройством"}: ${f[C.device]}${x.price ? " — " + money(x.price) : " — впишите цену"}`);
+  }
+  function unpickGood(device) {
+    const p = (S.gpicks || []).find(q => q.device === device); if (!p) return;
+    S.gpicks = S.gpicks.filter(q => q !== p);
+    if (String(S.dirty.get("new:" + C.device) || "") === device) {
+      // убрали основной товар: на его место — первое «ещё устройство», если есть
+      const next = S.extra.shift();
+      for (const c of [C.device, C.total, C.partCost, C.warranty, C.imei, C.issue]) { const v = next?.[c]; if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); else S.dirty.delete("new:" + c); }
+      if (!S.extra.length) S.multi = false;
+    } else { S.extra = S.extra.filter(x => x[C.device] !== device); if (!S.extra.length) S.multi = false; }
+    rerenderKeep();
+  }
+  // После создания продажи: б/у из бота → «Продано» с номером сделки. Не вышло — подсказка, а не ошибка.
+  async function markUsedSold(made) {
+    const picks = (S.gpicks || []).filter(p => p.kind === "used" && p.id); S.gpicks = [];
+    if (!picks.length || DEMO) return picks.length ? " · в боте отмечено «Продано» (демо)" : "";
+    const res = await Promise.all(picks.map(p => {
+      const m = made.find(x => x.list.some(ch => ch.c === C.device && String(ch.v) === p.device)) || made[0];
+      return fetch(CFG.botUsedSold, { method: "POST", headers: { Authorization: "Bearer " + S.token, "Content-Type": "application/json" }, body: JSON.stringify({ id: p.id, deal: m.num }) })
+        .then(r => r.json().catch(() => ({ ok: false }))).catch(e => ({ ok: false, error: e.message }));
+    }));
+    const bad = res.filter(r => !r.ok).length;
+    return bad ? ` · ⚠️ в боте не отмечено «Продано» (${bad}) — отметьте кнопкой в боте` : ` · в боте отмечено «Продано»`;
   }
 
   // ── подгрузка заказа из бота и с сайта в новую «Продажу» ──────────────────
@@ -2837,7 +2949,9 @@
       S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null; S.newClient = null; store.del("crm.draft");
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
-      toast((DEMO ? nums + (N > 1 ? " созданы" : " создан") + " (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`) + skMsg, null, true);
+      const soldMsg = await markUsedSold(made).catch(() => " · ⚠️ в боте не отмечено «Продано»");
+      S.goods = S.goods ? { ...S.goods, open: false, items: null } : null; // б/у в боте поменялся — перечитать при следующем открытии
+      toast((DEMO ? nums + (N > 1 ? " созданы" : " создан") + " (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`) + skMsg + soldMsg, null, true);
       // Двери по очереди, заказ за заказом — как если бы строки заполняли в таблице одну за другой.
       made.reduce((p, m) => p.then(() => doorInBackground(m.rec, m.num, m.list.filter(ch => ch.c !== C.num && !ch.formula))), Promise.resolve());
     } catch (e) { busy(false); toast(e.message, null, true); }
@@ -2876,8 +2990,9 @@
   // Элемент списка теперь <div role="button"> — Enter/пробел открывают заказ, как раньше у <button>.
   document.addEventListener("keydown", e => { const it = e.target.closest?.("[data-open][role=button]"); if (it && e.target === it && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); location.hash = "#/" + it.dataset.open; } });
   document.addEventListener("click", async e => {
-    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc],[data-svx],[data-cdev],[data-psup]"); if (!t) return;
+    const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc],[data-svx],[data-cdev],[data-psup],[data-gpick]"); if (!t) return;
     if (t.dataset.cdev != null) { pickDevice(+t.dataset.cdev); return; }
+    if (t.dataset.gpick != null) { if (!t.disabled) addGood(t.dataset.kind, +t.dataset.gpick); return; }
     if (t.dataset.act === "cmp") {
       const key = curKey(), i = +t.dataset.i;
       S.cmp = S.cmp?.key === key && S.cmp.i === i ? null : { key, i, q: "" };
@@ -2978,6 +3093,10 @@
       setDirty(key, c, telJoin(c)); field?.classList.toggle("is-dirty", S.dirty.has(key + ":" + c)); refreshSaveBar(key);
       if ($app.querySelectorAll(`[data-edit="${c}"]`).length < 2) { const a = field?.querySelector("[data-act=teladd]"); if (a) a.textContent = "＋ второй номер"; }
     }
+    else if (act === "gopen") loadGoods();
+    else if (act === "greload") loadGoods(true);
+    else if (act === "gclose") { if (S.goods) S.goods.open = false; rerenderKeep(); }
+    else if (act === "gunpick") unpickGood(t.dataset.device);
     else if (act === "proxyon") { S.proxyOpen = curKey(); const y = window.scrollY; render(); window.scrollTo(0, y); $app.querySelector(`[data-edit="${C.contactName}"]`)?.focus({ preventScroll: true }); }
     else if (act === "resend") {
       const key = curKey(), r = S.byNum.get(location.hash.slice(2)); if (!r) return;
@@ -3029,12 +3148,13 @@
       if (act === "addpart") $app.querySelector(`[data-part="${list.length - 1}"][data-pf="name"]`)?.focus();
     }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.newClient = null; store.del("crm.draft"); location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; store.del("crm.draft"); location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
     if (t.dataset.skq != null) { skSet(t.dataset.skq, t.value); return; }
     if (t.dataset.skf != null) { if (S.skAdd) S.skAdd.f[t.dataset.skf] = t.value; return; }
+    if (t.dataset.act === "gq") { clearTimeout(onEdit.gq); onEdit.gq = setTimeout(() => { if (S.goods) { S.goods["q_" + t.dataset.kind] = t.value; rerenderKeep(); } }, 150); return; }
     if (t.dataset.act === "sksearch") {
       clearTimeout(onEdit.sk);
       onEdit.sk = setTimeout(() => { S.sk.q = t.value; S.sk.limit = 150; const pos = t.selectionStart; renderStock(); const s = $app.querySelector(".sk-q"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } }, 150);
