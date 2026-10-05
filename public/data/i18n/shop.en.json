@@ -170,6 +170,8 @@
     "gb": "GB",
     "with_anc": "With ANC",
     "without_anc": "Without ANC",
+    "standard_case": "Standard case",
+    "wireless_case": "Wireless case",
     "mm": "mm"
   },
   "filter_labels": {
@@ -177,6 +179,7 @@
     "Память": "Storage",
     "Цвет": "Colour",
     "Модель": "Model",
+    "Версия": "Version",
     "Корпус": "Case",
     "Ремешок": "Band",
     "Тип": "Type",
@@ -191,7 +194,7 @@
     "Выберите модель MacBook": "Choose a MacBook model",
     "Выберите модель iPad": "Choose an iPad model",
     "Выберите модель AirPods": "Choose an AirPods model",
-    "Выберите версию AirPods 4": "Choose the AirPods 4 version",
+    "Выберите версию": "Choose the version",
     "Выберите модель Samsung": "Choose a Samsung model",
     "Выберите серию Apple Watch": "Choose an Apple Watch series",
     "Выберите размер корпуса": "Choose the case size",

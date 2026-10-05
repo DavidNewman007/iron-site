@@ -623,7 +623,7 @@
     formatIpadFacetValue
   );
 
-  const AIRPODS_MODEL_ORDER = ["4", "Pro 2", "Pro 3", "Max 2024", "Max 2026", "Max"];
+  const AIRPODS_MODEL_ORDER = ["4", "5", "Pro 2", "Pro 3", "Max 2024", "Max 2026", "Max"];
 
   function normalizeAirpodsColor(color) {
     return String(color || "")
@@ -632,31 +632,51 @@
       .trim();
   }
 
+  /**
+   * Изменено 05.10.2026 — в фильтре была неразбериха (зеркало — worker.js бота):
+   * - AirPods 5 разборщик не знал вовсе: модель пустая → товар «не фильтруемый»,
+   *   кнопки «AirPods 5» нет, а сами позиции висели в списке отдельно и
+   *   пропадали при выборе любой модели;
+   * - склад S3 пишет «AirPods Max 2 2026 USB-C Midnight»: год не находился
+   *   (мешала цифра поколения «2»), и появлялась лишняя модель «AirPods Max»;
+   * - в цвет попадали «USB-C» и «2 2026», а «Blue» вычёркивался как артикул
+   *   (под шаблон артикула [A-Z0-9]{4,5} подходит любое слово из 4–5 букв).
+   *   Артикул Apple всегда с цифрой (MXP63, MKFW4) — теперь цифра обязательна.
+   */
   function parseAirpodsTraits(name) {
     const productName = String(name || "").trim();
 
     let model = "";
     if (/airpods\s+max/i.test(productName)) {
-      const yearMatch = productName.match(/\bmax\s+(20\d{2})\b/i);
-      model = yearMatch ? `Max ${yearMatch[1]}` : "Max";
+      const yearMatch = productName.match(/\bmax\s+(?:2\s+)?(20\d{2})\b/i);
+      if (yearMatch) model = `Max ${yearMatch[1]}`;
+      else if (/\bmax\s+2\b/i.test(productName)) model = "Max 2026";
+      else model = "Max";
     } else if (/airpods\s+pro\s*3\b/i.test(productName)) {
       model = "Pro 3";
     } else if (/airpods\s+pro\s*2\b/i.test(productName)) {
       model = "Pro 2";
     } else if (/airpods\s+4\b/i.test(productName)) {
       model = "4";
+    } else if (/airpods\s+5\b/i.test(productName)) {
+      model = "5";
     }
 
+    // Поле «anc» — это «версия» модели: у AirPods 4 — с ANC или без, у
+    // AirPods 5 — обычный кейс или «Wireless case». Id поля не меняли.
     let anc = "";
     if (model === "4") {
       anc = /\banc\b|with\s+anc/i.test(productName) ? "anc" : "standard";
+    } else if (model === "5") {
+      anc = /wireless/i.test(productName) ? "wireless" : "case";
     }
 
     let color = "";
     if (/^max/i.test(model)) {
       const tail = productName
-        .replace(/^.*?max\s+(?:20\d{2}\s+)?/i,"")
-        .replace(/\s+[A-Z0-9]{4,5}(?:\s+[A-Z]{1,2}\/[A-Z]\/?A?)?\s*$/i,"")
+        .replace(/^.*?max\s+(?:2\s+)?(?:20\d{2}\s+)?/i,"")
+        .replace(/\busb-?c\b/i, "")
+        .replace(/\s+(?=[A-Z]*\d)[A-Z0-9]{4,5}(?:\s+[A-Z]{1,2}\/[A-Z]\/?A?)?\s*$/i,"")
         .trim();
       color = normalizeAirpodsColor(tail);
     }
@@ -684,6 +704,7 @@
   function airpodsModelLabel(model) {
     if (!model) return "";
     if (model === "4") return "AirPods 4";
+    if (model === "5") return "AirPods 5";
     if (/^pro/i.test(model)) return `AirPods ${model}`;
     if (/^max/i.test(model)) return `AirPods ${model}`;
     return `AirPods ${model}`;
@@ -696,7 +717,7 @@
       );
     }
     if (facetId === "anc") {
-      const order = { standard: 1, anc: 2 };
+      const order = { standard: 1, anc: 2, case: 3, wireless: 4 };
       return [...values].sort((a, b) => (order[a] || 99) - (order[b] || 99));
     }
     return [...values].sort((a, b) => a.localeCompare(b, "ru"));
@@ -707,6 +728,8 @@
     if (facetId === "anc") {
       if (value === "anc") return T("filters.with_anc", "С ANC");
       if (value === "standard") return T("filters.without_anc", "Без ANC");
+      if (value === "case") return T("filters.standard_case", "Обычный кейс");
+      if (value === "wireless") return T("filters.wireless_case", "Беспроводной кейс");
     }
     if (facetId === "color") return formatColorLabel(value);
     return value;
@@ -714,12 +737,12 @@
 
   const airpodsFacets = [
     { id: "model", label: "Модель" },
-    { id: "anc", label: "ANC" },
+    { id: "anc", label: "Версия" },
     { id: "color", label: "Цвет" }];
 
   const AIRPODS_WIZARD_PROMPTS = {
     model: "Выберите модель AirPods",
-    anc: "Выберите версию AirPods 4",
+    anc: "Выберите версию",
     color: "Выберите цвет",
   };
 
