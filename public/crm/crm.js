@@ -306,7 +306,9 @@
       };
       tokenClient.error_callback = e => reject(new Error(e?.type === "popup_closed" ? "Окно входа закрыли" : e?.type === "popup_failed_to_open"
         ? "Браузер не открыл окно входа Google — разрешите всплывающие окна для 1iron.ru" + (inApp() ? " или откройте ссылку в Safari/Chrome" : "") : "Не удалось войти" + (e?.type ? " (" + e.type + ")" : "")));
-      tokenClient.requestAccessToken({ prompt: store.get("crm.consent") ? "consent" : prompt ?? "", ...(hint ? { hint } : {}) });
+      // login_hint — сам выбирает нужный аккаунт. До v46 передавался только `hint` (старое имя), и при
+      // нескольких Google-аккаунтах в браузере Google каждый раз показывал выбор аккаунта.
+      tokenClient.requestAccessToken({ prompt: store.get("crm.consent") ? "consent" : prompt ?? "", ...(hint ? { hint, login_hint: hint } : {}) });
     });
   }
   // Встроенный браузер мессенджера: Google там вход запрещает (disallowed_useragent).
@@ -317,10 +319,13 @@
     S.token = null; S.rows = []; S.byNum.clear(); location.hash = ""; render();
   }
 
-  async function api(path, opts = {}) {
+  async function api(path, opts = {}, again) {
+    // Идёт тихое продление входа (клик после простоя) — дождаться нового токена, а не падать в 401.
+    if (refreshing) await refreshing;
     const r = await fetch("https://sheets.googleapis.com/v4/spreadsheets/" + CFG.sheetId + path, {
       ...opts, headers: { Authorization: "Bearer " + S.token, "Content-Type": "application/json", ...(opts.headers || {}) },
     });
+    if (r.status === 401 && refreshing && !again) { await refreshing; return api(path, opts, true); }
     if (r.status === 401) { store.del("crm.tok"); S.token = null; setTimeout(render, 0); throw Object.assign(new Error("Вход истёк — нажмите «Продолжить»"), { code: 401 }); }
     if (r.status === 403) {
       const why = await r.json().catch(() => ({}));
@@ -2849,10 +2854,18 @@
     if (same && !keepNew) S.dirty.delete(key + ":" + c); else S.dirty.set(key + ":" + c, v);
   }
 
+  // Продление входа (v46, 05.10.2026). Владелец: «после простоя просит войти — выбрать сохранённый
+  // аккаунт; не страшно, но напрягает». Токен Google живёт час, а продлить его без нажатия Google
+  // странице не даёт (нужно действие человека — иначе окно заблокирует браузер). Раньше: за 5 минут
+  // до конца или после — продление с выбором аккаунта, а тот же клик тем временем ловил 401 и
+  // выкидывал на экран входа. Теперь: за 10 минут до конца ИЛИ после простоя первый же клик
+  // продлевает вход ТИХО (prompt "none" + login_hint: окно мелькнёт и закроется без выбора), а
+  // запросы этого клика ждут новый токен (api() ждёт `refreshing`). Не вышло тихо — как раньше,
+  // экран «Продолжить как …».
   document.addEventListener("click", () => {
     const t = store.get("crm.tok");
-    if (DEMO || !S.token || refreshing || !t || t.exp - Date.now() > 5 * 60e3) return;
-    refreshing = signIn("", lastEmail()).catch(() => {}).finally(() => { refreshing = null; });
+    if (DEMO || !S.token || refreshing || !t || t.exp - Date.now() > 10 * 60e3 || !lastEmail()) return;
+    refreshing = signIn("none", lastEmail()).catch(() => {}).finally(() => { refreshing = null; });
   }, true);
   // Открытый список закрывается кликом мимо него и клавишей Escape.
   document.addEventListener("click", e => {
@@ -2929,7 +2942,11 @@
     if (act?.startsWith("sk") && await stockClick(act, t)) return;
     if (act === "dd") { const k = curKey() + ":" + t.dataset.c; S.ddOpen = S.ddOpen === k ? null : k; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
     if (act === "login") {
-      try { await signIn(t.dataset.hint ? "" : "select_account", t.dataset.hint); S.error = ""; await load(); } catch (err) { S.error = err.message; render(); }
+      // С подсказкой — сначала тихо (без выбора аккаунта). Google попросил подтверждения — следующее
+      // нажатие откроет обычное окно (новое окно после неудачи браузер бы заблокировал).
+      const quiet = t.dataset.hint && !S.loginLoud;
+      try { await signIn(t.dataset.hint ? (quiet ? "none" : "") : "select_account", t.dataset.hint); S.error = ""; S.loginLoud = false; await load(); }
+      catch (err) { if (quiet) { S.loginLoud = true; S.error = "Google просит подтвердить вход — нажмите «Продолжить» ещё раз"; } else S.error = err.message; render(); }
     } else if (act === "logout") signOut();
     else if (act === "relogin") { store.del("crm.tok"); store.del("crm.who"); S.token = null; S.error = ""; S.rows = []; render(); }
     else if (act === "reload") { if (!DEMO && !S.token) render(); else if (location.hash === "#/sklad") { await loadStock(true); render(); } else load(); }
