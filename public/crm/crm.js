@@ -1767,19 +1767,19 @@
   const skOnly = () => S.sk.only ?? S.stock.rows.some(x => x.qty > 0);
   function skFilter(skip = {}) {
     const f = S.sk, words = skWords(f.q).split(" ").filter(Boolean).map(w => SK_SYN[w] || w), only = skOnly();
-    // «🚫 Весь брак» (v48): владелец — «фильтр, чтобы показать весь брак». Остальные фильтры
-    // (группа, качество, поставщик, модель, «только в наличии») помнятся на устройстве и прятали бы
-    // часть брака — в этом режиме они не действуют, сужает только строка поиска.
-    const hit = x => !words.length || words.every(w => skWords(`${x.node} ${x.model} ${x.variant} ${x.color} ${x.own ? x.src + " " + x.note : ""}`).includes(w));
-    if (f.bad) return S.stock.rows.filter(x => x.def > 0 && hit(x));
+    // Режим «Брак» (v49–v53): только позиции с браком; фильтры — те же, что у склада, но свои (v53:
+    // владелец — «в режиме брака такие же фильтры, как в обычном»). При входе в режим обычные фильтры
+    // откладываются и сбрасываются — сразу виден весь брак (v49: «показать весь брак»), — а при выходе
+    // возвращаются. «Только в наличии» здесь не действует: брак на полке не числится.
     return S.stock.rows.filter(x => {
+      if (f.bad && !(x.def > 0)) return false;
       if (!skip.grp && f.grp && skGroup(x.node) !== f.grp) return false;
       if (!skip.node && f.node && x.node !== f.node) return false;
       if (!skip.ser && f.ser && skSeries(x.model) !== f.ser) return false;
       if (!skip.cls && f.cls && skClass(x.tier) !== f.cls) return false;
       if (!skip.tier && f.tier && x.tier !== f.tier) return false;
       if (!skip.src && f.src && skSrcKind(x.src) !== f.src) return false;
-      if (only && !(x.qty > 0 || x.def > 0 || S.skDirty.has(x.key))) return false;
+      if (!f.bad && only && !(x.qty > 0 || x.def > 0 || S.skDirty.has(x.key))) return false;
       if (words.length) { const t = skWords(`${x.node} ${x.model} ${x.variant} ${x.color} ${x.own ? x.src + " " + x.note : ""}`); if (!words.every(w => t.includes(w))) return false; }
       return true;
     });
@@ -1788,7 +1788,8 @@
   // и без этой строки легко забыть, что вчерашний «iPhone 13 · Оригинал» прячет всё остальное.
   function skActiveHtml(list) {
     const f = S.sk, on = [f.grp, f.node && cap(f.node), f.cls && SK_CLASSES.find(c => c[0] === f.cls)?.[1], f.tier, f.src && SK_SRC.find(c => c[0] === f.src)?.[1], f.ser, f.q && `«${f.q}»`, f.bad && "только брак"].filter(Boolean);
-    if (f.bad) return `<div class="sk-active">Режим «Брак»: весь брак склада${f.q ? ` по поиску «${esc(f.q)}»` : ""}, остальные фильтры не действуют.<button type="button" class="linkbtn" data-act="skbad">✕ выйти из брака</button></div>`;
+    if (f.bad) { const fl = on.filter(x => x !== "только брак");
+      return `<div class="sk-active">Режим «Брак»: ${fl.length ? `фильтры <b>${fl.map(esc).join(" · ")}</b> — брака: <b>${list.length}</b> поз.<button type="button" class="linkbtn" data-act="skreset">✕ сбросить фильтры</button>` : "весь брак склада."}<button type="button" class="linkbtn" data-act="skbad">✕ выйти из брака</button></div>`; }
     if (!on.length) return "";
     const inStock = S.stock.rows.filter(x => x.qty > 0).length, shownIn = list.filter(x => x.qty > 0).length;
     return `<div class="sk-active">Фильтры: <b>${on.map(esc).join(" · ")}</b>${inStock > shownIn ? ` — скрыто из наличия: <b>${inStock - shownIn}</b> поз.` : ""}<button type="button" class="linkbtn" data-act="skreset">✕ сбросить все</button></div>`;
@@ -1990,31 +1991,32 @@
     const ownN = inStock.filter(x => !isVitalya(x.src)).length, badN = all.reduce((a, x) => a + (x.def || 0), 0);
     const by = (rows, fn) => { const m = new Map(); for (const x of rows) { const k = fn(x); m.set(k, (m.get(k) || 0) + 1); } return m; };
     const gC = by(skFilter({ grp: 1, node: 1 }), x => skGroup(x.node));
-    const groups = [...new Set([...SK_GROUPS.map(g => g[0]), ...all.map(x => skGroup(x.node))])].filter(g => all.some(x => skGroup(x.node) === g));
+    // В режиме «Брак» вкладки и узлы — только те, где брак есть.
+    const pool = f.bad ? all.filter(x => x.def > 0) : all;
+    const groups = [...new Set([...SK_GROUPS.map(g => g[0]), ...pool.map(x => skGroup(x.node))])].filter(g => pool.some(x => skGroup(x.node) === g));
     let body = `<div class="sk-sum">На полке: <b>${inStock.length}</b> поз. · <b>${pcs}</b> шт${sum ? ` · закупка на <b>${money(sum)}</b>` : ""}${ownN ? ` · не от Витали: <b>${ownN}</b> поз.` : ""}${badN ? ` · <button type="button" class="linkbtn sk-sumbad" data-act="skbad">🚫 брак: <b>${badN}</b> шт</button>` : ""}</div>
       <input class="search sk-q" type="search" data-act="sksearch" value="${esc(f.q)}" placeholder="Модель, деталь, качество, цвет — например «13 про акб»" autocomplete="off">
-      ${f.bad ? "" : `<nav class="tabs"><button class="tab" data-act="skgrp" data-v="" aria-pressed="${!f.grp}">Все</button>${groups.map(g => `<button class="tab" data-act="skgrp" data-v="${esc(g)}" aria-pressed="${f.grp === g}">${esc(g)}<small>${gC.get(g) || 0}</small></button>`).join("")}</nav>`}`;
-    // В режиме «весь брак» фильтры не действуют — и не показываются, чтобы не путать.
-    if (f.grp && !f.bad) {
-      const nodes = [...new Set(all.filter(x => skGroup(x.node) === f.grp).map(x => x.node))].sort((a, b) => skNodeRank(a) - skNodeRank(b));
+      <nav class="tabs"><button class="tab" data-act="skgrp" data-v="" aria-pressed="${!f.grp}">Все</button>${groups.map(g => `<button class="tab" data-act="skgrp" data-v="${esc(g)}" aria-pressed="${f.grp === g}">${esc(g)}<small>${gC.get(g) || 0}</small></button>`).join("")}</nav>`;
+    if (f.grp) {
+      const nodes = [...new Set(pool.filter(x => skGroup(x.node) === f.grp).map(x => x.node))].sort((a, b) => skNodeRank(a) - skNodeRank(b));
       if (nodes.length > 1) {
         const nC = by(skFilter({ node: 1 }), x => x.node);
         body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="sknode" data-v="" aria-pressed="${!f.node}">Все узлы</button>${nodes.map(n => `<button type="button" class="tchip" data-act="sknode" data-v="${esc(n)}" aria-pressed="${f.node === n}">${esc(cap(n))} <small>${nC.get(n) || 0}</small></button>`).join("")}</div>`;
       }
     }
     const cC = by(skFilter({ cls: 1, tier: 1 }), x => skClass(x.tier));
-    if (!f.bad) body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skcls" data-v="" aria-pressed="${!f.cls}">Любое качество</button>${SK_CLASSES.map(([k, t]) => `<button type="button" class="tchip" data-act="skcls" data-v="${k}" aria-pressed="${f.cls === k}">${esc(t)} <small>${cC.get(k) || 0}</small></button>`).join("")}</div>`;
-    if (!f.bad && (f.grp || f.cls || f.tier)) { // все 46 вариантов разом — только шум, поэтому после выбора группы или класса
+    body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skcls" data-v="" aria-pressed="${!f.cls}">Любое качество</button>${SK_CLASSES.map(([k, t]) => `<button type="button" class="tchip" data-act="skcls" data-v="${k}" aria-pressed="${f.cls === k}">${esc(t)} <small>${cC.get(k) || 0}</small></button>`).join("")}</div>`;
+    if (f.grp || f.cls || f.tier) { // все 46 вариантов разом — только шум, поэтому после выбора группы или класса
       const tC = by(skFilter({ tier: 1 }), x => x.tier);
       const tiers = [...tC.keys()].concat(f.tier && !tC.has(f.tier) ? [f.tier] : []).filter(Boolean).sort((a, b) => skClassRank(a) - skClassRank(b) || (tC.get(b) || 0) - (tC.get(a) || 0));
       if (tiers.length > 1 || f.tier) body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="sktier" data-v="" aria-pressed="${!f.tier}">Все варианты</button>${tiers.map(t => `<button type="button" class="tchip" data-act="sktier" data-v="${esc(t)}" aria-pressed="${f.tier === t}">${esc(t)} <small>${tC.get(t) || 0}</small></button>`).join("")}</div>`;
     }
     const oC = by(skFilter({ src: 1 }), x => skSrcKind(x.src));
     const list0 = skFilter();
-    if (!f.bad) body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skfrom" data-v="" aria-pressed="${!f.src}">Любой поставщик</button>${SK_SRC.map(([k, t]) => `<button type="button" class="tchip" data-act="skfrom" data-v="${k}" aria-pressed="${f.src === k}">${esc(t)} <small>${oC.get(k) || 0}</small></button>`).join("")}</div>`;
+    body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skfrom" data-v="" aria-pressed="${!f.src}">Любой поставщик</button>${SK_SRC.map(([k, t]) => `<button type="button" class="tchip" data-act="skfrom" data-v="${k}" aria-pressed="${f.src === k}">${esc(t)} <small>${oC.get(k) || 0}</small></button>`).join("")}</div>`;
     const sC = by(skFilter({ ser: 1 }), x => skSeries(x.model));
     const series = [...sC.keys()].concat(f.ser && !sC.has(f.ser) ? [f.ser] : []).sort((a, b) => skSerRank(a) - skSerRank(b));
-    body += `${f.bad ? "" : `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skser" data-v="" aria-pressed="${!f.ser}">Все модели</button>${series.map(s => `<button type="button" class="tchip" data-act="skser" data-v="${esc(s)}" aria-pressed="${f.ser === s}">${esc(s)} <small>${sC.get(s) || 0}</small></button>`).join("")}</div>`}
+    body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skser" data-v="" aria-pressed="${!f.ser}">Все модели</button>${series.map(s => `<button type="button" class="tchip" data-act="skser" data-v="${esc(s)}" aria-pressed="${f.ser === s}">${esc(s)} <small>${sC.get(s) || 0}</small></button>`).join("")}</div>
       ${skActiveHtml(list0)}
       <div class="row sk-opts">${f.bad ? "" : `<button type="button" class="btn btn--toggle btn--sm" data-act="skonly" aria-pressed="${skOnly()}">${skOnly() ? "✓ " : ""}Только в наличии</button>`}<button type="button" class="btn btn--toggle btn--sm sk-badmode" data-act="skbad" aria-pressed="${!!f.bad}">${f.bad ? "✓ " : ""}🚫 Брак${badN ? ` (${badN} шт)` : ""}</button><button type="button" class="btn btn--ghost btn--sm" data-act="skadd" data-node="${esc(f.node || "")}" data-model="">＋ Своя запчасть (другая модель)</button>${S.skDirty.size ? `<span class="note">Изменено: <b>${S.skDirty.size}</b> — не забудьте сохранить</span>` : ""}</div>`;
     if (S.skAdd?.at === "top") body += `<section class="block">${skAddHtml()}</section>`;
@@ -2025,7 +2027,7 @@
     for (const x of all) { const k = x.node + "|" + x.model; if (!mFirst.has(k) || ord(x) < mFirst.get(k)) mFirst.set(k, ord(x)); }
     const list = skFilter().sort((a, b) => skGroupRank(skGroup(a.node)) - skGroupRank(skGroup(b.node)) || skNodeRank(a.node) - skNodeRank(b.node) || a.node.localeCompare(b.node)
       || skSerRank(skSeries(a.model)) - skSerRank(skSeries(b.model)) || mFirst.get(a.node + "|" + a.model) - mFirst.get(b.node + "|" + b.model) || ord(a) - ord(b));
-    if (!list.length) body += `<div class="empty">${f.bad ? (f.q ? "По поиску брака нет — очистите строку поиска." : "Брака нет. Добавьте неисправную запчасть кнопкой «＋ Добавить брак» выше.") : skOnly() && !inStock.length ? "На полке пока ничего не отмечено. Снимите «Только в наличии», найдите деталь и поставьте количество — или добавьте свою кнопкой «＋ Своя запчасть»." : skOnly() ? "В наличии ничего не нашлось — снимите «Только в наличии»." : "Ничего не нашлось"}</div>`;
+    if (!list.length) body += `<div class="empty">${f.bad ? (f.q || f.grp || f.cls || f.tier || f.src || f.ser ? "По этим фильтрам брака нет — «✕ сбросить фильтры» выше." : "Брака нет. Добавьте неисправную запчасть кнопкой «＋ Добавить брак» выше.") : skOnly() && !inStock.length ? "На полке пока ничего не отмечено. Снимите «Только в наличии», найдите деталь и поставьте количество — или добавьте свою кнопкой «＋ Своя запчасть»." : skOnly() ? "В наличии ничего не нашлось — снимите «Только в наличии»." : "Ничего не нашлось"}</div>`;
     const shown = list.slice(0, f.limit);
     // Свои позиции модели держатся рядом с Виталиными той же модели: сортировка выше ставит их в конец раздела.
     let node = null, model = null, open = false;
@@ -2086,7 +2088,9 @@
   // Клики склада: и на экране «Склад», и в карточке заказа. true — клик обработан.
   async function stockClick(act, t) {
     const rerender = () => { const y = window.scrollY; render(); window.scrollTo(0, y); };
-    const prefs = () => store.set("crm.sk", { grp: S.sk.grp, node: S.sk.node, ser: S.sk.ser, cls: S.sk.cls, tier: S.sk.tier, src: S.sk.src, only: S.sk.only });
+    // Фильтры режима «Брак» не запоминаются на устройстве — там остаются фильтры обычного склада.
+    const prefs = () => { if (!S.sk.bad) store.set("crm.sk", { grp: S.sk.grp, node: S.sk.node, ser: S.sk.ser, cls: S.sk.cls, tier: S.sk.tier, src: S.sk.src, only: S.sk.only }); };
+    const SK_FKEYS = ["grp", "node", "ser", "cls", "tier", "src", "q"];
     if (act === "skgrp") { S.sk.grp = t.dataset.v; S.sk.node = ""; S.sk.tier = ""; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "sknode") { S.sk.node = t.dataset.v; S.sk.tier = ""; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skcls") { S.sk.cls = t.dataset.v; S.sk.tier = ""; S.sk.limit = 150; prefs(); rerender(); }
@@ -2094,7 +2098,11 @@
     else if (act === "skfrom") { S.sk.src = t.dataset.v; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skser") { S.sk.ser = t.dataset.v; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skonly") { S.sk.only = !skOnly(); S.sk.limit = 150; prefs(); rerender(); }
-    else if (act === "skbad") { S.sk.bad = !S.sk.bad; S.sk.limit = 150; S.skDef = null; S.skBadAdd = null; rerender(); }
+    else if (act === "skbad") {
+      if (!S.sk.bad) { S.skNormalF = Object.fromEntries(SK_FKEYS.map(k => [k, S.sk[k]])); for (const k of SK_FKEYS) S.sk[k] = ""; S.sk.bad = true; }
+      else { S.sk.bad = false; Object.assign(S.sk, S.skNormalF || {}); S.skNormalF = null; }
+      S.sk.limit = 150; S.skDef = null; S.skBadAdd = null; rerender();
+    }
     else if (act === "skdef") { S.skDef = S.skDef === t.dataset.k ? null : t.dataset.k; rerender(); $app.querySelector("[data-skdefnote]")?.focus({ preventScroll: true }); }
     else if (act === "skdefgo") skDefApply(t);
     else if (act === "skprice") { S.skPrice = S.skPrice === t.dataset.k ? null : t.dataset.k; rerender(); const i = $app.querySelector("[data-skpr]"); if (i) { i.focus({ preventScroll: true }); i.select(); } }
@@ -2109,7 +2117,7 @@
     else if (act === "skcopy") { const ta = $app.querySelector("[data-sksenttext]"); try { await navigator.clipboard.writeText(ta.value); toast("Скопировано ✓"); } catch { ta.select(); document.execCommand("copy"); toast("Скопировано ✓"); } }
     else if (act === "sksentclose") { S.skSent = null; rerender(); }
     else if (act === "skmore") { S.sk.limit += 150; rerender(); }
-    else if (act === "skreset") { Object.assign(S.sk, { grp: "", node: "", ser: "", cls: "", tier: "", src: "", q: "", bad: false, limit: 150 }); prefs(); rerender(); }
+    else if (act === "skreset") { Object.assign(S.sk, { grp: "", node: "", ser: "", cls: "", tier: "", src: "", q: "", limit: 150 }); prefs(); rerender(); }
     else if (act === "skreload") { await loadStock(true); rerender(); }
     else if (act === "skstep") {
       const k = t.dataset.k, x = S.stock?.byKey?.get(k); if (!x) return true;
