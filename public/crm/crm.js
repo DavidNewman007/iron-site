@@ -2980,6 +2980,19 @@
   // отчёте «Дата выдачи», а её ставит рабочая дверь по закрывающему статусу. Поэтому личная — первой,
   // кроме сохранений с L или J. onDone — итог каждой двери сразу, не дожидаясь второй.
   const doorOrder = list => list.some(ch => ch.c === C.report || ch.c === C.review) ? [0, 1] : [1, 0];
+  // Google иногда отдаёт на исправную дверь свою страницу «Страница не найдена» (05.10.2026: у рабочей
+  // двери 2 запроса из 20; в 15:19 из-за этого пришла тревога сторожа дверей). До скрипта такой запрос
+  // не доходит, а оболочка считала его ошибкой двери и не повторяла — уведомление терялось. Теперь до
+  // 4 попыток с паузой. Задвоения нет: то же значение дверь 10 минут считает «уже обработано».
+  async function doorPost(url, action, body, keepalive) {
+    for (let i = 0; ; i++) {
+      const r = await fetch(url + "?action=" + action, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body, keepalive });
+      const text = await r.text();
+      const flaky = !text.trim().startsWith("{") && (r.status === 404 || /Страница не найдена|Page Not Found/i.test(text));
+      if (!flaky || i >= 3) return { r, text, flaky };
+      await new Promise(res => setTimeout(res, 1500 * (i + 1)));
+    }
+  }
   async function door(row, num, list, only, onDone) {
     if (DEMO || !CFG.doors.length) return null;
     // force — «отправить ещё раз»: статус кнопкой resend и отчёт поверх уже отправленного (Ok → Ok).
@@ -3000,10 +3013,9 @@
       for (let tries = 0; ; tries++) {
         let net = false;
         try {
-          const r = await fetch(url + "?action=crm-door", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body, keepalive: body.length < 60000 });
-          const text = await r.text();
+          const { r, text, flaky } = await doorPost(url, "crm-door", body, body.length < 60000);
           try { j = JSON.parse(text); }
-          catch { j = { ok: false, error: (text.match(/Exception:[^<]{0,160}/) || [])[0] || "ответила не JSON (" + r.status + ")" }; }
+          catch { j = { ok: false, error: flaky ? "Google 4 раза подряд ответил «Страница не найдена» — нажмите «Повторить»" : (text.match(/Exception:[^<]{0,160}/) || [])[0] || "ответила не JSON (" + r.status + ")" }; }
         } catch (e) { net = true; j = { ok: false, error: "не ответила — сеть или Google вернул ошибку (например, у аккаунта отозваны разрешения скрипта)" }; }
         if (j.ok || !(net || /занята/.test(j.error || "")) || tries >= (net ? 2 : 5)) break;
         await new Promise(res => setTimeout(res, 3000 * (tries + 1)));
@@ -3549,9 +3561,8 @@
     if (DEMO || !CFG.doors[0] || !S.token || location.hash !== "#/new") return;
     const x = preSig(); if (!x || S.pre?.sig === x.sig) return;
     const pre = S.pre = { sig: x.sig, state: "wait" };
-    pre.promise = fetch(CFG.doors[0] + "?action=crm-contact", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ token: S.token, name: x.name, phone: x.phone }) })
-      .then(r => r.text()).then(t => { try { return JSON.parse(t); } catch { return { ok: false, error: (t.match(/Exception:[^<]{0,120}/) || [])[0] || "дверь ответила не JSON" }; } })
+    pre.promise = doorPost(CFG.doors[0], "crm-contact", JSON.stringify({ token: S.token, name: x.name, phone: x.phone }))
+      .then(({ text: t }) => { try { return JSON.parse(t); } catch { return { ok: false, error: (t.match(/Exception:[^<]{0,120}/) || [])[0] || "дверь ответила не JSON" }; } })
       .catch(e => ({ ok: false, error: e.message }))
       .then(j => { Object.assign(pre, { state: j.ok ? "ok" : "err", id: j.id || "", existed: !!j.existed, err: j.error || "" }); if (S.pre === pre) preNote(); return j; });
     preNote();
