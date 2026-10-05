@@ -44,6 +44,8 @@
     // Товары для «Продажи» (v47): каталог новых и б/у из бота; «продано» для б/у после оформления.
     botGoods: "https://order-bot.4489530.workers.dev/crm/goods",
     botUsedSold: "https://order-bot.4489530.workers.dev/crm/used/sold",
+    botSupplier: "https://order-bot.4489530.workers.dev/crm/supplier", // запрос поставщику (v51)
+    botAuth: "https://order-bot.4489530.workers.dev/crm/auth", // долгий вход (v51)
     siteOrdersSheet: "заказы с сайта",
     reportValue: "Ok",
     // Склад запчастей Витали (v31, 02.10.2026): остатки — колонка I листа «Запчасти Витали»,
@@ -314,11 +316,65 @@
       tokenClient.requestAccessToken({ prompt: store.get("crm.consent") ? "consent" : prompt ?? "", ...(hint ? { hint, login_hint: hint } : {}) });
     });
   }
+  // ── долгий вход (v51, 05.10.2026) ────────────────────────────────────────────────────
+  // Владелец: «при простое просит войти — можно сохранить вход надолго?». Токен выше живёт час и
+  // продлевается только нажатием (v46: окно Google мелькает). Долгий вход: один раз — код Google
+  // (окно с выбором аккаунта и согласием «доступ офлайн»), бот заказов меняет его на токены и
+  // хранит refresh у себя, а сюда отдаёт ключ сессии (crm.sid). Дальше новый токен берётся по
+  // ключу за 5 минут до конца часа — без окон и без нажатий; ключ живёт 30 дней с последнего
+  // входа. Включается, когда в боте задан секрет OAuth-клиента (/crm/auth/status → enabled);
+  // до этого — вход как в v46.
+  const sidGet = () => store.get("crm.sid") || "";
+  async function authPost(action, body) {
+    const r = await fetch(`${CFG.botAuth}/${action}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    return { status: r.status, ...(await r.json().catch(() => ({}))) };
+  }
+  function takeToken(x) {
+    S.token = x.access_token;
+    store.set("crm.tok", { t: x.access_token, exp: Date.now() + ((x.expires_in || 3600) - 60) * 1000 });
+    if (x.email) store.set("crm.who", x.email);
+  }
+  // Новый токен по ключу сессии. false — ключа нет, он истёк или Google его отозвал.
+  async function sidRefresh() {
+    const sid = sidGet(); if (!sid || DEMO) return false;
+    try {
+      const r = await authPost("refresh", { sid });
+      if (r.ok) { takeToken(r); return true; }
+      if (r.status === 401) store.del("crm.sid");
+    } catch {}
+    return false;
+  }
+  function codeSignIn(hint) {
+    return new Promise((resolve, reject) => {
+      if (!window.google?.accounts?.oauth2) return reject(new Error("Google ещё грузится — нажмите ещё раз через пару секунд"));
+      google.accounts.oauth2.initCodeClient({
+        client_id: CFG.clientId, scope: CFG.scope, ux_mode: "popup", ...(hint ? { login_hint: hint } : { select_account: true }),
+        callback: async r => {
+          if (r.error) return reject(new Error(r.error === "access_denied" ? "Вход отменён: на экране Google нажали «Отмена» или закрыли его" : "Google не пустил: " + (r.error_description || r.error)));
+          if (!google.accounts.oauth2.hasGrantedAllScopes(r, "https://www.googleapis.com/auth/spreadsheets"))
+            return reject(new Error("Google не выдал доступ к таблицам: на экране входа нужно отметить галочку «Просматривать, изменять, создавать и удалять таблицы Google». Нажмите «Войти» ещё раз и отметьте её."));
+          try {
+            const x = await authPost("code", { code: r.code });
+            if (!x.ok) return reject(new Error(x.error || "бот заказов не принял вход"));
+            takeToken(x);
+            if (x.sid) store.set("crm.sid", x.sid); else if (x.note) toast(x.note, null, true);
+            resolve();
+          } catch (e) { reject(new Error("Бот заказов не ответил: " + e.message)); }
+        },
+        error_callback: e => reject(new Error(e?.type === "popup_closed" ? "Окно входа закрыли" : e?.type === "popup_failed_to_open"
+          ? "Браузер не открыл окно входа Google — разрешите всплывающие окна для 1iron.ru" + (inApp() ? " или откройте ссылку в Safari/Chrome" : "") : "Не удалось войти" + (e?.type ? " (" + e.type + ")" : ""))),
+      }).requestCode();
+    });
+  }
   // Встроенный браузер мессенджера: Google там вход запрещает (disallowed_useragent).
   const inApp = () => /Telegram|WhatsApp|Instagram|FBAN|FBAV|Line\/|VKClient|; wv\)/i.test(navigator.userAgent);
   function signOut() {
-    if (S.token && window.google?.accounts?.oauth2) google.accounts.oauth2.revoke(S.token, () => {});
-    store.del("crm.tok"); store.del("crm.who");
+    // С долгим входом токен у Google НЕ отзываем: отзыв access-токена гасит и refresh, а он общий
+    // для всех устройств владельца. Выход — удалить ключ этого устройства в боте.
+    const sid = sidGet();
+    if (sid) authPost("logout", { sid }).catch(() => {});
+    else if (S.token && window.google?.accounts?.oauth2) google.accounts.oauth2.revoke(S.token, () => {});
+    store.del("crm.tok"); store.del("crm.who"); store.del("crm.sid");
     S.token = null; S.rows = []; S.byNum.clear(); location.hash = ""; render();
   }
 
@@ -329,6 +385,7 @@
       ...opts, headers: { Authorization: "Bearer " + S.token, "Content-Type": "application/json", ...(opts.headers || {}) },
     });
     if (r.status === 401 && refreshing && !again) { await refreshing; return api(path, opts, true); }
+    if (r.status === 401 && !again && sidGet()) { refreshing ||= sidRefresh().finally(() => { refreshing = null; }); if (await refreshing) return api(path, opts, true); }
     if (r.status === 401) { store.del("crm.tok"); S.token = null; setTimeout(render, 0); throw Object.assign(new Error("Вход истёк — нажмите «Продолжить»"), { code: 401 }); }
     if (r.status === 403) {
       const why = await r.json().catch(() => ({}));
@@ -731,8 +788,10 @@
   function renderList() {
     const list = pick(), n = counts();
     const tabs = [["work", "В работе", n.work], ["stale", "⚡ Долго висят", n.stale], ["ready", "Готовы, ждут клиента", n.ready], ["done", "Выданы за 30 дней"], ["all", "Все"]];
-    let body = S.q ? "" : `<nav class="tabs">${tabs.map(([k, t, c]) =>
-      `<button class="tab" data-tab="${k}" aria-pressed="${S.tab === k}">${t}${c != null ? `<small>${c}</small>` : ""}</button>`).join("")}${viewToggle()}</nav>`;
+    // Долгий вход включили, а это устройство ещё на часовом (v51) — одна кнопка, один раз.
+    const longBar = S.authOn && !DEMO && S.token && !sidGet() && !inApp() ? `<div class="longbar">🔐 Можно не входить заново после простоя: <button type="button" class="btn btn--sm" data-act="longlogin">Запомнить вход на 30 дней</button></div>` : "";
+    let body = longBar + (S.q ? "" : `<nav class="tabs">${tabs.map(([k, t, c]) =>
+      `<button class="tab" data-tab="${k}" aria-pressed="${S.tab === k}">${t}${c != null ? `<small>${c}</small>` : ""}</button>`).join("")}${viewToggle()}</nav>`);
     if (S.q) {
       const one = S.q.startsWith("@c") ? clients().find(x => x.key === S.q.slice(1)) : null;
       const found = one ? [] : !isDigitQuery(S.q) ? findClients(S.q, 3) : [];
@@ -2313,9 +2372,9 @@
     try {
       let j;
       if (DEMO) j = { ok: true, items: [
-          { name: "iPhone 17 128Gb Black", country: "🇺🇸 США", price: 61900, purchase: 57000, warranty: "🛡️ Гарантия 1 год включена", source: "S1", category: "iPhone", order: false },
-          { name: "iPhone 17 256Gb Lavender", country: "🇪🇺 Европа", price: 80300, purchase: 76300, warranty: "", source: "S3", category: "iPhone", order: true, eta: "1–2 дня" },
-          { name: "AirPods Pro 3", country: "🇺🇸 США", price: 24990, purchase: 21000, warranty: "1 год", source: "S1", category: "AirPods", order: false }],
+          { name: "iPhone 17 128Gb Black", country: "🇺🇸 США", price: 61900, purchase: 57000, warranty: "🛡️ Гарантия 1 год включена", source: "S1", category: "iPhone", order: false, key: "Price-DA-All::11" },
+          { name: "iPhone 17 256Gb Lavender", country: "🇪🇺 Европа", price: 80300, purchase: 76300, warranty: "", source: "S3", category: "iPhone", order: true, eta: "1–2 дня", key: "Price-Dr.Store-MSK::7" },
+          { name: "AirPods Pro 3", country: "🇺🇸 США", price: 24990, purchase: 21000, warranty: "1 год", source: "S1", category: "AirPods", order: false, key: "Price-DA-All::40" }],
         used: [
           { id: "demo1", name: "iPhone 13 Pro 256Gb Graphite", price: 52000, warranty: "30 дней", condition: "отличное, АКБ 89%", kit: "коробка, кабель", specs: [{ k: "IMEI", v: "356000000000001" }], sold: false, photo: "" },
           { id: "demo2", name: "iPad 9 64Gb", price: 18000, warranty: "", condition: "", kit: "", specs: [], sold: true, deal: "7790", photo: "" }] };
@@ -2354,7 +2413,7 @@
   function goodsBlock(dk) {
     const used = dk === "sale_used", G = S.goods || {};
     const picks = (S.gpicks || []).filter(p => p.kind === (used ? "used" : "new"));
-    const chips = picks.length ? `<div class="g-picked">${picks.map(p => `<span class="chip">${esc(p.device)}<button type="button" class="linkbtn" data-act="gunpick" data-device="${esc(p.device)}" title="Убрать из сделки">✕</button></span>`).join("")}</div>` : "";
+    const chips = (picks.length ? `<div class="g-picked">${picks.map(p => `<span class="chip">${esc(p.device)}<button type="button" class="linkbtn" data-act="gunpick" data-device="${esc(p.device)}" title="Убрать из сделки">✕</button></span>`).join("")}</div>` : "") + (used ? "" : supplierPanel(picks));
     if (!G.open) return `<section class="block"><h3>${used ? "♻️ Б/у из бота" : "🛍 Новый товар из каталога"}</h3>${chips}
       <button type="button" class="btn" data-act="gopen">${used ? "♻️ Выбрать б/у из бота" : "🛍 Выбрать из каталога"}</button>
       <p class="note">${used ? "Аппараты из раздела «♻️ Б/у» бота — цена, гарантия, IMEI, состояние. После оформления в боте он отметится «Продано»." : "Тот же каталог, что в боте и на сайте: цена, закупка (у «под заказ» — с доставкой), склад, гарантия. Можно добавить несколько товаров — каждый станет устройством сделки."}</p></section>`;
@@ -2362,6 +2421,44 @@
       <div class="row" style="margin-top:0"><input class="search g-q" type="search" data-act="gq" data-kind="${used ? "used" : "new"}" value="${esc(G["q_" + (used ? "used" : "new")] || "")}" placeholder="${used ? "Поиск по б/у: модель, IMEI" : "Модель, память, цвет — например «17 pro 256»"}" autocomplete="off">
       <button type="button" class="btn btn--ghost btn--sm" data-act="greload" title="Перечитать из бота">⟳</button></div>
       ${G.loading ? `<div class="note">Загружаю…</div>` : G.error ? `<div class="note">${esc(G.error)}</div>` : goodsList(dk)}</section>`;
+  }
+  // ── запрос поставщику (v51, 05.10.2026) ──────────────────────────────────────────────
+  // В боте под заявкой есть кнопки «спросить поставщика» (план 47); продажу, оформленную прямо
+  // здесь (v47), спросить было нечем. Те же контакты и тот же текст: бот (/crm/supplier) берёт
+  // позиции из своего каталога по ключу и шлёт с личного Telegram владельца через юзербот — только
+  // владельцу. Перед отправкой — текст на подтверждение; отметка «📤 запрос …» ложится в комментарий.
+  const SUP_GROUPS = [
+    { g: "s1", label: "Склад 1 (Double Apple)", src: ["S1", "S4"], contacts: [["erol", "ЭРОЛ"], ["dima", "ДИМА"]] },
+    { g: "dr", label: "Dr.Store (склады 2–3)", src: ["S2", "S3"], contacts: [["drstore", "Dr.Store"]] },
+  ];
+  function supplierPanel(picks) {
+    const rows = SUP_GROUPS.map(G => ({ ...G, items: picks.filter(p => p.key && G.src.includes(p.source)) })).filter(G => G.items.length);
+    if (!rows.length) return "";
+    const sent = S.supSent || {};
+    return `<div class="sup">${rows.map(G => `<div class="sup__row"><span>📤 ${esc(G.label)}: <b>${G.items.length}</b> поз.${G.items.some(p => p.order) ? " · есть «под заказ»" : ""}</span>
+      ${G.contacts.map(([c, name]) => `<button type="button" class="btn btn--ghost btn--sm" data-act="supreq" data-c="${c}" data-g="${G.g}" data-name="${esc(name)}"${S.supBusy === c ? " disabled" : ""}>${sent[c] ? `✓ ${esc(name)} ${esc(sent[c])}` : `Запросить: ${esc(name)}`}</button>`).join("")}</div>`).join("")}
+      <p class="note">Уйдёт с вашего личного Telegram, как кнопка в боте: наличие и резерв, у «под заказ» — доступность; цена — закупочная поставщика, нашей нет. Перед отправкой покажу текст.</p></div>`;
+  }
+  async function supplierRequest(t) {
+    const c = t.dataset.c, name = t.dataset.name, G = SUP_GROUPS.find(x => x.g === t.dataset.g);
+    const keys = (S.gpicks || []).filter(p => p.kind === "new" && p.key && G.src.includes(p.source)).map(p => p.key);
+    if (!keys.length) return;
+    const call = body => DEMO ? Promise.resolve({ ok: true, text: "(демо) Привет! Проверьте, пожалуйста, наличие и поставьте в резерв:\n1. …", at: mskStamp().slice(11, 16), neighbours: [], already: "" })
+      : fetch(CFG.botSupplier, { method: "POST", headers: { Authorization: "Bearer " + S.token, "Content-Type": "application/json" }, body: JSON.stringify({ keys, contact: c, ...body }) }).then(r => r.json().catch(() => ({ ok: false, error: "бот ответил " + r.status })));
+    S.supBusy = c; rerenderKeep();
+    try {
+      const d = await call({ dry: true });
+      if (!d.ok) throw new Error(d.error || "бот не ответил");
+      const warn = [d.already && `⚠️ Этот же запрос ${name} уже ушёл в ${d.already}.`, d.neighbours?.length && `Уже ушло: ${d.neighbours.join(", ")}.`].filter(Boolean).join("\n");
+      if (!confirm(`Отправить ${name} с вашего Telegram?\n${warn ? warn + "\n" : ""}\n${d.text}`)) return;
+      const r = await call({ again: !!d.already });
+      if (!r.ok) throw new Error(r.error || "не ушло");
+      (S.supSent ||= {})[c] = r.at;
+      const com = String(S.dirty.get("new:" + C.comment) || "").trim(), note = `📤 запрос ${name} ${r.at}`;
+      S.dirty.set("new:" + C.comment, com ? com + "; " + note : note); saveDraft();
+      toast(`📤 Ушло ${name} в ${r.at}`, null, true);
+    } catch (e) { toast("Запрос поставщику: " + e.message, null, true); }
+    finally { S.supBusy = null; rerenderKeep(); }
   }
   // Выбранный товар → устройство сделки: первый — в основные поля, следующие — «ещё устройство».
   function addGood(kind, i) {
@@ -2376,7 +2473,7 @@
     else { S.extra.push(Object.fromEntries(Object.entries(f).map(([c, v]) => [c, String(v ?? "")]))); S.multi = true; }
     const com = String(S.dirty.get("new:" + C.comment) || "").trim();
     S.dirty.set("new:" + C.comment, com ? com + "; " + note : note);
-    (S.gpicks ||= []).push({ kind, id: x.id || "", device: f[C.device] });
+    (S.gpicks ||= []).push({ kind, id: x.id || "", key: x.key || "", source: x.source || "", order: !!x.order, device: f[C.device] });
     S.draft = true; saveDraft();
     rerenderKeep();
     toast(`${mainEmpty ? "В сделку" : "Ещё одним устройством"}: ${f[C.device]}${x.price ? " — " + money(x.price) : " — впишите цену"}`);
@@ -2394,7 +2491,7 @@
   }
   // После создания продажи: б/у из бота → «Продано» с номером сделки. Не вышло — подсказка, а не ошибка.
   async function markUsedSold(made) {
-    const picks = (S.gpicks || []).filter(p => p.kind === "used" && p.id); S.gpicks = [];
+    const picks = (S.gpicks || []).filter(p => p.kind === "used" && p.id); S.gpicks = []; S.supSent = {};
     if (!picks.length || DEMO) return picks.length ? " · в боте отмечено «Продано» (демо)" : "";
     const res = await Promise.all(picks.map(p => {
       const m = made.find(x => x.list.some(ch => ch.c === C.device && String(ch.v) === p.device)) || made[0];
@@ -3087,8 +3184,17 @@
   document.addEventListener("click", () => {
     const t = store.get("crm.tok");
     if (DEMO || !S.token || refreshing || !t || t.exp - Date.now() > 10 * 60e3 || !lastEmail()) return;
-    refreshing = signIn("none", lastEmail()).catch(() => {}).finally(() => { refreshing = null; });
+    refreshing = (sidGet() ? sidRefresh() : signIn("none", lastEmail()).catch(() => {})).finally(() => { refreshing = null; });
   }, true);
+  // С долгим входом (v51) нажатие не нужно: за 5 минут до конца часа токен обновляется сам, и
+  // после сна вкладки — сразу при возврате на неё.
+  const sidTick = () => {
+    const t = store.get("crm.tok");
+    if (DEMO || !S.token || refreshing || !sidGet() || (t && t.exp - Date.now() > 5 * 60e3)) return;
+    refreshing = sidRefresh().finally(() => { refreshing = null; });
+  };
+  setInterval(sidTick, 60e3);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") sidTick(); });
   // Открытый список закрывается кликом мимо него и клавишей Escape.
   document.addEventListener("click", e => {
     if (S.ddOpen && !e.target.closest(".dd")) { S.ddOpen = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
@@ -3163,15 +3269,22 @@
     const act = t.dataset.act;
     if (act?.startsWith("lst")) { await lstAct(act, t); return; }
     if (act?.startsWith("sk") && await stockClick(act, t)) return;
+    if (act === "supreq") { await supplierRequest(t); return; }
+    if (act === "longlogin") { try { await codeSignIn(lastEmail()); toast("🔐 Вход запомнен на 30 дней — без окон Google", null, true); } catch (e) { toast(e.message, null, true); } render(); return; }
     if (act === "dd") { const k = curKey() + ":" + t.dataset.c; S.ddOpen = S.ddOpen === k ? null : k; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
     if (act === "login") {
       // С подсказкой — сначала тихо (без выбора аккаунта). Google попросил подтверждения — следующее
       // нажатие откроет обычное окно (новое окно после неудачи браузер бы заблокировал).
+      if (S.authOn && !inApp()) {
+        try { await codeSignIn(t.dataset.hint || ""); S.error = ""; await load(); }
+        catch (err) { S.authOn = false; S.error = err.message + " — следующая попытка обычным входом"; render(); }
+        return;
+      }
       const quiet = t.dataset.hint && !S.loginLoud;
       try { await signIn(t.dataset.hint ? (quiet ? "none" : "") : "select_account", t.dataset.hint); S.error = ""; S.loginLoud = false; await load(); }
       catch (err) { if (quiet) { S.loginLoud = true; S.error = "Google просит подтвердить вход — нажмите «Продолжить» ещё раз"; } else S.error = err.message; render(); }
     } else if (act === "logout") signOut();
-    else if (act === "relogin") { store.del("crm.tok"); store.del("crm.who"); S.token = null; S.error = ""; S.rows = []; render(); }
+    else if (act === "relogin") { const sid = sidGet(); if (sid) authPost("logout", { sid }).catch(() => {}); store.del("crm.sid"); store.del("crm.tok"); store.del("crm.who"); S.token = null; S.error = ""; S.rows = []; render(); }
     else if (act === "reload") { if (!DEMO && !S.token) render(); else if (location.hash === "#/sklad") { await loadStock(true); render(); } else load(); }
     else if (act === "delask" || act === "delno") { S.delAsk = act === "delask" ? curKey() : null; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "delyes") { t.disabled = true; t.textContent = "Удаляю…"; deleteOrder(location.hash.slice(2)); }
@@ -3256,7 +3369,7 @@
       if (act === "addpart") $app.querySelector(`[data-part="${list.length - 1}"][data-pf="name"]`)?.focus();
     }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; store.del("crm.draft"); location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; S.supSent = {}; store.del("crm.draft"); location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
@@ -3551,5 +3664,11 @@
   Object.assign(S.sk, store.get("crm.sk") || {}); // фильтры склада — тоже
   const t = saved();
   if (t) S.token = t.t;
-  if (DEMO || S.token) load(); else render();
+  // Долгий вход: включён ли в боте (секрет OAuth-клиента задан). Запоминается, чтобы кнопка входа
+  // знала сразу; ответ бота поправляет.
+  S.authOn = !!store.get("crm.lg");
+  if (!DEMO) fetch(`${CFG.botAuth}/status`).then(r => r.json()).then(x => { const on = !!x.enabled; store.set("crm.lg", on); if (on !== S.authOn) { S.authOn = on; if (!location.hash.startsWith("#/n")) render(); } }).catch(() => {});
+  if (DEMO || S.token) load();
+  else if (sidGet()) { S.loading = true; render(); sidRefresh().then(ok => { S.loading = false; ok ? load() : render(); }); }
+  else render();
 })();

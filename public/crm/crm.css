@@ -652,3 +652,13 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .g-q { flex: 1; min-width: 0; }
 .g-picked { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
 .g-picked .chip { display: inline-flex; align-items: center; gap: 4px; }
+
+/* Запрос поставщику из «Продажи нового» и долгий вход (v51, 05.10.2026) */
+.sup { margin-top: 10px; padding: 10px 12px; border: 1px dashed var(--line-strong); border-radius: 12px; }
+.sup__row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.sup__row + .sup__row { margin-top: 8px; }
+.sup__row > span { flex: 1 1 100%; font-size: .9rem; }
+.sup__row .btn--sm { margin-top: 0; }
+.sup .note { margin: 8px 0 0; }
+.longbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 10px 0 0; padding: 8px 12px; border: 1px solid var(--gold); border-radius: 12px; background: rgba(212, 160, 18, .07); font-size: .9rem; }
+.longbar .btn--sm { margin-top: 0; }
