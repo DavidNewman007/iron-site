@@ -1177,10 +1177,68 @@
         <input data-part="${i}" data-pf="cost" value="${esc(p.cost)}" inputmode="decimal" placeholder="0"${lock ? " disabled" : ""}>
         <button type="button" class="linkbtn" data-act="rmpart" data-i="${i}" title="Убрать"${lock ? " disabled" : ""}>✕</button></div>${lock ? "" : supplierChipsHtml(key, r, p, i) + stockPartHtml(key, r, p, i) + compareHtml(key, r, p, i)}`).join("")}
       <div class="parts__foot"><button type="button" class="btn btn--ghost btn--sm" data-act="addpart"${lock ? " disabled" : ""}>＋ Запчасть</button><span class="note" data-parts-note>${note}</span></div>
+      ${holdHtml(key, r, list)}
       ${stockOrderHtml(r, lock)}
       ${dl(C.parts, "dl-pname")}${dl(C.partFrom, "dl-psrc")}</div>`;
   }
 
+
+  // ── «Попросить отложить» на складе (v56, 06.10.2026, план 93 §11.49) ─────────────────
+  // Владелец: «сообщение в WhatsApp и Telegram с рабочего номера на склад, откуда берём запчасть, с
+  // просьбой отложить; лучше кнопку после добавления запчастей, чтобы нажимал сам. MOS-LCD и Либерти,
+  // другие пока не надо». У запчастей этих складов в блоке — «📦 Попросить отложить»: готовый текст (можно
+  // поправить) и кнопки контактов; отправка — дверь `crm-hold` (SupplierHold.js) с рабочих Telegram
+  // @ironsochi и WhatsApp. Номера складов — только в двери: этот код публичный.
+  const HOLD_SUPPLIERS = [
+    { key: "moslcd", label: "MosLCD", re: /mos-?lcd|мос ?лсд/i, contacts: [["store", "MosLCD Сочи"], ["vladimir", "Владимир"], ["veronika", "Вероника"]] },
+    { key: "liberti", label: "Либерти", re: /libert|либерт/i, contacts: [["atrium", "Либерти Атриум"]] },
+  ];
+  const holdParts = (H, list) => list.filter(p => String(p.name).trim() && H.re.test(p.src || ""));
+  function holdText(key, r, parts) {
+    const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+    const raw = String(val(C.device) || "").split("\n")[0].trim(), lines = new Map();
+    for (const p of parts) {
+      const dev = partMeta(p, key, r).dev || raw;
+      const name = p.item || p.name.trim() + (dev && !norm(p.name).includes(norm(dev)) ? " для " + dev : "");
+      lines.set(name, (lines.get(name) || 0) + 1);
+    }
+    const many = lines.size > 1;
+    return ["Здравствуйте! Это IRON SERVICE.", `Отложите, пожалуйста, для нас${many ? " запчасти" : ""}:`,
+      ...[...lines].map(([n, q], i) => `${many ? i + 1 + ". " : ""}${n} — ${q} шт`), "Подскажите, когда можно забрать. Спасибо!"].join("\n");
+  }
+  function holdHtml(key, r, list) {
+    return HOLD_SUPPLIERS.map(H => {
+      const parts = holdParts(H, list); if (!parts.length) return "";
+      const st = (S.hold ||= {})[key + "|" + H.key] || {}, sent = st.sent || {};
+      const done = Object.entries(sent).map(([c, t]) => `${esc(H.contacts.find(x => x[0] === c)?.[1] || c)} ${esc(t)}`).join(", ");
+      return `<div class="hold"><div class="hold__row"><span>📦 ${esc(H.label)}: <b>${parts.length}</b> поз.${done ? ` · ✓ попросили: ${done}` : ""}</span>
+        <button type="button" class="btn btn--ghost btn--sm" data-act="holdopen" data-h="${H.key}">${st.open ? "Свернуть" : "Попросить отложить"}</button></div>
+        ${st.open ? `<textarea class="hold__text" data-holdtext="${H.key}" rows="${Math.min(10, String(st.text || "").split("\n").length + 1)}">${esc(st.text || "")}</textarea>
+        <div class="row hold__to"><span class="note">Кому:</span>${H.contacts.map(([c, name]) => `<button type="button" class="btn btn--sm" data-act="holdsend" data-h="${H.key}" data-c="${c}"${S.holdBusy === key + H.key + c ? " disabled" : ""}>${sent[c] ? "✓ " : ""}${esc(name)}</button>`).join("")}</div>
+        <p class="note">Уйдёт с рабочих Telegram @ironsochi и WhatsApp. Текст можно поправить перед отправкой.</p>` : ""}</div>`;
+    }).join("");
+  }
+  async function holdSend(t) {
+    const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
+    const H = HOLD_SUPPLIERS.find(x => x.key === t.dataset.h), c = t.dataset.c, name = H?.contacts.find(x => x[0] === c)?.[1] || c;
+    const st = S.hold?.[key + "|" + H?.key]; if (!H || !st) return;
+    const text = String($app.querySelector(`[data-holdtext="${H.key}"]`)?.value ?? st.text ?? "").trim();
+    if (!text) return toast("Пустой текст — нечего отправлять");
+    st.text = text;
+    const call = again => DEMO ? Promise.resolve({ ok: true, at: mskStamp().slice(11, 16), telegram: "ok", whatsapp: "ok" })
+      : doorPost(CFG.doors[0], "crm-hold", JSON.stringify({ token: S.token, supplier: H.key, contact: c, text, again })).then(({ text: x }) => { try { return JSON.parse(x); } catch { return { ok: false, error: "дверь ответила не JSON" }; } });
+    S.holdBusy = key + H.key + c; rerenderKeep();
+    try {
+      let j = await call(false);
+      if (!j.ok && j.already && confirm(`${name} уже получил этот запрос в ${j.already}. Отправить ещё раз?`)) j = await call(true);
+      if (!j.ok) { if (!j.already) toast("Не ушло: " + (j.error || "дверь не ответила"), null, true); return; }
+      (st.sent ||= {})[c] = j.at;
+      const ch = [j.telegram === "ok" && "Telegram", j.whatsapp === "ok" && "WhatsApp"].filter(Boolean).join(" и ");
+      const miss = [j.telegram !== "ok" && `Telegram: ${j.telegram}`, j.whatsapp !== "ok" && `WhatsApp: ${j.whatsapp}`].filter(Boolean).join("; ");
+      toast(`📦 ${name}: попросили отложить — ушло в ${ch}${miss ? ` (${miss})` : ""}`, null, true);
+    } catch (e) { toast("Не ушло: " + e.message, null, true); }
+    finally { S.holdBusy = null; rerenderKeep(); }
+  }
 
   // ── скидка (v26, 28.09.2026) ─────────────────────────────────────────────────
   // В таблице — W «Скидка»: «500 ₽» или «10%». Q «Итого» остаётся суммой, которую платит
@@ -1309,17 +1367,19 @@
     return `<div class="cmp"><div class="cmp__head"><b>⚖️ ${esc(dev || "модель не узнана")}${op ? " · " + esc(op) : ""}</b>
       <input class="cmp__q" data-act="cmpq" data-i="${i}" value="${esc(S.cmp.q || "")}" placeholder="Фильтр: soft, оригинал, 3750…" autocomplete="off">
       <button type="button" class="linkbtn" data-act="cmp" data-i="${i}">закрыть</button></div>
-      ${rows.length ? `<div class="cmp__list">${rows.slice(0, 150).map(x => `<button type="button" class="cmp__row${x.here ? " is-here" : ""}${cur(x) ? " is-on" : ""}${like(x) ? " is-like" : ""}" data-act="cmppick" data-i="${i}" data-s="${esc(x.src || "")}" data-c="${x.c ?? ""}"${x.stock ? ` data-k="${esc(x.k)}"` : ""} title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">
+      ${rows.length ? `<div class="cmp__list">${rows.slice(0, 150).map(x => `<button type="button" class="cmp__row${x.here ? " is-here" : ""}${cur(x) ? " is-on" : ""}${like(x) ? " is-like" : ""}" data-act="cmppick" data-i="${i}" data-s="${esc(x.src || "")}" data-c="${x.c ?? ""}" data-t="${esc(x.t || "")}"${x.stock ? ` data-k="${esc(x.k)}"` : ""} title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">
         <span class="cmp__s">${esc(x.s)}</span><span class="cmp__t">${esc(x.t)}</span><span class="cmp__a">${esc(x.a)}</span><b>${x.c != null ? money(x.c) : "—"}</b></button>`).join("")}</div>
       <p class="note">${rows.length} вариант(ов) у ${shops} источник(ов) · дешевле всего: <b>${esc(rows[0].s)}</b> ${rows[0].c != null ? money(rows[0].c) : ""}${vw.length ? " · подходящие по названию варианта подсвечены" : ""}</p>`
       : `<div class="note">${words.length ? "По фильтру ничего не нашлось." : dev ? "Для этой детали предложений нет." : "Не узнал модель по полю «Устройство»."}</div>`}</div>`;
   }
 
   // Поставщик выбран: закупка — из индекса; у запчасти из прайса — и итог на разницу.
-  function applySupplier(key, r, i, supplier, cost) {
+  function applySupplier(key, r, i, supplier, cost, item) {
     const list = partsOf(key, r), p = list[i]; if (!p) return;
     const old = toNum(p.cost) ?? 0;
     p.src = supplier; p.cost = String(cost);
+    // Название позиции в прайсе склада — для «Попросить отложить» (v56): складу понятнее его же строка.
+    if (item) p.item = String(item).replace(/\s*·\s*(в Сочи|под заказ).*$/, "").trim(); else delete p.item;
     if (p.stock && !skSrcMatch(supplier, S.stock?.byKey?.get(p.stock))) delete p.stock; // сменили поставщика — эта позиция склада уже не подходит
     if (p.fromSvc) {
       const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
@@ -3280,12 +3340,12 @@
     if (t.dataset.act === "cmppick") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), i = +t.dataset.i;
       if (t.dataset.k) { const x = skBind(key, r, i, t.dataset.k); if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`); }
-      else if (t.dataset.c) { applySupplier(key, r, i, t.dataset.s, +t.dataset.c); toast(`${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[i]?.fromSvc ? " · итог пересчитан" : ""}`); }
+      else if (t.dataset.c) { applySupplier(key, r, i, t.dataset.s, +t.dataset.c, t.dataset.t); toast(`${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[i]?.fromSvc ? " · итог пересчитан" : ""}`); }
       S.cmp = null; const y = window.scrollY; render(); window.scrollTo(0, y); return;
     }
     if (t.dataset.psup != null) {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
-      applySupplier(key, r, +t.dataset.psup, t.dataset.s, +t.dataset.c);
+      applySupplier(key, r, +t.dataset.psup, t.dataset.s, +t.dataset.c, t.dataset.t);
       const sk = skAuto(key, r, +t.dataset.psup, t.dataset.t);
       const y = window.scrollY; render(); window.scrollTo(0, y);
       toast(sk ? `📦 Со склада: ${skShort(sk)}${skFrom(sk)} — спишется при сохранении` : `${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[+t.dataset.psup]?.fromSvc ? " · итог пересчитан" : ""}`);
@@ -3335,6 +3395,13 @@
     if (act?.startsWith("lst")) { await lstAct(act, t); return; }
     if (act?.startsWith("sk") && await stockClick(act, t)) return;
     if (act === "supreq") { await supplierRequest(t); return; }
+    if (act === "holdopen") {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), H = HOLD_SUPPLIERS.find(x => x.key === t.dataset.h);
+      const st = (S.hold ||= {})[key + "|" + H.key] ||= {};
+      st.open = !st.open; if (st.open) st.text = holdText(key, r, holdParts(H, partsOf(key, r)));
+      rerenderKeep(); return;
+    }
+    if (act === "holdsend") { await holdSend(t); return; }
     if (act === "longlogin") { try { await codeSignIn(lastEmail()); toast("🔐 Вход запомнен на 30 дней — без окон Google", null, true); } catch (e) { toast(e.message, null, true); } render(); return; }
     if (act === "dd") { const k = curKey() + ":" + t.dataset.c; S.ddOpen = S.ddOpen === k ? null : k; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
     if (act === "login") {
@@ -3440,6 +3507,7 @@
     const t = e.target;
     if (t.dataset.skq != null) { skSet(t.dataset.skq, t.value); return; }
     if (t.dataset.act === "skbsel") return; // галочка «на возврат» — обработана кликом
+    if (t.dataset.holdtext != null) { const st = S.hold?.[curKey() + "|" + t.dataset.holdtext]; if (st) st.text = t.value; return; }
     if (t.dataset.act === "skbaq") { clearTimeout(onEdit.ba); onEdit.ba = setTimeout(() => { if (S.skBadAdd) { S.skBadAdd.q = t.value; const pos = t.selectionStart, y = window.scrollY; render(); window.scrollTo(0, y); const q = $app.querySelector(".sk-ba__q"); if (q) { q.focus({ preventScroll: true }); q.setSelectionRange(pos, pos); } } }, 150); return; }
     if (t.dataset.skbq != null) { const x = S.stock?.byKey?.get(t.dataset.skbq), n = Math.floor(+t.value.replace(",", ".")) || 0; if (x && S.skSend.has(x.key)) { S.skSend.set(x.key, Math.max(1, Math.min(x.def, n || 1))); skSendLabel(); } return; }
     if (t.dataset.skf != null) { if (S.skAdd) S.skAdd.f[t.dataset.skf] = t.value; return; }

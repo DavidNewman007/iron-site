@@ -670,3 +670,11 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .sk-pr .sk-def__top { align-items: flex-end; flex-wrap: wrap; }
 .sk-pr .sk-def__n input { width: 110px; }
 .sk-pr .row { margin-top: 0; }
+
+/* «Попросить отложить» на складе (v56, 06.10.2026) */
+.hold { margin-top: 10px; padding: 10px 12px; border: 1px dashed var(--line-strong); border-radius: 12px; }
+.hold__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; font-size: .9rem; }
+.hold__row .btn--sm, .hold__to .btn--sm { margin-top: 0; }
+.hold__text { width: 100%; margin-top: 8px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--field); color: var(--cream); font: .92rem/1.35 var(--font-body); resize: vertical; }
+.hold__to { flex-wrap: wrap; gap: 6px 8px; align-items: center; margin-top: 8px; }
+.hold .note { margin: 6px 0 0; }
