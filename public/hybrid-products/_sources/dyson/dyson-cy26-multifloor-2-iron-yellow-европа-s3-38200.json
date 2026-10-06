@@ -1,0 +1,55 @@
+{
+  "product_id": "dyson-cy26-multifloor-2-iron-yellow-европа-s3-38200",
+  "category": "dyson",
+  "file_slug": "dyson-cy26-multifloor-2-iron-yellow-s3-38200",
+  "name": "Dyson CY26 Multifloor 2 Iron/Yellow",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 38200,
+  "catalog_url": "https://www.dyson.co.uk/vacuum-cleaners/cylinders/big-ball-cylinder-2/multi-floor-2",
+  "catalog_title": "Пылесос Dyson Big Ball Multifloor 2 (CY26), сталь/жёлтый",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "Big Ball Multifloor 2 (CY26)"
+    },
+    {
+      "key": "Цвет",
+      "value": "Сталь/жёлтый (Iron/Yellow)"
+    },
+    {
+      "key": "Тип",
+      "value": "Проводной пылесос с контейнером"
+    },
+    {
+      "key": "Особенности",
+      "value": "Сам поднимается при опрокидывании, трубка поворачивается на 360°, насадка сама подстраивается под покрытие"
+    },
+    {
+      "key": "Комплектация",
+      "value": "Пневматическая насадка Musclehead, насадка для лестниц, комбинированная насадка"
+    }
+  ],
+  "images_remote": [
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/232573-01.png?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/gallery/gb-i/floorcare/cylinder-vacuums/big-ball/multi-floor-2/232573-01/232573-01-gallery-img-3.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cylinders/big-ball-cylinder-2/Cylinders_Gallery_02.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cylinders/big-ball-cylinder-2/Cylinders_Gallery_03.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/cylinders/big-ball-cylinder-2/Cylinders_Gallery_04.jpg?wid=1400"
+  ],
+  "images_local": [
+    "assets/product-images/6315e43551826724ab9e282a.jpg",
+    "assets/product-images/fcb1a8604f24ed00ebea317d.jpg",
+    "assets/product-images/e5cf8a0567d16f1bd96f17dd.jpg",
+    "assets/product-images/32a163f6e66bc2206bbe99a6.jpg",
+    "assets/product-images/91a8f75a08159d5ff43f6ec5.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson cy26 multifloor 2 iron yellow~s3",
+  "photo_source": "https://www.dyson.co.uk/vacuum-cleaners/cylinders/big-ball-cylinder-2/multi-floor-2",
+  "updated_at": "2026-10-06T14:02:25.306952Z"
+}

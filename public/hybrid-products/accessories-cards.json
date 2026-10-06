@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-05T15:55:08.344Z",
-  "count": 67,
+  "generated_at": "2026-10-06T14:04:29.056Z",
+  "count": 69,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -537,6 +537,22 @@
       "name": "🖊 Pencil (USB-C) MUWA3",
       "warehouse": "(S1)",
       "price": 8500
+    },
+    "чехол-pitaka-для-iphone-17-pro-max-moonrise-s2-6000": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-max-moonrise-s2-6000.html",
+      "url_en": "en/hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-max-moonrise-s2-6000.html",
+      "cover": "assets/product-images/673fb43b16bbcdf633df1b23.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro Max, Moonrise",
+      "warehouse": "(S2)",
+      "price": 6000
+    },
+    "ipad-pro-13-m4-256-black-wi-fi-without-charger-сша-s3-98900": {
+      "url": "hybrid-products/accessories/ipad-pro-13-m4-256-black-wi-fi-without-charger-s3-98900.html",
+      "url_en": "en/hybrid-products/accessories/ipad-pro-13-m4-256-black-wi-fi-without-charger-s3-98900.html",
+      "cover": "assets/product-images/9dbbe51e1e0e2dcab1bbcbf6.jpg",
+      "name": "iPad Pro 13 M4 256 Black Wi-Fi Without Charger",
+      "warehouse": "(S3)",
+      "price": 98900
     }
   }
 }

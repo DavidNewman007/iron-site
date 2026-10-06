@@ -1,0 +1,49 @@
+{
+  "product_id": "dyson-pencilvac-fluffy-black-гонконг-s3-47900",
+  "category": "dyson",
+  "file_slug": "dyson-pencilvac-fluffy-black-s3-47900",
+  "name": "Dyson PencilVac Fluffy Black",
+  "country": "🇭🇰 Гонконг",
+  "warehouse": "(S3)",
+  "price": 47900,
+  "catalog_url": "https://www.dyson.com.au/dyson-pencilvac-fluffycones-492714-01-black",
+  "catalog_title": "Dyson PencilVac Fluffycones, Black",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "PencilVac Fluffycones"
+    },
+    {
+      "key": "Тип",
+      "value": "Беспроводной пылесос для твёрдых полов"
+    },
+    {
+      "key": "Цвет",
+      "value": "Black"
+    },
+    {
+      "key": "Артикул",
+      "value": "492714-01"
+    }
+  ],
+  "images_remote": [
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/vacuum-cleaners/power-broom/pencilvac/fluffy-cones/pdp/gallery/683-PDP-Fluffycones-Gallery-1.jpg",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/vacuum-cleaners/power-broom/pencilvac/fluffy-cones/pdp/gallery/683-PDP-Fluffycones-Gallery-2.jpg",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/vacuum-cleaners/power-broom/pencilvac/fluffy-cones/pdp/gallery/683-PDP-Fluffycones-Gallery-3.jpg",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/products/vacuum-cleaners/power-broom/pencilvac/fluffy-cones/pdp/gallery/683-PDP-Fluffycones-Gallery-4.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/cc1e15e5facb52614075e133.jpg",
+    "assets/product-images/2f7a947d88c3f18ace8a2f33.jpg",
+    "assets/product-images/8bc7949f57484151cbdb2809.jpg",
+    "assets/product-images/b1ea53276d354d8e496fbda6.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson pencilvac fluffy black~s3",
+  "photo_source": "https://www.dyson.com.au/dyson-pencilvac-fluffycones-492714-01-black",
+  "updated_at": "2026-10-06T14:02:25.365119Z"
+}

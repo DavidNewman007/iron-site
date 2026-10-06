@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-05T15:55:08.357Z",
-  "count": 60,
+  "generated_at": "2026-10-06T14:04:29.070Z",
+  "count": 69,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -481,6 +481,78 @@
       "name": "Portal PS5 Белый",
       "warehouse": "(S2)",
       "price": 26700
+    },
+    "-ps5-pro-2tb-s2-125600": {
+      "url": "hybrid-products/gaming/ps5-pro-2tb-s2-125600.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-2tb-s2-125600.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro 2Tb",
+      "warehouse": "(S2)",
+      "price": 125600
+    },
+    "-ps5-slim-disk-1tb-s2-74200": {
+      "url": "hybrid-products/gaming/ps5-slim-disk-1tb-s2-74200.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-disk-1tb-s2-74200.html",
+      "cover": "assets/product-images/710d027896068006fabffb9c.jpg",
+      "name": "🎮PS5 Slim Disk 1TB",
+      "warehouse": "(S2)",
+      "price": 74200
+    },
+    "-ps5-slim-digital-1tb-s2-71300": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-1tb-s2-71300.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-1tb-s2-71300.html",
+      "cover": "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+      "name": "🎮PS5 Slim Digital 1TB",
+      "warehouse": "(S2)",
+      "price": 71300
+    },
+    "-ps-vr2-horizon-s2-37100": {
+      "url": "hybrid-products/gaming/ps-vr2-horizon-s2-37100.html",
+      "url_en": "en/hybrid-products/gaming/ps-vr2-horizon-s2-37100.html",
+      "cover": "assets/product-images/53ba5b9e8fd4d1ad012d5513.jpg",
+      "name": "🥽PS VR2+Horizon",
+      "warehouse": "(S2)",
+      "price": 37100
+    },
+    "portal-ps5-белый-s2-27300": {
+      "url": "hybrid-products/gaming/portal-ps5-белый-s2-27300.html",
+      "url_en": "en/hybrid-products/gaming/portal-ps5-белый-s2-27300.html",
+      "cover": "assets/product-images/9e175dd37be85181eac35fa5.jpg",
+      "name": "Portal PS5 Белый",
+      "warehouse": "(S2)",
+      "price": 27300
+    },
+    "-gamepad-ps5-blue-s2-7600": {
+      "url": "hybrid-products/gaming/gamepad-ps5-blue-s2-7600.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-blue-s2-7600.html",
+      "cover": "assets/product-images/4ef1d100ab2bc3f8b814e758.jpg",
+      "name": "🎮GamePad PS5 Blue",
+      "warehouse": "(S2)",
+      "price": 7600
+    },
+    "-gamepad-ps5-red-s2-7800": {
+      "url": "hybrid-products/gaming/gamepad-ps5-red-s2-7800.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-red-s2-7800.html",
+      "cover": "assets/product-images/626ba4adcc8a7cc476ee6c68.jpg",
+      "name": "🎮GamePad PS5 Red",
+      "warehouse": "(S2)",
+      "price": 7800
+    },
+    "-gamepad-ps5-sterling-silver-s2-8100": {
+      "url": "hybrid-products/gaming/gamepad-ps5-sterling-silver-s2-8100.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-sterling-silver-s2-8100.html",
+      "cover": "assets/product-images/cce6b8a3ffe169a9529db48d.jpg",
+      "name": "🎮GamePad PS5 Sterling Silver",
+      "warehouse": "(S2)",
+      "price": 8100
+    },
+    "-gamepad-ps5-black-s2-7600": {
+      "url": "hybrid-products/gaming/gamepad-ps5-black-s2-7600.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-black-s2-7600.html",
+      "cover": "assets/product-images/c36248458fe2e350df682200.jpg",
+      "name": "🎮GamePad PS5 Black",
+      "warehouse": "(S2)",
+      "price": 7600
     }
   }
 }

@@ -1,0 +1,75 @@
+{
+  "product_id": "dyson-cy28-parquet-2-iron-purple-европа-s3-37800",
+  "category": "dyson",
+  "file_slug": "dyson-cy28-parquet-2-iron-purple-s3-37800",
+  "name": "Dyson CY28 Parquet 2 Iron/Purple",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 37800,
+  "catalog_url": "https://www.coolblue.de/en/product/840775/dyson-big-ball-parquet-2.html",
+  "catalog_title": "Пылесос Dyson Big Ball Parquet 2 (CY28), сталь/фиолетовый",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "Big Ball Parquet 2 (CY28), артикул 228566-01"
+    },
+    {
+      "key": "Цвет",
+      "value": "Сталь/фиолетовый (Iron/Purple)"
+    },
+    {
+      "key": "Тип",
+      "value": "Проводной пылесос с контейнером"
+    },
+    {
+      "key": "Мощность",
+      "value": "600 Вт"
+    },
+    {
+      "key": "Контейнер",
+      "value": "1,5 л"
+    },
+    {
+      "key": "Шум",
+      "value": "До 80 дБ"
+    },
+    {
+      "key": "Шнур",
+      "value": "6,6 м, радиус действия 9,7 м"
+    },
+    {
+      "key": "Вес",
+      "value": "7,9 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "34,7 × 29,5 × 38,3 см"
+    },
+    {
+      "key": "Насадки",
+      "value": "Щелевая, универсальная, для паркета, мягкая щётка, для мебели"
+    }
+  ],
+  "images_remote": [
+    "https://image.coolblue.de/max/1400xauto/products/1450167",
+    "https://image.coolblue.de/max/1400xauto/products/1450171",
+    "https://image.coolblue.de/max/1400xauto/products/1450178",
+    "https://image.coolblue.de/max/1400xauto/products/1450175",
+    "https://image.coolblue.de/max/1400xauto/products/1450185"
+  ],
+  "images_local": [
+    "assets/product-images/1fb5a3352643b86068af7c0b.jpg",
+    "assets/product-images/ca65c9214d2e8d2a453af68f.jpg",
+    "assets/product-images/0dc6b8420a0d37a8c486fb75.jpg",
+    "assets/product-images/bf1ca56a6adabfdc4b710990.jpg",
+    "assets/product-images/805f4b9b1199be7eed2417c0.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson cy28 parquet 2 iron purple~s3",
+  "photo_source": "https://www.coolblue.de/en/product/840775/dyson-big-ball-parquet-2.html",
+  "updated_at": "2026-10-06T14:02:25.329251Z"
+}

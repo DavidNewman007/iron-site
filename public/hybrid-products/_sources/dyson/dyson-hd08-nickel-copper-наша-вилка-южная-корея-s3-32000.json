@@ -1,0 +1,55 @@
+{
+  "product_id": "dyson-hd08-nickel-copper-наша-вилка-южная-корея-s3-32000",
+  "category": "dyson",
+  "file_slug": "dyson-hd08-nickel-copper-наша-вилка-s3-32000",
+  "name": "Dyson HD08 Nickel Copper (наша вилка)",
+  "country": "🇰🇷 Южная Корея",
+  "warehouse": "(S3)",
+  "price": 32000,
+  "catalog_url": "https://re-store.ru/catalog/389928-01/",
+  "catalog_title": "Фен Dyson Supersonic HD08, никель/медь",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "Supersonic HD08"
+    },
+    {
+      "key": "Цвет",
+      "value": "Никель/медь (Nickel/Copper)"
+    },
+    {
+      "key": "Мотор",
+      "value": "Dyson V9, до 110 000 об/мин"
+    },
+    {
+      "key": "Режимы",
+      "value": "3 скорости, 4 температуры, холодный обдув"
+    },
+    {
+      "key": "Контроль нагрева",
+      "value": "Замер температуры воздуха более 40 раз в секунду"
+    },
+    {
+      "key": "Насадки",
+      "value": "Магнитные"
+    }
+  ],
+  "images_remote": [
+    "https://static.re-store.ru/upload/iblock/fdd/ul4jpbxr25i0tt2ufp6ogav8m1cghkoz.jpg",
+    "https://static.re-store.ru/upload/iblock/732/xjzx0arukpsq97gtdsh0ca47m40vldcq.jpg",
+    "https://static.re-store.ru/upload/iblock/49e/k4hjerc4105jugbsrbdqc8rq972cf84p.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/8ef31a60de0433202b48e4ef.jpg",
+    "assets/product-images/cb8d9e4a9e27aa2274d9c141.jpg",
+    "assets/product-images/e6f9b1b9bc9fd0ccd372e5df.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson hd08 nickel copper наша вилка~s3",
+  "photo_source": "https://re-store.ru/catalog/389928-01/",
+  "updated_at": "2026-10-06T14:01:45.929350Z"
+}

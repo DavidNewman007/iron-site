@@ -1,0 +1,46 @@
+{
+  "product_id": "galaxy-buds-3-pro-white-оаэ-s3-14200",
+  "category": "audio",
+  "file_slug": "galaxy-buds-3-pro-white-s3-14200",
+  "name": "Galaxy Buds 3 Pro White",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S3)",
+  "price": 14200,
+  "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/samsung-galaxy-buds-3-pro-white-besprovodnye-naushniki",
+  "catalog_title": "Samsung Galaxy Buds 3 Pro White",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Беспроводные наушники TWS (True Wireless Stereo)"
+    },
+    {
+      "key": "Активное шумоподавление (ANC)",
+      "value": "Да"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 30 часов"
+    },
+    {
+      "key": "Цвет",
+      "value": "Серебристый (Silver)"
+    },
+    {
+      "key": "Управление",
+      "value": "Сенсорное (касания)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav_11zon-6-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2_11zon-6-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3_11zon-6-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/4_11zon-6-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/0f083f8c1eeddced428e1d3f.jpeg",
+    "assets/product-images/4f49d090f9a063b933374ec9.jpeg",
+    "assets/product-images/d8b74bdfb9ba0daa0008a13f.jpeg",
+    "assets/product-images/adad71723ef88c4f1a107da5.jpeg"
+  ],
+  "updated_at": "2026-10-06T14:01:12.256442Z"
+}
