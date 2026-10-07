@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-06T14:04:29.091Z",
-  "count": 293,
+  "generated_at": "2026-10-07T14:21:53.628Z",
+  "count": 294,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -2345,6 +2345,14 @@
       "name": "Dyson V16 Piston Animal SV53 MatBlack/Copp",
       "warehouse": "(S3)",
       "price": 66600
+    },
+    "-hs09-co-anda-2x-apricot-topaz-s2-48400": {
+      "url": "hybrid-products/dyson/hs09-co-anda-2x-apricot-topaz-s2-48400.html",
+      "url_en": "en/hybrid-products/dyson/hs09-co-anda-2x-apricot-topaz-s2-48400.html",
+      "cover": "assets/product-images/1f01eeb70cce6f791cd24e57.jpg",
+      "name": "👱‍♀️HS09 Co-Anda 2X Apricot/Topaz",
+      "warehouse": "(S2)",
+      "price": 48400
     }
   }
 }
