@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-07T14:21:53.606Z",
-  "count": 69,
+  "generated_at": "2026-10-08T15:09:33.111Z",
+  "count": 70,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -553,6 +553,14 @@
       "name": "🎮GamePad PS5 Black",
       "warehouse": "(S2)",
       "price": 7600
+    },
+    "nintendo-switch-2-256gb-black-s2-48400": {
+      "url": "hybrid-products/gaming/nintendo-switch-2-256gb-black-s2-48400.html",
+      "url_en": "en/hybrid-products/gaming/nintendo-switch-2-256gb-black-s2-48400.html",
+      "cover": "assets/product-images/a11490d73ecc76528d109a82.jpeg",
+      "name": "Nintendo Switch 2 256GB Black",
+      "warehouse": "(S2)",
+      "price": 48400
     }
   }
 }

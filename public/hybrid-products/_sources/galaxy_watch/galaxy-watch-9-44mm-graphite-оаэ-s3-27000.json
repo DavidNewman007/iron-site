@@ -1,0 +1,51 @@
+{
+  "product_id": "galaxy-watch-9-44mm-graphite-оаэ-s3-27000",
+  "category": "galaxy_watch",
+  "file_slug": "galaxy-watch-9-44mm-graphite-s3-27000",
+  "name": "Galaxy Watch 9 44mm Graphite",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S3)",
+  "price": 27000,
+  "catalog_url": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-44mm-graphite-bluetooth-sku-sm-l350nzkaxaa/",
+  "catalog_title": "Samsung Galaxy Watch9 44 мм Graphite",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Samsung Galaxy Watch9"
+    },
+    {
+      "key": "Артикул",
+      "value": "SM-L350NZ"
+    },
+    {
+      "key": "Размер корпуса",
+      "value": "44 мм"
+    },
+    {
+      "key": "Цвет",
+      "value": "Graphite"
+    },
+    {
+      "key": "Связь",
+      "value": "Bluetooth"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056107",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056109",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056111",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056113",
+    "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056115"
+  ],
+  "images_local": [
+    "assets/product-images/40efa0acee9567a0c130ca2a.jpg",
+    "assets/product-images/955f0728e232139f45cec2ca.jpg",
+    "assets/product-images/7e3196c33f1a7f5d93e10368.jpg",
+    "assets/product-images/272e3f4f3f0abe305dcf5b84.jpg",
+    "assets/product-images/69f830d6d25b5fc198039285.jpg"
+  ],
+  "manual": true,
+  "manual_key": "galaxy watch 9 44mm graphite~s3",
+  "photo_source": "https://www.samsung.com/us/watches/galaxy-watch9/buy/galaxy-watch9-44mm-graphite-bluetooth-sku-sm-l350nzkaxaa/",
+  "updated_at": "2026-10-08T15:08:05.888042Z"
+}

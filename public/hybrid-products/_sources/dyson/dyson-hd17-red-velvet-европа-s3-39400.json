@@ -1,0 +1,75 @@
+{
+  "product_id": "dyson-hd17-red-velvet-европа-s3-39400",
+  "category": "dyson",
+  "file_slug": "dyson-hd17-red-velvet-s3-39400",
+  "name": "Dyson HD17 (Red Velvet)",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 39400,
+  "catalog_url": "https://roxbeauty.com/dyson-supersonic-hd17-red-velvet-gold-straight-plus-wavy.html",
+  "catalog_title": "Фен Dyson Supersonic r HD17, Red Velvet/Gold",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "Supersonic r HD17 (Straight+Wavy)"
+    },
+    {
+      "key": "Цвет",
+      "value": "Красный бархат/золото (Red Velvet/Gold)"
+    },
+    {
+      "key": "Мотор",
+      "value": "Dyson Hyperdymium, до 110 000 об/мин"
+    },
+    {
+      "key": "Насадки",
+      "value": "5 интеллектуальных насадок с RFID"
+    },
+    {
+      "key": "Ионизация",
+      "value": "До 46% меньше выбивающихся волос"
+    },
+    {
+      "key": "Размеры",
+      "value": "276,9 × 38 × 77 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "0,33 кг"
+    },
+    {
+      "key": "Шнур",
+      "value": "2,7 м"
+    },
+    {
+      "key": "Напряжение",
+      "value": "230 В"
+    },
+    {
+      "key": "Воздушный поток",
+      "value": "12,5 л/с"
+    },
+    {
+      "key": "Шум",
+      "value": "78 дБА"
+    }
+  ],
+  "images_remote": [
+    "https://roxbeauty.com/media/catalog/product/cache/95aa96d5d3f32bbfb6186d7b4c9cb5c2/5/0/5025155133071-dyson-supersonic-r-red-velvet_69afda75179de_650xr.png",
+    "https://roxbeauty.com/media/catalog/product/cache/95aa96d5d3f32bbfb6186d7b4c9cb5c2/d/y/dyson_supersonic_r_hd17_4.png",
+    "https://roxbeauty.com/media/catalog/product/cache/95aa96d5d3f32bbfb6186d7b4c9cb5c2/d/y/dyson_supersonic_r_hd17_3.png"
+  ],
+  "images_local": [
+    "assets/product-images/9140dd733f9188135b708421.jpg",
+    "assets/product-images/d6491b9feb83442a37096158.jpg",
+    "assets/product-images/d1f910c8c7d02ac2c803e15c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson hd17 red velvet~s3",
+  "photo_source": "https://roxbeauty.com/dyson-supersonic-hd17-red-velvet-gold-straight-plus-wavy.html",
+  "updated_at": "2026-10-08T15:07:21.601575Z"
+}

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-07T14:21:53.651Z",
-  "count": 80,
+  "generated_at": "2026-10-08T15:09:33.143Z",
+  "count": 85,
   "byId": {
     "-oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100": {
       "url": "hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100.html",
@@ -641,6 +641,46 @@
       "name": "🕶Wayfarer (Gen 2) S50, Matte Black/Clear (RW4012)",
       "warehouse": "(S2)",
       "price": 38500
+    },
+    "-wayfarer-gen-2-s50-matte-black-transitions-grey-rw4012-s2-38100": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-s50-matte-black-transitions-grey-rw4012-s2-38100.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-s50-matte-black-transitions-grey-rw4012-s2-38100.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "🕶Wayfarer (Gen 2) S50, Matte Black/Transitions Grey (RW4012)",
+      "warehouse": "(S2)",
+      "price": 38100
+    },
+    "-wayfarer-gen-2-s50-shiny-black-transitions-graphite-green-rw4012-s2-40700": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-s50-shiny-black-transitions-graphite-green-rw4012-s2-40700.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-s50-shiny-black-transitions-graphite-green-rw4012-s2-40700.html",
+      "cover": "assets/product-images/846d5d1b9ee7966a229efadb.jpg",
+      "name": "🕶Wayfarer (Gen 2) S50, Shiny Black/Transitions Graphite Green (RW4012)",
+      "warehouse": "(S2)",
+      "price": 40700
+    },
+    "-wayfarer-gen-2-s50-shiny-cosmic-blue-transitions-sapphire-rw4012-s2-40700": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-s50-shiny-cosmic-blue-transitions-sapphire-rw4012-s2-40700.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-s50-shiny-cosmic-blue-transitions-sapphire-rw4012-s2-40700.html",
+      "cover": "assets/product-images/c5099ca7ebbd037513290902.jpg",
+      "name": "🕶Wayfarer (Gen 2) S50, Shiny Cosmic Blue/Transitions Sapphire (RW4012)",
+      "warehouse": "(S2)",
+      "price": 40700
+    },
+    "-wayfarer-gen-2-s53-matte-black-transitions-grey-rw4012-s2-38100": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-s53-matte-black-transitions-grey-rw4012-s2-38100.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-s53-matte-black-transitions-grey-rw4012-s2-38100.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "🕶Wayfarer (Gen 2) S53, Matte Black/Transitions Grey (RW4012)",
+      "warehouse": "(S2)",
+      "price": 38100
+    },
+    "-wayfarer-gen-2-s53-shiny-cosmic-blue-transitions-sapphire-rw4012-s2-40700": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-s53-shiny-cosmic-blue-transitions-sapphire-rw4012-s2-40700.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-s53-shiny-cosmic-blue-transitions-sapphire-rw4012-s2-40700.html",
+      "cover": "assets/product-images/c5099ca7ebbd037513290902.jpg",
+      "name": "🕶Wayfarer (Gen 2) S53, Shiny Cosmic Blue/Transitions Sapphire (RW4012)",
+      "warehouse": "(S2)",
+      "price": 40700
     }
   }
 }

@@ -1,0 +1,65 @@
+{
+  "product_id": "dyson-pencil-wash-wr-04-европа-s3-42200",
+  "category": "dyson",
+  "file_slug": "dyson-pencil-wash-wr-04-s3-42200",
+  "name": "Dyson Pencil Wash WR 04",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 42200,
+  "catalog_url": "https://www.dyson.co.uk/floor-cleaners/wet/pencilwash/copper",
+  "catalog_title": "Моющий пылесос Dyson PencilWash (WR04)",
+  "specs": [
+    {
+      "key": "Бренд",
+      "value": "Dyson"
+    },
+    {
+      "key": "Модель",
+      "value": "PencilWash (WR04)"
+    },
+    {
+      "key": "Цвет",
+      "value": "Медный/чёрный"
+    },
+    {
+      "key": "Тип",
+      "value": "Беспроводной моющий пылесос для твёрдых полов"
+    },
+    {
+      "key": "Ручка",
+      "value": "Диаметр 38 мм, 380 г в руке"
+    },
+    {
+      "key": "Наклон",
+      "value": "До 170°, моет под мебелью"
+    },
+    {
+      "key": "Валик",
+      "value": "Микрофибра высокой плотности, увлажняется чистой водой при каждом обороте"
+    },
+    {
+      "key": "Покрытия",
+      "value": "Плитка, мрамор, винил, ламинат, герметизированное дерево"
+    }
+  ],
+  "images_remote": [
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/637218-01.png?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/wet-cleaners/pencilwash/Web_PDP_Gallery_970A-KV-3.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/wet-cleaners/pencilwash/Web_PDP_Gallery_970A-wet-dry-4.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/wet-cleaners/pencilwash/Web_PDP_Gallery_970A-manoevurable-6.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/wet-cleaners/pencilwash/Web_PDP_Gallery_970A-motor-7.jpg?wid=1400",
+    "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/gallery/home/floorcare/wet-cleaners/pencilwash/Web_PDP_Gallery_970A-clean-9.jpg?wid=1400"
+  ],
+  "images_local": [
+    "assets/product-images/c944e2666b1858bc1f122547.jpg",
+    "assets/product-images/3519a7909098eec9a6efe5a6.jpg",
+    "assets/product-images/9c95e00d8336b39ac35144de.jpg",
+    "assets/product-images/dd878a1e5eb31cebc84fcb3c.jpg",
+    "assets/product-images/e4ff5f409f042b484d15325c.jpg",
+    "assets/product-images/9b0d6a347972d14ade2bebc1.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dyson pencil wash wr 04~s3",
+  "photo_source": "https://www.dyson.co.uk/floor-cleaners/wet/pencilwash/copper",
+  "updated_at": "2026-10-08T15:07:39.285650Z"
+}
