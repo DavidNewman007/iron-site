@@ -678,3 +678,7 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .hold__text { width: 100%; margin-top: 8px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--field); color: var(--cream); font: .92rem/1.35 var(--font-body); resize: vertical; }
 .hold__to { flex-wrap: wrap; gap: 6px 8px; align-items: center; margin-top: 8px; }
 .hold .note { margin: 6px 0 0; }
+
+/* Оплачено и комментарий у позиции склада (v58, 09.10.2026) */
+.sk-paid { font-style: normal; font-size: .82rem; font-weight: 700; color: var(--ready); background: var(--ready-bg); border: 1px solid var(--ready); border-radius: 8px; padding: 1px 7px; margin-left: 6px; white-space: nowrap; }
+.sk-pr .sk-def__note { margin-top: 8px; }
