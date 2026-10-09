@@ -682,3 +682,6 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 /* Оплачено и комментарий у позиции склада (v58, 09.10.2026) */
 .sk-paid { font-style: normal; font-size: .82rem; font-weight: 700; color: var(--ready); background: var(--ready-bg); border: 1px solid var(--ready); border-radius: 8px; padding: 1px 7px; margin-left: 6px; white-space: nowrap; }
 .sk-pr .sk-def__note { margin-top: 8px; }
+
+/* Склад первым в «Работе из прайса» (v61, 09.10.2026) */
+.pp__item.is-stock { border-color: var(--ready); background: var(--ready-bg); }

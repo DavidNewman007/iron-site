@@ -1067,25 +1067,36 @@
   const PP_SYN = [[/^акб|^батар|^аккум/, ["аккумулятор"]], [/^экран|^диспл/, ["диспле", "матриц"]], [/^крышк|^задн/, ["заднего стекла", "корпус"]],
     [/^ссд|^ssd|^диск/, ["ssd", "накопител", "диск"]], [/^клав/, ["клавиатур"]], [/^тач|^трек/, ["тачпад", "сенсор"]], [/^зарядк|^разъ/, ["разъёма зарядки", "разъема зарядки"]],
     [/^чистк|^профил/, ["профилактик"]], [/^по$|^прошив|^ос$/, ["установка по", "по"]], [/^залит|^влаг/, ["залития"]], [/^вотч|^watch|^час/, ["watch"]]];
+  // Склад — первым блоком, наверху списка (v61). Владелец, 09.10.2026: «не видит деталь на складе, когда
+  // добавляю работу из прайса на MacBook Air M1 — замена матрицы; один оригинал есть». Позиция с полки была,
+  // но в самом низу — под всеми работами прайса, в блоке «Наш склад и другие поставщики»: её не видели.
+  // data-svx — номер в общем P.extra, поэтому индекс берётся из него, а не из отфильтрованного куска.
+  function ppXHtml(extras, take, title) {
+    const list = extras.map((x, j) => ({ x, j })).filter(({ x }) => take(x));
+    if (!list.length) return "";
+    return `<div class="pp__sub">${title}</div>` + list.map(({ x, j }) => `<button type="button" class="pp__item${x.kind === "stock" ? " is-stock" : ""}" data-svx="${j}">
+        <b>${esc(cap(x.operation))} <span class="note">${x.kind === "stock" ? "📦 с полки" : esc(x.src)} · ${esc(x.variant)}</span>${x.here ? ` <span class="psup__here">в Сочи</span>` : ""}</b>
+        <span>${money(x.price)} <em class="note">= работа ${money(x.work)} + запчасть ${money(x.cost)}${x.kind === "stock" ? ` · на полке ${x.qty} шт` + (isVitalya(x.src) ? " (Виталя)" : isDonor(x.src) ? " (донор)" : x.src ? " (" + esc(x.src) + ")" : "") : ""}</em>${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("") + (title.startsWith("📦") ? `<div class="pp__sub">Прайс</div>` : "");
+  }
   function pricePickHtml(key, deviceText) {
     const P = S.pp?.key === key ? S.pp : null;
     if (!P?.open) return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppopen">📋 Работа из прайса</button>`;
     if (!S.svc?.list) return `<div class="pp"><div class="note">${S.svc?.error ? "Прайс не загрузился: " + esc(S.svc.error) : "Загружаю прайс…"}</div></div>`;
     const dev = P.dev ?? matchDevice(deviceText), q = norm(P.q || "");
     // Поиск: слова запроса ищутся в работе и варианте; без модели — по всему прайсу (с моделью в строке).
-    const hit = x => { const t = norm(x.operation + " " + (x.variant || "") + (dev ? "" : " " + x.device)); return !q || q.split(" ").every(w => (PP_SYN.find(([re]) => re.test(w))?.[1] || [w]).some(a => t.includes(a))); };
+    // Слово запроса — с основой (v61): «матрица» находит «замена матрицы», «клавиатура» — «клавиатуры».
+    const alts = w => PP_SYN.find(([re]) => re.test(w))?.[1] || (w.length >= 5 ? [w, w.slice(0, -1)] : [w]);
+    const hit = x => { const t = norm(x.operation + " " + (x.variant || "") + (dev ? "" : " " + x.device)); return !q || q.split(" ").every(w => alts(w).some(a => t.includes(a))); };
     const items = S.svc.list.map((x, i) => ({ x, i })).filter(({ x }) => (dev ? x.device === dev : q.length >= 2) && hit(x)).slice(0, 80);
-    const hitX = x => !q || q.split(" ").every(w => (PP_SYN.find(([re]) => re.test(w))?.[1] || [w]).some(a => norm(x.operation + " " + x.variant + " " + x.src + " " + (x.title || "") + (x.kind === "stock" ? " склад наличие" : "")).includes(a)));
+    const hitX = x => !q || q.split(" ").every(w => alts(w).some(a => norm(x.operation + " " + x.variant + " " + x.src + " " + (x.title || "") + (x.kind === "stock" ? " склад наличие" : "")).includes(a)));
     const extras = dev ? ppExtras(dev).filter(hitX).slice(0, 60) : [];
     P.extra = extras; // для нажатия: data-svx — номер в этом списке
     return `<div class="pp"><div class="pp__head"><select data-act="ppdev"><option value="">— модель из прайса —</option>${S.svc.devices.map(d => `<option ${d === dev ? "selected" : ""}>${esc(d)}</option>`).join("")}</select>
       <button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>
       <input class="pp__q" data-act="ppq" value="${esc(P.q || "")}" placeholder="Поиск: дисплей, акб, oled…" autocomplete="off">
-      ${dev || q.length >= 2 ? (items.length || extras.length ? `<div class="pp__list">${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
+      ${dev || q.length >= 2 ? (items.length || extras.length ? `<div class="pp__list">${ppXHtml(extras, x => x.kind === "stock", "📦 На нашем складе")}${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
         <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}${dev ? "" : ` <span class="note">· ${esc(x.device)}</span>`}</b>
-        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_cost)}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${extras.length ? `<div class="pp__sub">Наш склад и другие поставщики</div>` + extras.map((x, j) => `<button type="button" class="pp__item" data-svx="${j}">
-        <b>${esc(cap(x.operation))} <span class="note">${x.kind === "stock" ? "📦 наш склад" : esc(x.src)} · ${esc(x.variant)}</span>${x.here ? ` <span class="psup__here">в Сочи</span>` : ""}</b>
-        <span>${money(x.price)} <em class="note">= работа ${money(x.work)} + запчасть ${money(x.cost)}${x.kind === "stock" ? ` · на полке ${x.qty} шт` + (isVitalya(x.src) ? " (Виталя)" : isDonor(x.src) ? " (донор)" : x.src ? " (" + esc(x.src) + ")" : "") : ""}</em>${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("") : ""}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
+        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_cost)}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${ppXHtml(extras, x => x.kind !== "stock", "Другие поставщики")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
         : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка или ищите по всему прайсу.</div>`}
       <p class="note">Нажатие добавляет работу в «Выполненные работы», цену — к «Итого», запчасть — в список запчастей. Можно добавить несколько.</p></div>`;
   }
@@ -1126,7 +1137,7 @@
       const w = ppWorkOf(dev, op); if (!w) continue;
       const nodes = OP_STOCK[norm(op)], models = S.stock?.rows ? skModelsFor(dev) : [];
       if (nodes && models.length) for (const x of S.stock.rows)
-        if (x.qty > 0 && x.cost != null && models.includes(x.model) && nodes.includes(norm(x.node)))
+        if (x.qty > 0 && x.cost != null && models.includes(x.model) && nodes.includes(norm(x.node)) && !skMacMismatch(dev, op, x))
           out.push({ kind: "stock", operation: op, variant: x.variant + (x.color ? ", " + skColor(x.color) : ""), src: x.src, cost: x.cost, stock: x.key, qty: x.qty, ...w });
       for (const o of S.supp?.map?.get(dev + "|" + op) || []) if (norm(o.s) !== "moslcd")
         out.push({ kind: "supp", operation: op, variant: ppShort(o.t, dev), title: o.t, src: o.s, cost: o.c, here: suppHere(o.t), ...w });
@@ -1556,6 +1567,12 @@
   // Модель склада по полю «Устройство»: самая длинная, все слова которой есть в тексте
   // («iPhone 13 Pro Max», а не «iPhone 13»), плюс «iPhone 13 серия» — общие детали линейки.
   const skWords = s => norm(s).replace(/айфон/g, "iphone").replace(/[^a-zа-я0-9]+/g, " ").trim();
+  // У Mac матрица и дисплей в сборе — разные детали и разные работы прайса, а у Витали Mac-матрицы лежат
+  // узлом «дисплей» (v61): матрицу не предлагаем под «замену дисплея» и наоборот. what — работа или имя запчасти.
+  function skMacMismatch(dev, what, x) {
+    if (!/mac|мак/i.test(String(dev || "")) || norm(x.node) !== "дисплей") return false;
+    return /матриц/.test(norm(what)) !== /матриц/.test(norm(x.model + " " + x.variant));
+  }
   function skModelsFor(text, hint) {
     if (!S.stock?.rows) return [];
     const models = [...new Set(S.stock.rows.map(x => x.model))];
@@ -1599,7 +1616,7 @@
     if (!models.length) return null;
     const nodes = skNodesOf(p.name), taken = new Map();
     for (const q of partsOf(key, r)) if (q !== p && q.stock) taken.set(q.stock, (taken.get(q.stock) || 0) + 1);
-    return S.stock.rows.filter(x => models.includes(x.model) && (!nodes || nodes.includes(norm(x.node))) && (anySrc || skSrcMatch(p.src, x)))
+    return S.stock.rows.filter(x => models.includes(x.model) && (!nodes || nodes.includes(norm(x.node))) && !skMacMismatch(val(C.device), p.name, x) && (anySrc || skSrcMatch(p.src, x)))
       .map(x => ({ ...x, free: x.qty - (taken.get(x.key) || 0) })).filter(x => x.free > 0);
   }
   function skBind(key, r, i, k) {
