@@ -997,7 +997,62 @@
   }
   // Модель из поля «Устройство»: самое длинное имя прайса, все слова которого есть в тексте
   // («iPhone 13 Pro Max» → «iPhone 13 Pro Max», а не «iPhone 13»). Скобки с годами не в счёт.
+  // ── Mac по записи в заказе (v59, 09.10.2026) ─────────────────────────────────────────
+  // Владелец: «когда вбиваешь работу из прайса — устройство определял не только айфоны, но и макбуки, и
+  // предлагал запчасти именно на него». Макбуки в базе пишут номером модели («Macbook air a1466», «Macbook
+  // Pro 13" A1708» — 1063 записи), а в прайсе они названы поколениями («MacBook Pro 13" Intel (2016–2020)»,
+  // «M1–M5»): поиск по словам названия их не находил, а «Pro 13" A1708» и вовсе узнавал как «(2009–2015)» —
+  // скобки отбрасывались. Теперь сначала номер модели (A1466 → «MacBook Air 13" Intel»), потом чип,
+  // диагональ и год. Неоднозначное («MacBook Air 13"» без чипа и года) не угадываем — модель выбирается в списке.
+  const MAC_A = {
+    'MacBook Air 11" (2010–2015)': "A1370 A1465",
+    'MacBook Air 13" Intel (2010–2020)': "A1237 A1304 A1369 A1466 A1932 A2179",
+    'MacBook Air 13" M1': "A2337", 'MacBook Air 13" M2': "A2681", 'MacBook Air 13" M3': "A3113", 'MacBook Air 13" M4': "A3240",
+    'MacBook Air 15" M2–M4': "A2941 A3114 A3241",
+    'MacBook Pro 13" (2009–2015)': "A1278 A1425 A1502",
+    'MacBook Pro 13" Intel (2016–2020)': "A1706 A1708 A1989 A2159 A2251 A2289",
+    'MacBook Pro 13" M1/M2': "A2338",
+    'MacBook Pro 14" M1–M5': "A2442 A2779 A2918 A2992 A3112 A3185 A3401 A3434",
+    'MacBook Pro 15" (2008–2015)': "A1286 A1398",
+    'MacBook Pro 15" Intel (2016–2019)': "A1707 A1990",
+    'MacBook Pro 16" Intel (2019)': "A2141",
+    'MacBook Pro 16" M1–M5': "A2485 A2780 A2991 A3186 A3403",
+    'iMac 21.5" Intel': "A1311 A1418 A2116", 'iMac 24" M1 и новее': "A2438 A2439 A2873 A2874 A3137 A3247", 'iMac 27" Intel': "A1312 A1419 A2115",
+    "Mac mini": "A1347 A1993 A2348 A2686 A2816 A3238 A3239",
+  };
+  const MAC_BY_A = new Map(Object.entries(MAC_A).flatMap(([d, list]) => list.split(" ").map(a => [a.toLowerCase(), d])));
+  function macDevice(text) {
+    // «а1398» — русская «а» перед номером модели; «pro 1502» — номер без буквы (годы 2000–2030 не путаем).
+    const t = " " + String(text || "").toLowerCase().replace(/[”″“"']/g, '" ').replace(/ё/g, "е").replace(/(^|[^a-zа-я])а(?=\s?-?\d{4}\b)/g, "$1a") + " ";
+    if (!/mac|мак|imac|аймак/.test(t)) return "";
+    const a = (t.match(/\ba\s?-?(1\d{3}|2\d{3}|3\d{3})\b/) || [])[1];
+    if (a && MAC_BY_A.has("a" + a)) return MAC_BY_A.get("a" + a);
+    for (const n of t.match(/\b[123]\d{3}\b/g) || []) if ((+n < 2000 || +n > 2030) && MAC_BY_A.has("a" + n)) return MAC_BY_A.get("a" + n);
+    const chip = +(t.match(/\bm([1-5])\b/) || [])[1] || 0;
+    const size = +(t.match(/(?:^|[^\da-z])(11|13|14|15|16|21|24|27)(?:[.,]\d)?\s*(?:"|дюйм|inch|\s|$)/) || [])[1] || 0;
+    const year = +(t.match(/\b(20[012]\d)\b/) || [])[1] || 0;
+    const intel = /intel|интел|touch ?bar|тачбар/.test(t) || (year && year <= 2020 && !chip);
+    if (/mac ?mini|macmini|мак ?мини/.test(t)) return "Mac mini";
+    if (/imac|аймак/.test(t)) return size === 27 ? 'iMac 27" Intel' : size === 24 || chip ? 'iMac 24" M1 и новее' : size === 21 ? 'iMac 21.5" Intel' : "";
+    if (/air|эйр/.test(t)) {
+      if (size === 11) return 'MacBook Air 11" (2010–2015)';
+      if (chip >= 2 && size === 15) return 'MacBook Air 15" M2–M4';
+      if (chip >= 1 && chip <= 4) return `MacBook Air 13" M${chip}`;
+      return intel ? 'MacBook Air 13" Intel (2010–2020)' : "";
+    }
+    if (/pro|про/.test(t)) {
+      if (size === 14) return 'MacBook Pro 14" M1–M5';
+      if (size === 16) return chip ? 'MacBook Pro 16" M1–M5' : intel || year === 2019 ? 'MacBook Pro 16" Intel (2019)' : "";
+      if (chip) return size === 13 || (!size && chip <= 2) ? 'MacBook Pro 13" M1/M2' : "";
+      if (size === 13 && year) return year <= 2015 ? 'MacBook Pro 13" (2009–2015)' : 'MacBook Pro 13" Intel (2016–2020)';
+      if (size === 15 && year) return year <= 2015 ? 'MacBook Pro 15" (2008–2015)' : 'MacBook Pro 15" Intel (2016–2019)';
+      if (/touch ?bar|тачбар/.test(t)) return size === 15 ? 'MacBook Pro 15" Intel (2016–2019)' : size === 13 ? 'MacBook Pro 13" Intel (2016–2020)' : "";
+    }
+    return "";
+  }
   function matchDevice(text) {
+    // Mac — по номеру модели, чипу, диагонали и году (v59); неоднозначный Mac не угадываем словами названия.
+    if (/mac|мак|imac|аймак/i.test(String(text || ""))) { const m = macDevice(text); return m && (S.svc?.devices || []).includes(m) ? m : ""; }
     const s = " " + norm(text).replace(/["”]/g, "") + " ";
     let best = null, bestLen = 0;
     for (const d of S.svc?.devices || []) {
@@ -1323,7 +1378,10 @@
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const dev = p.dev || (S.svc?.devices ? matchDevice(val(C.device)) : "");
     const op = p.op || opOfPart(p.name);
-    const variant = p.var || (String(p.name).match(/\(([^)]+)\)/) || [])[1] || p.name;
+    // Номер модели Mac из заказа («A1708») — в подбор: у поставщиков он есть в названии позиции
+    // («Аккумулятор A1713 для MacBook Pro 13" A1708»), и подходящая встаёт первой (v59).
+    const am = /mac/i.test(String(val(C.device))) ? (String(val(C.device)).match(/(?:^|[^a-zа-я])[aа]\s?-?(\d{4})\b/i) || [])[1] : "";
+    const variant = (p.var || (String(p.name).match(/\(([^)]+)\)/) || [])[1] || p.name) + (am ? " a" + am : "");
     return { dev, op, variant };
   }
   function supplierChipsHtml(key, r, p, i) {
