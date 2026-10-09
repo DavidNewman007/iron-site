@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-08T15:09:33.126Z",
-  "count": 323,
+  "generated_at": "2026-10-09T14:12:03.652Z",
+  "count": 329,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -2585,6 +2585,54 @@
       "name": "Dyson Wash G1 (Black)",
       "warehouse": "(S3)",
       "price": 35900
+    },
+    "dyson-hs09-coanda-2x-amber-silk-with-diffuse-европа-s3-53500": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-amber-silk-with-diffuse-s3-53500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-amber-silk-with-diffuse-s3-53500.html",
+      "cover": "assets/product-images/cbab21acd88e068de26cd006.jpg",
+      "name": "Dyson HS09 Coanda 2x Amber Silk with Diffuse",
+      "warehouse": "(S3)",
+      "price": 53500
+    },
+    "dyson-hs09-coanda-2x-apricot-topaz-великобритания-s3-47000": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-apricot-topaz-s3-47000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-apricot-topaz-s3-47000.html",
+      "cover": "assets/product-images/1f01eeb70cce6f791cd24e57.jpg",
+      "name": "Dyson HS09 Coanda 2x Apricot Topaz",
+      "warehouse": "(S3)",
+      "price": 47000
+    },
+    "dyson-hs09-coanda-2x-ceramic-pink-сингапур-s3-47300": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-ceramic-pink-s3-47300.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-ceramic-pink-s3-47300.html",
+      "cover": "assets/product-images/3cc99ad2cd24f0f15570eae6.jpg",
+      "name": "Dyson HS09 Coanda 2x Ceramic Pink",
+      "warehouse": "(S3)",
+      "price": 47300
+    },
+    "dyson-hs09-coanda-2x-jasper-plum-гонконг-s3-47100": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-jasper-plum-s3-47100.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-jasper-plum-s3-47100.html",
+      "cover": "assets/product-images/436d73c15f3360ad305a0147.jpg",
+      "name": "Dyson HS09 Coanda 2x Jasper Plum",
+      "warehouse": "(S3)",
+      "price": 47100
+    },
+    "dyson-spot-scrub-ai-black-blue-европа-s3-93100": {
+      "url": "hybrid-products/dyson/dyson-spot-scrub-ai-black-blue-s3-93100.html",
+      "url_en": "en/hybrid-products/dyson/dyson-spot-scrub-ai-black-blue-s3-93100.html",
+      "cover": "assets/product-images/fe86ff3412160bf316c05dd5.jpg",
+      "name": "Dyson Spot+Scrub AI Black/Blue",
+      "warehouse": "(S3)",
+      "price": 93100
+    },
+    "dyson-v12s-detect-slim-submarine-yellow-nickel-европа-s3-49100": {
+      "url": "hybrid-products/dyson/dyson-v12s-detect-slim-submarine-yellow-nickel-s3-49100.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v12s-detect-slim-submarine-yellow-nickel-s3-49100.html",
+      "cover": "assets/product-images/742cd664a7f8c69753640da5.jpg",
+      "name": "Dyson V12S Detect Slim Submarine Yellow/Nickel",
+      "warehouse": "(S3)",
+      "price": 49100
     }
   }
 }

@@ -1,0 +1,79 @@
+{
+  "product_id": "redmi-17-4g-6-256-nfc-oak-green-европа-s3-21300",
+  "category": "xiaomi",
+  "file_slug": "redmi-17-4g-6-256-nfc-oak-green-s3-21300",
+  "name": "Redmi 17 4G 6/256 NFC Oak Green",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 21300,
+  "catalog_url": "https://www.mi.com/my/product/redmi-17/buy/?gid=4223729957",
+  "catalog_title": "REDMI 17 4G Oak Green",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "Oak Green"
+    },
+    {
+      "key": "Память",
+      "value": "6 ГБ ОЗУ / 256 ГБ"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G91-Ultra, 8 ядер, до 2,0 ГГц"
+    },
+    {
+      "key": "Экран",
+      "value": "6,9\", 1600×720, до 120 Гц, Gorilla Glass 7i"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп, f/1.8"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мА·ч, зарядка 45 Вт, обратная 22,5 Вт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64"
+    },
+    {
+      "key": "NFC",
+      "value": "есть"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм, microSD до 2 ТБ"
+    },
+    {
+      "key": "Размеры и вес",
+      "value": "170,12 × 78,42 × 8,8 мм, 232 г"
+    },
+    {
+      "key": "ОС",
+      "value": "Xiaomi HyperOS 3"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/869_operatorx_operatorx_xm/28/07/2026/39d2526faa9c55fb54799c031e4affa2.png",
+    "https://i02.appmifile.com/415_operatorx_operatorx_xm/28/07/2026/e0feab05f1df38bf4e7f07ce16671e72.png",
+    "https://i02.appmifile.com/120_operatorx_operatorx_xm/28/07/2026/fb02f89ccf7203551dbc0d09dd8c64ae.png"
+  ],
+  "images_local": [
+    "assets/product-images/f1fa7a76598d7a2cd5702eb6.jpg",
+    "assets/product-images/f10535bfd833e8aec5dbe938.jpg",
+    "assets/product-images/61d0bde69c3855a617b51ed3.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi 17 4g 6 256 nfc oak green~s3",
+  "photo_source": "https://www.mi.com/my/product/redmi-17/buy/?gid=4223729957",
+  "updated_at": "2026-10-09T14:11:46.092174Z"
+}

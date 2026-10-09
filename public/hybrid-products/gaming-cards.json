@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-08T15:09:33.111Z",
-  "count": 70,
+  "generated_at": "2026-10-09T14:12:03.632Z",
+  "count": 75,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -561,6 +561,46 @@
       "name": "Nintendo Switch 2 256GB Black",
       "warehouse": "(S2)",
       "price": 48400
+    },
+    "-ps5-pro-2tb-s2-127700": {
+      "url": "hybrid-products/gaming/ps5-pro-2tb-s2-127700.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-2tb-s2-127700.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro 2Tb",
+      "warehouse": "(S2)",
+      "price": 127700
+    },
+    "-ps-vr2-horizon-s2-37600": {
+      "url": "hybrid-products/gaming/ps-vr2-horizon-s2-37600.html",
+      "url_en": "en/hybrid-products/gaming/ps-vr2-horizon-s2-37600.html",
+      "cover": "assets/product-images/53ba5b9e8fd4d1ad012d5513.jpg",
+      "name": "🥽PS VR2+Horizon",
+      "warehouse": "(S2)",
+      "price": 37600
+    },
+    "-gamepad-ps5-camouflage-s2-7700": {
+      "url": "hybrid-products/gaming/gamepad-ps5-camouflage-s2-7700.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-camouflage-s2-7700.html",
+      "cover": "assets/product-images/627bd94cba9e9bc334f6e71b.jpg",
+      "name": "🎮GamePad PS5 Camouflage",
+      "warehouse": "(S2)",
+      "price": 7700
+    },
+    "-gamepad-ps5-chroma-pearl-s2-8100": {
+      "url": "hybrid-products/gaming/gamepad-ps5-chroma-pearl-s2-8100.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-chroma-pearl-s2-8100.html",
+      "cover": "assets/product-images/5866341f13e30037737e2c48.jpg",
+      "name": "🎮GamePad PS5 Chroma Pearl",
+      "warehouse": "(S2)",
+      "price": 8100
+    },
+    "nintendo-switch-2-256gb-black-s2-51500": {
+      "url": "hybrid-products/gaming/nintendo-switch-2-256gb-black-s2-51500.html",
+      "url_en": "en/hybrid-products/gaming/nintendo-switch-2-256gb-black-s2-51500.html",
+      "cover": "assets/product-images/a11490d73ecc76528d109a82.jpeg",
+      "name": "Nintendo Switch 2 256GB Black",
+      "warehouse": "(S2)",
+      "price": 51500
     }
   }
 }
