@@ -685,3 +685,12 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 
 /* Склад первым в «Работе из прайса» (v61, 09.10.2026) */
 .pp__item.is-stock { border-color: var(--ready); background: var(--ready-bg); }
+
+/* Оплата и продажа запчастей (v62, 09.10.2026) */
+.field--pay { margin-top: 10px; }
+.pay { display: flex; flex-wrap: wrap; gap: 6px; }
+.pay__b { min-height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--surface-2); color: var(--cream); font: 700 .85rem var(--font-body); cursor: pointer; }
+.pay__b small { color: var(--gold); font-weight: 700; margin-left: 2px; }
+.pay__b[aria-pressed="true"] { background: var(--ready-bg); border-color: var(--ready); color: var(--ready); }
+.sp { margin: 4px 0 10px; }
+.sp .sk-ba__list { margin-top: 6px; }

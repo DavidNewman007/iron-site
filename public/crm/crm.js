@@ -26,7 +26,7 @@
     scope: "openid email https://www.googleapis.com/auth/spreadsheets",
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
-    lastCol: "AI", // AH–AI «На связи» (03.10.2026); до этого — AG
+    lastCol: "AJ", // AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
     // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
@@ -65,7 +65,8 @@
     // AH–AI «На связи» (03.10.2026, план 93 §11.38): телефон клиента в ремонте — уведомления
     // уходят этому человеку, а заказ остаётся за клиентом (C/D). Логика — ContactPerson.js.
     contactName: 33, contactPhone: 34,
-    gcontact: 23 }; // X «Google Contact ID» — пишет оболочка, если контакт заведён заранее (v45)
+    gcontact: 23, // X «Google Contact ID» — пишет оболочка, если контакт заведён заранее (v45)
+    payment: 35 }; // AJ «Оплата» (v62, 09.10.2026): наличные / перевод / карта или QR / счёт на организацию
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -111,6 +112,7 @@
     [C.linked]: { label: "Связанная сделка №" },
     [C.group]: { label: "Группа" },
     [C.discount]: { label: "Скидка" },
+    [C.payment]: { label: "Оплата" },
   };
 
   // Тип сделки (колонка AC). Пусто = ремонт. Ключи — как в DealTypes.js на стороне таблицы.
@@ -120,6 +122,7 @@
     if (s.startsWith("выкуп") && s.includes("запчаст")) return "parts";
     if (s.startsWith("выкуп")) return "buyback";
     if (s.includes("trade") || s.includes("трейд")) return "tradein";
+    if (s.startsWith("продажа") && s.includes("запчаст")) return "sale_parts"; // v62
     if (s.startsWith("продажа") && (s.includes("б/у") || s.includes("бу"))) return "sale_used";
     if (s.startsWith("продажа")) return "sale_new";
     return "other";
@@ -141,6 +144,10 @@
                 [C.date]: "Дата обращения", [C.issued]: "Дата продажи" },
     sale_new: { [C.device]: "Что продаём", [C.issue]: "Примечание", [C.work]: "Комплектация", [C.warranty]: "Гарантия",
                 [C.total]: "Цена продажи, ₽", [C.partCost]: "Закупка, ₽", [C.extra]: "Прочие расходы, ₽", [C.date]: "Дата обращения", [C.issued]: "Дата продажи" },
+    // Продажа запчастей (v62, 09.10.2026): запчасти — списком из склада (как в ремонте), E — что продали кратко
+    // (заполняется само из выбранного, уходит клиенту в сообщении), Q — цена, S — закупка из списка.
+    sale_parts: { [C.device]: "Что продаём (уйдёт клиенту)", [C.issue]: "Примечание", [C.warranty]: "Гарантия",
+                [C.total]: "Цена продажи, ₽", [C.partCost]: "Закупка, ₽", [C.extra]: "Прочие расходы, ₽", [C.date]: "Дата обращения", [C.issued]: "Дата продажи" },
     other:    { [C.work]: "Что сделано", [C.total]: "Итого, ₽ (платит клиент)" },
   };
   // Что по типу сделки вообще не показываем. Мастер в выкупе и продаже не нужен: его
@@ -153,6 +160,7 @@
     tradein:  [C.master, C.pass, C.parts, C.partFrom, C.labor],
     sale_used:[C.master, C.pass, C.parts, C.partFrom, C.labor],
     sale_new: [C.master, C.pass, C.parts, C.partFrom, C.labor, C.linked],
+    sale_parts: [C.master, C.pass, C.labor, C.linked, C.imei, C.work, C.buyback],
   };
   // Поля ОДНОГО устройства — одинаковые у каждого устройства заказа, включая первое
   // (владелец, 26.09.2026: «карточки товаров не идентичны» — у первого цена была в общем
@@ -166,6 +174,7 @@
     tradein:  [C.device, C.imei, C.issue, C.work, C.warranty, C.total, C.buyback, C.partCost],
     sale_used:[C.device, C.imei, C.issue, C.work, C.warranty, C.linked, C.total, C.partCost],
     sale_new: [C.device, C.imei, C.issue, C.work, C.warranty, C.total, C.partCost],
+    sale_parts: [C.device, C.issue, C.warranty, C.total, C.partCost],
   };
   const AREAS = [C.issue, C.work];
   // Раскладка полей устройства: короткие — попарно, тексты — рядом, деньги — в строку.
@@ -182,6 +191,7 @@
     tradein:  { multi: "Клиент сдаёт несколько устройств", start: "Обмен оформлен" },
     sale_used:{ multi: "Продаём несколько устройств", start: "Продан" },
     sale_new: { multi: "Продаём несколько устройств", start: "Продан" },
+    sale_parts:{ multi: "Несколько отдельных продаж", start: "Продан" },
     other:    { multi: "Несколько устройств в сделке", start: "Принят на диагностику" },
   };
   // Статусы, уместные для типа (текущий статус строки показывается всегда).
@@ -203,7 +213,7 @@
     if (dk === "buyback") return pick(["на согл", "выкуплен"]);
     if (dk === "parts") return pick(["на согл", "выкуплен", "разобран"]);
     if (dk === "tradein") return pick(["на согл", "ждем предоплату", "обмен оформлен"]);
-    if (dk === "sale_used" || dk === "sale_new") return pick(["ждем предоплату", "продан"]);
+    if (dk === "sale_used" || dk === "sale_new" || dk === "sale_parts") return pick(["ждем предоплату", "продан"]);
     return all;
   }
   const labelFor = (c, key) => LABELS[key]?.[c] || F[c]?.label || "";
@@ -597,7 +607,7 @@
     S.opts[C.status] = ["Принят на диагностику", "На согласовании", "Ждем предоплату", "Заказана запчасть", "В работе", "Готов ожидает клиента", "Выполнен", "Отказ от ремонта после диагностики", "Выкуплен", "Разобран на запчасти", "Обмен оформлен", "Продан"];
     S.opts[C.master] = uniq(C.master).sort();
     S.opts[C.source] = uniq(C.source);
-    S.opts[C.type] = ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Другое"];
+    S.opts[C.type] = ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Другое"];
     S.bools.add(C.review); S.bools.add(C.report);
   }
 
@@ -899,7 +909,7 @@
     const list = opts.includes(current) || !current ? opts : [current, ...opts];
     return `<div class="statuses">${list.map(o => `<button type="button" class="st st--${kindOf(o)}" data-choice="${col}" data-value="${esc(o)}" aria-pressed="${o === chosen}">${esc(col === C.status ? stLabel(o) : o)}</button>`).join("")}</div>`;
   }
-  const typeOptions = () => S.opts[C.type]?.length ? S.opts[C.type] : ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Другое"];
+  const typeOptions = () => S.opts[C.type]?.length ? S.opts[C.type] : ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Другое"];
 
   // Деньги по типу сделки: что считаем «остаётся нам».
   function moneySummary(key, val, r) {
@@ -913,8 +923,9 @@
       const src = S.byNum.get(String(val(C.linked)).trim());
       if (src) extra = `<div class="note">Устройство из сделки №${esc(val(C.linked))}: выкуплено за ${money(cell(src, C.buyback)) || "—"}</div>`;
     }
-    const d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
-    const dline = d && q != null ? `<div class="note">Без скидки ${baseOf(q, d).toLocaleString("ru-RU")} ₽ · скидка ${discText(d)}${d.pct != null ? ` (−${discRub(d, baseOf(q, d)).toLocaleString("ru-RU")} ₽)` : ""} · клиент платит ${q.toLocaleString("ru-RU")} ₽</div>` : "";
+    const d = parseDiscount(val(C.discount)), q = toNum(val(C.total)), pay = val(C.payment), up = payUp(pay) && !["buyback", "parts"].includes(key);
+    const b = q != null ? baseOf(q, d, up ? pay : "") : null;
+    const dline = (d || up) && q != null ? `<div class="note">${d ? `Без скидки ${b.toLocaleString("ru-RU")} ₽ · скидка ${discText(d)}${d.pct != null ? ` (−${discRub(d, b).toLocaleString("ru-RU")} ₽)` : ""}` : `Без наценки ${b.toLocaleString("ru-RU")} ₽`}${up ? ` · +10% за оплату «${esc(pay)}»` : ""} · клиент платит ${q.toLocaleString("ru-RU")} ₽</div>` : "";
     return `Остаётся нам: <b>${m.toLocaleString("ru-RU")} ₽</b> <span class="note">(${how})</span>${dline}${extra}`;
   }
 
@@ -1159,8 +1170,8 @@
     const work = cap(x.operation) + (x.variant ? ` (${x.variant})` : "");
     setDirty(key, C.work, addPhrase(val(C.work), work));
     if (x.price) {
-      const d = parseDiscount(val(C.discount)), q = toNum(val(C.total)), base = (q == null ? 0 : baseOf(q, d)) + x.price;
-      setDirty(key, C.total, String(Math.max(0, base - discRub(d, base))));
+      const d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total)), base = (q == null ? 0 : baseOf(q, d, pay)) + x.price;
+      setDirty(key, C.total, String(finalOf(base, d, pay)));
     }
     const partBase = OP_PART[norm(x.operation)];
     if (partBase && (part || x.part_cost || x.variant)) {
@@ -1226,6 +1237,37 @@
     const { O, U, S: sum } = composeParts(S.parts.get(key) || []);
     setDirty(key, C.parts, O); setDirty(key, C.partFrom, U);
     if (sum != null) setDirty(key, C.partCost, sum);
+  }
+  // ── «Продажа запчастей» (v62, 09.10.2026) ──────────────────────────────────────────
+  // Новый тип сделки. Запчасть берётся поиском по всему складу: встаёт в список запчастей с поставщиком и
+  // закупкой (S), цена продажи с полки прибавляется к итогу (с учётом скидки и оплаты), «что продаём» (E)
+  // заполняется само; при сохранении позиция списывается со склада — тем же путём, что в ремонте.
+  function spPickHtml(key, r) {
+    if (!S.stock?.rows) { if (!S.stock?.wait) loadStock().then(() => rerenderKeep()); return `<div class="note">Загружаю склад…</div>`; }
+    const q = S.spq || "", words = skWords(q).split(" ").filter(Boolean).map(w => SK_SYN[w] || w), taken = new Map();
+    for (const p of partsOf(key, r)) if (p.stock) taken.set(p.stock, (taken.get(p.stock) || 0) + 1);
+    const free = x => x.qty - (taken.get(x.key) || 0);
+    const found = words.length ? S.stock.rows.filter(x => free(x) > 0 && words.every(w => skWords(`${x.node} ${x.model} ${x.variant} ${x.color} ${x.own ? x.src + " " + x.note : ""}`).includes(w)))
+      .sort((a, b) => skNodeRank(a.node) - skNodeRank(b.node)).slice(0, 20) : [];
+    return `<div class="sp"><input class="search sp__q" type="search" data-act="spq" value="${esc(q)}" placeholder="📦 Найти на складе — например «13 про акб»" autocomplete="off">
+      ${words.length ? (found.length ? `<div class="sk-ba__list">${found.map(x => `<button type="button" class="sk-ba__item" data-act="sppick" data-k="${esc(x.key)}"><span>${esc(cap(x.node) + " · " + x.model)} · <b>${esc(x.variant)}</b>${x.color ? " · " + esc(x.color) : ""}${esc(skFrom(x))}</span><small>${x.price != null ? money(x.price) : "без цены"} · на полке ${free(x)}</small></button>`).join("")}</div>`
+        : `<p class="note">На складе не нашлось. Не со склада — впишите строкой ниже («＋ Запчасть»).</p>`)
+        : `<p class="note">Выберите со склада — запчасть встанет в список с закупкой, её цена продажи прибавится к итогу, при сохранении спишется со склада.</p>`}</div>`;
+  }
+  function spAdd(key, r, k) {
+    const x = S.stock?.byKey?.get(k); if (!x) return;
+    const val = c => { const kk = key + ":" + c; return S.dirty.has(kk) ? S.dirty.get(kk) : (r ? cell(r, c) : ""); };
+    const list = partsOf(key, r).filter(p => p.name || p.src || p.cost);
+    const name = `${cap(x.node)} ${x.model}${x.variant ? " (" + x.variant + ")" : ""}`.replace(/\s+/g, " ").trim();
+    list.push({ name, src: x.src, cost: x.cost != null ? String(x.cost) : "", stock: k, sale: x.price ?? null });
+    S.parts.set(key, list); syncParts(key);
+    if (x.price) { const d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total)); setDirty(key, C.total, String(finalOf((q == null ? 0 : baseOf(q, d, pay)) + x.price, d, pay))); }
+    // «Что продаём» — из выбранного, пока его не правили руками.
+    const names = list.filter(p => p.stock).map(p => p.name).join("; "), cur = String(val(C.device) || "").trim();
+    if (!cur || cur === (S.spAuto?.[key] || "")) { setDirty(key, C.device, names); (S.spAuto ||= {})[key] = names; }
+    S.spq = "";
+    rerenderKeep();
+    toast(`📦 ${name}${x.price ? " — " + money(x.price) : " — впишите цену"} · итог ${money(val(C.total))}`, null, true);
   }
   function partsHtml(key, r) {
     const list = partsOf(key, r);
@@ -1320,9 +1362,34 @@
   }
   const discText = d => !d ? "" : d.pct != null ? `${d.pct}%` : `${d.rub} ₽`;
   const discRub = (d, base) => !d ? 0 : d.pct != null ? Math.round(base * d.pct / 100) : d.rub;
-  // Сумма без скидки из итога: 10% от 5000 → итог 4500 → без скидки 5000.
-  const baseOf = (q, d) => q == null ? null : !d ? q : d.pct != null ? Math.round(q / (1 - d.pct / 100)) : q + d.rub;
-  const DISC_TYPES = ["repair", "other", "sale_used", "sale_new"];
+  // ── оплата (v62, 09.10.2026) ────────────────────────────────────────────────────────
+  // Владелец: «во все сделки добавь типы оплаты: наличные, перевод, по карте или QR-кодом, по счёту на организацию;
+  // для всех, кроме наличных и перевода, — автоматическое увеличение цены на 10%». AJ «Оплата»; Q «Итого» —
+  // по-прежнему сколько платит клиент, уже с +10%. Итог = (сумма без скидки − скидка) × (1 + 10%), обратно —
+  // так же; поэтому работа из прайса, скидка и смена поставщика пересчитывают итог с учётом оплаты. В выкупе
+  // платим мы — там оплата только отмечается, без наценки.
+  const PAY_TYPES = ["Наличные", "Перевод", "Карта или QR", "Счёт на организацию"];
+  const payUp = p => /карт|qr|сч[её]т/i.test(String(p || "")) ? 0.1 : 0;
+  // Сумма без скидки (и без наценки за оплату) из итога: 10% скидки от 5000 → итог 4500 → без скидки 5000.
+  const baseOf = (q, d, pay) => { if (q == null) return null; const u = payUp(pay); const pre = u ? Math.round(q / (1 + u)) : q;
+    return !d ? pre : d.pct != null ? Math.round(pre / (1 - d.pct / 100)) : pre + d.rub; };
+  const finalOf = (base, d, pay) => Math.max(0, Math.round((base - discRub(d, base)) * (1 + payUp(pay))));
+  const DISC_TYPES = ["repair", "other", "sale_used", "sale_new", "sale_parts"];
+  function payHtml(key, r, val, dk) {
+    const cur = String(val(C.payment) || ""), up = !["buyback", "parts"].includes(dk), dirty = S.dirty.has(key + ":" + C.payment);
+    return `<div class="field field--pay${dirty ? " is-dirty" : ""}"><span>Оплата${up ? "" : " <small class=\"note\">(платим мы — без наценки)</small>"}</span><div class="pay">${PAY_TYPES.map(p =>
+      `<button type="button" class="pay__b" data-act="pay" data-v="${esc(p)}" aria-pressed="${norm(cur) === norm(p)}">${esc(p)}${up && payUp(p) ? " <small>+10%</small>" : ""}</button>`).join("")}</div></div>`;
+  }
+  // Сменили способ оплаты: итог пересчитывается от суммы без наценки (и у остальных устройств нового заказа).
+  function applyPayment(key, r, pay, dk) {
+    const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+    const old = val(C.payment), d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
+    setDirty(key, C.payment, pay);
+    if (["buyback", "parts"].includes(dk) || payUp(old) === payUp(pay)) return null;
+    if (q != null) setDirty(key, C.total, String(finalOf(baseOf(q, d, old), d, pay)));
+    if (key === "new" && S.multi) for (const x of S.extra) { const t = toNum(x[C.total]); if (t != null) x[C.total] = String(Math.round(Math.round(t / (1 + payUp(old))) * (1 + payUp(pay)))); }
+    return toNum(val(C.total));
+  }
   function discountHtml(key, r, val) {
     const d = parseDiscount(val(C.discount)), unit = S.discUnit?.[key] || (d?.pct != null ? "pct" : "rub");
     const num = d ? (d.pct ?? d.rub) : "";
@@ -1334,10 +1401,10 @@
   // Новая скидка → новый итог: итог = (сумма без скидки) − скидка.
   function applyDiscount(key, r, raw, unit) {
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
-    const q = toNum(val(C.total)), base = baseOf(q, parseDiscount(val(C.discount)));
+    const pay = val(C.payment), q = toNum(val(C.total)), base = baseOf(q, parseDiscount(val(C.discount)), pay);
     const n = toNum(raw), d = n > 0 ? (unit === "pct" ? (n < 100 ? { pct: n } : null) : { rub: n }) : null;
     setDirty(key, C.discount, d ? (d.pct != null ? d.pct + "%" : d.rub + " ₽") : "");
-    if (base != null) setDirty(key, C.total, String(Math.max(0, base - discRub(d, base))));
+    if (base != null) setDirty(key, C.total, String(finalOf(base, d, pay)));
     return base;
   }
 
@@ -1466,7 +1533,8 @@
     if (p.fromSvc) {
       const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
       const d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
-      if (q != null) { const base = baseOf(q, d) + (cost - old); setDirty(key, C.total, String(Math.max(0, base - discRub(d, base)))); }
+      const pay = val(C.payment);
+      if (q != null) { const base = baseOf(q, d, pay) + (cost - old); setDirty(key, C.total, String(finalOf(base, d, pay))); }
     }
     syncParts(key);
   }
@@ -2447,16 +2515,18 @@
       right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${deviceGrid(cols, c => fh(c))}</section>`);
       right += box(5, extraDevicesHtml(dk));
       right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}</div>
+        ${payHtml(key, r, val, dk)}
         <div class="margin">${groupMoneySummary(dk)}</div></section>`);
     } else {
-    const rep = dk === "repair" || dk === "other", fam = familyOf(val(C.device));
+    const rep = dk === "repair" || dk === "other", fam = familyOf(val(C.device)), spp = dk === "sale_parts";
     const tips = (kind, c) => rep && (isNew || editable(c, r)) ? typicalHtml(kind, c, fam, val(c)) : "";
-    html += `<section class="block"><h3>${rep ? "Ремонт" : "Устройство"}</h3>
+    html += `<section class="block"><h3>${rep ? "Ремонт" : spp ? "Запчасти" : "Устройство"}</h3>
       ${multiBox}
       <div class="grid2">${fh(C.device)}${fh(C.imei)}</div>
       <div class="wide-area">${fh(C.issue)}${tips("issue", C.issue)}</div>
       <div class="wide-area">${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device)) : ""}</div>
-      ${rep ? `<div class="field field--parts"><span>Запчасти <small class="note">(клиенту в отчёте уходят только названия)</small></span>${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
+      ${spp ? `<div class="field field--parts"><span>Что продаём со склада</span>${(isNew || editable(C.parts, r)) ? spPickHtml(key, r) : ""}${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
+        : rep ? `<div class="field field--parts"><span>Запчасти <small class="note">(клиенту в отчёте уходят только названия)</small></span>${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
         : `<div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>`}
       ${dk === "sale_used" || String(val(C.linked)).trim() ? fh(C.linked) : ""}
       ${fh(C.master)}
@@ -2465,10 +2535,11 @@
     right += box(4, html); html = "";
 
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
-      : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : rep ? [C.total, C.labor, "parts", C.extra] : [C.total, C.labor, C.partCost, C.extra];
+      : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : rep ? [C.total, C.labor, "parts", C.extra] : spp ? [C.total, "parts", C.extra] : [C.total, C.labor, C.partCost, C.extra];
     const partsRo = `<div class="field"><span>Запчасти (закуп), ₽ <small class="note">(из списка запчастей)</small></span><div class="ro" data-parts-sum>${esc(money(val(C.partCost)) || "—")}</div></div>`;
     const discBox = DISC_TYPES.includes(dk) && (isNew || editable(C.total, r)) ? discountHtml(key, r, val) : "";
     html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => c === "parts" ? partsRo : fh(c)).join("")}${discBox}</div>
+      ${isNew || editable(C.total, r) || editable(C.buyback, r) ? payHtml(key, r, val, dk) : ""}
       <div class="margin">${moneySummary(dk, val, r)}</div></section>`;
     right += box(6, html); html = "";
     }
@@ -3524,6 +3595,16 @@
     if (act?.startsWith("lst")) { await lstAct(act, t); return; }
     if (act?.startsWith("sk") && await stockClick(act, t)) return;
     if (act === "supreq") { await supplierRequest(t); return; }
+    if (act === "pay") {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
+      const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+      const dk = dealKey(val(C.type)), pay = norm(val(C.payment)) === norm(t.dataset.v) ? "" : t.dataset.v;
+      const q = applyPayment(key, r, pay, dk);
+      rerenderKeep(); if (key !== "new") refreshSaveBar(key);
+      toast(`Оплата: ${pay || "не указана"}${q != null && !["buyback", "parts"].includes(dk) ? ` · итог ${money(q)}${payUp(pay) ? " (+10%)" : ""}` : ""}`);
+      return;
+    }
+    if (act === "sppick") { const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); spAdd(key, r, t.dataset.k); return; }
     if (act === "holdopen") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), H = HOLD_SUPPLIERS.find(x => x.key === t.dataset.h);
       const st = (S.hold ||= {})[key + "|" + H.key] ||= {};
@@ -3625,7 +3706,14 @@
     else if (act === "ppclose") { S.pp = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "addpart" || act === "rmpart") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), list = partsOf(key, r);
-      if (act === "addpart") list.push({ name: "", src: "", cost: "" }); else { list.splice(+t.dataset.i, 1); if (!list.length) list.push({ name: "", src: "", cost: "" }); syncParts(key); }
+      if (act === "addpart") list.push({ name: "", src: "", cost: "" });
+      else {
+        const [gone] = list.splice(+t.dataset.i, 1); if (!list.length) list.push({ name: "", src: "", cost: "" }); syncParts(key);
+        // Продажа запчастей: убрали позицию со склада — её цена уходит из итога (v62).
+        if (gone?.sale) { const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+          const d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total));
+          if (q != null) setDirty(key, C.total, String(finalOf(Math.max(0, baseOf(q, d, pay) - gone.sale), d, pay))); }
+      }
       const y = window.scrollY; render(); window.scrollTo(0, y);
       if (act === "addpart") $app.querySelector(`[data-part="${list.length - 1}"][data-pf="name"]`)?.focus();
     }
@@ -3637,6 +3725,7 @@
     if (t.dataset.skq != null) { skSet(t.dataset.skq, t.value); return; }
     if (t.dataset.act === "skbsel") return; // галочка «на возврат» — обработана кликом
     if (t.dataset.holdtext != null) { const st = S.hold?.[curKey() + "|" + t.dataset.holdtext]; if (st) st.text = t.value; return; }
+    if (t.dataset.act === "spq") { clearTimeout(onEdit.sp); onEdit.sp = setTimeout(() => { S.spq = t.value; const pos = t.selectionStart; rerenderKeep(); const q = $app.querySelector(".sp__q"); if (q) { q.focus({ preventScroll: true }); q.setSelectionRange(pos, pos); } }, 150); return; }
     if (t.dataset.act === "skbaq") { clearTimeout(onEdit.ba); onEdit.ba = setTimeout(() => { if (S.skBadAdd) { S.skBadAdd.q = t.value; const pos = t.selectionStart, y = window.scrollY; render(); window.scrollTo(0, y); const q = $app.querySelector(".sk-ba__q"); if (q) { q.focus({ preventScroll: true }); q.setSelectionRange(pos, pos); } } }, 150); return; }
     if (t.dataset.skbq != null) { const x = S.stock?.byKey?.get(t.dataset.skbq), n = Math.floor(+t.value.replace(",", ".")) || 0; if (x && S.skSend.has(x.key)) { S.skSend.set(x.key, Math.max(1, Math.min(x.def, n || 1))); skSendLabel(); } return; }
     if (t.dataset.skf != null) { if (S.skAdd) S.skAdd.f[t.dataset.skf] = t.value; return; }
