@@ -3048,7 +3048,8 @@
     for (let i = 0; ; i++) {
       const r = await fetch(url + "?action=" + action, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body, keepalive });
       const text = await r.text();
-      const flaky = !text.trim().startsWith("{") && (r.status === 404 || /Страница не найдена|Page Not Found/i.test(text));
+      // 09.10.2026: и HTTP 5xx от Google (503 «сервис недоступен» — та же временная беда, сторож дверей ловил её).
+      const flaky = !text.trim().startsWith("{") && (r.status === 404 || r.status >= 500 || /Страница не найдена|Page Not Found/i.test(text));
       if (!flaky || i >= 3) return { r, text, flaky };
       await new Promise(res => setTimeout(res, 1500 * (i + 1)));
     }
