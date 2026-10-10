@@ -609,16 +609,16 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 /* v50: кнопки брака у каждой позиции больше нет (v48 — «вводит в замешательство»); вход — «🚫 Брак» над списком */
 .sk-badmode { border-color: rgba(255, 150, 60, .6); color: #ffb36b; }
 .sk-badmode[aria-pressed="true"] { background: rgba(255, 150, 60, .18); border-color: #ff963c; color: #ffb36b; }
-.sk-defedit { padding: 0 6px; font-size: .85rem; color: #ffb36b; }
-.sk-baopen { margin: 10px 0 0; border-color: rgba(255, 150, 60, .6); color: #ffb36b; }
-.sk-ba { border: 1px solid rgba(255, 150, 60, .45); }
-.sk-ba__q { margin-top: 4px; }
+/* v64: в режиме «Брак» виден весь склад, а у позиции — только имя, брак и кнопка «± брак» (без остатка и цен) */
+.sk__row.sk__row--bad { grid-template-columns: minmax(0, 1fr) auto; }
+.sk-defedit { border-color: rgba(255, 150, 60, .6); color: #ffb36b; white-space: nowrap; }
+.sk-defedit[aria-expanded="true"] { background: rgba(255, 150, 60, .18); border-color: #ff963c; }
+.sk-have.sk-have--bad { color: #ffb36b; }
+/* .sk-ba__list / __item — список выбора, теперь только у «Продажи запчастей» (блок «＋ Добавить брак» убран в v64) */
 .sk-ba__list { display: grid; gap: 6px; margin-top: 8px; }
 .sk-ba__item { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; text-align: left; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--surface-2); color: var(--cream); font: .9rem var(--font-body); cursor: pointer; }
 .sk-ba__item:hover { border-color: #ff963c; }
 .sk-ba__item small { color: var(--muted); white-space: nowrap; }
-.sk-ba__pick { margin: 2px 0 6px; }
-.sk-ba__pick em { font-style: normal; color: var(--muted); }
 .sk__row.has-bad { box-shadow: inset 3px 0 0 rgba(255, 150, 60, .7); }
 .sk-def { margin: 4px 0 10px; padding: 10px 12px; border: 1px solid rgba(255, 150, 60, .45); border-radius: 12px; background: rgba(255, 150, 60, .07); }
 .sk-def__note { width: 100%; min-height: 44px; background: var(--field); color: var(--cream); border: 1px solid var(--line-strong); border-radius: 10px; padding: 6px 12px; font: inherit; }

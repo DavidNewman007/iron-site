@@ -256,7 +256,7 @@
   const S = { token: null, email: "", rows: [], byNum: new Map(), gid: 0, loadedAt: 0, loading: false,
     since: new Map(), tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [],
     parts: new Map(), svc: null, pp: null, view: null, // parts: ключ карточки → строки запчастей; svc — прайс сайта; pp — окно «работа из прайса»
-    stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", src: "", only: null, limit: 150 }, skAdd: null, skSend: new Map(), skSent: null, skBadAdd: null }; // склад Витали (v31); skSend/skSent — брак на возврат (v48), skBadAdd — «＋ Добавить брак» (v50)
+    stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", src: "", only: null, limit: 150 }, skAdd: null, skSend: new Map(), skSent: null }; // склад Витали (v31); skSend/skSent — брак на возврат (v48)
   const $app = document.getElementById("app");
   const $toast = document.getElementById("toast");
 
@@ -2001,12 +2001,15 @@
   const skOnly = () => S.sk.only ?? S.stock.rows.some(x => x.qty > 0);
   function skFilter(skip = {}) {
     const f = S.sk, words = skWords(f.q).split(" ").filter(Boolean).map(w => SK_SYN[w] || w), only = skOnly();
-    // Режим «Брак» (v49–v53): только позиции с браком; фильтры — те же, что у склада, но свои (v53:
-    // владелец — «в режиме брака такие же фильтры, как в обычном»). При входе в режим обычные фильтры
-    // откладываются и сбрасываются — сразу виден весь брак (v49: «показать весь брак»), — а при выходе
-    // возвращаются. «Только в наличии» здесь не действует: брак на полке не числится.
+    // Режим «Брак» (v49–v64): фильтры те же, что у склада, но свои — при входе обычные откладываются и
+    // сбрасываются, при выходе возвращаются. v64 (10.10.2026), владелец: «сделай, чтобы было видно все
+    // модели и фильтры, как в режиме склада, чтобы находить модель кнопками, а не писать название;
+    // наличие не показывай, в брак добавляю и то, что есть, и чего нет». До v64 режим показывал только
+    // позиции, где брак уже есть, — кнопок моделей почти не было, а новую позицию искали строкой
+    // «＋ Добавить брак». Теперь виден весь склад, «Только брак» (badOnly) — переключатель (v49:
+    // «показать весь брак»). «Только в наличии» здесь не действует.
     return S.stock.rows.filter(x => {
-      if (f.bad && !(x.def > 0)) return false;
+      if (f.bad && f.badOnly && !(x.def > 0)) return false;
       if (!skip.grp && f.grp && skGroup(x.node) !== f.grp) return false;
       if (!skip.node && f.node && x.node !== f.node) return false;
       if (!skip.ser && f.ser && skSeries(x.model) !== f.ser) return false;
@@ -2021,9 +2024,8 @@
   // Какие фильтры сейчас сужают список — одной строкой, со сбросом. Фильтры помнятся на устройстве,
   // и без этой строки легко забыть, что вчерашний «iPhone 13 · Оригинал» прячет всё остальное.
   function skActiveHtml(list) {
-    const f = S.sk, on = [f.grp, f.node && cap(f.node), f.cls && SK_CLASSES.find(c => c[0] === f.cls)?.[1], f.tier, f.src && SK_SRC.find(c => c[0] === f.src)?.[1], f.ser, f.q && `«${f.q}»`, f.bad && "только брак"].filter(Boolean);
-    if (f.bad) { const fl = on.filter(x => x !== "только брак");
-      return `<div class="sk-active">Режим «Брак»: ${fl.length ? `фильтры <b>${fl.map(esc).join(" · ")}</b> — брака: <b>${list.length}</b> поз.<button type="button" class="linkbtn" data-act="skreset">✕ сбросить фильтры</button>` : "весь брак склада."}<button type="button" class="linkbtn" data-act="skbad">✕ выйти из брака</button></div>`; }
+    const f = S.sk, on = [f.grp, f.node && cap(f.node), f.cls && SK_CLASSES.find(c => c[0] === f.cls)?.[1], f.tier, f.src && SK_SRC.find(c => c[0] === f.src)?.[1], f.ser, f.q && `«${f.q}»`].filter(Boolean);
+    if (f.bad) return `<div class="sk-active">Режим «Брак»${f.badOnly ? " · только с браком" : ""}: ${on.length ? `фильтры <b>${on.map(esc).join(" · ")}</b> — <b>${list.length}</b> поз.<button type="button" class="linkbtn" data-act="skreset">✕ сбросить фильтры</button>` : f.badOnly ? "весь брак склада." : "весь склад — выберите модель кнопками и нажмите «± брак» у запчасти."}<button type="button" class="linkbtn" data-act="skbad">✕ выйти из брака</button></div>`;
     if (!on.length) return "";
     const inStock = S.stock.rows.filter(x => x.qty > 0).length, shownIn = list.filter(x => x.qty > 0).length;
     return `<div class="sk-active">Фильтры: <b>${on.map(esc).join(" · ")}</b>${inStock > shownIn ? ` — скрыто из наличия: <b>${inStock - shownIn}</b> поз.` : ""}<button type="button" class="linkbtn" data-act="skreset">✕ сбросить все</button></div>`;
@@ -2032,13 +2034,19 @@
     const d = S.skDirty.has(x.key), v = d ? S.skDirty.get(x.key) : x.qty || "";
     const from = x.own ? `<em class="sk-src sk-src--${skSrcKind(x.src)}">${esc(isDonor(x.src) ? "🔧 донор" : isVitalya(x.src) ? "свой вариант · Виталя" : x.src)}</em>` : "";
     const sub = [x.color, x.note].filter(Boolean).map(esc).join(" · ");
-    const bad = (x.def > 0 ? `<em class="sk-bad" title="Неисправные, ждут возврата или замены">🚫 брак ${x.def} шт</em>` : "")
+    const def = x.def > 0 ? `<em class="sk-bad" title="Неисправные, ждут возврата или замены">🚫 брак ${x.def} шт</em>` : "";
+    // Режим «Брак» (v64): наличие и цены не показываем — владелец: «в режиме брака не показывай наличие».
+    if (S.sk.bad) return `<div class="sk__row sk__row--bad${x.def > 0 ? " has-bad" : ""}" data-skrow="${esc(x.key)}">
+      <div class="sk__name"><b>${esc(x.variant)}</b>${from}${def}${sub ? `<span>${sub}</span>` : ""}${skPickHtml(x)}</div>
+      <button type="button" class="btn btn--sm sk-defedit" data-act="skdef" data-k="${esc(x.key)}" aria-expanded="${S.skDef === x.key}">± брак</button>
+    </div>${S.skDef === x.key ? skDefHtml(x) : ""}`;
+    const bad = def
       + (x.paid > 0 ? `<em class="sk-paid" title="Оплачено — в таблице остатков Витали эти штуки не видны">💳 оплачено ${x.paid} шт</em>` : "");
     return `<div class="sk__row${x.qty > 0 ? " is-in" : ""}${d ? " is-dirty" : ""}${x.own ? " is-own" : ""}${x.def > 0 ? " has-bad" : ""}" data-skrow="${esc(x.key)}">
-      <div class="sk__name"><b>${esc(x.variant)}</b>${from}${bad}${x.own ? `<button type="button" class="linkbtn sk-edit" data-act="skedit" data-k="${esc(x.key)}" title="Поправить позицию">✎</button>` : `<button type="button" class="linkbtn sk-edit" data-act="skprice" data-k="${esc(x.key)}" title="Цена, оплачено, комментарий">✎</button>`}${S.sk.bad ? `<button type="button" class="linkbtn sk-defedit" data-act="skdef" data-k="${esc(x.key)}" aria-expanded="${S.skDef === x.key}">± брак</button>` : ""}${sub ? `<span>${sub}</span>` : ""}${skPickHtml(x)}</div>
+      <div class="sk__name"><b>${esc(x.variant)}</b>${from}${bad}${x.own ? `<button type="button" class="linkbtn sk-edit" data-act="skedit" data-k="${esc(x.key)}" title="Поправить позицию">✎</button>` : `<button type="button" class="linkbtn sk-edit" data-act="skprice" data-k="${esc(x.key)}" title="Цена, оплачено, комментарий">✎</button>`}${sub ? `<span>${sub}</span>` : ""}${skPickHtml(x)}</div>
       <div class="sk__cost">${x.cost != null ? money(x.cost) : ""}<button type="button" class="linkbtn sk-price${x.ownPrice ? " is-own" : ""}" data-act="skprice" data-k="${esc(x.key)}" title="Своя цена продажи" aria-expanded="${S.skPrice === x.key}">прод. ${x.price != null ? money(x.price) : "—"}${x.ownPrice ? " · своя" : ""} ✎</button></div>
       <div class="sk__qty"><button type="button" data-act="skstep" data-d="-1" data-k="${esc(x.key)}" aria-label="Меньше">−</button><input data-skq="${esc(x.key)}" value="${esc(v)}" placeholder="0" inputmode="numeric" autocomplete="off" aria-label="Остаток, шт"><button type="button" data-act="skstep" data-d="1" data-k="${esc(x.key)}" aria-label="Больше">+</button></div>
-    </div>${S.sk.bad && S.skDef === x.key ? skDefHtml(x) : ""}${S.skPrice === x.key ? skPriceHtml(x) : ""}`;
+    </div>${S.skPrice === x.key ? skPriceHtml(x) : ""}`;
   }
   // ── брак (v43, 03.10.2026) ─────────────────────────────────────────────────────────
   // Владелец: «добавь возможность завести брак, чтобы это также попадало в остатки для Витали».
@@ -2053,11 +2061,11 @@
       <div class="sk-def__top"><label class="sk-def__n">Сколько, шт<input data-skdefq value="1" inputmode="numeric" autocomplete="off"></label>
       <input class="sk-def__note" data-skdefnote placeholder="Неисправность: что не так (и № заказа, если вернули из заказа)" autocomplete="off"></div>
       <div class="row">
-        <button type="button" class="btn btn--sm" data-act="skdefgo" data-m="shelf" data-k="${esc(x.key)}"${x.qty > 0 ? "" : " disabled"} title="${x.qty > 0 ? "" : "на полке 0"}">🚫 С полки в брак</button>
+        <button type="button" class="btn btn--sm" data-act="skdefgo" data-m="shelf" data-k="${esc(x.key)}">🚫 С полки в брак</button>
         <button type="button" class="btn btn--ghost btn--sm" data-act="skdefgo" data-m="add" data-k="${esc(x.key)}">＋ Брак не с полки</button>
         <button type="button" class="btn btn--ghost btn--sm" data-act="skdefgo" data-m="back" data-k="${esc(x.key)}"${x.def > 0 ? "" : " disabled"}>${back}</button>
       </div>
-      <p class="note">«Не с полки» — пришла бракованной или вернулась из заказа: остаток на полке не меняется.${vit ? " Брак Витали виден ему в таблице остатков." : " Не от Витали — Витале не показывается."}</p>
+      <p class="note">«С полки» — штуки снимаются с остатка. «Не с полки» — пришла бракованной или вернулась из заказа: остаток не меняется.${vit ? " Брак Витали виден ему в таблице остатков." : " Не от Витали — Витале не показывается."}</p>
     </div>`;
   }
   async function skDefApply(t) {
@@ -2068,7 +2076,7 @@
     // Сколько штук (v48): владелец — «вводить количество и описание неисправности».
     const n = Math.floor(+String(box?.querySelector("[data-skdefq]")?.value || "1").replace(",", ".")) || 0;
     if (n < 1) return toast("Сколько штук? Впишите число от 1");
-    if (m === "shelf" && n > x.qty) return toast(`На полке только ${x.qty} шт`);
+    if (m === "shelf" && n > (x.qty || 0)) return toast(`${x.qty > 0 ? `На полке только ${x.qty} шт` : "На полке этой запчасти нет"} — если она не с полки, нажмите «＋ Брак не с полки»`, null, true);
     if (m === "back" && n > (x.def || 0)) return toast(`В браке только ${x.def || 0} шт`);
     const num = (note.match(/(?:№|#|заказ\S*\s*)(\d{3,6})/i) || note.match(/^(\d{4,6})$/) || [])[1] || "";
     const vit = isVitalya(x.src);
@@ -2080,7 +2088,7 @@
     t.disabled = true;
     try {
       const res = await stockApply([op]);
-      if (res.done.length) { S.skDef = null; S.skBadAdd = null; toast(m === "back" ? `${vit ? "Отдано Витале" : "Списано из брака"} ✓ Брак: ${res.done[0].dTo} шт` : `🚫 В браке: ${res.done[0].dTo} шт${m === "shelf" ? ` · на полке: ${res.done[0].to}` : ""}${vit ? " · Витале видно в таблице в течение 10 минут" : ""}`, null, true); }
+      if (res.done.length) { S.skDef = null; toast(m === "back" ? `${vit ? "Отдано Витале" : "Списано из брака"} ✓ Брак: ${res.done[0].dTo} шт` : `🚫 В браке: ${res.done[0].dTo} шт${m === "shelf" ? " · снято с полки" : ""}${vit ? " · Витале видно в таблице в течение 10 минут" : ""}`, null, true); }
       else toast("Не записано: " + (res.skipped[0]?.why || "нечего менять"), null, true);
     } catch (e) { toast(e.message, null, true); }
     const y = window.scrollY; render(); window.scrollTo(0, y);
@@ -2171,22 +2179,6 @@
   const skSendSel = () => [...S.skSend].map(([k, n]) => ({ x: S.stock?.byKey?.get(k), n })).filter(o => o.x && o.x.def > 0).map(o => ({ x: o.x, n: Math.min(o.n, o.x.def) }));
   const skSendWord = sel => `${sel.length} поз. · ${sel.reduce((a, o) => a + o.n, 0)} шт`;
   function skSendLabel() { const b = $app.querySelector('[data-act="sksend"]'), sel = skSendSel(); if (b) b.textContent = `📦 Отправить поставщику${sel.length ? ` (${skSendWord(sel)})` : ""}`; }
-  // Добавить брак (v50): владелец — «убери значок брак на каждой позиции, вводит в замешательство;
-  // сделай отдельную кнопку перейти в режим брак и там добавить нужную запчасть». Поиск по всему
-  // складу (и по тому, чего нет на полке), выбор → та же форма: сколько, неисправность, откуда.
-  function skBadAddHtml() {
-    const a = S.skBadAdd;
-    if (!a) return `<button type="button" class="btn btn--sm sk-baopen" data-act="skbaopen">＋ Добавить брак</button>`;
-    const x = a.key ? S.stock.byKey.get(a.key) : null;
-    if (x) return `<section class="block sk-ba"><h3>Брак: ${esc(cap(x.node) + " · " + x.model)}</h3><div class="sk-ba__pick"><b>${esc(x.variant)}</b>${x.color ? " · " + esc(x.color) : ""}${skFrom(x) ? `<em>${esc(skFrom(x))}</em>` : ""} — на полке ${x.qty || 0} шт${x.def ? `, в браке ${x.def}` : ""}<button type="button" class="linkbtn" data-act="skbapick" data-k="">другая</button></div>${skDefHtml(x)}<button type="button" class="linkbtn" data-act="skbaclose">✕ отмена</button></section>`;
-    const words = skWords(a.q).split(" ").filter(Boolean).map(w => SK_SYN[w] || w);
-    const found = words.length ? S.stock.rows.filter(y => { const t = skWords(`${y.node} ${y.model} ${y.variant} ${y.color} ${y.own ? y.src + " " + y.note : ""}`); return words.every(w => t.includes(w)); })
-      .sort((p, q) => (q.qty > 0) - (p.qty > 0) || skNodeRank(p.node) - skNodeRank(q.node)).slice(0, 15) : [];
-    return `<section class="block sk-ba"><h3>Добавить брак</h3>
-      <input class="search sk-ba__q" type="search" data-act="skbaq" value="${esc(a.q)}" placeholder="Какая запчасть — например «13 про макс дисплей»" autocomplete="off">
-      ${words.length ? (found.length ? `<div class="sk-ba__list">${found.map(y => `<button type="button" class="sk-ba__item" data-act="skbapick" data-k="${esc(y.key)}"><span>${esc(cap(y.node) + " · " + y.model)} · <b>${esc(y.variant)}</b>${y.color ? " · " + esc(y.color) : ""}${esc(skFrom(y))}</span><small>${y.qty > 0 ? `на полке ${y.qty}` : "нет на полке"}${y.def ? ` · брак ${y.def}` : ""}</small></button>`).join("")}</div>` : `<p class="note">Ничего не нашлось. Нет такой позиции — добавьте её кнопкой «＋ Своя запчасть», потом заведите брак.</p>`) : `<p class="note">Найдите запчасть по модели и названию, выберите — и укажите, сколько и что с ней не так.</p>`}
-      <button type="button" class="linkbtn" data-act="skbaclose">✕ отмена</button></section>`;
-  }
   function skSendHtml() {
     if (S.skSent) return `<section class="block sk-send"><h3>✓ Брак списан — текст для поставщика</h3>
       <textarea class="sk-send__text" data-sksenttext readonly rows="${Math.min(14, S.skSent.split("\n").length + 1)}">${esc(S.skSent)}</textarea>
@@ -2249,10 +2241,10 @@
     const ownN = inStock.filter(x => !isVitalya(x.src)).length, badN = all.reduce((a, x) => a + (x.def || 0), 0), paidN = all.reduce((a, x) => a + (x.paid || 0), 0);
     const by = (rows, fn) => { const m = new Map(); for (const x of rows) { const k = fn(x); m.set(k, (m.get(k) || 0) + 1); } return m; };
     const gC = by(skFilter({ grp: 1, node: 1 }), x => skGroup(x.node));
-    // В режиме «Брак» вкладки и узлы — только те, где брак есть.
-    const pool = f.bad ? all.filter(x => x.def > 0) : all;
+    // Вкладки и узлы — по всему складу; в режиме «Брак» с «Только брак» — только где брак есть.
+    const pool = f.bad && f.badOnly ? all.filter(x => x.def > 0) : all;
     const groups = [...new Set([...SK_GROUPS.map(g => g[0]), ...pool.map(x => skGroup(x.node))])].filter(g => pool.some(x => skGroup(x.node) === g));
-    let body = `<div class="sk-sum">На полке: <b>${inStock.length}</b> поз. · <b>${pcs}</b> шт${sum ? ` · закупка на <b>${money(sum)}</b>` : ""}${ownN ? ` · не от Витали: <b>${ownN}</b> поз.` : ""}${paidN ? ` · 💳 оплачено: <b>${paidN}</b> шт` : ""}${badN ? ` · <button type="button" class="linkbtn sk-sumbad" data-act="skbad">🚫 брак: <b>${badN}</b> шт</button>` : ""}</div>
+    let body = `<div class="sk-sum">${f.bad ? `🚫 В браке: <b>${badN}</b> шт${badN ? ` · <b>${all.filter(x => x.def > 0).length}</b> поз.` : ""}` : `На полке: <b>${inStock.length}</b> поз. · <b>${pcs}</b> шт${sum ? ` · закупка на <b>${money(sum)}</b>` : ""}${ownN ? ` · не от Витали: <b>${ownN}</b> поз.` : ""}${paidN ? ` · 💳 оплачено: <b>${paidN}</b> шт` : ""}${badN ? ` · <button type="button" class="linkbtn sk-sumbad" data-act="skbad" data-only="1">🚫 брак: <b>${badN}</b> шт</button>` : ""}`}</div>
       <input class="search sk-q" type="search" data-act="sksearch" value="${esc(f.q)}" placeholder="Модель, деталь, качество, цвет — например «13 про акб»" autocomplete="off">
       <nav class="tabs"><button class="tab" data-act="skgrp" data-v="" aria-pressed="${!f.grp}">Все</button>${groups.map(g => `<button class="tab" data-act="skgrp" data-v="${esc(g)}" aria-pressed="${f.grp === g}">${esc(g)}<small>${gC.get(g) || 0}</small></button>`).join("")}</nav>`;
     if (f.grp) {
@@ -2276,16 +2268,16 @@
     const series = [...sC.keys()].concat(f.ser && !sC.has(f.ser) ? [f.ser] : []).sort((a, b) => skSerRank(a) - skSerRank(b));
     body += `<div class="tchips sk-chips"><button type="button" class="tchip" data-act="skser" data-v="" aria-pressed="${!f.ser}">Все модели</button>${series.map(s => `<button type="button" class="tchip" data-act="skser" data-v="${esc(s)}" aria-pressed="${f.ser === s}">${esc(s)} <small>${sC.get(s) || 0}</small></button>`).join("")}</div>
       ${skActiveHtml(list0)}
-      <div class="row sk-opts">${f.bad ? "" : `<button type="button" class="btn btn--toggle btn--sm" data-act="skonly" aria-pressed="${skOnly()}">${skOnly() ? "✓ " : ""}Только в наличии</button>`}<button type="button" class="btn btn--toggle btn--sm sk-badmode" data-act="skbad" aria-pressed="${!!f.bad}">${f.bad ? "✓ " : ""}🚫 Брак${badN ? ` (${badN} шт)` : ""}</button><button type="button" class="btn btn--ghost btn--sm" data-act="skadd" data-node="${esc(f.node || "")}" data-model="">＋ Своя запчасть (другая модель)</button>${S.skDirty.size ? `<span class="note">Изменено: <b>${S.skDirty.size}</b> — не забудьте сохранить</span>` : ""}</div>`;
+      <div class="row sk-opts">${f.bad ? `<button type="button" class="btn btn--toggle btn--sm sk-badmode" data-act="skbadonly" aria-pressed="${!!f.badOnly}">${f.badOnly ? "✓ " : ""}Только брак${badN ? ` (${badN} шт)` : ""}</button>` : `<button type="button" class="btn btn--toggle btn--sm" data-act="skonly" aria-pressed="${skOnly()}">${skOnly() ? "✓ " : ""}Только в наличии</button>`}<button type="button" class="btn btn--toggle btn--sm sk-badmode" data-act="skbad" aria-pressed="${!!f.bad}">${f.bad ? "✓ " : ""}🚫 Брак${badN ? ` (${badN} шт)` : ""}</button><button type="button" class="btn btn--ghost btn--sm" data-act="skadd" data-node="${esc(f.node || "")}" data-model="">＋ Своя запчасть (другая модель)</button>${S.skDirty.size ? `<span class="note">Изменено: <b>${S.skDirty.size}</b> — не забудьте сохранить</span>` : ""}</div>`;
     if (S.skAdd?.at === "top") body += `<section class="block">${skAddHtml()}</section>`;
-    if (f.bad) body += skBadAddHtml() + skSendHtml();
+    if (f.bad) body += skSendHtml();
     // Порядок моделей — как в прайсе Витали; своя позиция встаёт в конец раздела своей модели,
     // а модель, которой у Витали нет, — после его моделей той же серии.
     const ord = x => (x.own ? 1e6 : 0) + x.row, mFirst = new Map();
     for (const x of all) { const k = x.node + "|" + x.model; if (!mFirst.has(k) || ord(x) < mFirst.get(k)) mFirst.set(k, ord(x)); }
     const list = skFilter().sort((a, b) => skGroupRank(skGroup(a.node)) - skGroupRank(skGroup(b.node)) || skNodeRank(a.node) - skNodeRank(b.node) || a.node.localeCompare(b.node)
       || skSerRank(skSeries(a.model)) - skSerRank(skSeries(b.model)) || mFirst.get(a.node + "|" + a.model) - mFirst.get(b.node + "|" + b.model) || ord(a) - ord(b));
-    if (!list.length) body += `<div class="empty">${f.bad ? (f.q || f.grp || f.cls || f.tier || f.src || f.ser ? "По этим фильтрам брака нет — «✕ сбросить фильтры» выше." : "Брака нет. Добавьте неисправную запчасть кнопкой «＋ Добавить брак» выше.") : skOnly() && !inStock.length ? "На полке пока ничего не отмечено. Снимите «Только в наличии», найдите деталь и поставьте количество — или добавьте свою кнопкой «＋ Своя запчасть»." : skOnly() ? "В наличии ничего не нашлось — снимите «Только в наличии»." : "Ничего не нашлось"}</div>`;
+    if (!list.length) body += `<div class="empty">${f.bad ? (!f.badOnly ? "Ничего не нашлось" : f.q || f.grp || f.cls || f.tier || f.src || f.ser ? "По этим фильтрам брака нет — «✕ сбросить фильтры» выше." : "Брака нет. Снимите «Только брак», найдите запчасть кнопками и нажмите «± брак».") : skOnly() && !inStock.length ? "На полке пока ничего не отмечено. Снимите «Только в наличии», найдите деталь и поставьте количество — или добавьте свою кнопкой «＋ Своя запчасть»." : skOnly() ? "В наличии ничего не нашлось — снимите «Только в наличии»." : "Ничего не нашлось"}</div>`;
     const shown = list.slice(0, f.limit);
     // Свои позиции модели держатся рядом с Виталиными той же модели: сортировка выше ставит их в конец раздела.
     let node = null, model = null, open = false;
@@ -2293,14 +2285,14 @@
     for (const x of shown) {
       if (x.node !== node) {
         close();
-        const nodeRows = list.filter(y => y.node === x.node), q = nodeRows.reduce((a, y) => a + y.qty, 0);
-        body += `<div class="section"><h2>${esc(cap(x.node))}</h2><span>${nodeRows.length} поз.${q ? ` · на полке ${q} шт` : ""}</span></div>`;
+        const nodeRows = list.filter(y => y.node === x.node), q = nodeRows.reduce((a, y) => a + (f.bad ? y.def || 0 : y.qty), 0);
+        body += `<div class="section"><h2>${esc(cap(x.node))}</h2><span>${nodeRows.length} поз.${q ? ` · ${f.bad ? "брак" : "на полке"} ${q} шт` : ""}</span></div>`;
         node = x.node; model = null;
       }
       if (x.model !== model) {
         close();
-        const q = list.filter(y => y.node === x.node && y.model === x.model).reduce((a, y) => a + y.qty, 0);
-        body += `<section class="block sk-model"><h3 class="h3-row"><span>${esc(x.model)}</span>${q ? `<small class="sk-have">на полке ${q} шт</small>` : ""}</h3>`;
+        const q = list.filter(y => y.node === x.node && y.model === x.model).reduce((a, y) => a + (f.bad ? y.def || 0 : y.qty), 0);
+        body += `<section class="block sk-model"><h3 class="h3-row"><span>${esc(x.model)}</span>${q ? `<small class="sk-have${f.bad ? " sk-have--bad" : ""}">${f.bad ? "брак" : "на полке"} ${q} шт</small>` : ""}</h3>`;
         model = x.model; open = true;
       }
       body += skRowHtml(x);
@@ -2315,6 +2307,7 @@
   function skSaveBar() {
     const n = S.skDirty.size;
     $app.querySelector(".savebar")?.remove();
+    if (S.sk.bad && !n) return; // в режиме «Брак» остатков нет — и полоса «Сохранить остатки» не нужна (v64)
     $app.insertAdjacentHTML("beforeend", `<div class="savebar"><div class="savebar__in">
       <button class="btn btn--ghost" data-act="skdiscard" ${n ? "" : "disabled"}>Отмена</button>
       <button class="btn btn--red" data-act="sksave" ${n ? "" : "disabled"}>${n ? `Сохранить остатки (${n})` : "Изменений нет"}</button></div></div>`);
@@ -2357,10 +2350,12 @@
     else if (act === "skser") { S.sk.ser = t.dataset.v; S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skonly") { S.sk.only = !skOnly(); S.sk.limit = 150; prefs(); rerender(); }
     else if (act === "skbad") {
-      if (!S.sk.bad) { S.skNormalF = Object.fromEntries(SK_FKEYS.map(k => [k, S.sk[k]])); for (const k of SK_FKEYS) S.sk[k] = ""; S.sk.bad = true; }
+      // Вход из сводки «🚫 брак: N шт» (data-only) — сразу «Только брак», кнопкой режима — весь склад.
+      if (!S.sk.bad) { S.skNormalF = Object.fromEntries(SK_FKEYS.map(k => [k, S.sk[k]])); for (const k of SK_FKEYS) S.sk[k] = ""; S.sk.bad = true; S.sk.badOnly = !!t.dataset.only; }
       else { S.sk.bad = false; Object.assign(S.sk, S.skNormalF || {}); S.skNormalF = null; }
-      S.sk.limit = 150; S.skDef = null; S.skBadAdd = null; rerender();
+      S.sk.limit = 150; S.skDef = null; rerender();
     }
+    else if (act === "skbadonly") { S.sk.badOnly = !S.sk.badOnly; S.sk.limit = 150; S.skDef = null; rerender(); }
     else if (act === "skdef") { S.skDef = S.skDef === t.dataset.k ? null : t.dataset.k; rerender(); $app.querySelector("[data-skdefnote]")?.focus({ preventScroll: true }); }
     else if (act === "skdefgo") skDefApply(t);
     else if (act === "skprice") { S.skPrice = S.skPrice === t.dataset.k ? null : t.dataset.k; rerender(); const i = $app.querySelector("[data-skpr]"); if (i) { i.focus({ preventScroll: true }); i.select(); } }
@@ -2369,9 +2364,6 @@
     else if (act === "skbsel") { const x = S.stock?.byKey?.get(t.dataset.k); if (S.skSend.has(t.dataset.k)) S.skSend.delete(t.dataset.k); else if (x?.def > 0) S.skSend.set(t.dataset.k, x.def); rerender(); }
     else if (act === "skball") { const all = S.stock.rows.filter(x => x.def > 0); if (all.every(x => S.skSend.has(x.key))) S.skSend.clear(); else for (const x of all) if (!S.skSend.has(x.key)) S.skSend.set(x.key, x.def); rerender(); }
     else if (act === "sksend") skSendApply(t);
-    else if (act === "skbaopen") { S.skBadAdd = { q: "", key: "" }; S.skDef = null; rerender(); $app.querySelector(".sk-ba__q")?.focus({ preventScroll: true }); }
-    else if (act === "skbapick") { if (S.skBadAdd) S.skBadAdd.key = t.dataset.k; rerender(); (t.dataset.k ? $app.querySelector(".sk-ba [data-skdefnote]") : $app.querySelector(".sk-ba__q"))?.focus({ preventScroll: true }); }
-    else if (act === "skbaclose") { S.skBadAdd = null; rerender(); }
     else if (act === "skcopy") { const ta = $app.querySelector("[data-sksenttext]"); try { await navigator.clipboard.writeText(ta.value); toast("Скопировано ✓"); } catch { ta.select(); document.execCommand("copy"); toast("Скопировано ✓"); } }
     else if (act === "sksentclose") { S.skSent = null; rerender(); }
     else if (act === "skmore") { S.sk.limit += 150; rerender(); }
@@ -3732,7 +3724,6 @@
     if (t.dataset.act === "skbsel") return; // галочка «на возврат» — обработана кликом
     if (t.dataset.holdtext != null) { const st = S.hold?.[curKey() + "|" + t.dataset.holdtext]; if (st) st.text = t.value; return; }
     if (t.dataset.act === "spq") { clearTimeout(onEdit.sp); onEdit.sp = setTimeout(() => { S.spq = t.value; const pos = t.selectionStart; rerenderKeep(); const q = $app.querySelector(".sp__q"); if (q) { q.focus({ preventScroll: true }); q.setSelectionRange(pos, pos); } }, 150); return; }
-    if (t.dataset.act === "skbaq") { clearTimeout(onEdit.ba); onEdit.ba = setTimeout(() => { if (S.skBadAdd) { S.skBadAdd.q = t.value; const pos = t.selectionStart, y = window.scrollY; render(); window.scrollTo(0, y); const q = $app.querySelector(".sk-ba__q"); if (q) { q.focus({ preventScroll: true }); q.setSelectionRange(pos, pos); } } }, 150); return; }
     if (t.dataset.skbq != null) { const x = S.stock?.byKey?.get(t.dataset.skbq), n = Math.floor(+t.value.replace(",", ".")) || 0; if (x && S.skSend.has(x.key)) { S.skSend.set(x.key, Math.max(1, Math.min(x.def, n || 1))); skSendLabel(); } return; }
     if (t.dataset.skf != null) { if (S.skAdd) S.skAdd.f[t.dataset.skf] = t.value; return; }
     if (t.dataset.act === "gq") { clearTimeout(onEdit.gq); onEdit.gq = setTimeout(() => { if (S.goods) { S.goods["q_" + t.dataset.kind] = t.value; rerenderKeep(); } }, 150); return; }
