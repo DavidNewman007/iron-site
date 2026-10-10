@@ -63,6 +63,10 @@ DR_STORE_BASE = "https://sochi.dr-store.ru"
 SITEMAP_URL = f"{DR_STORE_BASE}/sitemap.xml"
 
 HYBRID_CART_VERSION = "2026-08-28-1"
+# Версия общих файлов карточки (css/hybrid-card.css, js/hybrid-gallery.js) для
+# сброса кэша браузера. Поменял любой из двух файлов — подними версию и
+# перепиши ?v= во всех карточках (10.10.2026, план 105, ST-С5).
+HYBRID_CARD_ASSETS_VERSION = "2026-10-10-1"
 
 CATEGORY_URL_PREFIXES: dict[str, list[str]] = {
     "iphone": ["/apple/iphone/"],

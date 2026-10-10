@@ -44,6 +44,7 @@ from typing import Any
 from .bot_index import normalize_key_part, warehouse_tag
 from .config import PUBLIC, load_image_map, save_image_map
 from .http_utils import fetch_bytes
+from .image_compress import compress_image
 from .images import mirror_images
 from .scraper import clean_catalog_title, scrape_catalog_product
 from .slug import build_file_slug
@@ -107,7 +108,10 @@ def mirror_manual_images(urls: list[str]) -> list[str]:
         else:
             rel = ""
         if not rel:
-            dst = assets_dir / f"{stem}{ext}"
+            # Без sips (GitHub Actions) ужимает Pillow: PNG без прозрачности
+            # становится JPEG (10.10.2026, план 105, ST-С5).
+            data, new_ext = compress_image(data)
+            dst = assets_dir / f"{stem}{new_ext or ext}"
             dst.write_bytes(data)
             rel = f"{ASSETS_REL}/{dst.name}"
         image_map[url] = rel

@@ -60,6 +60,14 @@ jobs:
         with:
           node-version: "22"
 
+      # Pillow ужимает новые фото товаров при скачивании: PNG без прозрачности
+      # становится JPEG (scripts/hybrid/image_compress.py). Добавлено 10.10.2026
+      # (план 105, ST-С5): сайт дорос до 878 МБ при пределе Pages в 1 ГБ, две трети —
+      # фото как их отдаёт поставщик. Без Pillow сборка не падает, но фото снова
+      # ложатся как есть, и сайт опять растёт к пределу.
+      - name: Install Pillow
+        run: python3 -m pip install "Pillow==11.3.0"
+
       - name: Sync, audit, build missing cards and push
         env:
           GIT_AUTHOR_NAME: github-actions[bot]
