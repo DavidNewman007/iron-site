@@ -1301,22 +1301,43 @@
   // другие пока не надо». У запчастей этих складов в блоке — «📦 Попросить отложить»: готовый текст (можно
   // поправить) и кнопки контактов; отправка — дверь `crm-hold` (SupplierHold.js) с рабочих Telegram
   // @ironsochi и WhatsApp. Номера складов — только в двери: этот код публичный.
+  // v65 (10.10.2026), владелец: «когда просим отложить, у Либерти и PartsLog прикрепляй ссылку с их сайта и
+  // пиши цену, а у мосов давай полное наименование с ценой». До v65 в тексте было только название из прайса —
+  // у MOS-LCD это лишь вариант качества («In-Cell TFT Full HD — 1 шт»), без узла, модели и цены. Ссылку,
+  // полное наименование и артикул даёт индекс цен (колонки G–I листа «CRM — цены поставщиков»), цена — закупка
+  // из строки запчасти. PartsLog добавлен по той же просьбе (контакт — из Контактов владельца).
   const HOLD_SUPPLIERS = [
     { key: "moslcd", label: "MosLCD", re: /mos-?lcd|мос ?лсд/i, contacts: [["store", "MosLCD Сочи"], ["vladimir", "Владимир"], ["veronika", "Вероника"]] },
     { key: "liberti", label: "Либерти", re: /libert|либерт/i, contacts: [["atrium", "Либерти Атриум"]] },
+    { key: "partslog", label: "PartsLog", re: /parts ?log|партс ?лог/i, contacts: [["main", "PartsLog"]] },
   ];
+  // Позиция индекса цен, из которой взята запчасть: тот же поставщик и та же строка прайса (p.item), при
+  // равных — та же закупка; без p.item (поставщика вписали руками) — единственная позиция с такой закупкой.
+  function holdOffer(H, p, key, r) {
+    const { dev, op } = partMeta(p, key, r), cost = toNum(p.cost);
+    const same = ((dev && op && S.supp?.map?.get(dev + "|" + op)) || []).filter(o => H.re.test(o.s));
+    const clean = t => String(t || "").replace(/\s*·\s*(в Сочи|под заказ).*$/, "").trim();
+    const byItem = p.item ? same.filter(o => clean(o.t) === p.item) : [];
+    const byCost = (byItem.length ? byItem : same).filter(o => o.c === cost);
+    return byCost.length === 1 || (byItem.length && byCost.length) ? byCost[0] : byItem[0] || null;
+  }
   const holdParts = (H, list) => list.filter(p => String(p.name).trim() && H.re.test(p.src || ""));
   function holdText(key, r, parts) {
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const raw = String(val(C.device) || "").split("\n")[0].trim(), lines = new Map();
+    const H = HOLD_SUPPLIERS.find(h => parts[0] && h.re.test(parts[0].src || ""));
     for (const p of parts) {
-      const dev = partMeta(p, key, r).dev || raw;
-      const name = p.item || p.name.trim() + (dev && !norm(p.name).includes(norm(dev)) ? " для " + dev : "");
-      lines.set(name, (lines.get(name) || 0) + 1);
+      const dev = partMeta(p, key, r).dev || raw, o = H && holdOffer(H, p, key, r);
+      const base = p.name.trim() + (dev && !norm(p.name).includes(norm(dev)) ? " для " + dev : "");
+      // MOS-LCD: в p.item только вариант («In-Cell TFT Full HD») — без строки индекса дописываем его к названию запчасти.
+      const name = o?.f || (p.item && H?.key === "moslcd" && !norm(p.item).includes(norm(dev || "-")) ? `${base} (${p.item})` : p.item || base);
+      const price = toNum(p.cost), id = [name, price, o?.u || ""].join("|");
+      const l = lines.get(id) || { name, price, art: o?.a || "", url: o?.u || "", q: 0 }; l.q++; lines.set(id, l);
     }
     const many = lines.size > 1;
     return ["Здравствуйте! Это IRON SERVICE.", `Отложите, пожалуйста, для нас${many ? " запчасти" : ""}:`,
-      ...[...lines].map(([n, q], i) => `${many ? i + 1 + ". " : ""}${n} — ${q} шт`), "Подскажите, когда можно забрать. Спасибо!"].join("\n");
+      ...[...lines.values()].map((l, i) => `${many ? i + 1 + ". " : ""}${l.name} — ${l.q} шт${l.price ? ` × ${money(l.price)}` : ""}${l.art ? `, арт. ${l.art}` : ""}${l.url ? "\n" + l.url : ""}`),
+      "Подскажите, когда можно забрать. Спасибо!"].join("\n");
   }
   function holdHtml(key, r, list) {
     return HOLD_SUPPLIERS.map(H => {
@@ -1439,8 +1460,9 @@
         while (S.svc?.loading && !S.svc?.list) await new Promise(res => setTimeout(res, 100));
         for (const x of S.svc?.list || []) if (x.part_cost) put(x.device, x.operation, { s: (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, "MosLCD"])[1], t: x.variant || "", c: x.part_cost });
       } else {
-        const v = await api(`/values/${encodeURIComponent(`'${SUPP_SHEET}'!A2:F`)}`);
-        for (const [d, o, sp, t, c, when] of v.values || []) if (toNum(c)) put(d, o, { s: sp, t, c: toNum(c), when });
+        const v = await api(`/values/${encodeURIComponent(`'${SUPP_SHEET}'!A2:I`)}`);
+        // G–I (v65): ссылка на товар, полное наименование, артикул — для «Попросить отложить».
+        for (const [d, o, sp, t, c, when, u, f, a] of v.values || []) if (toNum(c)) put(d, o, { s: sp, t, c: toNum(c), when, u: u || "", f: f || "", a: a || "" });
       }
       S.supp = { map };
     } catch (e) { S.supp = { error: e.message, map: new Map() }; }
@@ -3606,6 +3628,7 @@
     if (act === "holdopen") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), H = HOLD_SUPPLIERS.find(x => x.key === t.dataset.h);
       const st = (S.hold ||= {})[key + "|" + H.key] ||= {};
+      if (!st.open && !S.supp?.map) await loadSupplierPrices(); // ссылки и полные наименования — из индекса цен (v65)
       st.open = !st.open; if (st.open) st.text = holdText(key, r, holdParts(H, partsOf(key, r)));
       rerenderKeep(); return;
     }
