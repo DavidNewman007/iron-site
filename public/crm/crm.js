@@ -917,7 +917,7 @@
     if (key === "buyback" || key === "parts") return `Отдали клиенту: <b>${n(C.buyback).toLocaleString("ru-RU")} ₽</b> <span class="note">(маржа — при продаже)</span>`;
     let m, how;
     if (key === "tradein") { m = n(C.total) + n(C.buyback) - n(C.partCost) - n(C.extra); how = "доплата + зачёт − закупка выданного − расходы"; }
-    else { m = n(C.total) - n(C.partCost) - n(C.extra); how = key.startsWith("sale") ? "цена − себестоимость − расходы" : "итого − запчасть − расходы"; }
+    else { m = n(C.total) - n(C.partCost) - n(C.extra); how = key.startsWith("sale") ? "цена − себестоимость − расходы" : "итого − закупка запчастей − сторонний мастер / расходы"; }
     let extra = "";
     if (key === "sale_used" && val(C.linked)) {
       const src = S.byNum.get(String(val(C.linked)).trim());
@@ -926,7 +926,9 @@
     const d = parseDiscount(val(C.discount)), q = toNum(val(C.total)), pay = val(C.payment), up = payUp(pay) && !["buyback", "parts"].includes(key);
     const b = q != null ? baseOf(q, d, up ? pay : "") : null;
     const dline = (d || up) && q != null ? `<div class="note">${d ? `Без скидки ${b.toLocaleString("ru-RU")} ₽ · скидка ${discText(d)}${d.pct != null ? ` (−${discRub(d, b).toLocaleString("ru-RU")} ₽)` : ""}` : `Без наценки ${b.toLocaleString("ru-RU")} ₽`}${up ? ` · +10% за оплату «${esc(pay)}»` : ""} · клиент платит ${q.toLocaleString("ru-RU")} ₽</div>` : "";
-    return `Остаётся нам: <b>${m.toLocaleString("ru-RU")} ₽</b> <span class="note">(${how})</span>${dline}${extra}`;
+    // У ремонта это и есть «Чистая работа» — колонка R таблицы (она же Q − S − T), здесь — на лету.
+    const title = key === "repair" || key === "other" ? "Чистая работа (остаётся нам)" : "Остаётся нам";
+    return `${title}: <b>${m.toLocaleString("ru-RU")} ₽</b> <span class="note">(${how})</span>${dline}${extra}`;
   }
 
   // ── типовые неисправности и работы (v18, 28.09.2026) ─────────────────────────
@@ -2535,8 +2537,12 @@
     right += box(4, html); html = "";
 
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
-      : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : rep ? [C.total, C.labor, "parts", C.extra] : spp ? [C.total, "parts", C.extra] : [C.total, C.labor, C.partCost, C.extra];
-    const partsRo = `<div class="field"><span>Запчасти (закуп), ₽ <small class="note">(из списка запчастей)</small></span><div class="ro" data-parts-sum>${esc(money(val(C.partCost)) || "—")}</div></div>`;
+      // «Чистая работа» (R) отсюда убрана (v63, 10.10.2026). Владелец: «не понимаю, что за поля; почему чистая работа
+      // пустая, хотя „остаётся нам“ — по сути то же самое, и оно заполнено». R — формула таблицы (Q − S − T): в
+      // карточке было её значение на момент загрузки — 0 у нового заказа и старое после правки итога, — а «Остаётся
+      // нам» оболочка считает на лету по той же формуле. Теперь одно живое число — строка под полями.
+      : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : rep ? [C.total, "parts", C.extra] : spp ? [C.total, "parts", C.extra] : [C.total, C.partCost, C.extra];
+    const partsRo = `<div class="field"><span>Запчасти (закуп), ₽ <small class="note">— сумма из списка запчастей</small></span><div class="ro" data-parts-sum>${esc(money(val(C.partCost)) || "—")}</div></div>`;
     const discBox = DISC_TYPES.includes(dk) && (isNew || editable(C.total, r)) ? discountHtml(key, r, val) : "";
     html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => c === "parts" ? partsRo : fh(c)).join("")}${discBox}</div>
       ${isNew || editable(C.total, r) || editable(C.buyback, r) ? payHtml(key, r, val, dk) : ""}
