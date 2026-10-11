@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-10T13:17:47.215Z",
-  "count": 1019,
+  "generated_at": "2026-10-11T13:31:39.035Z",
+  "count": 1024,
   "byId": {
     "series-se-3-40mm-s-m-midnight-mid-meh94-j-a-япония-s1-21900": {
       "url": "hybrid-products/watch/series-se-3-40mm-s-m-midnight-mid-meh94-j-a-s1-21900.html",
@@ -8153,6 +8153,46 @@
       "name": "Apple Watch Ultra 4 Black Titanium Ocean Band Black",
       "warehouse": "(S3)",
       "price": 75800
+    },
+    "series-11-42mm-s-m-silver-pur-fog-meu64-lw-a-сша-s1-34800": {
+      "url": "hybrid-products/watch/series-11-42mm-s-m-silver-pur-fog-meu64-lw-a-s1-34800.html",
+      "url_en": "en/hybrid-products/watch/series-11-42mm-s-m-silver-pur-fog-meu64-lw-a-s1-34800.html",
+      "cover": "assets/product-images/db4d3a35bdda7d72471491c8.jpg",
+      "name": "Series 11 42mm S/M Silver Pur Fog MEU64 LW/A",
+      "warehouse": "(S1)",
+      "price": 34800
+    },
+    "series-11-42mm-s-m-silver-pur-fog-meu64-lw-a-сша-s1-35200": {
+      "url": "hybrid-products/watch/series-11-42mm-s-m-silver-pur-fog-meu64-lw-a-s1-35200.html",
+      "url_en": "en/hybrid-products/watch/series-11-42mm-s-m-silver-pur-fog-meu64-lw-a-s1-35200.html",
+      "cover": "assets/product-images/db4d3a35bdda7d72471491c8.jpg",
+      "name": "Series 11 42mm S/M Silver Pur Fog MEU64 LW/A",
+      "warehouse": "(S1)",
+      "price": 35200
+    },
+    "series-11-42mm-s-m-space-gray-black-meqw4-lw-a-сша-s1-34600": {
+      "url": "hybrid-products/watch/series-11-42mm-s-m-space-gray-black-meqw4-lw-a-s1-34600.html",
+      "url_en": "en/hybrid-products/watch/series-11-42mm-s-m-space-gray-black-meqw4-lw-a-s1-34600.html",
+      "cover": "assets/product-images/8c7d3e0f153f900ea90200d0.jpg",
+      "name": "Series 11 42mm S/M Space Gray Black MEQW4 LW/A",
+      "warehouse": "(S1)",
+      "price": 34600
+    },
+    "series-12-46mm-m-l-dark-bronze-olive-mjeu4-x-a-австралия-s1-45000": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-dark-bronze-olive-mjeu4-x-a-s1-45000.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-dark-bronze-olive-mjeu4-x-a-s1-45000.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 46mm M/L Dark Bronze Olive MJEU4 X/A",
+      "warehouse": "(S1)",
+      "price": 45000
+    },
+    "series-ultra-3-49mm-m-l-black-black-tl-gps-cellular-mf1h4-af-a-франция-s1-60600": {
+      "url": "hybrid-products/watch/series-ultra-3-49mm-m-l-black-black-tl-gps-cellular-mf1h4-af-a-s1-60600.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-3-49mm-m-l-black-black-tl-gps-cellular-mf1h4-af-a-s1-60600.html",
+      "cover": "assets/product-images/839840c75398b9537d090485.jpg",
+      "name": "Series Ultra 3 49mm M/L Black Black TL GPS + Cellular MF1H4 AF/A",
+      "warehouse": "(S1)",
+      "price": 60600
     }
   }
 }

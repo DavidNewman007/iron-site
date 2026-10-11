@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-10T13:17:47.237Z",
-  "count": 270,
+  "generated_at": "2026-10-11T13:31:39.054Z",
+  "count": 271,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -2161,6 +2161,14 @@
       "name": "AirPods Max 2 2026 USB-C Purple",
       "warehouse": "(S3)",
       "price": 43200
+    },
+    "-airpods-5-wireless-case-mkft4-s1-17900": {
+      "url": "hybrid-products/airpods/airpods-5-wireless-case-mkft4-s1-17900.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-case-mkft4-s1-17900.html",
+      "cover": "assets/product-images/b971cee99de17a92f4f0ca43.jpg",
+      "name": "🎧 AirPods 5 (Wireless case) MKFT4",
+      "warehouse": "(S1)",
+      "price": 17900
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-10T13:17:47.389Z",
-  "count": 1724,
+  "generated_at": "2026-10-11T13:31:39.190Z",
+  "count": 1727,
   "byId": {
     "s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-южная-африка-s1-99300": {
       "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-zaf-s1-99300.html",
@@ -13793,6 +13793,30 @@
       "name": "Samsung Z Fold 8 Ultra 16/1TB Cream",
       "warehouse": "(S3)",
       "price": 190900
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-black-py-парагвай-s1-100600": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-black-py-s1-100600.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-black-py-s1-100600.html",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.jpg",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Black PY",
+      "warehouse": "(S1)",
+      "price": 100600
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-black-py-парагвай-s1-101600": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-black-py-s1-101600.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-black-py-s1-101600.html",
+      "cover": "assets/product-images/4941ad3e5cf638c8e1402359.jpg",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Black PY",
+      "warehouse": "(S1)",
+      "price": 101600
+    },
+    "s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-eu-европейский-союз-s1-96400": {
+      "url": "hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-eu-s1-96400.html",
+      "url_en": "en/hybrid-products/samsung/s26-ultra-sm-s948-b-ds-12-512gb-sky-blue-eu-s1-96400.html",
+      "cover": "assets/product-images/304c348f7a055773cd73e98d.jpg",
+      "name": "S26 Ultra SM-S948 B/DS 12+ 512Gb Sky Blue EU",
+      "warehouse": "(S1)",
+      "price": 96400
     }
   }
 }
