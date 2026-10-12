@@ -81,6 +81,8 @@ CATEGORY_RULES = [
         "test": re.compile(r"whoop|gopro|instax|fujifilm|canon|dji|osmo|apple tv|fitbit|фототехник|фитнес", re.I),
     },
     {"id": "macbook", "test": re.compile(r"macbook", re.I)},
+    # iMac / Mac mini / Mac Studio (12.10.2026, предзаказ S4) — после macbook, как в prices.js.
+    {"id": "mac", "test": re.compile(r"\bimac\b|\bmac\s+(?:mini|studio|pro)\b", re.I)},
     {
         "id": "samsung",
         "test": re.compile(r"samsung", re.I),

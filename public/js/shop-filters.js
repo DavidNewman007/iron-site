@@ -430,13 +430,18 @@
       }
     }
 
+    // Цвет — то, что после объёма SSD (изменено 12.10.2026). У предзаказа Double
+    // Apple в названии ядра и чип: «MacBook Air 13 M5 10/10 Core 16+ 512Gb Midnight»,
+    // и прежний разбор давал цвет «10/10 core 16+ 512gb midnight». Артикул в конце
+    // («MDHE4 LL/A») срезается, только если в нём есть цифра — раньше срезалось
+    // любое слово из 4–5 букв, и «Sky Blue» становился «sky». Зеркало — бот заказов.
     let color = "";
     if (line && storage) {
+      const sizeMatch = productName.match(/\b\d+\+\s*\d+\s*(?:Tb|TB|Gb|GB)\b/i) || productName.match(/\b\d+\s*(?:Tb|TB|Gb|GB)\b/i);
       const tail = productName
-        .replace(/^MacBook\s+(?:Neo\s+13\s+A18\s+Pro|Air\s+\d+\s+M\d+|Pro\s+\d+\s+M\d+)\s+/i,"")
-        .replace(/^\d+\+\s*/i,"")
-        .replace(/^(\d+)\s*(?:Tb|TB|Gb|GB)?\s+/i,"")
-        .replace(/\s+[A-Z0-9]{4,5}(?:\s+[A-Z]{1,2}\/[A-Z]\/?A?)?\s*$/i,"")
+        .slice(sizeMatch.index + sizeMatch[0].length)
+        .replace(/\s+(?=[A-Z]*\d)[A-Z0-9]{4,6}(?:\s+[A-Z]{1,2}\/[A-Z]\/?A?)?\s*$/i, "")
+        .replace(/\(.*?\)/g, "")
         .trim();
       color = normalizeMacbookColor(line, tail);
     }

@@ -51,8 +51,10 @@
    * не из константы — с 15.09.2026 сроки у складов разные.
    */
   function preorderBadgeText(product) {
-    const eta = localizeEta(product && product.eta) || PREORDER_ETA_TEXT;
     const isNew = PREORDER_NEW_WAREHOUSE_RE.test(String((product && product.warehouse) || ""));
+    // Без срока в товаре (позиция, добавленная со страницы карточки) — по складу:
+    // S4 — 5–7 дней, иначе 1–2. Раньше S4 без срока показывался «1–2 дня» (12.10.2026).
+    const eta = localizeEta(product && product.eta) || (isNew ? (I18N.isEn ? "5–7 days" : "5–7 дней") : PREORDER_ETA_TEXT);
     if (I18N.isEn) return `🛩️ ${isNew ? "pre-order" : "to order"}, ${eta}`;
     return `🛩️ ${isNew ? "предзаказ" : "под заказ"}, ${eta}`;
   }
@@ -373,6 +375,16 @@
       label: "MacBook",
       icon: "💻",
       test: (t) => /macbook/i.test(t),
+    },
+    // iMac / Mac mini / Mac Studio (12.10.2026) — пришли с предзаказом Double Apple
+    // (склад S4, Prices-4). Правило ПОСЛЕ macbook: «MacBook Pro» должен уйти в MacBook,
+    // а не сюда. Без правила эти позиции падали в «Прочее» или в соседний MacBook.
+    // Зеркало — scripts/hybrid/price_parser.py.
+    {
+      id: "mac",
+      label: "iMac / Mac mini / Studio",
+      icon: "🖥",
+      test: (t) => /\bimac\b|\bmac\s+(?:mini|studio|pro)\b/i.test(t),
     },
     {
       id: "samsung",
