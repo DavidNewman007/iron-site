@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-11T13:31:39.035Z",
-  "count": 1024,
+  "generated_at": "2026-10-12T16:36:22.132Z",
+  "count": 1066,
   "byId": {
     "series-se-3-40mm-s-m-midnight-mid-meh94-j-a-япония-s1-21900": {
       "url": "hybrid-products/watch/series-se-3-40mm-s-m-midnight-mid-meh94-j-a-s1-21900.html",
@@ -8193,6 +8193,342 @@
       "name": "Series Ultra 3 49mm M/L Black Black TL GPS + Cellular MF1H4 AF/A",
       "warehouse": "(S1)",
       "price": 60600
+    },
+    "series-se-3-40mm-s-m-midnight-mid-meh94-lw-a-сша-s1-22600": {
+      "url": "hybrid-products/watch/series-se-3-40mm-s-m-midnight-mid-meh94-lw-a-s1-22600.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-40mm-s-m-midnight-mid-meh94-lw-a-s1-22600.html",
+      "cover": "assets/product-images/2e8bb2eb792565745e46e5da.png",
+      "name": "Series SE 3 40mm S/M Midnight Mid MEH94 LW/A",
+      "warehouse": "(S1)",
+      "price": 22600
+    },
+    "series-se-3-44mm-m-l-starlight-star-mehj4-hn-a-индия-s1-27100": {
+      "url": "hybrid-products/watch/series-se-3-44mm-m-l-starlight-star-mehj4-hn-a-s1-27100.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-44mm-m-l-starlight-star-mehj4-hn-a-s1-27100.html",
+      "cover": "assets/product-images/c89fca5547c041099486190c.jpg",
+      "name": "Series SE 3 44mm M/L Starlight Star MEHJ4 HN/A",
+      "warehouse": "(S1)",
+      "price": 27100
+    },
+    "series-se-3-44mm-m-l-starlight-star-mehj4-lw-a-сша-s1-27100": {
+      "url": "hybrid-products/watch/series-se-3-44mm-m-l-starlight-star-mehj4-lw-a-s1-27100.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-44mm-m-l-starlight-star-mehj4-lw-a-s1-27100.html",
+      "cover": "assets/product-images/c89fca5547c041099486190c.jpg",
+      "name": "Series SE 3 44mm M/L Starlight Star MEHJ4 LW/A",
+      "warehouse": "(S1)",
+      "price": 27100
+    },
+    "series-se-3-44mm-m-l-starlight-star-mehj4-af-a-франция-s1-27400": {
+      "url": "hybrid-products/watch/series-se-3-44mm-m-l-starlight-star-mehj4-af-a-s1-27400.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-44mm-m-l-starlight-star-mehj4-af-a-s1-27400.html",
+      "cover": "assets/product-images/c89fca5547c041099486190c.jpg",
+      "name": "Series SE 3 44mm M/L Starlight Star MEHJ4 AF/A",
+      "warehouse": "(S1)",
+      "price": 27400
+    },
+    "series-11-42mm-s-m-silver-pur-fog-meu64-lw-a-сша-s1-34100": {
+      "url": "hybrid-products/watch/series-11-42mm-s-m-silver-pur-fog-meu64-lw-a-s1-34100.html",
+      "url_en": "en/hybrid-products/watch/series-11-42mm-s-m-silver-pur-fog-meu64-lw-a-s1-34100.html",
+      "cover": "assets/product-images/db4d3a35bdda7d72471491c8.jpg",
+      "name": "Series 11 42mm S/M Silver Pur Fog MEU64 LW/A",
+      "warehouse": "(S1)",
+      "price": 34100
+    },
+    "series-11-42mm-s-m-space-gray-black-meqw4-lw-a-сша-s1-34100": {
+      "url": "hybrid-products/watch/series-11-42mm-s-m-space-gray-black-meqw4-lw-a-s1-34100.html",
+      "url_en": "en/hybrid-products/watch/series-11-42mm-s-m-space-gray-black-meqw4-lw-a-s1-34100.html",
+      "cover": "assets/product-images/8c7d3e0f153f900ea90200d0.jpg",
+      "name": "Series 11 42mm S/M Space Gray Black MEQW4 LW/A",
+      "warehouse": "(S1)",
+      "price": 34100
+    },
+    "series-11-46mm-m-l-rose-gold-light-blush-mev74-lw-a-сша-s1-35700": {
+      "url": "hybrid-products/watch/series-11-46mm-m-l-rose-gold-light-blush-mev74-lw-a-s1-35700.html",
+      "url_en": "en/hybrid-products/watch/series-11-46mm-m-l-rose-gold-light-blush-mev74-lw-a-s1-35700.html",
+      "cover": "assets/product-images/17ce71b4b66cf5cc09050825.jpg",
+      "name": "Series 11 46mm M/L Rose Gold Light Blush MEV74 LW/A",
+      "warehouse": "(S1)",
+      "price": 35700
+    },
+    "series-11-46mm-m-l-rose-gold-light-blush-mev74-x-a-австралия-s1-36100": {
+      "url": "hybrid-products/watch/series-11-46mm-m-l-rose-gold-light-blush-mev74-x-a-s1-36100.html",
+      "url_en": "en/hybrid-products/watch/series-11-46mm-m-l-rose-gold-light-blush-mev74-x-a-s1-36100.html",
+      "cover": "assets/product-images/17ce71b4b66cf5cc09050825.jpg",
+      "name": "Series 11 46mm M/L Rose Gold Light Blush MEV74 X/A",
+      "warehouse": "(S1)",
+      "price": 36100
+    },
+    "series-11-46mm-m-l-silver-pur-fog-meva4-lw-a-сша-s1-36600": {
+      "url": "hybrid-products/watch/series-11-46mm-m-l-silver-pur-fog-meva4-lw-a-s1-36600.html",
+      "url_en": "en/hybrid-products/watch/series-11-46mm-m-l-silver-pur-fog-meva4-lw-a-s1-36600.html",
+      "cover": "assets/product-images/db4d3a35bdda7d72471491c8.jpg",
+      "name": "Series 11 46mm M/L Silver Pur Fog MEVA4 LW/A",
+      "warehouse": "(S1)",
+      "price": 36600
+    },
+    "series-11-46mm-m-l-space-gray-black-mev44-lw-a-сша-s1-36100": {
+      "url": "hybrid-products/watch/series-11-46mm-m-l-space-gray-black-mev44-lw-a-s1-36100.html",
+      "url_en": "en/hybrid-products/watch/series-11-46mm-m-l-space-gray-black-mev44-lw-a-s1-36100.html",
+      "cover": "assets/product-images/8c7d3e0f153f900ea90200d0.jpg",
+      "name": "Series 11 46mm M/L Space Gray Black MEV44 LW/A",
+      "warehouse": "(S1)",
+      "price": 36100
+    },
+    "series-12-46mm-m-l-dark-bronze-olive-mjeu4-x-a-австралия-s1-44800": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-dark-bronze-olive-mjeu4-x-a-s1-44800.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-dark-bronze-olive-mjeu4-x-a-s1-44800.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 46mm M/L Dark Bronze Olive MJEU4 X/A",
+      "warehouse": "(S1)",
+      "price": 44800
+    },
+    "s12-46mm-black-s-m-сша-s2-45900": {
+      "url": "hybrid-products/watch/s12-46mm-black-s-m-s2-45900.html",
+      "url_en": "en/hybrid-products/watch/s12-46mm-black-s-m-s2-45900.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "S12 46mm Black S/M",
+      "warehouse": "(S2)",
+      "price": 45900
+    },
+    "s12-46mm-bronze-m-l-сша-s2-45300": {
+      "url": "hybrid-products/watch/s12-46mm-bronze-m-l-s2-45300.html",
+      "url_en": "en/hybrid-products/watch/s12-46mm-bronze-m-l-s2-45300.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "S12 46mm Bronze M/L",
+      "warehouse": "(S2)",
+      "price": 45300
+    },
+    "apple-watch-se3-40-midnight-s-m-сша-s3-22400": {
+      "url": "hybrid-products/watch/apple-watch-se3-40-midnight-s-m-s3-22400.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-se3-40-midnight-s-m-s3-22400.html",
+      "cover": "assets/product-images/8b5761f071f5a9e9ac6c3917.png",
+      "name": "Apple Watch SE3 40 Midnight S/M",
+      "warehouse": "(S3)",
+      "price": 22400
+    },
+    "apple-watch-se3-40-starlight-s-m-сша-s3-24200": {
+      "url": "hybrid-products/watch/apple-watch-se3-40-starlight-s-m-s3-24200.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-se3-40-starlight-s-m-s3-24200.html",
+      "cover": "assets/product-images/dbe0932de4119f489942c01f.jpg",
+      "name": "Apple Watch SE3 40 Starlight S/M",
+      "warehouse": "(S3)",
+      "price": 24200
+    },
+    "apple-watch-se3-44-starlight-m-l-сша-s3-26000": {
+      "url": "hybrid-products/watch/apple-watch-se3-44-starlight-m-l-s3-26000.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-se3-44-starlight-m-l-s3-26000.html",
+      "cover": "assets/product-images/c89fca5547c041099486190c.jpg",
+      "name": "Apple Watch SE3 44 Starlight M/L",
+      "warehouse": "(S3)",
+      "price": 26000
+    },
+    "apple-watch-s12-42-black-s-m-сша-s3-40400": {
+      "url": "hybrid-products/watch/apple-watch-s12-42-black-s-m-s3-40400.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-42-black-s-m-s3-40400.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Apple Watch S12 42 Black S/M",
+      "warehouse": "(S3)",
+      "price": 40400
+    },
+    "apple-watch-s12-42-black-m-l-сша-s3-40600": {
+      "url": "hybrid-products/watch/apple-watch-s12-42-black-m-l-s3-40600.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-42-black-m-l-s3-40600.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Apple Watch S12 42 Black M/L",
+      "warehouse": "(S3)",
+      "price": 40600
+    },
+    "apple-watch-s12-42-space-gray-s-m-сша-s3-40500": {
+      "url": "hybrid-products/watch/apple-watch-s12-42-space-gray-s-m-s3-40500.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-42-space-gray-s-m-s3-40500.html",
+      "cover": "assets/product-images/56347aa9d566dcd702f543a4.jpg",
+      "name": "Apple Watch S12 42 Space Gray S/M",
+      "warehouse": "(S3)",
+      "price": 40500
+    },
+    "apple-watch-s12-42-space-gray-m-l-сша-s3-40600": {
+      "url": "hybrid-products/watch/apple-watch-s12-42-space-gray-m-l-s3-40600.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-42-space-gray-m-l-s3-40600.html",
+      "cover": "assets/product-images/56347aa9d566dcd702f543a4.jpg",
+      "name": "Apple Watch S12 42 Space Gray M/L",
+      "warehouse": "(S3)",
+      "price": 40600
+    },
+    "apple-watch-s12-46-black-s-m-сша-s3-44600": {
+      "url": "hybrid-products/watch/apple-watch-s12-46-black-s-m-s3-44600.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-46-black-s-m-s3-44600.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Apple Watch S12 46 Black S/M",
+      "warehouse": "(S3)",
+      "price": 44600
+    },
+    "apple-watch-s12-46-black-m-l-сша-s3-44100": {
+      "url": "hybrid-products/watch/apple-watch-s12-46-black-m-l-s3-44100.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-46-black-m-l-s3-44100.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Apple Watch S12 46 Black M/L",
+      "warehouse": "(S3)",
+      "price": 44100
+    },
+    "apple-watch-s12-46-space-gray-m-l-сша-s3-44300": {
+      "url": "hybrid-products/watch/apple-watch-s12-46-space-gray-m-l-s3-44300.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-46-space-gray-m-l-s3-44300.html",
+      "cover": "assets/product-images/56347aa9d566dcd702f543a4.jpg",
+      "name": "Apple Watch S12 46 Space Gray M/L",
+      "warehouse": "(S3)",
+      "price": 44300
+    },
+    "apple-watch-s12-46-light-gold-s-m-сша-s3-45100": {
+      "url": "hybrid-products/watch/apple-watch-s12-46-light-gold-s-m-s3-45100.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-46-light-gold-s-m-s3-45100.html",
+      "cover": "assets/product-images/a8c3a73714aa94bda36ea9e4.jpg",
+      "name": "Apple Watch S12 46 Light Gold S/M",
+      "warehouse": "(S3)",
+      "price": 45100
+    },
+    "apple-watch-s12-46-light-gold-m-l-сша-s3-45200": {
+      "url": "hybrid-products/watch/apple-watch-s12-46-light-gold-m-l-s3-45200.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-46-light-gold-m-l-s3-45200.html",
+      "cover": "assets/product-images/a8c3a73714aa94bda36ea9e4.jpg",
+      "name": "Apple Watch S12 46 Light Gold M/L",
+      "warehouse": "(S3)",
+      "price": 45200
+    },
+    "apple-watch-s12-46-dark-bronze-s-m-сша-s3-45100": {
+      "url": "hybrid-products/watch/apple-watch-s12-46-dark-bronze-s-m-s3-45100.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-46-dark-bronze-s-m-s3-45100.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Apple Watch S12 46 Dark Bronze S/M",
+      "warehouse": "(S3)",
+      "price": 45100
+    },
+    "apple-watch-s12-46-dark-bronze-m-l-сша-s3-44400": {
+      "url": "hybrid-products/watch/apple-watch-s12-46-dark-bronze-m-l-s3-44400.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-46-dark-bronze-m-l-s3-44400.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Apple Watch S12 46 Dark Bronze M/L",
+      "warehouse": "(S3)",
+      "price": 44400
+    },
+    "apple-watch-ultra-3-natural-alpine-loop-light-blue-s-сша-s3-60700": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-natural-alpine-loop-light-blue-s-s3-60700.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-natural-alpine-loop-light-blue-s-s3-60700.html",
+      "cover": "assets/product-images/28160dd1cd391a14f9f16b53.jpg",
+      "name": "Apple Watch Ultra 3 Natural Alpine Loop Light Blue S",
+      "warehouse": "(S3)",
+      "price": 60700
+    },
+    "apple-watch-ultra-3-natural-alpine-loop-light-blue-m-сша-s3-60700": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-natural-alpine-loop-light-blue-m-s3-60700.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-natural-alpine-loop-light-blue-m-s3-60700.html",
+      "cover": "assets/product-images/28160dd1cd391a14f9f16b53.jpg",
+      "name": "Apple Watch Ultra 3 Natural Alpine Loop Light Blue M",
+      "warehouse": "(S3)",
+      "price": 60700
+    },
+    "apple-watch-ultra-3-natural-alpine-loop-light-blue-l-сша-s3-60700": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-natural-alpine-loop-light-blue-l-s3-60700.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-natural-alpine-loop-light-blue-l-s3-60700.html",
+      "cover": "assets/product-images/28160dd1cd391a14f9f16b53.jpg",
+      "name": "Apple Watch Ultra 3 Natural Alpine Loop Light Blue L",
+      "warehouse": "(S3)",
+      "price": 60700
+    },
+    "apple-watch-ultra-3-natural-alpine-loop-black-l-сша-s3-61200": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-natural-alpine-loop-black-l-s3-61200.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-natural-alpine-loop-black-l-s3-61200.html",
+      "cover": "assets/product-images/3b34f183c452b93a77ee2c11.jpg",
+      "name": "Apple Watch Ultra 3 Natural Alpine Loop Black L",
+      "warehouse": "(S3)",
+      "price": 61200
+    },
+    "apple-watch-ultra-3-natural-trail-loop-blue-bright-blue-s-m-сша-s3-60900": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-natural-trail-loop-blue-bright-blue-s-m-s3-60900.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-natural-trail-loop-blue-bright-blue-s-m-s3-60900.html",
+      "cover": "assets/product-images/b9c91f79f916e4dc746e2701.jpg",
+      "name": "Apple Watch Ultra 3 Natural Trail Loop Blue/Bright Blue S/M",
+      "warehouse": "(S3)",
+      "price": 60900
+    },
+    "apple-watch-ultra-3-natural-ocean-band-anchor-blue-сша-s3-61700": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-natural-ocean-band-anchor-blue-s3-61700.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-natural-ocean-band-anchor-blue-s3-61700.html",
+      "cover": "assets/product-images/75fd6937c9db8e44883c25fa.jpg",
+      "name": "Apple Watch Ultra 3 Natural Ocean Band Anchor Blue",
+      "warehouse": "(S3)",
+      "price": 61700
+    },
+    "apple-watch-ultra-3-black-alpine-loop-black-m-сша-s3-60700": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-black-alpine-loop-black-m-s3-60700.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-black-alpine-loop-black-m-s3-60700.html",
+      "cover": "assets/product-images/66392d6c545802d6404cab3d.jpg",
+      "name": "Apple Watch Ultra 3 Black Alpine Loop Black M",
+      "warehouse": "(S3)",
+      "price": 60700
+    },
+    "apple-watch-ultra-3-black-trail-loop-black-charcoal-s-m-сша-s3-60700": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-black-trail-loop-black-charcoal-s-m-s3-60700.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-black-trail-loop-black-charcoal-s-m-s3-60700.html",
+      "cover": "assets/product-images/839840c75398b9537d090485.jpg",
+      "name": "Apple Watch Ultra 3 Black Trail Loop Black/Charcoal S/M",
+      "warehouse": "(S3)",
+      "price": 60700
+    },
+    "apple-watch-ultra-3-black-ocean-band-black-сша-s3-60900": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-black-ocean-band-black-s3-60900.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-black-ocean-band-black-s3-60900.html",
+      "cover": "assets/product-images/f9a4baf490188ff1e662423d.jpg",
+      "name": "Apple Watch Ultra 3 Black Ocean Band Black",
+      "warehouse": "(S3)",
+      "price": 60900
+    },
+    "apple-watch-ultra-3-black-titanium-milanese-loop-black-s-сша-s3-69300": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-black-titanium-milanese-loop-black-s-s3-69300.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-black-titanium-milanese-loop-black-s-s3-69300.html",
+      "cover": "assets/product-images/024a980a60901ca6bfe90630.jpg",
+      "name": "Apple Watch Ultra 3 Black Titanium Milanese Loop Black S",
+      "warehouse": "(S3)",
+      "price": 69300
+    },
+    "apple-watch-ultra-4-natural-alpine-loop-desert-s-сша-s3-76900": {
+      "url": "hybrid-products/watch/apple-watch-ultra-4-natural-alpine-loop-desert-s-s3-76900.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-4-natural-alpine-loop-desert-s-s3-76900.html",
+      "cover": "assets/product-images/77d69bb5e998d42d1751aed3.jpg",
+      "name": "Apple Watch Ultra 4 Natural Alpine Loop Desert S",
+      "warehouse": "(S3)",
+      "price": 76900
+    },
+    "apple-watch-ultra-4-natural-alpine-loop-desert-m-сша-s3-77400": {
+      "url": "hybrid-products/watch/apple-watch-ultra-4-natural-alpine-loop-desert-m-s3-77400.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-4-natural-alpine-loop-desert-m-s3-77400.html",
+      "cover": "assets/product-images/77d69bb5e998d42d1751aed3.jpg",
+      "name": "Apple Watch Ultra 4 Natural Alpine Loop Desert M",
+      "warehouse": "(S3)",
+      "price": 77400
+    },
+    "apple-watch-ultra-4-natural-trail-loop-natural-m-l-сша-s3-77400": {
+      "url": "hybrid-products/watch/apple-watch-ultra-4-natural-trail-loop-natural-m-l-s3-77400.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-4-natural-trail-loop-natural-m-l-s3-77400.html",
+      "cover": "assets/product-images/32aafc2c2ab5bf17c32aac17.jpg",
+      "name": "Apple Watch Ultra 4 Natural Trail Loop Natural M/L",
+      "warehouse": "(S3)",
+      "price": 77400
+    },
+    "apple-watch-ultra-4-black-alpine-loop-burgundy-m-сша-s3-75800": {
+      "url": "hybrid-products/watch/apple-watch-ultra-4-black-alpine-loop-burgundy-m-s3-75800.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-4-black-alpine-loop-burgundy-m-s3-75800.html",
+      "cover": "assets/product-images/32b3f4215fc2eb8c0c1e8f6e.jpg",
+      "name": "Apple Watch Ultra 4 Black Alpine Loop Burgundy M",
+      "warehouse": "(S3)",
+      "price": 75800
+    },
+    "apple-watch-ultra-4-black-trail-loop-burgundy-m-l-сша-s3-75800": {
+      "url": "hybrid-products/watch/apple-watch-ultra-4-black-trail-loop-burgundy-m-l-s3-75800.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-4-black-trail-loop-burgundy-m-l-s3-75800.html",
+      "cover": "assets/product-images/7572323ac874aab8f53289a4.jpg",
+      "name": "Apple Watch Ultra 4 Black Trail Loop Burgundy M/L",
+      "warehouse": "(S3)",
+      "price": 75800
     }
   }
 }
