@@ -1251,10 +1251,57 @@
     const free = x => x.qty - (taken.get(x.key) || 0);
     const found = words.length ? S.stock.rows.filter(x => free(x) > 0 && words.every(w => skWords(`${x.node} ${x.model} ${x.variant} ${x.color} ${x.own ? x.src + " " + x.note : ""}`).includes(w)))
       .sort((a, b) => skNodeRank(a.node) - skNodeRank(b.node)).slice(0, 20) : [];
-    return `<div class="sp"><input class="search sp__q" type="search" data-act="spq" value="${esc(q)}" placeholder="📦 Найти на складе — например «13 про акб»" autocomplete="off">
-      ${words.length ? (found.length ? `<div class="sk-ba__list">${found.map(x => `<button type="button" class="sk-ba__item" data-act="sppick" data-k="${esc(x.key)}"><span>${esc(cap(x.node) + " · " + x.model)} · <b>${esc(x.variant)}</b>${x.color ? " · " + esc(x.color) : ""}${esc(skFrom(x))}</span><small>${x.price != null ? money(x.price) : "без цены"} · на полке ${free(x)}</small></button>`).join("")}</div>`
-        : `<p class="note">На складе не нашлось. Не со склада — впишите строкой ниже («＋ Запчасть»).</p>`)
-        : `<p class="note">Выберите со склада — запчасть встанет в список с закупкой, её цена продажи прибавится к итогу, при сохранении спишется со склада.</p>`}</div>`;
+    // Каталог поставщиков (v66): то, чего нет на полке, — из индекса цен (те же позиции, что в «Сравнить склады»).
+    const supp = words.length ? spSuppFind(words) : [];
+    S.spSuppList = supp;
+    const sel = S.spSel, sold = sel ? spSuppName(sel) : "";
+    return `<div class="sp"><input class="search sp__q" type="search" data-act="spq" value="${esc(q)}" placeholder="📦 Найти на складе или у поставщиков — например «13 про акб»" autocomplete="off">
+      ${sel ? `<div class="sp-add"><div><b>${esc(sold)}</b><small>${esc(sel.s)} · закупка ${money(sel.c)}${sel.u ? ` · <a href="${esc(sel.u)}" target="_blank" rel="noopener">на сайте ↗</a>` : ""}</small></div>
+        <label class="sp-add__price">Цена продажи, ₽<input data-spprice inputmode="numeric" autocomplete="off" placeholder="сколько с клиента"></label>
+        <div class="row"><button type="button" class="btn btn--sm" data-act="spsuppadd">＋ Добавить</button><button type="button" class="linkbtn" data-act="spsuppcancel">✕ отмена</button></div></div>` : ""}
+      ${words.length ? (found.length ? `<div class="sp__h">📦 На складе</div><div class="sk-ba__list">${found.map(x => `<button type="button" class="sk-ba__item" data-act="sppick" data-k="${esc(x.key)}"><span>${esc(cap(x.node) + " · " + x.model)} · <b>${esc(x.variant)}</b>${x.color ? " · " + esc(x.color) : ""}${esc(skFrom(x))}</span><small>${x.price != null ? money(x.price) : "без цены"} · на полке ${free(x)}</small></button>`).join("")}</div>` : "")
+        + (supp.length ? `<div class="sp__h">🏪 У поставщиков — под заказ</div><div class="sk-ba__list">${supp.map((o, i) => `<button type="button" class="sk-ba__item${sel === o ? " is-on" : ""}" data-act="spsupp" data-i="${i}"><span><b>${esc(o.s)}</b> · ${esc(o.dev)}${spClean(o.f || o.t) ? " · " + esc(spClean(o.f || o.t)) : ""}</span><small>закупка ${money(o.c)}${suppHere(o.t) ? " · в Сочи" : ""}</small></button>`).join("")}</div>` : "")
+        + (found.length || supp.length ? "" : `<p class="note">Ни на складе, ни у поставщиков не нашлось. Впишите строкой ниже («＋ Запчасть»).</p>`)
+        : `<p class="note">Со склада — встанет в список с закупкой, цена продажи прибавится к итогу, при сохранении спишется со склада. От поставщика — укажите цену продажи, закупка и поставщик встанут сами.</p>`}</div>`;
+  }
+  // «Продажа запчастей» из каталога поставщиков (v66, 12.10.2026). Владелец: «добавь возможность добавлять
+  // запчасти из каталога поставщиков в режиме сделки „продажа запчастей“». Каталог — индекс цен (лист «CRM —
+  // цены поставщиков»: MOS-LCD, Виталя, Liberti, PartsLog, магазины Mac). Правила цены продажи для чужих позиций
+  // нет (автоцена есть только у склада Витали), поэтому цену вписывает человек; без неё позиция встаёт с
+  // закупкой, а итог не меняется. Позиция помнит строку прайса (item, dev, op) — по ней «Попросить отложить»
+  // найдёт полное наименование и ссылку.
+  const spClean = t => String(t || "").replace(/\s*·\s*(в Сочи|под заказ).*$/, "").trim();
+  const spSuppName = o => {
+    const f = String(o.f || "").replace(/,\s*раздел «[^»]*»$/, "").trim();
+    return f || `${OP_PART[norm(o.op)] || cap(String(o.op).replace(/^замена\s+/, ""))} ${o.dev}${spClean(o.t) ? " (" + spClean(o.t) + ")" : ""}`;
+  };
+  function spSuppFind(words) {
+    if (!S.supp?.map) { if (!S.supp?.loading) loadSupplierPrices().then(() => rerenderKeep()); return []; }
+    if (!S.supp.flat) {
+      const flat = [];
+      for (const [k, offers] of S.supp.map) { const [dev, op] = k.split("|"); for (const o of offers) flat.push({ ...o, dev, op, w: skWords(`${dev} ${op} ${OP_PART[norm(op)] || ""} ${o.s} ${o.f || o.t}`) }); }
+      S.supp.flat = flat;
+    }
+    // Одна позиция Liberti подходит нескольким моделям («iPhone 8/SE 2020») — в выдаче один раз.
+    const seen = new Set();
+    return S.supp.flat.filter(o => words.every(w => o.w.includes(w))).sort((a, b) => a.c - b.c)
+      .filter(o => { const k = o.s + "|" + (o.f || o.t) + "|" + o.c; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 20);
+  }
+  function spSuppAdd(key, r, o, sale) {
+    const val = c => { const kk = key + ":" + c; return S.dirty.has(kk) ? S.dirty.get(kk) : (r ? cell(r, c) : ""); };
+    const list = partsOf(key, r).filter(p => p.name || p.src || p.cost), name = spSuppName(o);
+    list.push({ name, src: o.s, cost: String(o.c), item: spClean(o.t), dev: o.dev, op: o.op, sale: sale || null, spSupp: true });
+    S.parts.set(key, list); syncParts(key);
+    if (sale) { const d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total)); setDirty(key, C.total, String(finalOf((q == null ? 0 : baseOf(q, d, pay)) + sale, d, pay))); }
+    spAutoDevice(key, r, list, val);
+    S.spq = ""; S.spSel = null;
+    rerenderKeep();
+    toast(`🏪 ${name} — ${o.s}, закупка ${money(o.c)}${sale ? " · продажа " + money(sale) : " · цену продажи впишите в «Итого»"} · итог ${money(val(C.total)) || "—"}`, null, true);
+  }
+  // «Что продаём» — из выбранного (склад и поставщики), пока его не правили руками.
+  function spAutoDevice(key, r, list, val) {
+    const names = list.filter(p => p.stock || p.spSupp).map(p => p.name).join("; "), cur = String(val(C.device) || "").trim();
+    if (!cur || cur === (S.spAuto?.[key] || "")) { setDirty(key, C.device, names); (S.spAuto ||= {})[key] = names; }
   }
   function spAdd(key, r, k) {
     const x = S.stock?.byKey?.get(k); if (!x) return;
@@ -1264,10 +1311,8 @@
     list.push({ name, src: x.src, cost: x.cost != null ? String(x.cost) : "", stock: k, sale: x.price ?? null });
     S.parts.set(key, list); syncParts(key);
     if (x.price) { const d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total)); setDirty(key, C.total, String(finalOf((q == null ? 0 : baseOf(q, d, pay)) + x.price, d, pay))); }
-    // «Что продаём» — из выбранного, пока его не правили руками.
-    const names = list.filter(p => p.stock).map(p => p.name).join("; "), cur = String(val(C.device) || "").trim();
-    if (!cur || cur === (S.spAuto?.[key] || "")) { setDirty(key, C.device, names); (S.spAuto ||= {})[key] = names; }
-    S.spq = "";
+    spAutoDevice(key, r, list, val);
+    S.spq = ""; S.spSel = null;
     rerenderKeep();
     toast(`📦 ${name}${x.price ? " — " + money(x.price) : " — впишите цену"} · итог ${money(val(C.total))}`, null, true);
   }
@@ -2541,7 +2586,7 @@
       <div class="grid2">${fh(C.device)}${fh(C.imei)}</div>
       <div class="wide-area">${fh(C.issue)}${tips("issue", C.issue)}</div>
       <div class="wide-area">${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device)) : ""}</div>
-      ${spp ? `<div class="field field--parts"><span>Что продаём со склада</span>${(isNew || editable(C.parts, r)) ? spPickHtml(key, r) : ""}${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
+      ${spp ? `<div class="field field--parts"><span>Что продаём — со склада или от поставщика</span>${(isNew || editable(C.parts, r)) ? spPickHtml(key, r) : ""}${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
         : rep ? `<div class="field field--parts"><span>Запчасти <small class="note">(клиенту в отчёте уходят только названия)</small></span>${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
         : `<div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>`}
       ${dk === "sale_used" || String(val(C.linked)).trim() ? fh(C.linked) : ""}
@@ -3547,6 +3592,7 @@
   }, true);
   document.addEventListener("keydown", e => { if (e.key === "Escape" && (S.ddOpen || S.lst)) { S.ddOpen = null; S.lst = null; const y = window.scrollY; render(); window.scrollTo(0, y); } });
   // Элемент списка теперь <div role="button"> — Enter/пробел открывают заказ, как раньше у <button>.
+  document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches?.("[data-spprice]")) { e.preventDefault(); $app.querySelector('[data-act="spsuppadd"]')?.click(); } });
   document.addEventListener("keydown", e => { const it = e.target.closest?.("[data-open][role=button]"); if (it && e.target === it && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); location.hash = "#/" + it.dataset.open; } });
   document.addEventListener("click", async e => {
     const t = e.target.closest("[data-act],[data-open],[data-tab],[data-choice],[data-q],[data-imp],[data-tip],[data-svc],[data-svx],[data-cdev],[data-psup],[data-gpick]"); if (!t) return;
@@ -3625,6 +3671,14 @@
       return;
     }
     if (act === "sppick") { const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); spAdd(key, r, t.dataset.k); return; }
+    if (act === "spsupp") { const o = S.spSuppList?.[+t.dataset.i]; S.spSel = S.spSel === o ? null : o || null; rerenderKeep(); $app.querySelector("[data-spprice]")?.focus({ preventScroll: true }); return; }
+    if (act === "spsuppcancel") { S.spSel = null; rerenderKeep(); return; }
+    if (act === "spsuppadd") {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), o = S.spSel; if (!o) return;
+      const raw = String($app.querySelector("[data-spprice]")?.value || "").trim(), sale = raw ? toNum(raw) : null;
+      if (raw && !(sale > 0)) return toast("Цена продажи — число, например 2500");
+      spSuppAdd(key, r, o, sale); return;
+    }
     if (act === "holdopen") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), H = HOLD_SUPPLIERS.find(x => x.key === t.dataset.h);
       const st = (S.hold ||= {})[key + "|" + H.key] ||= {};

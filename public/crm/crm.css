@@ -694,3 +694,12 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .pay__b[aria-pressed="true"] { background: var(--ready-bg); border-color: var(--ready); color: var(--ready); }
 .sp { margin: 4px 0 10px; }
 .sp .sk-ba__list { margin-top: 6px; }
+/* v66: каталог поставщиков в «Продаже запчастей» — заголовки групп и строка выбранной позиции с ценой продажи */
+.sp__h { margin: 10px 0 0; font-size: .82rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.sp .sk-ba__item.is-on { border-color: var(--gold); background: #231f14; }
+.sp-add { display: grid; gap: 8px; margin: 8px 0 4px; padding: 10px 12px; border: 1px solid var(--gold); border-radius: 12px; background: rgba(212, 175, 55, .06); }
+.sp-add small { display: block; color: var(--muted); font-size: .85rem; }
+.sp-add small a { color: var(--gold); }
+.sp-add__price { display: grid; gap: 4px; font-size: .85rem; color: var(--muted); max-width: 220px; }
+.sp-add__price input { height: 44px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--field); color: var(--text); font-size: 1.05rem; font-weight: 700; padding: 0 12px; }
+.sp-add__price input:focus { outline: none; border-color: var(--gold); }
