@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-12T16:36:22.279Z",
-  "count": 122,
+  "generated_at": "2026-10-13T15:13:29.435Z",
+  "count": 127,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -975,6 +975,46 @@
       "url_en": "en/hybrid-products/audio/buds-4-pro-pink-gold-s3-18400.html",
       "cover": "assets/product-images/9c24473bcf3b07c8103dfb49.jpg",
       "name": "Buds 4 Pro Pink Gold",
+      "warehouse": "(S3)",
+      "price": 18400
+    },
+    "-яндекс-станция-миди-оранжевый-s2-17200": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-оранжевый-s2-17200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-оранжевый-s2-17200.html",
+      "cover": "assets/product-images/10007a1f74890729ec6c0470.jpeg",
+      "name": "🔈Яндекс Станция Миди Оранжевый",
+      "warehouse": "(S2)",
+      "price": 17200
+    },
+    "galaxy-buds-core-white-оаэ-s3-5500": {
+      "url": "hybrid-products/audio/galaxy-buds-core-white-s3-5500.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-core-white-s3-5500.html",
+      "cover": "assets/product-images/c89f5d0852ae2924cb559f59.jpg",
+      "name": "Galaxy Buds Core White",
+      "warehouse": "(S3)",
+      "price": 5500
+    },
+    "galaxy-buds-3-fe-black-оаэ-s3-9100": {
+      "url": "hybrid-products/audio/galaxy-buds-3-fe-black-s3-9100.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-3-fe-black-s3-9100.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Galaxy Buds 3 FE Black",
+      "warehouse": "(S3)",
+      "price": 9100
+    },
+    "galaxy-buds-4-pro-white-оаэ-s3-16200": {
+      "url": "hybrid-products/audio/galaxy-buds-4-pro-white-s3-16200.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-4-pro-white-s3-16200.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Galaxy Buds 4 Pro White",
+      "warehouse": "(S3)",
+      "price": 16200
+    },
+    "galaxy-buds-4-pro-pink-оаэ-s3-18400": {
+      "url": "hybrid-products/audio/galaxy-buds-4-pro-pink-s3-18400.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-4-pro-pink-s3-18400.html",
+      "cover": "assets/product-images/9c24473bcf3b07c8103dfb49.jpg",
+      "name": "Galaxy Buds 4 Pro Pink",
       "warehouse": "(S3)",
       "price": 18400
     }

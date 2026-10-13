@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-12T16:36:22.299Z",
-  "count": 329,
+  "generated_at": "2026-10-13T15:13:29.459Z",
+  "count": 332,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -2633,6 +2633,30 @@
       "name": "Dyson V12S Detect Slim Submarine Yellow/Nickel",
       "warehouse": "(S3)",
       "price": 49100
+    },
+    "-hs08-ceramic-pink-rose-gold-s2-41200": {
+      "url": "hybrid-products/dyson/hs08-ceramic-pink-rose-gold-s2-41200.html",
+      "url_en": "en/hybrid-products/dyson/hs08-ceramic-pink-rose-gold-s2-41200.html",
+      "cover": "assets/product-images/cc30c5da38c09de41d16dd32.jpg",
+      "name": "👱‍♀️HS08 Ceramic Pink/Rose Gold",
+      "warehouse": "(S2)",
+      "price": 41200
+    },
+    "-hs09-co-anda-2x-jasper-plum-s2-48400": {
+      "url": "hybrid-products/dyson/hs09-co-anda-2x-jasper-plum-s2-48400.html",
+      "url_en": "en/hybrid-products/dyson/hs09-co-anda-2x-jasper-plum-s2-48400.html",
+      "cover": "assets/product-images/436d73c15f3360ad305a0147.jpg",
+      "name": "👱‍♀️HS09 Co-Anda 2X Jasper Plum",
+      "warehouse": "(S2)",
+      "price": 48400
+    },
+    "-hs09-co-anda-2x-ceramic-pink-rose-gold-s2-48400": {
+      "url": "hybrid-products/dyson/hs09-co-anda-2x-ceramic-pink-rose-gold-s2-48400.html",
+      "url_en": "en/hybrid-products/dyson/hs09-co-anda-2x-ceramic-pink-rose-gold-s2-48400.html",
+      "cover": "assets/product-images/3cc99ad2cd24f0f15570eae6.jpg",
+      "name": "👱‍♀️HS09 Co-Anda 2X Ceramic Pink/Rose Gold",
+      "warehouse": "(S2)",
+      "price": 48400
     }
   }
 }

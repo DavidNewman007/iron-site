@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-12T16:36:22.302Z",
-  "count": 37,
+  "generated_at": "2026-10-13T15:13:29.463Z",
+  "count": 38,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -297,6 +297,14 @@
       "name": "⌚️Whoop 5.0 Peak + годовая подписка",
       "warehouse": "(S2)",
       "price": 24600
+    },
+    "-canon-powershot-g7-x-mark-iii-silver-s2-105700": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-105700.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-105700.html",
+      "cover": "assets/product-images/dd1b9655ba8ad1dedcc47b4e.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Silver",
+      "warehouse": "(S2)",
+      "price": 105700
     }
   }
 }
