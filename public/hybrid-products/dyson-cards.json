@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-14T12:50:42.368Z",
-  "count": 332,
+  "generated_at": "2026-10-15T12:33:11.038Z",
+  "count": 333,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -2657,6 +2657,14 @@
       "name": "👱‍♀️HS09 Co-Anda 2X Ceramic Pink/Rose Gold",
       "warehouse": "(S2)",
       "price": 48400
+    },
+    "-hs08-apricot-topaz-s2-40700": {
+      "url": "hybrid-products/dyson/hs08-apricot-topaz-s2-40700.html",
+      "url_en": "en/hybrid-products/dyson/hs08-apricot-topaz-s2-40700.html",
+      "cover": "assets/product-images/414299834c0fdce97ae8e390.jpg",
+      "name": "👱‍♀️HS08 Apricot Topaz",
+      "warehouse": "(S2)",
+      "price": 40700
     }
   }
 }

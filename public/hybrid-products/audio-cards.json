@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-14T12:50:42.345Z",
-  "count": 132,
+  "generated_at": "2026-10-15T12:33:11.019Z",
+  "count": 137,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -1057,6 +1057,46 @@
       "name": "Buds 4 Pro White",
       "warehouse": "(S3)",
       "price": 16100
+    },
+    "buds-4-white-оаэ-s2-12200": {
+      "url": "hybrid-products/audio/buds-4-white-s2-12200.html",
+      "url_en": "en/hybrid-products/audio/buds-4-white-s2-12200.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Buds 4 White",
+      "warehouse": "(S2)",
+      "price": 12200
+    },
+    "buds-4-pro-white-оаэ-s2-16100": {
+      "url": "hybrid-products/audio/buds-4-pro-white-s2-16100.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-white-s2-16100.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Buds 4 Pro White",
+      "warehouse": "(S2)",
+      "price": 16100
+    },
+    "-яндекс-станция-миди-малиновый-s2-16700": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-малиновый-s2-16700.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-малиновый-s2-16700.html",
+      "cover": "assets/product-images/4e164c49778835f0aedc77c3.jpeg",
+      "name": "🔈Яндекс Станция Миди Малиновый",
+      "warehouse": "(S2)",
+      "price": 16700
+    },
+    "-яндекс-станция-max-черный-s2-35000": {
+      "url": "hybrid-products/audio/яндекс-станция-max-черный-s2-35000.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-черный-s2-35000.html",
+      "cover": "assets/product-images/1f04736e3d615bcedf619c73.jpg",
+      "name": "🔈Яндекс Станция MAX Черный",
+      "warehouse": "(S2)",
+      "price": 35000
+    },
+    "-яндекс-станция-max-зеленый-s2-34000": {
+      "url": "hybrid-products/audio/яндекс-станция-max-зеленый-s2-34000.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-зеленый-s2-34000.html",
+      "cover": "assets/product-images/b39a83816d38b8101c4251db.jpeg",
+      "name": "🔈Яндекс Станция MAX Зеленый",
+      "warehouse": "(S2)",
+      "price": 34000
     }
   }
 }

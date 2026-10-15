@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-14T12:50:42.027Z",
-  "count": 587,
+  "generated_at": "2026-10-15T12:33:10.755Z",
+  "count": 589,
   "byId": {
     "ipad-11-a16-wi-fi-128gb-blue-j-a-япония-s1-31600": {
       "url": "hybrid-products/ipad/ipad-11-a16-wi-fi-128gb-blue-j-a-s1-31600.html",
@@ -4697,6 +4697,22 @@
       "name": "iPad Pro 11 M5 256 Silver Wi-Fi",
       "warehouse": "(S3)",
       "price": 104100
+    },
+    "ipad-11-a16-256gb-wi-fi-yellow-сша-s2-53000": {
+      "url": "hybrid-products/ipad/ipad-11-a16-256gb-wi-fi-yellow-s2-53000.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-a16-256gb-wi-fi-yellow-s2-53000.html",
+      "cover": "assets/product-images/12ab0e68554cce9cf2f0341c.jpg",
+      "name": "iPad 11\" A16 256GB Wi-Fi Yellow",
+      "warehouse": "(S2)",
+      "price": 53000
+    },
+    "ipad-air-11-m4-128gb-wi-fi-starlight-сша-s2-65300": {
+      "url": "hybrid-products/ipad/ipad-air-11-m4-128gb-wi-fi-starlight-s2-65300.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m4-128gb-wi-fi-starlight-s2-65300.html",
+      "cover": "assets/product-images/6f26c4cb4de3f1a635ecfafe.jpg",
+      "name": "iPad Air 11\" M4 128GB Wi-Fi Starlight",
+      "warehouse": "(S2)",
+      "price": 65300
     }
   }
 }
