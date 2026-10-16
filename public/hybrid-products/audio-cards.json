@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-15T12:33:11.019Z",
-  "count": 137,
+  "generated_at": "2026-10-16T12:16:28.170Z",
+  "count": 149,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -1097,6 +1097,102 @@
       "name": "🔈Яндекс Станция MAX Зеленый",
       "warehouse": "(S2)",
       "price": 34000
+    },
+    "яндекс-станция-стрит-черный-s2-11100": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-черный-s2-11100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-черный-s2-11100.html",
+      "cover": "assets/product-images/0115a93bee7eb333ed6ea597.jpg",
+      "name": "Яндекс Станция Стрит Черный",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "яндекс-станция-стрит-зеленый-s2-11100": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-зеленый-s2-11100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-зеленый-s2-11100.html",
+      "cover": "assets/product-images/c2915f101f9dd4ff3c1b2ca9.jpg",
+      "name": "Яндекс Станция Стрит Зеленый",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "яндекс-станция-мини-3-черный-s2-11100": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-черный-s2-11100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-черный-s2-11100.html",
+      "cover": "assets/product-images/dc89cc514db8dd9b64b785ba.jpg",
+      "name": "Яндекс Станция Мини 3 Черный",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "яндекс-станция-мини-3-серый-s2-11100": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-серый-s2-11100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-серый-s2-11100.html",
+      "cover": "assets/product-images/494f62ad5f39fa179ceb4db1.jpg",
+      "name": "Яндекс Станция Мини 3 Серый",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "яндекс-станция-мини-3-лиловый-s2-11100": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-лиловый-s2-11100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-лиловый-s2-11100.html",
+      "cover": "assets/product-images/87f3162798cc8e5104144504.jpg",
+      "name": "Яндекс Станция Мини 3 Лиловый",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "galaxy-buds-core-black-оаэ-s3-6300": {
+      "url": "hybrid-products/audio/galaxy-buds-core-black-s3-6300.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-core-black-s3-6300.html",
+      "cover": "assets/product-images/de7e5559665f154b7f89ee7a.jpg",
+      "name": "Galaxy Buds Core Black",
+      "warehouse": "(S3)",
+      "price": 6300
+    },
+    "galaxy-buds-3-fe-black-оаэ-s3-9300": {
+      "url": "hybrid-products/audio/galaxy-buds-3-fe-black-s3-9300.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-3-fe-black-s3-9300.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Galaxy Buds 3 FE Black",
+      "warehouse": "(S3)",
+      "price": 9300
+    },
+    "galaxy-buds-3-fe-gray-оаэ-s3-9900": {
+      "url": "hybrid-products/audio/galaxy-buds-3-fe-gray-s3-9900.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-3-fe-gray-s3-9900.html",
+      "cover": "assets/product-images/c8795cac0cd4a068475011bd.jpg",
+      "name": "Galaxy Buds 3 FE Gray",
+      "warehouse": "(S3)",
+      "price": 9900
+    },
+    "galaxy-buds-3-pro-silver-оаэ-s3-14900": {
+      "url": "hybrid-products/audio/galaxy-buds-3-pro-silver-s3-14900.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-3-pro-silver-s3-14900.html",
+      "cover": "assets/product-images/9022d9cab6ca8a2548b24a40.jpeg",
+      "name": "Galaxy Buds 3 Pro Silver",
+      "warehouse": "(S3)",
+      "price": 14900
+    },
+    "galaxy-buds-4-black-оаэ-s3-12900": {
+      "url": "hybrid-products/audio/galaxy-buds-4-black-s3-12900.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-4-black-s3-12900.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Galaxy Buds 4 Black",
+      "warehouse": "(S3)",
+      "price": 12900
+    },
+    "galaxy-buds-4-white-оаэ-s3-13000": {
+      "url": "hybrid-products/audio/galaxy-buds-4-white-s3-13000.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-4-white-s3-13000.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Galaxy Buds 4 White",
+      "warehouse": "(S3)",
+      "price": 13000
+    },
+    "galaxy-buds-4-pro-white-оаэ-s3-16000": {
+      "url": "hybrid-products/audio/galaxy-buds-4-pro-white-s3-16000.html",
+      "url_en": "en/hybrid-products/audio/galaxy-buds-4-pro-white-s3-16000.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Galaxy Buds 4 Pro White",
+      "warehouse": "(S3)",
+      "price": 16000
     }
   }
 }
