@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-15T12:33:11.023Z",
-  "count": 75,
+  "generated_at": "2026-10-16T12:16:28.174Z",
+  "count": 79,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -601,6 +601,38 @@
       "name": "Nintendo Switch 2 256GB Black",
       "warehouse": "(S2)",
       "price": 51500
+    },
+    "-ps5-slim-digital-825gb-s2-67300": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-67300.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-825gb-s2-67300.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "🎮PS5 Slim Digital 825Gb",
+      "warehouse": "(S2)",
+      "price": 67300
+    },
+    "-дисковод-ps5-pro-s2-11100": {
+      "url": "hybrid-products/gaming/дисковод-ps5-pro-s2-11100.html",
+      "url_en": "en/hybrid-products/gaming/дисковод-ps5-pro-s2-11100.html",
+      "cover": "assets/product-images/b69ddd0b1caaeea46a30c8f4.jpg",
+      "name": "🎮Дисковод PS5 Pro",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "подставка-sony-vertical-stand-для-playstation-s2-3500": {
+      "url": "hybrid-products/gaming/подставка-sony-vertical-stand-для-playstation-s2-3500.html",
+      "url_en": "en/hybrid-products/gaming/подставка-sony-vertical-stand-для-playstation-s2-3500.html",
+      "cover": "assets/product-images/aeeaa9bf403cdc1cbdf75742.jpg",
+      "name": "Подставка Sony Vertical Stand для PlayStation",
+      "warehouse": "(S2)",
+      "price": 3500
+    },
+    "-gamepad-ps5-chroma-teal-s2-8100": {
+      "url": "hybrid-products/gaming/gamepad-ps5-chroma-teal-s2-8100.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-chroma-teal-s2-8100.html",
+      "cover": "assets/product-images/c6f43a8594b4f3ef295a42c2.jpg",
+      "name": "🎮GamePad PS5 Chroma Teal",
+      "warehouse": "(S2)",
+      "price": 8100
     }
   }
 }
