@@ -3313,7 +3313,12 @@
       const r = await fetch(url + "?action=" + action, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body, keepalive });
       const text = await r.text();
       // 09.10.2026: и HTTP 5xx от Google (503 «сервис недоступен» — та же временная беда, сторож дверей ловил её).
-      const flaky = !text.trim().startsWith("{") && (r.status === 404 || r.status >= 500 || /Страница не найдена|Page Not Found/i.test(text));
+      // 16.10.2026: и ответ doGet — {"error":"missing_token"}. Google изредка доводит POST до скрипта как
+      // GET без тела, и дверь отвечает чужой ручкой (персональное предложение). №7776: оболочка написала
+      // «уведомления НЕ ушли — личная дверь: missing_token», хотя статус и отчёт клиенту ушли. Повтор
+      // безопасен: то же значение дверь 10 минут считает «уже обработано».
+      const viaGet = /"error"\s*:\s*"missing_token"/.test(text);
+      const flaky = viaGet || (!text.trim().startsWith("{") && (r.status === 404 || r.status >= 500 || /Страница не найдена|Page Not Found/i.test(text)));
       if (!flaky || i >= 3) return { r, text, flaky };
       await new Promise(res => setTimeout(res, 1500 * (i + 1)));
     }
@@ -3339,7 +3344,7 @@
         let net = false;
         try {
           const { r, text, flaky } = await doorPost(url, "crm-door", body, body.length < 60000);
-          try { j = JSON.parse(text); }
+          try { j = JSON.parse(text); if (j.error === "missing_token") j = { ok: false, error: "Google 4 раза подряд довёл запрос до двери без данных — нажмите «Повторить»" }; }
           catch { j = { ok: false, error: flaky ? "Google 4 раза подряд ответил «Страница не найдена» — нажмите «Повторить»" : (text.match(/Exception:[^<]{0,160}/) || [])[0] || "ответила не JSON (" + r.status + ")" }; }
         } catch (e) { net = true; j = { ok: false, error: "не ответила — сеть или Google вернул ошибку (например, у аккаунта отозваны разрешения скрипта)" }; }
         if (j.ok || !(net || /занята/.test(j.error || "")) || tries >= (net ? 2 : 5)) break;
