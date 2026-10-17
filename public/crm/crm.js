@@ -1485,17 +1485,67 @@
     }
     S.tin.applied = cr;
   }
-  function tinHtml() {
-    if (!tinOn()) return "";
-    const many = S.tin.items.length > 1;
-    const f = (i, k, label, kind) => { const v = S.tin.items[i][k] ?? "", a = `data-tin="${i}" data-tf="${k}"`;
+  function tinHtml() { return tinOn() ? tinFormHtml(S.tin, "") : ""; }
+  function tinFormHtml(st, foot) {
+    const many = st.items.length > 1;
+    const f = (i, k, label, kind) => { const v = st.items[i][k] ?? "", a = `data-tin="${i}" data-tf="${k}"`;
       return `<label class="field"><span>${esc(label)}</span>${kind === "area" ? `<textarea ${a} rows="2" spellcheck="true" lang="ru">${esc(v)}</textarea>` : `<input ${a} value="${esc(v)}"${kind === "num" ? ' inputmode="decimal"' : ' spellcheck="false"'} autocomplete="off">`}</label>`; };
     return `<section class="block tin"><h3>🔄 Сдаёт в зачёт (трейд-ин)</h3>
-      ${S.tin.items.map((x, i) => `<div class="tin__item">${many ? `<div class="h3-row"><b>Устройство в зачёт ${i + 1}</b><button type="button" class="linkbtn" data-act="tinrm" data-i="${i}">убрать</button></div>` : ""}
+      ${st.items.map((x, i) => `<div class="tin__item">${many ? `<div class="h3-row"><b>Устройство в зачёт ${i + 1}</b><button type="button" class="linkbtn" data-act="tinrm" data-i="${i}">убрать</button></div>` : ""}
         <div class="grid2">${f(i, "device", "Что сдаёт (модель, память, цвет)")}${f(i, "imei", "IMEI / S\\N")}</div>
         <div class="grid2">${f(i, "issue", "Состояние и комплект", "area")}${f(i, "buyback", "Зачёт, ₽", "num")}</div></div>`).join("")}
-      <button type="button" class="more" data-act="tinadd">＋ Ещё устройство в зачёт</button>
-      <p class="note">Каждое сданное устройство запишется отдельным заказом «Trade-in» в той же группе: зачёт — его себестоимость, когда продадим как б/у. Перед приёмом: iCloud и «Найти iPhone» отключены, IMEI не в розыске. Паспортные данные — только в бумажный договор.</p></section>`;
+      <button type="button" class="more" data-act="tinadd">＋ Ещё устройство в зачёт</button>${foot}
+      <p class="note">Каждое сданное устройство запишется отдельным заказом «Trade-in» в той же группе: зачёт — его себестоимость, когда продадим как б/у. Перед приёмом: iCloud и «Найти iPhone» отключены, IMEI не в розыске. Пароли, iCloud и паспортные данные в таблицу не пишем — только в бумажный договор.</p></section>`;
+  }
+  // Трейд-ин к уже записанной продаже (v70, 17.10.2026). Владелец: «нововведения почему-то не распространились на
+  // уже сделанный ранее заказ» — №7827 записан до v68: зачёт стоял в AE строки продажи, сданные — текстом в F.
+  // Кнопка в карточке продажи: те же поля, при записи — строки «Trade-in» в группу продажи (AG = № продажи, если
+  // группы не было), а зачёт из AE строки продажи переносится в них (подставляется в первое устройство).
+  // Клиенту ничего не уходит: строки не первые в группе, дверь по ним молчит.
+  function tinExistingHtml(r) {
+    const gr = groupOf(r), tins = (gr?.rows || []).filter(x => dealKey(cell(x, C.type)) === "tradein");
+    const list = tins.length ? `<div class="note">Сдано в зачёт: ${tins.map(x => `<a href="#/${esc(cell(x, C.num))}">№${esc(cell(x, C.num))}</a> ${esc(cell(x, C.device) || "")} — ${money(cell(x, C.buyback)) || "—"}`).join("; ")}</div>` : "";
+    if (S.tinX?.row !== r.row) return `<section class="block tin"><h3>🔄 Трейд-ин</h3>${list}<button type="button" class="btn btn--ghost btn--sm" data-act="tinxopen">🔄 ${tins.length ? "Добавить ещё сданное устройство" : "Добавить трейд-ин — клиент сдал устройство в зачёт"}</button></section>`;
+    const legacy = toNum(cell(r, C.buyback));
+    return list + tinFormHtml(S.tinX, `${legacy != null ? `<p class="note">В строке продажи стоит зачёт ${money(legacy)} (записан до v68) — при записи он перейдёт в строки трейд-ина, в строке продажи очистится.</p>` : ""}
+      <div class="row"><button type="button" class="btn btn--red btn--sm" data-act="tinxsave">Записать трейд-ин</button><button type="button" class="linkbtn" data-act="tinxcancel">✕ отмена</button></div>`);
+  }
+  async function tinSaveExisting(t) {
+    const r = S.byNum.get(location.hash.slice(2)), st = S.tinX; if (!r || !st || st.row !== r.row) return;
+    const items = st.items.filter(x => String(x.device ?? "").trim());
+    if (!items.length) return toast("Впишите, что сдаёт клиент");
+    if (items.some(x => toNum(x.buyback) == null)) return toast("Трейд-ин: впишите зачёт у каждого сданного устройства", null, true);
+    t.disabled = true;
+    try {
+      const N = items.length, maxN = Math.max(0, ...S.rows.map(x => +cell(x, C.num) || 0)), lastRow = Math.max(0, ...S.rows.map(x => x.row));
+      const slots = DEMO ? items.map((_, i) => ({ row: lastRow + 1 + i, num: String(maxN + 1 + i), hasNum: false, hasMargin: true })) : await freeSlots(N);
+      const saleNum = String(cell(r, C.num)).trim(), g = String(cell(r, C.group) ?? "").trim() || saleNum, st0 = String(cell(r, C.status) || "");
+      const base = [C.name, C.phone, C.date, C.source, C.gcontact, C.contactName, C.contactPhone].map(c => ({ c, v: cell(r, c), old: "" })).filter(ch => String(ch.v ?? "").trim());
+      const tinType = typeOptions().find(o => /trade|трейд/i.test(o)) || "Trade-in";
+      const tinSt = /продан|выполн/i.test(st0) ? ((S.opts[C.status] || []).find(o => /обмен оформлен/i.test(o)) || "Обмен оформлен") : st0;
+      const gave = String(cell(r, C.device) || "").trim() + (String(cell(r, C.imei) || "").trim() ? ", IMEI " + String(cell(r, C.imei)).trim() : "");
+      const made = items.map((x, i) => {
+        const { num, row, hasNum, hasMargin } = slots[i];
+        const list = [...(hasNum ? [] : [{ c: C.num, v: num }]), { c: C.group, v: g, old: "" }, ...base, { c: C.type, v: tinType, old: "" }, { c: C.status, v: tinSt, old: "" }, { c: C.work, v: gave, old: "" },
+          ...[[C.device, x.device], [C.imei, x.imei], [C.issue, x.issue], [C.buyback, x.buyback]].map(([c, v]) => ({ c, v: String(v ?? "").trim(), old: "" })),
+          ...(hasMargin ? [] : [{ c: C.labor, v: `=Q${row}-S${row}-T${row}`, formula: true }])].filter(ch => String(ch.v ?? "").trim() !== "");
+        return { num, row, list };
+      });
+      const head = [];
+      if (!String(cell(r, C.group) ?? "").trim()) head.push({ c: C.group, v: g, old: "" });
+      if (toNum(cell(r, C.buyback)) != null) head.push({ c: C.buyback, v: "", old: cell(r, C.buyback) });
+      await Promise.all(made.map(m => writeCells(m.row, m.list)));
+      if (head.length) await writeCells(r.row, head);
+      for (const m of made) {
+        const cells = []; cells[C.num] = m.num; for (const ch of m.list) if (!ch.formula) cells[ch.c] = String(ch.w ?? "");
+        m.rec = { row: m.row, cells }; index(m.rec); S.rows.push(m.rec); S.byNum.set(m.num, m.rec);
+      }
+      for (const ch of head) r.cells[ch.c] = String(ch.w ?? "");
+      S.tinX = null;
+      toast(`🔄 Трейд-ин записан: ${made.map(m => "№" + m.num).join(", ")} — в группе продажи №${saleNum}${DEMO ? " (демо)" : ""}. Клиенту ничего не отправлялось.`, null, true);
+      made.reduce((p, m) => p.then(() => doorInBackground(m.rec, m.num, m.list.filter(ch => ch.c !== C.num && !ch.formula))), Promise.resolve());
+    } catch (e) { toast(e.message, null, true); }
+    t.disabled = false; const y = window.scrollY; render(); window.scrollTo(0, y);
   }
   const tinBox = () => `<label class="check multi"><input type="checkbox" data-act="tin" ${tinOn() ? "checked" : ""}><b>🔄 Трейд-ин — клиент сдаёт устройство в зачёт</b></label>`;
   const DISC_TYPES = ["repair", "other", "sale_used", "sale_new", "sale_parts"];
@@ -2654,6 +2704,7 @@
     </section>`;
     right += box(4, html); html = "";
     if (isNew && TIN_TYPES.includes(dk)) right += box(5, tinHtml());
+    else if (!isNew && TIN_TYPES.includes(dk) && canCreate()) right += box(5, tinExistingHtml(r));
 
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
       // «Чистая работа» (R) отсюда убрана (v63, 10.10.2026). Владелец: «не понимаю, что за поля; почему чистая работа
@@ -3517,6 +3568,35 @@
     } catch (e) { busy(false); toast(e.message, null, true); }
   }
 
+  // Куда класть N новых строк (номер, строка, есть ли номер и формула R) — после последнего заполненного заказа.
+  // Вынесено из create() в v70: тем же путём дописываются строки трейд-ина к уже записанной продаже.
+  async function freeSlots(N) {
+    let slots;
+    const got = await api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A2:H`)}`);
+    const vals = got.values || [];
+    let lastData = -1;
+    vals.forEach((r, i) => { if ([C.name, C.phone, C.device, C.issue, C.status].some(c => String(r[c] ?? "").trim())) lastData = i; });
+    let maxNum = Math.max(0, ...vals.map(r => +String(r[0] ?? "").trim() || 0));
+    slots = [];
+    for (let i = 0; i < N; i++) {
+      const idx = lastData + 1 + i, a = String(vals[idx]?.[0] ?? "").trim();
+      const has = !!(a && +a);
+      slots.push({ row: idx + 2, num: has ? a : String(++maxNum), hasNum: has });
+    }
+    const r0 = slots[0].row, r1 = slots[N - 1].row;
+    const probe = await api(`/values/${A1(1, r0, C.group, r1)}?valueRenderOption=FORMULA`)
+      .catch(e => { throw /400/.test(e.message) ? new Error(`В листе закончились строки (нужна строка ${r1}) — добавьте строки внизу листа в таблице и повторите`) : e; });
+    // Занята ли строка: формулы, снятые галочки и одинокая дата приёма (B) — не занятость.
+    // 28.09.2026 в строке 7750 осталась только дата: заказ начали вводить в таблице и
+    // стёрли, а дату (её ставит OrderAutofill) — нет; новый заказ не сохранялся вовсе.
+    const busyCell = (v, i) => { const t = String(v ?? "").trim(); return i > 0 && t !== "" && !t.startsWith("=") && t.toUpperCase() !== "FALSE"; };
+    const pv = probe.values || [];
+    const busy = pv.flatMap((rw, k) => (rw || []).map((v, i) => busyCell(v, i) ? LETTER(i + 1) + (r0 + k) : null).filter(Boolean));
+    if (busy.length) throw new Error(`Строка ${r0}${N > 1 ? "–" + r1 : ""} занята (${busy.slice(0, 4).join(", ")}) — проверьте её в таблице и повторите`);
+    slots.forEach((s, i) => { s.hasMargin = String(pv[i]?.[C.labor - 1] ?? "").trim().startsWith("="); });
+    return slots;
+  }
+
   async function create() {
     const get = c => S.dirty.get("new:" + c) ?? "";
     const skOps = S.multi ? [] : skPending("new"); // запчасти со склада — списать в первый заказ после записи
@@ -3580,28 +3660,7 @@
       if (DEMO) {
         slots = devices.map((_, i) => ({ row: row0 + i, num: String(num0 + i), hasNum: false, hasMargin: true }));
       } else {
-        const got = await api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A2:H`)}`);
-        const vals = got.values || [];
-        let lastData = -1;
-        vals.forEach((r, i) => { if ([C.name, C.phone, C.device, C.issue, C.status].some(c => String(r[c] ?? "").trim())) lastData = i; });
-        let maxNum = Math.max(0, ...vals.map(r => +String(r[0] ?? "").trim() || 0));
-        slots = [];
-        for (let i = 0; i < N; i++) {
-          const idx = lastData + 1 + i, a = String(vals[idx]?.[0] ?? "").trim();
-          const has = !!(a && +a);
-          slots.push({ row: idx + 2, num: has ? a : String(++maxNum), hasNum: has });
-        }
-        const r0 = slots[0].row, r1 = slots[N - 1].row;
-        const probe = await api(`/values/${A1(1, r0, C.group, r1)}?valueRenderOption=FORMULA`)
-          .catch(e => { throw /400/.test(e.message) ? new Error(`В листе закончились строки (нужна строка ${r1}) — добавьте строки внизу листа в таблице и повторите`) : e; });
-        // Занята ли строка: формулы, снятые галочки и одинокая дата приёма (B) — не занятость.
-        // 28.09.2026 в строке 7750 осталась только дата: заказ начали вводить в таблице и
-        // стёрли, а дату (её ставит OrderAutofill) — нет; новый заказ не сохранялся вовсе.
-        const busyCell = (v, i) => { const t = String(v ?? "").trim(); return i > 0 && t !== "" && !t.startsWith("=") && t.toUpperCase() !== "FALSE"; };
-        const pv = probe.values || [];
-        const busy = pv.flatMap((rw, k) => (rw || []).map((v, i) => busyCell(v, i) ? LETTER(i + 1) + (r0 + k) : null).filter(Boolean));
-        if (busy.length) throw new Error(`Строка ${r0}${N > 1 ? "–" + r1 : ""} занята (${busy.slice(0, 4).join(", ")}) — проверьте её в таблице и повторите`);
-        slots.forEach((s, i) => { s.hasMargin = String(pv[i]?.[C.labor - 1] ?? "").trim().startsWith("="); });
+        slots = await freeSlots(N);
         num0 = +slots[0].num;
       }
       const head = slots[0].num;
@@ -3790,6 +3849,18 @@
     else if (act === "impclose") { S.imp = { open: false }; render(); }
     else if (act === "multi") { S.multi = t.checked; if (S.multi && !S.extra.length) S.extra.push(blankDevice()); if (!S.multi) S.extra = []; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "adddev") { S.extra.push(blankDevice()); const y = window.scrollY; render(); window.scrollTo(0, y); }
+    else if ((act === "tinadd" || act === "tinrm") && curKey() !== "new" && S.tinX) {
+      if (act === "tinadd") S.tinX.items.push({}); else { S.tinX.items.splice(+t.dataset.i, 1); if (!S.tinX.items.length) S.tinX.items.push({}); }
+      const y = window.scrollY; render(); window.scrollTo(0, y);
+    }
+    else if (act === "tinxopen") {
+      const r = S.byNum.get(location.hash.slice(2)); if (!r) return true;
+      const legacy = toNum(cell(r, C.buyback));
+      S.tinX = { row: r.row, items: [legacy != null ? { buyback: String(legacy) } : {}] };
+      const y = window.scrollY; render(); window.scrollTo(0, y); $app.querySelector('[data-tf="device"]')?.focus({ preventScroll: true });
+    }
+    else if (act === "tinxcancel") { S.tinX = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
+    else if (act === "tinxsave") tinSaveExisting(t);
     else if (act === "tin" || act === "tinadd" || act === "tinrm") {
       if (act === "tin") S.tin = t.checked ? { items: [{}], applied: S.tin?.applied || 0 } : (S.tin && { ...S.tin, items: [] });
       else if (act === "tinadd") S.tin.items.push({});
@@ -3965,6 +4036,7 @@
         return;
       }
     }
+    if (t.dataset.tin != null && curKey() !== "new" && S.tinX) { S.tinX.items[+t.dataset.tin][t.dataset.tf] = t.value; return; }
     if (t.dataset.tin != null && S.tin) {
       S.tin.items[+t.dataset.tin][t.dataset.tf] = t.value;
       if (t.dataset.tf === "buyback") tinRecalc();
