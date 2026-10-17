@@ -513,7 +513,13 @@
     formatMacbookFacetValue
   );
 
-  const IPAD_MODEL_ORDER = ["11 A16", "Air 11 M3", "Air 11 M4", "Pro 11 M5"];
+  // Изменено 17.10.2026 (айпады из предзаказа 5–7 дней, склад S4) — зеркало cloudflare-order-bot/src/ipad-traits.js,
+  // меняются вместе. Раньше модель знала только «11 A16», «Air 11» и «Pro 11»: iPad mini, Air 13 и Pro 13 не попадали
+  // ни под одну кнопку и пропадали при любом выбранном фильтре. Склад S3 пишет память без единиц («iPad 11 128 Silver
+  // Wi-Fi») — такие позиции тоже были нефильтруемыми; «Wi-Fi + Cellular» оставлял в цвете «+».
+  const IPAD_MODEL_ORDER = [
+    "mini 7", "11 A16", "Air 11 M3", "Air 11 M4", "Air 13 M3", "Air 13 M4",
+    "Pro 11 M4", "Pro 11 M5", "Pro 13 M4", "Pro 13 M5"];
 
   const IPAD_COLOR_ALIASES = {
     gray: "space gray",
@@ -530,15 +536,23 @@
     return IPAD_COLOR_ALIASES[key] || key;
   }
 
+  /** Модель с чипом: «Air 11 M4», «Pro 13 M5», «mini 7», «11 A16» (базовый iPad 11 — это A16, S3 пишет без чипа). */
+  function ipadFullModel(name) {
+    const n = String(name || "").trim();
+    if (/^iPad\s+11"?(?:\s*A16)?\b/i.test(n)) return "11 A16";
+    const big = n.match(/^iPad\s+(Pro|Air)\s+(11|13)"?\s*(M\d+)?/i);
+    if (big) {
+      const line = big[1].charAt(0).toUpperCase() + big[1].slice(1).toLowerCase();
+      return `${line} ${big[2]}${big[3] ? ` ${big[3].toUpperCase()}` : ""}`;
+    }
+    const mini = n.match(/^iPad\s+mini\s*(\d+)?\b/i);
+    if (mini) return `mini${mini[1] ? ` ${mini[1]}` : ""}`;
+    return "";
+  }
+
   function parseIpadTraits(name) {
     const productName = String(name || "").trim();
-
-    let model = "";
-    const proMatch = productName.match(/^iPad\s+Pro\s+11"?\s*(M\d+)?/i);
-    if (proMatch) model = `Pro 11${proMatch[1] ? ` ${proMatch[1]}` : ""}`.trim();
-    const airMatch = productName.match(/^iPad\s+Air\s+11"?\s*(M\d+)?/i);
-    if (airMatch) model = `Air 11${airMatch[1] ? ` ${airMatch[1]}` : ""}`.trim();
-    if (/^iPad\s+11"?\s*A16/i.test(productName)) model = "11 A16";
+    const model = ipadFullModel(productName);
 
     let storage = "";
     const capMatch = productName.match(/\b(\d+)\s*(Tb|TB|Gb|GB)\b/i);
@@ -546,14 +560,19 @@
       const num = capMatch[1];
       const unit = String(capMatch[2] || "").toLowerCase();
       storage = unit.startsWith("t") ? `${num}tb` : num;
+    } else if (model) {
+      const bare = productName.replace(/^iPad\s+\S+(?:\s+1[13])?/i, "").match(/\b(64|128|256|512)\b/);
+      if (bare) storage = bare[1];
     }
 
     let color = "";
     if (model && storage) {
       const tail = productName
-        .replace(/^iPad\s+(?:Pro\s+11"?\s*M\d+|Air\s+11"?\s*M\d+|11"?\s*A16)\s*/i,"")
+        .replace(/^iPad\s+(?:mini(?:\s+\d+)?|(?:Pro|Air)\s+1[13]"?\s*(?:M\d+)?|11"?(?:\s*A16)?)\s*/i, "")
+        .replace(/\bNano-t(?:exture)?\b/gi, " ")
         .replace(/\b(?:Wi-Fi|WiFi|Cellular|LTE)\b/gi, " ")
-        .replace(new RegExp(`\\b${escapeRegExp(storage)}\\s*(?:Gb|GB|Tb|TB)?\\b`, "i"), " ")
+        .replace(/\s\+\s|\s\+$|^\+\s/g, " ")
+        .replace(new RegExp(`\\b${escapeRegExp(storage.replace(/tb$/, ""))}\\s*(?:Gb|GB|Tb|TB)?\\b`, "i"), " ")
         .replace(/\s+[A-Z]{1,2}\/[A-Z]\/?A?\s*$/i,"")
         .replace(/\s+/g, " ")
         .trim();
