@@ -708,3 +708,7 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .tin { border: 1px solid rgba(212, 160, 18, .45); }
 .tin__item + .tin__item { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
 .tin__item .h3-row { margin-bottom: 4px; }
+/* v71: трейд-ин в одном заказе — итог зачёта и строки только для чтения */
+.tin__sum { margin-top: 10px; color: var(--cream); }
+.tin__ro { padding: 4px 0; border-top: 1px solid var(--line); }
+.tin__ro:first-of-type { border-top: 0; }

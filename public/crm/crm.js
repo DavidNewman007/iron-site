@@ -26,7 +26,7 @@
     scope: "openid email https://www.googleapis.com/auth/spreadsheets",
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
-    lastCol: "AJ", // AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
+    lastCol: "AK", // AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
     // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
@@ -66,7 +66,8 @@
     // уходят этому человеку, а заказ остаётся за клиентом (C/D). Логика — ContactPerson.js.
     contactName: 33, contactPhone: 34,
     gcontact: 23, // X «Google Contact ID» — пишет оболочка, если контакт заведён заранее (v45)
-    payment: 35 }; // AJ «Оплата» (v62, 09.10.2026): наличные / перевод / карта или QR / счёт на организацию
+    payment: 35, // AJ «Оплата» (v62, 09.10.2026): наличные / перевод / карта или QR / счёт на организацию
+    tradein: 36 }; // AK «Трейд-ин» (v71, 17.10.2026): сданные в зачёт устройства продажи, по строке на устройство
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -113,6 +114,7 @@
     [C.group]: { label: "Группа" },
     [C.discount]: { label: "Скидка" },
     [C.payment]: { label: "Оплата" },
+    [C.tradein]: { label: "Трейд-ин: сданные устройства" },
   };
 
   // Тип сделки (колонка AC). Пусто = ремонт. Ключи — как в DealTypes.js на стороне таблицы.
@@ -256,7 +258,7 @@
   const S = { token: null, email: "", rows: [], byNum: new Map(), gid: 0, loadedAt: 0, loading: false,
     since: new Map(), tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [],
     parts: new Map(), svc: null, pp: null, view: null, // parts: ключ карточки → строки запчастей; svc — прайс сайта; pp — окно «работа из прайса»
-    stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", src: "", only: null, limit: 150 }, skAdd: null, skSend: new Map(), skSent: null }; // склад Витали (v31); skSend/skSent — брак на возврат (v48)
+    stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", src: "", only: null, limit: 150 }, skAdd: null, skSend: new Map(), skSent: null, tins: {} }; // склад Витали (v31); skSend/skSent — брак на возврат (v48)
   const $app = document.getElementById("app");
   const $toast = document.getElementById("toast");
 
@@ -915,9 +917,6 @@
   function moneySummary(key, val, r) {
     const n = c => toNum(val(c)) ?? 0;
     if (key === "buyback" || key === "parts") return `Отдали клиенту: <b>${n(C.buyback).toLocaleString("ru-RU")} ₽</b> <span class="note">(маржа — при продаже)</span>`;
-    // Сданное в продаже с трейд-ином (v68): зачёт — не доход, а себестоимость будущей продажи б/у.
-    const gr = r && key === "tradein" ? groupOf(r) : null, saleHead = gr?.rows.find(x => /^sale_/.test(dealKey(cell(x, C.type))));
-    if (saleHead) return `Зачтено клиенту: <b>${n(C.buyback).toLocaleString("ru-RU")} ₽</b> <span class="note">(трейд-ин в продаже №${esc(cell(saleHead, C.num))}; маржа — когда продадим как б/у)</span>`;
     let m, how;
     if (key === "tradein") { m = n(C.total) + n(C.buyback) - n(C.partCost) - n(C.extra); how = "доплата + зачёт − закупка выданного − расходы"; }
     else { m = n(C.total) - n(C.partCost) - n(C.extra); how = key.startsWith("sale") ? "цена − себестоимость − расходы" : "итого − закупка запчастей − сторонний мастер / расходы"; }
@@ -927,13 +926,10 @@
       if (src) extra = `<div class="note">Устройство из сделки №${esc(val(C.linked))}: выкуплено за ${money(cell(src, C.buyback)) || "—"}</div>`;
     }
     const d = parseDiscount(val(C.discount)), q = toNum(val(C.total)), pay = val(C.payment), up = payUp(pay) && !["buyback", "parts"].includes(key);
-    const cr = key.startsWith("sale") ? creditOf(r ? null : "new", r) : 0;
+    const cr = TIN_TYPES.includes(key) ? (toNum(val(C.buyback)) || 0) : 0; // зачёт трейд-ина (v71: AE этой же строки)
     const b = q != null ? baseOf(q, d, up ? pay : "", cr) : null;
     const dline = (d || up) && q != null ? `<div class="note">${d ? `Без скидки ${b.toLocaleString("ru-RU")} ₽ · скидка ${discText(d)}${d.pct != null ? ` (−${discRub(d, b).toLocaleString("ru-RU")} ₽)` : ""}` : `Без наценки ${b.toLocaleString("ru-RU")} ₽`}${up ? ` · +10% за оплату «${esc(pay)}»${cr ? " с доплаты" : ""}` : ""}${cr ? "" : ` · клиент платит ${q.toLocaleString("ru-RU")} ₽`}</div>` : "";
-    if (cr) {
-      const tins = r ? (groupOf(r)?.rows || []).filter(x => dealKey(cell(x, C.type)) === "tradein").map(x => `№${cell(x, C.num)} ${cell(x, C.device) || ""}`.trim()).join(", ") : "";
-      extra += `<div class="note">🔄 Трейд-ин${tins ? " (" + esc(tins) + ")" : ""}: зачёт ${money(cr)} → клиент доплачивает <b>${money(Math.max(0, (q ?? 0) - cr)) || "0 ₽"}</b></div>`;
-    }
+    if (cr) extra += `<div class="note">🔄 Трейд-ин: зачёт ${money(cr)} → клиент доплачивает <b>${money(Math.max(0, (q ?? 0) - cr)) || "0 ₽"}</b></div>`;
     // У ремонта это и есть «Чистая работа» — колонка R таблицы (она же Q − S − T), здесь — на лету.
     const title = key === "repair" || key === "other" ? "Чистая работа (остаётся нам)" : "Остаётся нам";
     return `${title}: <b>${m.toLocaleString("ru-RU")} ₽</b> <span class="note">(${how})</span>${dline}${extra}`;
@@ -1453,101 +1449,65 @@
     const pre = !u ? q : q <= credit ? q : Math.round((q + u * credit) / (1 + u));
     return !d ? pre : d.pct != null ? Math.round(pre / (1 - d.pct / 100)) : pre + d.rub; };
   const finalOf = (base, d, pay, credit = 0) => { const x = base - discRub(d, base); return Math.max(0, Math.round(x + payUp(pay) * Math.max(0, x - credit))); };
-  // ── Трейд-ин внутри продажи (v68, 17.10.2026) ────────────────────────────────────────
+  // ── Трейд-ин внутри продажи (v68–v71, 17.10.2026) ───────────────────────────────────
   // Владелец: «неудобно заполнять трейд-ин: нет „подгрузить заказ из бота“ и непонятно устроены поля. Объедини
-  // продажу нового и трейд-ин: в продаже нового галочка „трейд-ин“, и в трейд-ин можно добавить несколько устройств».
-  // В новой продаже — галочка и список сданных устройств (что, IMEI, состояние, зачёт). При записи каждое сданное
-  // ложится отдельным заказом «Trade-in» в ту же группу (AG), после строк продажи: зачёт (AE) — его себестоимость,
-  // когда продадим как б/у (как у выкупа), в G — что выдали взамен. Строка продажи хранит полную цену (Q), клиент
-  // доплачивает Q − Σзачёт; первую строку группы дверь шлёт клиенту одним сообщением «купили / сдали / доплата».
-  // Отдельный тип «Trade-in» для новых сделок убран из выбора; старые строки открываются как раньше.
-  // v69 (17.10.2026): и в «Продаже б/у» — владелец: «да, нужен» (на предложение включить трейд-ин и там).
+  // продажу нового и трейд-ин: в продаже галочка „трейд-ин“, и в трейд-ин можно добавить несколько устройств».
+  // v71 — всё в одном заказе. Владелец: «сданные прошли двумя новыми заказами — неудобно; нужно, чтобы всё было в
+  // одном заказе продажи с трейд-ином и оболочка сама считала, сколько клиент доплачивает за новое устройство».
+  // Сданные — списком в AK этой же строки (по строке на устройство: «модель · IMEI … · состояние · зачёт N ₽»),
+  // сумма зачёта — в AE. Q — полная цена (со скидкой), клиент доплачивает Q − AE; +10% за карту/счёт — только с
+  // доплаты. *Изменено 17.10.2026, в v68–v70 было:* каждое сданное — отдельный заказ «Trade-in» в группе продажи;
+  // так записан один заказ (№7827 + №7828–7829), он собран обратно. Работает и у записанной продажи: правка —
+  // как любого поля, кнопкой «Сохранить». Галочка — у «Продажи нового» и «Продажи б/у» (v69).
   const TIN_TYPES = ["sale_new", "sale_used"];
-  const tinOn = () => !!S.tin && TIN_TYPES.includes(dealKey(S.dirty.get("new:" + C.type)));
-  const tinCredit = () => tinOn() ? S.tin.items.reduce((a, x) => a + (toNum(x.buyback) || 0), 0) : 0;
-  // Зачёт, который уменьшает доплату по этой строке: у нового заказа — из формы, у записанного — сумма строк
-  // «Trade-in» его группы, и только у первой строки продажи (иначе зачёт посчитался бы дважды).
-  function creditOf(key, r) {
-    if (key === "new") return tinCredit();
-    if (!r || !/^sale_(new|used)$/.test(dealKey(cell(r, C.type)))) return 0;
-    const gr = groupOf(r); if (!gr) return 0;
-    if (gr.rows.find(x => /^sale_/.test(dealKey(cell(x, C.type)))) !== r) return 0;
-    return gr.rows.filter(x => dealKey(cell(x, C.type)) === "tradein").reduce((a, x) => a + (toNum(cell(x, C.buyback)) || 0), 0);
-  }
-  // Зачёт поменялся — при +10% за оплату итог пересчитывается: наценка теперь с новой доплаты.
-  function tinRecalc() {
-    if (!S.tin) return;
-    const cr = tinCredit(), was = S.tin.applied || 0, get = c => S.dirty.get("new:" + c) ?? "";
-    const pay = get(C.payment), q = toNum(get(C.total)), d = parseDiscount(get(C.discount));
-    if (payUp(pay) && q != null && cr !== was) {
-      setDirty("new", C.total, String(finalOf(baseOf(q, d, pay, was), d, pay, cr)));
-      const inp = $app.querySelector(`[data-edit="${C.total}"]`); if (inp) inp.value = S.dirty.get("new:" + C.total);
+  const tinVal = (key, r, c) => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+  const tinParse = text => String(text || "").split("\n").map(l => l.trim()).filter(Boolean).map(l => {
+    const parts = l.split(" · "), it = { device: String(parts.shift() || "").trim() }, rest = [];
+    for (const x of parts.map(p => p.trim())) {
+      if (/^IMEI\s/i.test(x)) it.imei = x.replace(/^IMEI\s+/i, "");
+      else if (/^зач[её]т\s/i.test(x)) it.buyback = x.replace(/[^\d]/g, "");
+      else rest.push(x);
     }
-    S.tin.applied = cr;
+    if (rest.length) it.issue = rest.join(", ");
+    return it;
+  });
+  const tinFilled = x => ["device", "imei", "issue", "buyback"].some(k => String(x[k] ?? "").trim());
+  const tinText = items => items.filter(tinFilled).map(x => [String(x.device ?? "").trim() || "устройство",
+    String(x.imei ?? "").trim() && "IMEI " + String(x.imei).trim(), String(x.issue ?? "").replace(/\s*\n\s*/g, ", ").replace(/ · /g, ", ").trim(),
+    toNum(x.buyback) != null && "зачёт " + toNum(x.buyback).toLocaleString("ru-RU") + " ₽"].filter(Boolean).join(" · ")).join("\n");
+  // Список на правку: пока его правят — в S.tins[key] (там и пустые строки), иначе — разбор AK.
+  const tinItems = (key, r) => S.tins[key] || tinParse(tinVal(key, r, C.tradein));
+  const tinActive = (key, r) => !!(S.tins[key]?.length || String(tinVal(key, r, C.tradein)).trim());
+  // Зачёт, который уменьшает доплату: AE строки продажи (в т. ч. вписанный до v68 руками, как у №7827).
+  function creditOf(key, r) { return TIN_TYPES.includes(dealKey(tinVal(key, r, C.type))) ? (toNum(tinVal(key, r, C.buyback)) || 0) : 0; }
+  // Список → AK и AE; при +10% за оплату итог пересчитывается: наценка — с новой доплаты.
+  function tinSync(key, r) {
+    const items = S.tins[key] || [], was = creditOf(key, r);
+    const cr = items.filter(tinFilled).reduce((a, x) => a + (toNum(x.buyback) || 0), 0);
+    setDirty(key, C.tradein, tinText(items));
+    setDirty(key, C.buyback, cr ? String(cr) : "");
+    const pay = tinVal(key, r, C.payment), q = toNum(tinVal(key, r, C.total)), d = parseDiscount(tinVal(key, r, C.discount));
+    if (payUp(pay) && q != null && cr !== was) {
+      setDirty(key, C.total, String(finalOf(baseOf(q, d, pay, was), d, pay, cr)));
+      const inp = $app.querySelector(`[data-edit="${C.total}"]`); if (inp) inp.value = tinVal(key, r, C.total);
+    }
   }
-  function tinHtml() { return tinOn() ? tinFormHtml(S.tin, "") : ""; }
-  function tinFormHtml(st, foot) {
-    const many = st.items.length > 1;
-    const f = (i, k, label, kind) => { const v = st.items[i][k] ?? "", a = `data-tin="${i}" data-tf="${k}"`;
+  function tinHtml(key, r) {
+    if (!tinActive(key, r)) return "";
+    const items = tinItems(key, r), many = items.length > 1, can = key === "new" || editable(C.buyback, r);
+    const cr = creditOf(key, r), q = toNum(tinVal(key, r, C.total));
+    const sum = `<div class="tin__sum">Зачёт: <b>${money(cr) || "0 ₽"}</b>${q != null ? ` · клиент доплачивает <b>${money(Math.max(0, q - cr)) || "0 ₽"}</b>` : ""}</div>`;
+    if (!can) return `<section class="block tin"><h3>🔄 Сдал в зачёт (трейд-ин)</h3>${items.map(x => `<div class="tin__ro"><b>${esc(x.device || "устройство")}</b>${x.imei ? " · IMEI " + esc(x.imei) : ""}${x.issue ? " · " + esc(x.issue) : ""} — ${money(x.buyback) || "—"}</div>`).join("")}${sum}</section>`;
+    const f = (i, k, label, kind) => { const v = items[i][k] ?? "", a = `data-tin="${i}" data-tf="${k}"`;
       return `<label class="field"><span>${esc(label)}</span>${kind === "area" ? `<textarea ${a} rows="2" spellcheck="true" lang="ru">${esc(v)}</textarea>` : `<input ${a} value="${esc(v)}"${kind === "num" ? ' inputmode="decimal"' : ' spellcheck="false"'} autocomplete="off">`}</label>`; };
     return `<section class="block tin"><h3>🔄 Сдаёт в зачёт (трейд-ин)</h3>
-      ${st.items.map((x, i) => `<div class="tin__item">${many ? `<div class="h3-row"><b>Устройство в зачёт ${i + 1}</b><button type="button" class="linkbtn" data-act="tinrm" data-i="${i}">убрать</button></div>` : ""}
+      ${items.map((x, i) => `<div class="tin__item">${many ? `<div class="h3-row"><b>Устройство в зачёт ${i + 1}</b><button type="button" class="linkbtn" data-act="tinrm" data-i="${i}">убрать</button></div>` : ""}
         <div class="grid2">${f(i, "device", "Что сдаёт (модель, память, цвет)")}${f(i, "imei", "IMEI / S\\N")}</div>
         <div class="grid2">${f(i, "issue", "Состояние и комплект", "area")}${f(i, "buyback", "Зачёт, ₽", "num")}</div></div>`).join("")}
-      <button type="button" class="more" data-act="tinadd">＋ Ещё устройство в зачёт</button>${foot}
-      <p class="note">Каждое сданное устройство запишется отдельным заказом «Trade-in» в той же группе: зачёт — его себестоимость, когда продадим как б/у. Перед приёмом: iCloud и «Найти iPhone» отключены, IMEI не в розыске. Пароли, iCloud и паспортные данные в таблицу не пишем — только в бумажный договор.</p></section>`;
+      <button type="button" class="more" data-act="tinadd">＋ Ещё устройство в зачёт</button>${sum}
+      <p class="note">Всё в этом заказе: сданные — в колонке AK «Трейд-ин», зачёт — в AE. Перед приёмом: iCloud и «Найти iPhone» отключены, IMEI не в розыске. Пароли, iCloud и паспортные данные в таблицу не пишем — только в бумажный договор.</p></section>`;
   }
-  // Трейд-ин к уже записанной продаже (v70, 17.10.2026). Владелец: «нововведения почему-то не распространились на
-  // уже сделанный ранее заказ» — №7827 записан до v68: зачёт стоял в AE строки продажи, сданные — текстом в F.
-  // Кнопка в карточке продажи: те же поля, при записи — строки «Trade-in» в группу продажи (AG = № продажи, если
-  // группы не было), а зачёт из AE строки продажи переносится в них (подставляется в первое устройство).
-  // Клиенту ничего не уходит: строки не первые в группе, дверь по ним молчит.
-  function tinExistingHtml(r) {
-    const gr = groupOf(r), tins = (gr?.rows || []).filter(x => dealKey(cell(x, C.type)) === "tradein");
-    const list = tins.length ? `<div class="note">Сдано в зачёт: ${tins.map(x => `<a href="#/${esc(cell(x, C.num))}">№${esc(cell(x, C.num))}</a> ${esc(cell(x, C.device) || "")} — ${money(cell(x, C.buyback)) || "—"}`).join("; ")}</div>` : "";
-    if (S.tinX?.row !== r.row) return `<section class="block tin"><h3>🔄 Трейд-ин</h3>${list}<button type="button" class="btn btn--ghost btn--sm" data-act="tinxopen">🔄 ${tins.length ? "Добавить ещё сданное устройство" : "Добавить трейд-ин — клиент сдал устройство в зачёт"}</button></section>`;
-    const legacy = toNum(cell(r, C.buyback));
-    return list + tinFormHtml(S.tinX, `${legacy != null ? `<p class="note">В строке продажи стоит зачёт ${money(legacy)} (записан до v68) — при записи он перейдёт в строки трейд-ина, в строке продажи очистится.</p>` : ""}
-      <div class="row"><button type="button" class="btn btn--red btn--sm" data-act="tinxsave">Записать трейд-ин</button><button type="button" class="linkbtn" data-act="tinxcancel">✕ отмена</button></div>`);
-  }
-  async function tinSaveExisting(t) {
-    const r = S.byNum.get(location.hash.slice(2)), st = S.tinX; if (!r || !st || st.row !== r.row) return;
-    const items = st.items.filter(x => String(x.device ?? "").trim());
-    if (!items.length) return toast("Впишите, что сдаёт клиент");
-    if (items.some(x => toNum(x.buyback) == null)) return toast("Трейд-ин: впишите зачёт у каждого сданного устройства", null, true);
-    t.disabled = true;
-    try {
-      const N = items.length, maxN = Math.max(0, ...S.rows.map(x => +cell(x, C.num) || 0)), lastRow = Math.max(0, ...S.rows.map(x => x.row));
-      const slots = DEMO ? items.map((_, i) => ({ row: lastRow + 1 + i, num: String(maxN + 1 + i), hasNum: false, hasMargin: true })) : await freeSlots(N);
-      const saleNum = String(cell(r, C.num)).trim(), g = String(cell(r, C.group) ?? "").trim() || saleNum, st0 = String(cell(r, C.status) || "");
-      const base = [C.name, C.phone, C.date, C.source, C.gcontact, C.contactName, C.contactPhone].map(c => ({ c, v: cell(r, c), old: "" })).filter(ch => String(ch.v ?? "").trim());
-      const tinType = typeOptions().find(o => /trade|трейд/i.test(o)) || "Trade-in";
-      const tinSt = /продан|выполн/i.test(st0) ? ((S.opts[C.status] || []).find(o => /обмен оформлен/i.test(o)) || "Обмен оформлен") : st0;
-      const gave = String(cell(r, C.device) || "").trim() + (String(cell(r, C.imei) || "").trim() ? ", IMEI " + String(cell(r, C.imei)).trim() : "");
-      const made = items.map((x, i) => {
-        const { num, row, hasNum, hasMargin } = slots[i];
-        const list = [...(hasNum ? [] : [{ c: C.num, v: num }]), { c: C.group, v: g, old: "" }, ...base, { c: C.type, v: tinType, old: "" }, { c: C.status, v: tinSt, old: "" }, { c: C.work, v: gave, old: "" },
-          ...[[C.device, x.device], [C.imei, x.imei], [C.issue, x.issue], [C.buyback, x.buyback]].map(([c, v]) => ({ c, v: String(v ?? "").trim(), old: "" })),
-          ...(hasMargin ? [] : [{ c: C.labor, v: `=Q${row}-S${row}-T${row}`, formula: true }])].filter(ch => String(ch.v ?? "").trim() !== "");
-        return { num, row, list };
-      });
-      const head = [];
-      if (!String(cell(r, C.group) ?? "").trim()) head.push({ c: C.group, v: g, old: "" });
-      if (toNum(cell(r, C.buyback)) != null) head.push({ c: C.buyback, v: "", old: cell(r, C.buyback) });
-      await Promise.all(made.map(m => writeCells(m.row, m.list)));
-      if (head.length) await writeCells(r.row, head);
-      for (const m of made) {
-        const cells = []; cells[C.num] = m.num; for (const ch of m.list) if (!ch.formula) cells[ch.c] = String(ch.w ?? "");
-        m.rec = { row: m.row, cells }; index(m.rec); S.rows.push(m.rec); S.byNum.set(m.num, m.rec);
-      }
-      for (const ch of head) r.cells[ch.c] = String(ch.w ?? "");
-      S.tinX = null;
-      toast(`🔄 Трейд-ин записан: ${made.map(m => "№" + m.num).join(", ")} — в группе продажи №${saleNum}${DEMO ? " (демо)" : ""}. Клиенту ничего не отправлялось.`, null, true);
-      made.reduce((p, m) => p.then(() => doorInBackground(m.rec, m.num, m.list.filter(ch => ch.c !== C.num && !ch.formula))), Promise.resolve());
-    } catch (e) { toast(e.message, null, true); }
-    t.disabled = false; const y = window.scrollY; render(); window.scrollTo(0, y);
-  }
-  const tinBox = () => `<label class="check multi"><input type="checkbox" data-act="tin" ${tinOn() ? "checked" : ""}><b>🔄 Трейд-ин — клиент сдаёт устройство в зачёт</b></label>`;
+  const tinBox = (key, r) => `<label class="check multi"><input type="checkbox" data-act="tin" ${tinActive(key, r) ? "checked" : ""}><b>🔄 Трейд-ин — клиент сдаёт устройство в зачёт</b></label>`;
   const DISC_TYPES = ["repair", "other", "sale_used", "sale_new", "sale_parts"];
   function payHtml(key, r, val, dk) {
     const cur = String(val(C.payment) || ""), up = !["buyback", "parts"].includes(dk), dirty = S.dirty.has(key + ":" + C.payment);
@@ -1562,7 +1522,6 @@
     if (["buyback", "parts"].includes(dk) || payUp(old) === payUp(pay)) return null;
     const cr = creditOf(key, r);
     if (q != null) setDirty(key, C.total, String(finalOf(baseOf(q, d, old, cr), d, pay, cr)));
-    if (key === "new" && S.tin) S.tin.applied = cr;
     if (key === "new" && S.multi) for (const x of S.extra) { const t = toNum(x[C.total]); if (t != null) x[C.total] = String(Math.round(Math.round(t / (1 + payUp(old))) * (1 + payUp(pay)))); }
     return toNum(val(C.total));
   }
@@ -1581,7 +1540,6 @@
     const n = toNum(raw), d = n > 0 ? (unit === "pct" ? (n < 100 ? { pct: n } : null) : { rub: n }) : null;
     setDirty(key, C.discount, d ? (d.pct != null ? d.pct + "%" : d.rub + " ₽") : "");
     if (base != null) setDirty(key, C.total, String(finalOf(base, d, pay, cr)));
-    if (key === "new" && S.tin) S.tin.applied = cr;
     return base;
   }
 
@@ -2682,8 +2640,8 @@
     const multiBox = isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>${esc(TYPE_UI[dk].multi)}</b></label>` : "";
     if (isNew && S.multi) {
       const cols = PER_DEVICE[dk].filter(c => !hidden(c));
-      right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${TIN_TYPES.includes(dk) ? tinBox() : ""}${deviceGrid(cols, c => fh(c))}</section>`);
-      right += box(5, extraDevicesHtml(dk) + (TIN_TYPES.includes(dk) ? tinHtml() : ""));
+      right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${TIN_TYPES.includes(dk) ? tinBox(key, r) : ""}${deviceGrid(cols, c => fh(c))}</section>`);
+      right += box(5, extraDevicesHtml(dk) + (TIN_TYPES.includes(dk) ? tinHtml(key, r) : ""));
       right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}</div>
         ${payHtml(key, r, val, dk)}
         <div class="margin">${groupMoneySummary(dk)}</div></section>`);
@@ -2691,7 +2649,7 @@
     const rep = dk === "repair" || dk === "other", fam = familyOf(val(C.device)), spp = dk === "sale_parts";
     const tips = (kind, c) => rep && (isNew || editable(c, r)) ? typicalHtml(kind, c, fam, val(c)) : "";
     html += `<section class="block"><h3>${rep ? "Ремонт" : spp ? "Запчасти" : "Устройство"}</h3>
-      ${multiBox}${isNew && TIN_TYPES.includes(dk) ? tinBox() : ""}
+      ${multiBox}${TIN_TYPES.includes(dk) && (isNew || editable(C.buyback, r)) ? tinBox(key, r) : ""}
       <div class="grid2">${fh(C.device)}${fh(C.imei)}</div>
       <div class="wide-area">${fh(C.issue)}${tips("issue", C.issue)}</div>
       <div class="wide-area">${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device)) : ""}</div>
@@ -2703,8 +2661,7 @@
       <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass)}</div>
     </section>`;
     right += box(4, html); html = "";
-    if (isNew && TIN_TYPES.includes(dk)) right += box(5, tinHtml());
-    else if (!isNew && TIN_TYPES.includes(dk) && canCreate()) right += box(5, tinExistingHtml(r));
+    if (TIN_TYPES.includes(dk)) right += box(5, tinHtml(key, r));
 
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
       // «Чистая работа» (R) отсюда убрана (v63, 10.10.2026). Владелец: «не понимаю, что за поля; почему чистая работа
@@ -2811,7 +2768,7 @@
     const f = n => n.toLocaleString("ru-RU") + " ₽";
     if (dk === "buyback" || dk === "parts") return `Итого отдаём клиенту за ${N} устр.: <b>${f(get(C.buyback))}</b>${warn}`;
     if (dk === "tradein") return `Доплата ${f(get(C.total))} + зачёт ${f(get(C.buyback))} − закупка ${f(get(C.partCost))} − расходы ${f(extra)} = остаётся нам: <b>${f(get(C.total) + get(C.buyback) - get(C.partCost) - extra)}</b>${warn}`;
-    const cr = TIN_TYPES.includes(dk) ? tinCredit() : 0, tinLine = cr ? `<div class="note">🔄 Трейд-ин: зачёт ${f(cr)} → клиент доплачивает <b>${f(Math.max(0, get(C.total) - cr))}</b></div>` : "";
+    const cr = TIN_TYPES.includes(dk) ? (toNum(S.dirty.get("new:" + C.buyback)) || 0) : 0, tinLine = cr ? `<div class="note">🔄 Трейд-ин: зачёт ${f(cr)} → клиент доплачивает <b>${f(Math.max(0, get(C.total) - cr))}</b></div>` : "";
     if (dk.startsWith("sale")) return `Итого по ${N} устр.: <b>${f(get(C.total))}</b> · закупка ${f(get(C.partCost))} · остаётся нам: <b>${f(get(C.total) - get(C.partCost) - extra)}</b>${warn}${tinLine}`;
     return `Итого по ${N} устр.: <b>${f(get(C.total))}</b>${warn}`;
   }
@@ -3251,15 +3208,18 @@
   async function deleteOrder(num) {
     const r = S.byNum.get(num); if (!r) return;
     try {
-      let raw = r.cells.slice(0, C.group + 1);
+      // До последней колонки (v71). *Исправлено 17.10.2026:* раньше копия и очистка шли до AG, и «На связи» (AH–AI),
+      // «Оплата» (AJ) оставались в строке — новый заказ, легший в неё, унаследовал бы чужой контакт «На связи».
+      const LAST = C.tradein;
+      let raw = r.cells.slice(0, LAST + 1);
       if (!DEMO) {
         const chk = await api(`/values/${A1(0, r.row)}`);
         if (String(chk.values?.[0]?.[0] ?? "").trim() !== String(num)) throw new Error("Строка в таблице сдвинулась — обновите список (⟳) и повторите");
-        raw = (await api(`/values/${A1(0, r.row, C.group, r.row)}?valueRenderOption=FORMULA`)).values?.[0] || [];
+        raw = (await api(`/values/${A1(0, r.row, LAST, r.row)}?valueRenderOption=FORMULA`)).values?.[0] || [];
         await ensureTrash();
-        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AJ`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AN`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
           { method: "POST", body: JSON.stringify({ values: [[mskStamp(), S.email || "", r.row, ...raw.map(v => String(v ?? ""))]] }) });
-        await api("/values:batchClear", { method: "POST", body: JSON.stringify({ ranges: [`'${CFG.sheet}'!B${r.row}:Q${r.row}`, `'${CFG.sheet}'!S${r.row}:${LETTER(C.group)}${r.row}`] }) });
+        await api("/values:batchClear", { method: "POST", body: JSON.stringify({ ranges: [`'${CFG.sheet}'!B${r.row}:Q${r.row}`, `'${CFG.sheet}'!S${r.row}:${LETTER(LAST)}${r.row}`] }) });
         await logStatus([[r.row, cell(r, C.status), "Удалён"]]);
       }
       S.lastDeleted = { row: r.row, num, raw };
@@ -3274,10 +3234,10 @@
   async function restoreOrder() {
     const d = S.lastDeleted; if (!d) return;
     try {
-      const now = (await api(`/values/${A1(1, d.row, C.group, d.row)}`)).values?.[0] || [];
+      const now = (await api(`/values/${A1(1, d.row, C.tradein, d.row)}`)).values?.[0] || [];
       if (now.some(v => String(v).trim())) return toast(`Строка ${d.row} уже занята — верните заказ вручную с листа «${TRASH}»`, null, true);
       const plain = d.raw.map(v => typeof v === "string" && v.startsWith("=") ? null : v);
-      await api(`/values/${A1(0, d.row, C.group, d.row)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [plain] }) });
+      await api(`/values/${A1(0, d.row, d.raw.length - 1, d.row)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [plain] }) });
       const f = d.raw.map((v, i) => typeof v === "string" && v.startsWith("=") ? { range: `'${CFG.sheet}'!${LETTER(i)}${d.row}`, values: [[v]] } : null).filter(Boolean);
       if (f.length) await api("/values:batchUpdate", { method: "POST", body: JSON.stringify({ valueInputOption: "USER_ENTERED", data: f }) });
       await logStatus([[d.row, "Удалён", d.raw[C.status] || "Пусто"]]);
@@ -3305,7 +3265,7 @@
   }
   function startNewFrom(r, warranty) {
     for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-    S.multi = false; S.extra = []; S.tin = null; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
+    S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
     S.draft = true; S.newClient = clientOfRow(r)?.key || null;
     const set = (c, v) => { if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); };
     set(C.status, CFG.newStatus); set(C.date, today()); set(C.type, "Ремонт");
@@ -3325,14 +3285,14 @@
   function saveDraft() {
     const dirty = [...S.dirty].filter(([k]) => k.startsWith("new:"));
     const meaningful = dirty.some(([k, v]) => ![C.status, C.date, C.type].includes(+k.split(":")[1]) && String(v ?? "").trim());
-    if (!meaningful && !S.extra.length && !S.tin) { store.del("crm.draft"); return; }
-    store.set("crm.draft", { at: Date.now(), dirty, multi: S.multi, extra: S.extra, tin: S.tin || null, parts: S.parts.get("new") || null, touched: !!S.newStatusTouched });
+    if (!meaningful && !S.extra.length && !S.tins.new) { store.del("crm.draft"); return; }
+    store.set("crm.draft", { at: Date.now(), dirty, multi: S.multi, extra: S.extra, tins: S.tins.new || null, parts: S.parts.get("new") || null, touched: !!S.newStatusTouched });
   }
   function restoreDraft() {
     const d = store.get("crm.draft");
     if (!d || Date.now() - d.at > 3 * 864e5 || !d.dirty?.length) return false;
     for (const [k, v] of d.dirty) S.dirty.set(k, v);
-    S.multi = !!d.multi; S.extra = d.extra || []; S.tin = d.tin || null; S.newStatusTouched = !!d.touched;
+    S.multi = !!d.multi; S.extra = d.extra || []; if (d.tins) S.tins.new = d.tins; S.newStatusTouched = !!d.touched;
     if (d.parts) S.parts.set("new", d.parts);
     setTimeout(() => toast("Восстановлен незаконченный заказ. «Отмена» внизу — начать заново", null, true), 50);
     return true;
@@ -3550,7 +3510,7 @@
       const quiet = [[r, list], ...others].filter(([, l]) => l.some(ch => ch.c === C.status && isSilent(ch.v)));
       if (quiet.length) await logStatus(quiet.map(([x, l]) => { const ch = l.find(c => c.c === C.status); return [x.row, ch.old, ch.v]; }));
       for (const ch of list) { r.cells[ch.c] = String(ch.w ?? ""); S.dirty.delete(key + ":" + ch.c); }
-      S.parts.delete(key); if (S.pp?.key === key) S.pp = null;
+      S.parts.delete(key); delete S.tins[key]; if (S.pp?.key === key) S.pp = null;
       for (const [x, l] of others) { for (const ch of l) x.cells[ch.c] = String(ch.w ?? ""); index(x); }
       const stamp = today().slice(0, 5) + today().slice(5);
       for (const [x, l] of [[r, list], ...others]) { const st = l.find(ch => ch.c === C.status); if (st) S.since.set(x.row, { ts: stamp, st: String(st.v) }); }
@@ -3619,7 +3579,7 @@
         const own = perDev.filter(c => String(x[c] ?? "").trim() !== "").map(c => ({ c, v: x[c], old: "" }));
         const ownCols = new Set(own.map(o => o.c));
         // общее — всё, что не поле устройства; мастер «как у первого», если свой не выбран
-        const base = shared.filter(ch => !perDev.includes(ch.c) || (ch.c === C.master && !ownCols.has(C.master)));
+        const base = shared.filter(ch => (!perDev.includes(ch.c) || (ch.c === C.master && !ownCols.has(C.master))) && ch.c !== C.tradein && ch.c !== C.buyback); // трейд-ин — только у первого
         devices.push([...base, ...own]);
       }
       let N = devices.length;
@@ -3630,19 +3590,8 @@
         if (N === 1) return askSum(sumColFor(stNew, dkNew), `Со статусом «${stNew}» нужна сумма`);
         return toast(`Со статусом «${stNew}» нужна сумма у каждого устройства — нет у ${noSum.map(i => "№" + i).join(", ")}`, null, true);
       }
-      // Трейд-ин (v68): каждое сданное — своя строка «Trade-in» после строк продажи, в той же группе.
-      const tins = TIN_TYPES.includes(dkNew) && S.tin ? S.tin.items.filter(x => String(x.device ?? "").trim()) : [];
-      if (tins.some(x => toNum(x.buyback) == null)) { busy(false); refreshSaveBar("new"); return toast("Трейд-ин: впишите зачёт у каждого сданного устройства", null, true); }
-      if (tins.length) {
-        const keep = [C.name, C.phone, C.date, C.source, C.gcontact, C.contactName, C.contactPhone];
-        const base = shared.filter(ch => keep.includes(ch.c));
-        const tinType = typeOptions().find(o => /trade|трейд/i.test(o)) || "Trade-in";
-        const tinSt = /продан|выполн/i.test(stNew) ? ((S.opts[C.status] || []).find(o => /обмен оформлен/i.test(o)) || "Обмен оформлен") : stNew;
-        const gave = devices.map(fs => { const g = c => String(fs.find(ch => ch.c === c)?.v ?? "").trim(); return g(C.device) + (g(C.imei) ? ", IMEI " + g(C.imei) : ""); }).filter(Boolean).join("; ");
-        for (const x of tins) devices.push([...base, { c: C.type, v: tinType, old: "" }, { c: C.status, v: tinSt, old: "" }, { c: C.work, v: gave, old: "" },
-          ...[[C.device, x.device], [C.imei, x.imei], [C.issue, x.issue], [C.buyback, x.buyback]].filter(([, v]) => String(v ?? "").trim()).map(([c, v]) => ({ c, v: String(v).trim(), old: "" }))]);
-        N = devices.length;
-      }
+      // Трейд-ин (v71): сданные — в AK, зачёт — в AE первой строки продажи; без зачёта у сданного не пишем.
+      if (TIN_TYPES.includes(dkNew) && (S.tins.new || []).some(x => tinFilled(x) && toNum(x.buyback) == null)) { busy(false); refreshSaveBar("new"); return toast("Трейд-ин: впишите зачёт у каждого сданного устройства", null, true); }
       let row0, num0;
       if (DEMO) {
         row0 = (S.rows.at(-1)?.row || 1) + 1; num0 = Math.max(0, ...S.rows.map(x => +cell(x, C.num) || 0)) + 1;
@@ -3679,7 +3628,7 @@
       }
       S.clients = null;
       for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-      S.draft = null; S.multi = false; S.extra = []; S.tin = null; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null; S.newClient = null; store.del("crm.draft");
+      S.draft = null; S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null; S.newClient = null; store.del("crm.draft");
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
       const soldMsg = await markUsedSold(made).catch(() => " · ⚠️ в боте не отмечено «Продано»");
@@ -3849,25 +3798,14 @@
     else if (act === "impclose") { S.imp = { open: false }; render(); }
     else if (act === "multi") { S.multi = t.checked; if (S.multi && !S.extra.length) S.extra.push(blankDevice()); if (!S.multi) S.extra = []; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "adddev") { S.extra.push(blankDevice()); const y = window.scrollY; render(); window.scrollTo(0, y); }
-    else if ((act === "tinadd" || act === "tinrm") && curKey() !== "new" && S.tinX) {
-      if (act === "tinadd") S.tinX.items.push({}); else { S.tinX.items.splice(+t.dataset.i, 1); if (!S.tinX.items.length) S.tinX.items.push({}); }
-      const y = window.scrollY; render(); window.scrollTo(0, y);
-    }
-    else if (act === "tinxopen") {
-      const r = S.byNum.get(location.hash.slice(2)); if (!r) return true;
-      const legacy = toNum(cell(r, C.buyback));
-      S.tinX = { row: r.row, items: [legacy != null ? { buyback: String(legacy) } : {}] };
-      const y = window.scrollY; render(); window.scrollTo(0, y); $app.querySelector('[data-tf="device"]')?.focus({ preventScroll: true });
-    }
-    else if (act === "tinxcancel") { S.tinX = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
-    else if (act === "tinxsave") tinSaveExisting(t);
     else if (act === "tin" || act === "tinadd" || act === "tinrm") {
-      if (act === "tin") S.tin = t.checked ? { items: [{}], applied: S.tin?.applied || 0 } : (S.tin && { ...S.tin, items: [] });
-      else if (act === "tinadd") S.tin.items.push({});
-      else S.tin.items.splice(+t.dataset.i, 1);
-      tinRecalc(); if (S.tin && !S.tin.items.length) S.tin = null; // сняли галочку — зачёт ушёл, наценка пересчитана
-      saveDraft(); const y = window.scrollY; render(); window.scrollTo(0, y);
-      if (act !== "tinrm" && S.tin) $app.querySelectorAll('[data-tf="device"]')[S.tin.items.length - 1]?.focus({ preventScroll: true });
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); if (key == null) return true;
+      if (act === "tin") S.tins[key] = t.checked ? (tinItems(key, r).length ? tinItems(key, r) : [{}]) : [];
+      else { const items = S.tins[key] = tinItems(key, r); if (act === "tinadd") items.push({}); else items.splice(+t.dataset.i, 1); }
+      tinSync(key, r); if (!S.tins[key].length) delete S.tins[key]; // сняли галочку — AK и AE пустые, наценка пересчитана
+      if (key === "new") saveDraft();
+      const y = window.scrollY; render(); window.scrollTo(0, y);
+      if (act !== "tinrm" && S.tins[key]) $app.querySelectorAll('[data-tf="device"]')[S.tins[key].length - 1]?.focus({ preventScroll: true });
     }
     else if (act === "rmdev") { S.extra.splice(+t.dataset.i, 1); if (!S.extra.length) S.multi = false; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "review") {
@@ -3951,7 +3889,7 @@
       if (act === "addpart") $app.querySelector(`[data-part="${list.length - 1}"][data-pf="name"]`)?.focus();
     }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.tin = null; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; S.supSent = {}; store.del("crm.draft"); location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); S.parts.delete(key); delete S.tins[key]; S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; S.supSent = {}; store.del("crm.draft"); location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
@@ -4036,13 +3974,15 @@
         return;
       }
     }
-    if (t.dataset.tin != null && curKey() !== "new" && S.tinX) { S.tinX.items[+t.dataset.tin][t.dataset.tf] = t.value; return; }
-    if (t.dataset.tin != null && S.tin) {
-      S.tin.items[+t.dataset.tin][t.dataset.tf] = t.value;
-      if (t.dataset.tf === "buyback") tinRecalc();
-      refreshSaveBar("new"); saveDraft();
-      const box = $app.querySelector(".margin"), dk = dealKey(S.dirty.get("new:" + C.type));
-      if (box) box.innerHTML = S.multi ? groupMoneySummary(dk) : moneySummary(dk, c => S.dirty.get("new:" + c) ?? "", null);
+    if (t.dataset.tin != null) {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); if (key == null) return;
+      const items = S.tins[key] = tinItems(key, r); if (!items[+t.dataset.tin]) return;
+      items[+t.dataset.tin][t.dataset.tf] = t.value;
+      tinSync(key, r); refreshSaveBar(key); if (key === "new") saveDraft();
+      const val = c => tinVal(key, r, c), dk = dealKey(val(C.type)), box = $app.querySelector(".margin");
+      if (box) box.innerHTML = key === "new" && S.multi ? groupMoneySummary(dk) : moneySummary(dk, val, r);
+      const sum = $app.querySelector(".tin__sum"), cr = creditOf(key, r), q = toNum(val(C.total));
+      if (sum) sum.innerHTML = `Зачёт: <b>${money(cr) || "0 ₽"}</b>${q != null ? ` · клиент доплачивает <b>${money(Math.max(0, q - cr)) || "0 ₽"}</b>` : ""}`;
       return;
     }
     if (t.dataset.extra != null) {
