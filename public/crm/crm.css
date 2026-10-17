@@ -703,3 +703,8 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .sp-add__price { display: grid; gap: 4px; font-size: .85rem; color: var(--muted); max-width: 220px; }
 .sp-add__price input { height: 44px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--field); color: var(--text); font-size: 1.05rem; font-weight: 700; padding: 0 12px; }
 .sp-add__price input:focus { outline: none; border-color: var(--gold); }
+
+/* v68: трейд-ин внутри продажи — блок сданных устройств */
+.tin { border: 1px solid rgba(212, 160, 18, .45); }
+.tin__item + .tin__item { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.tin__item .h3-row { margin-bottom: 4px; }

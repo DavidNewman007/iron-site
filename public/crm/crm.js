@@ -915,6 +915,9 @@
   function moneySummary(key, val, r) {
     const n = c => toNum(val(c)) ?? 0;
     if (key === "buyback" || key === "parts") return `Отдали клиенту: <b>${n(C.buyback).toLocaleString("ru-RU")} ₽</b> <span class="note">(маржа — при продаже)</span>`;
+    // Сданное в продаже с трейд-ином (v68): зачёт — не доход, а себестоимость будущей продажи б/у.
+    const gr = r && key === "tradein" ? groupOf(r) : null, saleHead = gr?.rows.find(x => /^sale_/.test(dealKey(cell(x, C.type))));
+    if (saleHead) return `Зачтено клиенту: <b>${n(C.buyback).toLocaleString("ru-RU")} ₽</b> <span class="note">(трейд-ин в продаже №${esc(cell(saleHead, C.num))}; маржа — когда продадим как б/у)</span>`;
     let m, how;
     if (key === "tradein") { m = n(C.total) + n(C.buyback) - n(C.partCost) - n(C.extra); how = "доплата + зачёт − закупка выданного − расходы"; }
     else { m = n(C.total) - n(C.partCost) - n(C.extra); how = key.startsWith("sale") ? "цена − себестоимость − расходы" : "итого − закупка запчастей − сторонний мастер / расходы"; }
@@ -924,8 +927,13 @@
       if (src) extra = `<div class="note">Устройство из сделки №${esc(val(C.linked))}: выкуплено за ${money(cell(src, C.buyback)) || "—"}</div>`;
     }
     const d = parseDiscount(val(C.discount)), q = toNum(val(C.total)), pay = val(C.payment), up = payUp(pay) && !["buyback", "parts"].includes(key);
-    const b = q != null ? baseOf(q, d, up ? pay : "") : null;
-    const dline = (d || up) && q != null ? `<div class="note">${d ? `Без скидки ${b.toLocaleString("ru-RU")} ₽ · скидка ${discText(d)}${d.pct != null ? ` (−${discRub(d, b).toLocaleString("ru-RU")} ₽)` : ""}` : `Без наценки ${b.toLocaleString("ru-RU")} ₽`}${up ? ` · +10% за оплату «${esc(pay)}»` : ""} · клиент платит ${q.toLocaleString("ru-RU")} ₽</div>` : "";
+    const cr = key.startsWith("sale") ? creditOf(r ? null : "new", r) : 0;
+    const b = q != null ? baseOf(q, d, up ? pay : "", cr) : null;
+    const dline = (d || up) && q != null ? `<div class="note">${d ? `Без скидки ${b.toLocaleString("ru-RU")} ₽ · скидка ${discText(d)}${d.pct != null ? ` (−${discRub(d, b).toLocaleString("ru-RU")} ₽)` : ""}` : `Без наценки ${b.toLocaleString("ru-RU")} ₽`}${up ? ` · +10% за оплату «${esc(pay)}»${cr ? " с доплаты" : ""}` : ""}${cr ? "" : ` · клиент платит ${q.toLocaleString("ru-RU")} ₽`}</div>` : "";
+    if (cr) {
+      const tins = r ? (groupOf(r)?.rows || []).filter(x => dealKey(cell(x, C.type)) === "tradein").map(x => `№${cell(x, C.num)} ${cell(x, C.device) || ""}`.trim()).join(", ") : "";
+      extra += `<div class="note">🔄 Трейд-ин${tins ? " (" + esc(tins) + ")" : ""}: зачёт ${money(cr)} → клиент доплачивает <b>${money(Math.max(0, (q ?? 0) - cr)) || "0 ₽"}</b></div>`;
+    }
     // У ремонта это и есть «Чистая работа» — колонка R таблицы (она же Q − S − T), здесь — на лету.
     const title = key === "repair" || key === "other" ? "Чистая работа (остаётся нам)" : "Остаётся нам";
     return `${title}: <b>${m.toLocaleString("ru-RU")} ₽</b> <span class="note">(${how})</span>${dline}${extra}`;
@@ -1439,9 +1447,55 @@
   const PAY_TYPES = ["Наличные", "Перевод", "Карта или QR", "Счёт на организацию"];
   const payUp = p => /карт|qr|сч[её]т/i.test(String(p || "")) ? 0.1 : 0;
   // Сумма без скидки (и без наценки за оплату) из итога: 10% скидки от 5000 → итог 4500 → без скидки 5000.
-  const baseOf = (q, d, pay) => { if (q == null) return null; const u = payUp(pay); const pre = u ? Math.round(q / (1 + u)) : q;
+  // credit — зачёт трейд-ина (v68): клиент доплачивает «итог − зачёт», и +10% за карту/счёт берутся только с доплаты:
+  // итог = x + 10% × (x − зачёт), где x — сумма со скидкой. Без зачёта формулы прежние.
+  const baseOf = (q, d, pay, credit = 0) => { if (q == null) return null; const u = payUp(pay);
+    const pre = !u ? q : q <= credit ? q : Math.round((q + u * credit) / (1 + u));
     return !d ? pre : d.pct != null ? Math.round(pre / (1 - d.pct / 100)) : pre + d.rub; };
-  const finalOf = (base, d, pay) => Math.max(0, Math.round((base - discRub(d, base)) * (1 + payUp(pay))));
+  const finalOf = (base, d, pay, credit = 0) => { const x = base - discRub(d, base); return Math.max(0, Math.round(x + payUp(pay) * Math.max(0, x - credit))); };
+  // ── Трейд-ин внутри продажи (v68, 17.10.2026) ────────────────────────────────────────
+  // Владелец: «неудобно заполнять трейд-ин: нет „подгрузить заказ из бота“ и непонятно устроены поля. Объедини
+  // продажу нового и трейд-ин: в продаже нового галочка „трейд-ин“, и в трейд-ин можно добавить несколько устройств».
+  // В новой продаже — галочка и список сданных устройств (что, IMEI, состояние, зачёт). При записи каждое сданное
+  // ложится отдельным заказом «Trade-in» в ту же группу (AG), после строк продажи: зачёт (AE) — его себестоимость,
+  // когда продадим как б/у (как у выкупа), в G — что выдали взамен. Строка продажи хранит полную цену (Q), клиент
+  // доплачивает Q − Σзачёт; первую строку группы дверь шлёт клиенту одним сообщением «купили / сдали / доплата».
+  // Отдельный тип «Trade-in» для новых сделок убран из выбора; старые строки открываются как раньше.
+  const tinOn = () => !!S.tin && dealKey(S.dirty.get("new:" + C.type)) === "sale_new";
+  const tinCredit = () => tinOn() ? S.tin.items.reduce((a, x) => a + (toNum(x.buyback) || 0), 0) : 0;
+  // Зачёт, который уменьшает доплату по этой строке: у нового заказа — из формы, у записанного — сумма строк
+  // «Trade-in» его группы, и только у первой строки продажи (иначе зачёт посчитался бы дважды).
+  function creditOf(key, r) {
+    if (key === "new") return tinCredit();
+    if (!r || !/^sale_(new|used)$/.test(dealKey(cell(r, C.type)))) return 0;
+    const gr = groupOf(r); if (!gr) return 0;
+    if (gr.rows.find(x => /^sale_/.test(dealKey(cell(x, C.type)))) !== r) return 0;
+    return gr.rows.filter(x => dealKey(cell(x, C.type)) === "tradein").reduce((a, x) => a + (toNum(cell(x, C.buyback)) || 0), 0);
+  }
+  // Зачёт поменялся — при +10% за оплату итог пересчитывается: наценка теперь с новой доплаты.
+  function tinRecalc() {
+    if (!S.tin) return;
+    const cr = tinCredit(), was = S.tin.applied || 0, get = c => S.dirty.get("new:" + c) ?? "";
+    const pay = get(C.payment), q = toNum(get(C.total)), d = parseDiscount(get(C.discount));
+    if (payUp(pay) && q != null && cr !== was) {
+      setDirty("new", C.total, String(finalOf(baseOf(q, d, pay, was), d, pay, cr)));
+      const inp = $app.querySelector(`[data-edit="${C.total}"]`); if (inp) inp.value = S.dirty.get("new:" + C.total);
+    }
+    S.tin.applied = cr;
+  }
+  function tinHtml() {
+    if (!tinOn()) return "";
+    const many = S.tin.items.length > 1;
+    const f = (i, k, label, kind) => { const v = S.tin.items[i][k] ?? "", a = `data-tin="${i}" data-tf="${k}"`;
+      return `<label class="field"><span>${esc(label)}</span>${kind === "area" ? `<textarea ${a} rows="2" spellcheck="true" lang="ru">${esc(v)}</textarea>` : `<input ${a} value="${esc(v)}"${kind === "num" ? ' inputmode="decimal"' : ' spellcheck="false"'} autocomplete="off">`}</label>`; };
+    return `<section class="block tin"><h3>🔄 Сдаёт в зачёт (трейд-ин)</h3>
+      ${S.tin.items.map((x, i) => `<div class="tin__item">${many ? `<div class="h3-row"><b>Устройство в зачёт ${i + 1}</b><button type="button" class="linkbtn" data-act="tinrm" data-i="${i}">убрать</button></div>` : ""}
+        <div class="grid2">${f(i, "device", "Что сдаёт (модель, память, цвет)")}${f(i, "imei", "IMEI / S\\N")}</div>
+        <div class="grid2">${f(i, "issue", "Состояние и комплект", "area")}${f(i, "buyback", "Зачёт, ₽", "num")}</div></div>`).join("")}
+      <button type="button" class="more" data-act="tinadd">＋ Ещё устройство в зачёт</button>
+      <p class="note">Каждое сданное устройство запишется отдельным заказом «Trade-in» в той же группе: зачёт — его себестоимость, когда продадим как б/у. Перед приёмом: iCloud и «Найти iPhone» отключены, IMEI не в розыске. Паспортные данные — только в бумажный договор.</p></section>`;
+  }
+  const tinBox = () => `<label class="check multi"><input type="checkbox" data-act="tin" ${tinOn() ? "checked" : ""}><b>🔄 Трейд-ин — клиент сдаёт устройство в зачёт</b></label>`;
   const DISC_TYPES = ["repair", "other", "sale_used", "sale_new", "sale_parts"];
   function payHtml(key, r, val, dk) {
     const cur = String(val(C.payment) || ""), up = !["buyback", "parts"].includes(dk), dirty = S.dirty.has(key + ":" + C.payment);
@@ -1454,7 +1508,9 @@
     const old = val(C.payment), d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
     setDirty(key, C.payment, pay);
     if (["buyback", "parts"].includes(dk) || payUp(old) === payUp(pay)) return null;
-    if (q != null) setDirty(key, C.total, String(finalOf(baseOf(q, d, old), d, pay)));
+    const cr = creditOf(key, r);
+    if (q != null) setDirty(key, C.total, String(finalOf(baseOf(q, d, old, cr), d, pay, cr)));
+    if (key === "new" && S.tin) S.tin.applied = cr;
     if (key === "new" && S.multi) for (const x of S.extra) { const t = toNum(x[C.total]); if (t != null) x[C.total] = String(Math.round(Math.round(t / (1 + payUp(old))) * (1 + payUp(pay)))); }
     return toNum(val(C.total));
   }
@@ -1469,10 +1525,11 @@
   // Новая скидка → новый итог: итог = (сумма без скидки) − скидка.
   function applyDiscount(key, r, raw, unit) {
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
-    const pay = val(C.payment), q = toNum(val(C.total)), base = baseOf(q, parseDiscount(val(C.discount)), pay);
+    const cr = creditOf(key, r), pay = val(C.payment), q = toNum(val(C.total)), base = baseOf(q, parseDiscount(val(C.discount)), pay, cr);
     const n = toNum(raw), d = n > 0 ? (unit === "pct" ? (n < 100 ? { pct: n } : null) : { rub: n }) : null;
     setDirty(key, C.discount, d ? (d.pct != null ? d.pct + "%" : d.rub + " ₽") : "");
-    if (base != null) setDirty(key, C.total, String(finalOf(base, d, pay)));
+    if (base != null) setDirty(key, C.total, String(finalOf(base, d, pay, cr)));
+    if (key === "new" && S.tin) S.tin.applied = cr;
     return base;
   }
 
@@ -2537,7 +2594,7 @@
 
     const box = (order, inner) => `<div class="cg-item" style="order:${order}">${inner}</div>`;
     let html = `<section class="block"><h3>Тип сделки</h3>${
-      editable(C.type, r) || isNew ? choiceButtons(key, C.type, typeNow, typeOptions(), () => "type") : `<div class="big">${esc(typeNow)}</div>`}
+      editable(C.type, r) || isNew ? choiceButtons(key, C.type, typeNow, isNew ? typeOptions().filter(o => !/trade|трейд/i.test(o) || o === typeNow) : typeOptions(), () => "type") : `<div class="big">${esc(typeNow)}</div>`}
       ${["buyback", "parts", "tradein"].includes(dk) ? `<p class="note">${dk === "tradein" ? "Сданное устройство" : "Перед выкупом"}: iCloud и «Найти iPhone» отключены, IMEI не в розыске, проверены АКБ и экран. Паспортные данные — только в бумажный договор, в таблицу не писать.</p>` : ""}
     </section>`;
     let left = box(1, html), right = ""; html = "";
@@ -2573,8 +2630,8 @@
     const multiBox = isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>${esc(TYPE_UI[dk].multi)}</b></label>` : "";
     if (isNew && S.multi) {
       const cols = PER_DEVICE[dk].filter(c => !hidden(c));
-      right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${deviceGrid(cols, c => fh(c))}</section>`);
-      right += box(5, extraDevicesHtml(dk));
+      right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${dk === "sale_new" ? tinBox() : ""}${deviceGrid(cols, c => fh(c))}</section>`);
+      right += box(5, extraDevicesHtml(dk) + (dk === "sale_new" ? tinHtml() : ""));
       right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}</div>
         ${payHtml(key, r, val, dk)}
         <div class="margin">${groupMoneySummary(dk)}</div></section>`);
@@ -2582,7 +2639,7 @@
     const rep = dk === "repair" || dk === "other", fam = familyOf(val(C.device)), spp = dk === "sale_parts";
     const tips = (kind, c) => rep && (isNew || editable(c, r)) ? typicalHtml(kind, c, fam, val(c)) : "";
     html += `<section class="block"><h3>${rep ? "Ремонт" : spp ? "Запчасти" : "Устройство"}</h3>
-      ${multiBox}
+      ${multiBox}${isNew && dk === "sale_new" ? tinBox() : ""}
       <div class="grid2">${fh(C.device)}${fh(C.imei)}</div>
       <div class="wide-area">${fh(C.issue)}${tips("issue", C.issue)}</div>
       <div class="wide-area">${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device)) : ""}</div>
@@ -2594,6 +2651,7 @@
       <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass)}</div>
     </section>`;
     right += box(4, html); html = "";
+    if (isNew && dk === "sale_new") right += box(5, tinHtml());
 
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
       // «Чистая работа» (R) отсюда убрана (v63, 10.10.2026). Владелец: «не понимаю, что за поля; почему чистая работа
@@ -2700,7 +2758,8 @@
     const f = n => n.toLocaleString("ru-RU") + " ₽";
     if (dk === "buyback" || dk === "parts") return `Итого отдаём клиенту за ${N} устр.: <b>${f(get(C.buyback))}</b>${warn}`;
     if (dk === "tradein") return `Доплата ${f(get(C.total))} + зачёт ${f(get(C.buyback))} − закупка ${f(get(C.partCost))} − расходы ${f(extra)} = остаётся нам: <b>${f(get(C.total) + get(C.buyback) - get(C.partCost) - extra)}</b>${warn}`;
-    if (dk.startsWith("sale")) return `Итого по ${N} устр.: <b>${f(get(C.total))}</b> · закупка ${f(get(C.partCost))} · остаётся нам: <b>${f(get(C.total) - get(C.partCost) - extra)}</b>${warn}`;
+    const cr = dk === "sale_new" ? tinCredit() : 0, tinLine = cr ? `<div class="note">🔄 Трейд-ин: зачёт ${f(cr)} → клиент доплачивает <b>${f(Math.max(0, get(C.total) - cr))}</b></div>` : "";
+    if (dk.startsWith("sale")) return `Итого по ${N} устр.: <b>${f(get(C.total))}</b> · закупка ${f(get(C.partCost))} · остаётся нам: <b>${f(get(C.total) - get(C.partCost) - extra)}</b>${warn}${tinLine}`;
     return `Итого по ${N} устр.: <b>${f(get(C.total))}</b>${warn}`;
   }
 
@@ -3193,7 +3252,7 @@
   }
   function startNewFrom(r, warranty) {
     for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-    S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
+    S.multi = false; S.extra = []; S.tin = null; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
     S.draft = true; S.newClient = clientOfRow(r)?.key || null;
     const set = (c, v) => { if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); };
     set(C.status, CFG.newStatus); set(C.date, today()); set(C.type, "Ремонт");
@@ -3213,14 +3272,14 @@
   function saveDraft() {
     const dirty = [...S.dirty].filter(([k]) => k.startsWith("new:"));
     const meaningful = dirty.some(([k, v]) => ![C.status, C.date, C.type].includes(+k.split(":")[1]) && String(v ?? "").trim());
-    if (!meaningful && !S.extra.length) { store.del("crm.draft"); return; }
-    store.set("crm.draft", { at: Date.now(), dirty, multi: S.multi, extra: S.extra, parts: S.parts.get("new") || null, touched: !!S.newStatusTouched });
+    if (!meaningful && !S.extra.length && !S.tin) { store.del("crm.draft"); return; }
+    store.set("crm.draft", { at: Date.now(), dirty, multi: S.multi, extra: S.extra, tin: S.tin || null, parts: S.parts.get("new") || null, touched: !!S.newStatusTouched });
   }
   function restoreDraft() {
     const d = store.get("crm.draft");
     if (!d || Date.now() - d.at > 3 * 864e5 || !d.dirty?.length) return false;
     for (const [k, v] of d.dirty) S.dirty.set(k, v);
-    S.multi = !!d.multi; S.extra = d.extra || []; S.newStatusTouched = !!d.touched;
+    S.multi = !!d.multi; S.extra = d.extra || []; S.tin = d.tin || null; S.newStatusTouched = !!d.touched;
     if (d.parts) S.parts.set("new", d.parts);
     setTimeout(() => toast("Восстановлен незаконченный заказ. «Отмена» внизу — начать заново", null, true), 50);
     return true;
@@ -3481,13 +3540,26 @@
         const base = shared.filter(ch => !perDev.includes(ch.c) || (ch.c === C.master && !ownCols.has(C.master)));
         devices.push([...base, ...own]);
       }
-      const N = devices.length;
+      let N = devices.length;
       const stNew = S.dirty.get("new:" + C.status) ?? CFG.newStatus, dkNew = dealKey(S.dirty.get("new:" + C.type));
       const noSum = devices.map((fields, i) => needSum(stNew, dkNew, c => fields.find(ch => ch.c === c)?.v ?? "") != null ? i + 1 : 0).filter(Boolean);
       if (noSum.length) {
         busy(false); refreshSaveBar("new");
         if (N === 1) return askSum(sumColFor(stNew, dkNew), `Со статусом «${stNew}» нужна сумма`);
         return toast(`Со статусом «${stNew}» нужна сумма у каждого устройства — нет у ${noSum.map(i => "№" + i).join(", ")}`, null, true);
+      }
+      // Трейд-ин (v68): каждое сданное — своя строка «Trade-in» после строк продажи, в той же группе.
+      const tins = dkNew === "sale_new" && S.tin ? S.tin.items.filter(x => String(x.device ?? "").trim()) : [];
+      if (tins.some(x => toNum(x.buyback) == null)) { busy(false); refreshSaveBar("new"); return toast("Трейд-ин: впишите зачёт у каждого сданного устройства", null, true); }
+      if (tins.length) {
+        const keep = [C.name, C.phone, C.date, C.source, C.gcontact, C.contactName, C.contactPhone];
+        const base = shared.filter(ch => keep.includes(ch.c));
+        const tinType = typeOptions().find(o => /trade|трейд/i.test(o)) || "Trade-in";
+        const tinSt = /продан|выполн/i.test(stNew) ? ((S.opts[C.status] || []).find(o => /обмен оформлен/i.test(o)) || "Обмен оформлен") : stNew;
+        const gave = devices.map(fs => { const g = c => String(fs.find(ch => ch.c === c)?.v ?? "").trim(); return g(C.device) + (g(C.imei) ? ", IMEI " + g(C.imei) : ""); }).filter(Boolean).join("; ");
+        for (const x of tins) devices.push([...base, { c: C.type, v: tinType, old: "" }, { c: C.status, v: tinSt, old: "" }, { c: C.work, v: gave, old: "" },
+          ...[[C.device, x.device], [C.imei, x.imei], [C.issue, x.issue], [C.buyback, x.buyback]].filter(([, v]) => String(v ?? "").trim()).map(([c, v]) => ({ c, v: String(v).trim(), old: "" }))]);
+        N = devices.length;
       }
       let row0, num0;
       if (DEMO) {
@@ -3546,7 +3618,7 @@
       }
       S.clients = null;
       for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-      S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null; S.newClient = null; store.del("crm.draft");
+      S.draft = null; S.multi = false; S.extra = []; S.tin = null; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null; S.newClient = null; store.del("crm.draft");
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
       const soldMsg = await markUsedSold(made).catch(() => " · ⚠️ в боте не отмечено «Продано»");
@@ -3716,6 +3788,14 @@
     else if (act === "impclose") { S.imp = { open: false }; render(); }
     else if (act === "multi") { S.multi = t.checked; if (S.multi && !S.extra.length) S.extra.push(blankDevice()); if (!S.multi) S.extra = []; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "adddev") { S.extra.push(blankDevice()); const y = window.scrollY; render(); window.scrollTo(0, y); }
+    else if (act === "tin" || act === "tinadd" || act === "tinrm") {
+      if (act === "tin") S.tin = t.checked ? { items: [{}], applied: S.tin?.applied || 0 } : (S.tin && { ...S.tin, items: [] });
+      else if (act === "tinadd") S.tin.items.push({});
+      else S.tin.items.splice(+t.dataset.i, 1);
+      tinRecalc(); if (S.tin && !S.tin.items.length) S.tin = null; // сняли галочку — зачёт ушёл, наценка пересчитана
+      saveDraft(); const y = window.scrollY; render(); window.scrollTo(0, y);
+      if (act !== "tinrm" && S.tin) $app.querySelectorAll('[data-tf="device"]')[S.tin.items.length - 1]?.focus({ preventScroll: true });
+    }
     else if (act === "rmdev") { S.extra.splice(+t.dataset.i, 1); if (!S.extra.length) S.multi = false; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "review") {
       const key = curKey(), r = S.byNum.get(location.hash.slice(2)), k = key + ":" + C.review;
@@ -3798,7 +3878,7 @@
       if (act === "addpart") $app.querySelector(`[data-part="${list.length - 1}"][data-pf="name"]`)?.focus();
     }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; S.supSent = {}; store.del("crm.draft"); location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); S.parts.delete(key); S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; S.tin = null; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; S.supSent = {}; store.del("crm.draft"); location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
@@ -3882,6 +3962,14 @@
         if (sp.ad) toast("IMEI / S\\N перенесён в своё поле: " + sp.ad, null, true);
         return;
       }
+    }
+    if (t.dataset.tin != null && S.tin) {
+      S.tin.items[+t.dataset.tin][t.dataset.tf] = t.value;
+      if (t.dataset.tf === "buyback") tinRecalc();
+      refreshSaveBar("new"); saveDraft();
+      const box = $app.querySelector(".margin"), dk = dealKey(S.dirty.get("new:" + C.type));
+      if (box) box.innerHTML = S.multi ? groupMoneySummary(dk) : moneySummary(dk, c => S.dirty.get("new:" + c) ?? "", null);
+      return;
     }
     if (t.dataset.extra != null) {
       S.extra[+t.dataset.extra][+t.dataset.col] = t.value;
