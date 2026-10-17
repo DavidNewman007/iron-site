@@ -143,9 +143,11 @@
                 [C.date]: "Дата обращения", [C.issued]: "Дата обмена" },
     sale_used:{ [C.device]: "Что продаём", [C.issue]: "Примечание", [C.work]: "Подготовка перед продажей", [C.warranty]: "Гарантия магазина",
                 [C.total]: "Цена продажи, ₽", [C.partCost]: "Себестоимость, ₽", [C.extra]: "Прочие расходы, ₽", [C.linked]: "Из какой сделки устройство (№ выкупа)",
+                [C.pass]: "Пароли для переноса данных 🔑 (код телефона, iCloud — клиенту не уходит)",
                 [C.date]: "Дата обращения", [C.issued]: "Дата продажи" },
     sale_new: { [C.device]: "Что продаём", [C.issue]: "Примечание", [C.work]: "Комплектация", [C.warranty]: "Гарантия",
-                [C.total]: "Цена продажи, ₽", [C.partCost]: "Закупка, ₽", [C.extra]: "Прочие расходы, ₽", [C.date]: "Дата обращения", [C.issued]: "Дата продажи" },
+                [C.total]: "Цена продажи, ₽", [C.partCost]: "Закупка, ₽", [C.extra]: "Прочие расходы, ₽", [C.date]: "Дата обращения", [C.issued]: "Дата продажи",
+                [C.pass]: "Пароли для переноса данных 🔑 (код телефона, iCloud — клиенту не уходит)" },
     // Продажа запчастей (v62, 09.10.2026): запчасти — списком из склада (как в ремонте), E — что продали кратко
     // (заполняется само из выбранного, уходит клиенту в сообщении), Q — цена, S — закупка из списка.
     sale_parts: { [C.device]: "Что продаём (уйдёт клиенту)", [C.issue]: "Примечание", [C.warranty]: "Гарантия",
@@ -160,8 +162,9 @@
     buyback:  [C.master, C.pass, C.parts, C.partFrom, C.warranty, C.labor, C.total, C.partCost],
     parts:    [C.master, C.pass, C.parts, C.partFrom, C.warranty, C.labor, C.total, C.partCost],
     tradein:  [C.master, C.pass, C.parts, C.partFrom, C.labor],
-    sale_used:[C.master, C.pass, C.parts, C.partFrom, C.labor],
-    sale_new: [C.master, C.pass, C.parts, C.partFrom, C.labor, C.linked],
+    // Пароль (K) в продажах — с v72: для переноса данных со сданного телефона на новый (владелец 17.10.2026).
+    sale_used:[C.master, C.parts, C.partFrom, C.labor],
+    sale_new: [C.master, C.parts, C.partFrom, C.labor, C.linked],
     sale_parts: [C.master, C.pass, C.labor, C.linked, C.imei, C.work, C.buyback],
   };
   // Поля ОДНОГО устройства — одинаковые у каждого устройства заказа, включая первое
@@ -843,7 +846,7 @@
       input = `<label class="check"><input type="checkbox" data-edit="${c}" ${isTrue(v) ? "checked" : ""}><b>${isTrue(v) ? "Да" : "Нет"}</b></label>`;
     } else if (S.opts[c]?.length && c !== C.status && !f.free) {
       return `<div class="field${dirty ? " is-dirty" : ""}"><span>${esc(label)}</span>${ddHtml(key, c, String(v ?? ""), S.opts[c])}</div>`;
-    } else if (f.area) {
+    } else if (f.area || opts.area) {
       input = `<textarea data-edit="${c}" rows="3"${spell}>${esc(v)}</textarea>`;
     } else if (f.tel) {
       return telFieldHtml(c, label, v, dirty);
@@ -2642,7 +2645,7 @@
       const cols = PER_DEVICE[dk].filter(c => !hidden(c));
       right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${TIN_TYPES.includes(dk) ? tinBox(key, r) : ""}${deviceGrid(cols, c => fh(c))}</section>`);
       right += box(5, extraDevicesHtml(dk) + (TIN_TYPES.includes(dk) ? tinHtml(key, r) : ""));
-      right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}</div>
+      right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}${TIN_TYPES.includes(dk) ? fh(C.pass, { area: true }) : ""}</div>
         ${payHtml(key, r, val, dk)}
         <div class="margin">${groupMoneySummary(dk)}</div></section>`);
     } else {
@@ -2658,7 +2661,7 @@
         : `<div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>`}
       ${dk === "sale_used" || String(val(C.linked)).trim() ? fh(C.linked) : ""}
       ${fh(C.master)}
-      <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass)}</div>
+      <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass, TIN_TYPES.includes(dk) ? { area: true } : {})}</div>
     </section>`;
     right += box(4, html); html = "";
     if (TIN_TYPES.includes(dk)) right += box(5, tinHtml(key, r));
