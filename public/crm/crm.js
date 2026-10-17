@@ -1461,7 +1461,9 @@
   // когда продадим как б/у (как у выкупа), в G — что выдали взамен. Строка продажи хранит полную цену (Q), клиент
   // доплачивает Q − Σзачёт; первую строку группы дверь шлёт клиенту одним сообщением «купили / сдали / доплата».
   // Отдельный тип «Trade-in» для новых сделок убран из выбора; старые строки открываются как раньше.
-  const tinOn = () => !!S.tin && dealKey(S.dirty.get("new:" + C.type)) === "sale_new";
+  // v69 (17.10.2026): и в «Продаже б/у» — владелец: «да, нужен» (на предложение включить трейд-ин и там).
+  const TIN_TYPES = ["sale_new", "sale_used"];
+  const tinOn = () => !!S.tin && TIN_TYPES.includes(dealKey(S.dirty.get("new:" + C.type)));
   const tinCredit = () => tinOn() ? S.tin.items.reduce((a, x) => a + (toNum(x.buyback) || 0), 0) : 0;
   // Зачёт, который уменьшает доплату по этой строке: у нового заказа — из формы, у записанного — сумма строк
   // «Trade-in» его группы, и только у первой строки продажи (иначе зачёт посчитался бы дважды).
@@ -2630,8 +2632,8 @@
     const multiBox = isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>${esc(TYPE_UI[dk].multi)}</b></label>` : "";
     if (isNew && S.multi) {
       const cols = PER_DEVICE[dk].filter(c => !hidden(c));
-      right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${dk === "sale_new" ? tinBox() : ""}${deviceGrid(cols, c => fh(c))}</section>`);
-      right += box(5, extraDevicesHtml(dk) + (dk === "sale_new" ? tinHtml() : ""));
+      right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${TIN_TYPES.includes(dk) ? tinBox() : ""}${deviceGrid(cols, c => fh(c))}</section>`);
+      right += box(5, extraDevicesHtml(dk) + (TIN_TYPES.includes(dk) ? tinHtml() : ""));
       right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}</div>
         ${payHtml(key, r, val, dk)}
         <div class="margin">${groupMoneySummary(dk)}</div></section>`);
@@ -2639,7 +2641,7 @@
     const rep = dk === "repair" || dk === "other", fam = familyOf(val(C.device)), spp = dk === "sale_parts";
     const tips = (kind, c) => rep && (isNew || editable(c, r)) ? typicalHtml(kind, c, fam, val(c)) : "";
     html += `<section class="block"><h3>${rep ? "Ремонт" : spp ? "Запчасти" : "Устройство"}</h3>
-      ${multiBox}${isNew && dk === "sale_new" ? tinBox() : ""}
+      ${multiBox}${isNew && TIN_TYPES.includes(dk) ? tinBox() : ""}
       <div class="grid2">${fh(C.device)}${fh(C.imei)}</div>
       <div class="wide-area">${fh(C.issue)}${tips("issue", C.issue)}</div>
       <div class="wide-area">${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device)) : ""}</div>
@@ -2651,7 +2653,7 @@
       <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass)}</div>
     </section>`;
     right += box(4, html); html = "";
-    if (isNew && dk === "sale_new") right += box(5, tinHtml());
+    if (isNew && TIN_TYPES.includes(dk)) right += box(5, tinHtml());
 
     const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
       // «Чистая работа» (R) отсюда убрана (v63, 10.10.2026). Владелец: «не понимаю, что за поля; почему чистая работа
@@ -2758,7 +2760,7 @@
     const f = n => n.toLocaleString("ru-RU") + " ₽";
     if (dk === "buyback" || dk === "parts") return `Итого отдаём клиенту за ${N} устр.: <b>${f(get(C.buyback))}</b>${warn}`;
     if (dk === "tradein") return `Доплата ${f(get(C.total))} + зачёт ${f(get(C.buyback))} − закупка ${f(get(C.partCost))} − расходы ${f(extra)} = остаётся нам: <b>${f(get(C.total) + get(C.buyback) - get(C.partCost) - extra)}</b>${warn}`;
-    const cr = dk === "sale_new" ? tinCredit() : 0, tinLine = cr ? `<div class="note">🔄 Трейд-ин: зачёт ${f(cr)} → клиент доплачивает <b>${f(Math.max(0, get(C.total) - cr))}</b></div>` : "";
+    const cr = TIN_TYPES.includes(dk) ? tinCredit() : 0, tinLine = cr ? `<div class="note">🔄 Трейд-ин: зачёт ${f(cr)} → клиент доплачивает <b>${f(Math.max(0, get(C.total) - cr))}</b></div>` : "";
     if (dk.startsWith("sale")) return `Итого по ${N} устр.: <b>${f(get(C.total))}</b> · закупка ${f(get(C.partCost))} · остаётся нам: <b>${f(get(C.total) - get(C.partCost) - extra)}</b>${warn}${tinLine}`;
     return `Итого по ${N} устр.: <b>${f(get(C.total))}</b>${warn}`;
   }
@@ -3549,7 +3551,7 @@
         return toast(`Со статусом «${stNew}» нужна сумма у каждого устройства — нет у ${noSum.map(i => "№" + i).join(", ")}`, null, true);
       }
       // Трейд-ин (v68): каждое сданное — своя строка «Trade-in» после строк продажи, в той же группе.
-      const tins = dkNew === "sale_new" && S.tin ? S.tin.items.filter(x => String(x.device ?? "").trim()) : [];
+      const tins = TIN_TYPES.includes(dkNew) && S.tin ? S.tin.items.filter(x => String(x.device ?? "").trim()) : [];
       if (tins.some(x => toNum(x.buyback) == null)) { busy(false); refreshSaveBar("new"); return toast("Трейд-ин: впишите зачёт у каждого сданного устройства", null, true); }
       if (tins.length) {
         const keep = [C.name, C.phone, C.date, C.source, C.gcontact, C.contactName, C.contactPhone];
