@@ -1,0 +1,54 @@
+{
+  "product_id": "-airtag-2-1pack-s2-4800",
+  "category": "accessories",
+  "file_slug": "airtag-2-1pack-s2-4800",
+  "name": "📍AirTag 2 1pack",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 4800,
+  "catalog_url": "https://sochi.dr-store.ru/apple/apple-gadgets/apple-airtag/airtag-2-1",
+  "catalog_title": "поисковый трекер Apple AirTag 2 (2026) (1шт)",
+  "specs": [
+    {
+      "key": "Интерфейсы",
+      "value": "Bluetooth для поиска в ограниченном радиусе, поддержка NFC"
+    },
+    {
+      "key": "Тип аккумулятора",
+      "value": "батарейка CR2032"
+    },
+    {
+      "key": "Диаметр",
+      "value": "31.9 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "8 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "11.8 г"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP67"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "встроенный динамик"
+    },
+    {
+      "key": "Датчики",
+      "value": "акселерометр"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/apple-accessories/airtag/airtag-dr-store-7-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/apple-accessories/airtag/airtag-dr-store-2-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/ee6b5bab498d1ede2c3102bd.jpg",
+    "assets/product-images/d3492b357be69537026b9ef5.jpg"
+  ],
+  "updated_at": "2026-10-17T11:37:05.526137Z"
+}

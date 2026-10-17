@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-16T12:16:28.162Z",
-  "count": 69,
+  "generated_at": "2026-10-17T11:37:57.574Z",
+  "count": 73,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -553,6 +553,38 @@
       "name": "iPad Pro 13 M4 256 Black Wi-Fi Without Charger",
       "warehouse": "(S3)",
       "price": 98900
+    },
+    "-airtag-2-1pack-s2-4800": {
+      "url": "hybrid-products/accessories/airtag-2-1pack-s2-4800.html",
+      "url_en": "en/hybrid-products/accessories/airtag-2-1pack-s2-4800.html",
+      "cover": "assets/product-images/ee6b5bab498d1ede2c3102bd.jpg",
+      "name": "📍AirTag 2 1pack",
+      "warehouse": "(S2)",
+      "price": 4800
+    },
+    "-airtag-2-4pack-s2-11700": {
+      "url": "hybrid-products/accessories/airtag-2-4pack-s2-11700.html",
+      "url_en": "en/hybrid-products/accessories/airtag-2-4pack-s2-11700.html",
+      "cover": "assets/product-images/ee6b5bab498d1ede2c3102bd.jpg",
+      "name": "📍AirTag 2 4pack",
+      "warehouse": "(S2)",
+      "price": 11700
+    },
+    "apple-pencil-usb-c-s2-8600": {
+      "url": "hybrid-products/accessories/apple-pencil-usb-c-s2-8600.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-usb-c-s2-8600.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "Apple Pencil USB-C",
+      "warehouse": "(S2)",
+      "price": 8600
+    },
+    "apple-pencil-pro-s2-12800": {
+      "url": "hybrid-products/accessories/apple-pencil-pro-s2-12800.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-pro-s2-12800.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "Apple Pencil Pro",
+      "warehouse": "(S2)",
+      "price": 12800
     }
   }
 }

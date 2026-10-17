@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-16T12:16:28.170Z",
-  "count": 149,
+  "generated_at": "2026-10-17T11:37:57.581Z",
+  "count": 160,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -1193,6 +1193,94 @@
       "name": "Galaxy Buds 4 Pro White",
       "warehouse": "(S3)",
       "price": 16000
+    },
+    "buds-4-pro-black-оаэ-s2-16100": {
+      "url": "hybrid-products/audio/buds-4-pro-black-s2-16100.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-black-s2-16100.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Buds 4 Pro Black",
+      "warehouse": "(S2)",
+      "price": 16100
+    },
+    "buds-4-pro-pink-gold-оаэ-s2-18200": {
+      "url": "hybrid-products/audio/buds-4-pro-pink-gold-s2-18200.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-pink-gold-s2-18200.html",
+      "cover": "assets/product-images/9c24473bcf3b07c8103dfb49.jpg",
+      "name": "Buds 4 Pro Pink Gold",
+      "warehouse": "(S2)",
+      "price": 18200
+    },
+    "яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6100": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6100.html",
+      "cover": "assets/product-images/7aa34cfd2c7bd8ea4ee7a430.jpg",
+      "name": "Яндекс Станция Лайт 2 Фиолетовая (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6100
+    },
+    "яндекс-станция-лайт-2-зеленый-без-часов-s2-6100": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-зеленый-без-часов-s2-6100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-зеленый-без-часов-s2-6100.html",
+      "cover": "assets/product-images/45b46141672346f50b991ed8.jpg",
+      "name": "Яндекс Станция Лайт 2 Зеленый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6100
+    },
+    "яндекс-станция-лайт-2-розовый-без-часов-s2-6100": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-розовый-без-часов-s2-6100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-розовый-без-часов-s2-6100.html",
+      "cover": "assets/product-images/95065d12adfd718e29eda5a3.jpg",
+      "name": "Яндекс Станция Лайт 2 Розовый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6100
+    },
+    "яндекс-станция-лайт-2-кораловый-без-часов-s2-6100": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-кораловый-без-часов-s2-6100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-кораловый-без-часов-s2-6100.html",
+      "cover": "assets/product-images/674ea8c697dae4dc71233a07.jpg",
+      "name": "Яндекс Станция Лайт 2 Кораловый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6100
+    },
+    "яндекс-станция-лайт-2-зеленый-s2-6900": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-зеленый-s2-6900.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-зеленый-s2-6900.html",
+      "cover": "assets/product-images/5c9af245e70e3122e50ee579.jpg",
+      "name": "Яндекс Станция Лайт 2 Зеленый",
+      "warehouse": "(S2)",
+      "price": 6900
+    },
+    "яндекс-станция-лайт-2-фиолетовый-s2-6900": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-фиолетовый-s2-6900.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-фиолетовый-s2-6900.html",
+      "cover": "assets/product-images/cec3b010164d02009b600a27.jpg",
+      "name": "Яндекс Станция Лайт 2 Фиолетовый",
+      "warehouse": "(S2)",
+      "price": 6900
+    },
+    "яндекс-станция-лайт-2-синий-s2-6900": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-синий-s2-6900.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-синий-s2-6900.html",
+      "cover": "assets/product-images/1d4af22da3733fcf703d6737.jpg",
+      "name": "Яндекс Станция Лайт 2 Синий",
+      "warehouse": "(S2)",
+      "price": 6900
+    },
+    "яндекс-станция-мини-3-про-зеленый-s2-12200": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-про-зеленый-s2-12200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-про-зеленый-s2-12200.html",
+      "cover": "assets/product-images/7164275bd3559bfd709c4c78.jpg",
+      "name": "Яндекс Станция Мини 3 Про Зеленый",
+      "warehouse": "(S2)",
+      "price": 12200
+    },
+    "яндекс-станция-мини-3-про-синий-s2-12200": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-про-синий-s2-12200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-про-синий-s2-12200.html",
+      "cover": "assets/product-images/f764039f14533c26f0c3044b.jpg",
+      "name": "Яндекс Станция Мини 3 Про Синий",
+      "warehouse": "(S2)",
+      "price": 12200
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-16T12:16:28.174Z",
-  "count": 79,
+  "generated_at": "2026-10-17T11:37:57.584Z",
+  "count": 80,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -633,6 +633,14 @@
       "name": "🎮GamePad PS5 Chroma Teal",
       "warehouse": "(S2)",
       "price": 8100
+    },
+    "-gamepad-ps5-cobalt-blue-s2-7600": {
+      "url": "hybrid-products/gaming/gamepad-ps5-cobalt-blue-s2-7600.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-cobalt-blue-s2-7600.html",
+      "cover": "assets/product-images/fb299bc84f2757ff25a6764b.jpg",
+      "name": "🎮GamePad PS5 Cobalt Blue",
+      "warehouse": "(S2)",
+      "price": 7600
     }
   }
 }
