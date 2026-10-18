@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-17T11:37:57.459Z",
-  "count": 339,
+  "generated_at": "2026-10-18T12:25:33.372Z",
+  "count": 346,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -2713,6 +2713,62 @@
       "name": "AirPods MAX 2 (2026) Midnight",
       "warehouse": "(S3)",
       "price": 45800
+    },
+    "-airpods-4-mxp63-s1-11900": {
+      "url": "hybrid-products/airpods/airpods-4-mxp63-s1-11900.html",
+      "url_en": "en/hybrid-products/airpods/airpods-4-mxp63-s1-11900.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "🎧 AirPods 4 MXP63",
+      "warehouse": "(S1)",
+      "price": 11900
+    },
+    "-airpods-5-mkfw4-s1-15000": {
+      "url": "hybrid-products/airpods/airpods-5-mkfw4-s1-15000.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-mkfw4-s1-15000.html",
+      "cover": "assets/product-images/03a5b60909df17ffaa449e5f.jpg",
+      "name": "🎧 AirPods 5 MKFW4",
+      "warehouse": "(S1)",
+      "price": 15000
+    },
+    "-airpods-5-wireless-s2-17000": {
+      "url": "hybrid-products/airpods/airpods-5-wireless-s2-17000.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s2-17000.html",
+      "cover": "assets/product-images/b971cee99de17a92f4f0ca43.jpg",
+      "name": "🔈AirPods 5 Wireless",
+      "warehouse": "(S2)",
+      "price": 17000
+    },
+    "-airpods-max-2026-starlight-s2-44300": {
+      "url": "hybrid-products/airpods/airpods-max-2026-starlight-s2-44300.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2026-starlight-s2-44300.html",
+      "cover": "assets/product-images/3fc3b26680f7e3f1f7024395.jpg",
+      "name": "🔈AirPods Max 2026 Starlight",
+      "warehouse": "(S2)",
+      "price": 44300
+    },
+    "airpods-4-сша-s3-12000": {
+      "url": "hybrid-products/airpods/airpods-4-s3-12000.html",
+      "url_en": "en/hybrid-products/airpods/airpods-4-s3-12000.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "AirPods 4",
+      "warehouse": "(S3)",
+      "price": 12000
+    },
+    "airpods-4-anc-сша-s3-13300": {
+      "url": "hybrid-products/airpods/airpods-4-anc-s3-13300.html",
+      "url_en": "en/hybrid-products/airpods/airpods-4-anc-s3-13300.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "AirPods 4 ANC",
+      "warehouse": "(S3)",
+      "price": 13300
+    },
+    "airpods-5-сша-s3-15300": {
+      "url": "hybrid-products/airpods/airpods-5-s3-15300.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-s3-15300.html",
+      "cover": "assets/product-images/b971cee99de17a92f4f0ca43.jpg",
+      "name": "AirPods 5",
+      "warehouse": "(S3)",
+      "price": 15300
     }
   }
 }

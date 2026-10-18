@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-17T11:37:57.596Z",
-  "count": 333,
+  "generated_at": "2026-10-18T12:25:33.590Z",
+  "count": 336,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -2665,6 +2665,30 @@
       "name": "👱‍♀️HS08 Apricot Topaz",
       "warehouse": "(S2)",
       "price": 40700
+    },
+    "-hd16-ceramic-pink-rose-gold-s2-32500": {
+      "url": "hybrid-products/dyson/hd16-ceramic-pink-rose-gold-s2-32500.html",
+      "url_en": "en/hybrid-products/dyson/hd16-ceramic-pink-rose-gold-s2-32500.html",
+      "cover": "assets/product-images/642c6166727ce1cde83f1885.jpg",
+      "name": "👱‍♀️HD16 Ceramic Pink/Rose Gold",
+      "warehouse": "(S2)",
+      "price": 32500
+    },
+    "-hd16-prussian-blue-s2-33000": {
+      "url": "hybrid-products/dyson/hd16-prussian-blue-s2-33000.html",
+      "url_en": "en/hybrid-products/dyson/hd16-prussian-blue-s2-33000.html",
+      "cover": "assets/product-images/db42adecb55826d26a702201.jpg",
+      "name": "👱‍♀️HD16 Prussian Blue",
+      "warehouse": "(S2)",
+      "price": 33000
+    },
+    "-hd17-r-pro-apricot-topaz-s2-36500": {
+      "url": "hybrid-products/dyson/hd17-r-pro-apricot-topaz-s2-36500.html",
+      "url_en": "en/hybrid-products/dyson/hd17-r-pro-apricot-topaz-s2-36500.html",
+      "cover": "assets/product-images/49c5844fc9874055352cd773.jpg",
+      "name": "👱‍♀️HD17 R Pro Apricot/Topaz",
+      "warehouse": "(S2)",
+      "price": 36500
     }
   }
 }
