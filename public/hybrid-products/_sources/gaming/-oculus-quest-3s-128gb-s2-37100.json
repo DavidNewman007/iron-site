@@ -1,0 +1,64 @@
+{
+  "product_id": "-oculus-quest-3s-128gb-s2-37100",
+  "category": "gaming",
+  "file_slug": "oculus-quest-3s-128gb-s2-37100",
+  "name": "🥽Oculus Quest 3S 128GB",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 37100,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/vr-glasses/oculus-quest-3-128gb",
+  "catalog_title": "шлем виртуальной реальности Meta Oculus Quest 3…",
+  "specs": [
+    {
+      "key": "Технология дисплея",
+      "value": "120 Гц"
+    },
+    {
+      "key": "Разрешение",
+      "value": "2064 х 2208 пикселей"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon XR2 Gen 2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Ширина",
+      "value": "184 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "98 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "160 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "515 г"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "встроенный микрофон"
+    },
+    {
+      "key": "Датчики",
+      "value": "акселерометр, гироскоп, датчик приближения"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/quest-3/meta-quest-3-dr-store-50-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/quest-3/meta-quest-3-dr-store-51-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/quest-3/meta-quest-3-dr-store-52-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/f453c94d3dbbf65fc61239fe.jpg",
+    "assets/product-images/5defff1ad769bc921d5375cb.jpg",
+    "assets/product-images/92180acae22d5947e263b4a7.jpg"
+  ],
+  "updated_at": "2026-10-19T14:16:58.716743Z"
+}

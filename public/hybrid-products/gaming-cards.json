@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-18T12:25:33.572Z",
-  "count": 81,
+  "generated_at": "2026-10-19T14:17:37.222Z",
+  "count": 84,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -649,6 +649,30 @@
       "name": "🎮GamePad PS5 Chroma Indigo",
       "warehouse": "(S2)",
       "price": 8100
+    },
+    "-ps5-slim-disk-1tb-s2-75300": {
+      "url": "hybrid-products/gaming/ps5-slim-disk-1tb-s2-75300.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-disk-1tb-s2-75300.html",
+      "cover": "assets/product-images/710d027896068006fabffb9c.jpg",
+      "name": "🎮PS5 Slim Disk 1TB",
+      "warehouse": "(S2)",
+      "price": 75300
+    },
+    "-sony-pulse-elite-white-s2-16700": {
+      "url": "hybrid-products/gaming/sony-pulse-elite-white-s2-16700.html",
+      "url_en": "en/hybrid-products/gaming/sony-pulse-elite-white-s2-16700.html",
+      "cover": "assets/product-images/1301064be8906b6740519b6c.jpg",
+      "name": "🎧Sony Pulse Elite, White",
+      "warehouse": "(S2)",
+      "price": 16700
+    },
+    "-oculus-quest-3s-128gb-s2-37100": {
+      "url": "hybrid-products/gaming/oculus-quest-3s-128gb-s2-37100.html",
+      "url_en": "en/hybrid-products/gaming/oculus-quest-3s-128gb-s2-37100.html",
+      "cover": "assets/product-images/f453c94d3dbbf65fc61239fe.jpg",
+      "name": "🥽Oculus Quest 3S 128GB",
+      "warehouse": "(S2)",
+      "price": 37100
     }
   }
 }

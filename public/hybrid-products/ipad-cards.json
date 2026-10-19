@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-18T12:25:33.197Z",
-  "count": 659,
+  "generated_at": "2026-10-19T14:17:36.829Z",
+  "count": 661,
   "byId": {
     "ipad-11-a16-wi-fi-128gb-blue-j-a-япония-s1-31600": {
       "url": "hybrid-products/ipad/ipad-11-a16-wi-fi-128gb-blue-j-a-s1-31600.html",
@@ -5273,6 +5273,22 @@
       "name": "iPad Air 13 M3 128Gb Space Gray Wi-Fi + Cellular",
       "warehouse": "(S4)",
       "price": 74700
+    },
+    "ipad-11-128-yellow-wi-fi-сша-s3-42800": {
+      "url": "hybrid-products/ipad/ipad-11-128-yellow-wi-fi-s3-42800.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-128-yellow-wi-fi-s3-42800.html",
+      "cover": "assets/product-images/12ab0e68554cce9cf2f0341c.jpg",
+      "name": "iPad 11 128 Yellow Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 42800
+    },
+    "ipad-air-11-m3-512-space-gray-wi-fi-сша-s3-83700": {
+      "url": "hybrid-products/ipad/ipad-air-11-m3-512-space-gray-wi-fi-s3-83700.html",
+      "url_en": "en/hybrid-products/ipad/ipad-air-11-m3-512-space-gray-wi-fi-s3-83700.html",
+      "cover": "assets/product-images/a09349f30c0b837086196cfc.jpg",
+      "name": "iPad AIR 11 M3 512 Space Gray Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 83700
     }
   }
 }

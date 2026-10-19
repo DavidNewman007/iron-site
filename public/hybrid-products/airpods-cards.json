@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-18T12:25:33.372Z",
-  "count": 346,
+  "generated_at": "2026-10-19T14:17:37.012Z",
+  "count": 350,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -2769,6 +2769,38 @@
       "name": "AirPods 5",
       "warehouse": "(S3)",
       "price": 15300
+    },
+    "-airpods-4-with-anc-mxp93-s1-13000": {
+      "url": "hybrid-products/airpods/airpods-4-with-anc-mxp93-s1-13000.html",
+      "url_en": "en/hybrid-products/airpods/airpods-4-with-anc-mxp93-s1-13000.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "🎧 AirPods 4 with ANC MXP93",
+      "warehouse": "(S1)",
+      "price": 13000
+    },
+    "-airpods-5-wireless-case-mkft4-s1-16900": {
+      "url": "hybrid-products/airpods/airpods-5-wireless-case-mkft4-s1-16900.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-case-mkft4-s1-16900.html",
+      "cover": "assets/product-images/b971cee99de17a92f4f0ca43.jpg",
+      "name": "🎧 AirPods 5 (Wireless case) MKFT4",
+      "warehouse": "(S1)",
+      "price": 16900
+    },
+    "-airpods-4-anc-s2-13100": {
+      "url": "hybrid-products/airpods/airpods-4-anc-s2-13100.html",
+      "url_en": "en/hybrid-products/airpods/airpods-4-anc-s2-13100.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "🔈AirPods 4 ANC",
+      "warehouse": "(S2)",
+      "price": 13100
+    },
+    "-airpods-5-wireless-s2-16900": {
+      "url": "hybrid-products/airpods/airpods-5-wireless-s2-16900.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s2-16900.html",
+      "cover": "assets/product-images/b971cee99de17a92f4f0ca43.jpg",
+      "name": "🔈AirPods 5 Wireless",
+      "warehouse": "(S2)",
+      "price": 16900
     }
   }
 }
