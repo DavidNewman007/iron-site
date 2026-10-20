@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-19T14:17:37.245Z",
-  "count": 38,
+  "generated_at": "2026-10-20T12:52:22.561Z",
+  "count": 40,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -305,6 +305,22 @@
       "name": "📷Canon PowerShot G7 X Mark III, Silver",
       "warehouse": "(S2)",
       "price": 105700
+    },
+    "-gopro-max-2-8k-360-s2-32000": {
+      "url": "hybrid-products/gadgets/gopro-max-2-8k-360-s2-32000.html",
+      "url_en": "en/hybrid-products/gadgets/gopro-max-2-8k-360-s2-32000.html",
+      "cover": "assets/product-images/9f9f2c10491a098cbfaf45af.jpg",
+      "name": "📷GoPro Max 2 8K 360",
+      "warehouse": "(S2)",
+      "price": 32000
+    },
+    "-gopro-13-creator-edition-s2-50000": {
+      "url": "hybrid-products/gadgets/gopro-13-creator-edition-s2-50000.html",
+      "url_en": "en/hybrid-products/gadgets/gopro-13-creator-edition-s2-50000.html",
+      "cover": "assets/product-images/ab5a15caa67aea99633334a3.jpg",
+      "name": "📷GoPro 13 Creator Edition",
+      "warehouse": "(S2)",
+      "price": 50000
     }
   }
 }

@@ -1,0 +1,58 @@
+{
+  "product_id": "-gopro-13-creator-edition-s2-50000",
+  "category": "gadgets",
+  "file_slug": "gopro-13-creator-edition-s2-50000",
+  "name": "📷GoPro 13 Creator Edition",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 50000,
+  "catalog_url": "https://sochi.dr-store.ru/foto-video/ekshn-kamery/GoPro_HERO_13_Black_Creator_Edition_Action_Camera",
+  "catalog_title": "Экшн-камеру GoPro HERO13 Black Creator Edition",
+  "specs": [
+    {
+      "key": "Максимальная частота кадров",
+      "value": "240 кадров/с"
+    },
+    {
+      "key": "Производитель",
+      "value": "GoPro"
+    },
+    {
+      "key": "Тип дисплея",
+      "value": "Сенсорный"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "1900 мАч"
+    },
+    {
+      "key": "Ширина",
+      "value": "71.8 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "50.8 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "33.6 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "120 г"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_13_Black_Creator_Edition_Action_Camera/GoPro_HERO_13_Black_Creator_Edition_Action_Camera-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_13_Black_Creator_Edition_Action_Camera/GoPro_HERO_13_Black_Creator_Edition_Action_Camera-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_13_Black_Creator_Edition_Action_Camera/GoPro_HERO_13_Black_Creator_Edition_Action_Camera-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/GoPro_HERO_13_Black_Creator_Edition_Action_Camera/GoPro_HERO_13_Black_Creator_Edition_Action_Camera-4-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/ab5a15caa67aea99633334a3.jpg",
+    "assets/product-images/1b7c931ef91dd82fc67bad34.jpg",
+    "assets/product-images/0900130470935db78c15d2c2.jpg",
+    "assets/product-images/c5d246e4a1a8cd69fa64d232.jpg"
+  ],
+  "updated_at": "2026-10-20T12:49:54.414828Z"
+}
