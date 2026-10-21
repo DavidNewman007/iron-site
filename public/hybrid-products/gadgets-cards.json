@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-20T12:52:22.561Z",
-  "count": 40,
+  "generated_at": "2026-10-21T13:11:33.994Z",
+  "count": 42,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -321,6 +321,22 @@
       "name": "📷GoPro 13 Creator Edition",
       "warehouse": "(S2)",
       "price": 50000
+    },
+    "-canon-powershot-g7-x-mark-iii-silver-s2-103600": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-103600.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-103600.html",
+      "cover": "assets/product-images/dd1b9655ba8ad1dedcc47b4e.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Silver",
+      "warehouse": "(S2)",
+      "price": 103600
+    },
+    "-instax-mini-13-pink-s2-12200": {
+      "url": "hybrid-products/gadgets/instax-mini-13-pink-s2-12200.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-13-pink-s2-12200.html",
+      "cover": "assets/product-images/8f9254746a3dbd1e1254da29.jpg",
+      "name": "📸instax mini 13 Pink",
+      "warehouse": "(S2)",
+      "price": 12200
     }
   }
 }

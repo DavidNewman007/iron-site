@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-20T12:52:22.546Z",
-  "count": 86,
+  "generated_at": "2026-10-21T13:11:33.980Z",
+  "count": 87,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -689,6 +689,14 @@
       "name": "🎮PS5 Slim Digital 825Gb",
       "warehouse": "(S2)",
       "price": 68800
+    },
+    "-ps-vr2-s2-37600": {
+      "url": "hybrid-products/gaming/ps-vr2-s2-37600.html",
+      "url_en": "en/hybrid-products/gaming/ps-vr2-s2-37600.html",
+      "cover": "assets/product-images/eee8f146c8f5648d0877ab61.jpg",
+      "name": "🥽PS VR2",
+      "warehouse": "(S2)",
+      "price": 37600
     }
   }
 }

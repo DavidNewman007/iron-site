@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-20T12:52:22.578Z",
-  "count": 135,
+  "generated_at": "2026-10-21T13:11:34.013Z",
+  "count": 136,
   "byId": {
     "-oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100": {
       "url": "hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100.html",
@@ -1081,6 +1081,14 @@
       "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 155 - 53 Size C 601S1Z53",
       "warehouse": "(S1)",
       "price": 37200
+    },
+    "-wayfarer-gen-2-matte-black-polar-gradient-graphite-150-50-size-c-601st350-s1-36": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-polar-gradient-graphite-150-50-size-c-601st350-36600.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-polar-gradient-graphite-150-50-size-c-601st350-36600.html",
+      "cover": "assets/product-images/adede315e00c0ea89966a40f.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Polar Gradient Graphite 150 - 50 Size C 601ST350",
+      "warehouse": "(S1)",
+      "price": 36600
     }
   }
 }
