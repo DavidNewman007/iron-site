@@ -712,3 +712,10 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .tin__sum { margin-top: 10px; color: var(--cream); }
 .tin__ro { padding: 4px 0; border-top: 1px solid var(--line); }
 .tin__ro:first-of-type { border-top: 0; }
+
+/* v73: залог — срок выкупа в списке и карточке, быстрые кнопки суммы и срока */
+.chip--bad { background: rgba(255, 90, 70, .16); border-color: rgba(255, 90, 70, .55); color: #ff8a7a; }
+.pawnbar a { color: var(--gold); text-decoration: none; white-space: nowrap; }
+.pawn-chips { margin-top: 8px; align-items: center; }
+.pawn-chips .note { margin: 0 2px 0 6px; }
+.pawn-acts { align-items: center; gap: 8px; }

@@ -26,7 +26,7 @@
     scope: "openid email https://www.googleapis.com/auth/spreadsheets",
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
-    lastCol: "AK", // AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
+    lastCol: "AL", // AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
     // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
@@ -67,7 +67,8 @@
     contactName: 33, contactPhone: 34,
     gcontact: 23, // X «Google Contact ID» — пишет оболочка, если контакт заведён заранее (v45)
     payment: 35, // AJ «Оплата» (v62, 09.10.2026): наличные / перевод / карта или QR / счёт на организацию
-    tradein: 36 }; // AK «Трейд-ин» (v71, 17.10.2026): сданные в зачёт устройства продажи, по строке на устройство
+    tradein: 36, // AK «Трейд-ин» (v71, 17.10.2026): сданные в зачёт устройства продажи, по строке на устройство
+    pawnUntil: 37 }; // AL «Залог: выкупить до» (v73, 22.10.2026) — дата, до которой клиент выкупает устройство
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -115,6 +116,7 @@
     [C.discount]: { label: "Скидка" },
     [C.payment]: { label: "Оплата" },
     [C.tradein]: { label: "Трейд-ин: сданные устройства" },
+    [C.pawnUntil]: { label: "Выкупить до", entered: true, door: true },
   };
 
   // Тип сделки (колонка AC). Пусто = ремонт. Ключи — как в DealTypes.js на стороне таблицы.
@@ -127,6 +129,7 @@
     if (s.startsWith("продажа") && s.includes("запчаст")) return "sale_parts"; // v62
     if (s.startsWith("продажа") && (s.includes("б/у") || s.includes("бу"))) return "sale_used";
     if (s.startsWith("продажа")) return "sale_new";
+    if (s.startsWith("залог")) return "pawn"; // v73
     return "other";
   }
   // Подписи полей по типу: одна и та же колонка значит разное в ремонте, выкупе и продаже.
@@ -153,6 +156,9 @@
     sale_parts: { [C.device]: "Что продаём (уйдёт клиенту)", [C.issue]: "Примечание", [C.warranty]: "Гарантия",
                 [C.total]: "Цена продажи, ₽", [C.partCost]: "Закупка, ₽", [C.extra]: "Прочие расходы, ₽", [C.date]: "Дата обращения", [C.issued]: "Дата продажи" },
     other:    { [C.work]: "Что сделано", [C.total]: "Итого, ₽ (платит клиент)" },
+    // Залог (v73): деньги под устройство с правом выкупа. AE — что выдали клиенту, Q — что он вернёт, AL — до когда.
+    pawn:     { [C.device]: "Что в залоге", [C.issue]: "Состояние и комплект", [C.buyback]: "Выдали клиенту, ₽",
+                [C.total]: "Сумма выкупа, ₽ (вернёт клиент)", [C.pawnUntil]: "Выкупить до", [C.date]: "Дата залога", [C.issued]: "Дата закрытия" },
   };
   // Что по типу сделки вообще не показываем. Мастер в выкупе и продаже не нужен: его
   // назначение шлёт мастеру «Для тебя новый заказ!» — о продаже это сбивает с толку.
@@ -166,6 +172,7 @@
     sale_used:[C.master, C.parts, C.partFrom, C.labor],
     sale_new: [C.master, C.parts, C.partFrom, C.labor, C.linked],
     sale_parts: [C.master, C.pass, C.labor, C.linked, C.imei, C.work, C.buyback],
+    pawn:     [C.master, C.pass, C.parts, C.partFrom, C.labor, C.warranty, C.partCost, C.work, C.linked],
   };
   // Поля ОДНОГО устройства — одинаковые у каждого устройства заказа, включая первое
   // (владелец, 26.09.2026: «карточки товаров не идентичны» — у первого цена была в общем
@@ -180,6 +187,7 @@
     sale_used:[C.device, C.imei, C.issue, C.work, C.warranty, C.linked, C.total, C.partCost],
     sale_new: [C.device, C.imei, C.issue, C.work, C.warranty, C.total, C.partCost],
     sale_parts: [C.device, C.issue, C.warranty, C.total, C.partCost],
+    pawn:     [C.device, C.imei, C.issue, C.buyback, C.total, C.pawnUntil],
   };
   const AREAS = [C.issue, C.work];
   // Раскладка полей устройства: короткие — попарно, тексты — рядом, деньги — в строку.
@@ -197,10 +205,11 @@
     sale_used:{ multi: "Продаём несколько устройств", start: "Продан" },
     sale_new: { multi: "Продаём несколько устройств", start: "Продан" },
     sale_parts:{ multi: "Несколько отдельных продаж", start: "Продан" },
+    pawn:     { multi: "В залоге несколько устройств", start: "В залоге" },
     other:    { multi: "Несколько устройств в сделке", start: "Принят на диагностику" },
   };
   // Статусы, уместные для типа (текущий статус строки показывается всегда).
-  const DEAL_FINAL = ["выкуплен", "разобран", "обмен оформлен", "продан"];
+  const DEAL_FINAL = ["выкуплен", "разобран", "обмен оформлен", "продан", "залог", "в залоге"]; // «залог…», «в залоге» — v73
   // «Выполнен» — сразу под «Готов ожидает клиента» (владелец, 03.10.2026). В списке таблицы он
   // 13-й, после пяти отказов, и в оболочке приходилось тянуться вниз мимо них. Порядок в самой
   // таблице не меняем — только здесь; остальные статусы стоят, как стояли.
@@ -219,7 +228,8 @@
     if (dk === "parts") return pick(["на согл", "выкуплен", "разобран"]);
     if (dk === "tradein") return pick(["на согл", "ждем предоплату", "обмен оформлен"]);
     if (dk === "sale_used" || dk === "sale_new" || dk === "sale_parts") return pick(["ждем предоплату", "продан"]);
-    return all;
+    if (dk === "pawn") return pick(["в залоге", "залог выкуплен", "залог не выкуплен"]);
+    return all.filter(x => !norm(x).startsWith("залог") && !norm(x).startsWith("в залоге"));
   }
   const labelFor = (c, key) => LABELS[key]?.[c] || F[c]?.label || "";
   // Меняется ли поле здесь прямо сейчас. С дверью — всё. Без двери — поля без реакций, а
@@ -231,7 +241,7 @@
     return !f.notify && c !== C.name && c !== C.phone && !!r && !isTrue(cell(r, C.report));
   };
 
-  const FINAL = ["выполнен", "отказ от ремонта", "ремонт невозможен", "без ремонта", "продан", "разобран", "выкуплен", "обмен оформлен", "закрыт"];
+  const FINAL = ["выполнен", "отказ от ремонта", "ремонт невозможен", "без ремонта", "продан", "разобран", "выкуплен", "обмен оформлен", "закрыт", "залог выкуплен", "залог не выкуплен"];
   // «Закрыт» — архивное закрытие без уведомления клиенту (28.09.2026: 1475 заказов старше
   // двух месяцев закрыты разом). В таблице для простоты просто «Закрыт», в оболочке — с
   // пояснением. Кнопкой в оболочке не ставится; руками в таблице — клиенту ничего не уходит.
@@ -609,10 +619,10 @@
   }
   function demoOptions() {
     const uniq = c => [...new Set(S.rows.map(r => String(cell(r, c)).trim()).filter(Boolean))];
-    S.opts[C.status] = ["Принят на диагностику", "На согласовании", "Ждем предоплату", "Заказана запчасть", "В работе", "Готов ожидает клиента", "Выполнен", "Отказ от ремонта после диагностики", "Выкуплен", "Разобран на запчасти", "Обмен оформлен", "Продан"];
+    S.opts[C.status] = ["Принят на диагностику", "На согласовании", "Ждем предоплату", "Заказана запчасть", "В работе", "Готов ожидает клиента", "Выполнен", "Отказ от ремонта после диагностики", "Выкуплен", "Разобран на запчасти", "Обмен оформлен", "Продан", "В залоге", "Залог выкуплен", "Залог не выкуплен"];
     S.opts[C.master] = uniq(C.master).sort();
     S.opts[C.source] = uniq(C.source);
-    S.opts[C.type] = ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Другое"];
+    S.opts[C.type] = ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Залог", "Другое"];
     S.bools.add(C.review); S.bools.add(C.report);
   }
 
@@ -624,6 +634,7 @@
   }
   function isStale(r) {
     if (!inWork(r)) return false;
+    if (dealKey(cell(r, C.type)) === "pawn") return pawnLeft(r) != null && pawnLeft(r) < 0; // залог — по сроку выкупа (v73)
     const age = daysSince(cell(r, C.date));
     if (age == null) return false;
     return isReady(cell(r, C.status)) ? age > 7 : age > 14;
@@ -750,6 +761,7 @@
         ${String(cell(r, C.contactPhone) ?? "").trim() ? `<span title="Уведомления уходят человеку на связи">📲 ${mark(cell(r, C.contactName) || cell(r, C.contactPhone))}</span>` : ""}
         ${cell(r, C.master) ? `<span>🔧 ${mark(cell(r, C.master))}</span>` : ""}
         ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}
+        ${dk === "pawn" && pawnLeft(r) != null ? `<span class="chip${pawnLeft(r) < 0 ? " chip--bad" : ""}">${esc(pawnDue(pawnLeft(r)))}</span>` : ""}
         <span class="item__sum">${money(cell(r, C.total))}</span></div>
     </div>`;
   }
@@ -805,7 +817,9 @@
     const tabs = [["work", "В работе", n.work], ["stale", "⚡ Долго висят", n.stale], ["ready", "Готовы, ждут клиента", n.ready], ["done", "Выданы за 30 дней"], ["all", "Все"]];
     // Долгий вход включили, а это устройство ещё на часовом (v51) — одна кнопка, один раз.
     const longBar = S.authOn && !DEMO && S.token && !sidGet() && !inApp() ? `<div class="longbar">🔐 Можно не входить заново после простоя: <button type="button" class="btn btn--sm" data-act="longlogin">Запомнить вход на 30 дней</button></div>` : "";
-    let body = longBar + (S.q ? "" : `<nav class="tabs">${tabs.map(([k, t, c]) =>
+    const pawns = S.q ? [] : S.rows.filter(r => dealKey(cell(r, C.type)) === "pawn" && pawnLeft(r) != null && pawnLeft(r) <= 1);
+    const pawnBar = pawns.length ? `<div class="longbar pawnbar">⏰ Залоги — срок выкупа: ${pawns.map(r => `<a href="#/${esc(cell(r, C.num))}">№${esc(cell(r, C.num))} ${esc(cell(r, C.device) || "")} — ${esc(pawnDue(pawnLeft(r)))}</a>`).join(" · ")}</div>` : "";
+    let body = longBar + pawnBar + (S.q ? "" : `<nav class="tabs">${tabs.map(([k, t, c]) =>
       `<button class="tab" data-tab="${k}" aria-pressed="${S.tab === k}">${t}${c != null ? `<small>${c}</small>` : ""}</button>`).join("")}${viewToggle()}</nav>`);
     if (S.q) {
       const one = S.q.startsWith("@c") ? clients().find(x => x.key === S.q.slice(1)) : null;
@@ -914,12 +928,18 @@
     const list = opts.includes(current) || !current ? opts : [current, ...opts];
     return `<div class="statuses">${list.map(o => `<button type="button" class="st st--${kindOf(o)}" data-choice="${col}" data-value="${esc(o)}" aria-pressed="${o === chosen}">${esc(col === C.status ? stLabel(o) : o)}</button>`).join("")}</div>`;
   }
-  const typeOptions = () => S.opts[C.type]?.length ? S.opts[C.type] : ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Другое"];
+  const typeOptions = () => S.opts[C.type]?.length ? S.opts[C.type] : ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Залог", "Другое"];
 
   // Деньги по типу сделки: что считаем «остаётся нам».
   function moneySummary(key, val, r) {
     const n = c => toNum(val(c)) ?? 0;
     if (key === "buyback" || key === "parts") return `Отдали клиенту: <b>${n(C.buyback).toLocaleString("ru-RU")} ₽</b> <span class="note">(маржа — при продаже)</span>`;
+    if (key === "pawn") { // v73
+      const given = n(C.buyback), back = n(C.total), gain = back - given, pct = given ? Math.round(gain / given * 1000) / 10 : 0;
+      const left = pawnLeft(r, val), until = String(val(C.pawnUntil) || "").trim();
+      return `Выдали <b>${given.toLocaleString("ru-RU")} ₽</b> · вернёт <b>${back.toLocaleString("ru-RU")} ₽</b> · наш доход при выкупе: <b>${gain.toLocaleString("ru-RU")} ₽</b>${given ? ` <span class="note">(${pct}%)</span>` : ""}`
+        + `<div class="note">${until ? `Выкупить до ${esc(until)}${left != null ? " · " + pawnDue(left) : ""}` : "Срок выкупа не задан — поставьте «Выкупить до» или кнопку срока выше"}<br>Не выкупит — устройство наше, себестоимость при продаже — ${given.toLocaleString("ru-RU")} ₽.</div>`;
+    }
     let m, how;
     if (key === "tradein") { m = n(C.total) + n(C.buyback) - n(C.partCost) - n(C.extra); how = "доплата + зачёт − закупка выданного − расходы"; }
     else { m = n(C.total) - n(C.partCost) - n(C.extra); how = key.startsWith("sale") ? "цена − себестоимость − расходы" : "итого − закупка запчастей − сторонний мастер / расходы"; }
@@ -928,7 +948,7 @@
       const src = S.byNum.get(String(val(C.linked)).trim());
       if (src) extra = `<div class="note">Устройство из сделки №${esc(val(C.linked))}: выкуплено за ${money(cell(src, C.buyback)) || "—"}</div>`;
     }
-    const d = parseDiscount(val(C.discount)), q = toNum(val(C.total)), pay = val(C.payment), up = payUp(pay) && !["buyback", "parts"].includes(key);
+    const d = parseDiscount(val(C.discount)), q = toNum(val(C.total)), pay = val(C.payment), up = payUp(pay) && !["buyback", "parts", "pawn"].includes(key);
     const cr = TIN_TYPES.includes(key) ? (toNum(val(C.buyback)) || 0) : 0; // зачёт трейд-ина (v71: AE этой же строки)
     const b = q != null ? baseOf(q, d, up ? pay : "", cr) : null;
     const dline = (d || up) && q != null ? `<div class="note">${d ? `Без скидки ${b.toLocaleString("ru-RU")} ₽ · скидка ${discText(d)}${d.pct != null ? ` (−${discRub(d, b).toLocaleString("ru-RU")} ₽)` : ""}` : `Без наценки ${b.toLocaleString("ru-RU")} ₽`}${up ? ` · +10% за оплату «${esc(pay)}»${cr ? " с доплаты" : ""}` : ""}${cr ? "" : ` · клиент платит ${q.toLocaleString("ru-RU")} ₽`}</div>` : "";
@@ -1462,6 +1482,63 @@
   // доплаты. *Изменено 17.10.2026, в v68–v70 было:* каждое сданное — отдельный заказ «Trade-in» в группе продажи;
   // так записан один заказ (№7827 + №7828–7829), он собран обратно. Работает и у записанной продажи: правка —
   // как любого поля, кнопкой «Сохранить». Галочка — у «Продажи нового» и «Продажи б/у» (v69).
+  // ── Залог (v73, 22.10.2026) ──────────────────────────────────────────────────────────
+  // Владелец: «добавь тип сделки „залог“, предусмотри всё, что нужно» — «деньги под устройство»: клиент оставляет
+  // устройство, мы выдаём деньги (AE), до срока (AL) он выкупает его дороже (Q); не выкупил — устройство наше, и
+  // «🛍 Продать как б/у» заводит продажу со ссылкой на залог (себестоимость = выданное). Клиенту пишем при «В залоге»
+  // и «Залог выкуплен»; «Залог не выкуплен» — молча. Напоминание о выкупе — только кнопкой (дверь crm-pawn-remind).
+  const ruDate = v => { const m = String(v ?? "").match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; };
+  const ruFmt = d => `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
+  // Сколько дней осталось до выкупа (отрицательное — просрочен); null — срока нет или залог закрыт.
+  function pawnLeft(r, get) {
+    const g = get || (c => cell(r, c));
+    if (!norm(g(C.status)).startsWith("в залоге")) return null;
+    const d = ruDate(g(C.pawnUntil)); if (!d) return null;
+    const t = new Date(); t.setHours(0, 0, 0, 0);
+    return Math.round((d - t) / 864e5);
+  }
+  const pawnDue = n => n == null ? "" : n < 0 ? `⚠️ просрочен на ${-n} дн.` : n === 0 ? "⏰ выкуп сегодня" : `⏰ осталось ${n} дн.`;
+  // Быстрые кнопки: сумма выкупа от выданного и срок от даты залога.
+  function pawnChipsHtml(key, r, val) {
+    if (key !== "new" && !editable(C.total, r)) return "";
+    // Кнопки не выключаем по пустому «Выдали»: поле правят без перерисовки формы — проверка при нажатии.
+    return `<div class="tchips pawn-chips"><span class="note">Выкуп:</span>${[10, 15, 20, 30].map(p => `<button type="button" class="tchip" data-act="pawnpct" data-p="${p}" title="Сумма выкупа = выдали + ${p}%">+${p}%</button>`).join("")}
+      <span class="note">Срок:</span>${[7, 14, 30].map(d => `<button type="button" class="tchip" data-act="pawndays" data-d="${d}">${d} дн.</button>`).join("")}</div>`;
+  }
+  function pawnActionsHtml(r) {
+    const st = norm(cell(r, C.status)), left = pawnLeft(r);
+    if (st.startsWith("в залоге")) return `<div class="row pawn-acts">${left != null ? `<span class="chip${left < 0 ? " chip--bad" : ""}">${esc(pawnDue(left))}</span>` : ""}<button type="button" class="btn btn--ghost btn--sm" data-act="pawnremind"${S.pawnBusy ? " disabled" : ""}>📨 Напомнить о выкупе</button></div>
+      <p class="note">Клиенту уйдёт: что в залоге, до какого числа и за сколько выкупить. Само не пишет — только этой кнопкой.</p>`;
+    if (st.startsWith("залог не выкуплен") && canCreate()) return `<div class="row pawn-acts"><button type="button" class="btn btn--sm" data-act="pawnsell">🛍 Продать как б/у</button></div>
+      <p class="note">Откроется новая «Продажа б/у»: устройство и IMEI отсюда, ссылка на залог №${esc(cell(r, C.num))}, себестоимость — выданные ${money(cell(r, C.buyback)) || "—"}.</p>`;
+    return "";
+  }
+  function startSaleFromPawn(r) {
+    for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
+    S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
+    S.draft = true; S.newClient = null;
+    const set = (c, v) => { if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); };
+    const type = typeOptions().find(o => dealKey(o) === "sale_used") || "Продажа б/у";
+    set(C.type, type); set(C.status, TYPE_UI.sale_used.start); set(C.date, today());
+    set(C.device, cell(r, C.device)); set(C.imei, cell(r, C.imei)); set(C.linked, cell(r, C.num)); set(C.partCost, toNum(cell(r, C.buyback)) ?? "");
+    location.hash = "#/new";
+    toast(`Продажа б/у из залога №${cell(r, C.num)}: устройство и себестоимость подставлены — впишите покупателя и цену`, null, true);
+  }
+  async function pawnRemind(t) {
+    const r = S.byNum.get(location.hash.slice(2)); if (!r) return;
+    const num = String(cell(r, C.num)).trim();
+    const call = again => DEMO ? Promise.resolve({ ok: true, at: mskStamp().slice(11, 16), channel: "Telegram" })
+      : doorPost(CFG.doors[0], "crm-pawn-remind", JSON.stringify({ token: S.token, row: r.row, num, again })).then(({ text: x }) => { try { return JSON.parse(x); } catch { return { ok: false, error: "дверь ответила не JSON" }; } });
+    S.pawnBusy = true; rerenderKeep();
+    try {
+      let j = await call(false);
+      if (!j.ok && j.already && confirm(`Напоминание по №${num} уже уходило в ${j.already}. Отправить ещё раз?`)) j = await call(true);
+      if (!j.ok) { if (!j.already) toast("Не ушло: " + (j.error || "дверь не ответила"), null, true); return; }
+      toast(`📨 Напоминание о выкупе №${num} ушло в ${j.channel}${DEMO ? " (демо)" : ""}`, null, true);
+    } catch (e) { toast(e.message, null, true); }
+    finally { S.pawnBusy = false; rerenderKeep(); }
+  }
+
   const TIN_TYPES = ["sale_new", "sale_used"];
   const tinVal = (key, r, c) => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
   const tinParse = text => String(text || "").split("\n").map(l => l.trim()).filter(Boolean).map(l => {
@@ -1513,7 +1590,7 @@
   const tinBox = (key, r) => `<label class="check multi"><input type="checkbox" data-act="tin" ${tinActive(key, r) ? "checked" : ""}><b>🔄 Трейд-ин — клиент сдаёт устройство в зачёт</b></label>`;
   const DISC_TYPES = ["repair", "other", "sale_used", "sale_new", "sale_parts"];
   function payHtml(key, r, val, dk) {
-    const cur = String(val(C.payment) || ""), up = !["buyback", "parts"].includes(dk), dirty = S.dirty.has(key + ":" + C.payment);
+    const cur = String(val(C.payment) || ""), up = !["buyback", "parts", "pawn"].includes(dk), dirty = S.dirty.has(key + ":" + C.payment);
     return `<div class="field field--pay${dirty ? " is-dirty" : ""}"><span>Оплата${up ? "" : " <small class=\"note\">(платим мы — без наценки)</small>"}</span><div class="pay">${PAY_TYPES.map(p =>
       `<button type="button" class="pay__b" data-act="pay" data-v="${esc(p)}" aria-pressed="${norm(cur) === norm(p)}">${esc(p)}${up && payUp(p) ? " <small>+10%</small>" : ""}</button>`).join("")}</div></div>`;
   }
@@ -1522,7 +1599,7 @@
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const old = val(C.payment), d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
     setDirty(key, C.payment, pay);
-    if (["buyback", "parts"].includes(dk) || payUp(old) === payUp(pay)) return null;
+    if (["buyback", "parts", "pawn"].includes(dk) || payUp(old) === payUp(pay)) return null;
     const cr = creditOf(key, r);
     if (q != null) setDirty(key, C.total, String(finalOf(baseOf(q, d, old, cr), d, pay, cr)));
     if (key === "new" && S.multi) for (const x of S.extra) { const t = toNum(x[C.total]); if (t != null) x[C.total] = String(Math.round(Math.round(t / (1 + payUp(old))) * (1 + payUp(pay)))); }
@@ -2569,9 +2646,12 @@
   // отказ от ремонта, ремонт невозможен, без ремонта (в т. ч. «оставили на запчасти»).
   // 0 — это сумма (гарантийный ремонт), пусто — нет. То же правило стоит в таблице
   // (OrderAutofill.js, orderCloseBlocked_): там статус без суммы откатывается.
-  const CLOSING = ["выполнен", "продан", "обмен оформлен", "выкуплен", "разобран"];
+  const CLOSING = ["выполнен", "продан", "обмен оформлен", "выкуплен", "разобран", "залог выкуплен", "залог не выкуплен"];
   function sumColFor(status, dk) {
     const s = norm(status);
+    // Залог (v73): «в залоге» — без суммы выдачи нечего сообщать клиенту; «не выкуплен» закрывается выданным (AE),
+    // «выкуплен» — суммой выкупа (Q). Так же решает таблица (OrderAutofill.js, orderCloseBlocked_).
+    if (dk === "pawn") return s.startsWith("в залоге") || s.startsWith("залог не выкуплен") ? C.buyback : s.startsWith("залог выкуплен") ? C.total : null;
     if (!CLOSING.some(x => s.startsWith(x))) return null;
     return ["buyback", "parts", "tradein"].includes(dk) ? C.buyback : C.total;
   }
@@ -2608,7 +2688,7 @@
     const box = (order, inner) => `<div class="cg-item" style="order:${order}">${inner}</div>`;
     let html = `<section class="block"><h3>Тип сделки</h3>${
       editable(C.type, r) || isNew ? choiceButtons(key, C.type, typeNow, isNew ? typeOptions().filter(o => !/trade|трейд/i.test(o) || o === typeNow) : typeOptions(), () => "type") : `<div class="big">${esc(typeNow)}</div>`}
-      ${["buyback", "parts", "tradein"].includes(dk) ? `<p class="note">${dk === "tradein" ? "Сданное устройство" : "Перед выкупом"}: iCloud и «Найти iPhone» отключены, IMEI не в розыске, проверены АКБ и экран. Паспортные данные — только в бумажный договор, в таблицу не писать.</p>` : ""}
+      ${["buyback", "parts", "tradein", "pawn"].includes(dk) ? `<p class="note">${dk === "tradein" ? "Сданное устройство" : dk === "pawn" ? "Перед залогом" : "Перед выкупом"}: iCloud и «Найти iPhone» отключены, IMEI не в розыске, проверены АКБ и экран. Паспортные данные — только в бумажный договор, в таблицу не писать.</p>` : ""}
     </section>`;
     let left = box(1, html), right = ""; html = "";
 
@@ -2660,6 +2740,7 @@
         : rep ? `<div class="field field--parts"><span>Запчасти <small class="note">(клиенту в отчёте уходят только названия)</small></span>${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
         : `<div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>`}
       ${dk === "sale_used" || String(val(C.linked)).trim() ? fh(C.linked) : ""}
+      ${dk === "pawn" && !isNew ? pawnActionsHtml(r) : ""}
       ${fh(C.master)}
       <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass, TIN_TYPES.includes(dk) ? { area: true } : {})}</div>
     </section>`;
@@ -2671,10 +2752,12 @@
       // пустая, хотя „остаётся нам“ — по сути то же самое, и оно заполнено». R — формула таблицы (Q − S − T): в
       // карточке было её значение на момент загрузки — 0 у нового заказа и старое после правки итога, — а «Остаётся
       // нам» оболочка считает на лету по той же формуле. Теперь одно живое число — строка под полями.
+      : dk === "pawn" ? [C.buyback, C.total, C.pawnUntil]
       : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : rep ? [C.total, "parts", C.extra] : spp ? [C.total, "parts", C.extra] : [C.total, C.partCost, C.extra];
     const partsRo = `<div class="field"><span>Запчасти (закуп), ₽ <small class="note">— сумма из списка запчастей</small></span><div class="ro" data-parts-sum>${esc(money(val(C.partCost)) || "—")}</div></div>`;
     const discBox = DISC_TYPES.includes(dk) && (isNew || editable(C.total, r)) ? discountHtml(key, r, val) : "";
     html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => c === "parts" ? partsRo : fh(c)).join("")}${discBox}</div>
+      ${dk === "pawn" ? pawnChipsHtml(key, r, val) : ""}
       ${isNew || editable(C.total, r) || editable(C.buyback, r) ? payHtml(key, r, val, dk) : ""}
       <div class="margin">${moneySummary(dk, val, r)}</div></section>`;
     right += box(6, html); html = "";
@@ -2770,6 +2853,7 @@
     const warn = missing ? `<div class="note" style="color:var(--wait)">⚠️ Без суммы: ${missing} из ${N} — впишите, иначе итог не сойдётся.</div>` : "";
     const f = n => n.toLocaleString("ru-RU") + " ₽";
     if (dk === "buyback" || dk === "parts") return `Итого отдаём клиенту за ${N} устр.: <b>${f(get(C.buyback))}</b>${warn}`;
+    if (dk === "pawn") return `Залог ${N} устр.: выдали <b>${f(get(C.buyback))}</b> · вернёт <b>${f(get(C.total))}</b> · доход при выкупе <b>${f(get(C.total) - get(C.buyback))}</b>${warn}`;
     if (dk === "tradein") return `Доплата ${f(get(C.total))} + зачёт ${f(get(C.buyback))} − закупка ${f(get(C.partCost))} − расходы ${f(extra)} = остаётся нам: <b>${f(get(C.total) + get(C.buyback) - get(C.partCost) - extra)}</b>${warn}`;
     const cr = TIN_TYPES.includes(dk) ? (toNum(S.dirty.get("new:" + C.buyback)) || 0) : 0, tinLine = cr ? `<div class="note">🔄 Трейд-ин: зачёт ${f(cr)} → клиент доплачивает <b>${f(Math.max(0, get(C.total) - cr))}</b></div>` : "";
     if (dk.startsWith("sale")) return `Итого по ${N} устр.: <b>${f(get(C.total))}</b> · закупка ${f(get(C.partCost))} · остаётся нам: <b>${f(get(C.total) - get(C.partCost) - extra)}</b>${warn}${tinLine}`;
@@ -3213,14 +3297,14 @@
     try {
       // До последней колонки (v71). *Исправлено 17.10.2026:* раньше копия и очистка шли до AG, и «На связи» (AH–AI),
       // «Оплата» (AJ) оставались в строке — новый заказ, легший в неё, унаследовал бы чужой контакт «На связи».
-      const LAST = C.tradein;
+      const LAST = C.pawnUntil; // последняя колонка листа (v73: AL «Залог: выкупить до»)
       let raw = r.cells.slice(0, LAST + 1);
       if (!DEMO) {
         const chk = await api(`/values/${A1(0, r.row)}`);
         if (String(chk.values?.[0]?.[0] ?? "").trim() !== String(num)) throw new Error("Строка в таблице сдвинулась — обновите список (⟳) и повторите");
         raw = (await api(`/values/${A1(0, r.row, LAST, r.row)}?valueRenderOption=FORMULA`)).values?.[0] || [];
         await ensureTrash();
-        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AN`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AO`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
           { method: "POST", body: JSON.stringify({ values: [[mskStamp(), S.email || "", r.row, ...raw.map(v => String(v ?? ""))]] }) });
         await api("/values:batchClear", { method: "POST", body: JSON.stringify({ ranges: [`'${CFG.sheet}'!B${r.row}:Q${r.row}`, `'${CFG.sheet}'!S${r.row}:${LETTER(LAST)}${r.row}`] }) });
         await logStatus([[r.row, cell(r, C.status), "Удалён"]]);
@@ -3237,7 +3321,7 @@
   async function restoreOrder() {
     const d = S.lastDeleted; if (!d) return;
     try {
-      const now = (await api(`/values/${A1(1, d.row, C.tradein, d.row)}`)).values?.[0] || [];
+      const now = (await api(`/values/${A1(1, d.row, C.pawnUntil, d.row)}`)).values?.[0] || [];
       if (now.some(v => String(v).trim())) return toast(`Строка ${d.row} уже занята — верните заказ вручную с листа «${TRASH}»`, null, true);
       const plain = d.raw.map(v => typeof v === "string" && v.startsWith("=") ? null : v);
       await api(`/values/${A1(0, d.row, d.raw.length - 1, d.row)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [plain] }) });
@@ -3759,6 +3843,15 @@
       rerenderKeep(); if (key !== "new") refreshSaveBar(key);
       toast(`Оплата: ${pay || "не указана"}${q != null && !["buyback", "parts"].includes(dk) ? ` · итог ${money(q)}${payUp(pay) ? " (+10%)" : ""}` : ""}`);
       return;
+    }
+    if (act === "pawnremind") { await pawnRemind(t); return; }
+    if (act === "pawnsell") { const r = S.byNum.get(location.hash.slice(2)); if (r) startSaleFromPawn(r); return; }
+    if (act === "pawnpct" || act === "pawndays") {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); if (key == null) return;
+      const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+      if (act === "pawnpct") { const given = toNum(val(C.buyback)); if (!given) return toast("Сначала впишите, сколько выдали клиенту"); setDirty(key, C.total, String(Math.ceil(given * (1 + +t.dataset.p / 100) / 100) * 100)); }
+      else { const from = ruDate(val(C.date)) || new Date(); from.setDate(from.getDate() + +t.dataset.d); setDirty(key, C.pawnUntil, ruFmt(from)); }
+      if (key === "new") saveDraft(); rerenderKeep(); return;
     }
     if (act === "sppick") { const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); spAdd(key, r, t.dataset.k); return; }
     if (act === "spsupp") { const o = S.spSuppList?.[+t.dataset.i]; S.spSel = S.spSel === o ? null : o || null; rerenderKeep(); $app.querySelector("[data-spprice]")?.focus({ preventScroll: true }); return; }
