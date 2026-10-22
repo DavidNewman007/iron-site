@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-21T13:11:33.992Z",
-  "count": 336,
+  "generated_at": "2026-10-22T13:15:53.277Z",
+  "count": 337,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -2689,6 +2689,14 @@
       "name": "👱‍♀️HD17 R Pro Apricot/Topaz",
       "warehouse": "(S2)",
       "price": 36500
+    },
+    "-hs09-co-anda-2x-ceramic-pink-rose-gold-s2-47400": {
+      "url": "hybrid-products/dyson/hs09-co-anda-2x-ceramic-pink-rose-gold-s2-47400.html",
+      "url_en": "en/hybrid-products/dyson/hs09-co-anda-2x-ceramic-pink-rose-gold-s2-47400.html",
+      "cover": "assets/product-images/3cc99ad2cd24f0f15570eae6.jpg",
+      "name": "👱‍♀️HS09 Co-Anda 2X Ceramic Pink/Rose Gold",
+      "warehouse": "(S2)",
+      "price": 47400
     }
   }
 }
