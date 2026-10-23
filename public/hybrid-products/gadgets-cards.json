@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-22T13:15:53.280Z",
-  "count": 42,
+  "generated_at": "2026-10-23T15:23:29.984Z",
+  "count": 46,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -337,6 +337,38 @@
       "name": "📸instax mini 13 Pink",
       "warehouse": "(S2)",
       "price": 12200
+    },
+    "google-fitbit-air-lavender-s4-12800": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-lavender-s4-12800.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-lavender-s4-12800.html",
+      "cover": "assets/product-images/e601b2e215bd4ee6a0abbc08.jpg",
+      "name": "Google Fitbit Air Lavender",
+      "warehouse": "(S4)",
+      "price": 12800
+    },
+    "google-fitbit-air-obsidian-s4-12100": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-obsidian-s4-12100.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-obsidian-s4-12100.html",
+      "cover": "assets/product-images/38bf1864c0332f59f4f5c38b.jpg",
+      "name": "Google Fitbit Air Obsidian",
+      "warehouse": "(S4)",
+      "price": 12100
+    },
+    "google-fitbit-air-fog-s4-12700": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-fog-s4-12700.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-fog-s4-12700.html",
+      "cover": "assets/product-images/58d99235700e3bc864262981.jpg",
+      "name": "Google Fitbit Air Fog",
+      "warehouse": "(S4)",
+      "price": 12700
+    },
+    "google-fitbit-air-berry-s4-12000": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-berry-s4-12000.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-berry-s4-12000.html",
+      "cover": "assets/product-images/2ffa2d52407c52f5032fafc2.jpg",
+      "name": "Google Fitbit Air Berry",
+      "warehouse": "(S4)",
+      "price": 12000
     }
   }
 }

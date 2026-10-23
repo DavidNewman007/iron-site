@@ -1,0 +1,99 @@
+{
+  "product_id": "honor-x7e-6-256gb-black-россия-s4-20100",
+  "category": "android",
+  "file_slug": "honor-x7e-6-256gb-black-s4-20100",
+  "name": "Honor X7e 6+ 256Gb Black",
+  "country": "🇷🇺 Россия",
+  "warehouse": "(S4)",
+  "price": 20100,
+  "catalog_url": "https://www.honor.com/kz/phones/honor-x7e/spec/",
+  "catalog_title": "HONOR X7e 6/256 ГБ, чёрный",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,61″ TFT LCD, 1604×720, до 120 Гц, алюмосиликатное стекло"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G81 Ultra, 8 ядер (2 × 2,0 ГГц + 6 × 1,7 ГГц); графика Mali-G52 MC2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "6 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ, слот microSD (вместо второй SIM)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8) + вспомогательный модуль; видео 1080p"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "5 Мп (f/2.2), видео 1080p"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7000 мАч (типичная ёмкость, версия для СНГ LAB-LX1)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная HONOR SuperCharge 45 Вт, USB Type-C; обратная зарядка проводом"
+    },
+    {
+      "key": "Сеть",
+      "value": "4G LTE, 3G, 2G"
+    },
+    {
+      "key": "SIM",
+      "value": "2 × nano-SIM или nano-SIM + microSD"
+    },
+    {
+      "key": "Беспроводная связь",
+      "value": "Wi-Fi 5 (802.11ac, 2,4/5 ГГц), Bluetooth 5.1, NFC"
+    },
+    {
+      "key": "Навигация",
+      "value": "GPS, ГЛОНАСС, BeiDou, Galileo"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64 от пыли и брызг"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм для наушников"
+    },
+    {
+      "key": "Размеры",
+      "value": "163,9 × 75,9 × 8,29 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "около 204 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "чёрный (Midnight Black / «Полночный чёрный»)"
+    },
+    {
+      "key": "ОС",
+      "value": "MagicOS 10.0 на базе Android 16"
+    }
+  ],
+  "images_remote": [
+    "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-x7e/honor-x7e-black-list.png",
+    "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-x7e/honor-x7e-black-back.png",
+    "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-x7e/honor-x7e-black-front.png"
+  ],
+  "images_local": [
+    "assets/product-images/0084b0bf9946d1aa30b9ccac.jpg",
+    "assets/product-images/df8379977cfedbc01d0aa148.jpg",
+    "assets/product-images/a2716b4524b7168c0ad1ce0c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "honor x7e 6 256gb black~s4",
+  "photo_source": "https://www.honor.com/kz/phones/honor-x7e/spec/",
+  "updated_at": "2026-10-23T15:15:33.848566Z"
+}

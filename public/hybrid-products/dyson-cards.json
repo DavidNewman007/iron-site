@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-22T13:15:53.277Z",
-  "count": 337,
+  "generated_at": "2026-10-23T15:23:29.980Z",
+  "count": 343,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -2697,6 +2697,54 @@
       "name": "👱‍♀️HS09 Co-Anda 2X Ceramic Pink/Rose Gold",
       "warehouse": "(S2)",
       "price": 47400
+    },
+    "-hs08-red-velvet-gold-s2-41700": {
+      "url": "hybrid-products/dyson/hs08-red-velvet-gold-s2-41700.html",
+      "url_en": "en/hybrid-products/dyson/hs08-red-velvet-gold-s2-41700.html",
+      "cover": "assets/product-images/3d055f96e29fd2c24f4fda49.jpg",
+      "name": "👱‍♀HS08 Red Velvet/Gold",
+      "warehouse": "(S2)",
+      "price": 41700
+    },
+    "-hs09-co-anda-2x-apricot-topaz-s2-46400": {
+      "url": "hybrid-products/dyson/hs09-co-anda-2x-apricot-topaz-s2-46400.html",
+      "url_en": "en/hybrid-products/dyson/hs09-co-anda-2x-apricot-topaz-s2-46400.html",
+      "cover": "assets/product-images/1f01eeb70cce6f791cd24e57.jpg",
+      "name": "👱‍♀️HS09 Co-Anda 2X Apricot/Topaz",
+      "warehouse": "(S2)",
+      "price": 46400
+    },
+    "-hd16-prussian-blue-s2-31400": {
+      "url": "hybrid-products/dyson/hd16-prussian-blue-s2-31400.html",
+      "url_en": "en/hybrid-products/dyson/hd16-prussian-blue-s2-31400.html",
+      "cover": "assets/product-images/db42adecb55826d26a702201.jpg",
+      "name": "👱‍♀️HD16 Prussian Blue",
+      "warehouse": "(S2)",
+      "price": 31400
+    },
+    "-hd16-ceramic-pink-rose-gold-s2-31400": {
+      "url": "hybrid-products/dyson/hd16-ceramic-pink-rose-gold-s2-31400.html",
+      "url_en": "en/hybrid-products/dyson/hd16-ceramic-pink-rose-gold-s2-31400.html",
+      "cover": "assets/product-images/642c6166727ce1cde83f1885.jpg",
+      "name": "👱‍♀️HD16 Ceramic Pink/Rose Gold",
+      "warehouse": "(S2)",
+      "price": 31400
+    },
+    "-hd17-r-pro-apricot-topaz-s2-36000": {
+      "url": "hybrid-products/dyson/hd17-r-pro-apricot-topaz-s2-36000.html",
+      "url_en": "en/hybrid-products/dyson/hd17-r-pro-apricot-topaz-s2-36000.html",
+      "cover": "assets/product-images/49c5844fc9874055352cd773.jpg",
+      "name": "👱‍♀️HD17 R Pro Apricot/Topaz",
+      "warehouse": "(S2)",
+      "price": 36000
+    },
+    "-ht01-nickel-cooper-s2-33500": {
+      "url": "hybrid-products/dyson/ht01-nickel-cooper-s2-33500.html",
+      "url_en": "en/hybrid-products/dyson/ht01-nickel-cooper-s2-33500.html",
+      "cover": "assets/product-images/b028af352d0c4e82aa81fbc7.jpg",
+      "name": "👩HT01 Nickel Cooper",
+      "warehouse": "(S2)",
+      "price": 33500
     }
   }
 }

@@ -135,6 +135,7 @@ def render_html(source: dict[str, Any], lang: str = "ru") -> str:
         "specs": "Характеристики",
         "pick": "+ Выбрать",
         "preorder": "🛩️ под заказ, 1–2 дня",
+        "preorder57": "🛩️ под заказ, 5–7 дней",
         "about": "<strong>IRON SERVICE</strong> — магазин и сервис Apple в Сочи, ул. Московская, 5.",
         "order": "Заказ:",
         "footer_legal": "Независимый сервис Apple в Сочи. Не является официальным сайтом Apple Inc.",
@@ -159,9 +160,19 @@ def render_html(source: dict[str, Any], lang: str = "ru") -> str:
     # детальная страница выглядела бы как товар в наличии: в магазине бейдж есть,
     # а на странице товара его не было вовсе (27.08.2026, когда для S3 начали
     # собирать карточки). Класс тот же, что в магазине, — стиль в shop.css.
+    #
+    # S4 (предзаказ Double Apple, 5–7 дней) — 23.10.2026: проверка искала только
+    # «s3», и все карточки S4 (iPhone 18 с 18.09, вся техника с 12.10) выглядели
+    # на странице товара как наличие. Срок у S4 свой — 5–7 дней.
+    warehouse = str(source.get("warehouse") or "")
+    preorder_label = (
+        подписи["preorder"] if re.search(r"s3", warehouse, re.I)
+        else подписи["preorder57"] if re.search(r"s4", warehouse, re.I)
+        else ""
+    )
     preorder_badge = (
-        f'\n          <p class="price-card__preorder">{подписи["preorder"]}</p>'
-        if re.search(r"s3", str(source.get("warehouse") or ""), re.I)
+        f'\n          <p class="price-card__preorder">{preorder_label}</p>'
+        if preorder_label
         else ""
     )
     gallery_main, thumbs_html = _gallery_block(images_rel, name, base)

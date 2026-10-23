@@ -1,0 +1,103 @@
+{
+  "product_id": "google-pixel-11-pro-fold-16-256gb-olive-сша-s4-119200",
+  "category": "android",
+  "file_slug": "google-pixel-11-pro-fold-16-256gb-olive-s4-119200",
+  "name": "Google Pixel 11 Pro Fold 16+ 256Gb Olive",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 119200,
+  "catalog_url": "https://store.google.com/gb/config/pixel_11_pro_fold?hl=en-GB",
+  "catalog_title": "Google Pixel 11 Pro Fold 16/256 ГБ, Olive (оливковый)",
+  "specs": [
+    {
+      "key": "Внешний экран",
+      "value": "6,5\" OLED Super Actua, 1080×2342 (399 ppi), 1–120 Гц, до 3600 нит"
+    },
+    {
+      "key": "Внутренний гибкий экран",
+      "value": "8\" OLED Super Actua Flex, 2076×2152 (372 ppi), 1–120 Гц, до 3600 нит"
+    },
+    {
+      "key": "Процессор",
+      "value": "Google Tensor G6 + чип безопасности Titan M3"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ"
+    },
+    {
+      "key": "Основные камеры",
+      "value": "48 Мп широкоугольная (f/1.7, OIS) + 10,5 Мп сверхширокоугольная с макро + 10,8 Мп телеобъектив 5x (OIS), Super Zoom до 30x"
+    },
+    {
+      "key": "Фронтальные камеры",
+      "value": "10 Мп на внешнем экране + 10 Мп на внутреннем"
+    },
+    {
+      "key": "Видео",
+      "value": "4K 24/30/60 к/с, 10-bit HDR"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "4806 мАч (типично), 24+ ч работы"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 50% за ~30 мин (от 30 Вт USB-C PPS); беспроводная Pixelsnap (Qi2.2) до 25 Вт"
+    },
+    {
+      "key": "SIM",
+      "value": "nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, Wi-Fi 7, Bluetooth 6, NFC, UWB, двухчастотная GNSS"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68; стеклокерамика на внешнем экране"
+    },
+    {
+      "key": "Размеры в сложенном виде",
+      "value": "155,2 × 76 × 10,1 мм"
+    },
+    {
+      "key": "Размеры в разложенном виде",
+      "value": "155,2 × 150,4 × 5 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "239 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Olive (оливковый)"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 17 (на старте), 7 лет обновлений ОС и безопасности"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/7bAFKKkShy2Ml49iyisIoV-ZUFTA-DooIwE-gUlUf1voIiqExIOB1wXBroEzc4DvaiggOS80ykqHSrhFF74QZ9936JJfNXlvJg=w1200-rp",
+    "https://lh3.googleusercontent.com/s3czXV1F4CJ5eZIOOmGExv8eNCOE49SygQ4zDLWwIvmI_aNaiK3gOlXM-wZk8gdasI08hb44gpZchmLs-FPcB0oJ-B9C9gOYXQ=w1200-rp",
+    "https://lh3.googleusercontent.com/apIAgTf2_5NFGRL6mBDLfhY6E2tGGEguO5TOuoPCDWeEF-rupi0r5vsxiJFH_HHRycfvH2ooNrb2cEnE6xf678JcDltkjLrZ1Wk=w1200-rp",
+    "https://lh3.googleusercontent.com/HGAk9Gp9gAIWubgwrtfrNsmC6wtOHQ03utetYtPGqZVL4KRS1LPpV7Var3r72oAPW68LoIYHkXMFxmNq5dUtoRYufwFMGMuvpOw=w1200-rp",
+    "https://lh3.googleusercontent.com/0PKxBqZYhym5376eaj9CU-vooClylpwwSGR6ArTQpGM0dTC40Ooix9Ow64tM5Z9VmlSMQFKNW2d8VoHGZgAuyu5GQ6Eyjtor3o8=w1200-rp"
+  ],
+  "images_local": [
+    "assets/product-images/7834a13ecb5fe296739e2574.jpg",
+    "assets/product-images/17e45d8b81ab8c0d0a3675b8.jpg",
+    "assets/product-images/c131ab38c7c53273663ce1dc.jpg",
+    "assets/product-images/366b60ca8d14c184dbb78e4a.jpg",
+    "assets/product-images/3ff5414e4d610d0c1ad1d14d.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google pixel 11 pro fold 16 256gb olive~s4",
+  "photo_source": "https://store.google.com/gb/config/pixel_11_pro_fold?hl=en-GB",
+  "updated_at": "2026-10-23T15:15:33.743508Z"
+}

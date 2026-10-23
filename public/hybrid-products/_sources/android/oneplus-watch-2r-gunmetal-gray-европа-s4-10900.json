@@ -1,0 +1,101 @@
+{
+  "product_id": "oneplus-watch-2r-gunmetal-gray-европа-s4-10900",
+  "category": "android",
+  "file_slug": "oneplus-watch-2r-gunmetal-gray-s4-10900",
+  "name": "OnePlus Watch 2R Gunmetal Gray",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 10900,
+  "catalog_url": "https://www.oneplus.com/us/buy-oneplus-watch-2r",
+  "catalog_title": "Смарт-часы OnePlus Watch 2R 47 мм, Gunmetal Gray (тёмно-серые)",
+  "specs": [
+    {
+      "key": "Корпус",
+      "value": "алюминиевый сплав, 47,6 × 46,6 × 12,1 мм; нижняя крышка — пластик"
+    },
+    {
+      "key": "Ремешок",
+      "value": "силиконовый, застёжка из нержавеющей стали; на запястье 140–210 мм"
+    },
+    {
+      "key": "Экран",
+      "value": "1,43\" AMOLED, 466×466, 326 ppi, яркость до 1000 нит, стекло 2D"
+    },
+    {
+      "key": "Процессор",
+      "value": "Snapdragon W5 Gen 1 + сопроцессор BES2700BP (двухчиповая схема)"
+    },
+    {
+      "key": "Память",
+      "value": "2 ГБ ОЗУ + 32 ГБ"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Wear OS 4 + RTOS"
+    },
+    {
+      "key": "Датчики",
+      "value": "пульсометр (оптический), акселерометр, гироскоп, геомагнитный датчик, датчик освещённости, барометр"
+    },
+    {
+      "key": "Навигация",
+      "value": "двухчастотный GPS (L1+L5), BeiDou, Galileo, ГЛОНАСС, QZSS"
+    },
+    {
+      "key": "Связь",
+      "value": "Bluetooth 5.0, Wi-Fi 2,4/5 ГГц, NFC (Google Wallet)"
+    },
+    {
+      "key": "Звонки",
+      "value": "через Bluetooth с телефона"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "500 мАч"
+    },
+    {
+      "key": "Автономность",
+      "value": "до 100 ч в умном режиме, до 48 ч при активном использовании, до 12 дней в режиме энергосбережения"
+    },
+    {
+      "key": "Зарядка",
+      "value": "полная — около 60 мин; 10 мин — на сутки работы"
+    },
+    {
+      "key": "Защита",
+      "value": "5 ATM (до 50 м), IP68"
+    },
+    {
+      "key": "Спорт и здоровье",
+      "value": "100+ спортивных режимов, мониторинг сна, пульса, стресса"
+    },
+    {
+      "key": "Вес",
+      "value": "около 37 г без ремешка, около 59 г с ремешком"
+    },
+    {
+      "key": "Совместимость",
+      "value": "только Android 8.0 и новее с сервисами Google; iPhone не поддерживается"
+    },
+    {
+      "key": "Цвет",
+      "value": "Gunmetal Gray (тёмно-серый корпус, чёрный ремешок)"
+    }
+  ],
+  "images_remote": [
+    "https://image01.oneplus.net/media/202408/16/d87c4fab0c606d83fdc8413e55bd89ae.png",
+    "https://image01.oneplus.net/media/202408/16/a8f3e040d086c1cca7b4048731a52688.png",
+    "https://image01.oneplus.net/media/202408/16/7d857384c982ef60987714083a6d13d0.png",
+    "https://www.oneplus.com/content/dam/oasis/page/bagel/in/v2/assets/images-kv-watch-black-1.png"
+  ],
+  "images_local": [
+    "assets/product-images/47ef6668644ccdb125040b28.jpg",
+    "assets/product-images/e2c49138b045da3e2a7adcaa.jpg",
+    "assets/product-images/60b22d22ff08065f5221afc8.jpg",
+    "assets/product-images/132647d072ad399f73417b6e.jpg"
+  ],
+  "manual": true,
+  "manual_key": "oneplus watch 2r gunmetal gray~s4",
+  "photo_source": "https://www.oneplus.com/us/buy-oneplus-watch-2r",
+  "updated_at": "2026-10-23T15:15:33.872342Z"
+}

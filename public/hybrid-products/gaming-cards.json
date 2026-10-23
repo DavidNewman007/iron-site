@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-22T13:15:53.258Z",
-  "count": 87,
+  "generated_at": "2026-10-23T15:23:29.957Z",
+  "count": 97,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -697,6 +697,86 @@
       "name": "🥽PS VR2",
       "warehouse": "(S2)",
       "price": 37600
+    },
+    "-gamepad-ps5-volcanic-red-s2-8100": {
+      "url": "hybrid-products/gaming/gamepad-ps5-volcanic-red-s2-8100.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-volcanic-red-s2-8100.html",
+      "cover": "assets/product-images/6dff1efeecb9f63494cd696c.jpg",
+      "name": "🎮GamePad PS5 Volcanic Red",
+      "warehouse": "(S2)",
+      "price": 8100
+    },
+    "-gamepad-ps5-white-s2-7600": {
+      "url": "hybrid-products/gaming/gamepad-ps5-white-s2-7600.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-white-s2-7600.html",
+      "cover": "assets/product-images/44bf9e4cf263624c6e295998.jpg",
+      "name": "🎮GamePad PS5 White",
+      "warehouse": "(S2)",
+      "price": 7600
+    },
+    "-gamepad-ps5-chroma-pearl-s2-8300": {
+      "url": "hybrid-products/gaming/gamepad-ps5-chroma-pearl-s2-8300.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-chroma-pearl-s2-8300.html",
+      "cover": "assets/product-images/5866341f13e30037737e2c48.jpg",
+      "name": "🎮GamePad PS5 Chroma Pearl",
+      "warehouse": "(S2)",
+      "price": 8300
+    },
+    "-gamepad-ps5-chroma-teal-s2-8500": {
+      "url": "hybrid-products/gaming/gamepad-ps5-chroma-teal-s2-8500.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-chroma-teal-s2-8500.html",
+      "cover": "assets/product-images/c6f43a8594b4f3ef295a42c2.jpg",
+      "name": "🎮GamePad PS5 Chroma Teal",
+      "warehouse": "(S2)",
+      "price": 8500
+    },
+    "-gamepad-ps5-chroma-indigo-s2-8200": {
+      "url": "hybrid-products/gaming/gamepad-ps5-chroma-indigo-s2-8200.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-chroma-indigo-s2-8200.html",
+      "cover": "assets/product-images/a2ae99d842ae9b7f87e76245.jpg",
+      "name": "🎮GamePad PS5 Chroma Indigo",
+      "warehouse": "(S2)",
+      "price": 8200
+    },
+    "-gamepad-ps5-techno-red-s2-8800": {
+      "url": "hybrid-products/gaming/gamepad-ps5-techno-red-s2-8800.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-techno-red-s2-8800.html",
+      "cover": "assets/product-images/6060ab25f8228d5c146fa2d7.jpg",
+      "name": "🎮GamePad PS5 Techno Red",
+      "warehouse": "(S2)",
+      "price": 8800
+    },
+    "-gamepad-ps5-rhythm-blue-s2-8800": {
+      "url": "hybrid-products/gaming/gamepad-ps5-rhythm-blue-s2-8800.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-rhythm-blue-s2-8800.html",
+      "cover": "assets/product-images/01306a630995cdf1095cf9dd.jpg",
+      "name": "🎮GamePad PS5 Rhythm Blue",
+      "warehouse": "(S2)",
+      "price": 8800
+    },
+    "sony-playstation-5-slim-disc-оаэ-s4-80800": {
+      "url": "hybrid-products/gaming/sony-playstation-5-slim-disc-s4-80800.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-5-slim-disc-s4-80800.html",
+      "cover": "assets/product-images/b69ddd0b1caaeea46a30c8f4.jpg",
+      "name": "Sony PlayStation 5 SLIM Disc",
+      "warehouse": "(S4)",
+      "price": 80800
+    },
+    "sony-playstation-5-slim-digital-825gb-оаэ-s4-75300": {
+      "url": "hybrid-products/gaming/sony-playstation-5-slim-digital-825gb-s4-75300.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-5-slim-digital-825gb-s4-75300.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "Sony PlayStation 5 SLIM Digital 825Gb",
+      "warehouse": "(S4)",
+      "price": 75300
+    },
+    "sony-playstation-portal-white-s4-26800": {
+      "url": "hybrid-products/gaming/sony-playstation-portal-white-s4-26800.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-portal-white-s4-26800.html",
+      "cover": "assets/product-images/9e175dd37be85181eac35fa5.jpg",
+      "name": "Sony PlayStation Portal White",
+      "warehouse": "(S4)",
+      "price": 26800
     }
   }
 }

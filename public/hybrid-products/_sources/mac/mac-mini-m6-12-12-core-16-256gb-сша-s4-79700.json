@@ -1,0 +1,87 @@
+{
+  "product_id": "mac-mini-m6-12-12-core-16-256gb-сша-s4-79700",
+  "category": "mac",
+  "file_slug": "mac-mini-m6-12-12-core-16-256gb-s4-79700",
+  "name": "Mac mini M6 12/12 Core 16+ 256Gb",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 79700,
+  "catalog_url": "https://www.apple.com/shop/buy-mac/mac-mini/m6-chip-12-core-cpu-12-core-gpu-16gb-memory-256gb-storage",
+  "catalog_title": "Apple Mac mini M6 (12/12 ядер), 16 ГБ, 256 ГБ",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Apple M6, 12-ядерный CPU (2 суперъядра, 4 производительных и 6 энергоэффективных ядер)"
+    },
+    {
+      "key": "Графика",
+      "value": "12-ядерный GPU с нейроускорителями, аппаратная трассировка лучей"
+    },
+    {
+      "key": "Neural Engine",
+      "value": "двойной, 2 × 16 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ объединённой памяти (пропускная способность 153 ГБ/с)"
+    },
+    {
+      "key": "Накопитель",
+      "value": "SSD 256 ГБ"
+    },
+    {
+      "key": "Порты спереди",
+      "value": "2 × USB‑C (USB 3, до 10 Гбит/с), разъём 3,5 мм для наушников"
+    },
+    {
+      "key": "Порты сзади",
+      "value": "3 × Thunderbolt 4 (до 40 Гбит/с), HDMI, Ethernet 2,5 Гбит/с"
+    },
+    {
+      "key": "Внешние мониторы",
+      "value": "до трёх мониторов (два 6K 60 Гц и третий до 5K 60 Гц)"
+    },
+    {
+      "key": "Беспроводная связь",
+      "value": "чип Apple N1: Wi‑Fi 7 (802.11be), Bluetooth 6, Thread"
+    },
+    {
+      "key": "Звук",
+      "value": "встроенный динамик, многоканальный звук через HDMI"
+    },
+    {
+      "key": "Блок питания",
+      "value": "встроенный, до 155 Вт"
+    },
+    {
+      "key": "Размеры",
+      "value": "12,7 × 12,7 × 5,0 см"
+    },
+    {
+      "key": "Вес",
+      "value": "0,67 кг"
+    },
+    {
+      "key": "Цвет",
+      "value": "серебристый"
+    },
+    {
+      "key": "Операционная система",
+      "value": "macOS"
+    }
+  ],
+  "images_remote": [
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-mini-chip-unselect-202608-gallery-1?wid=1200&hei=769&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-mini-chip-unselect-202608-gallery-2?wid=1200&hei=769&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-mini-chip-unselect-202608-gallery-3?wid=1200&hei=769&fmt=jpeg&qlt=90"
+  ],
+  "images_local": [
+    "assets/product-images/4e99aa9c76726399041b0e75.jpg",
+    "assets/product-images/b55c84cbb8c65b06f6289975.jpg",
+    "assets/product-images/9211a442efd3c26fb6ae3634.jpg"
+  ],
+  "manual": true,
+  "manual_key": "mac mini m6 12 12 core 16 256gb~s4",
+  "photo_source": "https://www.apple.com/shop/buy-mac/mac-mini/m6-chip-12-core-cpu-12-core-gpu-16gb-memory-256gb-storage",
+  "updated_at": "2026-10-23T15:22:16.464015Z"
+}

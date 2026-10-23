@@ -1,0 +1,99 @@
+{
+  "product_id": "google-pixel-watch-5-45mm-fog-wi-fi-сша-s4-38100",
+  "category": "android",
+  "file_slug": "google-pixel-watch-5-45mm-fog-wi-fi-s4-38100",
+  "name": "Google Pixel Watch 5 45mm Fog Wi-Fi",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 38100,
+  "catalog_url": "https://store.google.com/gb/config/pixel_watch_5?hl=en-GB",
+  "catalog_title": "Смарт-часы Google Pixel Watch 5 45 мм (Wi-Fi), корпус Polished Silver, ремешок Fog (светло-мятный)",
+  "specs": [
+    {
+      "key": "Размер корпуса",
+      "value": "45 мм, толщина 12,3 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "36,7 г (без ремешка)"
+    },
+    {
+      "key": "Корпус",
+      "value": "алюминий (100% переработанный), Polished Silver (полированное серебро)"
+    },
+    {
+      "key": "Ремешок",
+      "value": "Active Band 2-го поколения, Fog (светло-мятный); в комплекте размеры S и L (обхват 150–215 мм)"
+    },
+    {
+      "key": "Экран",
+      "value": "AMOLED LTPO Actua 360, 320 ppi, 1–60 Гц, до 3000 нит, Always-on"
+    },
+    {
+      "key": "Защитное стекло",
+      "value": "Corning Gorilla Glass 5 (изогнутое 3D)"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon W5 Gen 2 + сопроцессор Cortex-M55"
+    },
+    {
+      "key": "Память",
+      "value": "64 ГБ"
+    },
+    {
+      "key": "Связь",
+      "value": "Bluetooth 6.0, Wi-Fi 802.11 a/b/g/n/ac/ax (2,4/5 ГГц), NFC, UWB; без LTE (версия Wi-Fi)"
+    },
+    {
+      "key": "Навигация",
+      "value": "двухчастотный GPS: GPS, Galileo, ГЛОНАСС, BeiDou, QZSS"
+    },
+    {
+      "key": "Датчики",
+      "value": "оптический пульсометр, ЭКГ, SpO2, температура кожи, cEDA (кожно-гальваническая реакция), акселерометр, гироскоп, барометр, магнитометр, компас, высотомер, датчик освещённости"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "465 мАч"
+    },
+    {
+      "key": "Автономность",
+      "value": "до 40 ч с Always-on, до 72 ч в режиме экономии"
+    },
+    {
+      "key": "Зарядка",
+      "value": "док-станция Quick Charge: 50% примерно за 15 минут"
+    },
+    {
+      "key": "Защита",
+      "value": "5 ATM, IP68"
+    },
+    {
+      "key": "Управление",
+      "value": "сенсорный экран, тактильная заводная головка, боковая кнопка, жесты одной рукой"
+    },
+    {
+      "key": "Звук",
+      "value": "микрофон и динамик"
+    },
+    {
+      "key": "ОС и совместимость",
+      "value": "Wear OS 7.0; телефоны на Android 12 и новее"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/gpiT3TFQRcALP4TguyH04tfOz3q9_-BGL3yBmSRkRWa0xY0-qfHDivJgElAP932Y0FpQwXrz3lpUEiVJJpDiwbZRaTXtxY5mzHLX=w1200-rp",
+    "https://lh3.googleusercontent.com/8efZVTT7YVGnnabotdze7dRWPIdCGoLvipckle1gVU25dy9uVVHlaE14hiGiLe3mHC7xz6IZEndyRBKb5njV0UjK3kxOsCNKmX4a=w1200-rp",
+    "https://lh3.googleusercontent.com/xMdPiout707qtLgG16fI1W0rl-mNh4GtZkZ_ipUQLirT2eGvlPYIjK0WhNJTf-acisZUKeq7fAWiH2npiuo9XAN0Gy0tJJqiQ6k=w1200-rp"
+  ],
+  "images_local": [
+    "assets/product-images/4f82f2b843b1d1cae4597f39.jpg",
+    "assets/product-images/e9e408f7cc0cd1230b160d02.jpg",
+    "assets/product-images/e388ce0610cf9b3adb02eb72.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google pixel watch 5 45mm fog wi fi~s4",
+  "photo_source": "https://store.google.com/gb/config/pixel_watch_5?hl=en-GB",
+  "updated_at": "2026-10-23T15:15:33.816940Z"
+}

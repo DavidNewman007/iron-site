@@ -177,9 +177,15 @@ def _is_memory_start(token: str, next_token: str) -> bool:
     return bool(_MEMORY_TOKEN_RE.match(next_token)) or (next_token.isdigit() and int(next_token) >= 32)
 
 
+def _xiaomi_tokens(text: str) -> list[str]:
+    # «+» — память у предзаказа S4 пишется «12+ 256Gb» (23.10.2026): без замены
+    # «12+» не узнавался как память и входил в модель, и все 115 Xiaomi/POCO S4
+    # получали штраф чужой модели — страница поставщика была, карточки не было.
+    return normalize_match_text(text).replace("_", " ").replace("/", " ").replace("+", " ").split()
+
+
 def xiaomi_model_core(text: str) -> tuple[str, ...]:
-    value = normalize_match_text(text).replace("_", " ").replace("/", " ")
-    tokens = value.split()
+    tokens = _xiaomi_tokens(text)
     core: list[str] = []
     for i, token in enumerate(tokens):
         following = tokens[i + 1] if i + 1 < len(tokens) else ""
@@ -192,7 +198,7 @@ def xiaomi_model_core(text: str) -> tuple[str, ...]:
 
 
 def xiaomi_has_memory(text: str) -> bool:
-    tokens = normalize_match_text(text).replace("_", " ").replace("/", " ").split()
+    tokens = _xiaomi_tokens(text)
     return any(_is_memory_start(t, tokens[i + 1] if i + 1 < len(tokens) else "") for i, t in enumerate(tokens))
 
 
@@ -239,7 +245,6 @@ SAMSUNG_NOISE_TOKENS = frozenset(
 def samsung_model_core(text: str) -> str:
     value = normalize_match_text(text).replace("_", " ").replace("/", " ").replace("+", " ")
     value = re.sub(r"\bsm\s*[a-z]\d{3,4}[a-z]*\b", " ", value)  # артикул SM-S948
-    tokens = value.split()
     core: list[str] = []
     for i, token in enumerate(tokens):
         following = tokens[i + 1] if i + 1 < len(tokens) else ""

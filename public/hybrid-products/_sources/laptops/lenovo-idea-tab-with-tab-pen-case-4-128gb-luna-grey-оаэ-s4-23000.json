@@ -1,0 +1,93 @@
+{
+  "product_id": "lenovo-idea-tab-with-tab-pen-case-4-128gb-luna-grey-оаэ-s4-23000",
+  "category": "laptops",
+  "file_slug": "lenovo-idea-tab-with-tab-pen-case-4-128gb-luna-grey-s4-23000",
+  "name": "Lenovo Idea Tab with Tab pen & Case 4+ 128Gb Luna Grey",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S4)",
+  "price": 23000,
+  "catalog_url": "https://psref.lenovo.com/Product/Lenovo_Tablets/Idea_Tab",
+  "catalog_title": "Планшет Lenovo Idea Tab 11″ 4/128 ГБ, Luna Grey, со стилусом и чехлом",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 6300 (8 ядер, до 2,4 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ (UFS 2.2) + слот microSD до 2 ТБ"
+    },
+    {
+      "key": "Экран",
+      "value": "11″, 2560×1600 (2.5K), IPS, 500 нит, 90 Гц, сенсорный"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "Arm Mali-G57 MC2"
+    },
+    {
+      "key": "Камеры",
+      "value": "фронтальная 5 Мп, основная 8 Мп"
+    },
+    {
+      "key": "Звук",
+      "value": "4 динамика, Dolby Atmos"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 5, Bluetooth 5.2, GPS / ГЛОНАСС / Galileo"
+    },
+    {
+      "key": "Порты",
+      "value": "USB-C (USB 2.0), аудиоразъём 3,5 мм, слот microSD"
+    },
+    {
+      "key": "Батарея",
+      "value": "7040 мА·ч, зарядка 20 Вт"
+    },
+    {
+      "key": "Вес",
+      "value": "480 г"
+    },
+    {
+      "key": "Размеры",
+      "value": "254,59 × 166,15 × 6,99 мм"
+    },
+    {
+      "key": "Корпус",
+      "value": "металл, защита IP52"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 15"
+    },
+    {
+      "key": "Комплектация",
+      "value": "планшет, стилус Lenovo Tab Pen, чехол (по PSREF в комплектах 4/128 — Folio Case)"
+    },
+    {
+      "key": "Цвет",
+      "value": "Luna Grey (серый)"
+    }
+  ],
+  "images_remote": [
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Idea_Tab/Compressedimage/Idea_Tab_CT1_06.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Idea_Tab/Compressedimage/Idea_Tab_CT1_08.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Idea_Tab/Compressedimage/Idea_Tab_CT1_05.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Idea_Tab/Compressedimage/Idea_Tab_CT2_01.png"
+  ],
+  "images_local": [
+    "assets/product-images/45beedf3ee104d2737e7c888.jpg",
+    "assets/product-images/9c6cab02579f5483ea161009.jpg",
+    "assets/product-images/e1f495f99b60ccdc1f189178.jpg",
+    "assets/product-images/ba93ea29bded036557f14c0c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "lenovo idea tab with tab pen case 4 128gb luna grey~s4",
+  "photo_source": "https://psref.lenovo.com/Product/Lenovo_Tablets/Idea_Tab",
+  "updated_at": "2026-10-23T15:22:16.371126Z"
+}

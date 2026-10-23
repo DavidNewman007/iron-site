@@ -1,0 +1,75 @@
+{
+  "product_id": "honor-band-6-pink-европа-s4-2200",
+  "category": "android",
+  "file_slug": "honor-band-6-pink-s4-2200",
+  "name": "Honor Band 6 Pink",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 2200,
+  "catalog_url": "https://www.honor.com/uk/wearables/honor-band-6/",
+  "catalog_title": "Фитнес-браслет HONOR Band 6, розовый",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "1,47″ AMOLED, сенсорный, 194×368"
+    },
+    {
+      "key": "Размер корпуса",
+      "value": "43 × 25,4 × 11,45 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "около 18 г (без ремешка)"
+    },
+    {
+      "key": "Датчики",
+      "value": "6-осевой (акселерометр + гироскоп), оптический датчик пульса"
+    },
+    {
+      "key": "Здоровье",
+      "value": "пульс 24/7 (TruSeen 4.0), SpO2 (кислород в крови), сон TruSleep, менструальный цикл"
+    },
+    {
+      "key": "Тренировки",
+      "value": "10 профессиональных режимов, включая плавание"
+    },
+    {
+      "key": "Автономность",
+      "value": "до 14 дней при обычном использовании, до 10 дней при интенсивном"
+    },
+    {
+      "key": "Аккумулятор и зарядка",
+      "value": "180 мАч, магнитная зарядка; 10 минут зарядки — около 3 дней работы"
+    },
+    {
+      "key": "Защита",
+      "value": "водонепроницаемость 5 ATM (до 50 м), подходит для плавания в бассейне"
+    },
+    {
+      "key": "Связь",
+      "value": "Bluetooth 5.0 BLE"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Android 5.0 и новее, iOS 9.0 и новее (часть функций только на Android)"
+    },
+    {
+      "key": "Цвет",
+      "value": "розовый (Coral Pink / «Коралловый розовый»)"
+    }
+  ],
+  "images_remote": [
+    "https://www-file.honor.com/content/dam/honor/uk/product-list/wearables/honor-band-6/honor-band-6-listimage-pink-pc.png",
+    "https://www-file.honor.com/content/dam/honor/ru/products/wearable/honor-band-6/image/new-pink.jpg",
+    "https://www-file.honor.com/content/dam/honor/uk/products/wearable/honor-band-6/image/honor-band-6-pc_12.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/c428e0535fcde4386d7b0a26.jpg",
+    "assets/product-images/f04bed1d09e556473ce284eb.jpg",
+    "assets/product-images/706a97c1cc932438a0262759.jpg"
+  ],
+  "manual": true,
+  "manual_key": "honor band 6 pink~s4",
+  "photo_source": "https://www.honor.com/uk/wearables/honor-band-6/",
+  "updated_at": "2026-10-23T15:15:33.838523Z"
+}

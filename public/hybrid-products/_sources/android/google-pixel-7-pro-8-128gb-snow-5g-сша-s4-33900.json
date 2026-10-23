@@ -1,0 +1,97 @@
+{
+  "product_id": "google-pixel-7-pro-8-128gb-snow-5g-сша-s4-33900",
+  "category": "android",
+  "file_slug": "google-pixel-7-pro-8-128gb-snow-5g-s4-33900",
+  "name": "Google Pixel 7 Pro 8+ 128Gb Snow 5G",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 33900,
+  "catalog_url": "https://web.archive.org/web/20230531215306/https://store.google.com/us/config/pixel_7_pro?hl=en-US",
+  "catalog_title": "Google Pixel 7 Pro 12/128 ГБ, Snow (белый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,7\" LTPO OLED, 1440×3120 (QHD+, 512 ppi), до 120 Гц, HDR, яркость до 1500 нит (пик)"
+    },
+    {
+      "key": "Процессор",
+      "value": "Google Tensor G2 (5 нм) + чип безопасности Titan M2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ LPDDR5"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ UFS 3.1, без слота карт памяти"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп широкоугольная (f/1.85, OIS) + 12 Мп сверхширокоугольная с автофокусом (f/2.2, 125,8°, макро) + 48 Мп телевик 5× (f/3.5, OIS); Super Res Zoom до 30×; видео 4K 60 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "10,8 Мп (f/2.2, 92,8°), видео 4K 60 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мАч (типичная ёмкость; минимальная 4926 мАч)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "Проводная до 23 Вт (USB-C PD 3.0 PPS), беспроводная Qi, обратная беспроводная (Battery Share)"
+    },
+    {
+      "key": "SIM",
+      "value": "nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, Wi-Fi 6E, Bluetooth 5.2, NFC, UWB, USB Type-C 3.2"
+    },
+    {
+      "key": "Разблокировка",
+      "value": "Подэкранный сканер отпечатков, разблокировка по лицу"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68 (пыль и вода); стекло Corning Gorilla Glass Victus спереди и сзади"
+    },
+    {
+      "key": "Корпус",
+      "value": "Стекло и полированная алюминиевая рамка"
+    },
+    {
+      "key": "Размеры",
+      "value": "162,9 × 76,6 × 8,9 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "212 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Snow (белый, рамка и блок камер серебристые)"
+    },
+    {
+      "key": "ОС",
+      "value": "Вышел с Android 13; обновления безопасности не менее 5 лет с начала продаж (до октября 2027 г.)"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/jkigZVLD-d5OvLd5ONKeVCmXW3dZEtZhsJnmFkNSgB-uN8COK_nq21jZ6BOyucknMbWOtY5YxZd9mZImVK3I7qrbgCewCPsBX5w=s1200",
+    "https://lh3.googleusercontent.com/bztzbCMWknr91CSCns3MDyDYPbfj-zMrm_pCU3tUg7L8jESI5ik-PjfUloo_D1A1t4lNZMPr1NqcnVkuJl0sGNI2hIO89Ie48b0W=s1200",
+    "https://lh3.googleusercontent.com/jvtmafrNHIXxIF5LzY4STnJ7bR70Lx7-38bLitMObGmlUdEtF6uj9xniBKpoSWmXLJWUWDZOfaHrfa-dDITX7zbVDf9GLzgLxQ=s1200",
+    "https://lh3.googleusercontent.com/ObSbLdzA0aobGSsRars8HdPnsb2wb5pOP7tFuKWuUyFBcBLFWC2iSAx2ZQvvxb-eU_aX5V8xPE6gIzhP0VpGtfxPuTPmYUTsCw=s1200"
+  ],
+  "images_local": [
+    "assets/product-images/c462df9c204aa034b307b130.jpg",
+    "assets/product-images/0c025c606bbec2bff577741d.jpg",
+    "assets/product-images/4b814de08500b93c40e64494.jpg",
+    "assets/product-images/7a4b2f7dca884451f14e35f7.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google pixel 7 pro 8 128gb snow 5g~s4",
+  "photo_source": "https://web.archive.org/web/20230531215306/https://store.google.com/us/config/pixel_7_pro?hl=en-US",
+  "updated_at": "2026-10-23T15:15:33.779353Z"
+}

@@ -280,10 +280,14 @@
     // xiaomi (28.09.2026): категорию магазин знал давно, а манифеста не было —
     // конвейер карточек Xiaomi не узнавал, и 80 телефонов S3 шли без фото.
     "xiaomi",
+    // android, mac, laptops (23.10.2026, план 108): разделы предзаказа S4.
+    "android",
+    "mac",
+    "laptops",
   ];
   // Поднимать при каждом изменении списка выше: иначе браузер отдаст манифесты
   // из кэша, и новая категория останется без фото до его истечения.
-  const EXTRA_HYBRID_MANIFEST_VERSION = "2026-09-28-1";
+  const EXTRA_HYBRID_MANIFEST_VERSION = "2026-10-23-1";
   const TG_USER = cfg.telegramOrderUser || "ironsochi";
   const CART_KEY = "iron_cart";
   const CART_PRODUCT_ID_QUERY_PARAM = "pid";

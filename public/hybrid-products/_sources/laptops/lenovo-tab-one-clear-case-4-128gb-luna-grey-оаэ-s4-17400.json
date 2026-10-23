@@ -1,0 +1,95 @@
+{
+  "product_id": "lenovo-tab-one-clear-case-4-128gb-luna-grey-оаэ-s4-17400",
+  "category": "laptops",
+  "file_slug": "lenovo-tab-one-clear-case-4-128gb-luna-grey-s4-17400",
+  "name": "Lenovo Tab One + clear case 4+ 128Gb Luna Grey",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S4)",
+  "price": 17400,
+  "catalog_url": "https://psref.lenovo.com/Product/Lenovo_Tablets/Tab_One",
+  "catalog_title": "Планшет Lenovo Tab One 8,7″ 4/128 ГБ, Luna Grey, с прозрачным чехлом",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G85 (8 ядер, до 2,0 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ (eMMC 5.1) + слот microSD до 1 ТБ"
+    },
+    {
+      "key": "Экран",
+      "value": "8,7″, 1340×800, IPS, 480 нит, 60 Гц, сенсорный"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "Arm Mali-G52 MC2"
+    },
+    {
+      "key": "Камеры",
+      "value": "фронтальная 2 Мп, основная 8 Мп"
+    },
+    {
+      "key": "Звук",
+      "value": "2 динамика, Dolby Atmos"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 5, Bluetooth 5.3, GPS / ГЛОНАСС / Galileo / BeiDou"
+    },
+    {
+      "key": "Порты",
+      "value": "USB-C (USB 2.0), аудиоразъём 3,5 мм, слот microSD"
+    },
+    {
+      "key": "Батарея",
+      "value": "5100 мА·ч"
+    },
+    {
+      "key": "Вес",
+      "value": "около 320 г"
+    },
+    {
+      "key": "Размеры",
+      "value": "211 × 124,8 × 8,5 мм"
+    },
+    {
+      "key": "Корпус",
+      "value": "пластик"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 14"
+    },
+    {
+      "key": "Комплектация",
+      "value": "планшет, прозрачный чехол"
+    },
+    {
+      "key": "Цвет",
+      "value": "Luna Grey (серый)"
+    }
+  ],
+  "images_remote": [
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Tab_One/Compressedimage/Tab_One_CT1_01.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Tab_One/Compressedimage/Tab_One_CT2_08.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Tab_One/Compressedimage/Tab_One_CT2_05.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Tab_One/Compressedimage/Tab_One_CT2_06.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Tab_One/Compressedimage/Tab_One_CT2_01.png"
+  ],
+  "images_local": [
+    "assets/product-images/5dd5965b129101cf20ca5a28.jpg",
+    "assets/product-images/5c08aee83eba811685644f29.jpg",
+    "assets/product-images/2fd545cdeb23845d06f8b3f4.jpg",
+    "assets/product-images/4cc55d32d900eadd77609b65.jpg",
+    "assets/product-images/a371cdfe6d7cc3252d8c8dd5.jpg"
+  ],
+  "manual": true,
+  "manual_key": "lenovo tab one clear case 4 128gb luna grey~s4",
+  "photo_source": "https://psref.lenovo.com/Product/Lenovo_Tablets/Tab_One",
+  "updated_at": "2026-10-23T15:22:16.419109Z"
+}

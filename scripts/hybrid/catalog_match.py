@@ -346,7 +346,7 @@ COLOR_TOKENS = frozenset(
 # xiaomi добавлен 28.09.2026: цвет и «Pro»/«Max» у телефонов сверяются так же;
 # модель вдобавок проверяет xiaomi_match_penalty.
 GENERIC_MATCH_CATEGORIES = frozenset(
-    {"audio", "gaming", "dyson", "gadgets", "galaxy_watch", "meta", "xiaomi"}
+    {"audio", "gaming", "dyson", "gadgets", "galaxy_watch", "meta", "xiaomi", "android"}
 )
 
 
@@ -367,6 +367,10 @@ GENERIC_NOISE_WORDS = frozenset(
         "godovaya", "podpiska", "size", "gen", "edition",
         # «NFC» есть в каждом названии Redmi и ни в одном адресе (28.09.2026).
         "nfc",
+        # «(без зарядки)» / «(No Charger)» у предзаказа S4 (23.10.2026): комплектация,
+        # а не модель — в адресе поставщика этих слов нет, и 9 POCO/Xiaomi с
+        # верной страницей получали штраф «слово-модель не найдено» дважды.
+        "bez", "zaryadki", "charger",
     }
 )
 
@@ -659,6 +663,7 @@ GUARDED_CATEGORIES = frozenset(
         # xiaomi (28.09.2026) — чужую модель и цвет отсекают xiaomi_match_penalty
         # и generic_match_penalty, поэтому планка та же, что у соседей.
         "xiaomi",
+        "android",
     }
 )
 GUARDED_MIN_SCORE = 0.25

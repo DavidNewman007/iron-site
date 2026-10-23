@@ -1,0 +1,95 @@
+{
+  "product_id": "lenovo-v15-g5-irl-15-6-intel-core-i7-13620h-16-512gb-black-европа-s4-69700",
+  "category": "laptops",
+  "file_slug": "lenovo-v15-g5-irl-15-6-intel-core-i7-13620h-16-512gb-black-s4-69700",
+  "name": "Lenovo V15 G5 IRL 15.6 Intel Core i7-13620H 16+ 512Gb Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 69700,
+  "catalog_url": "https://psref.lenovo.com/Product/Lenovo/Lenovo_V15_G5_IRL",
+  "catalog_title": "Ноутбук Lenovo V15 G5 IRL 15,6″ Core i7-13620H, 16 ГБ, 512 ГБ, чёрный",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Intel Core i7-13620H"
+    },
+    {
+      "key": "Ядра и частота",
+      "value": "10 ядер (6P + 4E), 16 потоков, до 4,9 ГГц, кэш 24 МБ"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Тип памяти",
+      "value": "DDR5-5200, 2 слота SO-DIMM (до 32 ГБ)"
+    },
+    {
+      "key": "Накопитель",
+      "value": "512 ГБ SSD (M.2, PCIe NVMe)"
+    },
+    {
+      "key": "Экран",
+      "value": "15,6″, 1920×1080 (Full HD), антибликовое; матрица TN 250 нит или IPS 300 нит — зависит от партии"
+    },
+    {
+      "key": "Сенсорный экран",
+      "value": "нет"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "Intel UHD Graphics (встроенная)"
+    },
+    {
+      "key": "Порты",
+      "value": "2× USB-A 5 Гбит/с, 1× USB-C 5 Гбит/с (USB PD, DisplayPort 1.2), HDMI 1.4b, Ethernet RJ-45, аудиоразъём 3,5 мм"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 6 (2×2), Bluetooth 5.2"
+    },
+    {
+      "key": "Веб-камера",
+      "value": "HD 720p со шторкой"
+    },
+    {
+      "key": "Клавиатура",
+      "value": "полноразмерная с цифровым блоком, без подсветки"
+    },
+    {
+      "key": "Батарея",
+      "value": "47 Вт·ч, Rapid Charge (до 80% за 1 час)"
+    },
+    {
+      "key": "Вес",
+      "value": "от 1,61 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "359,2 × 235,8 × 18,3 мм"
+    },
+    {
+      "key": "Цвет",
+      "value": "Business Black (чёрный)"
+    }
+  ],
+  "images_remote": [
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo/Lenovo_V15_G5_IRL/Compressedimage/Lenovo_V15_G5_IRL_CT1_03.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo/Lenovo_V15_G5_IRL/Compressedimage/Lenovo_V15_G5_IRL_CT1_01.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo/Lenovo_V15_G5_IRL/Compressedimage/Lenovo_V15_G5_IRL_CT1_02.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo/Lenovo_V15_G5_IRL/Compressedimage/Lenovo_V15_G5_IRL_CT1_04.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo/Lenovo_V15_G5_IRL/Compressedimage/Lenovo_V15_G5_IRL_CT2_04.png"
+  ],
+  "images_local": [
+    "assets/product-images/5316eb2e98cd2aacb831faf7.jpg",
+    "assets/product-images/7f1330c087ef2a632cd7eabf.jpg",
+    "assets/product-images/1a3c5abe4594fb1a08da74d3.jpg",
+    "assets/product-images/d81afc9523a22466ebf2562d.jpg",
+    "assets/product-images/67bb0a83d8b341ca3969a351.jpg"
+  ],
+  "manual": true,
+  "manual_key": "lenovo v15 g5 irl 15 6 intel core i7 13620h 16 512gb black~s4",
+  "photo_source": "https://psref.lenovo.com/Product/Lenovo/Lenovo_V15_G5_IRL",
+  "updated_at": "2026-10-23T15:22:16.433771Z"
+}

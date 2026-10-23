@@ -1,7 +1,7 @@
 /**
  * Словари поиска магазина IRON SERVICE.
- * Сгенерировано: 2026-10-22
- * Источники: витрина запчастей
+ * Сгенерировано: 2026-10-23
+ * Источники: Товары список.txt, витрина запчастей, листы прайса (Prices, Prices-2, Prices-3, Prices-4)
  * Пересборка: node scripts/build-search-dictionary.mjs
  */
 window.IRON_SEARCH_DICT = {
@@ -9,6 +9,21 @@ window.IRON_SEARCH_DICT = {
   translit:   {
       "a07": [
           "a07"
+      ],
+      "a075": [
+          "a075"
+      ],
+      "a07s": [
+          "a07s"
+      ],
+      "a08": [
+          "a08"
+      ],
+      "a11": [
+          "a11"
+      ],
+      "a11+": [
+          "a11+"
       ],
       "a16": [
           "а16",
@@ -52,6 +67,9 @@ window.IRON_SEARCH_DICT = {
           "а37",
           "a37"
       ],
+      "a5": [
+          "a5"
+      ],
       "a56": [
           "а56",
           "a56"
@@ -60,10 +78,22 @@ window.IRON_SEARCH_DICT = {
           "а57",
           "a57"
       ],
+      "a65": [
+          "a65"
+      ],
+      "a7": [
+          "a7"
+      ],
+      "abyss": [
+          "abyss"
+      ],
       "accessories": [
           "аксессуары",
           "аксесуары",
           "акссесуары"
+      ],
+      "active5": [
+          "active5"
       ],
       "acton": [
           "acton"
@@ -76,6 +106,9 @@ window.IRON_SEARCH_DICT = {
           "проклейка",
           "скотч",
           "клей"
+      ],
+      "adventurer": [
+          "adventurer"
       ],
       "air": [
           "аир",
@@ -126,6 +159,9 @@ window.IRON_SEARCH_DICT = {
           "amber",
           "амбер"
       ],
+      "amd": [
+          "amd"
+      ],
       "amethyst": [
           "аметист",
           "аметист"
@@ -145,6 +181,12 @@ window.IRON_SEARCH_DICT = {
           "anchor",
           "анкор"
       ],
+      "and": [
+          "and"
+      ],
+      "anniversary": [
+          "anniversary"
+      ],
       "antenna": [
           "антенна",
           "антенны"
@@ -161,6 +203,18 @@ window.IRON_SEARCH_DICT = {
       "apricot/topaz": [
           "apricot/topaz"
       ],
+      "aquamarine": [
+          "aquamarine"
+      ],
+      "arctic": [
+          "arctic"
+      ],
+      "arp10": [
+          "arp10"
+      ],
+      "asteroid": [
+          "asteroid"
+      ],
       "au": [
           "au"
       ],
@@ -170,6 +224,12 @@ window.IRON_SEARCH_DICT = {
       ],
       "aurora": [
           "aurora"
+      ],
+      "autumn": [
+          "autumn"
+      ],
+      "aviator": [
+          "aviator"
       ],
       "b/ds": [
           "b/ds"
@@ -183,6 +243,9 @@ window.IRON_SEARCH_DICT = {
           "банд",
           "ремешок",
           "браслет"
+      ],
+      "basalt": [
+          "basalt"
       ],
       "bataree": [
           "батарея",
@@ -207,14 +270,23 @@ window.IRON_SEARCH_DICT = {
       "black/black": [
           "black/black"
       ],
+      "black/blue": [
+          "black/blue"
+      ],
       "black/charcoal": [
           "black/charcoal"
+      ],
+      "black/clear": [
+          "black/clear"
       ],
       "black/g15": [
           "black/g15"
       ],
       "black/gray": [
           "black/gray"
+      ],
+      "black/grey": [
+          "black/grey"
       ],
       "black/transitions": [
           "black/transitions"
@@ -234,6 +306,9 @@ window.IRON_SEARCH_DICT = {
       ],
       "blue/topaz": [
           "blue/topaz"
+      ],
+      "blue/transitions": [
+          "blue/transitions"
       ],
       "blueberry": [
           "blueberry"
@@ -257,20 +332,35 @@ window.IRON_SEARCH_DICT = {
           "bright",
           "bright"
       ],
+      "bronze": [
+          "bronze"
+      ],
       "brown": [
           "brown",
           "braун",
           "коричневый"
+      ],
+      "bu0305dx": [
+          "bu0305dx"
+      ],
+      "bubs": [
+          "bubs"
       ],
       "buds": [
           "бадс",
           "buds",
           "будс"
       ],
+      "burgundy": [
+          "burgundy"
+      ],
       "buzzer": [
           "полифонический динамик",
           "бузер",
           "динамик"
+      ],
+      "c95": [
+          "c95"
       ],
       "cable": [
           "кабель",
@@ -286,9 +376,24 @@ window.IRON_SEARCH_DICT = {
           "camouflage",
           "камуфляж"
       ],
+      "canon": [
+          "canon"
+      ],
+      "canyon": [
+          "canyon"
+      ],
       "carbon": [
           "carbon",
           "карбон"
+      ],
+      "case": [
+          "case"
+      ],
+      "ce6": [
+          "ce6"
+      ],
+      "cel": [
+          "cel"
       ],
       "cellular": [
           "селюлар",
@@ -298,6 +403,9 @@ window.IRON_SEARCH_DICT = {
       "ceramic": [
           "ceramic",
           "керамик"
+      ],
+      "cerullean": [
+          "cerullean"
       ],
       "ch52": [
           "ch52"
@@ -317,12 +425,18 @@ window.IRON_SEARCH_DICT = {
           "зарядка",
           "чarging"
       ],
+      "charoite": [
+          "charoite"
+      ],
       "cherry": [
           "cherry"
       ],
       "chroma": [
           "chroma",
           "хрома"
+      ],
+      "chrome": [
+          "chrome"
       ],
       "citrus": [
           "цитрус",
@@ -331,6 +445,9 @@ window.IRON_SEARCH_DICT = {
       "classic": [
           "classic",
           "классик"
+      ],
+      "clear": [
+          "clear"
       ],
       "cloud": [
           "клауд",
@@ -344,12 +461,18 @@ window.IRON_SEARCH_DICT = {
           "cobalt",
           "кобalt"
       ],
+      "combo": [
+          "combo"
+      ],
       "coming": [
           "coming"
       ],
       "cooper": [
           "cooper",
           "купер"
+      ],
+      "copper": [
+          "copper"
       ],
       "copy": [
           "копия",
@@ -367,10 +490,16 @@ window.IRON_SEARCH_DICT = {
           "космик",
           "космос"
       ],
+      "cover": [
+          "cover"
+      ],
       "cream": [
           "cream",
           "крим",
           "кремовый"
+      ],
+      "creator": [
+          "creator"
       ],
       "curry": [
           "curry"
@@ -387,6 +516,9 @@ window.IRON_SEARCH_DICT = {
       "deep": [
           "deep"
       ],
+      "denim": [
+          "denim"
+      ],
       "desert": [
           "desert"
       ],
@@ -396,6 +528,9 @@ window.IRON_SEARCH_DICT = {
       ],
       "dinamik": [
           "динамик"
+      ],
+      "disc": [
+          "disc"
       ],
       "disk": [
           "disk",
@@ -411,13 +546,28 @@ window.IRON_SEARCH_DICT = {
           "дисплей",
           "экран"
       ],
+      "dji": [
+          "dji"
+      ],
       "dual": [
           "dual",
           "дуал"
       ],
+      "dualsense": [
+          "dualsense"
+      ],
+      "duo": [
+          "duo"
+      ],
+      "dusk": [
+          "dusk"
+      ],
       "dyson": [
           "дайсон",
           "дисон"
+      ],
+      "e12": [
+          "e12"
       ],
       "earpiece": [
           "слуховой динамик",
@@ -434,6 +584,12 @@ window.IRON_SEARCH_DICT = {
           "elite",
           "элит"
       ],
+      "emberton": [
+          "emberton"
+      ],
+      "emerald": [
+          "emerald"
+      ],
       "esim": [
           "есим",
           "е сим",
@@ -447,6 +603,9 @@ window.IRON_SEARCH_DICT = {
           "evo",
           "эво"
       ],
+      "f6": [
+          "f6"
+      ],
       "f7": [
           "f7"
       ],
@@ -455,6 +614,15 @@ window.IRON_SEARCH_DICT = {
       ],
       "f9": [
           "f9"
+      ],
+      "fc0002nw": [
+          "fc0002nw"
+      ],
+      "fd2043nia": [
+          "fd2043nia"
+      ],
+      "fd2067nia": [
+          "fd2067nia"
       ],
       "fe": [
           "fe"
@@ -489,15 +657,48 @@ window.IRON_SEARCH_DICT = {
       "fold": [
           "fold"
       ],
+      "folio": [
+          "folio"
+      ],
+      "forest": [
+          "forest"
+      ],
+      "fresh": [
+          "fresh"
+      ],
+      "frost": [
+          "frost"
+      ],
+      "fryer": [
+          "fryer"
+      ],
       "fujifilm": [
           "fujifilm"
       ],
       "full": [
           "full"
       ],
+      "fury": [
+          "fury"
+      ],
+      "g10": [
+          "g10"
+      ],
       "g15": [
           "g15",
           "g 15"
+      ],
+      "g5": [
+          "g5"
+      ],
+      "g7": [
+          "g7"
+      ],
+      "g8ial": [
+          "g8ial"
+      ],
+      "gadget": [
+          "gadget"
       ],
       "gadgets": [
           "gadgets",
@@ -524,6 +725,9 @@ window.IRON_SEARCH_DICT = {
           "ген",
           "поколение"
       ],
+      "glacier": [
+          "glacier"
+      ],
       "glass": [
           "стекло",
           "стекла",
@@ -536,6 +740,9 @@ window.IRON_SEARCH_DICT = {
       "glint": [
           "glint",
           "glint"
+      ],
+      "god": [
+          "god"
       ],
       "gold": [
           "голд",
@@ -582,12 +789,21 @@ window.IRON_SEARCH_DICT = {
           "грин",
           "грин"
       ],
+      "green/gold": [
+          "green/gold"
+      ],
       "grey": [
           "грей",
           "грэй"
       ],
+      "gunmetal": [
+          "gunmetal"
+      ],
       "hard": [
           "hard"
+      ],
+      "havana": [
+          "havana"
       ],
       "hd": [
           "hd"
@@ -605,16 +821,31 @@ window.IRON_SEARCH_DICT = {
           "headliner",
           "хедлайнер"
       ],
+      "headphones": [
+          "headphones"
+      ],
       "hero": [
           "hero",
           "хиро"
       ],
+      "hibiscus": [
+          "hibiscus"
+      ],
       "hole": [
           "hole"
+      ],
+      "honor": [
+          "honor"
       ],
       "housing": [
           "корпус",
           "корпуса"
+      ],
+      "hp": [
+          "hp"
+      ],
+      "hs": [
+          "hs"
       ],
       "hs08": [
           "hs08"
@@ -630,6 +861,30 @@ window.IRON_SEARCH_DICT = {
       "ht01": [
           "ht01"
       ],
+      "i5-13420h": [
+          "i5-13420h"
+      ],
+      "i7": [
+          "i7"
+      ],
+      "i7-13620h": [
+          "i7-13620h"
+      ],
+      "i7-13650hx": [
+          "i7-13650hx"
+      ],
+      "i7-14700hx": [
+          "i7-14700hx"
+      ],
+      "ice": [
+          "ice"
+      ],
+      "iceblue": [
+          "iceblue"
+      ],
+      "icy": [
+          "icy"
+      ],
       "icyblue": [
           "icyblue",
           "айсибlue",
@@ -639,11 +894,20 @@ window.IRON_SEARCH_DICT = {
           "айди",
           "ид"
       ],
+      "idea": [
+          "idea"
+      ],
+      "ideapad": [
+          "ideapad"
+      ],
       "ii": [
           "ii"
       ],
       "iii": [
           "iii"
+      ],
+      "imac": [
+          "imac"
       ],
       "indigo": [
           "индиго",
@@ -653,17 +917,38 @@ window.IRON_SEARCH_DICT = {
           "инстакс",
           "instax"
       ],
+      "intel": [
+          "intel"
+      ],
       "ipad": [
           "айпад",
           "айпэд",
           "айпед",
           "ипад"
       ],
+      "iph11": [
+          "iph11"
+      ],
       "iphone": [
           "айфон",
           "аифон",
           "айфоон",
           "ифон"
+      ],
+      "irh10": [
+          "irh10"
+      ],
+      "irl": [
+          "irl"
+      ],
+      "irx10": [
+          "irx10"
+      ],
+      "irx9": [
+          "irx9"
+      ],
+      "jade": [
+          "jade"
       ],
       "jasper": [
           "jasper",
@@ -702,8 +987,14 @@ window.IRON_SEARCH_DICT = {
       "kylie": [
           "kylie"
       ],
+      "large": [
+          "large"
+      ],
       "late": [
           "late"
+      ],
+      "lava": [
+          "lava"
       ],
       "lavender": [
           "лавендер",
@@ -713,6 +1004,12 @@ window.IRON_SEARCH_DICT = {
           "лсд",
           "матрица",
           "дисплей"
+      ],
+      "legion": [
+          "legion"
+      ],
+      "lenovo": [
+          "lenovo"
       ],
       "life": [
           "life",
@@ -735,17 +1032,32 @@ window.IRON_SEARCH_DICT = {
           "лайлак",
           "сиреневый"
       ],
+      "lime": [
+          "lime"
+      ],
+      "linen": [
+          "linen"
+      ],
       "link": [
           "link",
           "линк"
+      ],
+      "lite": [
+          "lite"
       ],
       "loop": [
           "loop",
           "луп",
           "петля"
       ],
+      "loq": [
+          "loq"
+      ],
       "lotus": [
           "lotus"
+      ],
+      "lp": [
+          "lp"
       ],
       "lte": [
           "лте",
@@ -755,8 +1067,23 @@ window.IRON_SEARCH_DICT = {
           "lucid",
           "lucid"
       ],
+      "luna": [
+          "luna"
+      ],
+      "luxe": [
+          "luxe"
+      ],
       "m/l": [
           "m/l"
+      ],
+      "m1": [
+          "m1"
+      ],
+      "m17": [
+          "m17"
+      ],
+      "m17e": [
+          "m17e"
       ],
       "m3": [
           "м3",
@@ -778,6 +1105,18 @@ window.IRON_SEARCH_DICT = {
       ],
       "m53": [
           "m53"
+      ],
+      "m6": [
+          "m6"
+      ],
+      "m7": [
+          "m7"
+      ],
+      "m8": [
+          "m8"
+      ],
+      "mac": [
+          "mac"
       ],
       "macbook": [
           "макбук",
@@ -806,6 +1145,12 @@ window.IRON_SEARCH_DICT = {
           "major",
           "major iv"
       ],
+      "marathon": [
+          "marathon"
+      ],
+      "mark": [
+          "mark"
+      ],
       "marshall": [
           "marshall",
           "маршал"
@@ -817,9 +1162,15 @@ window.IRON_SEARCH_DICT = {
       "max": [
           "макс"
       ],
+      "md": [
+          "md"
+      ],
       "meta": [
           "мета",
           "мэта"
+      ],
+      "mg": [
+          "mg"
       ],
       "mhfa4": [
           "mhfa4"
@@ -865,6 +1216,9 @@ window.IRON_SEARCH_DICT = {
           "миднайт",
           "мид найт"
       ],
+      "mil": [
+          "mil"
+      ],
       "milanese": [
           "milanese"
       ],
@@ -884,10 +1238,52 @@ window.IRON_SEARCH_DICT = {
           "мист",
           "мист"
       ],
+      "mix": [
+          "mix"
+      ],
+      "mjad4": [
+          "mjad4"
+      ],
+      "mjay4": [
+          "mjay4"
+      ],
+      "mje74": [
+          "mje74"
+      ],
+      "mjea4": [
+          "mjea4"
+      ],
+      "mjed4": [
+          "mjed4"
+      ],
+      "mjef4": [
+          "mjef4"
+      ],
+      "mjej4": [
+          "mjej4"
+      ],
+      "mjel4": [
+          "mjel4"
+      ],
+      "mjeu4": [
+          "mjeu4"
+      ],
+      "mkft4": [
+          "mkft4"
+      ],
+      "mkfw4": [
+          "mkfw4"
+      ],
       "mm": [
           "мм",
           "millimetр",
           "миллиметров"
+      ],
+      "mobile": [
+          "mobile"
+      ],
+      "moonlight": [
+          "moonlight"
       ],
       "moonrise": [
           "moonrise",
@@ -912,6 +1308,12 @@ window.IRON_SEARCH_DICT = {
       "nano": [
           "nano"
       ],
+      "nano-t": [
+          "nano-t"
+      ],
+      "nano-texture": [
+          "nano-texture"
+      ],
       "natural": [
           "нэчурал",
           "натурал"
@@ -920,6 +1322,12 @@ window.IRON_SEARCH_DICT = {
           "navy",
           "нэви",
           "темносиний"
+      ],
+      "nd": [
+          "nd"
+      ],
+      "nearfield": [
+          "nearfield"
       ],
       "neo": [
           "нео",
@@ -932,8 +1340,23 @@ window.IRON_SEARCH_DICT = {
           "nickel",
           "nickel"
       ],
+      "night": [
+          "night"
+      ],
+      "nintendo": [
+          "nintendo"
+      ],
+      "noon": [
+          "noon"
+      ],
+      "nord": [
+          "nord"
+      ],
       "note": [
           "note"
+      ],
+      "numeric": [
+          "numeric"
       ],
       "oak": [
           "oak"
@@ -945,9 +1368,18 @@ window.IRON_SEARCH_DICT = {
           "окли",
           "оуклей"
       ],
+      "obsidian": [
+          "obsidian"
+      ],
       "ocean": [
           "океан",
           "морской"
+      ],
+      "oculus": [
+          "oculus"
+      ],
+      "of": [
+          "of"
       ],
       "oled": [
           "олед",
@@ -956,8 +1388,14 @@ window.IRON_SEARCH_DICT = {
       "olive": [
           "olive"
       ],
+      "omnibook": [
+          "omnibook"
+      ],
       "one": [
           "one"
+      ],
+      "oneplus": [
+          "oneplus"
       ],
       "orange": [
           "оранж",
@@ -970,12 +1408,18 @@ window.IRON_SEARCH_DICT = {
           "оригинал",
           "оригинальный"
       ],
+      "osmo": [
+          "osmo"
+      ],
       "pacific": [
           "pacific"
       ],
       "pack": [
           "pack",
           "пак"
+      ],
+      "pad": [
+          "pad"
       ],
       "part": [
           "деталь",
@@ -984,9 +1428,18 @@ window.IRON_SEARCH_DICT = {
       "patina/topaz": [
           "patina/topaz"
       ],
+      "peach": [
+          "peach"
+      ],
       "peak": [
           "peak",
           "peak pro"
+      ],
+      "pearl": [
+          "pearl"
+      ],
+      "pen": [
+          "pen"
       ],
       "pencil": [
           "пенсил",
@@ -996,6 +1449,9 @@ window.IRON_SEARCH_DICT = {
       ],
       "perehodnik": [
           "переходник"
+      ],
+      "phistachio": [
+          "phistachio"
       ],
       "pink": [
           "пинк",
@@ -1013,9 +1469,15 @@ window.IRON_SEARCH_DICT = {
       "pitch": [
           "pitch"
       ],
+      "pixel": [
+          "pixel"
+      ],
       "plata": [
           "плата",
           "материнская плата"
+      ],
+      "platinum": [
+          "platinum"
       ],
       "playstation": [
           "плейстейшн",
@@ -1043,6 +1505,9 @@ window.IRON_SEARCH_DICT = {
       ],
       "portal": [
           "портал"
+      ],
+      "powershot": [
+          "powershot"
       ],
       "prizm": [
           "prizm"
@@ -1088,6 +1553,12 @@ window.IRON_SEARCH_DICT = {
       "py": [
           "py"
       ],
+      "quest": [
+          "quest"
+      ],
+      "racing": [
+          "racing"
+      ],
       "ray-ban": [
           "ray ban",
           "рей бан",
@@ -1117,12 +1588,27 @@ window.IRON_SEARCH_DICT = {
       "rj": [
           "rj"
       ],
+      "robot": [
+          "robot"
+      ],
       "rose": [
           "роуз",
           "роуз"
       ],
+      "ruby": [
+          "ruby"
+      ],
+      "rw4012": [
+          "rw4012"
+      ],
+      "ryzen": [
+          "ryzen"
+      ],
       "s/m": [
           "s/m"
+      ],
+      "s10": [
+          "s10"
       ],
       "s11": [
           "s11",
@@ -1132,8 +1618,14 @@ window.IRON_SEARCH_DICT = {
       "s12": [
           "s12"
       ],
+      "s1z50": [
+          "s1z50"
+      ],
       "s1z53": [
           "s1z53"
+      ],
+      "s24": [
+          "s24"
       ],
       "s25": [
           "s25",
@@ -1158,6 +1650,9 @@ window.IRON_SEARCH_DICT = {
       "s50": [
           "s50"
       ],
+      "s53": [
+          "s53"
+      ],
       "s6": [
           "s6"
       ],
@@ -1179,9 +1674,15 @@ window.IRON_SEARCH_DICT = {
           "самсум",
           "сасунг"
       ],
+      "sand": [
+          "sand"
+      ],
       "sapphire": [
           "сапфир",
           "сапфайр"
+      ],
+      "satin": [
+          "satin"
       ],
       "screen": [
           "экран",
@@ -1225,9 +1726,15 @@ window.IRON_SEARCH_DICT = {
           "silk",
           "silk"
       ],
+      "silveer": [
+          "silveer"
+      ],
       "silver": [
           "сильвер",
           "силвер"
+      ],
+      "silver-131500": [
+          "silver-131500"
       ],
       "silverblue": [
           "silverblue"
@@ -1258,6 +1765,9 @@ window.IRON_SEARCH_DICT = {
           "скиллер",
           "скайлер"
       ],
+      "slate": [
+          "slate"
+      ],
       "slim": [
           "slim",
           "слим"
@@ -1273,6 +1783,9 @@ window.IRON_SEARCH_DICT = {
       "snapdragon": [
           "snapdragon"
       ],
+      "snow": [
+          "snow"
+      ],
       "soft": [
           "софт",
           "софт"
@@ -1282,6 +1795,9 @@ window.IRON_SEARCH_DICT = {
       ],
       "soon": [
           "soon"
+      ],
+      "sp": [
+          "sp"
       ],
       "space": [
           "спейс",
@@ -1312,6 +1828,12 @@ window.IRON_SEARCH_DICT = {
       "stand": [
           "stand"
       ],
+      "standard": [
+          "standard"
+      ],
+      "standart": [
+          "standart"
+      ],
       "star": [
           "star",
           "star"
@@ -1339,14 +1861,29 @@ window.IRON_SEARCH_DICT = {
           "sterling",
           "sterling"
       ],
+      "studio": [
+          "studio"
+      ],
+      "summer": [
+          "summer"
+      ],
       "sunset": [
           "sunset",
           "sunset"
+      ],
+      "superknit": [
+          "superknit"
+      ],
+      "switch": [
+          "switch"
       ],
       "szu": [
           "сзу",
           "зарядное устройство",
           "зарядка"
+      ],
+      "tab": [
+          "tab"
       ],
       "tan": [
           "tan",
@@ -1373,19 +1910,37 @@ window.IRON_SEARCH_DICT = {
       "th": [
           "th"
       ],
+      "thinkbook": [
+          "thinkbook"
+      ],
+      "titan": [
+          "titan"
+      ],
       "titanium": [
           "titanium"
       ],
       "tl": [
           "tl"
       ],
+      "tml": [
+          "tml"
+      ],
       "topaz": [
           "topaz",
           "тopaz"
       ],
+      "tortoise": [
+          "tortoise"
+      ],
       "touch": [
           "тач",
           "тач"
+      ],
+      "touchscreen": [
+          "touchscreen"
+      ],
+      "trackpad": [
+          "trackpad"
       ],
       "trail": [
           "трейл",
@@ -1399,6 +1954,15 @@ window.IRON_SEARCH_DICT = {
       "transitions": [
           "трансишнс",
           "транзишнс"
+      ],
+      "translucent": [
+          "translucent"
+      ],
+      "transp": [
+          "transp"
+      ],
+      "trs": [
+          "trs"
       ],
       "tv": [
           "tv"
@@ -1420,12 +1984,21 @@ window.IRON_SEARCH_DICT = {
           "ультрамарин",
           "ультрамарин"
       ],
+      "umber": [
+          "umber"
+      ],
       "usb": [
           "юсб",
           "усб"
       ],
       "usb-c": [
           "usb-c"
+      ],
+      "v15": [
+          "v15"
+      ],
+      "vacuum": [
+          "vacuum"
       ],
       "velvet": [
           "velvet",
@@ -1449,6 +2022,9 @@ window.IRON_SEARCH_DICT = {
           "volcanic",
           "volcanic"
       ],
+      "vr": [
+          "vr"
+      ],
       "vr2": [
           "vr2"
       ],
@@ -1459,6 +2035,9 @@ window.IRON_SEARCH_DICT = {
           "wallet",
           "валлет",
           "кошелек"
+      ],
+      "war": [
+          "war"
       ],
       "watch": [
           "вотч",
@@ -1471,6 +2050,9 @@ window.IRON_SEARCH_DICT = {
           "часы",
           "ватчи"
       ],
+      "water": [
+          "water"
+      ],
       "way": [
           "way",
           "way"
@@ -1481,6 +2063,12 @@ window.IRON_SEARCH_DICT = {
           "вайфарер",
           "вейферер",
           "уейфарер"
+      ],
+      "wh-1000xm5": [
+          "wh-1000xm5"
+      ],
+      "wh-1000xm6": [
+          "wh-1000xm6"
       ],
       "white": [
           "вайт",
@@ -1505,19 +2093,31 @@ window.IRON_SEARCH_DICT = {
           "wi fi",
           "вайфи"
       ],
+      "wireless": [
+          "wireless"
+      ],
       "with": [
           "with",
           "with"
       ],
+      "wolverine": [
+          "wolverine"
+      ],
       "woven": [
           "woven",
           "тканевый"
+      ],
+      "x7e": [
+          "x7e"
       ],
       "x8": [
           "x8"
       ],
       "xiaomi": [
           "xiaomi"
+      ],
+      "xl": [
+          "xl"
       ],
       "xr": [
           "xr"
@@ -1541,6 +2141,9 @@ window.IRON_SEARCH_DICT = {
           "запчасть",
           "запчасти",
           "деталь"
+      ],
+      "zena": [
+          "zena"
       ],
       "zigbee": [
           "zigbee",

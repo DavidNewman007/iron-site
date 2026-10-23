@@ -1,0 +1,97 @@
+{
+  "product_id": "google-pixel-7-8-128gb-snow-5g-сша-s4-26000",
+  "category": "android",
+  "file_slug": "google-pixel-7-8-128gb-snow-5g-s4-26000",
+  "name": "Google Pixel 7 8+ 128Gb Snow 5G",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 26000,
+  "catalog_url": "https://web.archive.org/web/20230601221342/https://store.google.com/us/config/pixel_7?hl=en-US",
+  "catalog_title": "Google Pixel 7 8/128 ГБ, Snow (белый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,3\" OLED, 1080×2400 (FHD+, 416 ppi), до 90 Гц, HDR, яркость до 1400 нит (пик)"
+    },
+    {
+      "key": "Процессор",
+      "value": "Google Tensor G2 (5 нм) + чип безопасности Titan M2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ LPDDR5"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ UFS 3.1, без слота карт памяти"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп широкоугольная (f/1.85, оптическая стабилизация) + 12 Мп сверхширокоугольная (f/2.2, 114°); видео 4K 60 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "10,8 Мп (f/2.2, 92,8°), видео 4K 60 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "4355 мАч (типичная ёмкость; минимальная 4270 мАч)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "Проводная до 20 Вт (USB-C PD 3.0 PPS), беспроводная Qi, обратная беспроводная (Battery Share)"
+    },
+    {
+      "key": "SIM",
+      "value": "nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, Wi-Fi 6E, Bluetooth 5.2, NFC, USB Type-C 3.2"
+    },
+    {
+      "key": "Разблокировка",
+      "value": "Подэкранный сканер отпечатков, разблокировка по лицу"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68 (пыль и вода); стекло Corning Gorilla Glass Victus спереди и сзади"
+    },
+    {
+      "key": "Корпус",
+      "value": "Стекло и матовая алюминиевая рамка"
+    },
+    {
+      "key": "Размеры",
+      "value": "155,6 × 73,2 × 8,7 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "197 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Snow (белый, рамка и блок камер серебристые)"
+    },
+    {
+      "key": "ОС",
+      "value": "Вышел с Android 13; обновления безопасности не менее 5 лет с начала продаж (до октября 2027 г.)"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/Gjrbu6tqV8Li46mGnTecjRjrq4xJlxLF6zySjzm2bSkmI8rZmfdJ0sRzBloSWL9hU1fZL4vIuHu-C9zgUpN5ma0WgboJYS8YS2e8=s1200",
+    "https://lh3.googleusercontent.com/VpJEuI5esMS6tMRYvftcecXMd5xQsDRFpDnfpILllat3YvD3DiKiMBlKwi5YmJTgZb1n2BQRzPYYeTHop-Nd9eO8QUbYYffCOg=s1200",
+    "https://lh3.googleusercontent.com/tDg6L37YTIOnjQLuNJwVd2BRTl44zjLLaZ5laZwoQFT5fBObCnxcsKQAYNtI8radsAqS95gzn90D_NgTRL9YO3V6zEhFATPcmQ=s1200",
+    "https://lh3.googleusercontent.com/yzORwqTjphTIQ_ztHHqPlWPGZSk-Sfgu_vjCopsaVyXUKm7HskPCdQIbIO-lmGfMmDpPZGSzNLydHR9YXFJzSxLXc8GjGzKlxj8X=s1200"
+  ],
+  "images_local": [
+    "assets/product-images/0eef550a55bd96be49542241.jpg",
+    "assets/product-images/a6c65acf78cb0d8503c53bde.jpg",
+    "assets/product-images/4f3491558471b583cd13c7ef.jpg",
+    "assets/product-images/58efe59f6f9898dbd7aa8fe8.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google pixel 7 8 128gb snow 5g~s4",
+  "photo_source": "https://web.archive.org/web/20230601221342/https://store.google.com/us/config/pixel_7?hl=en-US",
+  "updated_at": "2026-10-23T15:15:33.776208Z"
+}

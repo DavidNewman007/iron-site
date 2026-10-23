@@ -1,0 +1,105 @@
+{
+  "product_id": "honor-400-8-512gb-gold-европа-s4-30800",
+  "category": "android",
+  "file_slug": "honor-400-8-512gb-gold-s4-30800",
+  "name": "Honor 400 8+ 512Gb Gold",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 30800,
+  "catalog_url": "https://www.honor.com/kz/phones/honor-400/spec/",
+  "catalog_title": "HONOR 400 8/512 ГБ, золотой",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,55″ AMOLED, 2736×1264, 1,07 млрд цветов"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 7 Gen 3, 8 ядер; графика Adreno 720"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "200 Мп (f/1.9, оптическая стабилизация) + 12 Мп сверхширокоугольная (f/2.2); видео до 4K"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "50 Мп (f/2.0), видео до 4K"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6000 мАч, кремний-углеродный"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная HONOR SuperCharge до 80 Вт, USB Type-C"
+    },
+    {
+      "key": "Сеть",
+      "value": "5G, 4G LTE, 3G, 2G"
+    },
+    {
+      "key": "SIM",
+      "value": "2 × nano-SIM; второй слот может работать как eSIM (зависит от рынка и оператора)"
+    },
+    {
+      "key": "Беспроводная связь",
+      "value": "Wi-Fi 6 (802.11ax), Bluetooth 5.4, NFC, ИК-порт"
+    },
+    {
+      "key": "Навигация",
+      "value": "GPS, ГЛОНАСС, BeiDou, Galileo, QZSS"
+    },
+    {
+      "key": "Защита",
+      "value": "IP65 от пыли и брызг"
+    },
+    {
+      "key": "Разблокировка",
+      "value": "сканер отпечатков пальцев, 2D-распознавание лица"
+    },
+    {
+      "key": "Размеры",
+      "value": "156,5 × 74,6 × 7,3 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "около 184 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "золотой (Desert Gold / «Пустынный золотой»)"
+    },
+    {
+      "key": "ОС",
+      "value": "MagicOS 9.0 на базе Android 15"
+    }
+  ],
+  "images_remote": [
+    "https://www-file.honor.com/content/dam/honor/common/products/smartphone/honor-400/whole-scene-component/honor-400-pc.png",
+    "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-400/honor-400-gold-list.png",
+    "https://www-file.honor.com/content/dam/honor/common/products/smartphone/honor-400/product/imgs/section-camera/honor400-camera-phone-back.png",
+    "https://www-file.honor.com/content/dam/honor/common/products/smartphone/honor-400/product/imgs/section-thin/honor400-thin-phone.png",
+    "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-400/honor-400-id-gold-back.png",
+    "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-400/honor-400-id-gold-front.png"
+  ],
+  "images_local": [
+    "assets/product-images/75dfd862d071ae5b47d138ab.jpg",
+    "assets/product-images/b5361db3e06076651ea34c4c.jpg",
+    "assets/product-images/421682a41bebe282dba2db72.jpg",
+    "assets/product-images/964d57468a974e9f2ab8616c.jpg",
+    "assets/product-images/47ddcac7f39bf1027cb1d7d4.jpg",
+    "assets/product-images/d57c100b65099bef545b3ea4.jpg"
+  ],
+  "manual": true,
+  "manual_key": "honor 400 8 512gb gold~s4",
+  "photo_source": "https://www.honor.com/kz/phones/honor-400/spec/",
+  "updated_at": "2026-10-23T15:15:33.827590Z"
+}

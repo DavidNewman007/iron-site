@@ -1,0 +1,99 @@
+{
+  "product_id": "lenovo-legion-5-15irx10-15-3-intel-core-i7-13650hx-16-1tb-black-европа-s4-144500",
+  "category": "laptops",
+  "file_slug": "lenovo-legion-5-15irx10-15-3-intel-core-i7-13650hx-16-1tb-black-s4-144500",
+  "name": "Lenovo Legion 5 15IRX10 15.3 Intel Core i7-13650HX 16+ 1Tb Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 144500,
+  "catalog_url": "https://psref.lenovo.com/Product/Legion/Legion_5_15IRX10",
+  "catalog_title": "Игровой ноутбук Lenovo Legion 5 15IRX10 15,3″ Core i7-13650HX, 16 ГБ, 1 ТБ, чёрный",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Intel Core i7-13650HX"
+    },
+    {
+      "key": "Ядра и частота",
+      "value": "14 ядер (6P + 8E), 20 потоков, до 4,9 ГГц, кэш 24 МБ"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Тип памяти",
+      "value": "DDR5-4800, 2 слота SO-DIMM (до 32 ГБ)"
+    },
+    {
+      "key": "Накопитель",
+      "value": "1 ТБ SSD (M.2, PCIe 4.0 NVMe); второй слот M.2"
+    },
+    {
+      "key": "Экран",
+      "value": "15,3″, 1920×1200 (WUXGA), IPS, 300 нит, 100% sRGB, 165 Гц, Dolby Vision, заводская калибровка, антибликовое"
+    },
+    {
+      "key": "Сенсорный экран",
+      "value": "нет"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "NVIDIA GeForce RTX 5050, RTX 5060 или RTX 5070 8 ГБ GDDR7 (TGP 115 Вт) — зависит от партии"
+    },
+    {
+      "key": "Порты",
+      "value": "3× USB-A 5 Гбит/с (один Always On), 1× USB-C 10 Гбит/с (USB PD 95–100 Вт, DisplayPort 2.1), 1× USB-C 10 Гбит/с (DisplayPort 1.4), HDMI 2.1, Ethernet RJ-45, аудиоразъём 3,5 мм"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 6 (2×2), Bluetooth 5.2"
+    },
+    {
+      "key": "Веб-камера",
+      "value": "HD 720p с электронной шторкой"
+    },
+    {
+      "key": "Звук",
+      "value": "стереодинамики 2×2 Вт, HARMAN, Nahimic Audio"
+    },
+    {
+      "key": "Клавиатура",
+      "value": "с белой подсветкой и цифровым блоком"
+    },
+    {
+      "key": "Батарея",
+      "value": "80 Вт·ч (в части партий 60 Вт·ч), Super Rapid Charge; блок питания 245 Вт"
+    },
+    {
+      "key": "Вес",
+      "value": "от 2,1 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "344,9 × 255,35 × 22,5–23,99 мм"
+    },
+    {
+      "key": "Цвет",
+      "value": "Eclipse Black (чёрный)"
+    }
+  ],
+  "images_remote": [
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Legion/Legion_5_15IRX10/Compressedimage/Legion_5_15IRX10_CT1_13.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Legion/Legion_5_15IRX10/Compressedimage/Legion_5_15IRX10_CT1_11.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Legion/Legion_5_15IRX10/Compressedimage/Legion_5_15IRX10_CT1_16.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Legion/Legion_5_15IRX10/Compressedimage/Legion_5_15IRX10_CT1_15.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Legion/Legion_5_15IRX10/Compressedimage/Legion_5_15IRX10_CT1_14.png"
+  ],
+  "images_local": [
+    "assets/product-images/a062e4c6d1e5e0b9309b575c.jpg",
+    "assets/product-images/64627c25999d976315b01e90.jpg",
+    "assets/product-images/e5ca712fd09a6e98e0248c7d.jpg",
+    "assets/product-images/d87433a4a74149cbb0f84f3b.jpg",
+    "assets/product-images/e2966eba06c148f4f39237c6.jpg"
+  ],
+  "manual": true,
+  "manual_key": "lenovo legion 5 15irx10 15 3 intel core i7 13650hx 16 1tb black~s4",
+  "photo_source": "https://psref.lenovo.com/Product/Legion/Legion_5_15IRX10",
+  "updated_at": "2026-10-23T15:22:16.394542Z"
+}

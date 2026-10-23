@@ -1,0 +1,91 @@
+{
+  "product_id": "mac-studio-m4-max-14-32-core-36-512gb-оаэ-s4-222400",
+  "category": "mac",
+  "file_slug": "mac-studio-m4-max-14-32-core-36-512gb-s4-222400",
+  "name": "Mac Studio M4 Max 14/32 Core 36+ 512Gb",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S4)",
+  "price": 222400,
+  "catalog_url": "https://www.apple.com/au/shop/product/fu963x/a/Refurbished-Mac-Studio-Apple-M4-Max-chip-with-14%E2%80%91Core-CPU-and-32%E2%80%91Core-GPU",
+  "catalog_title": "Apple Mac Studio M4 Max (14/32 ядер), 36 ГБ, 512 ГБ",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Apple M4 Max, 14-ядерный CPU (10 производительных и 4 энергоэффективных ядра)"
+    },
+    {
+      "key": "Графика",
+      "value": "32-ядерный GPU, аппаратная трассировка лучей"
+    },
+    {
+      "key": "Neural Engine",
+      "value": "16 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "36 ГБ объединённой памяти (пропускная способность 410 ГБ/с)"
+    },
+    {
+      "key": "Накопитель",
+      "value": "SSD 512 ГБ"
+    },
+    {
+      "key": "Порты сзади",
+      "value": "4 × Thunderbolt 5 (до 120 Гбит/с), 2 × USB‑A (до 5 Гбит/с), HDMI 2.1, Ethernet 10 Гбит/с, разъём 3,5 мм для наушников"
+    },
+    {
+      "key": "Порты спереди",
+      "value": "2 × USB‑C (до 10 Гбит/с), слот SDXC (UHS‑II)"
+    },
+    {
+      "key": "Внешние мониторы",
+      "value": "до пяти мониторов (четыре 6K 60 Гц через Thunderbolt и пятый через HDMI)"
+    },
+    {
+      "key": "Беспроводная связь",
+      "value": "Wi‑Fi 6E (802.11ax), Bluetooth 5.3"
+    },
+    {
+      "key": "Видеодвижок",
+      "value": "два кодировщика видео и два движка ProRes, декодирование AV1"
+    },
+    {
+      "key": "Блок питания",
+      "value": "встроенный, до 480 Вт"
+    },
+    {
+      "key": "Размеры",
+      "value": "19,7 × 19,7 × 9,5 см"
+    },
+    {
+      "key": "Вес",
+      "value": "2,74 кг"
+    },
+    {
+      "key": "Цвет",
+      "value": "серебристый"
+    },
+    {
+      "key": "Операционная система",
+      "value": "macOS"
+    }
+  ],
+  "images_remote": [
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mac-studio-202503?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mac-studio-202503_AV1?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mac-studio-202503_AV2?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mac-studio-202503_AV3?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-studio-select-202503?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+  ],
+  "images_local": [
+    "assets/product-images/310ae711561418240a63ceab.jpg",
+    "assets/product-images/b1631327861a14808480a97f.jpg",
+    "assets/product-images/2b247d4fd1ce0a7bd28a4d7f.jpg",
+    "assets/product-images/7bd0711d965ae9ef1e1e3f54.jpg",
+    "assets/product-images/d3c818e576cea58c388bdc18.jpg"
+  ],
+  "manual": true,
+  "manual_key": "mac studio m4 max 14 32 core 36 512gb~s4",
+  "photo_source": "https://www.apple.com/au/shop/product/fu963x/a/Refurbished-Mac-Studio-Apple-M4-Max-chip-with-14%E2%80%91Core-CPU-and-32%E2%80%91Core-GPU",
+  "updated_at": "2026-10-23T15:22:16.469786Z"
+}

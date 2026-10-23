@@ -147,13 +147,19 @@ def push_with_rebase(branch: str, attempts: int = 5) -> None:
     поэтому rebase поверх чужих коммитов почти всегда проходит без конфликта.
     При конфликте rebase отменяется и прогон падает с понятной ошибкой — молча
     перезаписывать чужое нельзя.
+
+    `--autostash` (23.10.2026): прогон коммитит только свои папки, а прочие
+    файлы, которые он трогает по дороге (снимки листов, кэш сопоставления),
+    остаются неподготовленными. Без автостэша `git pull --rebase` отказывался
+    начинать («You have unstaged changes») — прогон 23.10 собрал сотни карточек
+    предзаказа S4 и потерял их на этом месте, сообщив «конфликт», которого не было.
     """
     for attempt in range(1, attempts + 1):
         print(f"$ git push -u origin {branch}  (попытка {attempt}/{attempts})")
         if subprocess.run(["git", "push", "-u", "origin", branch], cwd=ROOT).returncode == 0:
             return
-        print("$ git pull --rebase origin", branch)
-        pull = subprocess.run(["git", "pull", "--rebase", "origin", branch], cwd=ROOT)
+        print("$ git pull --rebase --autostash origin", branch)
+        pull = subprocess.run(["git", "pull", "--rebase", "--autostash", "origin", branch], cwd=ROOT)
         if pull.returncode != 0:
             subprocess.run(["git", "rebase", "--abort"], cwd=ROOT)
             raise SystemExit(

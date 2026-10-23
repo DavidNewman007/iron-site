@@ -1,0 +1,95 @@
+{
+  "product_id": "lenovo-loq-15irx10-15-6-intel-core-i7-14700hx-16-1tb-luna-grey-великобритания-s4",
+  "category": "laptops",
+  "file_slug": "lenovo-loq-15irx10-15-6-intel-core-i7-14700hx-16-1tb-luna-grey-s4-152700",
+  "name": "Lenovo LOQ 15IRX10 15.6 Intel Core i7-14700HX 16+ 1Tb Luna Grey",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S4)",
+  "price": 152700,
+  "catalog_url": "https://psref.lenovo.com/Product/LOQ/LOQ_15IRX10",
+  "catalog_title": "Игровой ноутбук Lenovo LOQ 15IRX10 15,6″ Core i7-14700HX, 16 ГБ, 1 ТБ, Luna Grey",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Intel Core i7-14700HX"
+    },
+    {
+      "key": "Ядра и частота",
+      "value": "20 ядер (8P + 12E), 28 потоков, до 5,5 ГГц, кэш 33 МБ"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Тип памяти",
+      "value": "DDR5-5600, 2 слота SO-DIMM (до 32 ГБ)"
+    },
+    {
+      "key": "Накопитель",
+      "value": "1 ТБ SSD (M.2, PCIe 4.0 NVMe); второй слот M.2"
+    },
+    {
+      "key": "Экран",
+      "value": "15,6″, 1920×1080 (Full HD), IPS, 300 нит, 100% sRGB, 144 Гц, NVIDIA G-SYNC, антибликовое"
+    },
+    {
+      "key": "Сенсорный экран",
+      "value": "нет"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "NVIDIA GeForce RTX 5050 8 ГБ или RTX 5060 8 ГБ GDDR7 (TGP 100 Вт) — зависит от партии"
+    },
+    {
+      "key": "Порты",
+      "value": "3× USB-A 5 Гбит/с, 1× USB-C 10 Гбит/с (USB PD 65–100 Вт, DisplayPort 1.4), HDMI 2.1, Ethernet RJ-45, аудиоразъём 3,5 мм"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 6 (2×2), Bluetooth 5.2"
+    },
+    {
+      "key": "Веб-камера",
+      "value": "5 Мп с электронной шторкой"
+    },
+    {
+      "key": "Клавиатура",
+      "value": "с подсветкой (белой или RGB, 24 зоны) и цифровым блоком"
+    },
+    {
+      "key": "Батарея",
+      "value": "60 Вт·ч (в части партий 80 Вт·ч), быстрая зарядка Rapid Charge Pro"
+    },
+    {
+      "key": "Вес",
+      "value": "от 2,4 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "359,86 × 258,7 × 21,9–23,9 мм"
+    },
+    {
+      "key": "Цвет",
+      "value": "Luna Grey (серый)"
+    }
+  ],
+  "images_remote": [
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/LOQ/LOQ_15IRX10/Compressedimage/LOQ_15IRX10_CT1_03.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/LOQ/LOQ_15IRX10/Compressedimage/LOQ_15IRX10_CT1_01.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/LOQ/LOQ_15IRX10/Compressedimage/LOQ_15IRX10_CT1_05.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/LOQ/LOQ_15IRX10/Compressedimage/LOQ_15IRX10_CT2_03.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/LOQ/LOQ_15IRX10/Compressedimage/LOQ_15IRX10_CT2_02.png"
+  ],
+  "images_local": [
+    "assets/product-images/9930589f2179baed6ab77e38.jpg",
+    "assets/product-images/86b1fe5e7928d2842e897e8e.jpg",
+    "assets/product-images/895197897d2d1a73fef1f637.jpg",
+    "assets/product-images/b9527589de02125c79f893e8.jpg",
+    "assets/product-images/85c6f83eaaa6d60492c64319.jpg"
+  ],
+  "manual": true,
+  "manual_key": "lenovo loq 15irx10 15 6 intel core i7 14700hx 16 1tb luna grey~s4",
+  "photo_source": "https://psref.lenovo.com/Product/LOQ/LOQ_15IRX10",
+  "updated_at": "2026-10-23T15:22:16.407550Z"
+}

@@ -1,0 +1,107 @@
+{
+  "product_id": "oneplus-nord-6-12-512gb-fresh-mint-европа-s4-47800",
+  "category": "android",
+  "file_slug": "oneplus-nord-6-12-512gb-fresh-mint-s4-47800",
+  "name": "OnePlus Nord 6 12+ 512Gb Fresh Mint",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 47800,
+  "catalog_url": "https://www.oneplus.com/global/nord-6/specs",
+  "catalog_title": "OnePlus Nord 6 12/512 ГБ, Fresh Mint (мятный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,78\" AMOLED (Sunburst, гибкая панель), 2772×1272 (1,5K), 450 ppi, до 165 Гц, пиковая яркость 3600 нит, 10 бит"
+    },
+    {
+      "key": "Защитное стекло",
+      "value": "Crystal Guard"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8s Gen 4, графика Adreno 825"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ UFS 4.1"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп Sony LYTIA-600, f/1.8, оптическая стабилизация (OIS) + 8 Мп сверхширокоугольная, 112°"
+    },
+    {
+      "key": "Видео",
+      "value": "до 4K 60 кадр/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп, f/2.0, автофокус"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мАч (глобальная версия; в индийской версии — 9000 мАч)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "SUPERVOOC 80 Вт, обратная проводная 6,5 Вт, обходная зарядка"
+    },
+    {
+      "key": "SIM",
+      "value": "2 × nano-SIM (Dual SIM Dual Active), eSIM нет"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, Wi-Fi 7, Bluetooth 6.0, NFC, ИК-порт, USB Type-C"
+    },
+    {
+      "key": "Навигация",
+      "value": "GPS, ГЛОНАСС, BeiDou, Galileo, QZSS"
+    },
+    {
+      "key": "Защита",
+      "value": "IP66, IP68, IP69, IP69K; MIL-STD-810H"
+    },
+    {
+      "key": "Сканер отпечатка",
+      "value": "в экране"
+    },
+    {
+      "key": "Размеры",
+      "value": "162,46 × 77,45 × 8,5 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "210 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Fresh Mint (мятный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "OxygenOS 16 на базе Android 16"
+    }
+  ],
+  "images_remote": [
+    "https://www.oneplus.com/content/dam/oneplus/2026/product-station/oneplus-nord-6/specs/OnePlus_VW_Mint.png",
+    "https://image01-in.oneplus.net/media/202604/07/81dc65c7b543e8d08cd7684534cc348f.png",
+    "https://image01-in.oneplus.net/media/202603/30/fe2091b216b5627eacbf86969478fa02.png",
+    "https://www.oneplus.com/content/dam/oneplus/2026/product-station/oneplus-nord-6/assets/images-design-phone-mint-1-512043.png",
+    "https://www.oneplus.com/content/dam/oneplus/2026/product-station/oneplus-nord-6/assets/images-kv-phone-1-1-fb2fce.png"
+  ],
+  "images_local": [
+    "assets/product-images/6f86fac1be88ceb9938a62ef.jpg",
+    "assets/product-images/92ca5e515682bfd2e76bff11.jpg",
+    "assets/product-images/904f9b7514568343d320b183.jpg",
+    "assets/product-images/fa2b3abfecaf37a8e0a66ed9.jpg",
+    "assets/product-images/75b0df4ba72485e17955e694.jpg"
+  ],
+  "manual": true,
+  "manual_key": "oneplus nord 6 12 512gb fresh mint~s4",
+  "photo_source": "https://www.oneplus.com/global/nord-6/specs",
+  "updated_at": "2026-10-23T15:15:33.851910Z"
+}

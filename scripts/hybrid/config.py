@@ -55,6 +55,15 @@ HYBRID_CATEGORIES = [
     # (см. CATEGORY_RULES в price_parser.py), а без категории здесь конвейер не
     # искал им страниц. У поставщика раздел есть: /smartfony/xiaomi/.
     "xiaomi",
+    # android, mac, laptops — 23.10.2026, план 108: предзаказ S4 принёс разделы
+    # «Google Pixel / OnePlus / Honor», «iMac / Mac mini / Studio» и «Ноутбуки
+    # HP / Lenovo» (прайс и бот их уже знали), а конвейер — нет: 107 позиций
+    # висели без фото. Pixel и Honor у поставщика есть; iMac, Mac mini,
+    # Mac Studio, OnePlus, HP и Lenovo — нет, им фото даёт только ручной
+    # источник (manual_sources.json) с сайтов производителей.
+    "android",
+    "mac",
+    "laptops",
 ]
 
 CATEGORY_MANIFEST = {cat: HYBRID_ROOT / f"{cat}-cards.json" for cat in HYBRID_CATEGORIES}
@@ -88,6 +97,12 @@ CATEGORY_URL_PREFIXES: dict[str, list[str]] = {
     # Телефоны — /smartfony/xiaomi/{mi,poco,redmi}/…, планшеты Pad — отдельный
     # раздел /tablets/xiaomi-tablets/ (28.09.2026).
     "xiaomi": ["/smartfony/xiaomi/", "/tablets/xiaomi-tablets/"],
+    # 23.10.2026: Pixel — /smartfony/google/pixel-10/<товар>, Honor —
+    # /smartfony/honor/honor-600/<товар>. OnePlus у поставщика нет.
+    "android": ["/smartfony/google/", "/smartfony/honor/"],
+    # Нет у поставщика вовсе — только ручной источник.
+    "mac": [],
+    "laptops": [],
 }
 
 # Минимальная глубина ссылки товара в карте сайта. У Apple товар лежит на

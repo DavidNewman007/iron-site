@@ -1,0 +1,78 @@
+{
+  "product_id": "google-fitbit-air-fog-s4-12700",
+  "category": "gadgets",
+  "file_slug": "google-fitbit-air-fog-s4-12700",
+  "name": "Google Fitbit Air Fog",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 12700,
+  "catalog_url": "https://sochi.dr-store.ru/smart-watches/fitness-bracelets/fitnes-braslet-google-fitbit-air-fog",
+  "catalog_title": "Фитнес-браслет Google Fitbit Air, Fog",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "фитнес-браслет без дисплея"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Bluetooth 5.0"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Android 11 и новее; iOS 16.4 и новее"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 7 дней"
+    },
+    {
+      "key": "Время зарядки",
+      "value": "90 минут, 5 минут зарядки — до 1 дня работы"
+    },
+    {
+      "key": "Материал",
+      "value": "переработанный поликарбонат и PBT-пластик"
+    },
+    {
+      "key": "Размер ремешка",
+      "value": "130–210 мм"
+    },
+    {
+      "key": "Ширина",
+      "value": "17 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "8,3 мм"
+    },
+    {
+      "key": "Влагозащищенный корпус",
+      "value": "до 50 м"
+    },
+    {
+      "key": "Вес",
+      "value": "5,2 г без ремешка; около 12 г с ремешком"
+    },
+    {
+      "key": "Датчики",
+      "value": "оптический датчик пульса, акселерометр, гироскоп, красные и инфракрасные датчики SpO₂, датчик температуры"
+    },
+    {
+      "key": "Приложение",
+      "value": "Google Health"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/smart-watch/fitbit/google-fitbit-dr-store5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/smart-watch/fitbit/google-fitbit-dr-store3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/smart-watch/fitbit/google-fitbit-dr-store4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/smart-watch/fitbit/google-fitbit-dr-store13-1200x1200.png"
+  ],
+  "images_local": [
+    "assets/product-images/58d99235700e3bc864262981.jpg",
+    "assets/product-images/35c8011eb471a63be2d41139.jpg",
+    "assets/product-images/9e40ef07cdad07e0783f6c9e.jpg",
+    "assets/product-images/f5fb75e5f3da5a56c1a78a4a.png"
+  ],
+  "updated_at": "2026-10-23T15:15:35.565039Z"
+}

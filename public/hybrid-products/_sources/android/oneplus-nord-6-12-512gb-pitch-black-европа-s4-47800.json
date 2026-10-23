@@ -1,0 +1,107 @@
+{
+  "product_id": "oneplus-nord-6-12-512gb-pitch-black-европа-s4-47800",
+  "category": "android",
+  "file_slug": "oneplus-nord-6-12-512gb-pitch-black-s4-47800",
+  "name": "OnePlus Nord 6 12+ 512Gb Pitch Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 47800,
+  "catalog_url": "https://www.oneplus.com/global/nord-6/specs",
+  "catalog_title": "OnePlus Nord 6 12/512 ГБ, Pitch Black (чёрный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,78\" AMOLED (Sunburst, гибкая панель), 2772×1272 (1,5K), 450 ppi, до 165 Гц, пиковая яркость 3600 нит, 10 бит"
+    },
+    {
+      "key": "Защитное стекло",
+      "value": "Crystal Guard"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8s Gen 4, графика Adreno 825"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ UFS 4.1"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп Sony LYTIA-600, f/1.8, оптическая стабилизация (OIS) + 8 Мп сверхширокоугольная, 112°"
+    },
+    {
+      "key": "Видео",
+      "value": "до 4K 60 кадр/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп, f/2.0, автофокус"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мАч (глобальная версия; в индийской версии — 9000 мАч)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "SUPERVOOC 80 Вт, обратная проводная 6,5 Вт, обходная зарядка"
+    },
+    {
+      "key": "SIM",
+      "value": "2 × nano-SIM (Dual SIM Dual Active), eSIM нет"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, Wi-Fi 7, Bluetooth 6.0, NFC, ИК-порт, USB Type-C"
+    },
+    {
+      "key": "Навигация",
+      "value": "GPS, ГЛОНАСС, BeiDou, Galileo, QZSS"
+    },
+    {
+      "key": "Защита",
+      "value": "IP66, IP68, IP69, IP69K; MIL-STD-810H"
+    },
+    {
+      "key": "Сканер отпечатка",
+      "value": "в экране"
+    },
+    {
+      "key": "Размеры",
+      "value": "162,46 × 77,45 × 8,5 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "210 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Pitch Black (чёрный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "OxygenOS 16 на базе Android 16"
+    }
+  ],
+  "images_remote": [
+    "https://www.oneplus.com/content/dam/oneplus/2026/product-station/oneplus-nord-6/specs/OnePlus_VW_Black.png",
+    "https://image01-in.oneplus.net/media/202604/07/f57d588b7aef9fa3d1ed3f329a3eff0c.png",
+    "https://image01-in.oneplus.net/media/202603/30/78a50e85dcda1a363f630e141374664f.png",
+    "https://www.oneplus.com/content/dam/oneplus/2026/product-station/oneplus-nord-6/assets/images-design-phone-black-1-fa878a.png",
+    "https://www.oneplus.com/content/dam/oneplus/2026/product-station/oneplus-nord-6/assets/images-kv-phone-2-1-f44d9e.png"
+  ],
+  "images_local": [
+    "assets/product-images/4fd6bcbf39d3ba501f7d5920.jpg",
+    "assets/product-images/20cd64d4f8775e8badb21c81.jpg",
+    "assets/product-images/abddc6d076331323e9ab99c4.jpg",
+    "assets/product-images/1400d662887767b23bfdde57.jpg",
+    "assets/product-images/cecb73c772f840ba131e06df.jpg"
+  ],
+  "manual": true,
+  "manual_key": "oneplus nord 6 12 512gb pitch black~s4",
+  "photo_source": "https://www.oneplus.com/global/nord-6/specs",
+  "updated_at": "2026-10-23T15:15:33.855285Z"
+}

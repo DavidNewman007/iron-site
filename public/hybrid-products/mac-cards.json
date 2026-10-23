@@ -1,0 +1,102 @@
+{
+  "generated_at": "2026-10-23T15:22:16.472677Z",
+  "count": 12,
+  "byId": {
+    "imac-24-m4-8-8-core-16-256gb-silver-великобритания-s4-167100": {
+      "url": "hybrid-products/mac/imac-24-m4-8-8-core-16-256gb-silver-s4-167100.html",
+      "url_en": "en/hybrid-products/mac/imac-24-m4-8-8-core-16-256gb-silver-s4-167100.html",
+      "cover": "assets/product-images/e128cf3d8195c4ecaf177489.jpg",
+      "name": "iMac 24 M4 8/8 Core 16+ 256Gb Silver",
+      "warehouse": "(S4)",
+      "price": 167100
+    },
+    "imac-24-m4-10-10-core-24-512gb-blue-сша-s4-219500": {
+      "url": "hybrid-products/mac/imac-24-m4-10-10-core-24-512gb-blue-s4-219500.html",
+      "url_en": "en/hybrid-products/mac/imac-24-m4-10-10-core-24-512gb-blue-s4-219500.html",
+      "cover": "assets/product-images/1b3f7a73146987c4da38a74c.jpg",
+      "name": "iMac 24 M4 10/10 Core 24+ 512Gb Blue",
+      "warehouse": "(S4)",
+      "price": 219500
+    },
+    "imac-24-m4-10-10-core-16-512gb-pink-сша-s4-201000": {
+      "url": "hybrid-products/mac/imac-24-m4-10-10-core-16-512gb-pink-s4-201000.html",
+      "url_en": "en/hybrid-products/mac/imac-24-m4-10-10-core-16-512gb-pink-s4-201000.html",
+      "cover": "assets/product-images/a098f1be8d6533339489fea9.jpg",
+      "name": "iMac 24 M4 10/10 Core 16+ 512Gb Pink",
+      "warehouse": "(S4)",
+      "price": 201000
+    },
+    "imac-24-m4-10-10-core-16-512gb-silver-сша-s4-207400": {
+      "url": "hybrid-products/mac/imac-24-m4-10-10-core-16-512gb-silver-s4-207400.html",
+      "url_en": "en/hybrid-products/mac/imac-24-m4-10-10-core-16-512gb-silver-s4-207400.html",
+      "cover": "assets/product-images/306611aa18ead7dabdd37686.jpg",
+      "name": "iMac 24 M4 10/10 Core 16+ 512Gb Silver",
+      "warehouse": "(S4)",
+      "price": 207400
+    },
+    "mac-mini-m4-10-10-core-16-256gb-сша-s4-73400": {
+      "url": "hybrid-products/mac/mac-mini-m4-10-10-core-16-256gb-s4-73400.html",
+      "url_en": "en/hybrid-products/mac/mac-mini-m4-10-10-core-16-256gb-s4-73400.html",
+      "cover": "assets/product-images/5b35bd9bbab9c32d62641f46.jpg",
+      "name": "Mac mini M4 10/10 Core 16+ 256Gb",
+      "warehouse": "(S4)",
+      "price": 73400
+    },
+    "mac-mini-m4-pro-12-16-core-24-512gb-австралия-s4-148100": {
+      "url": "hybrid-products/mac/mac-mini-m4-pro-12-16-core-24-512gb-s4-148100.html",
+      "url_en": "en/hybrid-products/mac/mac-mini-m4-pro-12-16-core-24-512gb-s4-148100.html",
+      "cover": "assets/product-images/6b8a4b2b5200faf02a6b40c1.jpg",
+      "name": "Mac mini M4 Pro 12/16 Core 24+ 512Gb",
+      "warehouse": "(S4)",
+      "price": 148100
+    },
+    "mac-mini-m5-pro-15-16-core-24-512gb-сша-s4-157100": {
+      "url": "hybrid-products/mac/mac-mini-m5-pro-15-16-core-24-512gb-s4-157100.html",
+      "url_en": "en/hybrid-products/mac/mac-mini-m5-pro-15-16-core-24-512gb-s4-157100.html",
+      "cover": "assets/product-images/4e99aa9c76726399041b0e75.jpg",
+      "name": "Mac mini M5 Pro 15/16 Core 24+ 512Gb",
+      "warehouse": "(S4)",
+      "price": 157100
+    },
+    "mac-mini-m6-12-12-core-16-256gb-сша-s4-79700": {
+      "url": "hybrid-products/mac/mac-mini-m6-12-12-core-16-256gb-s4-79700.html",
+      "url_en": "en/hybrid-products/mac/mac-mini-m6-12-12-core-16-256gb-s4-79700.html",
+      "cover": "assets/product-images/4e99aa9c76726399041b0e75.jpg",
+      "name": "Mac mini M6 12/12 Core 16+ 256Gb",
+      "warehouse": "(S4)",
+      "price": 79700
+    },
+    "mac-mini-m6-12-12-core-16-256gb-индия-s4-79700": {
+      "url": "hybrid-products/mac/mac-mini-m6-12-12-core-16-256gb-s4-79700.html",
+      "url_en": "en/hybrid-products/mac/mac-mini-m6-12-12-core-16-256gb-s4-79700.html",
+      "cover": "assets/product-images/4e99aa9c76726399041b0e75.jpg",
+      "name": "Mac mini M6 12/12 Core 16+ 256Gb",
+      "warehouse": "(S4)",
+      "price": 79700
+    },
+    "mac-mini-m6-12-12-core-16-512gb-сша-s4-103100": {
+      "url": "hybrid-products/mac/mac-mini-m6-12-12-core-16-512gb-s4-103100.html",
+      "url_en": "en/hybrid-products/mac/mac-mini-m6-12-12-core-16-512gb-s4-103100.html",
+      "cover": "assets/product-images/4e99aa9c76726399041b0e75.jpg",
+      "name": "Mac mini M6 12/12 Core 16+ 512Gb",
+      "warehouse": "(S4)",
+      "price": 103100
+    },
+    "mac-studio-m4-max-14-32-core-36-512gb-оаэ-s4-222400": {
+      "url": "hybrid-products/mac/mac-studio-m4-max-14-32-core-36-512gb-s4-222400.html",
+      "url_en": "en/hybrid-products/mac/mac-studio-m4-max-14-32-core-36-512gb-s4-222400.html",
+      "cover": "assets/product-images/310ae711561418240a63ceab.jpg",
+      "name": "Mac Studio M4 Max 14/32 Core 36+ 512Gb",
+      "warehouse": "(S4)",
+      "price": 222400
+    },
+    "mac-studio-m5-max-18-32-core-36-512gb-сша-s4-245400": {
+      "url": "hybrid-products/mac/mac-studio-m5-max-18-32-core-36-512gb-s4-245400.html",
+      "url_en": "en/hybrid-products/mac/mac-studio-m5-max-18-32-core-36-512gb-s4-245400.html",
+      "cover": "assets/product-images/0bc8d6a11b1a993a842805fe.jpg",
+      "name": "Mac Studio M5 Max 18/32 Core 36+ 512Gb",
+      "warehouse": "(S4)",
+      "price": 245400
+    }
+  }
+}

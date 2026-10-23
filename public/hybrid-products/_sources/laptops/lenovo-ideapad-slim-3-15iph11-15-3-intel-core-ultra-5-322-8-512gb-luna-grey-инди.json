@@ -1,0 +1,103 @@
+{
+  "product_id": "lenovo-ideapad-slim-3-15iph11-15-3-intel-core-ultra-5-322-8-512gb-luna-grey-инди",
+  "category": "laptops",
+  "file_slug": "lenovo-ideapad-slim-3-15iph11-15-3-intel-core-ultra-5-322-8-512gb-luna-gre-69200",
+  "name": "Lenovo Ideapad Slim 3 15IPH11 15.3 Intel Core Ultra 5-322 8+ 512Gb Luna Grey",
+  "country": "🇮🇳 Индия",
+  "warehouse": "(S4)",
+  "price": 69200,
+  "catalog_url": "https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_3_15IPH11",
+  "catalog_title": "Ноутбук Lenovo IdeaPad Slim 3 15IPH11 15,3″ Core Ultra 5 322, 8 ГБ, 512 ГБ, Luna Grey",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Intel Core Ultra 5-322"
+    },
+    {
+      "key": "Ядра и частота",
+      "value": "6 ядер (2 производительных + 4 энергоэффективных LP-E), до 4,4 ГГц, кэш 12 МБ"
+    },
+    {
+      "key": "Нейропроцессор (NPU)",
+      "value": "до 46 TOPS (Copilot+ PC)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Тип памяти",
+      "value": "DDR5-5600"
+    },
+    {
+      "key": "Накопитель",
+      "value": "512 ГБ SSD (M.2 2242, PCIe 4.0 NVMe); второй слот M.2 для расширения"
+    },
+    {
+      "key": "Экран",
+      "value": "15,3″, 1920×1200 (WUXGA), IPS, 400 нит, 45% NTSC, 60 Гц, антибликовое"
+    },
+    {
+      "key": "Сенсорный экран",
+      "value": "нет"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "Intel Graphics (встроенная)"
+    },
+    {
+      "key": "Порты",
+      "value": "2× USB-A 5 Гбит/с, 1× USB-C 5 Гбит/с (зарядка USB PD, DisplayPort 1.2), HDMI 1.4, кардридер SD, аудиоразъём 3,5 мм"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 6 (2×2), Bluetooth 5.3"
+    },
+    {
+      "key": "Веб-камера",
+      "value": "Full HD 1080p + ИК-камера для Windows Hello, шторка"
+    },
+    {
+      "key": "Клавиатура",
+      "value": "полноразмерная с цифровым блоком, клавиша Copilot"
+    },
+    {
+      "key": "Батарея",
+      "value": "50 или 60 Вт·ч в зависимости от партии, быстрая зарядка Rapid Charge Boost"
+    },
+    {
+      "key": "Вес",
+      "value": "от 1,59 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "343,4 × 239,5 × 16,9–17,9 мм"
+    },
+    {
+      "key": "Корпус",
+      "value": "алюминиевая крышка, пластиковое основание; MIL-STD-810H"
+    },
+    {
+      "key": "Цвет",
+      "value": "Luna Grey (серый)"
+    }
+  ],
+  "images_remote": [
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/IdeaPad/IdeaPad_Slim_3_15IPH11/Compressedimage/IdeaPad_Slim_3_15IPH11_CT1_05.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/IdeaPad/IdeaPad_Slim_3_15IPH11/Compressedimage/IdeaPad_Slim_3_15IPH11_CT2_08.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/IdeaPad/IdeaPad_Slim_3_15IPH11/Compressedimage/IdeaPad_Slim_3_15IPH11_CT2_09.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/IdeaPad/IdeaPad_Slim_3_15IPH11/Compressedimage/IdeaPad_Slim_3_15IPH11_CT2_11.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/IdeaPad/IdeaPad_Slim_3_15IPH11/Compressedimage/IdeaPad_Slim_3_15IPH11_CT2_12.png"
+  ],
+  "images_local": [
+    "assets/product-images/aa66571df613659e5ce5d189.jpg",
+    "assets/product-images/e194b1a3f05972edf108b101.jpg",
+    "assets/product-images/ab026f0a06f87be3f9079170.jpg",
+    "assets/product-images/c434d71da82728570aa3ac39.jpg",
+    "assets/product-images/fde52225b85d655ea5e527d1.jpg"
+  ],
+  "manual": true,
+  "manual_key": "lenovo ideapad slim 3 15iph11 15 3 intel core ultra 5 322 8 512gb luna grey~s4",
+  "photo_source": "https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_3_15IPH11",
+  "updated_at": "2026-10-23T15:22:16.377541Z"
+}

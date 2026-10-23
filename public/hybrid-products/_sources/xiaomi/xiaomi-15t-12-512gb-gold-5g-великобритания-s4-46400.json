@@ -1,0 +1,294 @@
+{
+  "product_id": "xiaomi-15t-12-512gb-gold-5g-великобритания-s4-46400",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-15t-12-512gb-gold-5g-s4-46400",
+  "name": "Xiaomi 15T 12+ 512Gb Gold 5G",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S4)",
+  "price": 46400,
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/xiaomi/mi/xiaomi-15t/smartfon-xiaomi-15t-12-512gb-rose-gold",
+  "catalog_title": "Xiaomi 15T 12/512GB, Rose Gold",
+  "specs": [
+    {
+      "key": "Диагональ",
+      "value": "6,83\""
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "Original color PRO | Pro HDR | Технология влажного касания, HDR10+, Dolby Vision®"
+    },
+    {
+      "key": "Разрешение",
+      "value": "2772 x 1280"
+    },
+    {
+      "key": "Тип матрицы",
+      "value": "AMOLED"
+    },
+    {
+      "key": "Частота обновления",
+      "value": "120 Гц"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "447 пикселей/дюйм"
+    },
+    {
+      "key": "Максимальная яркость",
+      "value": "3200 нит (покрытие 25% площади экрана)"
+    },
+    {
+      "key": "Цветовой охват",
+      "value": "DCI-P3"
+    },
+    {
+      "key": "Поддержка HDR",
+      "value": "HDR10, HDR10+, Dolby Vision®"
+    },
+    {
+      "key": "Частота дискретизации сенсора",
+      "value": "480Гц (мгновенная частота считывания касаний — 2560Гц, активируется в режиме Game Turbo)"
+    },
+    {
+      "key": "Количество цветов экрана",
+      "value": "68 млрд."
+    },
+    {
+      "key": "Особенности экрана",
+      "value": "Сертификация TÜV Rheinland Low Blue Light (Hardware Solution), Сертификация TÜV Rheinland Flicker Free, Сертификация TÜV Rheinland Circadian Friendly"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 8400-Ultra"
+    },
+    {
+      "key": "Техпроцесс",
+      "value": "4 нм"
+    },
+    {
+      "key": "Конфигурация процессора",
+      "value": "1 x Arm Cortex-A725, до 3,25 ГГц, 3 x Arm Cortex-A725, до 3,0 ГГц, 4 x Arm Cortex-A725, до 2,1ГГц"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "Mali-G720"
+    },
+    {
+      "key": "Нейронный сопроцессор",
+      "value": "NPU 880"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Частота оперативной памяти",
+      "value": "8533 Мбит/с"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ"
+    },
+    {
+      "key": "Тип встроенной памяти",
+      "value": "UFS 4.1"
+    },
+    {
+      "key": "Тип оперативной памяти",
+      "value": "LPDDR5X"
+    },
+    {
+      "key": "Встроенный динамик",
+      "value": "Два динамика"
+    },
+    {
+      "key": "Количество основных (тыловых) камер",
+      "value": "3"
+    },
+    {
+      "key": "Сверхширокоугольная камера",
+      "value": "Ультраширокоугольная камера Leica 15мм (12 МП, f/2.2, Эквивалентное фокусное расстояние 15 мм, 120° FF)"
+    },
+    {
+      "key": "Телефото-камера",
+      "value": "Телеобъектив Leica 46мм (50 МП, f/1.9, Эквивалентное фокусное расстояние 46мм)"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50 МП"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "f/1.7"
+    },
+    {
+      "key": "Разрешение видео",
+      "value": "4K (3840×2160) при 30 к/с, 60 к/с; 1080p (1920×1080) HD при 30 к/с, 60 к/с; 720p (1280×720) HD при 30 к/с"
+    },
+    {
+      "key": "Тип модулей камеры",
+      "value": "Оптический объектив Leica SummiluxVARIO-SUMMILUX 1:1.7-2.2/15-46 ASPH: Основная камера Leica 23мм, Телеобъектив Leica 46мм, Ультраширокоугольная камера Leica 15мм"
+    },
+    {
+      "key": "Сверхзамедленная съёмка",
+      "value": "720p при 120, 240, 960 к/с, 1080p при 120, 240, 960 к/с"
+    },
+    {
+      "key": "Фокусное расстояние объектива",
+      "value": "23 мм"
+    },
+    {
+      "key": "Режимы и функции фотосъемки",
+      "value": "Два стиля съемки Leica (Leica Authentic look, Leica Vibrant Look); Фильтры Leica | Классический звук затвора Leica | Водяной знак Leica; Xiaomi ProFocus (фокусировка на движущихся объектах, непрерывная съемка и Lightning Burst); Цифровой зум до 60xHDR; Динамический снимок; Портретный режим; Система объективов Master (23мм, 35мм, 46мм, 75мм); Режим 50МП (широкоугольный/телеобъектив); Панорама; Длительная выдержка; Документы; Режим Fastshot; Режим Pro; Параметры LUT"
+    },
+    {
+      "key": "Режимы и функции видеосъемки",
+      "value": "ShootSteady, Замедленная съемка, Таймлапс, Ночная видеосъемка, Профессиональный режим видео, Видео в формате log"
+    },
+    {
+      "key": "Фокусное расстояние объектива фронтальной камеры",
+      "value": "21 мм"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "32 МП"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "f/2.2"
+    },
+    {
+      "key": "Разрешение видеосъемки фронтальной камеры",
+      "value": "4K (3840×2160) при 30 к/с, 1080p (1920×1080) HD при 30 к/с, 60 к/с, 720p (1280×720) HD при 30 к/с"
+    },
+    {
+      "key": "Режимы и функции съемки фронтальной камеры",
+      "value": "HDR, Портретный режим, Спуск затвора по жесту ладони, Спуск затвора голосом, Серийная съемка по таймеру, Таймер для селфи, Подсветка экрана"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 Nano-SIM + eSim"
+    },
+    {
+      "key": "Беспроводные модули",
+      "value": "Wi-Fi 6E, Bluetooth 6.0, NFC"
+    },
+    {
+      "key": "Модуль NFC (бесконтактная оплата)",
+      "value": "есть"
+    },
+    {
+      "key": "Системы навигации",
+      "value": "GPS: L1+L5Galileo: E1+E5a | GLONASS: G1 | Beidou | QZSS: L1+L5 | NavIC: L5"
+    },
+    {
+      "key": "Система A-GPS",
+      "value": "есть"
+    },
+    {
+      "key": "Прочие технологии передачи данных",
+      "value": "2x2 MIMO, WiFi Direct"
+    },
+    {
+      "key": "Диапазоны частот 5G",
+      "value": "5G SA: n1/2/3/5/7/8/12/20/26/28/38/40/41/48/66/71/75/77/78, 5G NSA: n1/3/5/7/8/20/28/38/40/41/66/71/75/77/78"
+    },
+    {
+      "key": "Диапазоны частот 4G (LTE)",
+      "value": "LTE FDD: B1/2/3/4/5/7/8/12/13/17/18/19/20/26/28/32/66/71, LTE TDD: B38/40/41/42/48"
+    },
+    {
+      "key": "Диапазоны частот 3G",
+      "value": "WCDMA: B1/2/4/5/8/6/19"
+    },
+    {
+      "key": "Диапазоны частот 2G",
+      "value": "GSM: 2/3/5/8"
+    },
+    {
+      "key": "Тип питания",
+      "value": "Батарея Xiaomi Surge 5500 мАч"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "5500 мАч"
+    },
+    {
+      "key": "Мощность",
+      "value": "67 Вт"
+    },
+    {
+      "key": "Разъём питания",
+      "value": "USB-C"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "HyperCharge, Поддерживает PD3.0 / PD2.0"
+    },
+    {
+      "key": "Ширина",
+      "value": "78,0 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "163,2 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "7,50 мм"
+    },
+    {
+      "key": "Устойчивое к царапинам стекло",
+      "value": "Corning® Gorilla® Glass® 7i"
+    },
+    {
+      "key": "Вес",
+      "value": "194 г"
+    },
+    {
+      "key": "Биометрическая защита",
+      "value": "Встроенный в экран сканер отпечатков пальцев, Разблокировка по лицу с помощью ИИ"
+    },
+    {
+      "key": "Система охлаждения",
+      "value": "Система Xiaomi 3D IceLoop"
+    },
+    {
+      "key": "Цвет",
+      "value": "Розово-золотой"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 2"
+    },
+    {
+      "key": "Аудиотехнологии",
+      "value": "Dolby Atmos®, Hi-Res и Hi-Res Wireless"
+    },
+    {
+      "key": "Датчики",
+      "value": "Датчик приближения | Датчик освещенности | Акселерометр | Гироскоп | Электронный компас | ИК-излучатель | Датчик мерцания | Линейный вибромотор по оси X | Датчик цветовой температуры"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-xiaomi-15t-12-512gb-rose-gold/smartfon-xiaomi-15t-12-512gb-rose-gold-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-xiaomi-15t-12-512gb-rose-gold/smartfon-xiaomi-15t-12-512gb-rose-gold-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-xiaomi-15t-12-512gb-rose-gold/smartfon-xiaomi-15t-12-512gb-rose-gold-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-xiaomi-15t-12-512gb-rose-gold/smartfon-xiaomi-15t-12-512gb-rose-gold-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-xiaomi-15t-12-512gb-rose-gold/smartfon-xiaomi-15t-12-512gb-rose-gold-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/smartfon-xiaomi-15t-12-512gb-rose-gold/smartfon-xiaomi-15t-12-512gb-rose-gold-6-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/a750a624c7332bfb73656f56.jpg",
+    "assets/product-images/981f4b31f6a0d3acea1fd5a9.jpg",
+    "assets/product-images/bf180858c7519cb6db41e6d1.jpg",
+    "assets/product-images/e33f55766375e1f21c63dc60.jpg",
+    "assets/product-images/34ded1e5a13d12002ce16ef4.jpg",
+    "assets/product-images/ca59b8f990999674508b7c35.jpg"
+  ],
+  "updated_at": "2026-10-23T15:23:08.639325Z"
+}

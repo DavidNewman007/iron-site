@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-22T13:15:53.310Z",
-  "count": 143,
+  "generated_at": "2026-10-23T15:23:30.015Z",
+  "count": 169,
   "byId": {
     "-oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100": {
       "url": "hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100.html",
@@ -1145,6 +1145,214 @@
       "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 155 - 53 Size C 601S1Z53",
       "warehouse": "(S1)",
       "price": 36800
+    },
+    "-oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-36600": {
+      "url": "hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-36600.html",
+      "url_en": "en/hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-36600.html",
+      "cover": "assets/product-images/66575747d0327e9598d95e50.jpg",
+      "name": "👓 Oakley HSTN Black Prizm Black Polarized 145 - 51 Size C",
+      "warehouse": "(S1)",
+      "price": 36600
+    },
+    "-skyler-gen-2-shiny-black-g15-green-150-52-size-c-601-s1-35800": {
+      "url": "hybrid-products/meta/skyler-gen-2-shiny-black-g15-green-150-52-size-c-601-s1-35800.html",
+      "url_en": "en/hybrid-products/meta/skyler-gen-2-shiny-black-g15-green-150-52-size-c-601-s1-35800.html",
+      "cover": "assets/product-images/aadad7db98276a988d3a73b3.jpg",
+      "name": "👓 Skyler (Gen 2) Shiny Black G15 Green 150 - 52 Size C 601/",
+      "warehouse": "(S1)",
+      "price": 35800
+    },
+    "-wayfarer-gen-2-shiny-black-g15-green-150-50-size-c-601-s1-36300": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-shiny-black-g15-green-150-50-size-c-601-s1-36300.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-shiny-black-g15-green-150-50-size-c-601-s1-36300.html",
+      "cover": "assets/product-images/533b99892bcc0c54268d7851.jpg",
+      "name": "👓 Wayfarer (Gen 2) Shiny Black G15 Green 150 - 50 Size C 601/",
+      "warehouse": "(S1)",
+      "price": 36300
+    },
+    "-wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-36700": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-36700.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-36700.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 150 - 50 Size C 601S1Z50",
+      "warehouse": "(S1)",
+      "price": 36700
+    },
+    "-wayfarer-gen-2-shiny-black-transition-graph-green-155-53-size-c-601-1m53-s1-363": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-shiny-black-transition-graph-green-155-53-size-c-601-1m53-s-36300.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-shiny-black-transition-graph-green-155-53-size-c-601-1m53-s-36300.html",
+      "cover": "assets/product-images/846d5d1b9ee7966a229efadb.jpg",
+      "name": "👓 Wayfarer (Gen 2) Shiny Black Transition Graph. Green 155 - 53 Size C 601/1M53",
+      "warehouse": "(S1)",
+      "price": 36300
+    },
+    "-wayfarer-gen-2-matte-black-gradient-graphite-155-53-size-c-601st353-s1-36800": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-gradient-graphite-155-53-size-c-601st353-s1-36800.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-gradient-graphite-155-53-size-c-601st353-s1-36800.html",
+      "cover": "assets/product-images/adede315e00c0ea89966a40f.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Gradient Graphite 155 - 53 Size C 601ST353",
+      "warehouse": "(S1)",
+      "price": 36800
+    },
+    "-wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-36700": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-36700.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-36700.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 155 - 53 Size C 601S1Z53",
+      "warehouse": "(S1)",
+      "price": 36700
+    },
+    "meta-wayfarer-g15-green-shiny-black-150-50-size-s4-23500": {
+      "url": "hybrid-products/meta/meta-wayfarer-g15-green-shiny-black-150-50-size-s4-23500.html",
+      "url_en": "en/hybrid-products/meta/meta-wayfarer-g15-green-shiny-black-150-50-size-s4-23500.html",
+      "cover": "assets/product-images/533b99892bcc0c54268d7851.jpg",
+      "name": "Meta Wayfarer G15 Green Shiny Black 150 - 50 Size",
+      "warehouse": "(S4)",
+      "price": 23500
+    },
+    "meta-wayfarer-g15-green-shiny-black-155-53-size-s4-24000": {
+      "url": "hybrid-products/meta/meta-wayfarer-g15-green-shiny-black-155-53-size-s4-24000.html",
+      "url_en": "en/hybrid-products/meta/meta-wayfarer-g15-green-shiny-black-155-53-size-s4-24000.html",
+      "cover": "assets/product-images/533b99892bcc0c54268d7851.jpg",
+      "name": "Meta Wayfarer G15 Green Shiny Black 155 - 53 Size",
+      "warehouse": "(S4)",
+      "price": 24000
+    },
+    "meta-wayfarer-gradient-graphite-matte-black-155-53-size-s4-23000": {
+      "url": "hybrid-products/meta/meta-wayfarer-gradient-graphite-matte-black-155-53-size-s4-23000.html",
+      "url_en": "en/hybrid-products/meta/meta-wayfarer-gradient-graphite-matte-black-155-53-size-s4-23000.html",
+      "cover": "assets/product-images/adede315e00c0ea89966a40f.jpg",
+      "name": "Meta Wayfarer Gradient Graphite Matte Black 155 - 53 Size",
+      "warehouse": "(S4)",
+      "price": 23000
+    },
+    "meta-skyler-cerullean-blue-shiny-black-150-52-size-s4-22100": {
+      "url": "hybrid-products/meta/meta-skyler-cerullean-blue-shiny-black-150-52-size-s4-22100.html",
+      "url_en": "en/hybrid-products/meta/meta-skyler-cerullean-blue-shiny-black-150-52-size-s4-22100.html",
+      "cover": "assets/product-images/6957e5acc5f55106d69979d7.png",
+      "name": "Meta Skyler Cerullean Blue Shiny Black 150 - 52 Size",
+      "warehouse": "(S4)",
+      "price": 22100
+    },
+    "meta-skyler-g15-green-shiny-black-150-52-size-s4-23000": {
+      "url": "hybrid-products/meta/meta-skyler-g15-green-shiny-black-150-52-size-s4-23000.html",
+      "url_en": "en/hybrid-products/meta/meta-skyler-g15-green-shiny-black-150-52-size-s4-23000.html",
+      "cover": "assets/product-images/9fc1715cc76fe509abf1a488.png",
+      "name": "Meta Skyler G15 Green Shiny Black 150 - 52 Size",
+      "warehouse": "(S4)",
+      "price": 23000
+    },
+    "meta-skyler-amethyst-shiny-black-150-52-size-s4-23000": {
+      "url": "hybrid-products/meta/meta-skyler-amethyst-shiny-black-150-52-size-s4-23000.html",
+      "url_en": "en/hybrid-products/meta/meta-skyler-amethyst-shiny-black-150-52-size-s4-23000.html",
+      "cover": "assets/product-images/66f3e6a766dd27937ab13abb.png",
+      "name": "Meta Skyler Amethyst Shiny Black 150 - 52 Size",
+      "warehouse": "(S4)",
+      "price": 23000
+    },
+    "meta-wayfarer-gen-2-g15-green-shiny-black-150-50-size-s4-34900": {
+      "url": "hybrid-products/meta/meta-wayfarer-gen-2-g15-green-shiny-black-150-50-size-s4-34900.html",
+      "url_en": "en/hybrid-products/meta/meta-wayfarer-gen-2-g15-green-shiny-black-150-50-size-s4-34900.html",
+      "cover": "assets/product-images/533b99892bcc0c54268d7851.jpg",
+      "name": "Meta Wayfarer (Gen 2) G15 Green Shiny Black 150 - 50 Size",
+      "warehouse": "(S4)",
+      "price": 34900
+    },
+    "meta-wayfarer-gen-2-clear-matte-black-155-53-size-s4-34900": {
+      "url": "hybrid-products/meta/meta-wayfarer-gen-2-clear-matte-black-155-53-size-s4-34900.html",
+      "url_en": "en/hybrid-products/meta/meta-wayfarer-gen-2-clear-matte-black-155-53-size-s4-34900.html",
+      "cover": "assets/product-images/7f8beb0abdae264cb0e835dd.jpg",
+      "name": "Meta Wayfarer (Gen 2) Clear Matte Black 155 - 53 Size",
+      "warehouse": "(S4)",
+      "price": 34900
+    },
+    "meta-wayfarer-gen-2-transitions-grey-matte-black-150-50-size-s4-35300": {
+      "url": "hybrid-products/meta/meta-wayfarer-gen-2-transitions-grey-matte-black-150-50-size-s4-35300.html",
+      "url_en": "en/hybrid-products/meta/meta-wayfarer-gen-2-transitions-grey-matte-black-150-50-size-s4-35300.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "Meta Wayfarer (Gen 2) Transitions Grey Matte Black 150 - 50 Size",
+      "warehouse": "(S4)",
+      "price": 35300
+    },
+    "meta-wayfarer-gen-2-transitions-grey-matte-black-155-53-size-s4-35300": {
+      "url": "hybrid-products/meta/meta-wayfarer-gen-2-transitions-grey-matte-black-155-53-size-s4-35300.html",
+      "url_en": "en/hybrid-products/meta/meta-wayfarer-gen-2-transitions-grey-matte-black-155-53-size-s4-35300.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "Meta Wayfarer (Gen 2) Transitions Grey Matte Black 155 - 53 Size",
+      "warehouse": "(S4)",
+      "price": 35300
+    },
+    "meta-wayfarer-gen-2-polar-gradient-graphite-matte-black-150-50-size-s4-35400": {
+      "url": "hybrid-products/meta/meta-wayfarer-gen-2-polar-gradient-graphite-matte-black-150-50-size-s4-35400.html",
+      "url_en": "en/hybrid-products/meta/meta-wayfarer-gen-2-polar-gradient-graphite-matte-black-150-50-size-s4-35400.html",
+      "cover": "assets/product-images/adede315e00c0ea89966a40f.jpg",
+      "name": "Meta Wayfarer (Gen 2) Polar Gradient Graphite Matte Black 150 - 50 Size",
+      "warehouse": "(S4)",
+      "price": 35400
+    },
+    "meta-wayfarer-gen-2-transitions-sapphire-shiny-cosmic-blue-150-50-size-s4-36200": {
+      "url": "hybrid-products/meta/meta-wayfarer-gen-2-transitions-sapphire-shiny-cosmic-blue-150-50-size-s4-36200.html",
+      "url_en": "en/hybrid-products/meta/meta-wayfarer-gen-2-transitions-sapphire-shiny-cosmic-blue-150-50-size-s4-36200.html",
+      "cover": "assets/product-images/c5099ca7ebbd037513290902.jpg",
+      "name": "Meta Wayfarer (Gen 2) Transitions Sapphire Shiny Cosmic Blue 150 - 50 Size",
+      "warehouse": "(S4)",
+      "price": 36200
+    },
+    "oakley-hstn-clear-black-145-51-size-s4-37600": {
+      "url": "hybrid-products/meta/oakley-hstn-clear-black-145-51-size-s4-37600.html",
+      "url_en": "en/hybrid-products/meta/oakley-hstn-clear-black-145-51-size-s4-37600.html",
+      "cover": "assets/product-images/2a554a0e3a8982dfaa8399ae.jpeg",
+      "name": "Oakley HSTN Clear Black 145 - 51 Size",
+      "warehouse": "(S4)",
+      "price": 37600
+    },
+    "oakley-hstn-prizm-black-polarized-black-145-51-size-s4-35200": {
+      "url": "hybrid-products/meta/oakley-hstn-prizm-black-polarized-black-145-51-size-s4-35200.html",
+      "url_en": "en/hybrid-products/meta/oakley-hstn-prizm-black-polarized-black-145-51-size-s4-35200.html",
+      "cover": "assets/product-images/66575747d0327e9598d95e50.jpg",
+      "name": "Oakley HSTN Prizm Black Polarized Black 145 - 51 Size",
+      "warehouse": "(S4)",
+      "price": 35200
+    },
+    "oakley-hstn-transitions-amethyst-black-145-51-size-s4-38400": {
+      "url": "hybrid-products/meta/oakley-hstn-transitions-amethyst-black-145-51-size-s4-38400.html",
+      "url_en": "en/hybrid-products/meta/oakley-hstn-transitions-amethyst-black-145-51-size-s4-38400.html",
+      "cover": "assets/product-images/570d6ab87dd0e4e8c5451c17.jpg",
+      "name": "Oakley HSTN Transitions Amethyst Black 145 - 51 Size",
+      "warehouse": "(S4)",
+      "price": 38400
+    },
+    "oakley-hstn-prizm-deep-water-polarized-brown-smoke-145-51-size-s4-35100": {
+      "url": "hybrid-products/meta/oakley-hstn-prizm-deep-water-polarized-brown-smoke-145-51-size-s4-35100.html",
+      "url_en": "en/hybrid-products/meta/oakley-hstn-prizm-deep-water-polarized-brown-smoke-145-51-size-s4-35100.html",
+      "cover": "assets/product-images/f22f435b009b914a6785386a.jpeg",
+      "name": "Oakley HSTN Prizm Deep Water Polarized Brown Smoke 145 - 51 Size",
+      "warehouse": "(S4)",
+      "price": 35100
+    },
+    "meta-headliner-gen-2-g15-green-shiny-black-150-50-size-s4-34000": {
+      "url": "hybrid-products/meta/meta-headliner-gen-2-g15-green-shiny-black-150-50-size-s4-34000.html",
+      "url_en": "en/hybrid-products/meta/meta-headliner-gen-2-g15-green-shiny-black-150-50-size-s4-34000.html",
+      "cover": "assets/product-images/6f95c90088c6ce4e8765cf20.jpg",
+      "name": "Meta Headliner (Gen 2) G15 Green Shiny Black 150 - 50 Size",
+      "warehouse": "(S4)",
+      "price": 34000
+    },
+    "meta-headliner-gen-2-transitions-emerald-shiny-asteroid-grey-150-50-size-s4-3720": {
+      "url": "hybrid-products/meta/meta-headliner-gen-2-transitions-emerald-shiny-asteroid-grey-150-50-size-s-37200.html",
+      "url_en": "en/hybrid-products/meta/meta-headliner-gen-2-transitions-emerald-shiny-asteroid-grey-150-50-size-s-37200.html",
+      "cover": "assets/product-images/d9fe1430c402b1b9da80912d.jpg",
+      "name": "Meta Headliner (Gen 2) Transitions Emerald Shiny Asteroid Grey 150 - 50 Size",
+      "warehouse": "(S4)",
+      "price": 37200
+    },
+    "meta-skyler-gen-2-g15-green-shiny-black-150-52-size-s4-34400": {
+      "url": "hybrid-products/meta/meta-skyler-gen-2-g15-green-shiny-black-150-52-size-s4-34400.html",
+      "url_en": "en/hybrid-products/meta/meta-skyler-gen-2-g15-green-shiny-black-150-52-size-s4-34400.html",
+      "cover": "assets/product-images/aadad7db98276a988d3a73b3.jpg",
+      "name": "Meta Skyler (Gen 2) G15 Green Shiny Black 150 - 52 Size",
+      "warehouse": "(S4)",
+      "price": 34400
     }
   }
 }

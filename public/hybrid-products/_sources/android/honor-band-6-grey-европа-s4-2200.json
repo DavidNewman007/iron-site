@@ -1,0 +1,75 @@
+{
+  "product_id": "honor-band-6-grey-европа-s4-2200",
+  "category": "android",
+  "file_slug": "honor-band-6-grey-s4-2200",
+  "name": "Honor Band 6 Grey",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 2200,
+  "catalog_url": "https://www.honor.com/uk/wearables/honor-band-6/",
+  "catalog_title": "Фитнес-браслет HONOR Band 6, серый",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "1,47″ AMOLED, сенсорный, 194×368"
+    },
+    {
+      "key": "Размер корпуса",
+      "value": "43 × 25,4 × 11,45 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "около 18 г (без ремешка)"
+    },
+    {
+      "key": "Датчики",
+      "value": "6-осевой (акселерометр + гироскоп), оптический датчик пульса"
+    },
+    {
+      "key": "Здоровье",
+      "value": "пульс 24/7 (TruSeen 4.0), SpO2 (кислород в крови), сон TruSleep, менструальный цикл"
+    },
+    {
+      "key": "Тренировки",
+      "value": "10 профессиональных режимов, включая плавание"
+    },
+    {
+      "key": "Автономность",
+      "value": "до 14 дней при обычном использовании, до 10 дней при интенсивном"
+    },
+    {
+      "key": "Аккумулятор и зарядка",
+      "value": "180 мАч, магнитная зарядка; 10 минут зарядки — около 3 дней работы"
+    },
+    {
+      "key": "Защита",
+      "value": "водонепроницаемость 5 ATM (до 50 м), подходит для плавания в бассейне"
+    },
+    {
+      "key": "Связь",
+      "value": "Bluetooth 5.0 BLE"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Android 5.0 и новее, iOS 9.0 и новее (часть функций только на Android)"
+    },
+    {
+      "key": "Цвет",
+      "value": "серый (Sandstone Grey / «Песочный серый»)"
+    }
+  ],
+  "images_remote": [
+    "https://www-file.honor.com/content/dam/honor/uk/product-list/wearables/honor-band-6/honor-band-6-listimage-grey-pc.png",
+    "https://www-file.honor.com/content/dam/honor/ru/products/wearable/honor-band-6/image/new-grey.jpg",
+    "https://www-file.honor.com/content/dam/honor/uk/products/wearable/honor-band-6/image/honor-band-6-pc_08.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/b936562d44e9eed9a30b604a.jpg",
+    "assets/product-images/70561fe983a65c61c4009a2d.jpg",
+    "assets/product-images/48ac0a49b1af832d59ebbaa2.jpg"
+  ],
+  "manual": true,
+  "manual_key": "honor band 6 grey~s4",
+  "photo_source": "https://www.honor.com/uk/wearables/honor-band-6/",
+  "updated_at": "2026-10-23T15:15:33.835707Z"
+}

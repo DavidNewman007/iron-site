@@ -1,0 +1,95 @@
+{
+  "product_id": "lenovo-tab-clear-case-4-128gb-luna-grey-оаэ-s4-20600",
+  "category": "laptops",
+  "file_slug": "lenovo-tab-clear-case-4-128gb-luna-grey-s4-20600",
+  "name": "Lenovo Tab + clear case 4+ 128Gb Luna Grey",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S4)",
+  "price": 20600,
+  "catalog_url": "https://psref.lenovo.com/Product/Lenovo_Tablets/Lenovo_Tab",
+  "catalog_title": "Планшет Lenovo Tab 10,1″ 4/128 ГБ, Luna Grey, с прозрачным чехлом",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G85 (8 ядер, до 2,0 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ (eMMC 5.1) + слот microSD до 1 ТБ"
+    },
+    {
+      "key": "Экран",
+      "value": "10,1″, 1920×1200 (WUXGA), IPS, 400 нит, 60 Гц, сенсорный"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "Arm Mali-G52 MC2"
+    },
+    {
+      "key": "Камеры",
+      "value": "фронтальная 5 Мп, основная 8 Мп"
+    },
+    {
+      "key": "Звук",
+      "value": "2 динамика, Dolby Atmos"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 5, Bluetooth 5.3, GPS / ГЛОНАСС / Galileo / BeiDou"
+    },
+    {
+      "key": "Порты",
+      "value": "USB-C (USB 2.0), аудиоразъём 3,5 мм, слот microSD"
+    },
+    {
+      "key": "Батарея",
+      "value": "5100 мА·ч, зарядка 20 Вт"
+    },
+    {
+      "key": "Вес",
+      "value": "около 425 г"
+    },
+    {
+      "key": "Размеры",
+      "value": "235,7 × 154,5 × 7,5 мм"
+    },
+    {
+      "key": "Корпус",
+      "value": "металл, защита IP52"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 14"
+    },
+    {
+      "key": "Комплектация",
+      "value": "планшет, прозрачный чехол со встроенной подставкой"
+    },
+    {
+      "key": "Цвет",
+      "value": "Luna Grey (серый)"
+    }
+  ],
+  "images_remote": [
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Lenovo_Tab/Compressedimage/Lenovo_Tab_CT1_01.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Lenovo_Tab/Compressedimage/Lenovo_Tab_CT1_03.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Lenovo_Tab/Compressedimage/Lenovo_Tab_CT2_02.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Lenovo_Tab/Compressedimage/Lenovo_Tab_CT2_01.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Lenovo_Tab/Compressedimage/Lenovo_Tab_CT2_04.png"
+  ],
+  "images_local": [
+    "assets/product-images/f979831f3df3520e14414e96.jpg",
+    "assets/product-images/a296cbb3bdcc22b74d241b6f.jpg",
+    "assets/product-images/1eed18abcd6ed5e6dd2dd027.jpg",
+    "assets/product-images/a862aafa42b9b3135c71df89.jpg",
+    "assets/product-images/57c78b17a263d89b83102600.jpg"
+  ],
+  "manual": true,
+  "manual_key": "lenovo tab clear case 4 128gb luna grey~s4",
+  "photo_source": "https://psref.lenovo.com/Product/Lenovo_Tablets/Lenovo_Tab",
+  "updated_at": "2026-10-23T15:22:16.416474Z"
+}

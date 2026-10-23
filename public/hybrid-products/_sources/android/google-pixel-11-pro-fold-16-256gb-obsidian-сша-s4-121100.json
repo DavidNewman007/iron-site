@@ -1,0 +1,103 @@
+{
+  "product_id": "google-pixel-11-pro-fold-16-256gb-obsidian-сша-s4-121100",
+  "category": "android",
+  "file_slug": "google-pixel-11-pro-fold-16-256gb-obsidian-s4-121100",
+  "name": "Google Pixel 11 Pro Fold 16+ 256Gb Obsidian",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 121100,
+  "catalog_url": "https://store.google.com/gb/config/pixel_11_pro_fold?hl=en-GB",
+  "catalog_title": "Google Pixel 11 Pro Fold 16/256 ГБ, Obsidian (чёрный)",
+  "specs": [
+    {
+      "key": "Внешний экран",
+      "value": "6,5\" OLED Super Actua, 1080×2342 (399 ppi), 1–120 Гц, до 3600 нит"
+    },
+    {
+      "key": "Внутренний гибкий экран",
+      "value": "8\" OLED Super Actua Flex, 2076×2152 (372 ppi), 1–120 Гц, до 3600 нит"
+    },
+    {
+      "key": "Процессор",
+      "value": "Google Tensor G6 + чип безопасности Titan M3"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ"
+    },
+    {
+      "key": "Основные камеры",
+      "value": "48 Мп широкоугольная (f/1.7, OIS) + 10,5 Мп сверхширокоугольная с макро + 10,8 Мп телеобъектив 5x (OIS), Super Zoom до 30x"
+    },
+    {
+      "key": "Фронтальные камеры",
+      "value": "10 Мп на внешнем экране + 10 Мп на внутреннем"
+    },
+    {
+      "key": "Видео",
+      "value": "4K 24/30/60 к/с, 10-bit HDR"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "4806 мАч (типично), 24+ ч работы"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 50% за ~30 мин (от 30 Вт USB-C PPS); беспроводная Pixelsnap (Qi2.2) до 25 Вт"
+    },
+    {
+      "key": "SIM",
+      "value": "nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, Wi-Fi 7, Bluetooth 6, NFC, UWB, двухчастотная GNSS"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68; стеклокерамика на внешнем экране"
+    },
+    {
+      "key": "Размеры в сложенном виде",
+      "value": "155,2 × 76 × 10,1 мм"
+    },
+    {
+      "key": "Размеры в разложенном виде",
+      "value": "155,2 × 150,4 × 5 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "239 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Obsidian (чёрный)"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 17 (на старте), 7 лет обновлений ОС и безопасности"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/fGURXLVgumj-_vnGs5nB8omikHBsXofHNUfwkcYk1Scc8UYjyfRmS034oANXXM-IX5WhxSnJIptU58wFaVHhM9y8zro7-pbGog=w1200-rp",
+    "https://lh3.googleusercontent.com/uKrlymSXzrRITAhEv5mKxCr4OnFKp7pKCcZxooDI8KsdvaJtGcEfNFX-2q-JVOa60N3pLtxlqGgbNh1n9t5_vQXQ4ZI9zS0k9g=w1200-rp",
+    "https://lh3.googleusercontent.com/oUN0Y8t62V5F52IjcEdG9YHcmcq2FNDW9dB4gwftdeo9w95ndTJUpTpsUwXq47dJhnWgsb5n8sDRvLF26xQ8zke12KQrO5lTRA=w1200-rp",
+    "https://lh3.googleusercontent.com/ZhKehSycS9cu4fmZGlLE1IHxJaX5XLbvA38xGjQlHBhD2bSsegk3d0YllB4UmWeCCXqm4p0NY6vJoiRRoT1AnmSOxFJBPrXeVhk=w1200-rp",
+    "https://lh3.googleusercontent.com/zGeRbQJO8sEXgTWB1nZqPzyrYE3vZA4sFbKXzTCrs0E8Ml2a5MzZPc0C7CqIKwzZLklg8BGfseZIUIgI3e4ISP3utGEuEIyq89I=w1200-rp"
+  ],
+  "images_local": [
+    "assets/product-images/cd9c5f47f159daed29ced59b.jpg",
+    "assets/product-images/98f5380047e11d9d133bd4e4.jpg",
+    "assets/product-images/46092d35c35dbc2e062a202f.jpg",
+    "assets/product-images/c4d7eeaf9457381224e00d1a.jpg",
+    "assets/product-images/eb9fb93ca05dd6f5cc4add41.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google pixel 11 pro fold 16 256gb obsidian~s4",
+  "photo_source": "https://store.google.com/gb/config/pixel_11_pro_fold?hl=en-GB",
+  "updated_at": "2026-10-23T15:15:33.739885Z"
+}
