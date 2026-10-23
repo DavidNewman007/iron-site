@@ -1019,20 +1019,46 @@
 
   // ── работы из прайса сайта ─────────────────────────────────────────────────
   // Прайс ремонта уже лежит на сайте (/data/services.json, 1001 услуга): модель, работа,
-  // вариант запчасти, цена клиенту, закупка, поставщик, гарантия. Добавленная работа
+  // вариант запчасти, цена клиенту, гарантия. Добавленная работа
   // дописывается в «Выполненные работы», её цена прибавляется к «Итого», запчасть с
   // поставщиком и закупкой встаёт строкой в «Запчасти», гарантия — если больше прежней.
+  // Работа, закупка и поставщик (v74, 23.10.2026) — НЕ из файла сайта: до v74 они лежали в нём, и закупку видел
+  // любой. Теперь их кладёт scripts/crm_supplier_prices.py на скрытый лист «CRM — прайс ремонта» книги БАЗА, а
+  // оболочка читает его входом пользователя и подмешивает к услугам по «устройство|работа|вариант|№ повтора»
+  // (у модели бывают две одинаковые строки с разной ценой — номер по порядку, порядок у файла и листа один).
+  // Лист не прочитался — прайс работает, но без «= работа + запчасть» и без закупки в «Запчастях».
+  // В ?demo работа и закупка выдуманные: работа — четверть цены (1000–6000 ₽), запчасть — остальное.
   const SRC_NAME = [[/mos-?lcd/i, "MosLCD"], [/wepro/i, "WePro"], [/macsuper/i, "MacSuper"], [/liberti/i, "Liberti"], [/partslog/i, "PartsLog"], [/detaliapple/i, "DetaliApple"]];
   const OP_PART = { "замена дисплея": "Дисплейный модуль", "замена аккумулятора": "АКБ", "замена заднего стекла": "Задняя крышка", "замена стекла": "Стекло дисплея",
     "замена стекла камеры": "Стекло камеры", "замена камеры": "Камера", "замена динамика": "Динамик", "замена клавиатуры": "Клавиатура", "замена корпуса": "Корпус",
     "замена матрицы без крышки": "Матрица", "замена накопителя (ssd)": "SSD", "замена нижнего шлейфа": "Нижний шлейф", "замена разъёма зарядки": "Разъём зарядки",
     "замена сенсора": "Тачскрин", "замена тачпада": "Трекпад", "замена шлейфа": "Шлейф", "замена материнской платы": "Материнская плата" };
+  const SVC_SHEET = "CRM — прайс ремонта";
   async function loadServices() {
     if (S.svc?.list || S.svc?.loading) return;
     S.svc = { loading: true };
     try {
-      const j = await fetch("/data/services.json", { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error("прайс не ответил (" + r.status + ")"); return r.json(); });
-      S.svc = { list: (j.services || []).filter(x => x.device && x.operation), devices: [...new Set((j.services || []).map(x => x.device))] };
+      const [j, cost] = await Promise.all([
+        fetch("/data/services.json", { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error("прайс не ответил (" + r.status + ")"); return r.json(); }),
+        DEMO ? null : api(`/values/${encodeURIComponent(`'${SVC_SHEET}'!A2:H`)}`).catch(e => ({ error: e.message }))]);
+      const list = (j.services || []).filter(x => x.device && x.operation);
+      if (DEMO) for (const x of list) {
+        const w = Math.min(6000, Math.max(1000, Math.round(x.price / 400) * 100));
+        if (x.variant && OP_PART[norm(x.operation)] && x.price > w) Object.assign(x, { work: w, part_cost: x.price - w, part_source: "MOS-LCD" });
+      } else if (!cost.error) {
+        // A устройство, B работа, C вариант, D № повтора, E цена клиенту, F работа, G закупка, H поставщик
+        const by = new Map((cost.values || []).map(([d, o, v, n, , w, c, s]) => [`${d}|${o}|${v || ""}|${toNum(n) || 1}`, { w: toNum(w), c: toNum(c), s: s || "" }]));
+        const seen = new Map();
+        for (const x of list) {
+          const b = `${x.device}|${x.operation}|${x.variant || ""}`, n = (seen.get(b) || 0) + 1, y = by.get(b + "|" + n);
+          seen.set(b, n);
+          if (!y) continue;
+          if (y.w) x.work = y.w;
+          if (y.c) x.part_cost = y.c;
+          if (y.s) x.part_source = y.s;
+        }
+      }
+      S.svc = { list, devices: [...new Set((j.services || []).map(x => x.device))], costError: cost?.error || "" };
     } catch (e) { S.svc = { error: e.message }; }
   }
   // Модель из поля «Устройство»: самое длинное имя прайса, все слова которого есть в тексте
@@ -1138,6 +1164,7 @@
         <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}${dev ? "" : ` <span class="note">· ${esc(x.device)}</span>`}</b>
         <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_cost)}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${ppXHtml(extras, x => x.kind !== "stock", "Другие поставщики")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
         : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка или ищите по всему прайсу.</div>`}
+      ${S.svc.costError ? `<p class="note">⚠️ Работа и закупка не загрузились (лист «${SVC_SHEET}»: ${esc(S.svc.costError)}) — цены клиенту верные, но без разбивки и без закупки запчасти.</p>` : ""}
       <p class="note">Нажатие добавляет работу в «Выполненные работы», цену — к «Итого», запчасть — в список запчастей. Можно добавить несколько.</p></div>`;
   }
   // ── «Работа из прайса» — и наш склад, и другие поставщики (v37, 02.10.2026) ─────────────
@@ -1648,6 +1675,7 @@
       if (DEMO) {
         // Прайс могли начать грузить параллельно (partsHtml зовёт оба сразу) — тогда loadServices вернётся
         // сразу, ещё без списка, и демо-цены поставщиков выходили пустыми (найдено 09.10.2026, v60).
+        // С v74 закупка в демо — выдуманная (loadServices): настоящей в файле сайта больше нет.
         await loadServices();
         while (S.svc?.loading && !S.svc?.list) await new Promise(res => setTimeout(res, 100));
         for (const x of S.svc?.list || []) if (x.part_cost) put(x.device, x.operation, { s: (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, "MosLCD"])[1], t: x.variant || "", c: x.part_cost });
