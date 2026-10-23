@@ -1,0 +1,105 @@
+{
+  "product_id": "redmi-17-6-128-deep-blue-европа-s3-19000",
+  "category": "xiaomi",
+  "file_slug": "redmi-17-6-128-deep-blue-s3-19000",
+  "name": "Redmi 17 6/128 Deep Blue",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 19000,
+  "catalog_url": "https://www.mi.com/global/product/redmi-17/specs/",
+  "catalog_title": "Xiaomi Redmi 17 6/128 ГБ, Deep Blue (синий)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9\", IPS LCD, 1600×720 (HD+), до 120 Гц, яркость до 825 нит (HBM), Corning Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G91-Ultra (12 нм, 8 ядер, до 2,0 ГГц), графика Mali-G52 MC2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "6 ГБ LPDDR4X (+ расширение памяти за счёт накопителя)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ eMMC 5.1, microSD до 2 ТБ (гибридный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп, f/1.8 + вспомогательный модуль; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп, f/2.05; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мАч (тип.)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 45 Вт (USB Type-C), обратная проводная 22,5 Вт; блок питания в комплект не входит"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM (гибридный слот: вторая SIM или microSD)"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), NFC, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4, GPS/ГЛОНАСС/Galileo/BeiDou, FM-радио"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64 (пыль и брызги)"
+    },
+    {
+      "key": "Разблокировка",
+      "value": "сканер отпечатка в боковой кнопке, распознавание лица"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм для наушников"
+    },
+    {
+      "key": "Размеры",
+      "value": "170,12 × 78,42 × 8,8 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "232 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Deep Blue (Глубокий синий)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 (Android 16)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "смартфон, кабель USB Type-C, скрепка для SIM, документация (без блока питания)"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/48_operatorx_operatorx_xm/04/08/2026/035523b60e80d711e939d637c06a19d8.png",
+    "https://i02.appmifile.com/655_operatorx_operatorx_xm/04/08/2026/718a97058d48f0f8f8a3db83f44e2c85.png",
+    "https://i02.appmifile.com/677_operatorx_operatorx_xm/04/08/2026/5731a492e9927015d0d43472ef060b25.png",
+    "https://i02.appmifile.com/794_operatorx_operatorx_xm/04/08/2026/965652fce1cb4cacaf7fb13d9530cad1.png",
+    "https://i02.appmifile.com/422_operatorx_operatorx_xm/04/08/2026/da3a0ca0c3ad873297e80d66ec0eb44a.png",
+    "https://i02.appmifile.com/365_operatorx_operatorx_xm/04/08/2026/b1502dccc672e3256b85f429116bbb6c.png"
+  ],
+  "images_local": [
+    "assets/product-images/7014c4149b5f668338ac6fae.jpg",
+    "assets/product-images/53ba7ef25213fd4cc16114b3.jpg",
+    "assets/product-images/86e70e072a41e47825a2cf34.jpg",
+    "assets/product-images/6075955764a4990f701ecfb6.jpg",
+    "assets/product-images/d6af9ad3028029f17ae221a7.jpg",
+    "assets/product-images/02897e4880d0dd4f313cf24c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi 17 6 128 deep blue~s3",
+  "photo_source": "https://www.mi.com/global/product/redmi-17/specs/",
+  "updated_at": "2026-10-23T15:43:50.389513Z"
+}

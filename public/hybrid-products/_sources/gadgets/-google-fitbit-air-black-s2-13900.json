@@ -1,0 +1,83 @@
+{
+  "product_id": "-google-fitbit-air-black-s2-13900",
+  "category": "gadgets",
+  "file_slug": "google-fitbit-air-black-s2-13900",
+  "name": "⌚️Google Fitbit Air Black",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 13900,
+  "catalog_url": "https://sochi.dr-store.ru/smart-watches/fitness-bracelets/fitnes-braslet-google-fitbit-air-obsidian",
+  "catalog_title": "Фитнес-браслет Google Fitbit Air, Obsidian (чёрный)",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "фитнес-трекер без дисплея"
+    },
+    {
+      "key": "Цвет",
+      "value": "Obsidian — матовый чёрный ремешок, чёрная пряжка из нержавеющей стали"
+    },
+    {
+      "key": "Датчики",
+      "value": "оптический пульсометр, SpO₂ (красный и ИК), датчик температуры, акселерометр, гироскоп"
+    },
+    {
+      "key": "Связь",
+      "value": "Bluetooth 5.0"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Android 11 и новее, iOS 16.4 и новее"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 7 дней"
+    },
+    {
+      "key": "Зарядка",
+      "value": "0–100% за 90 минут; 5 минут — около суток работы"
+    },
+    {
+      "key": "Водозащита",
+      "value": "до 50 м"
+    },
+    {
+      "key": "Размер трекера",
+      "value": "ширина 17 мм, толщина 8,3 мм"
+    },
+    {
+      "key": "Размер ремешка",
+      "value": "130–210 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "5,2 г без ремешка, около 12 г с ремешком"
+    },
+    {
+      "key": "Материал",
+      "value": "переработанный поликарбонат, PBT-пластик"
+    },
+    {
+      "key": "Приложение",
+      "value": "Google Health"
+    },
+    {
+      "key": "Комплектация",
+      "value": "трекер, ремешок, зарядный кабель USB-C, документация"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/smart-watch/fitbit/google-fitbit-dr-store1-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/smart-watch/fitbit/google-fitbit-dr-store7-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/gadget/smart-watch/fitbit/google-fitbit-dr-store10-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/ac36ecccc445183a2e5d6f99.jpg",
+    "assets/product-images/63853e3e37590ecf8ece7cea.jpg",
+    "assets/product-images/e772733ca3b603dc9a39e1e5.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google fitbit air black~s2",
+  "photo_source": "https://sochi.dr-store.ru/smart-watches/fitness-bracelets/fitnes-braslet-google-fitbit-air-obsidian",
+  "updated_at": "2026-10-23T15:49:51.766879Z"
+}

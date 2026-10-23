@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-23T15:23:29.950Z",
-  "count": 188,
+  "generated_at": "2026-10-23T15:54:11.373Z",
+  "count": 199,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -1505,6 +1505,94 @@
       "name": "Sony WH-1000XM6 Wireless Headphones Black",
       "warehouse": "(S4)",
       "price": 29800
+    },
+    "-яндекс-дропс-черный-s2-8100": {
+      "url": "hybrid-products/audio/яндекс-дропс-черный-s2-8100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-дропс-черный-s2-8100.html",
+      "cover": "assets/product-images/872e8aeab4d4b1baa899b722.jpg",
+      "name": "🎧Яндекс Дропс Черный",
+      "warehouse": "(S2)",
+      "price": 8100
+    },
+    "яндекс-станция-стрит-фиолетовый-s2-11100": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-фиолетовый-s2-11100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-фиолетовый-s2-11100.html",
+      "cover": "assets/product-images/b662afbe801929e27813207f.jpg",
+      "name": "Яндекс Станция Стрит Фиолетовый",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "яндекс-станция-стрит-оранжевый-s2-11100": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-оранжевый-s2-11100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-оранжевый-s2-11100.html",
+      "cover": "assets/product-images/46a6344452aa0a7890480eb3.jpg",
+      "name": "Яндекс Станция Стрит Оранжевый",
+      "warehouse": "(S2)",
+      "price": 11100
+    },
+    "-яндекс-станция-миди-изумрудный-s2-17200": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-изумрудный-s2-17200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-изумрудный-s2-17200.html",
+      "cover": "assets/product-images/741ff4a404efe3648d55bf8b.jpg",
+      "name": "🔈Яндекс Станция Миди Изумрудный",
+      "warehouse": "(S2)",
+      "price": 17200
+    },
+    "-яндекс-станция-max-бежеый-s2-34500": {
+      "url": "hybrid-products/audio/яндекс-станция-max-бежеый-s2-34500.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-бежеый-s2-34500.html",
+      "cover": "assets/product-images/f8e9576798a44e82ad922df9.jpg",
+      "name": "🔈Яндекс Станция MAX Бежеый",
+      "warehouse": "(S2)",
+      "price": 34500
+    },
+    "sony-wh-1000xm6-wireless-headphones-platinum-silver-s4-29800": {
+      "url": "hybrid-products/audio/sony-wh-1000xm6-wireless-headphones-platinum-silver-s4-29800.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm6-wireless-headphones-platinum-silver-s4-29800.html",
+      "cover": "assets/product-images/35f09fd7265041ab68570a70.jpg",
+      "name": "Sony WH-1000XM6 Wireless Headphones Platinum Silver",
+      "warehouse": "(S4)",
+      "price": 29800
+    },
+    "marshall-acton-iii-blue-s4-31800": {
+      "url": "hybrid-products/audio/marshall-acton-iii-blue-s4-31800.html",
+      "url_en": "en/hybrid-products/audio/marshall-acton-iii-blue-s4-31800.html",
+      "cover": "assets/product-images/1e1aa229645988c85a12c072.jpg",
+      "name": "Marshall Acton III Blue",
+      "warehouse": "(S4)",
+      "price": 31800
+    },
+    "marshall-emberton-iii-black-s4-21600": {
+      "url": "hybrid-products/audio/marshall-emberton-iii-black-s4-21600.html",
+      "url_en": "en/hybrid-products/audio/marshall-emberton-iii-black-s4-21600.html",
+      "cover": "assets/product-images/51f57f2ee449124b0d610852.jpg",
+      "name": "Marshall Emberton III Black",
+      "warehouse": "(S4)",
+      "price": 21600
+    },
+    "marshall-emberton-iii-cream-s4-16400": {
+      "url": "hybrid-products/audio/marshall-emberton-iii-cream-s4-16400.html",
+      "url_en": "en/hybrid-products/audio/marshall-emberton-iii-cream-s4-16400.html",
+      "cover": "assets/product-images/234b6438b73ddd776e450946.jpg",
+      "name": "Marshall Emberton III Cream",
+      "warehouse": "(S4)",
+      "price": 16400
+    },
+    "marshall-emberton-iii-sage-s4-16400": {
+      "url": "hybrid-products/audio/marshall-emberton-iii-sage-s4-16400.html",
+      "url_en": "en/hybrid-products/audio/marshall-emberton-iii-sage-s4-16400.html",
+      "cover": "assets/product-images/b8434fae3e11131968ff68f5.jpg",
+      "name": "Marshall Emberton III Sage",
+      "warehouse": "(S4)",
+      "price": 16400
+    },
+    "marshall-major-v-headphones-black-s4-8100": {
+      "url": "hybrid-products/audio/marshall-major-v-headphones-black-s4-8100.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-headphones-black-s4-8100.html",
+      "cover": "assets/product-images/860e3ff443a5b72e268258d0.jpg",
+      "name": "Marshall Major V Headphones Black",
+      "warehouse": "(S4)",
+      "price": 8100
     }
   }
 }

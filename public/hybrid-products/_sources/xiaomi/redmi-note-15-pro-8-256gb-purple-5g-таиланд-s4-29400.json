@@ -1,0 +1,101 @@
+{
+  "product_id": "redmi-note-15-pro-8-256gb-purple-5g-таиланд-s4-29400",
+  "category": "xiaomi",
+  "file_slug": "redmi-note-15-pro-8-256gb-purple-5g-s4-29400",
+  "name": "Redmi Note 15 Pro 8+ 256Gb Purple 5G",
+  "country": "🇹🇭 Таиланд",
+  "warehouse": "(S4)",
+  "price": 29400,
+  "catalog_url": "https://www.mi.com/global/product/redmi-note-15-pro-5g/specs/",
+  "catalog_title": "Xiaomi Redmi Note 15 Pro 5G 8/256 ГБ, Mist Purple (фиолетовый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,83\" AMOLED, 1,5K (2772×1280), до 120 Гц, пиковая яркость 3200 нит, HDR10+, Dolby Vision, Corning Gorilla Glass Victus 2"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 7400-Ultra (4 нм), 8 ядер до 2,6 ГГц, графика Mali-G615"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ (LPDDR4X)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ (UFS 2.2)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "200 Мп (f/1.7, 1/1.4\", оптическая стабилизация) + 8 Мп сверхширокоугольная; видео 4K 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "20 Мп (f/2.2), видео 1080p 60 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6580 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 45 Вт (Turbo Charging), USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "две nano-SIM или nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 6, Bluetooth 5.4, ИК-порт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP66, IP68, IP69, IP69K"
+    },
+    {
+      "key": "Безопасность",
+      "value": "сканер отпечатков в экране, разблокировка по лицу"
+    },
+    {
+      "key": "Звук",
+      "value": "стереодинамики, Dolby Atmos, Hi-Res"
+    },
+    {
+      "key": "Размеры",
+      "value": "163,61 × 78,09 × 7,96 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "210 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Mist Purple (фиолетовый)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 2"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/240_item_my/12/01/2026/1b69c85a6676fed09e1fb01d79670a74.png",
+    "https://i02.appmifile.com/847_item_my/12/01/2026/74647c0e907f12f88adc73b02a51a94c.png",
+    "https://i02.appmifile.com/823_item_my/12/01/2026/7e01153fbaa4b8275f65a676754ea6a0.png",
+    "https://i02.appmifile.com/402_item_my/12/01/2026/c3292a83bb551907f270759978348cbc.png",
+    "https://i02.appmifile.com/379_item_my/12/01/2026/de9df2e1b88a44ba17e6b9e7a7159b30.png",
+    "https://i02.appmifile.com/129_item_my/12/01/2026/ac0b7f87a421218de4a60951335359ef.png"
+  ],
+  "images_local": [
+    "assets/product-images/36da678fe316af1f853f3a66.jpg",
+    "assets/product-images/82d458bbc40595a5f0eeeef7.jpg",
+    "assets/product-images/3397efa4fdb5ca416b4730dc.jpg",
+    "assets/product-images/e9d4ade951ccc4da92a8f190.jpg",
+    "assets/product-images/af1f128aed581667f76011d2.jpg",
+    "assets/product-images/9ac5f7d8a6cf8081e6cf724b.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi note 15 pro 8 256gb purple 5g~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-note-15-pro-5g/specs/",
+  "updated_at": "2026-10-23T15:44:13.341155Z"
+}

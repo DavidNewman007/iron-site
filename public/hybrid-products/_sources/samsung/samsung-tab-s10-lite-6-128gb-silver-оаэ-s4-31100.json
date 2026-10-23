@@ -1,0 +1,87 @@
+{
+  "product_id": "samsung-tab-s10-lite-6-128gb-silver-оаэ-s4-31100",
+  "category": "samsung",
+  "file_slug": "samsung-tab-s10-lite-6-128gb-silver-s4-31100",
+  "name": "Samsung Tab S10 Lite 6+ 128Gb Silver",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S4)",
+  "price": 31100,
+  "catalog_url": "https://www.samsung.com/uk/tablets/galaxy-tab-s/galaxy-tab-s10-lite-silver-128gb-wi-fi-sm-x400nzsreub/buy/",
+  "catalog_title": "Планшет Samsung Galaxy Tab S10 Lite 10,9\" 6/128 ГБ Wi-Fi, серебристый (Silver)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "10,9\" TFT, 2112×1320 (WUXGA+), 90 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "Samsung Exynos 1380, 8 ядер (2,4 ГГц + 2,0 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "6 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ, microSD до 2 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "8 Мп, автофокус"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "5 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "8000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 25 Вт, USB Type-C"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 6 (802.11ax, 2,4 + 5 ГГц), Bluetooth 5.3; без SIM-карты"
+    },
+    {
+      "key": "Размеры",
+      "value": "254,3 × 165,8 × 6,6 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "524 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "серебристый (Silver)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15, One UI 7 (на момент выхода)"
+    },
+    {
+      "key": "Стилус S Pen",
+      "value": "в комплекте"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzsreub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzsreub-548559685?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzsreub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzsreub-548559686?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzsreub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzsreub-548559706?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzsreub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzsreub-548559687?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzsreub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzsreub-548559692?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/5d1676ce693c648d55de4a5d.jpg",
+    "assets/product-images/8208d6711e1bf892caf31774.jpg",
+    "assets/product-images/b663a84164040bca01f465c9.jpg",
+    "assets/product-images/23eb81d7469fd51dd2c0f496.jpg",
+    "assets/product-images/00d7c529645ab5a017d9fe93.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung tab s10 lite 6 128gb silver~s4",
+  "photo_source": "https://www.samsung.com/uk/tablets/galaxy-tab-s/galaxy-tab-s10-lite-silver-128gb-wi-fi-sm-x400nzsreub/buy/",
+  "updated_at": "2026-10-23T15:53:26.538129Z"
+}

@@ -1,0 +1,103 @@
+{
+  "product_id": "samsung-a65-4-64gb-gold-юар-s4-11800",
+  "category": "samsung",
+  "file_slug": "samsung-a65-4-64gb-gold-s4-11800",
+  "name": "Samsung A65 4+ 64Gb Gold",
+  "country": "🇿🇦 ЮАР",
+  "warehouse": "(S4)",
+  "price": 11800,
+  "catalog_url": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a06-gold-64gb-sm-a065fzddskz/",
+  "catalog_title": "Samsung Galaxy A06 4/64 ГБ, золотой (Gold)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,7\", PLS LCD, 720×1600 (HD+)"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G85, 8 ядер, до 2,0 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "64 ГБ"
+    },
+    {
+      "key": "Карта памяти",
+      "value": "microSD до 1 ТБ (отдельный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8, автофокус) + 2 Мп (глубина)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп (f/2.0)"
+    },
+    {
+      "key": "Видео",
+      "value": "Full HD 1080p, 60 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "USB Type-C, быстрая зарядка 25 Вт"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE, Wi-Fi 5 (2,4 + 5 ГГц), Bluetooth 5.3, GPS/ГЛОНАСС"
+    },
+    {
+      "key": "NFC",
+      "value": "нет (в спецификации Samsung не указан)"
+    },
+    {
+      "key": "Разъём для наушников",
+      "value": "3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "167,3 × 77,3 × 8,0 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "189 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "золотой (Gold)"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 14, One UI 6.1 (с обновлениями)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/a06/samsung-a06-dr-store-14-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/a06/samsung-a06-dr-store-8-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/a06/samsung-a06-dr-store-11-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/a06/samsung-a06-dr-store-3-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/smartfony/samsung/a06/samsung-a06-dr-store-4-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/fce771100f7b91b878fde4c3.jpg",
+    "assets/product-images/3a47b333fdfdbc98ee425ad0.jpg",
+    "assets/product-images/a3c930727321c6b3035117d3.jpg",
+    "assets/product-images/8828cf4b4e98614a3abe7969.jpg",
+    "assets/product-images/1716a7366bebac83b66291ff.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung a65 4 64gb gold~s4",
+  "photo_source": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a06-gold-64gb-sm-a065fzddskz/",
+  "updated_at": "2026-10-23T15:41:31.499523Z"
+}

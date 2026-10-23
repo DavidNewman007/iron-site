@@ -1,0 +1,91 @@
+{
+  "product_id": "samsung-tab-a11-11-0-g-4-64gb-grey-lte-юар-s4-13800",
+  "category": "samsung",
+  "file_slug": "samsung-tab-a11-11-0-g-4-64gb-grey-lte-s4-13800",
+  "name": "Samsung Tab A11 11.0 G 4+ 64Gb Grey LTE",
+  "country": "🇿🇦 ЮАР",
+  "warehouse": "(S4)",
+  "price": 13800,
+  "catalog_url": "https://www.samsung.com/uk/tablets/galaxy-tab-a/galaxy-tab-a11-grey-128gb-lte-sm-x135fzaeeub/buy/",
+  "catalog_title": "Планшет Samsung Galaxy Tab A11 8,7\" 4/64 ГБ LTE, серый (Gray)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "8,7\" TFT, 1340×800 (WXGA+), 90 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G99, 8 ядер (2,2 ГГц + 2,0 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "64 ГБ, microSD до 2 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "8 Мп, автофокус"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "5 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5100 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 15 Вт, USB Type-C 2.0"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE, 1 nano-SIM; Wi-Fi 5 (802.11ac), Bluetooth 5.3"
+    },
+    {
+      "key": "Разъём для наушников",
+      "value": "3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "211,0 × 124,7 × 8,0 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "337 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "серый (Gray)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15, One UI 7 (на момент выхода)"
+    },
+    {
+      "key": "Стилус S Pen",
+      "value": "не поддерживается, в комплект не входит"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x135fzaeeub/gallery/uk-galaxy-tab-a11-sm-x130-566821-sm-x135fzaeeub-549348622?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x135fzaeeub/gallery/uk-galaxy-tab-a11-sm-x130-566821-sm-x135fzaeeub-549348623?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x135fzaeeub/gallery/uk-galaxy-tab-a11-sm-x130-566821-sm-x135fzaeeub-549348635?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x135fzaeeub/gallery/uk-galaxy-tab-a11-sm-x130-566821-sm-x135fzaeeub-549348624?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x135fzaeeub/gallery/uk-galaxy-tab-a11-sm-x130-566821-sm-x135fzaeeub-549348626?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/b6ac8bafd82e31b8c5ce4a1d.jpg",
+    "assets/product-images/a9ff6b0877268bebb106c66a.jpg",
+    "assets/product-images/e834bc464abb27cf57e37fd6.jpg",
+    "assets/product-images/7cea50cfccda5613f5e0d4cc.jpg",
+    "assets/product-images/a8b45ec0babf907ee3f43cfe.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung tab a11 11 0 g 4 64gb grey lte~s4",
+  "photo_source": "https://www.samsung.com/uk/tablets/galaxy-tab-a/galaxy-tab-a11-grey-128gb-lte-sm-x135fzaeeub/buy/",
+  "updated_at": "2026-10-23T15:53:20.572289Z"
+}

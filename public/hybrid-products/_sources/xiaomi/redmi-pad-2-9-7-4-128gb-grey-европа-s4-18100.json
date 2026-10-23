@@ -1,0 +1,97 @@
+{
+  "product_id": "redmi-pad-2-9-7-4-128gb-grey-европа-s4-18100",
+  "category": "xiaomi",
+  "file_slug": "redmi-pad-2-9-7-4-128gb-grey-s4-18100",
+  "name": "Redmi Pad 2 9.7 4+ 128Gb Grey",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 18100,
+  "catalog_url": "https://www.mi.com/global/product/redmi-pad-2-9-7-inch/specs/",
+  "catalog_title": "Планшет Xiaomi Redmi Pad 2 9.7 4/128 ГБ, Graphite Gray (серый графит)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "9,7\", IPS LCD, 2048×1280 (2K), до 120 Гц, 16:10, 500 нит (600 нит в режиме улицы)"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 6s 4G Gen 2 (6 нм), 8 ядер; GPU Adreno 610"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ LPDDR4X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ UFS 2.2"
+    },
+    {
+      "key": "Карта памяти",
+      "value": "microSD"
+    },
+    {
+      "key": "Основная камера",
+      "value": "8 Мп, f/2.0, видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "5 Мп, f/2.2, видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7600 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "18 Вт, USB Type-C; блок питания в комплекте зависит от региона поставки"
+    },
+    {
+      "key": "SIM",
+      "value": "нет (версия Wi-Fi)"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 5 (802.11ac, 2,4/5 ГГц), Bluetooth 5.0; без NFC и сотовой связи"
+    },
+    {
+      "key": "Звук",
+      "value": "стереодинамики, разъём 3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "226,51 × 147,97 × 7,4 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "406 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Graphite Gray (серый графит)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/749_item_sg/23/04/2026/da839ccfc83c8756be0cf4bdb46f12d4.png",
+    "https://i02.appmifile.com/816_item_sg/23/04/2026/12fd512969d5be7895d15086de655bc2.png",
+    "https://i02.appmifile.com/512_item_sg/23/04/2026/3f1521b7edae3fe4c2d30cfb6c09eb61.png",
+    "https://i02.appmifile.com/792_item_sg/23/04/2026/bc1a125d78231e1ca01ae4459680e0a7.png",
+    "https://i02.appmifile.com/295_item_sg/23/04/2026/7ae6260f445589d8e0d5f2430ffa6981.png",
+    "https://i02.appmifile.com/785_item_sg/23/04/2026/0ba1f076e11c47275afcf86beed19b32.png"
+  ],
+  "images_local": [
+    "assets/product-images/b0d848bc19a1595c57381e8c.jpg",
+    "assets/product-images/726577b27f0b3bb82f79e750.jpg",
+    "assets/product-images/80da984404f0a1fedf6dd210.jpg",
+    "assets/product-images/c46be354da86377b3150c5bd.jpg",
+    "assets/product-images/e45807b2d0782027a3189d8f.jpg",
+    "assets/product-images/16fb4bc7d01a457949bcb68e.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi pad 2 9 7 4 128gb grey~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-pad-2-9-7-inch/specs/",
+  "updated_at": "2026-10-23T15:45:13.037683Z"
+}

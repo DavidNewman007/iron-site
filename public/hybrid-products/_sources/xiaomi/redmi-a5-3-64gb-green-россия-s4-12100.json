@@ -1,0 +1,97 @@
+{
+  "product_id": "redmi-a5-3-64gb-green-россия-s4-12100",
+  "category": "xiaomi",
+  "file_slug": "redmi-a5-3-64gb-green-s4-12100",
+  "name": "Redmi A5 3+ 64Gb Green",
+  "country": "🇷🇺 Россия",
+  "warehouse": "(S4)",
+  "price": 12100,
+  "catalog_url": "https://www.mi.com/global/product/redmi-a5/specs/",
+  "catalog_title": "Xiaomi Redmi A5 3/64 ГБ, Lake Green (зелёный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,88″ LCD, 1640×720, до 120 Гц, 450 нит"
+    },
+    {
+      "key": "Процессор",
+      "value": "UNISOC T7250, 8 ядер, до 1,8 ГГц, 12 нм"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "3 ГБ LPDDR4X (+ до 3 ГБ виртуальной)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "64 ГБ (eMMC 5.1), microSD"
+    },
+    {
+      "key": "Основная камера",
+      "value": "32 МП, f/2.0 + вспомогательный модуль; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 МП, f/2.0"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5200 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "15 Вт, USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM + microSD"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), без NFC, Wi-Fi 2,4/5 ГГц, Bluetooth 5.2, FM-радио"
+    },
+    {
+      "key": "Защита",
+      "value": "боковой сканер отпечатка, разблокировка по лицу"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "171,7 × 77,8 × 8,26 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "193 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Lake Green (зелёный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15 (Go edition)"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/379_item_de/27/04/2025/35901f3243b99d09844f74a1d152fa7e.png",
+    "https://i05.appmifile.com/211_item_de/27/04/2025/2470021ed18abb28e96f8a9ec5cb29af.png",
+    "https://i05.appmifile.com/140_item_de/27/04/2025/b4be293285a152e43bb1657daa65917a.png",
+    "https://i05.appmifile.com/410_item_de/27/04/2025/98e820dad595d3c58edcf30e4dd82d7f.png",
+    "https://i05.appmifile.com/559_item_de/27/04/2025/d21e28cda610ae1e13ad75746d558402.png",
+    "https://i05.appmifile.com/180_item_de/27/04/2025/a823b1b02fde3e036b6fdb7670ba82dd.png"
+  ],
+  "images_local": [
+    "assets/product-images/85d7ce86d08bbe422d1e3272.jpg",
+    "assets/product-images/4d399fd19d3474cbfe1574e7.jpg",
+    "assets/product-images/ec146064d6ff5292f0264c56.jpg",
+    "assets/product-images/269641cd02594f7da7b284f7.jpg",
+    "assets/product-images/a0a0949da8db9e4cba054cf9.jpg",
+    "assets/product-images/a834fecda5d47cd52f099e10.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi a5 3 64gb green~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-a5/specs/",
+  "updated_at": "2026-10-23T15:44:45.581200Z"
+}

@@ -1,0 +1,89 @@
+{
+  "product_id": "xiaomi-17-pro-max-16-512gb-purple-китай-s4-93100",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-17-pro-max-16-512gb-purple-s4-93100",
+  "name": "Xiaomi 17 Pro Max 16+ 512Gb Purple",
+  "country": "🇨🇳 Китай",
+  "warehouse": "(S4)",
+  "price": 93100,
+  "catalog_url": "https://www.mi.com/shop/buy/detail?product_id=21936",
+  "catalog_title": "Xiaomi 17 Pro Max 16/512 ГБ, Purple (фиолетовый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9\" LTPO AMOLED, 2608×1200, до 120 Гц, пиковая яркость до 3500 нит, Dolby Vision, HDR10+"
+    },
+    {
+      "key": "Второй экран",
+      "value": "2,9\" AMOLED на задней панели, 976×596, 120 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Elite Gen 5 (3 нм), до 4,6 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ (UFS 4.1), без слота карт памяти"
+    },
+    {
+      "key": "Основная камера",
+      "value": "Leica: 50 Мп основная (1/1,28\", f/1.7, OIS) + 50 Мп перископ 5x (115 мм, OIS) + 50 Мп сверхширокоугольная (17 мм); видео до 8K"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "50 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мА·ч (кремний-углеродный)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 100 Вт, беспроводная 50 Вт, обратная беспроводная 22,5 Вт"
+    },
+    {
+      "key": "SIM",
+      "value": "2 × nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 7, Bluetooth 5.4, UWB, ИК-порт, USB Type-C 3.2"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68, ультразвуковой сканер отпечатков в экране"
+    },
+    {
+      "key": "Размеры",
+      "value": "162,9 × 77,6 × 8,0 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "219 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "фиолетовый (冷烟紫, «холодный дымчато-фиолетовый»)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 (Android 16), китайская версия"
+    }
+  ],
+  "images_remote": [
+    "https://cdn.cnbj1.fds.api.mi-img.com/nr-pub/202509222138_1404487bf238ce2e5e626237c118aac0.png",
+    "https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-17-pro-max-3.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/34c8ba478fc4eebcb7722fb0.jpg",
+    "assets/product-images/c7acc4a54eefe95e7f82d000.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi 17 pro max 16 512gb purple~s4",
+  "photo_source": "https://www.mi.com/shop/buy/detail?product_id=21936",
+  "updated_at": "2026-10-23T15:54:02.124409Z"
+}

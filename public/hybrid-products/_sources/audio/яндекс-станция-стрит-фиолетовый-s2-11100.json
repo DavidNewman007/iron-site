@@ -1,0 +1,91 @@
+{
+  "product_id": "яндекс-станция-стрит-фиолетовый-s2-11100",
+  "category": "audio",
+  "file_slug": "яндекс-станция-стрит-фиолетовый-s2-11100",
+  "name": "Яндекс Станция Стрит Фиолетовый",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 11100,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-headphones-and-speakers/yandex-station-street/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj",
+  "catalog_title": "Портативная умная колонка Яндекс Станция Стрит, фиолетовая",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "портативная умная колонка с Алисой"
+    },
+    {
+      "key": "Цвет",
+      "value": "фиолетовый"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "30 Вт"
+    },
+    {
+      "key": "Динамики",
+      "value": "низкочастотный 20 Вт (44×80 мм) + высокочастотный 10 Вт (24 мм)"
+    },
+    {
+      "key": "Диапазон частот",
+      "value": "80–20 000 Гц"
+    },
+    {
+      "key": "Микрофоны",
+      "value": "3, с активным шумоподавлением"
+    },
+    {
+      "key": "Wi-Fi",
+      "value": "802.11 a/b/g/n/ac, 2,4 и 5 ГГц"
+    },
+    {
+      "key": "Bluetooth",
+      "value": "5.0, BLE"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "Li-Ion, 3300 мАч"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 12 ч прослушивания музыки"
+    },
+    {
+      "key": "Зарядка",
+      "value": "USB Type-C, USB Power Delivery; полная — около 2,5 ч, 30 минут — до 4 ч работы"
+    },
+    {
+      "key": "Защита",
+      "value": "IP67 — пыле- и влагозащита"
+    },
+    {
+      "key": "Размеры",
+      "value": "диаметр 83 мм, высота 202 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "700 г"
+    },
+    {
+      "key": "Комплектация",
+      "value": "колонка, кабель USB-A — USB-C, ремень для переноски, документация"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj-2-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj-3-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj-4-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj-5-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/b662afbe801929e27813207f.jpg",
+    "assets/product-images/4d118f36cab4e905bd8562bf.jpg",
+    "assets/product-images/ec41bea1e8e6cd895912e528.jpg",
+    "assets/product-images/2497288f9c51b28cd90a00a2.jpg",
+    "assets/product-images/470658e4e2c823fb95bb8f17.jpg"
+  ],
+  "manual": true,
+  "manual_key": "яндекс станция стрит фиолетовый~s2",
+  "photo_source": "https://sochi.dr-store.ru/audio/speakers/yandex-headphones-and-speakers/yandex-station-street/portativnaya-umnaya-kolonka-yandeks-strit-fioletovyj",
+  "updated_at": "2026-10-23T15:48:15.901684Z"
+}

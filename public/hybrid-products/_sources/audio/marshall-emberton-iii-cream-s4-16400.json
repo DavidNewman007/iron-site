@@ -1,0 +1,99 @@
+{
+  "product_id": "marshall-emberton-iii-cream-s4-16400",
+  "category": "audio",
+  "file_slug": "marshall-emberton-iii-cream-s4-16400",
+  "name": "Marshall Emberton III Cream",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 16400,
+  "catalog_url": "https://www.marshall.com/us/en/product/emberton-iii",
+  "catalog_title": "Портативная колонка Marshall Emberton III, Cream (кремовая)",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "Cream (кремовый)"
+    },
+    {
+      "key": "Тип",
+      "value": "портативная Bluetooth-колонка"
+    },
+    {
+      "key": "Звук",
+      "value": "стерео (True Stereophonic), 360°"
+    },
+    {
+      "key": "Динамики",
+      "value": "2 широкополосных 2″ по 10 Вт + 2 пассивных излучателя"
+    },
+    {
+      "key": "Диапазон частот",
+      "value": "65–20 000 Гц"
+    },
+    {
+      "key": "Макс. громкость",
+      "value": "90 дБ SPL на 1 м"
+    },
+    {
+      "key": "Bluetooth",
+      "value": "5.3, LE Audio (Auracast-ready)"
+    },
+    {
+      "key": "Радиус связи",
+      "value": "до 100 м на открытом пространстве"
+    },
+    {
+      "key": "Время работы",
+      "value": "более 32 ч"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "20 мин — 6 ч работы"
+    },
+    {
+      "key": "Полная зарядка",
+      "value": "около 2 ч"
+    },
+    {
+      "key": "Разъём зарядки",
+      "value": "USB-C"
+    },
+    {
+      "key": "Защита",
+      "value": "IP67 (пыль, погружение до 1 м на 30 мин)"
+    },
+    {
+      "key": "Размеры (Ш×В×Г)",
+      "value": "160 × 68 × 76,9 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "0,67 кг"
+    },
+    {
+      "key": "Приложение",
+      "value": "Marshall Bluetooth (iOS, Android)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "колонка, кабель USB-C, документация"
+    }
+  ],
+  "images_remote": [
+    "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6595/6595491_sd.jpg",
+    "https://images.ctfassets.net/javen7msabdh/2siQvLLagLTBTTRVUirxLF/aa51a93497694c29b2a647ca3ca3682f/emberton-iii-cream-front-desktop.jpeg",
+    "https://images.ctfassets.net/javen7msabdh/72HjyvOakwKQwDgIRgqmGA/f9d720cdaae7a7e107b2337c7838e492/emberton-iii-side-desktop-1.jpeg",
+    "https://images.ctfassets.net/javen7msabdh/4tkloHGMCKpU0ZmIW3cRkv/a64e4c9cee36e3eac3ddef03ac27620b/emberton-iii-zoom-desktop-3.jpeg",
+    "https://images.ctfassets.net/javen7msabdh/6XgnrHYaWNga5WhE9iKMmj/31bc142841bba815e91cdbac7e3148eb/emberton-iii-above-desktop-4.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/234b6438b73ddd776e450946.jpg",
+    "assets/product-images/7f4f88d4a38834c1551d6ce9.jpg",
+    "assets/product-images/ea875aff2a9c4c01858f2c10.jpg",
+    "assets/product-images/46e89b9a5fb144246f630a1a.jpg",
+    "assets/product-images/efaaffa1598beb72cef2da01.jpg"
+  ],
+  "manual": true,
+  "manual_key": "marshall emberton iii cream~s4",
+  "photo_source": "https://www.marshall.com/us/en/product/emberton-iii",
+  "updated_at": "2026-10-23T15:48:30.008618Z"
+}

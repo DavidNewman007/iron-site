@@ -1,0 +1,89 @@
+{
+  "product_id": "poco-f6-12-512gb-titanium-5g-индонезия-s4-28100",
+  "category": "xiaomi",
+  "file_slug": "poco-f6-12-512gb-titanium-5g-s4-28100",
+  "name": "Poco F6 12+ 512Gb Titanium 5G",
+  "country": "🇮🇩 Индонезия",
+  "warehouse": "(S4)",
+  "price": 28100,
+  "catalog_url": "https://www.mi.com/global/product/poco-f6/specs/",
+  "catalog_title": "POCO F6 12/512 ГБ, Titanium (титановый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,67\" Flow AMOLED, 2712×1220 (1,5K), 120 Гц, пиковая яркость до 2400 нит, HDR10+, Dolby Vision, Gorilla Glass Victus"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8s Gen 3 (4 нм), 8 ядер до 3,0 ГГц, графика Adreno"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ UFS 4.0, без слота карт памяти"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп Sony IMX882 (f/1.59, OIS) + 8 Мп сверхширокоугольная; видео до 4K 60 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "20 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "90 Вт турбозарядка по проводу, USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM, 5G + 5G"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 6, Bluetooth 5.4, ИК-порт"
+    },
+    {
+      "key": "Звук",
+      "value": "Стереодинамики, Dolby Atmos, Hi-Res Audio"
+    },
+    {
+      "key": "Размеры",
+      "value": "160,5 × 74,4 × 7,8 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "179 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Titanium (титановый)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS (на базе Android 14)"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/1_item_de/23/05/2024/f623af09f05b4cdb121871aeaecc0c49.png",
+    "https://i05.appmifile.com/879_item_de/23/05/2024/862d70da26ff309b05c008f3006c634d.png",
+    "https://i05.appmifile.com/610_item_de/23/05/2024/74e719ad2383d2ec8112a7b2f2ee8ae3.png",
+    "https://i05.appmifile.com/630_item_de/23/05/2024/13c203f0928d0edf3c978734dbf84460.png"
+  ],
+  "images_local": [
+    "assets/product-images/45640af7f23668daff17f98b.jpg",
+    "assets/product-images/6356742d2be4d402aa6597af.jpg",
+    "assets/product-images/c262f5a586f912e26e0d4b84.jpg",
+    "assets/product-images/75ce55ce527b53647fe1c826.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco f6 12 512gb titanium 5g~s4",
+  "photo_source": "https://www.mi.com/global/product/poco-f6/specs/",
+  "updated_at": "2026-10-23T15:43:55.070295Z"
+}

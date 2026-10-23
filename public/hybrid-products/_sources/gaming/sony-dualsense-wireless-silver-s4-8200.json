@@ -1,0 +1,93 @@
+{
+  "product_id": "sony-dualsense-wireless-silver-s4-8200",
+  "category": "gaming",
+  "file_slug": "sony-dualsense-wireless-silver-s4-8200",
+  "name": "Sony DualSense wireless Silver",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 8200,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-sterling-silver",
+  "catalog_title": "Беспроводной геймпад Sony DualSense, Sterling Silver (серебристый металлик)",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "Беспроводной геймпад"
+    },
+    {
+      "key": "Модель",
+      "value": "Sony DualSense (CFI-ZCT1)"
+    },
+    {
+      "key": "Совместимость",
+      "value": "PlayStation 5, PS5 Pro, PlayStation Portal; ПК и Mac, iOS/Android — по Bluetooth"
+    },
+    {
+      "key": "Подключение",
+      "value": "Bluetooth; проводное — USB Type-C"
+    },
+    {
+      "key": "Тактильная отдача",
+      "value": "Да, двойные приводы вместо классической вибрации"
+    },
+    {
+      "key": "Адаптивные триггеры",
+      "value": "Да, L2/R2 с изменяемым сопротивлением"
+    },
+    {
+      "key": "Микрофон",
+      "value": "Встроенный, с кнопкой отключения"
+    },
+    {
+      "key": "Динамик",
+      "value": "Встроенный"
+    },
+    {
+      "key": "Сенсорная панель",
+      "value": "Да, с нажатием"
+    },
+    {
+      "key": "Датчик движения",
+      "value": "Шестиосевой (гироскоп и акселерометр)"
+    },
+    {
+      "key": "Кнопки",
+      "value": "Create, PS, Options, кнопка отключения микрофона"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм для гарнитуры"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "Встроенный литий-ионный, зарядка по USB Type-C"
+    },
+    {
+      "key": "Размеры",
+      "value": "≈ 160 × 66 × 106 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "≈ 280 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Sterling Silver (серебристый металлик)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-7-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-16-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-11-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-6-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/fb2b0f7280fb374a13747665.jpg",
+    "assets/product-images/1d6f49f160196c230e5c1bd6.jpg",
+    "assets/product-images/3bb8c34559e7e71a9184f0ed.jpg",
+    "assets/product-images/af006001caccd707dd21462c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "sony dualsense wireless silver~s4",
+  "photo_source": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-sterling-silver",
+  "updated_at": "2026-10-23T15:47:04.731912Z"
+}

@@ -1,0 +1,105 @@
+{
+  "product_id": "samsung-a18-8-256-light-blue-оаэ-s3-27000",
+  "category": "samsung",
+  "file_slug": "samsung-a18-8-256-light-blue-s3-27000",
+  "name": "Samsung A18 8/256 Light Blue",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S3)",
+  "price": 27000,
+  "catalog_url": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a18-light-blue-256gb-galaxy-a18-sm-a185flbnskz/",
+  "catalog_title": "Samsung Galaxy A18 8/256 ГБ, голубой (Light Blue)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,7\", Super AMOLED, 1080×2340 (FHD+)"
+    },
+    {
+      "key": "Процессор",
+      "value": "8 ядер, до 2,4 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ"
+    },
+    {
+      "key": "Карта памяти",
+      "value": "microSD до 2 ТБ (гибридный слот вместо второй SIM)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8, автофокус) + 5 Мп (сверхширокоугольная) + 2 Мп (макро)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "13 Мп (f/2.0)"
+    },
+    {
+      "key": "Видео",
+      "value": "Full HD 1080p, 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "USB Type-C, быстрая зарядка"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE, Wi-Fi 5 (2,4 + 5 ГГц), Bluetooth 5.3, GPS/ГЛОНАСС"
+    },
+    {
+      "key": "NFC",
+      "value": "есть"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64, стекло Gorilla Glass 3"
+    },
+    {
+      "key": "Размеры",
+      "value": "164,4 × 77,9 × 7,7 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "196 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "голубой (Light Blue)"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 17, One UI 9"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185flblskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185flblskz-554554722?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185flblskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185flblskz-554554706?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185flblskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185flblskz-554554707?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185flblskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185flblskz-554554705?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185flblskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185flblskz-554554708?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185flblskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185flblskz-554554710?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/ad5818b83fa05a156d728a57.jpg",
+    "assets/product-images/c00a76ce4341bcf1a7c3aed5.jpg",
+    "assets/product-images/6086ee9104f678d5824f28d8.jpg",
+    "assets/product-images/a38c3bbd5e4afd5596bd2414.jpg",
+    "assets/product-images/2537d2862e8cede8902ec41e.jpg",
+    "assets/product-images/9c724a9ef29476e565415904.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung a18 8 256 light blue~s3",
+  "photo_source": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a18-light-blue-256gb-galaxy-a18-sm-a185flbnskz/",
+  "updated_at": "2026-10-23T15:41:23.340470Z"
+}

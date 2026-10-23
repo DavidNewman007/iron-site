@@ -1,0 +1,93 @@
+{
+  "product_id": "sony-dualsense-wireless-black-s4-8100",
+  "category": "gaming",
+  "file_slug": "sony-dualsense-wireless-black-s4-8100",
+  "name": "Sony DualSense wireless Black",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 8100,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-black",
+  "catalog_title": "Беспроводной геймпад Sony DualSense, Midnight Black (чёрный)",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "Беспроводной геймпад"
+    },
+    {
+      "key": "Модель",
+      "value": "Sony DualSense (CFI-ZCT1)"
+    },
+    {
+      "key": "Совместимость",
+      "value": "PlayStation 5, PS5 Pro, PlayStation Portal; ПК и Mac, iOS/Android — по Bluetooth"
+    },
+    {
+      "key": "Подключение",
+      "value": "Bluetooth; проводное — USB Type-C"
+    },
+    {
+      "key": "Тактильная отдача",
+      "value": "Да, двойные приводы вместо классической вибрации"
+    },
+    {
+      "key": "Адаптивные триггеры",
+      "value": "Да, L2/R2 с изменяемым сопротивлением"
+    },
+    {
+      "key": "Микрофон",
+      "value": "Встроенный, с кнопкой отключения"
+    },
+    {
+      "key": "Динамик",
+      "value": "Встроенный"
+    },
+    {
+      "key": "Сенсорная панель",
+      "value": "Да, с нажатием"
+    },
+    {
+      "key": "Датчик движения",
+      "value": "Шестиосевой (гироскоп и акселерометр)"
+    },
+    {
+      "key": "Кнопки",
+      "value": "Create, PS, Options, кнопка отключения микрофона"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм для гарнитуры"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "Встроенный литий-ионный, зарядка по USB Type-C"
+    },
+    {
+      "key": "Размеры",
+      "value": "≈ 160 × 66 × 106 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "≈ 280 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Midnight Black (чёрный)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-3-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_35-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_36-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_1-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/9a7cf6695610d96a2891e4d9.jpg",
+    "assets/product-images/c61b37694c35d3fa3cb01e06.jpg",
+    "assets/product-images/484993454db9aec24f013dfe.jpg",
+    "assets/product-images/f2f6d57fbb3032cbe52e898c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "sony dualsense wireless black~s4",
+  "photo_source": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-black",
+  "updated_at": "2026-10-23T15:46:54.537900Z"
+}

@@ -1,0 +1,95 @@
+{
+  "product_id": "redmi-note-14s-8-256gb-blue-европа-s4-21700",
+  "category": "xiaomi",
+  "file_slug": "redmi-note-14s-8-256gb-blue-s4-21700",
+  "name": "Redmi Note 14S 8+ 256Gb Blue",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 21700,
+  "catalog_url": "https://www.mi.com/global/product/redmi-note-14s/specs/",
+  "catalog_title": "Xiaomi Redmi Note 14S 8/256 ГБ, Ocean Blue (синий)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,67″ AMOLED, 2400×1080, до 120 Гц, до 1300 нит, Gorilla Glass 5"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G99-Ultra, 8 ядер, до 2,2 ГГц, 6 нм; GPU Mali-G57 MC2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ LPDDR4X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ (UFS 2.2), microSD до 1 ТБ (гибридный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "200 МП (f/1.65, OIS) + 8 МП сверхширокий + 2 МП макро; видео 1080p 60 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "16 МП, f/2.45"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "67 Вт HyperCharge, блок питания в комплекте"
+    },
+    {
+      "key": "SIM",
+      "value": "nano-SIM + гибрид (nano-SIM или microSD)"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), NFC, Wi-Fi 5 (802.11ac), Bluetooth 5.3, ИК-порт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64, сканер отпечатка в экране"
+    },
+    {
+      "key": "Звук",
+      "value": "стереодинамики, Dolby Atmos, 3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "161,1 × 74,95 × 7,98 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "179 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Ocean Blue (синий)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15, Xiaomi HyperOS"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/882_item_ro/31/03/2025/27a063fde1c8902d25df91e4c5d89b72.png",
+    "https://i05.appmifile.com/537_item_ro/31/03/2025/f1c912062a494b166e64e302365c82be.png",
+    "https://i05.appmifile.com/989_item_ro/31/03/2025/791ea65251f0ab9aa37745ff0b923022.png",
+    "https://i05.appmifile.com/590_item_ro/31/03/2025/c0d39b93048bd2a7ee316c901849d2d7.png",
+    "https://i05.appmifile.com/241_item_ro/31/03/2025/0b186971068a8874acdecf72d5c530d1.png"
+  ],
+  "images_local": [
+    "assets/product-images/ea5809512460f38864e12504.jpg",
+    "assets/product-images/6ec03b769a56e5a6f53aa2bf.jpg",
+    "assets/product-images/214e9b712e569da2012956ca.jpg",
+    "assets/product-images/799b768954d2c7dc0bf12010.jpg",
+    "assets/product-images/b6886bf0d5bd6d7e94ab7cb6.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi note 14s 8 256gb blue~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-note-14s/specs/",
+  "updated_at": "2026-10-23T15:44:08.827933Z"
+}

@@ -1,0 +1,93 @@
+{
+  "product_id": "sony-dualsense-wireless-purple-s4-8100",
+  "category": "gaming",
+  "file_slug": "sony-dualsense-wireless-purple-s4-8100",
+  "name": "Sony DualSense wireless Purple",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 8100,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-purple",
+  "catalog_title": "Беспроводной геймпад Sony DualSense, Galactic Purple (фиолетовый)",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "Беспроводной геймпад"
+    },
+    {
+      "key": "Модель",
+      "value": "Sony DualSense (CFI-ZCT1)"
+    },
+    {
+      "key": "Совместимость",
+      "value": "PlayStation 5, PS5 Pro, PlayStation Portal; ПК и Mac, iOS/Android — по Bluetooth"
+    },
+    {
+      "key": "Подключение",
+      "value": "Bluetooth; проводное — USB Type-C"
+    },
+    {
+      "key": "Тактильная отдача",
+      "value": "Да, двойные приводы вместо классической вибрации"
+    },
+    {
+      "key": "Адаптивные триггеры",
+      "value": "Да, L2/R2 с изменяемым сопротивлением"
+    },
+    {
+      "key": "Микрофон",
+      "value": "Встроенный, с кнопкой отключения"
+    },
+    {
+      "key": "Динамик",
+      "value": "Встроенный"
+    },
+    {
+      "key": "Сенсорная панель",
+      "value": "Да, с нажатием"
+    },
+    {
+      "key": "Датчик движения",
+      "value": "Шестиосевой (гироскоп и акселерометр)"
+    },
+    {
+      "key": "Кнопки",
+      "value": "Create, PS, Options, кнопка отключения микрофона"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм для гарнитуры"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "Встроенный литий-ионный, зарядка по USB Type-C"
+    },
+    {
+      "key": "Размеры",
+      "value": "≈ 160 × 66 × 106 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "≈ 280 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Galactic Purple (фиолетовый)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-5-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_29-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_27-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_28-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/49d6daf333009febeca3ba51.jpg",
+    "assets/product-images/606250004e505eebcc2fd90b.jpg",
+    "assets/product-images/a1e72c0127f3d2676ece53c6.jpg",
+    "assets/product-images/938d81296527c115cd466dd5.jpg"
+  ],
+  "manual": true,
+  "manual_key": "sony dualsense wireless purple~s4",
+  "photo_source": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-purple",
+  "updated_at": "2026-10-23T15:47:00.425272Z"
+}

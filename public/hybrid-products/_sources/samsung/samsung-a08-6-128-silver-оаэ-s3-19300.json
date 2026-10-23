@@ -1,0 +1,109 @@
+{
+  "product_id": "samsung-a08-6-128-silver-оаэ-s3-19300",
+  "category": "samsung",
+  "file_slug": "samsung-a08-6-128-silver-s3-19300",
+  "name": "Samsung A08 6/128 Silver",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S3)",
+  "price": 19300,
+  "catalog_url": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a08-silver-128gb-sm-a085fzshskz/",
+  "catalog_title": "Samsung Galaxy A08 6/128 ГБ, серебристый (Silver)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,7\", PLS LCD, 720×1600 (HD+)"
+    },
+    {
+      "key": "Процессор",
+      "value": "8 ядер, до 2,2 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "6 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ"
+    },
+    {
+      "key": "Карта памяти",
+      "value": "microSD до 2 ТБ (отдельный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8, автофокус) + 2 Мп (глубина)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп (f/2.0)"
+    },
+    {
+      "key": "Видео",
+      "value": "Full HD 1080p, 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "USB Type-C, быстрая зарядка"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE, Wi-Fi 5 (2,4 + 5 ГГц), Bluetooth 5.3, GPS/ГЛОНАСС"
+    },
+    {
+      "key": "NFC",
+      "value": "нет (в спецификации Samsung не указан)"
+    },
+    {
+      "key": "Разъём для наушников",
+      "value": "3,5 мм"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64"
+    },
+    {
+      "key": "Размеры",
+      "value": "167,4 × 77,4 × 8,0 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "197 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "серебристый (Silver)"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 17, One UI 9"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzsdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzsdskz-554537681?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzsdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzsdskz-554537665?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzsdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzsdskz-554537666?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzsdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzsdskz-554537664?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzsdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzsdskz-554537668?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzsdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzsdskz-554537670?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/b3f9f37233482cd851a77cc9.jpg",
+    "assets/product-images/c107517867155944e2bc88a9.jpg",
+    "assets/product-images/bf54c5f17c69d18a6276400d.jpg",
+    "assets/product-images/08d7990380b94f84d7372331.jpg",
+    "assets/product-images/f4156386f431e66d7ab48800.jpg",
+    "assets/product-images/d7c134e76bea2e63b999b347.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung a08 6 128 silver~s3",
+  "photo_source": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a08-silver-128gb-sm-a085fzshskz/",
+  "updated_at": "2026-10-23T15:41:15.822551Z"
+}

@@ -1,0 +1,105 @@
+{
+  "product_id": "samsung-a18-8-256gb-silver-казахстан-s4-26900",
+  "category": "samsung",
+  "file_slug": "samsung-a18-8-256gb-silver-s4-26900",
+  "name": "Samsung A18 8+ 256Gb Silver",
+  "country": "🇰🇿 Казахстан",
+  "warehouse": "(S4)",
+  "price": 26900,
+  "catalog_url": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a18-silver-256gb-galaxy-a18-sm-a185fzsnskz/",
+  "catalog_title": "Samsung Galaxy A18 8/256 ГБ, серебристый (Silver)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,7\", Super AMOLED, 1080×2340 (FHD+)"
+    },
+    {
+      "key": "Процессор",
+      "value": "8 ядер, до 2,4 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ"
+    },
+    {
+      "key": "Карта памяти",
+      "value": "microSD до 2 ТБ (гибридный слот вместо второй SIM)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8, автофокус) + 5 Мп (сверхширокоугольная) + 2 Мп (макро)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "13 Мп (f/2.0)"
+    },
+    {
+      "key": "Видео",
+      "value": "Full HD 1080p, 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "USB Type-C, быстрая зарядка"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE, Wi-Fi 5 (2,4 + 5 ГГц), Bluetooth 5.3, GPS/ГЛОНАСС"
+    },
+    {
+      "key": "NFC",
+      "value": "есть"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64, стекло Gorilla Glass 3"
+    },
+    {
+      "key": "Размеры",
+      "value": "164,4 × 77,9 × 7,7 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "196 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "серебристый (Silver)"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 17, One UI 9"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185fzslskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185fzslskz-554554799?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185fzslskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185fzslskz-554554783?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185fzslskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185fzslskz-554554784?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185fzslskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185fzslskz-554554782?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185fzslskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185fzslskz-554554786?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a185fzslskz/gallery/kz-ru-galaxy-a18-sm-a185-sm-a185fzslskz-554554788?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/686e53292e1d2a4a20fd2a33.jpg",
+    "assets/product-images/99d8a623ef0cd160ed9f36ba.jpg",
+    "assets/product-images/d00e454b8d38bdb6f831836d.jpg",
+    "assets/product-images/3d4865f0b4e0dfddb6390783.jpg",
+    "assets/product-images/9257a10a41fb39c743bd67fd.jpg",
+    "assets/product-images/2d11b9f5538039a980304ea8.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung a18 8 256gb silver~s4",
+  "photo_source": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a18-silver-256gb-galaxy-a18-sm-a185fzsnskz/",
+  "updated_at": "2026-10-23T15:41:39.690121Z"
+}

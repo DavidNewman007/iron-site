@@ -1,0 +1,97 @@
+{
+  "product_id": "poco-x8-pro-12-512-yellow-европа-s3-41800",
+  "category": "xiaomi",
+  "file_slug": "poco-x8-pro-12-512-yellow-s3-41800",
+  "name": "Poco X8 Pro 12/512 Yellow",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 41800,
+  "catalog_url": "https://www.po.co/global/product/poco-x8-pro/specs/",
+  "catalog_title": "POCO X8 Pro 12/512 ГБ, Yellow (жёлтый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,59\", AMOLED, 2756×1268 (1.5K), до 120 Гц, пиковая яркость 3500 нит, Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 8500-Ultra (4 нм), 8 ядер до 3,4 ГГц, GPU Mali-G720 MC8"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ UFS 4.1"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп Sony IMX882 (f/1.5, OIS) + 8 Мп сверхширокоугольная (f/2.2); видео 4K 60 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "20 Мп; видео 1080p 60 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6500 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "100 Вт HyperCharge, обратная до 27 Вт, USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "2 × nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 6, Bluetooth 6.0, ИК-порт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Прочее",
+      "value": "стереодинамики Dolby Atmos, сканер отпечатка в экране, RGB-подсветка блока камер"
+    },
+    {
+      "key": "Размеры",
+      "value": "157,53 × 75,19 × 8,38 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "201,47 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Yellow (жёлтый)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 (Android 16)"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/848_operatorx_operatorx_xm/30/06/2026/e7d4a490550655e48cf125a4099b4a14.png",
+    "https://i02.appmifile.com/64_operatorx_operatorx_xm/30/06/2026/da89149b66d3d8f1eceb7a6662731384.png",
+    "https://i02.appmifile.com/187_operatorx_operatorx_xm/30/06/2026/3f05a34aa719ee2e2fc840818f81b9d3.png",
+    "https://i02.appmifile.com/518_operatorx_operatorx_xm/30/06/2026/d33ea5159f11471cf971527838544430.png",
+    "https://i02.appmifile.com/644_operatorx_operatorx_xm/30/06/2026/fe3a4ebb2d686b0271ed2682908dfae2.png",
+    "https://i02.appmifile.com/990_operatorx_operatorx_xm/30/06/2026/66c86e9f0e21d658a7fc591200c58842.png"
+  ],
+  "images_local": [
+    "assets/product-images/d775171ba24e4d680f539c90.jpg",
+    "assets/product-images/fe16249187cd68d2dc8802fb.jpg",
+    "assets/product-images/030d32245e8f0f24dd59b9a2.jpg",
+    "assets/product-images/72f4eed7f359fb3769245a9a.jpg",
+    "assets/product-images/df86eed05a063007ecea0795.jpg",
+    "assets/product-images/4be0d4f67dd5e99b9d8cd212.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco x8 pro 12 512 yellow~s3",
+  "photo_source": "https://www.po.co/global/product/poco-x8-pro/specs/",
+  "updated_at": "2026-10-23T15:43:13.275552Z"
+}

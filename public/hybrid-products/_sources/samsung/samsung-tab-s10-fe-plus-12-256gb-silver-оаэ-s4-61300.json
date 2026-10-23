@@ -1,0 +1,91 @@
+{
+  "product_id": "samsung-tab-s10-fe-plus-12-256gb-silver-оаэ-s4-61300",
+  "category": "samsung",
+  "file_slug": "samsung-tab-s10-fe-plus-12-256gb-silver-s4-61300",
+  "name": "Samsung Tab S10 FE Plus 12+ 256Gb Silver",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S4)",
+  "price": 61300,
+  "catalog_url": "https://www.samsung.com/uk/tablets/galaxy-tab-s10-fe/buy/?modelCode=SM-X620NZSREUB",
+  "catalog_title": "Планшет Samsung Galaxy Tab S10 FE+ 13,1\" 12/256 ГБ Wi-Fi, серебристый (Silver)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "13,1\" TFT LCD, 2880×1800 (WQXGA+), 90 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "Samsung Exynos 1580, 8 ядер (2,9 + 2,6 + 1,9 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ, microSD до 2 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "13 Мп, автофокус"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "12 Мп, сверхширокоугольная"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "10090 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 45 Вт, USB Type-C"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 6 (802.11ax, 2,4 + 5 ГГц), Bluetooth 5.3; без SIM-карты"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Размеры",
+      "value": "300,6 × 194,7 × 6,0 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "664 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "серебристый (Silver)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15, One UI 7 (на момент выхода)"
+    },
+    {
+      "key": "Стилус S Pen",
+      "value": "в комплекте"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x620nzsreub/gallery/uk-galaxy-tab-s10-fe-plus-sm-x626-sm-x620nzsreub-545671646?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x620nzsreub/gallery/uk-galaxy-tab-s10-fe-plus-sm-x626-sm-x620nzsreub-545671647?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x620nzsreub/gallery/uk-galaxy-tab-s10-fe-plus-sm-x626-sm-x620nzsreub-545671652?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x620nzsreub/gallery/uk-galaxy-tab-s10-fe-plus-sm-x626-sm-x620nzsreub-545671648?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x620nzsreub/gallery/uk-galaxy-tab-s10-fe-plus-sm-x626-sm-x620nzsreub-545671653?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/7829f1499e76e43dcd5d14bf.jpg",
+    "assets/product-images/e839a4d4c6e97fe726b74b9d.jpg",
+    "assets/product-images/5cd641990f5631f0e0ef784b.jpg",
+    "assets/product-images/95a93e3585a54dfda6a93d38.jpg",
+    "assets/product-images/fcaeecfefc89be411f3201f3.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung tab s10 fe plus 12 256gb silver~s4",
+  "photo_source": "https://www.samsung.com/uk/tablets/galaxy-tab-s10-fe/buy/?modelCode=SM-X620NZSREUB",
+  "updated_at": "2026-10-23T15:53:39.965079Z"
+}

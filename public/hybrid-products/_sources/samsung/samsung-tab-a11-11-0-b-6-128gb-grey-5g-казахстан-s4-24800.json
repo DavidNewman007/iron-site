@@ -1,0 +1,91 @@
+{
+  "product_id": "samsung-tab-a11-11-0-b-6-128gb-grey-5g-казахстан-s4-24800",
+  "category": "samsung",
+  "file_slug": "samsung-tab-a11-11-0-b-6-128gb-grey-5g-s4-24800",
+  "name": "Samsung Tab A11+ 11.0 B 6+ 128Gb Grey 5G",
+  "country": "🇰🇿 Казахстан",
+  "warehouse": "(S4)",
+  "price": 24800,
+  "catalog_url": "https://www.samsung.com/latin_en/tablets/galaxy-tab-a/galaxy-tab-a11-plus-gray-128gb-sm-x236bzadgto/",
+  "catalog_title": "Планшет Samsung Galaxy Tab A11+ 11\" 6/128 ГБ 5G, серый (Gray)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "11\" TFT, 1920×1200 (WUXGA), 90 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 7300 (MT8775), 8 ядер (2,5 ГГц + 2,0 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "6 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ, microSD до 2 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "8 Мп, автофокус"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "5 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7040 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 25 Вт, USB Type-C 2.0"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, 1 nano-SIM; Wi-Fi 5 (802.11ac), Bluetooth 5.3"
+    },
+    {
+      "key": "Разъём для наушников",
+      "value": "3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "257,1 × 168,7 × 6,9 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "482 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "серый (Gray)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 16, One UI 8 (на момент выхода)"
+    },
+    {
+      "key": "Стилус S Pen",
+      "value": "в комплект не входит"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/latin_en/sm-x236bzadgto/gallery/latin-en-galaxy-tab-a11-plus-sm-x230-573734-sm-x236bzadgto-550431251?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/latin_en/sm-x236bzadgto/gallery/latin-en-galaxy-tab-a11-plus-sm-x230-573734-sm-x236bzadgto-550431252?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/latin_en/sm-x236bzadgto/gallery/latin-en-galaxy-tab-a11-plus-sm-x230-573734-sm-x236bzadgto-550431262?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/latin_en/sm-x236bzadgto/gallery/latin-en-galaxy-tab-a11-plus-sm-x230-573734-sm-x236bzadgto-550431253?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/latin_en/sm-x236bzadgto/gallery/latin-en-galaxy-tab-a11-plus-sm-x230-573734-sm-x236bzadgto-550431254?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/f14f735ecc19f8ed8c1dac82.jpg",
+    "assets/product-images/290521491049b80495286c26.jpg",
+    "assets/product-images/acb23532fd335d5e299298bd.jpg",
+    "assets/product-images/c8932577bdc5678dd8853386.jpg",
+    "assets/product-images/6730f0495bd6f1e214628aad.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung tab a11 11 0 b 6 128gb grey 5g~s4",
+  "photo_source": "https://www.samsung.com/latin_en/tablets/galaxy-tab-a/galaxy-tab-a11-plus-gray-128gb-sm-x236bzadgto/",
+  "updated_at": "2026-10-23T15:53:24.742797Z"
+}

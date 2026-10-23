@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-23T15:23:29.980Z",
-  "count": 343,
+  "generated_at": "2026-10-23T15:54:11.401Z",
+  "count": 344,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -2745,6 +2745,14 @@
       "name": "👩HT01 Nickel Cooper",
       "warehouse": "(S2)",
       "price": 33500
+    },
+    "-ht01-ceramic-pink-s2-35000": {
+      "url": "hybrid-products/dyson/ht01-ceramic-pink-s2-35000.html",
+      "url_en": "en/hybrid-products/dyson/ht01-ceramic-pink-s2-35000.html",
+      "cover": "assets/product-images/120eb497b86281b86175915a.jpg",
+      "name": "👩HT01 Ceramic Pink",
+      "warehouse": "(S2)",
+      "price": 35000
     }
   }
 }

@@ -1,0 +1,109 @@
+{
+  "product_id": "samsung-a07s-4-128gb-black-казахстан-s4-14600",
+  "category": "samsung",
+  "file_slug": "samsung-a07s-4-128gb-black-s4-14600",
+  "name": "Samsung A07s 4+ 128Gb Black",
+  "country": "🇰🇿 Казахстан",
+  "warehouse": "(S4)",
+  "price": 14600,
+  "catalog_url": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a07s-black-128gb-sm-a077fzkgskz/",
+  "catalog_title": "Samsung Galaxy A07s 4/128 ГБ, чёрный (Black)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,7\", PLS LCD, 720×1600 (HD+), 90 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G99+ (6 нм), 8 ядер, до 2,2 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ"
+    },
+    {
+      "key": "Карта памяти",
+      "value": "microSD до 2 ТБ (отдельный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8, автофокус) + 2 Мп (глубина)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп (f/2.0)"
+    },
+    {
+      "key": "Видео",
+      "value": "Full HD 1080p, 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "USB Type-C, быстрая зарядка"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE, Wi-Fi 5 (2,4 + 5 ГГц), Bluetooth 5.3, GPS/ГЛОНАСС"
+    },
+    {
+      "key": "NFC",
+      "value": "нет (в спецификации Samsung не указан)"
+    },
+    {
+      "key": "Разъём для наушников",
+      "value": "3,5 мм"
+    },
+    {
+      "key": "Защита",
+      "value": "IP54"
+    },
+    {
+      "key": "Размеры",
+      "value": "167,4 × 77,4 × 7,6 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "188 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "чёрный (Black)"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 16, One UI"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a077fzkdskz/gallery/kz-ru-galaxy-a07s-sm-a077-sm-a077fzkdskz-554248881?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a077fzkdskz/gallery/kz-ru-galaxy-a07s-sm-a077-sm-a077fzkdskz-554248864?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a077fzkdskz/gallery/kz-ru-galaxy-a07s-sm-a077-sm-a077fzkdskz-554248865?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a077fzkdskz/gallery/kz-ru-galaxy-a07s-sm-a077-sm-a077fzkdskz-554248867?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a077fzkdskz/gallery/kz-ru-galaxy-a07s-sm-a077-sm-a077fzkdskz-554248869?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a077fzkdskz/gallery/kz-ru-galaxy-a07s-sm-a077-sm-a077fzkdskz-554248870?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/88de87133ec1339baf4f1722.jpg",
+    "assets/product-images/e209c1b6d3934861cddce861.jpg",
+    "assets/product-images/d879e622b965d268528337a8.jpg",
+    "assets/product-images/af522024ab0e357098a7e286.jpg",
+    "assets/product-images/547c4448590b8f706c6e7797.jpg",
+    "assets/product-images/f1710502fdf6f10b04573569.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung a07s 4 128gb black~s4",
+  "photo_source": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a07s-black-128gb-sm-a077fzkgskz/",
+  "updated_at": "2026-10-23T15:41:39.374131Z"
+}

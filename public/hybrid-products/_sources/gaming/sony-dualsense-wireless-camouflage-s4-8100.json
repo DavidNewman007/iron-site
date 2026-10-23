@@ -1,0 +1,91 @@
+{
+  "product_id": "sony-dualsense-wireless-camouflage-s4-8100",
+  "category": "gaming",
+  "file_slug": "sony-dualsense-wireless-camouflage-s4-8100",
+  "name": "Sony DualSense wireless Camouflage",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 8100,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-camouflage",
+  "catalog_title": "Беспроводной геймпад Sony DualSense, Gray Camouflage (серый камуфляж)",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "Беспроводной геймпад"
+    },
+    {
+      "key": "Модель",
+      "value": "Sony DualSense (CFI-ZCT1)"
+    },
+    {
+      "key": "Совместимость",
+      "value": "PlayStation 5, PS5 Pro, PlayStation Portal; ПК и Mac, iOS/Android — по Bluetooth"
+    },
+    {
+      "key": "Подключение",
+      "value": "Bluetooth; проводное — USB Type-C"
+    },
+    {
+      "key": "Тактильная отдача",
+      "value": "Да, двойные приводы вместо классической вибрации"
+    },
+    {
+      "key": "Адаптивные триггеры",
+      "value": "Да, L2/R2 с изменяемым сопротивлением"
+    },
+    {
+      "key": "Микрофон",
+      "value": "Встроенный, с кнопкой отключения"
+    },
+    {
+      "key": "Динамик",
+      "value": "Встроенный"
+    },
+    {
+      "key": "Сенсорная панель",
+      "value": "Да, с нажатием"
+    },
+    {
+      "key": "Датчик движения",
+      "value": "Шестиосевой (гироскоп и акселерометр)"
+    },
+    {
+      "key": "Кнопки",
+      "value": "Create, PS, Options, кнопка отключения микрофона"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм для гарнитуры"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "Встроенный литий-ионный, зарядка по USB Type-C"
+    },
+    {
+      "key": "Размеры",
+      "value": "≈ 160 × 66 × 106 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "≈ 280 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Gray Camouflage (серый камуфляж)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-1-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/sony-playstation-dualsense-grey-camouflage-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5-dualsense-gray-camouflage-4-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/62f26263bed66d3d9a740ae1.jpg",
+    "assets/product-images/7dfcfb35c12ee8b7d6df5412.jpg",
+    "assets/product-images/166b690838ae39ed92fcd4d5.jpg"
+  ],
+  "manual": true,
+  "manual_key": "sony dualsense wireless camouflage~s4",
+  "photo_source": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-camouflage",
+  "updated_at": "2026-10-23T15:46:57.747113Z"
+}

@@ -1,0 +1,91 @@
+{
+  "product_id": "samsung-tab-s10-plus-12-4-12-512gb-grey-парагвай-s4-65800",
+  "category": "samsung",
+  "file_slug": "samsung-tab-s10-plus-12-4-12-512gb-grey-s4-65800",
+  "name": "Samsung Tab S10 Plus 12.4 12+ 512Gb Grey",
+  "country": "🇵🇾 Парагвай",
+  "warehouse": "(S4)",
+  "price": 65800,
+  "catalog_url": "https://www.samsung.com/tr/tablets/galaxy-tab-s/galaxy-tab-s10-plus-gray-512gb-sm-x820nzaptur/buy/",
+  "catalog_title": "Планшет Samsung Galaxy Tab S10+ 12,4\" 12/512 ГБ Wi-Fi, серый (Moonstone Gray)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "12,4\" Dynamic AMOLED 2X, 2800×1752 (WQXGA+), 120 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 9300+, 8 ядер (3,4 + 2,8 + 2,0 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ, microSD до 1,5 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "13 Мп (автофокус) + 8 Мп сверхширокоугольная, вспышка"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "12 Мп, сверхширокоугольная"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "10090 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 45 Вт, USB Type-C"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 6E (802.11ax, 2,4 + 5 + 6 ГГц), Bluetooth 5.3; без SIM-карты"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Размеры",
+      "value": "285,4 × 185,4 × 5,6 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "571 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "серый (Moonstone Gray)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 14, One UI 6.1.1 (на момент выхода)"
+    },
+    {
+      "key": "Стилус S Pen",
+      "value": "в комплекте"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/tr/sm-x820nzaptur/gallery/tr-galaxy-tab-s10-plus-sm-x820-sm-x820nzaptur-543481365?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/tr/sm-x820nzaptur/gallery/tr-galaxy-tab-s10-plus-sm-x820-sm-x820nzaptur-543481345?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/tr/sm-x820nzaptur/gallery/tr-galaxy-tab-s10-plus-sm-x820-sm-x820nzaptur-543481344?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/tr/sm-x820nzaptur/gallery/tr-galaxy-tab-s10-plus-sm-x820-sm-x820nzaptur-543481346?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/tr/sm-x820nzaptur/gallery/tr-galaxy-tab-s10-plus-sm-x820-sm-x820nzaptur-543481351?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/82d2c169bf66aa77884ad875.jpg",
+    "assets/product-images/d663f740c0e2bb06b5e78773.jpg",
+    "assets/product-images/54b161e64980c236e322a935.jpg",
+    "assets/product-images/407f2c476186b6b1bc1a5e15.jpg",
+    "assets/product-images/218862c1183a6dbe2d941694.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung tab s10 plus 12 4 12 512gb grey~s4",
+  "photo_source": "https://www.samsung.com/tr/tablets/galaxy-tab-s/galaxy-tab-s10-plus-gray-512gb-sm-x820nzaptur/buy/",
+  "updated_at": "2026-10-23T15:53:35.839355Z"
+}

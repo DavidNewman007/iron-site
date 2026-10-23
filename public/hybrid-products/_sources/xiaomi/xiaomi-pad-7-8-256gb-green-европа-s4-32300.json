@@ -1,0 +1,89 @@
+{
+  "product_id": "xiaomi-pad-7-8-256gb-green-европа-s4-32300",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-pad-7-8-256gb-green-s4-32300",
+  "name": "Xiaomi Pad 7 8+ 256Gb Green",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 32300,
+  "catalog_url": "https://www.mi.com/global/product/xiaomi-pad-7/specs/",
+  "catalog_title": "Планшет Xiaomi Pad 7 8/256 ГБ, Green (зелёный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "11,2\", IPS LCD, 3200×2136 (3,2K), 345 ppi, до 144 Гц, 3:2, до 800 нит, Dolby Vision, HDR10"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 7+ Gen 3 (4 нм), 8 ядер до 2,8 ГГц, GPU Adreno"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ UFS 4.0"
+    },
+    {
+      "key": "Основная камера",
+      "value": "13 Мп, f/2.2, автофокус PDAF, видео 4K 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп, f/2.28, видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "8850 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "45 Вт, USB Type-C (USB 3.2 Gen 1)"
+    },
+    {
+      "key": "SIM",
+      "value": "нет (только Wi-Fi)"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 6E, Bluetooth 5.4, ИК-порт; без NFC и сотовой связи"
+    },
+    {
+      "key": "Звук",
+      "value": "4 динамика с Dolby Atmos"
+    },
+    {
+      "key": "Размеры",
+      "value": "251,22 × 173,42 × 6,18 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "500 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Green (светло-зелёный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 2 (Android 15)"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/941_item_uk/24/02/2025/beff2d389e355113eacaf22d10c61136.png",
+    "https://i05.appmifile.com/876_item_uk/24/02/2025/abe485bcab67c2a5b609f8433dc55a85.png",
+    "https://i05.appmifile.com/988_item_uk/24/02/2025/cef45016ae1397e36e568bde9fb4e9e6.png",
+    "https://i05.appmifile.com/677_item_uk/24/02/2025/1718fb756e38698bd4630e3b8a2f929c.png"
+  ],
+  "images_local": [
+    "assets/product-images/25e8416a9c7ab19c66413e5a.jpg",
+    "assets/product-images/3b897e187270d6683e1cc665.jpg",
+    "assets/product-images/b156c228b0a6a8a33741ff1c.jpg",
+    "assets/product-images/bb7ba033a32e4f6106ff0a8e.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi pad 7 8 256gb green~s4",
+  "photo_source": "https://www.mi.com/global/product/xiaomi-pad-7/specs/",
+  "updated_at": "2026-10-23T15:46:01.162364Z"
+}

@@ -1,0 +1,93 @@
+{
+  "product_id": "sony-dualsense-wireless-cobalt-blue-s4-8200",
+  "category": "gaming",
+  "file_slug": "sony-dualsense-wireless-cobalt-blue-s4-8200",
+  "name": "Sony DualSense wireless Cobalt Blue",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 8200,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-cobalt-blue",
+  "catalog_title": "Беспроводной геймпад Sony DualSense, Cobalt Blue (синий металлик)",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "Беспроводной геймпад"
+    },
+    {
+      "key": "Модель",
+      "value": "Sony DualSense (CFI-ZCT1)"
+    },
+    {
+      "key": "Совместимость",
+      "value": "PlayStation 5, PS5 Pro, PlayStation Portal; ПК и Mac, iOS/Android — по Bluetooth"
+    },
+    {
+      "key": "Подключение",
+      "value": "Bluetooth; проводное — USB Type-C"
+    },
+    {
+      "key": "Тактильная отдача",
+      "value": "Да, двойные приводы вместо классической вибрации"
+    },
+    {
+      "key": "Адаптивные триггеры",
+      "value": "Да, L2/R2 с изменяемым сопротивлением"
+    },
+    {
+      "key": "Микрофон",
+      "value": "Встроенный, с кнопкой отключения"
+    },
+    {
+      "key": "Динамик",
+      "value": "Встроенный"
+    },
+    {
+      "key": "Сенсорная панель",
+      "value": "Да, с нажатием"
+    },
+    {
+      "key": "Датчик движения",
+      "value": "Шестиосевой (гироскоп и акселерометр)"
+    },
+    {
+      "key": "Кнопки",
+      "value": "Create, PS, Options, кнопка отключения микрофона"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм для гарнитуры"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "Встроенный литий-ионный, зарядка по USB Type-C"
+    },
+    {
+      "key": "Размеры",
+      "value": "≈ 160 × 66 × 106 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "≈ 280 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Cobalt Blue (синий металлик)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-10-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-14-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-15-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-dr-store-9-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/74b158f7607648270b20a2de.jpg",
+    "assets/product-images/f418370c830fd8c557dfe245.jpg",
+    "assets/product-images/ec03b318b5718c6043613dcb.jpg",
+    "assets/product-images/078941a5c739f1e285c0677e.jpg"
+  ],
+  "manual": true,
+  "manual_key": "sony dualsense wireless cobalt blue~s4",
+  "photo_source": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-ps5-cobalt-blue",
+  "updated_at": "2026-10-23T15:46:58.838684Z"
+}

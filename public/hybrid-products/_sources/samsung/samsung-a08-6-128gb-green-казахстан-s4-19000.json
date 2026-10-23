@@ -1,0 +1,109 @@
+{
+  "product_id": "samsung-a08-6-128gb-green-казахстан-s4-19000",
+  "category": "samsung",
+  "file_slug": "samsung-a08-6-128gb-green-s4-19000",
+  "name": "Samsung A08 6+ 128Gb Green",
+  "country": "🇰🇿 Казахстан",
+  "warehouse": "(S4)",
+  "price": 19000,
+  "catalog_url": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a08-green-128gb-sm-a085fzghskz/",
+  "catalog_title": "Samsung Galaxy A08 6/128 ГБ, зелёный (Green)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,7\", PLS LCD, 720×1600 (HD+)"
+    },
+    {
+      "key": "Процессор",
+      "value": "8 ядер, до 2,2 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "6 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ"
+    },
+    {
+      "key": "Карта памяти",
+      "value": "microSD до 2 ТБ (отдельный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8, автофокус) + 2 Мп (глубина)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп (f/2.0)"
+    },
+    {
+      "key": "Видео",
+      "value": "Full HD 1080p, 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "USB Type-C, быстрая зарядка"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE, Wi-Fi 5 (2,4 + 5 ГГц), Bluetooth 5.3, GPS/ГЛОНАСС"
+    },
+    {
+      "key": "NFC",
+      "value": "нет (в спецификации Samsung не указан)"
+    },
+    {
+      "key": "Разъём для наушников",
+      "value": "3,5 мм"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64"
+    },
+    {
+      "key": "Размеры",
+      "value": "167,4 × 77,4 × 8,0 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "197 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "зелёный (Green)"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 17, One UI 9"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzgdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzgdskz-554537643?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzgdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzgdskz-554537627?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzgdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzgdskz-554537628?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzgdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzgdskz-554537626?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzgdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzgdskz-554537630?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/kz_ru/sm-a085fzgdskz/gallery/kz-ru-galaxy-a08-sm-a085-sm-a085fzgdskz-554537632?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/76e8a20e3ac03fdd8a80e1ff.jpg",
+    "assets/product-images/dea07d2b7039c50e4b79a4f3.jpg",
+    "assets/product-images/d296b48d9c823d9b9ea984d5.jpg",
+    "assets/product-images/945b30984a2eb1e3e7307b51.jpg",
+    "assets/product-images/67d61290725c384a95093a12.jpg",
+    "assets/product-images/96920f97dce599af6b7e5571.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung a08 6 128gb green~s4",
+  "photo_source": "https://www.samsung.com/kz_ru/smartphones/galaxy-a/galaxy-a08-green-128gb-sm-a085fzghskz/",
+  "updated_at": "2026-10-23T15:41:39.544447Z"
+}

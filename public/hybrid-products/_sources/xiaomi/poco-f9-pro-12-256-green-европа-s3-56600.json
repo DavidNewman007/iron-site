@@ -1,0 +1,97 @@
+{
+  "product_id": "poco-f9-pro-12-256-green-европа-s3-56600",
+  "category": "xiaomi",
+  "file_slug": "poco-f9-pro-12-256-green-s3-56600",
+  "name": "Poco F9 Pro 12/256 Green",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 56600,
+  "catalog_url": "https://www.mi.com/global/product/poco-f9-pro/specs/",
+  "catalog_title": "POCO F9 Pro 12/256 ГБ, Aurora Green (зелёный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,59\" AMOLED (POCO HyperRGB), 2510×1156, до 185 Гц, пиковая яркость до 4500 нит (10000 нит в HDR), HDR10+, Dolby Vision, Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Elite Gen 5 V Series (3 нм), 8 ядер до 4,6 ГГц, графика Adreno; отдельный чип VisionBoost D8"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ UFS 4.1, без слота карт памяти"
+    },
+    {
+      "key": "Основная камера",
+      "value": "200 Мп (OIS) + 50 Мп телевик 2,5× (60 мм, OIS) + 8 Мп сверхширокоугольная; видео до 4K 60 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп, видео 4K 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6330 мА·ч (кремний-углеродный)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "100 Вт HyperCharge по проводу, 50 Вт беспроводная, обратная 27 Вт проводная / 22,5 Вт беспроводная; USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "2 SIM: nano-SIM + nano-SIM, nano-SIM + eSIM или eSIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 7, Bluetooth 6.0, ИК-порт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68, ультразвуковой сканер отпечатка в экране"
+    },
+    {
+      "key": "Звук",
+      "value": "Стереодинамики, настройка Bose, Dolby Atmos"
+    },
+    {
+      "key": "Размеры",
+      "value": "157,49 × 75,25 × 8,79 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "206 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Aurora Green (зелёный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 на базе Android 16"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/973_operatorx_operatorx_xm/21/08/2026/5921d9fa000f52c9517921faefce5377.png",
+    "https://i02.appmifile.com/528_operatorx_operatorx_xm/21/08/2026/a60249a2d8115063e6699616276bb8bb.png",
+    "https://i02.appmifile.com/814_operatorx_operatorx_xm/21/08/2026/0a954322b335c7380cf7f42afb03cbc2.png",
+    "https://i02.appmifile.com/204_operatorx_operatorx_xm/21/08/2026/e497a1126318cf906b9ec7be3ef32de5.png",
+    "https://i02.appmifile.com/978_operatorx_operatorx_xm/21/08/2026/1a7533756eb1b02e8c3317e0c8e56165.png",
+    "https://i02.appmifile.com/575_operatorx_operatorx_xm/21/08/2026/a2956962e2841e337a21db9af5e4b304.png"
+  ],
+  "images_local": [
+    "assets/product-images/1c8eff3948abb77313f2fa72.jpg",
+    "assets/product-images/86315a3b2d1e983cddd5c5e5.jpg",
+    "assets/product-images/a466eb226a74768f1c725a99.jpg",
+    "assets/product-images/ac18860e7cd1932e1cb06d36.jpg",
+    "assets/product-images/cd03185b6486416c7e815922.jpg",
+    "assets/product-images/b79ff78f82cdff58bf88a0d6.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco f9 pro 12 256 green~s3",
+  "photo_source": "https://www.mi.com/global/product/poco-f9-pro/specs/",
+  "updated_at": "2026-10-23T15:43:15.628803Z"
+}

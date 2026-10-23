@@ -1,0 +1,97 @@
+{
+  "product_id": "redmi-pad-2-with-cover-8-256gb-green-турция-s4-24300",
+  "category": "xiaomi",
+  "file_slug": "redmi-pad-2-with-cover-8-256gb-green-s4-24300",
+  "name": "Redmi Pad 2 with Cover 8+ 256Gb Green",
+  "country": "🇹🇷 Турция",
+  "warehouse": "(S4)",
+  "price": 24300,
+  "catalog_url": "https://www.mi.com/global/product/redmi-pad-2/specs/",
+  "catalog_title": "Планшет Xiaomi Redmi Pad 2 8/256 ГБ с чехлом-обложкой, Mint Green (мятный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "11\", IPS LCD, 2560×1600 (2,5K), 274 ppi, до 90 Гц, 16:10, 500 нит (600 нит в режиме улицы)"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G100-Ultra (6 нм), 8 ядер: 2×A76 2,2 ГГц + 6×A55 2,0 ГГц; GPU Mali-G57 MC2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ LPDDR4X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ UFS 2.2"
+    },
+    {
+      "key": "Карта памяти",
+      "value": "microSD до 2 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "8 Мп, f/2.0, видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "5 Мп, f/2.2, видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "9000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "18 Вт, USB Type-C (USB 2.0); блок питания в комплекте зависит от региона поставки"
+    },
+    {
+      "key": "SIM",
+      "value": "нет (версия Wi-Fi)"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 5 (802.11ac), Bluetooth 5.3; без NFC и сотовой связи"
+    },
+    {
+      "key": "Звук",
+      "value": "4 динамика с Dolby Atmos, разъём 3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "254,58 × 166,04 × 7,36 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "510 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Mint Green (мятный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 2 (Android 15)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "планшет + фирменный чехол-обложка (Cover) с функцией подставки"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/811_item_jp/07/07/2025/442e18a2c875793155236f8ab2d5be52.png",
+    "https://i02.appmifile.com/809_item_jp/07/07/2025/2643f3e1069d0242a50aa0548c236298.png",
+    "https://i02.appmifile.com/421_item_jp/07/07/2025/9462e3822da054976d5b8984b5251516.png",
+    "https://i02.appmifile.com/235_item_jp/07/07/2025/5756efd18125975e976a7b92767e71b2.png"
+  ],
+  "images_local": [
+    "assets/product-images/dbba272bea37687c5e11084c.jpg",
+    "assets/product-images/bb429d197b0dbea506cd14b7.jpg",
+    "assets/product-images/f398fe70260eb3bbe7b2723e.jpg",
+    "assets/product-images/82972192933e67ffd12e88e3.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi pad 2 with cover 8 256gb green~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-pad-2/specs/",
+  "updated_at": "2026-10-23T15:45:05.978988Z"
+}

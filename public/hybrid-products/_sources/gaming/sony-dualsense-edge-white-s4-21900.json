@@ -1,0 +1,91 @@
+{
+  "product_id": "sony-dualsense-edge-white-s4-21900",
+  "category": "gaming",
+  "file_slug": "sony-dualsense-edge-white-s4-21900",
+  "name": "Sony DualSense Edge White",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 21900,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-edge-ps5-white",
+  "catalog_title": "Беспроводной геймпад Sony DualSense Edge, белый",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "Беспроводной профессиональный геймпад"
+    },
+    {
+      "key": "Модель",
+      "value": "Sony DualSense Edge (CFI-ZCP1)"
+    },
+    {
+      "key": "Совместимость",
+      "value": "PlayStation 5, PS5 Pro, PlayStation Portal; ПК по Bluetooth или кабелю"
+    },
+    {
+      "key": "Подключение",
+      "value": "Bluetooth; проводное — USB Type-C"
+    },
+    {
+      "key": "Сменные модули стиков",
+      "value": "Да, заменяются без инструментов"
+    },
+    {
+      "key": "Накладки стиков",
+      "value": "Стандартные, высокие и низкие выпуклые"
+    },
+    {
+      "key": "Задние кнопки",
+      "value": "2 шт., сменные: полукупол и рычажок"
+    },
+    {
+      "key": "Ограничители хода триггеров",
+      "value": "Да, по 3 положения на L2/R2"
+    },
+    {
+      "key": "Профили",
+      "value": "Кнопки Fn: быстрое переключение профилей, настройка мёртвых зон и чувствительности стиков"
+    },
+    {
+      "key": "Тактильная отдача и адаптивные триггеры",
+      "value": "Да"
+    },
+    {
+      "key": "Микрофон",
+      "value": "Встроенный, с кнопкой отключения"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C с фиксатором кабеля, 3,5 мм для гарнитуры"
+    },
+    {
+      "key": "Комплект",
+      "value": "Геймпад, плетёный кабель USB-C 2,7 м с фиксатором, кейс, накладки стиков, задние кнопки"
+    },
+    {
+      "key": "Вес",
+      "value": "≈ 325 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Белый"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-edge-8-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-edge-4-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-edge-5-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-edge-2-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/gamepad-ps5-edge-3-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/01cdd1471475c7fd8900934e.jpg",
+    "assets/product-images/03d4495b1b119914df8713b3.jpg",
+    "assets/product-images/aea799ad44d687a63fb6bc84.jpg",
+    "assets/product-images/8fc482069a51a520d1771af3.jpg",
+    "assets/product-images/78b46f89e115a02101cbbaf3.jpg"
+  ],
+  "manual": true,
+  "manual_key": "sony dualsense edge white~s4",
+  "photo_source": "https://sochi.dr-store.ru/gaming/gaming-accessories/gamepad-dualsense-edge-ps5-white",
+  "updated_at": "2026-10-23T15:46:52.676362Z"
+}

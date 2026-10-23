@@ -1,0 +1,61 @@
+{
+  "product_id": "-зарядная-станция-dualsense-s2-4800",
+  "category": "gaming",
+  "file_slug": "зарядная-станция-dualsense-s2-4800",
+  "name": "🎮Зарядная станция Dualsense",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 4800,
+  "catalog_url": "https://sochi.dr-store.ru/gaming/gaming-accessories/dualsense-charging-station-ps5",
+  "catalog_title": "Зарядная станция Sony DualSense для PS5",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "Зарядная станция для двух геймпадов"
+    },
+    {
+      "key": "Модель",
+      "value": "Sony DualSense Charging Station (CFI-ZDS1)"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Геймпады DualSense и DualSense Edge"
+    },
+    {
+      "key": "Одновременная зарядка",
+      "value": "До двух геймпадов"
+    },
+    {
+      "key": "Установка",
+      "value": "Геймпады защёлкиваются в станцию сверху, без кабелей"
+    },
+    {
+      "key": "Время зарядки",
+      "value": "Как при зарядке от консоли PS5"
+    },
+    {
+      "key": "Питание",
+      "value": "От сети, адаптер питания в комплекте"
+    },
+    {
+      "key": "Цвет",
+      "value": "Белый с чёрным, в стиле PS5"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_16-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_17-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/game/ps5/ps5_18-1000x1000.jpg",
+    "https://gmedia.playstation.com/is/image/SIEPDC/dualsense-charging-station-image-block-02-en-22nov23?$1200px$"
+  ],
+  "images_local": [
+    "assets/product-images/96c2f9c24f186f74d0f05e1c.jpg",
+    "assets/product-images/29500fd01fef59d47439cf82.jpg",
+    "assets/product-images/adf9a3098a4c41044e275397.jpg",
+    "assets/product-images/8020faf82e4a3d1bbfe5b4f7.jpg"
+  ],
+  "manual": true,
+  "manual_key": "зарядная станция dualsense~s2",
+  "photo_source": "https://sochi.dr-store.ru/gaming/gaming-accessories/dualsense-charging-station-ps5",
+  "updated_at": "2026-10-23T15:46:40.047142Z"
+}

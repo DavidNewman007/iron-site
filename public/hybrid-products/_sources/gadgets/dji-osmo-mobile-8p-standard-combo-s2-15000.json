@@ -1,0 +1,99 @@
+{
+  "product_id": "dji-osmo-mobile-8p-standard-combo-s2-15000",
+  "category": "gadgets",
+  "file_slug": "dji-osmo-mobile-8p-standard-combo-s2-15000",
+  "name": "DJI Osmo Mobile 8P Standard Combo",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 15000,
+  "catalog_url": "https://store.dji.com/product/osmo-mobile-8p",
+  "catalog_title": "Стабилизатор для смартфона DJI Osmo Mobile 8P, Standard Combo",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "3-осевой стабилизатор для смартфона"
+    },
+    {
+      "key": "Комплект",
+      "value": "Standard Combo (без модуля DJI OM Multifunctional Module 2)"
+    },
+    {
+      "key": "Особенность",
+      "value": "съёмный пульт-экран Osmo FrameTap: сенсорный 1,4″, 240×240, 800 кд/м², передача видео по Wi-Fi до 25 м"
+    },
+    {
+      "key": "Слежение",
+      "value": "нативное слежение за объектом через DJI Mimo"
+    },
+    {
+      "key": "Удлинитель",
+      "value": "встроенный, до 215 мм"
+    },
+    {
+      "key": "Штатив",
+      "value": "встроенный, 82 мм"
+    },
+    {
+      "key": "Совместимые телефоны",
+      "value": "вес 170–300 г, толщина 6,9–11 мм, ширина 67–84 мм"
+    },
+    {
+      "key": "Диапазон подвеса (управляемый)",
+      "value": "панорама 360° без ограничений, крен −52°…256°, наклон −37°…55°"
+    },
+    {
+      "key": "Макс. скорость управления",
+      "value": "120°/с"
+    },
+    {
+      "key": "Связь",
+      "value": "Bluetooth 5.3"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "Li-Po 1S, 3350 мАч, 12,06 Вт·ч"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 10 ч"
+    },
+    {
+      "key": "Время зарядки",
+      "value": "около 2,5 ч, USB-C; может заряжать телефон"
+    },
+    {
+      "key": "Размеры",
+      "value": "в разложенном виде 291×110×101 мм, в сложенном 196×105×38 мм"
+    },
+    {
+      "key": "Материал",
+      "value": "поликарбонат, алюминиевый сплав"
+    },
+    {
+      "key": "Комплектация",
+      "value": "стабилизатор, магнитный держатель DJI OM Magnetic Phone Clamp 5, Osmo FrameTap, кабель питания USB-C — USB-C 50 см, кабель для зарядки телефона USB-C — USB-C 15 см, чехол"
+    },
+    {
+      "key": "Приложение",
+      "value": "DJI Mimo"
+    }
+  ],
+  "images_remote": [
+    "https://se-cdn.djiits.com/tpc/uploads/carousel/image/6bb03b23077230c4b9116b077c58a119@ultra.jpg",
+    "https://se-cdn.djiits.com/tpc/uploads/carousel/image/aa5ab8ac857abe942c702c30b13b5b0d@ultra.jpg",
+    "https://se-cdn.djiits.com/tpc/uploads/carousel/image/2a6c481c26d6fc050ba27646ba822e05@ultra.jpg",
+    "https://se-cdn.djiits.com/tpc/uploads/carousel/image/5bf95cf4b9f11df7f6b6dffe1726a03b@ultra.jpg",
+    "https://se-cdn.djiits.com/tpc/uploads/carousel/image/af13e66ee8f83be89a72b1adbb61162e@ultra.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/f846fe415de362bff335adcb.jpg",
+    "assets/product-images/7231860ba2a22df31dfdc3f0.jpg",
+    "assets/product-images/d9b7642eb04155537e344073.jpg",
+    "assets/product-images/b36754963d876ae24961a7bd.jpg",
+    "assets/product-images/33265cce2b6f8c6482f34bd3.jpg"
+  ],
+  "manual": true,
+  "manual_key": "dji osmo mobile 8p standard combo~s2",
+  "photo_source": "https://store.dji.com/product/osmo-mobile-8p",
+  "updated_at": "2026-10-23T15:49:51.006748Z"
+}

@@ -1,0 +1,99 @@
+{
+  "product_id": "marshall-emberton-iii-black-s4-21600",
+  "category": "audio",
+  "file_slug": "marshall-emberton-iii-black-s4-21600",
+  "name": "Marshall Emberton III Black",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 21600,
+  "catalog_url": "https://www.marshall.com/us/en/product/emberton-iii",
+  "catalog_title": "Портативная колонка Marshall Emberton III, Black & Brass (чёрная с латунью)",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "Black & Brass (чёрный с латунными деталями)"
+    },
+    {
+      "key": "Тип",
+      "value": "портативная Bluetooth-колонка"
+    },
+    {
+      "key": "Звук",
+      "value": "стерео (True Stereophonic), 360°"
+    },
+    {
+      "key": "Динамики",
+      "value": "2 широкополосных 2″ по 10 Вт + 2 пассивных излучателя"
+    },
+    {
+      "key": "Диапазон частот",
+      "value": "65–20 000 Гц"
+    },
+    {
+      "key": "Макс. громкость",
+      "value": "90 дБ SPL на 1 м"
+    },
+    {
+      "key": "Bluetooth",
+      "value": "5.3, LE Audio (Auracast-ready)"
+    },
+    {
+      "key": "Радиус связи",
+      "value": "до 100 м на открытом пространстве"
+    },
+    {
+      "key": "Время работы",
+      "value": "более 32 ч"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "20 мин — 6 ч работы"
+    },
+    {
+      "key": "Полная зарядка",
+      "value": "около 2 ч"
+    },
+    {
+      "key": "Разъём зарядки",
+      "value": "USB-C"
+    },
+    {
+      "key": "Защита",
+      "value": "IP67 (пыль, погружение до 1 м на 30 мин)"
+    },
+    {
+      "key": "Размеры (Ш×В×Г)",
+      "value": "160 × 68 × 76,9 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "0,67 кг"
+    },
+    {
+      "key": "Приложение",
+      "value": "Marshall Bluetooth (iOS, Android)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "колонка, кабель USB-C, документация"
+    }
+  ],
+  "images_remote": [
+    "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6595/6595492_sd.jpg",
+    "https://images.ctfassets.net/javen7msabdh/Fttl4DrU7xxpEqrPBRiRB/58175527eaf6b1c3a114bfd04e5bbc9b/emberton-iii-blackandbrass-front-desktop.jpeg",
+    "https://images.ctfassets.net/javen7msabdh/5c8a9Qa7rzcz349m28KkJV/707c01dfe2a1ef4def07e3b8fd848966/emberton-iii-side-desktop-1.jpeg",
+    "https://images.ctfassets.net/javen7msabdh/1j6ZQTz9YP6qYJ2P4dGVnN/93446605ed2024adbe6acaf437c7c73a/emberton-iii-zoom-desktop-3.jpeg",
+    "https://images.ctfassets.net/javen7msabdh/4oIKY1SeQUgn7Y7qoglt4Y/f319c4bad9d962585a43d3cc8bfc8ba3/emberton-iii-above-desktop-4.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/51f57f2ee449124b0d610852.jpg",
+    "assets/product-images/fe8dd5f5b11bbba594e39ee3.jpg",
+    "assets/product-images/96a048bf8d06d8db24dd777b.jpg",
+    "assets/product-images/3fe43f57d81862002953030d.jpg",
+    "assets/product-images/03cdbb22fe897efc51bd9fbb.jpg"
+  ],
+  "manual": true,
+  "manual_key": "marshall emberton iii black~s4",
+  "photo_source": "https://www.marshall.com/us/en/product/emberton-iii",
+  "updated_at": "2026-10-23T15:48:27.313305Z"
+}

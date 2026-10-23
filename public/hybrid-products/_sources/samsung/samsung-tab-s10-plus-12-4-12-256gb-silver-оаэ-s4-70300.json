@@ -1,0 +1,91 @@
+{
+  "product_id": "samsung-tab-s10-plus-12-4-12-256gb-silver-оаэ-s4-70300",
+  "category": "samsung",
+  "file_slug": "samsung-tab-s10-plus-12-4-12-256gb-silver-s4-70300",
+  "name": "Samsung Tab S10 Plus 12.4 12+ 256Gb Silver",
+  "country": "🇦🇪 ОАЭ",
+  "warehouse": "(S4)",
+  "price": 70300,
+  "catalog_url": "https://www.samsung.com/tr/tablets/galaxy-tab-s/galaxy-tab-s10-plus-silver-256gb-sm-x820nzsrtur/buy/",
+  "catalog_title": "Планшет Samsung Galaxy Tab S10+ 12,4\" 12/256 ГБ Wi-Fi, серебристый (Platinum Silver)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "12,4\" Dynamic AMOLED 2X, 2800×1752 (WQXGA+), 120 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 9300+, 8 ядер (3,4 + 2,8 + 2,0 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ, microSD до 1,5 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "13 Мп (автофокус) + 8 Мп сверхширокоугольная, вспышка"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "12 Мп, сверхширокоугольная"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "10090 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 45 Вт, USB Type-C"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 6E (802.11ax, 2,4 + 5 + 6 ГГц), Bluetooth 5.3; без SIM-карты"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Размеры",
+      "value": "285,4 × 185,4 × 5,6 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "571 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "серебристый (Platinum Silver)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 14, One UI 6.1.1 (на момент выхода)"
+    },
+    {
+      "key": "Стилус S Pen",
+      "value": "в комплекте"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/tr/sm-x820nzsrtur/gallery/tr-galaxy-tab-s10-plus-sm-x820-sm-x820nzsrtur-543481440?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/tr/sm-x820nzsrtur/gallery/tr-galaxy-tab-s10-plus-sm-x820-sm-x820nzsrtur-543481428?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/tr/sm-x820nzsrtur/gallery/tr-galaxy-tab-s10-plus-sm-x820-sm-x820nzsrtur-543481427?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/tr/sm-x820nzsrtur/gallery/tr-galaxy-tab-s10-plus-sm-x820-sm-x820nzsrtur-543481419?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/tr/sm-x820nzsrtur/gallery/tr-galaxy-tab-s10-plus-sm-x820-sm-x820nzsrtur-543481424?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/49805502f14125397964c9ee.jpg",
+    "assets/product-images/de63f3ee15c876f705ae1bee.jpg",
+    "assets/product-images/182eb1c93d2801834a97ee29.jpg",
+    "assets/product-images/b9a849f7b66e4f8c518a3042.jpg",
+    "assets/product-images/53b88b1aaca36ece2ffc88ea.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung tab s10 plus 12 4 12 256gb silver~s4",
+  "photo_source": "https://www.samsung.com/tr/tablets/galaxy-tab-s/galaxy-tab-s10-plus-silver-256gb-sm-x820nzsrtur/buy/",
+  "updated_at": "2026-10-23T15:53:28.484496Z"
+}

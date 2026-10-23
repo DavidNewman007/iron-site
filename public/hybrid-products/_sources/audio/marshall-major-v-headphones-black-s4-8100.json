@@ -1,0 +1,107 @@
+{
+  "product_id": "marshall-major-v-headphones-black-s4-8100",
+  "category": "audio",
+  "file_slug": "marshall-major-v-headphones-black-s4-8100",
+  "name": "Marshall Major V Headphones Black",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 8100,
+  "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/marshall-naushniki/marshall-major-v",
+  "catalog_title": "Беспроводные наушники Marshall Major V, чёрные",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "накладные беспроводные, складные"
+    },
+    {
+      "key": "Цвет",
+      "value": "чёрный"
+    },
+    {
+      "key": "Излучатели",
+      "value": "динамические, 40 мм"
+    },
+    {
+      "key": "Диапазон частот",
+      "value": "20–20 000 Гц"
+    },
+    {
+      "key": "Чувствительность",
+      "value": "106 дБ SPL (100 мВ, 1 кГц)"
+    },
+    {
+      "key": "Импеданс",
+      "value": "32 Ом"
+    },
+    {
+      "key": "Bluetooth",
+      "value": "5.3, готовность к LE Audio"
+    },
+    {
+      "key": "Кодеки",
+      "value": "SBC, AAC, LC3"
+    },
+    {
+      "key": "Радиус связи",
+      "value": "до 10 м"
+    },
+    {
+      "key": "Проводное подключение",
+      "value": "3,5 мм (вход/выход)"
+    },
+    {
+      "key": "Время работы",
+      "value": "более 100 ч"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "15 мин — 15 ч работы"
+    },
+    {
+      "key": "Полная зарядка",
+      "value": "около 3 ч"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Разъём зарядки",
+      "value": "USB-C"
+    },
+    {
+      "key": "Управление",
+      "value": "джойстик, настраиваемая M-кнопка"
+    },
+    {
+      "key": "Микрофон",
+      "value": "есть"
+    },
+    {
+      "key": "Шумоподавление (ANC)",
+      "value": "нет"
+    },
+    {
+      "key": "Вес",
+      "value": "186 г"
+    },
+    {
+      "key": "Комплектация",
+      "value": "наушники, кабель 3,5 мм, кабель USB-C, документация"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav-2-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2-2-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3-2-1000x1000.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/860e3ff443a5b72e268258d0.jpg",
+    "assets/product-images/2051f3866e529241993b8976.jpg",
+    "assets/product-images/e751c4c221a2d446c64f4fd3.jpg"
+  ],
+  "manual": true,
+  "manual_key": "marshall major v headphones black~s4",
+  "photo_source": "https://sochi.dr-store.ru/audio/naushniki/marshall-naushniki/marshall-major-v",
+  "updated_at": "2026-10-23T15:48:35.712066Z"
+}

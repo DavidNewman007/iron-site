@@ -1,0 +1,97 @@
+{
+  "product_id": "redmi-a7-pro-4-128-blue-европа-s3-14600",
+  "category": "xiaomi",
+  "file_slug": "redmi-a7-pro-4-128-blue-s3-14600",
+  "name": "Redmi A7 Pro 4/128 Blue",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 14600,
+  "catalog_url": "https://www.mi.com/global/product/redmi-a7-pro/specs/",
+  "catalog_title": "Xiaomi Redmi A7 Pro 4/128 ГБ, Mist Blue (голубой)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9″ LCD, 1600×720, до 120 Гц, до 800 нит (HBM)"
+    },
+    {
+      "key": "Процессор",
+      "value": "UNISOC T7250, 8 ядер (2×A75 1,8 ГГц + 6×A55 1,6 ГГц), 12 нм; GPU Mali-G57"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ LPDDR4X (+ до 4 ГБ виртуальной)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ (UFS 2.2), microSD"
+    },
+    {
+      "key": "Основная камера",
+      "value": "13 МП, f/2.2 + вспомогательный модуль; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 МП, f/2.0"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6000 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "15 Вт, USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM + microSD"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), Wi-Fi 2,4/5 ГГц, Bluetooth 5.2, FM-радио; NFC — зависит от региона"
+    },
+    {
+      "key": "Защита",
+      "value": "защита от пыли и брызг, боковой сканер отпечатка, разблокировка по лицу"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "171,56 × 79,47 × 8,15 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "208 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Mist Blue (голубой)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 16, Xiaomi HyperOS 3"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/343_item_es/31/03/2026/c772bef10e662d13873b254b51d0f8f9.png",
+    "https://i05.appmifile.com/875_item_es/31/03/2026/3a6f7ba59ff81269dea758aec43485d4.png",
+    "https://i05.appmifile.com/253_item_es/31/03/2026/e6ed47bc8d43223db0c8d2fe6c2eb998.png",
+    "https://i05.appmifile.com/372_item_es/31/03/2026/9b8b8cd80df22acfb5e025194283f10f.png",
+    "https://i05.appmifile.com/846_item_es/31/03/2026/18d802896de247e27941f5fa1e9a44da.png",
+    "https://i05.appmifile.com/144_item_es/31/03/2026/5bc4e33e8b643f3801be85179bdc2f9f.png"
+  ],
+  "images_local": [
+    "assets/product-images/742d420e116ff21c1edf8ec7.jpg",
+    "assets/product-images/572c24f531e7894c6f98870f.jpg",
+    "assets/product-images/64ae4105cca7c6f0f5d02eca.jpg",
+    "assets/product-images/7e0ecab7cc1ededda1ca887e.jpg",
+    "assets/product-images/d41140867cbc8524cde926c6.jpg",
+    "assets/product-images/39a5f133531616f6543c334f.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi a7 pro 4 128 blue~s3",
+  "photo_source": "https://www.mi.com/global/product/redmi-a7-pro/specs/",
+  "updated_at": "2026-10-23T15:43:35.119565Z"
+}

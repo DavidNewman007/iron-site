@@ -1,0 +1,91 @@
+{
+  "product_id": "samsung-m17-8-128gb-black-5g-индия-s4-21600",
+  "category": "samsung",
+  "file_slug": "samsung-m17-8-128gb-black-5g-s4-21600",
+  "name": "Samsung M17 8+ 128Gb Black 5G",
+  "country": "🇮🇳 Индия",
+  "warehouse": "(S4)",
+  "price": 21600,
+  "catalog_url": "https://www.samsung.com/in/smartphones/galaxy-m/galaxy-m17-5g-black-128gb-sm-m176bzkbins/buy/",
+  "catalog_title": "Samsung Galaxy M17 5G 8/128 ГБ, чёрный (Sapphire Black)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,7\" Super AMOLED, 2340×1080 (FHD+), 90 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "Samsung Exynos 1330, 8 ядер (2,4 ГГц + 2,0 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ, microSD до 2 ТБ (гибридный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8, оптическая стабилизация) + 5 Мп сверхширокоугольная + 2 Мп макро"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "13 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 25 Вт, USB Type-C"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, 2 nano-SIM"
+    },
+    {
+      "key": "Беспроводные интерфейсы",
+      "value": "Wi-Fi 5 (802.11ac, 2,4 + 5 ГГц), Bluetooth 5.3"
+    },
+    {
+      "key": "Защита",
+      "value": "IP54 (от пыли и брызг)"
+    },
+    {
+      "key": "Размеры",
+      "value": "164,4 × 77,9 × 7,5 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "192 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "чёрный (Sapphire Black)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15, One UI 7 (на момент выхода)"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-m176bzkbins/gallery/in-galaxy-m-sm-m176bzkbins-galaxy-m----g----gb-memory--sapphire-black-549650047?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-m176bzkbins/gallery/in-galaxy-m-sm-m176bzkbins-galaxy-m----g----gb-memory--sapphire-black-549650055?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-m176bzkbins/gallery/in-galaxy-m-sm-m176bzkbins-galaxy-m----g----gb-memory--sapphire-black-549650057?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-m176bzkbins/gallery/in-galaxy-m-sm-m176bzkbins-galaxy-m----g----gb-memory--sapphire-black-549650049?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-m176bzkbins/gallery/in-galaxy-m-sm-m176bzkbins-galaxy-m----g----gb-memory--sapphire-black-549650059?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/0a87a4c5adf3bbca69a4783d.jpg",
+    "assets/product-images/c8518936b2eca223e8b1ff1e.jpg",
+    "assets/product-images/1b1156fd9338e7026245c5fb.jpg",
+    "assets/product-images/fb3d7e3a3f29f22dc41499e2.jpg",
+    "assets/product-images/6457965994c0557c80cdfb1b.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung m17 8 128gb black 5g~s4",
+  "photo_source": "https://www.samsung.com/in/smartphones/galaxy-m/galaxy-m17-5g-black-128gb-sm-m176bzkbins/buy/",
+  "updated_at": "2026-10-23T15:52:19.068577Z"
+}

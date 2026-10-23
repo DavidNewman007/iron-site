@@ -1,0 +1,97 @@
+{
+  "product_id": "redmi-15c-8-256gb-midnight-black-европа-s4-17300",
+  "category": "xiaomi",
+  "file_slug": "redmi-15c-8-256gb-midnight-black-s4-17300",
+  "name": "Redmi 15C 8+ 256Gb Midnight Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 17300,
+  "catalog_url": "https://www.mi.com/global/product/redmi-15c/specs/",
+  "catalog_title": "Xiaomi Redmi 15C 8/256 ГБ, Midnight Black (чёрный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9″ IPS LCD, 1600×720, до 120 Гц, до 810 нит (HBM)"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G81-Ultra, 8 ядер, до 2,0 ГГц; GPU Mali-G52 MC2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ LPDDR4X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ (eMMC 5.1), microSD до 1 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 МП, f/1.8 + вспомогательный модуль; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 МП, f/2.0"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6000 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "33 Вт, USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM + microSD"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), NFC, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4, FM-радио"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64, боковой сканер отпечатка, разблокировка по лицу"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "171,56 × 79,47 × 7,99 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "205 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Midnight Black (чёрный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15, Xiaomi HyperOS 2"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/smartfon-xiaomi-redmi-15c-8-256gb-black/smartfon-xiaomi-redmi-15c-8-256gb-black-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/smartfon-xiaomi-redmi-15c-8-256gb-black/smartfon-xiaomi-redmi-15c-8-256gb-black-6-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/smartfon-xiaomi-redmi-15c-8-256gb-black/smartfon-xiaomi-redmi-15c-8-256gb-black-5-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/smartfon-xiaomi-redmi-15c-8-256gb-black/smartfon-xiaomi-redmi-15c-8-256gb-black-2-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/smartfon-xiaomi-redmi-15c-8-256gb-black/smartfon-xiaomi-redmi-15c-8-256gb-black-8-1000x1000.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new%20products/smartfon-xiaomi-redmi-15c-8-256gb-black/smartfon-xiaomi-redmi-15c-8-256gb-black-9-1000x1000.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/6976be5be716bca989968a5a.jpg",
+    "assets/product-images/069ce9563e23191fa6c84c4f.jpg",
+    "assets/product-images/7049b643ae6e3d742942b693.jpg",
+    "assets/product-images/6d3f4d4fe42a2cf152166f6c.jpg",
+    "assets/product-images/722e3478de95dca71fcf8c8e.jpg",
+    "assets/product-images/ac0a0ab0df8cc0dec87d91d9.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi 15c 8 256gb midnight black~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-15c/specs/",
+  "updated_at": "2026-10-23T15:44:53.167298Z"
+}

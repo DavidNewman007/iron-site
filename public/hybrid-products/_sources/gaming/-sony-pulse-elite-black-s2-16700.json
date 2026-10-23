@@ -1,0 +1,81 @@
+{
+  "product_id": "-sony-pulse-elite-black-s2-16700",
+  "category": "gaming",
+  "file_slug": "sony-pulse-elite-black-s2-16700",
+  "name": "🎧Sony Pulse Elite, Black",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 16700,
+  "catalog_url": "https://www.playstation.com/en-gb/accessories/pulse-elite-wireless-headset/",
+  "catalog_title": "Беспроводная гарнитура Sony PULSE Elite, Midnight Black (чёрная)",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "Беспроводная полноразмерная гарнитура"
+    },
+    {
+      "key": "Модель",
+      "value": "CFI-ZWH2 (Midnight Black)"
+    },
+    {
+      "key": "Совместимость",
+      "value": "PlayStation 5, PlayStation Portal, ПК и Mac (через адаптер PlayStation Link), смартфоны и планшеты по Bluetooth"
+    },
+    {
+      "key": "Подключение",
+      "value": "PlayStation Link (USB-адаптер в комплекте) и Bluetooth, одновременно"
+    },
+    {
+      "key": "Излучатели",
+      "value": "Планарно-магнитные"
+    },
+    {
+      "key": "Звук",
+      "value": "Поддержка 3D-звука Tempest на PS5"
+    },
+    {
+      "key": "Микрофон",
+      "value": "Полностью убирающийся, с шумоподавлением на основе ИИ"
+    },
+    {
+      "key": "Время работы",
+      "value": "До 30 часов"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "Около 10 минут зарядки — до 2,5 часа работы"
+    },
+    {
+      "key": "Зарядка",
+      "value": "USB Type-C; зарядная подставка-вешалка в комплекте"
+    },
+    {
+      "key": "Комплект",
+      "value": "Гарнитура, вешалка для зарядки, адаптер PlayStation Link (USB), кабель USB"
+    },
+    {
+      "key": "Цвет",
+      "value": "Midnight Black (чёрный)"
+    }
+  ],
+  "images_remote": [
+    "https://gmedia.playstation.com/is/image/SIEPDC/PulseEliteHeadset-MidnightBlack-01-1x1-01-17feb26$en?$1200px$",
+    "https://gmedia.playstation.com/is/image/SIEPDC/PulseEliteHeadset-MidnightBlack-02-16x9-01-17feb26$en?$1200px$",
+    "https://gmedia.playstation.com/is/image/SIEPDC/PulseEliteHeadset-MidnightBlack-03-16x9-01-17feb26$en?$1200px$",
+    "https://gmedia.playstation.com/is/image/SIEPDC/PulseEliteHeadset-MidnightBlack-05-16x9-05-17feb26$en?$1200px$",
+    "https://gmedia.playstation.com/is/image/SIEPDC/PulseEliteHeadset-MidnightBlack-06-16x9-01-17feb26$en?$1200px$",
+    "https://gmedia.playstation.com/is/image/SIEPDC/PulseEliteHeadset-MidnightBlack-07-16x9-01-17feb26$en?$1200px$"
+  ],
+  "images_local": [
+    "assets/product-images/c69af72d5703c9d95c01790e.jpg",
+    "assets/product-images/3e7a0ea1a751e30d382669ae.jpg",
+    "assets/product-images/b41f6c2fc10e8f93223ba4e2.jpg",
+    "assets/product-images/eaf454329ca9f108e16ebe68.jpg",
+    "assets/product-images/74497fb446efd18db9e492f3.jpg",
+    "assets/product-images/54043a963a17641fe9570a9c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "sony pulse elite black~s2",
+  "photo_source": "https://www.playstation.com/en-gb/accessories/pulse-elite-wireless-headset/",
+  "updated_at": "2026-10-23T15:46:43.363493Z"
+}

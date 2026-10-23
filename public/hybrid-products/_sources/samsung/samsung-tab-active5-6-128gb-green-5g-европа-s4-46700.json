@@ -1,0 +1,91 @@
+{
+  "product_id": "samsung-tab-active5-6-128gb-green-5g-европа-s4-46700",
+  "category": "samsung",
+  "file_slug": "samsung-tab-active5-6-128gb-green-5g-s4-46700",
+  "name": "Samsung Tab Active5 6+ 128Gb Green 5G",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 46700,
+  "catalog_url": "https://shop.samsung.com/ar/galaxy-tab-active-5-5g/p",
+  "catalog_title": "Защищённый планшет Samsung Galaxy Tab Active5 8\" 6/128 ГБ 5G, зелёный (Green)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "8\" TFT, 1920×1200 (WUXGA)"
+    },
+    {
+      "key": "Процессор",
+      "value": "Samsung Exynos 1380, 8 ядер (2,4 ГГц + 2,0 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "6 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ, слот microSD"
+    },
+    {
+      "key": "Основная камера",
+      "value": "13 Мп, автофокус, вспышка"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "5 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5050 мА·ч, съёмный"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 25 Вт, USB Type-C"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, nano-SIM; Wi-Fi 6 (802.11ax), Bluetooth 5.3"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68, военный стандарт MIL-STD-810H"
+    },
+    {
+      "key": "Размеры",
+      "value": "213,8 × 126,8 × 10,1 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "433 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "зелёный (Green)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 14, One UI 6 (на момент выхода)"
+    },
+    {
+      "key": "Стилус S Pen",
+      "value": "в комплекте (защищённый, IP68)"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/cl/sm-x306bzgal07/gallery/cl-galaxy-tab-active5-5g-sm-x306-sm-x306bzgal07-543857082?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/cl/sm-x306bzgal07/gallery/cl-galaxy-tab-active5-5g-sm-x306-sm-x306bzgal07-543857077?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/cl/sm-x306bzgal07/gallery/cl-galaxy-tab-active5-5g-sm-x306-sm-x306bzgal07-543857080?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/cl/sm-x306bzgal07/gallery/cl-galaxy-tab-active5-5g-sm-x306-sm-x306bzgal07-543857078?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/cl/sm-x306bzgal07/gallery/cl-galaxy-tab-active5-5g-sm-x306-sm-x306bzgal07-543857081?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/d9196d247ee0a4dae703b776.jpg",
+    "assets/product-images/8356a6b5d34dac0b7b030763.jpg",
+    "assets/product-images/208eefd78b03dda1755b0423.jpg",
+    "assets/product-images/d54ad7642ff04993b1035dd9.jpg",
+    "assets/product-images/d99e3b447d1cd2fc9fd9e58f.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung tab active5 6 128gb green 5g~s4",
+  "photo_source": "https://shop.samsung.com/ar/galaxy-tab-active-5-5g/p",
+  "updated_at": "2026-10-23T15:53:16.921105Z"
+}

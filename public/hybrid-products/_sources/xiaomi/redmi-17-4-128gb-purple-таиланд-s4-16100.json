@@ -1,0 +1,105 @@
+{
+  "product_id": "redmi-17-4-128gb-purple-таиланд-s4-16100",
+  "category": "xiaomi",
+  "file_slug": "redmi-17-4-128gb-purple-s4-16100",
+  "name": "Redmi 17 4+ 128Gb Purple",
+  "country": "🇹🇭 Таиланд",
+  "warehouse": "(S4)",
+  "price": 16100,
+  "catalog_url": "https://www.mi.com/global/product/redmi-17/specs/",
+  "catalog_title": "Xiaomi Redmi 17 4/128 ГБ, Lotus Purple (фиолетовый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9\", IPS LCD, 1600×720 (HD+), до 120 Гц, яркость до 825 нит (HBM), Corning Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G91-Ultra (12 нм, 8 ядер, до 2,0 ГГц), графика Mali-G52 MC2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ LPDDR4X (+ расширение памяти за счёт накопителя)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ eMMC 5.1, microSD до 2 ТБ (гибридный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп, f/1.8 + вспомогательный модуль; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп, f/2.05; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мАч (тип.)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 45 Вт (USB Type-C), обратная проводная 22,5 Вт; блок питания в комплект не входит"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM (гибридный слот: вторая SIM или microSD)"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), NFC, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4, GPS/ГЛОНАСС/Galileo/BeiDou, FM-радио"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64 (пыль и брызги)"
+    },
+    {
+      "key": "Разблокировка",
+      "value": "сканер отпечатка в боковой кнопке, распознавание лица"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм для наушников"
+    },
+    {
+      "key": "Размеры",
+      "value": "170,12 × 78,42 × 8,8 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "232 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Lotus Purple (Лотосовый фиолетовый)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 (Android 16)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "смартфон, кабель USB Type-C, скрепка для SIM, документация (без блока питания)"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/248_operatorx_operatorx_xm/04/08/2026/016da147c5791896e62cf8fd616c13fb.png",
+    "https://i02.appmifile.com/552_operatorx_operatorx_xm/04/08/2026/f7e3eb37cb95d09c66c7358be55eb526.png",
+    "https://i02.appmifile.com/471_operatorx_operatorx_xm/04/08/2026/6500d376bbfa3ffdd5ea550f748f9f9f.png",
+    "https://i02.appmifile.com/411_operatorx_operatorx_xm/04/08/2026/6c75e4d2d75ab44ab399bd53fee32bf5.png",
+    "https://i02.appmifile.com/566_operatorx_operatorx_xm/04/08/2026/07672be524c093ebaa37ecee2d1c3b2d.png",
+    "https://i02.appmifile.com/329_operatorx_operatorx_xm/04/08/2026/e2c1bfc8a3823a2ef5876ab1ab3525b7.png"
+  ],
+  "images_local": [
+    "assets/product-images/2299c3923e74ffd414324938.jpg",
+    "assets/product-images/26a75df613014bd8c32272f4.jpg",
+    "assets/product-images/52b0e5059a2c97b585ba76d0.jpg",
+    "assets/product-images/5af2766f2783c90c01d6aadf.jpg",
+    "assets/product-images/35328696767e2b36e305f306.jpg",
+    "assets/product-images/094a594bbcc2d833a303767f.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi 17 4 128gb purple~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-17/specs/",
+  "updated_at": "2026-10-23T15:44:53.240943Z"
+}

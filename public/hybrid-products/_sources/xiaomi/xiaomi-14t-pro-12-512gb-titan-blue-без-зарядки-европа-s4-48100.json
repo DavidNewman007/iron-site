@@ -1,0 +1,93 @@
+{
+  "product_id": "xiaomi-14t-pro-12-512gb-titan-blue-без-зарядки-европа-s4-48100",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-14t-pro-12-512gb-titan-blue-без-зарядки-s4-48100",
+  "name": "Xiaomi 14T Pro 12+ 512Gb Titan Blue (без зарядки)",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 48100,
+  "catalog_url": "https://www.mi.com/global/product/xiaomi-14t-pro/specs/",
+  "catalog_title": "Xiaomi 14T Pro 12/512 ГБ, Titan Blue (синий титан), без зарядного устройства",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,67\", AMOLED, 2712×1220 (446 ppi), до 144 Гц, до 4000 нит, Dolby Vision, HDR10+"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 9300+ (4 нм)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ (UFS 4.0)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "Leica: 50 Мп (Light Fusion 900, f/1.6, OIS) + телеобъектив 50 Мп 60 мм (f/2.0) + сверхширокоугольная 12 Мп (120°)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 120 Вт HyperCharge, беспроводная 50 Вт"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM, nano-SIM + eSIM или 2 eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 7, Bluetooth 5.4"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Размеры",
+      "value": "160,4 × 75,1 × 8,39 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "209 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Titan Blue (синий титан)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS (Android 14)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "смартфон, кабель USB-C, чехол, скрепка для SIM, документация; сетевой адаптер (блок питания) в комплект не входит"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/948_item_it/23/08/2024/11471f814876442a45366df4be6ac6cc.png",
+    "https://i05.appmifile.com/173_item_it/23/08/2024/4bb237fc33a3091ae4885d73ace79be6.png",
+    "https://i05.appmifile.com/673_item_it/23/08/2024/fe8a01c05331583274b24ad3a2394229.png",
+    "https://i05.appmifile.com/78_item_it/23/08/2024/5f73b21178fbcd20ec78eb8349a885bf.png"
+  ],
+  "images_local": [
+    "assets/product-images/d12c6152eaabff688609d38d.jpg",
+    "assets/product-images/6e76e56b3863b62c94427656.jpg",
+    "assets/product-images/cedb8b7ec5b4c4f93004a12a.jpg",
+    "assets/product-images/3a195b101cd95a65e5a50225.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi 14t pro 12 512gb titan blue без зарядки~s4",
+  "photo_source": "https://www.mi.com/global/product/xiaomi-14t-pro/specs/",
+  "updated_at": "2026-10-23T15:45:27.445539Z"
+}

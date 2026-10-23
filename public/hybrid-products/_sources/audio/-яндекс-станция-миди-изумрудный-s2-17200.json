@@ -1,0 +1,83 @@
+{
+  "product_id": "-яндекс-станция-миди-изумрудный-s2-17200",
+  "category": "audio",
+  "file_slug": "яндекс-станция-миди-изумрудный-s2-17200",
+  "name": "🔈Яндекс Станция Миди Изумрудный",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 17200,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-headphones-and-speakers/yandex-station-midi/yandex-station-midi-green",
+  "catalog_title": "Умная колонка Яндекс Станция Миди, изумрудная",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "умная колонка с Алисой"
+    },
+    {
+      "key": "Цвет",
+      "value": "изумрудный (у Яндекса — «Изумруд»)"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "24 Вт"
+    },
+    {
+      "key": "Динамики",
+      "value": "2 ВЧ по 20 мм, НЧ 63 мм, 2 пассивных излучателя"
+    },
+    {
+      "key": "Диапазон частот",
+      "value": "70–20 000 Гц"
+    },
+    {
+      "key": "Микрофоны",
+      "value": "4, распознавание до 7 м"
+    },
+    {
+      "key": "Wi-Fi",
+      "value": "802.11 b/g/n/ac, 2,4 и 5 ГГц"
+    },
+    {
+      "key": "Bluetooth",
+      "value": "5.0, BLE"
+    },
+    {
+      "key": "Умный дом",
+      "value": "встроенный хаб Zigbee 3.0"
+    },
+    {
+      "key": "Экран",
+      "value": "LED-часы, яркость настраивается"
+    },
+    {
+      "key": "Подсветка",
+      "value": "контурная градиентная, 16 млн цветов"
+    },
+    {
+      "key": "Питание",
+      "value": "от сети через адаптер, без аккумулятора"
+    },
+    {
+      "key": "Размеры",
+      "value": "96 × 96 × 110 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "900 г"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yndx-midi/yandex-midi-dr-store-103-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yndx-midi/yandex-midi-dr-store-104-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/yndx-midi/yandex-midi-dr-store-107-1000x1000.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/741ff4a404efe3648d55bf8b.jpg",
+    "assets/product-images/c661ef35f76e2789b32f8ab6.jpg",
+    "assets/product-images/aeb94c7412dbbecefd6bec7b.jpg"
+  ],
+  "manual": true,
+  "manual_key": "яндекс станция миди изумрудный~s2",
+  "photo_source": "https://sochi.dr-store.ru/audio/speakers/yandex-headphones-and-speakers/yandex-station-midi/yandex-station-midi-green",
+  "updated_at": "2026-10-23T15:48:17.693760Z"
+}

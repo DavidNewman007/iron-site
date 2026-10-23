@@ -1,0 +1,105 @@
+{
+  "product_id": "redmi-17-4-128-green-европа-s3-17500",
+  "category": "xiaomi",
+  "file_slug": "redmi-17-4-128-green-s3-17500",
+  "name": "Redmi 17 4/128 Green",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 17500,
+  "catalog_url": "https://www.mi.com/global/product/redmi-17/specs/",
+  "catalog_title": "Xiaomi Redmi 17 4/128 ГБ, Oak Green (зелёный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9\", IPS LCD, 1600×720 (HD+), до 120 Гц, яркость до 825 нит (HBM), Corning Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G91-Ultra (12 нм, 8 ядер, до 2,0 ГГц), графика Mali-G52 MC2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ LPDDR4X (+ расширение памяти за счёт накопителя)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ eMMC 5.1, microSD до 2 ТБ (гибридный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп, f/1.8 + вспомогательный модуль; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп, f/2.05; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мАч (тип.)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 45 Вт (USB Type-C), обратная проводная 22,5 Вт; блок питания в комплект не входит"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM (гибридный слот: вторая SIM или microSD)"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), NFC, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4, GPS/ГЛОНАСС/Galileo/BeiDou, FM-радио"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64 (пыль и брызги)"
+    },
+    {
+      "key": "Разблокировка",
+      "value": "сканер отпечатка в боковой кнопке, распознавание лица"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм для наушников"
+    },
+    {
+      "key": "Размеры",
+      "value": "170,12 × 78,42 × 8,8 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "232 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Oak Green (Дубовый зелёный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 (Android 16)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "смартфон, кабель USB Type-C, скрепка для SIM, документация (без блока питания)"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/293_operatorx_operatorx_xm/04/08/2026/aada77fd83ee749a01a423260ba3ad8d.png",
+    "https://i02.appmifile.com/932_operatorx_operatorx_xm/04/08/2026/2f548e290c31cfbb7c1fef1e9f7ae69f.png",
+    "https://i02.appmifile.com/634_operatorx_operatorx_xm/04/08/2026/65c24c57297532858a7dcdac67885280.png",
+    "https://i02.appmifile.com/177_operatorx_operatorx_xm/04/08/2026/8591f457bc59aef3fea2c6522960705d.png",
+    "https://i02.appmifile.com/921_operatorx_operatorx_xm/04/08/2026/4b8fa2cc846ed838453a05451e97ba24.png",
+    "https://i02.appmifile.com/37_operatorx_operatorx_xm/04/08/2026/4fbec65f611fcc562229d3cc590f11af.png"
+  ],
+  "images_local": [
+    "assets/product-images/83a756625564798494f166ba.jpg",
+    "assets/product-images/f8d97b2b65a625ec2c7a32e0.jpg",
+    "assets/product-images/07e5a936402c7d177749413f.jpg",
+    "assets/product-images/bf75d32f07b7343288b5c720.jpg",
+    "assets/product-images/4026ad5da9943946f4b10126.jpg",
+    "assets/product-images/fc623e7cb785eb00c33a336d.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi 17 4 128 green~s3",
+  "photo_source": "https://www.mi.com/global/product/redmi-17/specs/",
+  "updated_at": "2026-10-23T15:43:45.695730Z"
+}

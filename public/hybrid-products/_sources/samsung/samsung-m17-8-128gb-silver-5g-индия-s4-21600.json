@@ -1,0 +1,91 @@
+{
+  "product_id": "samsung-m17-8-128gb-silver-5g-индия-s4-21600",
+  "category": "samsung",
+  "file_slug": "samsung-m17-8-128gb-silver-5g-s4-21600",
+  "name": "Samsung M17 8+ 128Gb Silver 5G",
+  "country": "🇮🇳 Индия",
+  "warehouse": "(S4)",
+  "price": 21600,
+  "catalog_url": "https://www.samsung.com/in/smartphones/galaxy-m/galaxy-m17-5g-moonlight-silver-128gb-sm-m176bzsains/buy/",
+  "catalog_title": "Samsung Galaxy M17 5G 8/128 ГБ, серебристый (Moonlight Silver)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,7\" Super AMOLED, 2340×1080 (FHD+), 90 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "Samsung Exynos 1330, 8 ядер (2,4 ГГц + 2,0 ГГц)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ, microSD до 2 ТБ (гибридный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8, оптическая стабилизация) + 5 Мп сверхширокоугольная + 2 Мп макро"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "13 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 25 Вт, USB Type-C"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, 2 nano-SIM"
+    },
+    {
+      "key": "Беспроводные интерфейсы",
+      "value": "Wi-Fi 5 (802.11ac, 2,4 + 5 ГГц), Bluetooth 5.3"
+    },
+    {
+      "key": "Защита",
+      "value": "IP54 (от пыли и брызг)"
+    },
+    {
+      "key": "Размеры",
+      "value": "164,4 × 77,9 × 7,5 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "192 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "серебристый (Moonlight Silver)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15, One UI 7 (на момент выхода)"
+    }
+  ],
+  "images_remote": [
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-m176bzsains/gallery/in-galaxy-m17-5g-sm-m176-sm-m176bzsains-549649648?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-m176bzsains/gallery/in-galaxy-m17-5g-sm-m176-sm-m176bzsains-549649658?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-m176bzsains/gallery/in-galaxy-m17-5g-sm-m176-sm-m176bzsains-549649660?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-m176bzsains/gallery/in-galaxy-m17-5g-sm-m176-sm-m176bzsains-549649652?$Q90_1368_1094_F_JPG$",
+    "https://images.samsung.com/is/image/samsung/p6pim/in/sm-m176bzsains/gallery/in-galaxy-m17-5g-sm-m176-sm-m176bzsains-549649664?$Q90_1368_1094_F_JPG$"
+  ],
+  "images_local": [
+    "assets/product-images/ef65c9bd95b86fac1f2bc3e3.jpg",
+    "assets/product-images/c749ad0aa3844628fa702395.jpg",
+    "assets/product-images/22479ec6e0bdd2e4485ff51f.jpg",
+    "assets/product-images/01ed08e339f970995d9546f9.jpg",
+    "assets/product-images/bed6fae04cabea433c5e7156.jpg"
+  ],
+  "manual": true,
+  "manual_key": "samsung m17 8 128gb silver 5g~s4",
+  "photo_source": "https://www.samsung.com/in/smartphones/galaxy-m/galaxy-m17-5g-moonlight-silver-128gb-sm-m176bzsains/buy/",
+  "updated_at": "2026-10-23T15:52:19.094785Z"
+}
