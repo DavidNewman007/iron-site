@@ -91,7 +91,11 @@ def mirror_manual_images(urls: list[str]) -> list[str]:
         except Exception:  # noqa: BLE001
             continue
         stem = hashlib.md5(url.encode("utf-8")).hexdigest()[:24]
-        if ext != ".jpg" and shutil.which("sips"):
+        # JPEG тоже пережимается, если он тяжёлый (23.10.2026): у производителей
+        # бывают снимки 1000×1000 по 7 МБ почти без сжатия — 10 таких уехали на
+        # сайт как есть, а сайт и так у предела GitHub Pages (1 ГБ).
+        heavy_jpeg = ext == ".jpg" and len(data) > 600_000
+        if (ext != ".jpg" or heavy_jpeg) and shutil.which("sips"):
             with tempfile.TemporaryDirectory() as tmp:
                 src = Path(tmp) / f"src{ext}"
                 src.write_bytes(data)
