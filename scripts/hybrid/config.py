@@ -27,7 +27,8 @@ CONFIG_JS = PUBLIC / "js" / "config.example.js"
 # фотографии. Ровно та же история, что с Prices-3 в августе. Проверяя новый
 # склад, смотри не только прайс и бота, но и этот список.
 SHEET_TABS = ["Prices", "Prices-2", "Prices-3", "Prices-4"]
-SHEET_RANGE = "A1:F1200"
+# 3000 (23.10.2026): предзаказ S4 со всеми группами — ~1270 строк.
+SHEET_RANGE = "A1:F3000"
 
 # Категории, для которых собираются hybrid-карточки. Первые семь — с самого
 # начала; audio/gaming/dyson/gadgets/galaxy_watch/meta добавлены 27.08.2026.

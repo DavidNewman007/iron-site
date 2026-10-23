@@ -302,7 +302,7 @@
     const seenIds = new Set();
 
     for (const tab of SHEET_TABS) {
-      const url = `${base}?tqx=out:json&sheet=${encodeURIComponent(tab)}&range=${encodeURIComponent("A1:F1200")}`;
+      const url = `${base}?tqx=out:json&sheet=${encodeURIComponent(tab)}&range=${encodeURIComponent("A1:F3000")}`;
       const json = await fetchSheetJson(url);
       for (const product of parseCatalogFromGviz(json)) {
         if (seenIds.has(product.id)) continue;

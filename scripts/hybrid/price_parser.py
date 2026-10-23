@@ -35,7 +35,7 @@ CATEGORY_RULES = [
     {
         "id": "accessories",
         "test": re.compile(
-            r"pencil|remax|pitaka|чехол|кейс|ремешк|wallet|сзу|charger|кабель|аксесс|accessories|magic mouse|airtag|smarttag",
+            r"pencil|remax|pitaka|чехол|кейс|ремешк|wallet|сзу|charger|кабель|аксесс|accessories|magic mouse|magic keyboard|magic trackpad|smart keyboard|airtag|smarttag",
             re.I,
         ),
         # Dyson — не аксессуар, даже если в строке «с кейсом» или «Pencil»
@@ -52,7 +52,7 @@ CATEGORY_RULES = [
         # \bgaming\b — ради заголовка «🎮 Gaming» (28.09.2026): его не узнавало
         # ни одно правило, раздел наследовал категорию Dyson, и «Подставка Sony
         # Vertical Stand» под подзаголовком «Sony» числилась феном.
-        "test": re.compile(r"playstation|ps5|ps vr|vr2|gamepad|pulse|xbox|nintendo|\bgaming\b", re.I),
+        "test": re.compile(r"playstation|ps5|ps vr|vr2|gamepad|dualsense|meta\s+quest|pulse|xbox|nintendo|\bgaming\b", re.I),
     },
     {
         "id": "audio",
@@ -83,6 +83,9 @@ CATEGORY_RULES = [
     {"id": "macbook", "test": re.compile(r"macbook", re.I)},
     # iMac / Mac mini / Mac Studio (12.10.2026, предзаказ S4) — после macbook, как в prices.js.
     {"id": "mac", "test": re.compile(r"\bimac\b|\bmac\s+(?:mini|studio|pro)\b", re.I)},
+    # Бренды предзаказа S4 (23.10.2026), как в prices.js.
+    {"id": "android", "test": re.compile(r"\bgoogle\s+pixel\b|\boneplus\b|\bhonor\b|📲", re.I)},
+    {"id": "laptops", "test": re.compile(r"\bhp\s|\blenovo\b|omnibook|ideapad|thinkpad|ноутбук|⌨", re.I)},
     {
         "id": "samsung",
         "test": re.compile(r"samsung", re.I),

@@ -315,7 +315,7 @@
       icon: "🔌",
       // Dyson — не аксессуар, даже «с кейсом» или «PencilVac» (28.09.2026).
       test: (t) =>
-        /pencil|remax|pitaka|чехол|кейс|ремешк|wallet|сзу|charger|кабель|аксесс|accessories|magic mouse|airtag|smarttag/i.test(t) &&
+        /pencil|remax|pitaka|чехол|кейс|ремешк|wallet|сзу|charger|кабель|аксесс|accessories|magic mouse|magic keyboard|magic trackpad|smart keyboard|airtag|smarttag/i.test(t) &&
         !/dyson/i.test(t),
     },
     { id: "iphone", label: "iPhone", icon: "📱", test: (t) => /iphone/i.test(t) },
@@ -332,7 +332,8 @@
       icon: "🎮",
       // \bgaming\b — заголовок «🎮 Gaming» (28.09.2026): раньше не узнавался,
       // и раздел наследовал Dyson («Подставка Sony Vertical Stand» — в Dyson).
-      test: (t) => /playstation|ps5|ps vr|vr2|gamepad|pulse|xbox|nintendo|\bgaming\b/i.test(t),
+      // dualsense|meta quest — предзаказ S4 (23.10.2026): без них геймпады и шлемы уходили в Audio / Meta.
+      test: (t) => /playstation|ps5|ps vr|vr2|gamepad|dualsense|meta\s+quest|pulse|xbox|nintendo|\bgaming\b/i.test(t),
     },
     {
       id: "audio",
@@ -386,6 +387,20 @@
       icon: "🖥",
       test: (t) => /\bimac\b|\bmac\s+(?:mini|studio|pro)\b/i.test(t),
     },
+    // Бренды предзаказа Double Apple (S4, 23.10.2026): раньше их не было ни у одного склада.
+    // Зеркало — scripts/hybrid/price_parser.py; ключи — как у бота заказов и канала.
+    {
+      id: "android",
+      label: "Google Pixel / OnePlus / Honor",
+      icon: "📲",
+      test: (t) => /\bgoogle\s+pixel\b|\boneplus\b|\bhonor\b|📲/i.test(t),
+    },
+    {
+      id: "laptops",
+      label: "Ноутбуки HP / Lenovo",
+      icon: "⌨️",
+      test: (t) => /\bhp\s|\blenovo\b|omnibook|ideapad|thinkpad|ноутбук|⌨/i.test(t),
+    },
     {
       id: "samsung",
       label: "Samsung",
@@ -418,7 +433,8 @@
     { id: "other", label: "Прочее", icon: "◆", test: () => true }];
 
   const SEARCH_DICT = window.IRON_SEARCH_DICT || { translit: {}, translate: [] };
-  const PRICE_CACHE_KEY = `iron_prices_sheet_${SHEET_TABS.join("_")}_v5`;
+  // v6 (23.10.2026) — новые разделы android / laptops: старый кэш держал прежнюю раскладку.
+  const PRICE_CACHE_KEY = `iron_prices_sheet_${SHEET_TABS.join("_")}_v6`;
   // v2 (16.08.2026): у товара появились поля preorder/eta. Без смены ключа
   // вкладка, открытая до деплоя, продолжила бы отдавать из sessionStorage
   // товары без признака «под заказ» — то есть без пометки в карточке.
@@ -2018,7 +2034,8 @@
   }
 
   function getSheetUrl() {
-    const range = "A1:G1200";
+    // 3000, а не 1200 (23.10.2026): предзаказ S4 со всеми группами — ~1270 строк в Prices-4.
+    const range = "A1:G3000";
     return (
       `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq`
     );
@@ -2060,7 +2077,7 @@
     const tabResults = new Map();
 
     const fetchTab = async (tab) => {
-      const url = `${base}?tqx=out:json&sheet=${encodeURIComponent(tab)}&range=${encodeURIComponent("A1:G1200")}`;
+      const url = `${base}?tqx=out:json&sheet=${encodeURIComponent(tab)}&range=${encodeURIComponent("A1:G3000")}`;
       const json = await loadSheetJson(url, { cache: false });
       return { tab, parsed: parseSheetJson(json, tab) };
     };
