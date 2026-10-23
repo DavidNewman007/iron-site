@@ -290,6 +290,13 @@
             : "гарантия " + s.warranty_days + " дн.";
           li.appendChild(w);
         }
+        // Деталь этого варианта уже лежит у нас (план 93 §11.61) — ремонт без ожидания запчасти.
+        if (s.in_stock) {
+          var st = document.createElement("i");
+          st.className = "rs-warranty rs-stock";
+          st.textContent = EN ? "✅ part in stock" : "✅ запчасть в наличии";
+          li.appendChild(st);
+        }
         if (!s.options || !s.options.length) li.appendChild(addButton(s, null));
         ul.appendChild(li);
         (s.options || []).forEach(function (o) {
