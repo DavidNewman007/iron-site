@@ -1009,8 +1009,26 @@
   }
   // Видны первые 8 (частые для этой техники) и уже выбранные; остальные — под «ещё».
   const TIPS_SHOWN = 8;
+  // Порядок — по тому, как часто фраза встречается в заказах этой техники (v76, 23.10.2026). Владелец: «самые часто
+  // используемые неисправности и виды работ перенеси в верх списка». До v76 порядок был ручной (снят с базы 28.09)
+  // и не менялся. Считается по последним 4000 заказам: заказ засчитывается фразе, если в поле есть предложение,
+  // которое ей равно или с неё начинается; при равенстве — прежний порядок. Пересчёт — когда список заказов вырос.
+  function tipsOrder(kind, fam) {
+    const key = kind + "|" + fam, hit = (S.tipFreq ||= {})[key];
+    if (hit && hit.n === S.rows.length) return hit.list;
+    const base = [...new Set([...(TYPICAL[kind][fam] || []), ...TYPICAL[kind].all])], keys = base.map(norm), cnt = base.map(() => 0);
+    const col = kind === "issue" ? C.issue : C.work;
+    for (const r of S.rows.slice(-4000)) {
+      if (fam !== "other" && familyOf(cell(r, C.device)) !== fam) continue;
+      const ss = sentences(cell(r, col)).map(norm); if (!ss.length) continue;
+      keys.forEach((k, i) => { if (ss.some(x => x === k || x.startsWith(k))) cnt[i]++; });
+    }
+    const list = base.map((p, i) => ({ p, i, n: cnt[i] })).sort((a, b) => b.n - a.n || a.i - b.i).map(x => x.p);
+    S.tipFreq[key] = { n: S.rows.length, list };
+    return list;
+  }
   function typicalHtml(kind, c, fam, text) {
-    const list = [...new Set([...(TYPICAL[kind][fam] || []), ...TYPICAL[kind].all])];
+    const list = tipsOrder(kind, fam);
     const open = S.tipsOpen?.has(c);
     const more = list.filter((p, i) => i >= TIPS_SHOWN && !hasPhrase(text, p)).length;
     return `<div class="tchips${open ? " is-open" : ""}">${list.map((p, i) => `<button type="button" class="tchip${i >= TIPS_SHOWN && !hasPhrase(text, p) ? " tchip--more" : ""}" data-tip="${c}" data-text="${esc(p)}" aria-pressed="${hasPhrase(text, p)}">${esc(p)}</button>`).join("")}${
@@ -1146,6 +1164,25 @@
         <b>${esc(cap(x.operation))} <span class="note">${x.kind === "stock" ? "📦 с полки" : esc(x.src)} · ${esc(x.variant)}</span>${x.here ? ` <span class="psup__here">в Сочи</span>` : ""}</b>
         <span>${money(x.price)} <em class="note">= работа ${money(x.work)} + запчасть ${money(x.cost)}${x.kind === "stock" ? ` · на полке ${x.qty} шт` + (isVitalya(x.src) ? " (Виталя)" : isDonor(x.src) ? " (донор)" : x.src ? " (" + esc(x.src) + ")" : "") : ""}</em>${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("") + (title.startsWith("📦") ? `<div class="pp__sub">Прайс</div>` : "");
   }
+  // Сколько заказов этой техники с такой работой (v76, 23.10.2026; владелец — «самые часто используемые виды работ
+  // перенеси в верх списка»): работа узнаётся в «Выполненных работах» по детали (PART_OP: «акб» → замена
+  // аккумулятора) или по основам слов её названия («профилактика», «прошивка»). Последние 4000 заказов, с кэшем.
+  function opPopularity(fam) {
+    const hit = (S.opPop ||= {})[fam];
+    if (hit && hit.n === S.rows.length) return hit.m;
+    const ops = [...new Set((S.svc?.list || []).map(x => x.operation))];
+    const stems = ops.map(op => norm(op).split(/[^a-zа-я0-9]+/).filter(w => w.length > 4 && w !== "замена").map(w => w.slice(0, 5)));
+    const m = new Map();
+    for (const r of S.rows.slice(-4000)) {
+      if (familyOf(cell(r, C.device)) !== fam) continue;
+      const w = norm(cell(r, C.work)); if (!w) continue;
+      const seen = new Set(PART_OP.filter(([re]) => re.test(w)).map(([, op]) => op));
+      ops.forEach((op, i) => { if (stems[i].length && stems[i].every(st => w.includes(st))) seen.add(op); });
+      for (const op of seen) m.set(op, (m.get(op) || 0) + 1);
+    }
+    S.opPop[fam] = { n: S.rows.length, m };
+    return m;
+  }
   function pricePickHtml(key, deviceText) {
     const P = S.pp?.key === key ? S.pp : null;
     if (!P?.open) return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppopen">📋 Работа из прайса</button>`;
@@ -1155,7 +1192,10 @@
     // Слово запроса — с основой (v61): «матрица» находит «замена матрицы», «клавиатура» — «клавиатуры».
     const alts = w => PP_SYN.find(([re]) => re.test(w))?.[1] || (w.length >= 5 ? [w, w.slice(0, -1)] : [w]);
     const hit = x => { const t = norm(x.operation + " " + (x.variant || "") + (dev ? "" : " " + x.device)); return !q || q.split(" ").every(w => alts(w).some(a => t.includes(a))); };
-    const items = S.svc.list.map((x, i) => ({ x, i })).filter(({ x }) => (dev ? x.device === dev : q.length >= 2) && hit(x)).slice(0, 80);
+    // Частые у этой техники работы — сверху (v76), варианты одной работы остаются рядом в прежнем порядке.
+    const pop = opPopularity(familyOf(dev || deviceText));
+    const items = S.svc.list.map((x, i) => ({ x, i })).filter(({ x }) => (dev ? x.device === dev : q.length >= 2) && hit(x))
+      .sort((a, b) => (pop.get(b.x.operation) || 0) - (pop.get(a.x.operation) || 0) || a.i - b.i).slice(0, 80);
     const hitX = x => !q || q.split(" ").every(w => alts(w).some(a => norm(x.operation + " " + x.variant + " " + x.src + " " + (x.title || "") + (x.kind === "stock" ? " склад наличие" : "")).includes(a)));
     const extras = dev ? ppExtras(dev).filter(hitX).slice(0, 60) : [];
     P.extra = extras; // для нажатия: data-svx — номер в этом списке
@@ -2763,7 +2803,7 @@
     const tips = (kind, c) => rep && (isNew || editable(c, r)) ? typicalHtml(kind, c, fam, val(c)) : "";
     html += `<section class="block"><h3>${rep ? "Ремонт" : spp ? "Запчасти" : "Устройство"}</h3>
       ${multiBox}${TIN_TYPES.includes(dk) && (isNew || editable(C.buyback, r)) ? tinBox(key, r) : ""}
-      <div class="grid2">${fh(C.device)}${fh(C.imei)}</div>
+      <div class="grid2"><div>${fh(C.device)}${isNew || editable(C.device, r) ? `<div class="ac" id="ac-dev"></div>` : ""}</div>${fh(C.imei)}</div>
       <div class="wide-area">${fh(C.issue)}${tips("issue", C.issue)}</div>
       <div class="wide-area">${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device)) : ""}</div>
       ${spp ? `<div class="field field--parts"><span>Что продаём — со склада или от поставщика</span>${(isNew || editable(C.parts, r)) ? spPickHtml(key, r) : ""}${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
@@ -4126,6 +4166,7 @@
     if (c === C.issue || c === C.work) t.closest(".field")?.parentElement?.querySelectorAll(".tchips [data-tip]").forEach(b => b.setAttribute("aria-pressed", String(hasPhrase(v, b.dataset.text))));
     if (t.type === "checkbox") t.nextElementSibling.textContent = t.checked ? "Да" : "Нет";
     refreshSaveBar(key);
+    if (c === C.device && e.type === "input") { clearTimeout(onEdit.dev); onEdit.dev = setTimeout(() => suggestDevice(t.value), 120); }
     if (key === "new" && (c === C.name || c === C.phone)) {
       clearTimeout(onEdit.ac); onEdit.ac = setTimeout(() => suggest(c, t.value), 120);
       if (c === C.phone && S.newClient) { const cl = clients().find(x => x.key === S.newClient), ds = phones(t.value).map(p => p.d);
@@ -4178,6 +4219,37 @@
   // ── подсказки клиента в новом заказе ─────────────────────
   // Набрал 3+ буквы имени или фамилии (или 4+ цифры телефона) — список клиентов из базы.
   // Выбрал клиента: один телефон — подставился сам; несколько — выбираешь номер вторым шагом.
+  // ── подсказки модели в поле «Устройство» (v76, 23.10.2026) ─────────────────────────────
+  // Владелец: «когда вводишь устройство, чтобы автоматом предлагались варианты после ввода определённого количества
+  // символов». С 2 символов: сначала модели из прайса (как их узнаёт «Работа из прайса»), по частоте в заказах, потом —
+  // как модель записывали в заказах раньше (то, чего в прайсе нет: Samsung, Dyson…). Слова ищутся в любом порядке,
+  // «13 про макс» = iPhone 13 Pro Max, «эйр м1» = MacBook Air M1. Выбор подставляет строку целиком.
+  const DEV_SYN = { "про": "pro", "макс": "max", "мини": "mini", "плюс": "plus", "эйр": "air", "аир": "air", "се": "se", "макбук": "macbook",
+    "айпад": "ipad", "аймак": "imac", "часы": "watch", "вотч": "watch", "эпл": "apple", "аирподс": "airpods", "эйрподс": "airpods", "ультра": "ultra", "м1": "m1", "м2": "m2", "м3": "m3", "м4": "m4" };
+  const devWords = q => skWords(q).split(" ").filter(Boolean).map(w => DEV_SYN[w] || w);
+  function devIndex() {
+    const ix = S.devIx;
+    if (ix && ix.n === S.rows.length && ix.svc === !!S.svc?.devices) return ix;
+    const raw = new Map(), canon = new Map();
+    for (const r of S.rows) {
+      const d = String(cell(r, C.device) || "").split("\n")[0].trim(); if (d.length < 3) continue;
+      const k = skWords(d), e = raw.get(k) || { text: d, n: 0 }; e.n++; raw.set(k, e);
+    }
+    if (S.svc?.devices) for (const e of raw.values()) { const m = matchDevice(e.text); if (m) canon.set(m, (canon.get(m) || 0) + e.n); }
+    return S.devIx = { n: S.rows.length, svc: !!S.svc?.devices, raw, canon, canonKeys: new Set((S.svc?.devices || []).map(skWords)) };
+  }
+  function suggestDevice(value) {
+    const box = document.getElementById("ac-dev"); if (!box) return;
+    const q = String(value || "").trim();
+    if (q.length < 2) { box.innerHTML = ""; return; }
+    if (!S.svc?.list && !S.svc?.loading) loadServices().then(() => suggestDevice($app.querySelector(`[data-edit="${C.device}"]`)?.value));
+    const ws = devWords(q), ok = t => { const h = skWords(t); return ws.every(w => h.includes(w)); }, ix = devIndex();
+    if (norm(q) && (S.svc?.devices || []).some(d => norm(d) === norm(q))) { box.innerHTML = ""; return; } // уже выбрано
+    const fromPrice = (S.svc?.devices || []).filter(ok).map(d => ({ text: d, n: ix.canon.get(d) || 0, price: true })).sort((a, b) => b.n - a.n).slice(0, 6);
+    const fromOrders = [...ix.raw.values()].filter(e => ok(e.text) && !ix.canonKeys.has(skWords(e.text)) && e.n > 1).sort((a, b) => b.n - a.n).slice(0, fromPrice.length ? 3 : 8);
+    const all = [...fromPrice, ...fromOrders];
+    box.innerHTML = all.map(x => `<button type="button" class="ac-item ac-item--dev" data-devpick="${esc(x.text)}"><b>${esc(x.text)}</b><span>${x.price ? "📋 модель из прайса" : "как записывали в заказах"}${x.n ? ` · ${x.n} ${ordersWord(x.n)}` : ""}</span></button>`).join("");
+  }
   function suggest(c, value) {
     const box = document.getElementById("ac-" + c); if (!box) return;
     const list = findClients(value);
@@ -4268,6 +4340,13 @@
     const it = e.target.closest(".ac-item"); if (!it) return;
     e.preventDefault();
     if (it.dataset.pxclient || it.dataset.pxphone) return pickProxy(it);
+    if (it.dataset.devpick != null) { // подсказка модели (v76)
+      const key = curKey(); if (key == null) return;
+      setDirty(key, C.device, it.dataset.devpick);
+      const inp = $app.querySelector(`[data-edit="${C.device}"]`); if (inp) inp.value = it.dataset.devpick;
+      document.getElementById("ac-dev").innerHTML = ""; refreshSaveBar(key);
+      const y = window.scrollY; render(); window.scrollTo(0, y); return; // семейство техники поменялось — чипы и прайс тоже
+    }
     if (it.dataset.client) pickClient(it.dataset.client, it.dataset.from === String(C.phone));
     else if (it.dataset.phone) { fillField(C.phone, it.dataset.phone); document.getElementById("ac-" + C.phone).innerHTML = ""; refreshSaveBar("new"); }
   });
