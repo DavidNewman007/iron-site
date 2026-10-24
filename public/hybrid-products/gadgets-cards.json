@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-24T09:48:31.540Z",
-  "count": 51,
+  "generated_at": "2026-10-24T12:03:46.389Z",
+  "count": 58,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -409,6 +409,62 @@
       "name": "Whoop MG SuperKnit Luxe Obsidian Life",
       "warehouse": "(S4)",
       "price": 33800
+    },
+    "-whoop-5-0-one-годовая-подписка-s2-19900": {
+      "url": "hybrid-products/gadgets/whoop-5-0-one-годовая-подписка-s2-19900.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-one-годовая-подписка-s2-19900.html",
+      "cover": "assets/product-images/051fe14d2aab2805ea14e014.jpg",
+      "name": "⌚️Whoop 5.0 One + годовая подписка",
+      "warehouse": "(S2)",
+      "price": 19900
+    },
+    "google-fitbit-air-lavender-s4-12900": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-lavender-s4-12900.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-lavender-s4-12900.html",
+      "cover": "assets/product-images/e601b2e215bd4ee6a0abbc08.jpg",
+      "name": "Google Fitbit Air Lavender",
+      "warehouse": "(S4)",
+      "price": 12900
+    },
+    "google-fitbit-air-obsidian-s4-12200": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-obsidian-s4-12200.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-obsidian-s4-12200.html",
+      "cover": "assets/product-images/38bf1864c0332f59f4f5c38b.jpg",
+      "name": "Google Fitbit Air Obsidian",
+      "warehouse": "(S4)",
+      "price": 12200
+    },
+    "google-fitbit-air-fog-s4-12800": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-fog-s4-12800.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-fog-s4-12800.html",
+      "cover": "assets/product-images/58d99235700e3bc864262981.jpg",
+      "name": "Google Fitbit Air Fog",
+      "warehouse": "(S4)",
+      "price": 12800
+    },
+    "whoop-5-0-superknit-obsidian-peak-европа-s4-24800": {
+      "url": "hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-24800.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-24800.html",
+      "cover": "assets/product-images/14727cb6df731ff8ae6ed8f4.jpg",
+      "name": "Whoop 5.0 SuperKnit Obsidian Peak",
+      "warehouse": "(S4)",
+      "price": 24800
+    },
+    "whoop-mg-superknit-luxe-obsidian-life-сша-s4-32200": {
+      "url": "hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-32200.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-32200.html",
+      "cover": "assets/product-images/dc19fcde756b291fbf288162.jpg",
+      "name": "Whoop MG SuperKnit Luxe Obsidian Life",
+      "warehouse": "(S4)",
+      "price": 32200
+    },
+    "whoop-mg-superknit-luxe-obsidian-life-европа-s4-34100": {
+      "url": "hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-34100.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-34100.html",
+      "cover": "assets/product-images/dc19fcde756b291fbf288162.jpg",
+      "name": "Whoop MG SuperKnit Luxe Obsidian Life",
+      "warehouse": "(S4)",
+      "price": 34100
     }
   }
 }

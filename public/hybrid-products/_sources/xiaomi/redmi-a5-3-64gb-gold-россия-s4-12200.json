@@ -1,0 +1,97 @@
+{
+  "product_id": "redmi-a5-3-64gb-gold-россия-s4-12200",
+  "category": "xiaomi",
+  "file_slug": "redmi-a5-3-64gb-gold-s4-12200",
+  "name": "Redmi A5 3+ 64Gb Gold",
+  "country": "🇷🇺 Россия",
+  "warehouse": "(S4)",
+  "price": 12200,
+  "catalog_url": "https://www.mi.com/global/product/redmi-a5/specs/",
+  "catalog_title": "Xiaomi Redmi A5 3/64 ГБ, Sandy Gold (золотистый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,88″ LCD, 1640×720, до 120 Гц, 450 нит"
+    },
+    {
+      "key": "Процессор",
+      "value": "UNISOC T7250, 8 ядер, до 1,8 ГГц, 12 нм"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "3 ГБ LPDDR4X (+ до 3 ГБ виртуальной)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "64 ГБ (eMMC 5.1), microSD"
+    },
+    {
+      "key": "Основная камера",
+      "value": "32 МП, f/2.0 + вспомогательный модуль; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 МП, f/2.0"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5200 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "15 Вт, USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM + microSD"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), без NFC, Wi-Fi 2,4/5 ГГц, Bluetooth 5.2, FM-радио"
+    },
+    {
+      "key": "Защита",
+      "value": "боковой сканер отпечатка, разблокировка по лицу"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "171,7 × 77,8 × 8,26 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "193 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Sandy Gold (золотистый)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 15 (Go edition)"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/467_item_de/27/04/2025/9bbf8d8c18c8032cc3993eb8f3d50e5f.png",
+    "https://i05.appmifile.com/432_item_de/27/04/2025/f3368e4013d4ab7cf79849e676661a6e.png",
+    "https://i05.appmifile.com/34_item_de/27/04/2025/faf20adf51c48508cba53b5dc6fd0ac9.png",
+    "https://i05.appmifile.com/332_item_de/27/04/2025/816ad26c3b4eb81fe55ca46149f594fe.png",
+    "https://i05.appmifile.com/78_item_de/27/04/2025/d6a87c5d5ae29a356c8d6f0387e87fdb.png",
+    "https://i05.appmifile.com/864_item_de/27/04/2025/d614f9503d01f7fbba10a76a5d9b2a84.png"
+  ],
+  "images_local": [
+    "assets/product-images/1b33c9e0278dccd9e092765e.jpg",
+    "assets/product-images/4ee1e9e821f96d2fb503ca56.jpg",
+    "assets/product-images/0f8f14f356eeab57adfcd2fe.jpg",
+    "assets/product-images/92731691b4bd7f60a8b7c15d.jpg",
+    "assets/product-images/511939cd329700b15e5ae8d3.jpg",
+    "assets/product-images/2d4b42efc9fb976a5cdbcd10.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi a5 3 64gb gold~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-a5/specs/",
+  "updated_at": "2026-10-24T12:01:50.399282Z"
+}

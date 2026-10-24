@@ -1,0 +1,99 @@
+{
+  "product_id": "redmi-note-15-pro-8-256gb-titanium-5g-таиланд-s4-29600",
+  "category": "xiaomi",
+  "file_slug": "redmi-note-15-pro-8-256gb-titanium-5g-s4-29600",
+  "name": "Redmi Note 15 Pro 8+ 256Gb Titanium 5G",
+  "country": "🇹🇭 Таиланд",
+  "warehouse": "(S4)",
+  "price": 29600,
+  "catalog_url": "https://www.mi.com/global/product/redmi-note-15-pro-5g/specs/",
+  "catalog_title": "Xiaomi Redmi Note 15 Pro 5G 8/256 ГБ, Titanium (титановый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,83\" AMOLED, 1,5K (2772×1280), до 120 Гц, пиковая яркость 3200 нит, HDR10+, Dolby Vision, Corning Gorilla Glass Victus 2"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 7400-Ultra (4 нм), 8 ядер до 2,6 ГГц, графика Mali-G615"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ (LPDDR4X)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ (UFS 2.2)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "200 Мп (f/1.7, 1/1.4\", оптическая стабилизация) + 8 Мп сверхширокоугольная; видео 4K 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "20 Мп (f/2.2), видео 1080p 60 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6580 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 45 Вт (Turbo Charging), USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "две nano-SIM или nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 6, Bluetooth 5.4, ИК-порт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP66, IP68, IP69, IP69K"
+    },
+    {
+      "key": "Безопасность",
+      "value": "сканер отпечатков в экране, разблокировка по лицу"
+    },
+    {
+      "key": "Звук",
+      "value": "стереодинамики, Dolby Atmos, Hi-Res"
+    },
+    {
+      "key": "Размеры",
+      "value": "163,61 × 78,09 × 7,96 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "210 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Titanium (титановый)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 2"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/584_item_uk/08/01/2026/24ea358442cc65ffb9c96ca7c70e72dc.png",
+    "https://i05.appmifile.com/382_item_uk/25/12/2025/02e3b41f1a6f2a11f987b765f089ef7b.png",
+    "https://i05.appmifile.com/256_item_uk/25/12/2025/f4c487ccc9bce70887410362692f753b.png",
+    "https://i05.appmifile.com/992_item_uk/25/12/2025/685f6236f10d23749d40eb147b40dd12.png",
+    "https://i05.appmifile.com/287_item_uk/25/12/2025/1dcd0561d5fc73290ada1859eece648f.png"
+  ],
+  "images_local": [
+    "assets/product-images/d103634fd68e8fb79e8a23c4.jpg",
+    "assets/product-images/ccec9e87364abf42b2f63f3b.jpg",
+    "assets/product-images/34faaee123e9b75736a33ce3.jpg",
+    "assets/product-images/4ba072373b0e462153b0b2cf.jpg",
+    "assets/product-images/47a422986868ceae7a2d0eaf.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi note 15 pro 8 256gb titanium 5g~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-note-15-pro-5g/specs/",
+  "updated_at": "2026-10-24T12:01:31.342587Z"
+}

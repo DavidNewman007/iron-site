@@ -1,0 +1,99 @@
+{
+  "product_id": "marshall-emberton-iii-sage-s4-16500",
+  "category": "audio",
+  "file_slug": "marshall-emberton-iii-sage-s4-16500",
+  "name": "Marshall Emberton III Sage",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 16500,
+  "catalog_url": "https://www.marshall.com/us/en/product/emberton-iii",
+  "catalog_title": "Портативная колонка Marshall Emberton III, Sage (шалфейно-зелёная)",
+  "specs": [
+    {
+      "key": "Цвет",
+      "value": "Sage (приглушённый зелёный)"
+    },
+    {
+      "key": "Тип",
+      "value": "портативная Bluetooth-колонка"
+    },
+    {
+      "key": "Звук",
+      "value": "стерео (True Stereophonic), 360°"
+    },
+    {
+      "key": "Динамики",
+      "value": "2 широкополосных 2″ по 10 Вт + 2 пассивных излучателя"
+    },
+    {
+      "key": "Диапазон частот",
+      "value": "65–20 000 Гц"
+    },
+    {
+      "key": "Макс. громкость",
+      "value": "90 дБ SPL на 1 м"
+    },
+    {
+      "key": "Bluetooth",
+      "value": "5.3, LE Audio (Auracast-ready)"
+    },
+    {
+      "key": "Радиус связи",
+      "value": "до 100 м на открытом пространстве"
+    },
+    {
+      "key": "Время работы",
+      "value": "более 32 ч"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "20 мин — 6 ч работы"
+    },
+    {
+      "key": "Полная зарядка",
+      "value": "около 2 ч"
+    },
+    {
+      "key": "Разъём зарядки",
+      "value": "USB-C"
+    },
+    {
+      "key": "Защита",
+      "value": "IP67 (пыль, погружение до 1 м на 30 мин)"
+    },
+    {
+      "key": "Размеры (Ш×В×Г)",
+      "value": "160 × 68 × 76,9 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "0,67 кг"
+    },
+    {
+      "key": "Приложение",
+      "value": "Marshall Bluetooth (iOS, Android)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "колонка, кабель USB-C, документация"
+    }
+  ],
+  "images_remote": [
+    "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_158355499",
+    "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_158355500",
+    "https://images.ctfassets.net/javen7msabdh/2aQ1myFON3nAhR6oS9gXzP/d352b7abe2fef4370c81609c4b0f2686/emberton_iii_sage_tile-standard-hybrid.jpeg",
+    "https://images.ctfassets.net/javen7msabdh/1MBwRnXV5JYrbflvMTjoak/23a0c6dc483f0fe89773b3dc191cc333/emberton_iii_sage_gallery-assets-desktop-01.jpeg",
+    "https://images.ctfassets.net/javen7msabdh/lvYSLgSTrshhn8WUIgnBB/e430ad052a53578ff93bc4e5b26db963/emberton_iii_sage_gallery-assets-desktop-03.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/b8434fae3e11131968ff68f5.jpg",
+    "assets/product-images/bd154f305f6b4acfff943426.jpg",
+    "assets/product-images/f235a4f97d33c93665810537.jpg",
+    "assets/product-images/6a577ffe4fb49b7c3202cb58.jpg",
+    "assets/product-images/38176b538b0648202cffc846.jpg"
+  ],
+  "manual": true,
+  "manual_key": "marshall emberton iii sage~s4",
+  "photo_source": "https://www.marshall.com/us/en/product/emberton-iii",
+  "updated_at": "2026-10-24T11:59:07.978135Z"
+}

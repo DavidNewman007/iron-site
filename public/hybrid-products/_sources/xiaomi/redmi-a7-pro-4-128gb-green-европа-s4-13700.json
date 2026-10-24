@@ -1,0 +1,97 @@
+{
+  "product_id": "redmi-a7-pro-4-128gb-green-европа-s4-13700",
+  "category": "xiaomi",
+  "file_slug": "redmi-a7-pro-4-128gb-green-s4-13700",
+  "name": "Redmi A7 Pro 4+ 128Gb Green",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 13700,
+  "catalog_url": "https://www.mi.com/global/product/redmi-a7-pro/specs/",
+  "catalog_title": "Xiaomi Redmi A7 Pro 4/128 ГБ, Palm Green (зелёный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9″ LCD, 1600×720, до 120 Гц, до 800 нит (HBM)"
+    },
+    {
+      "key": "Процессор",
+      "value": "UNISOC T7250, 8 ядер (2×A75 1,8 ГГц + 6×A55 1,6 ГГц), 12 нм; GPU Mali-G57"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ LPDDR4X (+ до 4 ГБ виртуальной)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ (UFS 2.2), microSD"
+    },
+    {
+      "key": "Основная камера",
+      "value": "13 МП, f/2.2 + вспомогательный модуль; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 МП, f/2.0"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6000 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "15 Вт, USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM + microSD"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), Wi-Fi 2,4/5 ГГц, Bluetooth 5.2, FM-радио; NFC — зависит от региона"
+    },
+    {
+      "key": "Защита",
+      "value": "защита от пыли и брызг, боковой сканер отпечатка, разблокировка по лицу"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "171,56 × 79,47 × 8,15 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "208 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Palm Green (зелёный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 16, Xiaomi HyperOS 3"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/303_item_es/31/03/2026/0552ee0e58220bc614d37ffe10e7fd2f.png",
+    "https://i05.appmifile.com/782_item_es/31/03/2026/3759e902701d61a3b00643edf324006b.png",
+    "https://i05.appmifile.com/277_item_es/31/03/2026/ef91a731db334e792a12a6967c9f161b.png",
+    "https://i05.appmifile.com/498_item_es/31/03/2026/8826c373397c7d4a14969d8c8e1d76e0.png",
+    "https://i05.appmifile.com/138_item_es/31/03/2026/eaac5a5cca6a16a7812f5cbbaf59c98d.png",
+    "https://i05.appmifile.com/436_item_es/31/03/2026/50ef31e14fcc5de28cee1adf5f633533.png"
+  ],
+  "images_local": [
+    "assets/product-images/bed11e3e1422d97eed69709e.jpg",
+    "assets/product-images/a9f925692384a4049eee2c03.jpg",
+    "assets/product-images/771367c092481c307baf5fce.jpg",
+    "assets/product-images/67ff2584cf1347a84f9d2217.jpg",
+    "assets/product-images/3af72933f3bf6dc297817469.jpg",
+    "assets/product-images/4abd250ce2b13aea2ea3bd0e.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi a7 pro 4 128gb green~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-a7-pro/specs/",
+  "updated_at": "2026-10-24T12:01:50.532862Z"
+}

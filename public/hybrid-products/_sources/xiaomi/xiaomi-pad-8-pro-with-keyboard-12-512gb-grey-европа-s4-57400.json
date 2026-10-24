@@ -1,0 +1,97 @@
+{
+  "product_id": "xiaomi-pad-8-pro-with-keyboard-12-512gb-grey-европа-s4-57400",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-pad-8-pro-with-keyboard-12-512gb-grey-s4-57400",
+  "name": "Xiaomi Pad 8 Pro with Keyboard 12+ 512Gb Grey",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 57400,
+  "catalog_url": "https://www.mi.com/global/product/xiaomi-pad-8-pro/specs/",
+  "catalog_title": "Планшет Xiaomi Pad 8 Pro 12/512 ГБ с клавиатурой, Gray (серый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "11,2\", IPS LCD, 3200×2136 (3,2K), 345 ppi, до 144 Гц, 3:2, до 800 нит, Dolby Vision, HDR10"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Elite (3 нм), 8 ядер Oryon: 2×4,32 ГГц + 6×3,53 ГГц; GPU Adreno 830"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ LPDDR5T"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ UFS 4.1"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп, f/1.8, автофокус PDAF, видео 4K 60 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп, f/2.2, видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "9200 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "67 Вт HyperCharge, USB Type-C (USB 3.2 Gen 1)"
+    },
+    {
+      "key": "SIM",
+      "value": "нет (только Wi-Fi)"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 7, Bluetooth 5.4, ИК-порт; без NFC и сотовой связи"
+    },
+    {
+      "key": "Безопасность",
+      "value": "сканер отпечатка в боковой кнопке, разблокировка по лицу"
+    },
+    {
+      "key": "Звук",
+      "value": "4 динамика с Dolby Atmos"
+    },
+    {
+      "key": "Размеры",
+      "value": "251,22 × 173,42 × 5,75 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "485 г (без клавиатуры)"
+    },
+    {
+      "key": "Цвет",
+      "value": "Gray (серый)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 (Android 16)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "планшет + клавиатура-чехол (комплект «with Keyboard»)"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/675_item_uk/10/03/2026/ecea575f8087b72c8a890ee936796351.png",
+    "https://i05.appmifile.com/76_item_uk/10/03/2026/38864d8ef476c486191372d06ff9ba41.png",
+    "https://i05.appmifile.com/414_item_uk/10/03/2026/6314bba2d1c8219709d5b1911e6a1595.png",
+    "https://i02.appmifile.com/894_item_my/28/02/2026/31958dc92bee5b2c4fa9ac058a11c195.png"
+  ],
+  "images_local": [
+    "assets/product-images/5bfb5f31b7bdf7d5556c37fd.jpg",
+    "assets/product-images/187cdcd12273af37fe3f179a.jpg",
+    "assets/product-images/9e84d3a42ed5f8fd4a6d596b.jpg",
+    "assets/product-images/7b957a6bc15ab793de81f020.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi pad 8 pro with keyboard 12 512gb grey~s4",
+  "photo_source": "https://www.mi.com/global/product/xiaomi-pad-8-pro/specs/",
+  "updated_at": "2026-10-24T12:02:24.181048Z"
+}

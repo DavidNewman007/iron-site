@@ -1,0 +1,87 @@
+{
+  "product_id": "poco-pad-m1-8-256gb-blue-европа-s4-29500",
+  "category": "xiaomi",
+  "file_slug": "poco-pad-m1-8-256gb-blue-s4-29500",
+  "name": "Poco Pad M1 8+ 256Gb Blue",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 29500,
+  "catalog_url": "https://www.po.co/global/product/poco-pad-m1/specs/",
+  "catalog_title": "Планшет Xiaomi POCO Pad M1 8/256 ГБ, Blue (синий)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "12,1\" 2,5K (2560×1600), 16:10, до 120 Гц, 500 нит (до 600 нит в режиме HBM), Dolby Vision"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 7s Gen 4 (4 нм), 8 ядер до 2,7 ГГц, графика Adreno"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ (LPDDR4X)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ (UFS 2.2), карта памяти до 2 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "8 Мп (f/2.0), видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп (f/2.28), видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "12 000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 33 Вт; обратная проводная зарядка до 27 Вт; USB Type-C (USB 2.0)"
+    },
+    {
+      "key": "SIM",
+      "value": "нет (версия только с Wi-Fi)"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 6, Bluetooth 5.4"
+    },
+    {
+      "key": "Датчики",
+      "value": "акселерометр, гироскоп, датчик освещённости и цветовой температуры, компас, датчик Холла"
+    },
+    {
+      "key": "Размеры",
+      "value": "279,80 × 181,65 × 7,5 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "610 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Blue (синий)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 2"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/692_item_sg/21/11/2025/c80f8bc77c484cb79768194dfcb5add7.png",
+    "https://i02.appmifile.com/141_item_sg/21/11/2025/a13f89d0b364911a17d9398c30543e23.png",
+    "https://i02.appmifile.com/563_item_sg/21/11/2025/2e7168d5e87e7b298bf503b116dedc1d.png"
+  ],
+  "images_local": [
+    "assets/product-images/50a07bd125ee187882b1a349.jpg",
+    "assets/product-images/4b8a7efb2f916902920b0021.jpg",
+    "assets/product-images/e5053cd929cb7ccebba0a9b9.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco pad m1 8 256gb blue~s4",
+  "photo_source": "https://www.po.co/global/product/poco-pad-m1/specs/",
+  "updated_at": "2026-10-24T12:01:31.101488Z"
+}

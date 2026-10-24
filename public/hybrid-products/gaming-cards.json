@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-24T09:48:31.469Z",
-  "count": 116,
+  "generated_at": "2026-10-24T12:03:46.365Z",
+  "count": 132,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -929,6 +929,134 @@
       "name": "Sony DualSense wireless Marathon",
       "warehouse": "(S4)",
       "price": 10400
+    },
+    "dualsense-edge-для-ps5-white-s2-22000": {
+      "url": "hybrid-products/gaming/dualsense-edge-для-ps5-white-s2-22000.html",
+      "url_en": "en/hybrid-products/gaming/dualsense-edge-для-ps5-white-s2-22000.html",
+      "cover": "assets/product-images/01cdd1471475c7fd8900934e.jpg",
+      "name": "DualSense EDGE для PS5 White",
+      "warehouse": "(S2)",
+      "price": 22000
+    },
+    "oculus-meta-quest-3s-128gb-white-япония-s4-36400": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-36400.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-36400.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 128Gb White",
+      "warehouse": "(S4)",
+      "price": 36400
+    },
+    "oculus-meta-quest-3s-128gb-white-сша-s4-38100": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-38100.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-38100.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 128Gb White",
+      "warehouse": "(S4)",
+      "price": 38100
+    },
+    "oculus-meta-quest-3s-256gb-white-япония-s4-44300": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-256gb-white-s4-44300.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-256gb-white-s4-44300.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 256Gb White",
+      "warehouse": "(S4)",
+      "price": 44300
+    },
+    "sony-playstation-vr-2-white-европа-s4-45200": {
+      "url": "hybrid-products/gaming/sony-playstation-vr-2-white-s4-45200.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-vr-2-white-s4-45200.html",
+      "cover": "assets/product-images/474636c856161f23c0651f48.jpg",
+      "name": "Sony Playstation VR 2 White",
+      "warehouse": "(S4)",
+      "price": 45200
+    },
+    "sony-playstation-5-slim-disc-оаэ-s4-81400": {
+      "url": "hybrid-products/gaming/sony-playstation-5-slim-disc-s4-81400.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-5-slim-disc-s4-81400.html",
+      "cover": "assets/product-images/b69ddd0b1caaeea46a30c8f4.jpg",
+      "name": "Sony PlayStation 5 SLIM Disc",
+      "warehouse": "(S4)",
+      "price": 81400
+    },
+    "sony-playstation-5-slim-digital-825gb-оаэ-s4-75900": {
+      "url": "hybrid-products/gaming/sony-playstation-5-slim-digital-825gb-s4-75900.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-5-slim-digital-825gb-s4-75900.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "Sony PlayStation 5 SLIM Digital 825Gb",
+      "warehouse": "(S4)",
+      "price": 75900
+    },
+    "sony-playstation-portal-white-s4-27000": {
+      "url": "hybrid-products/gaming/sony-playstation-portal-white-s4-27000.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-portal-white-s4-27000.html",
+      "cover": "assets/product-images/9e175dd37be85181eac35fa5.jpg",
+      "name": "Sony PlayStation Portal White",
+      "warehouse": "(S4)",
+      "price": 27000
+    },
+    "sony-dualsense-edge-white-s4-22000": {
+      "url": "hybrid-products/gaming/sony-dualsense-edge-white-s4-22000.html",
+      "url_en": "en/hybrid-products/gaming/sony-dualsense-edge-white-s4-22000.html",
+      "cover": "assets/product-images/01cdd1471475c7fd8900934e.jpg",
+      "name": "Sony DualSense Edge White",
+      "warehouse": "(S4)",
+      "price": 22000
+    },
+    "sony-dualsense-wireless-black-s4-8200": {
+      "url": "hybrid-products/gaming/sony-dualsense-wireless-black-s4-8200.html",
+      "url_en": "en/hybrid-products/gaming/sony-dualsense-wireless-black-s4-8200.html",
+      "cover": "assets/product-images/9a7cf6695610d96a2891e4d9.jpg",
+      "name": "Sony DualSense wireless Black",
+      "warehouse": "(S4)",
+      "price": 8200
+    },
+    "sony-dualsense-wireless-cobalt-blue-s4-8300": {
+      "url": "hybrid-products/gaming/sony-dualsense-wireless-cobalt-blue-s4-8300.html",
+      "url_en": "en/hybrid-products/gaming/sony-dualsense-wireless-cobalt-blue-s4-8300.html",
+      "cover": "assets/product-images/74b158f7607648270b20a2de.jpg",
+      "name": "Sony DualSense wireless Cobalt Blue",
+      "warehouse": "(S4)",
+      "price": 8300
+    },
+    "sony-dualsense-wireless-pink-s4-9000": {
+      "url": "hybrid-products/gaming/sony-dualsense-wireless-pink-s4-9000.html",
+      "url_en": "en/hybrid-products/gaming/sony-dualsense-wireless-pink-s4-9000.html",
+      "cover": "assets/product-images/1d709ce23df52636c4919c8d.jpg",
+      "name": "Sony DualSense wireless Pink",
+      "warehouse": "(S4)",
+      "price": 9000
+    },
+    "sony-dualsense-wireless-silver-s4-8300": {
+      "url": "hybrid-products/gaming/sony-dualsense-wireless-silver-s4-8300.html",
+      "url_en": "en/hybrid-products/gaming/sony-dualsense-wireless-silver-s4-8300.html",
+      "cover": "assets/product-images/fb2b0f7280fb374a13747665.jpg",
+      "name": "Sony DualSense wireless Silver",
+      "warehouse": "(S4)",
+      "price": 8300
+    },
+    "sony-dualsense-wireless-white-s4-8200": {
+      "url": "hybrid-products/gaming/sony-dualsense-wireless-white-s4-8200.html",
+      "url_en": "en/hybrid-products/gaming/sony-dualsense-wireless-white-s4-8200.html",
+      "cover": "assets/product-images/df30a6da1ee0b1a8b90bd75e.jpg",
+      "name": "Sony DualSense wireless White",
+      "warehouse": "(S4)",
+      "price": 8200
+    },
+    "sony-dualsense-wireless-chroma-indigo-s4-8300": {
+      "url": "hybrid-products/gaming/sony-dualsense-wireless-chroma-indigo-s4-8300.html",
+      "url_en": "en/hybrid-products/gaming/sony-dualsense-wireless-chroma-indigo-s4-8300.html",
+      "cover": "assets/product-images/95f1fd1c853ee62a82fb9bd9.jpg",
+      "name": "Sony DualSense wireless Chroma Indigo",
+      "warehouse": "(S4)",
+      "price": 8300
+    },
+    "sony-dualsense-wireless-marathon-s4-10500": {
+      "url": "hybrid-products/gaming/sony-dualsense-wireless-marathon-s4-10500.html",
+      "url_en": "en/hybrid-products/gaming/sony-dualsense-wireless-marathon-s4-10500.html",
+      "cover": "assets/product-images/a103efb059160da656a3a595.jpg",
+      "name": "Sony DualSense wireless Marathon",
+      "warehouse": "(S4)",
+      "price": 10500
     }
   }
 }

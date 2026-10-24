@@ -1,0 +1,103 @@
+{
+  "product_id": "meta-adventurer-brown-classic-tortoise-standart-s4-33400",
+  "category": "meta",
+  "file_slug": "meta-adventurer-brown-classic-tortoise-standart-s4-33400",
+  "name": "Meta Adventurer Brown Classic Tortoise Standart",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 33400,
+  "catalog_url": "https://www.abt.com/Meta-Adventurer-Sunglasses-49mm-in-Classic-Tortoise-with-Brown-Lenses-0YM0000044402D1/p/249161.html",
+  "catalog_title": "Умные очки Meta Adventurer, оправа Classic Tortoise, коричневые линзы, размер Standard (49 мм)",
+  "specs": [
+    {
+      "key": "Бренд / модель",
+      "value": "Meta Adventurer (собственная линейка Meta, производство EssilorLuxottica)"
+    },
+    {
+      "key": "Код модели",
+      "value": "0YM000004-4402D1"
+    },
+    {
+      "key": "Оправа",
+      "value": "Classic Tortoise (черепаховая)"
+    },
+    {
+      "key": "Линзы",
+      "value": "коричневые (Brown)"
+    },
+    {
+      "key": "Тип линз",
+      "value": "солнцезащитные, не поляризованные"
+    },
+    {
+      "key": "Форма оправы",
+      "value": "прямоугольная, полный обод"
+    },
+    {
+      "key": "Размер",
+      "value": "49-22-150 мм (ширина линзы — переносица — заушник), высота линзы 37 мм; размер Standard, высокая посадка переносицы"
+    },
+    {
+      "key": "Камера",
+      "value": "12 Мп, сверхширокоугольная, угол обзора 100°; фото 3024×4032"
+    },
+    {
+      "key": "Видео",
+      "value": "до 3K 30 к/с, 1080p до 60 к/с; гиперлапс, замедленная съёмка, стабилизация"
+    },
+    {
+      "key": "Аудио",
+      "value": "открытые динамики с адаптивной громкостью"
+    },
+    {
+      "key": "Микрофоны",
+      "value": "6 микрофонов с шумоподавлением ветра"
+    },
+    {
+      "key": "Управление",
+      "value": "голос, сенсорная панель, кнопка съёмки, настраиваемая кнопка действия"
+    },
+    {
+      "key": "ИИ",
+      "value": "Meta AI: голосовой ассистент, распознавание увиденного, перевод"
+    },
+    {
+      "key": "Память",
+      "value": "32 ГБ (около 1000 фото или 100+ видео по 30 с)"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "более 8 ч работы; складной зарядный кейс — ещё до 40 ч"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 6, Bluetooth 5.4"
+    },
+    {
+      "key": "Совместимость",
+      "value": "iOS 17+ и Android 10+, приложение Meta AI"
+    },
+    {
+      "key": "Комплект",
+      "value": "очки, складной зарядный кейс, салфетка, инструкция (кабель USB-C не входит)"
+    }
+  ],
+  "images_remote": [
+    "https://content.abt.com/image.php/2ba27fe6ca4e4f803f9c8b4790120785?image=/images/products/BDP_Images/meta-sunglasses-0YM000004-4402D1-left-angled-1.jpg&ck=2&width=1500&height=1500&canvas",
+    "https://content.abt.com/image.php/af5e99b1352de7ef6932d9bd7316122b?image=/images/products/BDP_Images/meta-sunglasses-0YM000004-4402D1-front.jpg&ck=2&width=1500&height=1500&canvas",
+    "https://content.abt.com/image.php/4317ea2cb6fd56cbcb2ba91a263b9f6c?image=/images/products/BDP_Images/meta-sunglasses-0YM000004-4402D1-right-facing.jpg&ck=2&width=1500&height=1500&canvas",
+    "https://content.abt.com/image.php/cd2417861896d60d19ad60e0e8997b96?image=/images/products/BDP_Images/meta-sunglasses-0YM000004-4402D1-back-1.jpg&ck=2&width=1500&height=1500&canvas",
+    "https://content.abt.com/image.php/4fc77f5f7455abbb5bad9372198a6b03?image=/images/products/BDP_Images/meta-sunglasses-0YM000004-4402D1-box.jpg&ck=2&width=1500&height=1500&canvas"
+  ],
+  "images_local": [
+    "assets/product-images/9d709b373259013bb574d025.jpg",
+    "assets/product-images/bddde6efaac9d87419e7c228.jpg",
+    "assets/product-images/3dc0cc978620c7d30d3d6089.jpg",
+    "assets/product-images/0cf4c48d45fa8a628f25b18f.jpg",
+    "assets/product-images/42bffaa65c89ee1e33a970b6.jpg"
+  ],
+  "manual": true,
+  "manual_key": "meta adventurer brown classic tortoise standart~s4",
+  "photo_source": "https://www.abt.com/Meta-Adventurer-Sunglasses-49mm-in-Classic-Tortoise-with-Brown-Lenses-0YM0000044402D1/p/249161.html",
+  "updated_at": "2026-10-24T12:00:46.568959Z"
+}

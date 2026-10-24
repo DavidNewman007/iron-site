@@ -1,0 +1,89 @@
+{
+  "product_id": "xiaomi-14-12-512gb-black-5g-великобритания-s4-51500",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-14-12-512gb-black-5g-s4-51500",
+  "name": "Xiaomi 14 12+ 512Gb Black 5G",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S4)",
+  "price": 51500,
+  "catalog_url": "https://www.mi.com/global/product/xiaomi-14/specs/",
+  "catalog_title": "Xiaomi 14 12/512 ГБ, Black (чёрный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,36\", AMOLED LTPO, 2670×1200 (460 ppi), 1–120 Гц, до 3000 нит, Dolby Vision, HDR10+"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Gen 3 (4 нм)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ (UFS 4.0)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "Leica: 50 Мп (Light Fusion 900, f/1.6, OIS) + телеобъектив 50 Мп 75 мм (f/2.0, OIS) + сверхширокоугольная 50 Мп (115°)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "4610 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 90 Вт HyperCharge, беспроводная 50 Вт, обратная беспроводная"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM или nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 7, Bluetooth 5.4, USB-C 3.2"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Размеры",
+      "value": "152,8 × 71,5 × 8,2 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "193 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Black (чёрный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS (Android 14)"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/890_item_pl/21/03/2024/c546314ecc6ee9b9f6f2f2166fa540ae.png",
+    "https://i05.appmifile.com/251_item_pl/04/11/2025/a2c591e33dac902523f97064a20816be.png",
+    "https://i05.appmifile.com/595_item_pl/04/11/2025/ff775859f16e9ef9f608a9ecc8bb8f56.png",
+    "https://i05.appmifile.com/330_item_pl/04/11/2025/4618d268ebda51d6e6892b5b86678e9e.png"
+  ],
+  "images_local": [
+    "assets/product-images/693baa808436922edc08c494.jpg",
+    "assets/product-images/6d32058964141e397031f202.jpg",
+    "assets/product-images/eedb2cd4ad7b647118959822.jpg",
+    "assets/product-images/5502ba9a7285a7d86ee1bb09.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi 14 12 512gb black 5g~s4",
+  "photo_source": "https://www.mi.com/global/product/xiaomi-14/specs/",
+  "updated_at": "2026-10-24T12:01:54.762529Z"
+}

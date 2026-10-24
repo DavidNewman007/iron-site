@@ -1,0 +1,89 @@
+{
+  "product_id": "xiaomi-pad-8-8-256gb-grey-европа-s4-42500",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-pad-8-8-256gb-grey-s4-42500",
+  "name": "Xiaomi Pad 8 8+ 256Gb Grey",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 42500,
+  "catalog_url": "https://www.mi.com/global/product/xiaomi-pad-8/specs/",
+  "catalog_title": "Планшет Xiaomi Pad 8 8/256 ГБ, Gray (серый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "11,2\", IPS LCD, 3200×2136 (3,2K), 345 ppi, до 144 Гц, 3:2, до 800 нит, Dolby Vision, HDR10"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8s Gen 4 (4 нм), 8 ядер: 1×X4 3,2 ГГц + 3×A720 3,0 ГГц + 2×A720 2,8 ГГц + 2×A720 2,0 ГГц; GPU Adreno 825"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ UFS 4.1"
+    },
+    {
+      "key": "Основная камера",
+      "value": "13 Мп, f/2.2, автофокус PDAF, видео 4K 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп, f/2.28, видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "9200 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "45 Вт, USB Type-C (USB 3.2 Gen 1); блок питания не входит в комплект"
+    },
+    {
+      "key": "SIM",
+      "value": "нет (только Wi-Fi)"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 7, Bluetooth 5.4, ИК-порт; без NFC и сотовой связи"
+    },
+    {
+      "key": "Звук",
+      "value": "4 динамика с Dolby Atmos"
+    },
+    {
+      "key": "Размеры",
+      "value": "251,22 × 173,42 × 5,75 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "485 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Gray (серый)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 (Android 16)"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/360_item_uk/25/02/2026/1c824d5a0e2669e37b58b3500b665ed2.png",
+    "https://i05.appmifile.com/929_item_uk/25/02/2026/a532951c760123480fca1eac526f8b0b.png",
+    "https://i05.appmifile.com/857_item_uk/25/02/2026/e7071dccb0bd7505a62474cbbe8cdc29.png",
+    "https://i02.appmifile.com/24_item_sa/25/03/2026/6a27bdfcc3eb9ebd2d86c25e5520669d.png"
+  ],
+  "images_local": [
+    "assets/product-images/5cf14a90f5fbdca553e03b6b.jpg",
+    "assets/product-images/0ca8080bdfa8b1f25a3d7046.jpg",
+    "assets/product-images/314a11b83961c998f91e3f43.jpg",
+    "assets/product-images/dfe1a4d949aedcc7e8e31b91.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi pad 8 8 256gb grey~s4",
+  "photo_source": "https://www.mi.com/global/product/xiaomi-pad-8/specs/",
+  "updated_at": "2026-10-24T12:02:24.252594Z"
+}

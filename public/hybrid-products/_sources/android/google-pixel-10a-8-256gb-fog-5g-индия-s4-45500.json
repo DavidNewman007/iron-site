@@ -1,0 +1,105 @@
+{
+  "product_id": "google-pixel-10a-8-256gb-fog-5g-индия-s4-45500",
+  "category": "android",
+  "file_slug": "google-pixel-10a-8-256gb-fog-5g-s4-45500",
+  "name": "Google Pixel 10a 8+ 256Gb Fog 5G",
+  "country": "🇮🇳 Индия",
+  "warehouse": "(S4)",
+  "price": 45500,
+  "catalog_url": "https://store.google.com/gb/config/pixel_10a?hl=en-GB",
+  "catalog_title": "Google Pixel 10a 8/256 ГБ, Fog (светло-зелёный, «туман»)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,3\" pOLED Actua, 1080×2424 (422 ppi), 60–120 Гц, до 2000 нит HDR / 3000 нит пик"
+    },
+    {
+      "key": "Защитное стекло",
+      "value": "Corning Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "Google Tensor G4 + чип безопасности Titan M2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "48 Мп (f/1.7, OIS) + 13 Мп сверхширокоугольная (120°), Super Zoom до 8x"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "13 Мп, f/2.2, 96°"
+    },
+    {
+      "key": "Видео",
+      "value": "4K 30/60 к/с (основная), 4K 30 к/с (фронтальная)"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5100 мАч (типично), 30+ ч работы"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 50% за ~30 мин (зарядное 45 Вт USB-C PPS, продаётся отдельно); беспроводная Qi"
+    },
+    {
+      "key": "SIM",
+      "value": "nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, Wi-Fi 6E, Bluetooth 6, NFC, GPS/ГЛОНАСС/Galileo/BeiDou"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68 (пыль и вода)"
+    },
+    {
+      "key": "Разблокировка",
+      "value": "сканер отпечатка пальца, распознавание лица"
+    },
+    {
+      "key": "Корпус",
+      "value": "матовая композитная задняя панель, рамка из сатинированного алюминия"
+    },
+    {
+      "key": "Размеры",
+      "value": "153,9 × 73 × 9 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "183 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Fog (светло-зелёный, «туман»)"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 16 (на старте), 7 лет обновлений ОС и безопасности"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/aalucKlAm-9YDs254a6hB6L0RoWdO5LjPX4AOubEbBKXlRu1CgjCrNsMrtQadzo-wLIaccEsRAAPaHRLwZnjSC4SdQVkvZnKq7YP=w1200-rp",
+    "https://lh3.googleusercontent.com/bdVla-ncH5TJIAjwc_fovko5kqKtbHyYcGW4NPzWn4sEwaeEFygfCxqWrIi1foYzQb6IsqfHNPF1u5IQMwJbegw3PKJsrFeLi64=w1200-rp",
+    "https://lh3.googleusercontent.com/jgEg_O7DCpM_3V_qNQ_97iq0Xmw5JOjZuQVpvpfGP1lw5KzoLLugobjPIC9fB3lrAsgrd-1rsK-zaywCKpvLSA0MUo6LSM8PF_0=w1200-rp",
+    "https://lh3.googleusercontent.com/hkEORFoOF8OWwISs7stBwDpq_Yzw78WSmkcVMA-4RruqoX5mVuFzAqzopKAIAf5SCK7SgDw-i-rKAIYLI6Jk8LUdlpRpB4xIQA=w1200-rp"
+  ],
+  "images_local": [
+    "assets/product-images/ac13a6cfcb56d3d19d73e817.jpg",
+    "assets/product-images/f1c05b9637e69c0216e971c2.jpg",
+    "assets/product-images/f7da7b0b9561d427263c9815.jpg",
+    "assets/product-images/fb899d994f56c9e2feb1c910.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google pixel 10a 8 256gb fog 5g~s4",
+  "photo_source": "https://store.google.com/gb/config/pixel_10a?hl=en-GB",
+  "updated_at": "2026-10-24T12:02:42.964589Z"
+}

@@ -1,0 +1,103 @@
+{
+  "product_id": "lenovo-thinkbook-16g8ial-16-core-ultra-7-255h-16-512gb-arctic-grey-европа-s4-904",
+  "category": "laptops",
+  "file_slug": "lenovo-thinkbook-16g8ial-16-core-ultra-7-255h-16-512gb-arctic-grey-s4-90400",
+  "name": "Lenovo Thinkbook 16G8IAL 16 Core Ultra 7-255H 16+ 512Gb Arctic Grey",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 90400,
+  "catalog_url": "https://psref.lenovo.com/Product/ThinkBook/ThinkBook_16_G8_IAL",
+  "catalog_title": "Ноутбук Lenovo ThinkBook 16 Gen 8 (IAL) 16″ Core Ultra 7 255H, 16 ГБ, 512 ГБ, Arctic Grey",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Core Ultra 7-255H"
+    },
+    {
+      "key": "Ядра и частота",
+      "value": "16 ядер (6P + 8E + 2LP-E), 16 потоков, до 5,1 ГГц, кэш 24 МБ"
+    },
+    {
+      "key": "Нейропроцессор (NPU)",
+      "value": "Intel AI Boost, до 13 TOPS"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Тип памяти",
+      "value": "DDR5-5600, 2 слота SO-DIMM (до 64 ГБ)"
+    },
+    {
+      "key": "Накопитель",
+      "value": "512 ГБ SSD (M.2, PCIe 4.0 NVMe); второй слот M.2 2280"
+    },
+    {
+      "key": "Экран",
+      "value": "16″, 1920×1200 (WUXGA), IPS, 300 нит, 45% NTSC, 60 Гц, антибликовое"
+    },
+    {
+      "key": "Сенсорный экран",
+      "value": "нет"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "Intel Arc 140T (встроенная; с одним модулем памяти работает как Intel Graphics)"
+    },
+    {
+      "key": "Порты",
+      "value": "1× USB-C Thunderbolt 4 / USB4 40 Гбит/с (USB PD, DisplayPort 2.1), 1× USB-C 10 Гбит/с (USB PD, DisplayPort 1.4), 2× USB-A 5 Гбит/с (один Always On), HDMI 2.1, Ethernet RJ-45, кардридер SD, аудиоразъём 3,5 мм"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 6E (2×2), Bluetooth 5.3"
+    },
+    {
+      "key": "Веб-камера",
+      "value": "Full HD 1080p со шторкой (в части партий с ИК)"
+    },
+    {
+      "key": "Клавиатура",
+      "value": "с цифровым блоком"
+    },
+    {
+      "key": "Батарея",
+      "value": "45 Вт·ч, Rapid Charge Pro; адаптер 65 Вт USB-C"
+    },
+    {
+      "key": "Вес",
+      "value": "от 1,7 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "356 × 253,5 × 17,5 мм"
+    },
+    {
+      "key": "Корпус",
+      "value": "алюминиевая крышка, пластиковое основание"
+    },
+    {
+      "key": "Цвет",
+      "value": "Arctic Grey (серый)"
+    }
+  ],
+  "images_remote": [
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkBook/ThinkBook_16_G8_IAL/Compressedimage/ThinkBook_16_G8_IAL_CT1_02.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkBook/ThinkBook_16_G8_IAL/Compressedimage/ThinkBook_16_G8_IAL_CT1_01.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkBook/ThinkBook_16_G8_IAL/Compressedimage/ThinkBook_16_G8_IAL_CT1_03.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkBook/ThinkBook_16_G8_IAL/Compressedimage/ThinkBook_16_G8_IAL_CT1_05.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkBook/ThinkBook_16_G8_IAL/Compressedimage/ThinkBook_16_G8_IAL_CT2_04.png"
+  ],
+  "images_local": [
+    "assets/product-images/a32dc1a0de039030a95a9910.jpg",
+    "assets/product-images/d305cf1cdb8e7eaa25f72568.jpg",
+    "assets/product-images/34d9314d6a3c1ac65ff24dd6.jpg",
+    "assets/product-images/771663ba6ea051904a196ed3.jpg",
+    "assets/product-images/d8e372353d31809713abb571.jpg"
+  ],
+  "manual": true,
+  "manual_key": "lenovo thinkbook 16g8ial 16 core ultra 7 255h 16 512gb arctic grey~s4",
+  "photo_source": "https://psref.lenovo.com/Product/ThinkBook/ThinkBook_16_G8_IAL",
+  "updated_at": "2026-10-24T12:03:38.685673Z"
+}

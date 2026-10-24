@@ -1,0 +1,105 @@
+{
+  "product_id": "oneplus-nord-ce6-8-256gb-pitch-black-европа-s4-33800",
+  "category": "android",
+  "file_slug": "oneplus-nord-ce6-8-256gb-pitch-black-s4-33800",
+  "name": "OnePlus Nord CE6 8+ 256Gb Pitch Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 33800,
+  "catalog_url": "https://www.oneplus.com/global/nord-ce6/specs",
+  "catalog_title": "OnePlus Nord CE6 8/256 ГБ, Pitch Black (чёрный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,78\" AMOLED, 2772×1272 (1,5K), 450 ppi, до 144 Гц, пиковая яркость 3600 нит, 10 бит"
+    },
+    {
+      "key": "Защитное стекло",
+      "value": "Crystal Guard"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 7s Gen 4, графика Adreno 810"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ UFS 3.1"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп OmniVision OV50D40, f/1.8, оптическая стабилизация (OIS) + 2 Мп вспомогательная"
+    },
+    {
+      "key": "Видео",
+      "value": "до 4K 30 кадр/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп, f/2.0, автофокус"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мАч (глобальная версия; в индийской версии — 8000 мАч)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "SUPERVOOC 80 Вт, обратная проводная 6,5 Вт, обходная зарядка"
+    },
+    {
+      "key": "SIM",
+      "value": "2 × nano-SIM (Dual SIM Dual Active), eSIM нет"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, Wi-Fi 6, Bluetooth 5.2, NFC, ИК-порт, USB Type-C"
+    },
+    {
+      "key": "Навигация",
+      "value": "GPS, ГЛОНАСС, BeiDou, Galileo, QZSS"
+    },
+    {
+      "key": "Защита",
+      "value": "IP66, IP68, IP69, IP69K; MIL-STD-810H"
+    },
+    {
+      "key": "Сканер отпечатка",
+      "value": "в экране"
+    },
+    {
+      "key": "Размеры",
+      "value": "162,46 × 77,45 × 8,5 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "208 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Pitch Black (чёрный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "OxygenOS 16 на базе Android 16"
+    }
+  ],
+  "images_remote": [
+    "https://www.oneplus.com/content/dam/oneplus/2026/product-station/oneplus-nord-ce6/specs/OnePlus_Prado_Black_1080x1080_new.png",
+    "https://image01-in.oneplus.net/media/202604/29/e9dd0df19bca2fa88d4fba2074eb46db.png",
+    "https://image01-in.oneplus.net/media/202604/29/c555afc6a30b967907b4a889386d4a7d.png",
+    "https://www.oneplus.com/content/dam/oneplus/2026/product-station/oneplus-nord-ce6/assets/images-design-phone-black-1-b51636.png"
+  ],
+  "images_local": [
+    "assets/product-images/775100984af33195769fd961.jpg",
+    "assets/product-images/607cdb400578398fed78904b.jpg",
+    "assets/product-images/4047c3284b330d1395363dda.jpg",
+    "assets/product-images/bcb3084c175f43933d2dedaa.jpg"
+  ],
+  "manual": true,
+  "manual_key": "oneplus nord ce6 8 256gb pitch black~s4",
+  "photo_source": "https://www.oneplus.com/global/nord-ce6/specs",
+  "updated_at": "2026-10-24T12:02:28.704259Z"
+}

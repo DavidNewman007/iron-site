@@ -1,0 +1,93 @@
+{
+  "product_id": "xiaomi-mix-flip-12-512gb-black-европа-s4-48700",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-mix-flip-12-512gb-black-s4-48700",
+  "name": "Xiaomi MIX Flip 12+ 512Gb Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 48700,
+  "catalog_url": "https://www.mi.com/global/product/xiaomi-mix-flip/specs/",
+  "catalog_title": "Xiaomi MIX Flip 12/512 ГБ, Black (чёрный)",
+  "specs": [
+    {
+      "key": "Основной экран",
+      "value": "6,86\", AMOLED (UTG), 2912×1224 (460 ppi), 1–120 Гц, до 3000 нит"
+    },
+    {
+      "key": "Внешний экран",
+      "value": "4,01\", AMOLED, 1392×1208 (460 ppi), до 120 Гц, до 3000 нит"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Gen 3 (4 нм)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ (UFS 4.0)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "Leica: 50 Мп (Light Fusion 800, f/1.7, OIS) + телеобъектив 50 Мп 47 мм (f/2.0)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "4780 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 67 Вт HyperCharge"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 7, Bluetooth 5.4"
+    },
+    {
+      "key": "Размеры",
+      "value": "в разложенном виде 167,5 × 74,02 × 7,6 мм; в сложенном 85,54 × 74,02 × 15,99 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "192 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Black (чёрный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS (Android 14)"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/945_item_it/13/03/2025/c20124b151f276c10b61e8bfd0e45bdf.png",
+    "https://i05.appmifile.com/167_item_it/13/03/2025/de3c24a17db980ffaae7fcc2af3977a7.png",
+    "https://i05.appmifile.com/750_item_it/13/03/2025/2515ee90a947bb1badd01d94df37990e.png",
+    "https://i05.appmifile.com/385_item_it/13/03/2025/21b47e4183d8af6d09f7546c82fd872e.png",
+    "https://i05.appmifile.com/84_item_it/13/03/2025/035ee493766f5dfda2d44eeb828a2004.png",
+    "https://i05.appmifile.com/696_item_it/13/03/2025/c95392a2f63acf3ec4a230a8fb53c61c.png"
+  ],
+  "images_local": [
+    "assets/product-images/1f5670186660a22b1c009e94.jpg",
+    "assets/product-images/0b15037da70e13a25bb118e3.jpg",
+    "assets/product-images/12376fde71a07980d6752e7f.jpg",
+    "assets/product-images/e36b473e4225cbee7fdfc34f.jpg",
+    "assets/product-images/30933437e279f8860affa45c.jpg",
+    "assets/product-images/60b2d1c66a88379766086fa6.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi mix flip 12 512gb black~s4",
+  "photo_source": "https://www.mi.com/global/product/xiaomi-mix-flip/specs/",
+  "updated_at": "2026-10-24T12:02:24.002915Z"
+}

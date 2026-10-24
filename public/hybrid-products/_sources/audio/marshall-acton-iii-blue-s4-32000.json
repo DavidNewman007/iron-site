@@ -1,0 +1,95 @@
+{
+  "product_id": "marshall-acton-iii-blue-s4-32000",
+  "category": "audio",
+  "file_slug": "marshall-acton-iii-blue-s4-32000",
+  "name": "Marshall Acton III Blue",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 32000,
+  "catalog_url": "https://www.marshall.com/us/en/product/acton-iii",
+  "catalog_title": "Акустическая система Marshall Acton III, Midnight Blue (тёмно-синяя)",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "домашняя Bluetooth-колонка"
+    },
+    {
+      "key": "Цвет",
+      "value": "Midnight Blue (тёмно-синий)"
+    },
+    {
+      "key": "Звук",
+      "value": "стерео, корпус фазоинверторного типа"
+    },
+    {
+      "key": "Усилители",
+      "value": "1 × 30 Вт (вуфер) + 2 × 15 Вт (твитеры), класс D"
+    },
+    {
+      "key": "Диапазон частот",
+      "value": "45–20 000 Гц"
+    },
+    {
+      "key": "Макс. громкость",
+      "value": "95 дБ на 1 м"
+    },
+    {
+      "key": "Bluetooth",
+      "value": "5.2, готовность к LE Audio"
+    },
+    {
+      "key": "Радиус связи",
+      "value": "до 10 м"
+    },
+    {
+      "key": "Проводной вход",
+      "value": "3,5 мм (AUX)"
+    },
+    {
+      "key": "Управление",
+      "value": "аналоговые ручки громкости, баса и высоких частот, кнопка источника, play/pause"
+    },
+    {
+      "key": "Wi-Fi / микрофон",
+      "value": "нет"
+    },
+    {
+      "key": "Питание",
+      "value": "от сети 100–240 В, 50–60 Гц"
+    },
+    {
+      "key": "Размеры (Ш×В×Г)",
+      "value": "260 × 170 × 150 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "2,85 кг"
+    },
+    {
+      "key": "Приложение",
+      "value": "Marshall Bluetooth (iOS, Android), обновления по воздуху"
+    },
+    {
+      "key": "Комплектация",
+      "value": "колонка, сетевой кабель, документация"
+    }
+  ],
+  "images_remote": [
+    "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6639/6639218_sd.jpg",
+    "https://images.ctfassets.net/javen7msabdh/faXqyJr9ZK7m4hSJsPVrb/4561c9c14c6ce418b4e87d440db70dae/acton_iii_midnight-blue_front_desktop-1_x2.jpg",
+    "https://images.ctfassets.net/javen7msabdh/3CGoAK0rUlqCZciVpTfVXQ/8018e2a49b2d6ca2b7cd5ea16cc70db7/acton_iii_midnight-blue_front_desktop-3_x2.jpg",
+    "https://images.ctfassets.net/javen7msabdh/2qszv8Z0lIPSLqGxpRRnWC/bd4419427562f6f80a680cb021019b45/acton_iii_midnight-blue_front_desktop-4_x2.jpg",
+    "https://images.ctfassets.net/javen7msabdh/3PoUsvTKtAqwClG6sT3WQj/2d1e0bd9a0f13ba28558ae4b79f549a5/acton_iii_midnight-blue_front_desktop-6_x2.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/1e1aa229645988c85a12c072.jpg",
+    "assets/product-images/fe507c1d4e7917e2617d71a6.jpg",
+    "assets/product-images/016e4e92065823dac57c8861.jpg",
+    "assets/product-images/8a4c8fb67d0df211a55fd748.jpg",
+    "assets/product-images/c9e4417d7550c7a1558da52e.jpg"
+  ],
+  "manual": true,
+  "manual_key": "marshall acton iii blue~s4",
+  "photo_source": "https://www.marshall.com/us/en/product/acton-iii",
+  "updated_at": "2026-10-24T11:59:07.857030Z"
+}

@@ -1,0 +1,103 @@
+{
+  "product_id": "lenovo-thinkbook-16-16-amd-ryzen-7-250-16-512gb-luna-grey-сша-s4-87300",
+  "category": "laptops",
+  "file_slug": "lenovo-thinkbook-16-16-amd-ryzen-7-250-16-512gb-luna-grey-s4-87300",
+  "name": "Lenovo Thinkbook 16 16 AMD Ryzen 7-250 16+ 512Gb Luna Grey",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 87300,
+  "catalog_url": "https://psref.lenovo.com/Product/ThinkBook/ThinkBook_16_G9_AHP",
+  "catalog_title": "Ноутбук Lenovo ThinkBook 16 Gen 9 (AHP) 16″ Ryzen 7 250, 16 ГБ, 512 ГБ",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "AMD Ryzen 7-250"
+    },
+    {
+      "key": "Ядра и частота",
+      "value": "8 ядер, 16 потоков, 3,3–5,1 ГГц, кэш L3 16 МБ"
+    },
+    {
+      "key": "Нейропроцессор (NPU)",
+      "value": "AMD Ryzen AI, до 16 TOPS"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Тип памяти",
+      "value": "DDR5-5600, 2 слота SO-DIMM (до 64 ГБ)"
+    },
+    {
+      "key": "Накопитель",
+      "value": "512 ГБ SSD (M.2 2242, PCIe 4.0 NVMe); второй слот M.2 2280"
+    },
+    {
+      "key": "Экран",
+      "value": "16″, 1920×1200 (WUXGA), IPS, 400 нит, 45% NTSC, 60 Гц, антибликовое"
+    },
+    {
+      "key": "Сенсорный экран",
+      "value": "нет"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "AMD Radeon 780M (встроенная)"
+    },
+    {
+      "key": "Порты",
+      "value": "2× USB-C USB4 40 Гбит/с (USB PD, DisplayPort 1.4a), 2× USB-A 5 Гбит/с (один Always On), HDMI 2.1, Ethernet RJ-45, кардридер SD, аудиоразъём 3,5 мм"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 7 (2×2), Bluetooth 5.4"
+    },
+    {
+      "key": "Веб-камера",
+      "value": "Full HD 1080p + ИК, шторка"
+    },
+    {
+      "key": "Клавиатура",
+      "value": "с подсветкой и цифровым блоком"
+    },
+    {
+      "key": "Батарея",
+      "value": "48 Вт·ч, Rapid Charge Pro; адаптер 65 Вт USB-C"
+    },
+    {
+      "key": "Вес",
+      "value": "от 1,7 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "356 × 253,5 × 17,5 мм"
+    },
+    {
+      "key": "Корпус",
+      "value": "алюминиевая крышка, пластиковое основание"
+    },
+    {
+      "key": "Цвет",
+      "value": "Arctic Grey (серый)"
+    }
+  ],
+  "images_remote": [
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkBook/ThinkBook_16_G9_AHP/Compressedimage/ThinkBook_16_G9_AHP_CT1_03.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkBook/ThinkBook_16_G9_AHP/Compressedimage/ThinkBook_16_G9_AHP_CT1_01.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkBook/ThinkBook_16_G9_AHP/Compressedimage/ThinkBook_16_G9_AHP_CT1_02.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkBook/ThinkBook_16_G9_AHP/Compressedimage/ThinkBook_16_G9_AHP_CT1_06.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkBook/ThinkBook_16_G9_AHP/Compressedimage/ThinkBook_16_G9_AHP_CT2_03.png"
+  ],
+  "images_local": [
+    "assets/product-images/8c74159205608cd718cc13c9.jpg",
+    "assets/product-images/db717bc1cbd8b6e9b786982d.jpg",
+    "assets/product-images/ea3ad09da63a562a9a344d07.jpg",
+    "assets/product-images/5482922ec27d836641a5f897.jpg",
+    "assets/product-images/daaabb685a38ccb6bc3138d8.jpg"
+  ],
+  "manual": true,
+  "manual_key": "lenovo thinkbook 16 16 amd ryzen 7 250 16 512gb luna grey~s4",
+  "photo_source": "https://psref.lenovo.com/Product/ThinkBook/ThinkBook_16_G9_AHP",
+  "updated_at": "2026-10-24T12:03:38.723761Z"
+}

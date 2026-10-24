@@ -1,0 +1,99 @@
+{
+  "product_id": "meta-fury-light-blue-racing-green-s4-33400",
+  "category": "meta",
+  "file_slug": "meta-fury-light-blue-racing-green-s4-33400",
+  "name": "Meta Fury Light Blue Racing Green",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 33400,
+  "catalog_url": "https://www.abt.com/Meta-Fury-Sunglasses-51mm-in-Racing-Green-with-Light-Blue-Atlantic-Lenses-0YM0000052520B1/p/249168.html",
+  "catalog_title": "Умные очки Meta Fury, оправа Racing Green, линзы Light Blue Atlantic",
+  "specs": [
+    {
+      "key": "Бренд / модель",
+      "value": "Meta Fury (собственная линейка Meta, производство EssilorLuxottica)"
+    },
+    {
+      "key": "Код модели",
+      "value": "0YM000005-2520B1"
+    },
+    {
+      "key": "Оправа",
+      "value": "Racing Green (тёмно-зелёная, полупрозрачная)"
+    },
+    {
+      "key": "Линзы",
+      "value": "Light Blue Atlantic (светло-голубые)"
+    },
+    {
+      "key": "Тип линз",
+      "value": "солнцезащитные, не поляризованные"
+    },
+    {
+      "key": "Форма оправы",
+      "value": "квадратная, массивная, полный обод"
+    },
+    {
+      "key": "Размер",
+      "value": "51-22-150 мм (ширина линзы — переносица — заушник), высота линзы 41 мм; размер Standard, высокая посадка переносицы"
+    },
+    {
+      "key": "Камера",
+      "value": "12 Мп, сверхширокоугольная, угол обзора 100°; фото 3024×4032"
+    },
+    {
+      "key": "Видео",
+      "value": "до 3K"
+    },
+    {
+      "key": "Аудио",
+      "value": "открытые динамики"
+    },
+    {
+      "key": "Микрофоны",
+      "value": "многомикрофонная система"
+    },
+    {
+      "key": "ИИ",
+      "value": "Meta AI: голосовой ассистент, распознавание увиденного, перевод"
+    },
+    {
+      "key": "Память",
+      "value": "32 ГБ"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "более 8 ч работы; складной зарядный кейс"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 6, Bluetooth 5.4"
+    },
+    {
+      "key": "Совместимость",
+      "value": "iOS 17+ и Android 10+, приложение Meta AI"
+    },
+    {
+      "key": "Комплект",
+      "value": "очки, складной зарядный кейс, салфетка, инструкция (кабель USB-C не входит)"
+    }
+  ],
+  "images_remote": [
+    "https://content.abt.com/image.php/550fb00387935d750de04a3b0d0a6770?image=/images/products/BDP_Images/meta-sunglasses-0YM000005-2520B1-front-angled.jpg&ck=2&width=1500&height=1500&canvas",
+    "https://content.abt.com/image.php/101a6ca4071f42b66739ce6be3e5eabb?image=/images/products/BDP_Images/meta-sunglasses-0YM000005-2520B1-front.jpg&ck=2&width=1500&height=1500&canvas",
+    "https://content.abt.com/image.php/a44efb1eeba02e58890a50be6f9be2b7?image=/images/products/BDP_Images/meta-sunglasses-0YM000005-2520B1-right.jpg&ck=2&width=1500&height=1500&canvas",
+    "https://content.abt.com/image.php/a9c6e31f36a8cb2a3e9063a26a778f04?image=/images/products/BDP_Images/meta-sunglasses-0YM000005-2520B1-back.jpg&ck=2&width=1500&height=1500&canvas",
+    "https://content.abt.com/image.php/101186f5a4dabea766dd5cfd9362c81c?image=/images/products/BDP_Images/meta-fury-sunglasses-YM0000052520B1-in-the-box.jpg&ck=2&width=1500&height=1500&canvas"
+  ],
+  "images_local": [
+    "assets/product-images/a5ff860192e288d95711da4b.jpg",
+    "assets/product-images/1054f423da3902a9e52258c4.jpg",
+    "assets/product-images/69783e8397fc2fd713428278.jpg",
+    "assets/product-images/13b8c3a516285da46726843d.jpg",
+    "assets/product-images/55d2f782d30ff0fd65b458f2.jpg"
+  ],
+  "manual": true,
+  "manual_key": "meta fury light blue racing green~s4",
+  "photo_source": "https://www.abt.com/Meta-Fury-Sunglasses-51mm-in-Racing-Green-with-Light-Blue-Atlantic-Lenses-0YM0000052520B1/p/249168.html",
+  "updated_at": "2026-10-24T12:00:46.449466Z"
+}
