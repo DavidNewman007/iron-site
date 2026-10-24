@@ -1091,6 +1091,25 @@
           if (y.s) x.part_source = y.s;
         }
       }
+      // v83 (24.10.2026): варианты одной услуги — отдельными строками. Владелец: «добавь в оболочку и в общий прайс прошивку
+      // айфона через режим восстановления: с потерей данных 1500, без потери данных 2500». В прайсе это одна услуга
+      // «установка ПО» с вариантами (options, подпись — примечание строки листа), и до v83 оболочка видела только первую
+      // цену: прошивку без потери данных, переклейку «без гарантии», заднее стекло «оригинал», диагностику iMac с разборкой
+      // нельзя было выбрать. Разворачиваем, только если подписи разные: одинаковые («запчастей нет — цена целиком за
+      // работу» у двух групп профилактики) — это не варианты, а пересечение групп в листе. Работа и закупка с листа CRM
+      // относятся к первому варианту (он и есть строка услуги), у остальных их нет.
+      const flat = [];
+      for (const x of list) {
+        const opts = Array.isArray(x.options) ? x.options : [];
+        if (opts.length < 2 || new Set(opts.map(o => norm(o.label || ""))).size < opts.length || opts.some(o => !String(o.label || "").trim())) { flat.push(x); continue; }
+        opts.forEach((o, i) => {
+          const y = { ...x, price: o.price || 0, price_is_from: !!o.from, price_free: !!o.free, variant: [x.variant, o.label].filter(Boolean).join(", "), opt: true };
+          delete y.options;
+          if (i) { delete y.work; delete y.part_cost; delete y.part_source; }
+          flat.push(y);
+        });
+      }
+      list.splice(0, list.length, ...flat);
       S.svc = { list, devices: [...new Set((j.services || []).map(x => x.device))], costError: cost?.error || "" };
     } catch (e) { S.svc = { error: e.message }; }
   }
@@ -1163,9 +1182,10 @@
     return fam === "laptop" && !/mac/.test(norm(text)) ? "Ноутбуки на Windows" : fam === "phone" && !/iphone/.test(norm(text)) ? "Смартфон Android" : fam === "desktop" && !/mac/.test(norm(text)) ? "ПК / системный блок" : "";
   }
   // Как говорят в сервисе → как написано в прайсе.
+  // v83: у «по / прошивка» убран синоним «по» — он совпадал внутри любого слова («под привязку», «после залития»).
   const PP_SYN = [[/^акб|^батар|^аккум/, ["аккумулятор"]], [/^экран|^диспл/, ["диспле", "матриц"]], [/^крышк|^задн/, ["заднего стекла", "корпус"]],
     [/^ссд|^ssd|^диск/, ["ssd", "накопител", "диск"]], [/^клав/, ["клавиатур"]], [/^тач|^трек/, ["тачпад", "сенсор"]], [/^зарядк|^разъ/, ["разъёма зарядки", "разъема зарядки"]],
-    [/^чистк|^профил/, ["профилактик"]], [/^по$|^прошив|^ос$/, ["установка по", "по"]], [/^залит|^влаг/, ["залития"]], [/^вотч|^watch|^час/, ["watch"]]];
+    [/^чистк|^профил/, ["профилактик"]], [/^по$|^прошив|^ос$/, ["установка по"]], [/^залит|^влаг/, ["залития"]], [/^вотч|^watch|^час/, ["watch"]]];
   // Склад — первым блоком, наверху списка (v61). Владелец, 09.10.2026: «не видит деталь на складе, когда
   // добавляю работу из прайса на MacBook Air M1 — замена матрицы; один оригинал есть». Позиция с полки была,
   // но в самом низу — под всеми работами прайса, в блоке «Наш склад и другие поставщики»: её не видели.
@@ -1217,7 +1237,7 @@
       <input class="pp__q" data-act="ppq" value="${esc(P.q || "")}" placeholder="Поиск: дисплей, акб, oled…" autocomplete="off">
       ${dev || q.length >= 2 ? (items.length || extras.length ? `<div class="pp__list">${ppXHtml(extras, x => x.kind === "stock", "📦 На нашем складе")}${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
         <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}${dev ? "" : ` <span class="note">· ${esc(x.device)}</span>`}</b>
-        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_cost)}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${ppXHtml(extras, x => x.kind !== "stock", "Другие поставщики")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
+        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : x.price_free ? "бесплатно" : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_cost)}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${ppXHtml(extras, x => x.kind !== "stock", "Другие поставщики")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
         : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка или ищите по всему прайсу.</div>`}
       ${S.svc.costError ? `<p class="note">⚠️ Работа и закупка не загрузились (лист «${SVC_SHEET}»: ${esc(S.svc.costError)}) — цены клиенту верные, но без разбивки и без закупки запчасти.</p>` : ""}
       <p class="note">Нажатие добавляет работу в «Выполненные работы», цену — к «Итого», запчасть — в список запчастей. Можно добавить несколько.</p></div>`;
@@ -1290,7 +1310,8 @@
     const partBase = OP_PART[norm(x.operation)];
     // «Только работа» (запчасть по модели, напр. задняя крышка Android, v80) — строка запчасти без цены: под ней
     // варианты поставщиков именно для этой модели, выбор добавит цену детали к итогу (applySupplier).
-    if (partBase && (part || x.part_cost || x.variant || x.work_only)) {
+    // Вариант услуги (v83, x.opt: «оригинал», «без гарантии») — не вариант запчасти: строку детали без закупки не ставим.
+    if (partBase && (part || x.part_cost || (x.variant && !x.opt) || x.work_only)) {
       const src = part ? part.src : (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, ""])[1];
       const cost = part ? part.cost : x.part_cost;
       const list = partsOf(key, r).filter(p => p.name || p.src || p.cost);
