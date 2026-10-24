@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<yml_catalog date="2026-10-24 06:18">
+<yml_catalog date="2026-10-24 11:56">
 <shop>
 <name>Мастерская ремонта техники, Сочи</name>
 <company>ИП, Сочи, ул. Московская, 5</company>
@@ -815,6 +815,7 @@
 <offer id="de0809b64c1a" available="true"><url>https://1iron.ru/uslugi.html</url><price>1000</price><currencyId>RUR</currencyId><categoryId>5</categoryId><name>Перенос данных Ноутбуки на Windows</name><description></description></offer>
 <offer id="fc7c5cea020c" available="true"><url>https://1iron.ru/uslugi.html</url><price>1000</price><currencyId>RUR</currencyId><categoryId>5</categoryId><name>Апгрейд: увеличение оперативной памяти Ноутбуки на Windows</name><description>Цена за работу, запчасть оплачивается отдельно.</description></offer>
 <offer id="97adfadce373" available="true"><url>https://1iron.ru/uslugi.html</url><price>4000</price><currencyId>RUR</currencyId><categoryId>5</categoryId><name>Замена диска на SSD с установкой ПО Ноутбуки на Windows</name><description>Цена за работу, запчасть оплачивается отдельно.</description></offer>
+<offer id="5863f6c8a22e" available="true"><url>https://1iron.ru/uslugi.html</url><price>1000</price><currencyId>RUR</currencyId><categoryId>6</categoryId><name>Замена задней крышки Смартфон Android</name><description>Цена за работу, запчасть оплачивается отдельно.</description></offer>
 <offer id="7ecb11d35f72" available="true"><url>https://1iron.ru/uslugi.html</url><price>5000</price><currencyId>RUR</currencyId><categoryId>1</categoryId><name>Замена заднего стекла iPhone 14</name><description></description></offer>
 <offer id="f7d06face769" available="true"><url>https://1iron.ru/uslugi.html</url><price>5500</price><currencyId>RUR</currencyId><categoryId>1</categoryId><name>Замена заднего стекла iPhone 15</name><description></description></offer>
 <offer id="7d9835b6e4dd" available="true"><url>https://1iron.ru/uslugi.html</url><price>7500</price><currencyId>RUR</currencyId><categoryId>1</categoryId><name>Замена заднего стекла iPhone 15 Plus</name><description></description></offer>

@@ -739,3 +739,7 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .svc-log { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
 .svc-chip { display: inline-flex; align-items: center; gap: 4px; }
 .svc-chip .linkbtn { padding: 0 2px; }
+/* v80: цена работы из прайса — полем в списке «Из прайса» */
+.svc-price { width: 78px; height: 30px; border-radius: 8px; border: 1px solid var(--line-strong); background: var(--field); color: var(--text); font-weight: 700; text-align: right; padding: 0 6px; }
+.svc-price:focus { outline: none; border-color: var(--gold); }
+.svc-note { margin: 4px 0 0; }

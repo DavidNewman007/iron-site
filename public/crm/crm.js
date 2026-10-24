@@ -1062,7 +1062,7 @@
   // v75 (23.10.2026, план 93 §11.61): у вариантов iPhone закупка бывает «Виталя (полка)» — деталь Витали с нашей полки
   // дешевле MOS и Liberti. Без строки ниже «Работа из прайса» ставила пустое «Откуда», а сводка — «MosLCD».
   const SRC_NAME = [[/mos-?lcd/i, "MosLCD"], [/wepro/i, "WePro"], [/macsuper/i, "MacSuper"], [/liberti/i, "Liberti"], [/partslog/i, "PartsLog"], [/detaliapple/i, "DetaliApple"], [/витал/i, "Виталя Ростов"]];
-  const OP_PART = { "замена дисплея": "Дисплейный модуль", "замена аккумулятора": "АКБ", "замена заднего стекла": "Задняя крышка", "замена стекла": "Стекло дисплея",
+  const OP_PART = { "замена дисплея": "Дисплейный модуль", "замена аккумулятора": "АКБ", "замена заднего стекла": "Задняя крышка", "замена задней крышки": "Задняя крышка", "замена стекла": "Стекло дисплея",
     "замена стекла камеры": "Стекло камеры", "замена камеры": "Камера", "замена динамика": "Динамик", "замена клавиатуры": "Клавиатура", "замена корпуса": "Корпус",
     "замена матрицы без крышки": "Матрица", "замена накопителя (ssd)": "SSD", "замена нижнего шлейфа": "Нижний шлейф", "замена разъёма зарядки": "Разъём зарядки",
     "замена сенсора": "Тачскрин", "замена тачпада": "Трекпад", "замена шлейфа": "Шлейф", "замена материнской платы": "Материнская плата" };
@@ -1261,7 +1261,7 @@
       if (nodes && models.length) for (const x of S.stock.rows)
         if (x.qty > 0 && x.cost != null && models.includes(x.model) && nodes.includes(norm(x.node)) && !skMacMismatch(dev, op, x))
           out.push({ kind: "stock", operation: op, variant: x.variant + (x.color ? ", " + skColor(x.color) : ""), src: x.src, cost: x.cost, stock: x.key, qty: x.qty, ...w });
-      for (const o of S.supp?.map?.get(dev + "|" + op) || []) if (norm(o.s) !== "moslcd")
+      for (const o of suppList(dev, op)) if (norm(o.s) !== "moslcd")
         out.push({ kind: "supp", operation: op, variant: ppShort(o.t, dev), title: o.t, src: o.s, cost: o.c, here: suppHere(o.t), ...w });
     }
     for (const x of out) { x.device = dev; x.price = Math.ceil((x.work + x.cost) / 100) * 100; }
@@ -1288,7 +1288,9 @@
       setDirty(key, C.total, String(finalOf(base, d, pay)));
     }
     const partBase = OP_PART[norm(x.operation)];
-    if (partBase && (part || x.part_cost || x.variant)) {
+    // «Только работа» (запчасть по модели, напр. задняя крышка Android, v80) — строка запчасти без цены: под ней
+    // варианты поставщиков именно для этой модели, выбор добавит цену детали к итогу (applySupplier).
+    if (partBase && (part || x.part_cost || x.variant || x.work_only)) {
       const src = part ? part.src : (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, ""])[1];
       const cost = part ? part.cost : x.part_cost;
       const list = partsOf(key, r).filter(p => p.name || p.src || p.cost);
@@ -1321,11 +1323,15 @@
   function removeService(key, r, svc) {
     const val = valOf(key, r);
     if (hasPhrase(val(C.work), svc.work)) setDirty(key, C.work, removePhrase(val(C.work), svc.work));
-    minusTotal(key, r, svc.base);
-    const list = partsOf(key, r), left = list.filter(p => p.svcId !== svc.id);
+    const list = partsOf(key, r), mine = svc.id ? list.filter(p => p.svcId === svc.id) : [];
+    // Деталь могли сменить у поставщика после добавления — эта разница попала в итог (applySupplier: svcAdded), её тоже
+    // вычитаем. Цена, вписанная в строку руками, итог не меняла — её не трогаем.
+    const delta = mine.reduce((a, p) => a + (p.svcAdded || 0), 0);
+    minusTotal(key, r, (svc.base || 0) + delta);
+    const left = list.filter(p => !svc.id || p.svcId !== svc.id);
     if (left.length !== list.length) { S.parts.set(key, left.length ? left : [{ name: "", src: "", cost: "" }]); syncParts(key); }
     if (S.svcLog?.[key]) S.svcLog[key] = S.svcLog[key].filter(x => x.id !== svc.id);
-    toast(`Убрано: ${svc.work}${svc.base ? ` (−${money(svc.base)})` : ""} — из работ, итога и запчастей. Итого ${money(val(C.total)) || "—"}`, null, true);
+    toast(`Убрано: ${svc.work}${svc.base + delta ? ` (−${money(svc.base + delta)})` : ""} — из работ, итога и запчастей. Итого ${money(val(C.total)) || "—"}`, null, true);
   }
   // Запчасть, записанная раньше: «Дисплейный модуль (In-Cell TFT Full HD)» → работа «Замена дисплея (In-Cell TFT Full HD)».
   function serviceOfPart(key, r, p) {
@@ -1339,8 +1345,26 @@
   }
   function svcLogHtml(key) {
     const log = S.svcLog?.[key] || []; if (!log.length) return "";
-    return `<div class="svc-log"><span class="note">Из прайса:</span>${log.map(x => `<span class="chip svc-chip">${esc(x.work)}${x.base ? " · " + money(x.base) : ""}<button type="button" class="linkbtn" data-act="svcrm" data-id="${esc(x.id)}" title="Убрать из работ, итога и запчастей">✕</button></span>`).join("")}</div>`;
+    // Цена — полем (v80): владелец — «после выбора этой работы из прайса я смог изменить цену этой работы».
+    return `<div class="svc-log"><span class="note">Из прайса:</span>${log.map(x => `<span class="chip svc-chip">${esc(x.work)} · <input class="svc-price" data-svcprice="${esc(x.id)}" value="${esc(x.base || "")}" inputmode="numeric" autocomplete="off" title="Цена работы — итог пересчитается"> ₽<button type="button" class="linkbtn" data-act="svcrm" data-id="${esc(x.id)}" title="Убрать из работ, итога и запчастей">✕</button></span>`).join("")}</div>
+      <p class="note svc-note">Цену работы можно поменять — итог пересчитается; «✕» убирает работу из работ, итога и запчастей.</p>`;
   }
+
+  // Новая цена работы из прайса: итог −старая +новая (через baseOf/finalOf — скидка и наценка за оплату учтены).
+  function repriceService(key, r, svc, price) {
+    const val = valOf(key, r), d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total));
+    const base = Math.max(0, (q == null ? 0 : baseOf(q, d, pay)) - (svc.base || 0) + price);
+    setDirty(key, C.total, base ? String(finalOf(base, d, pay)) : "");
+    toast(`${svc.work}: ${money(svc.base || 0)} → ${money(price)} · итог ${money(val(C.total)) || "—"}`);
+    svc.base = price;
+  }
+  document.addEventListener("change", e => {
+    const id = e.target.dataset?.svcprice; if (id == null) return;
+    const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), svc = (S.svcLog?.[key] || []).find(x => x.id === id);
+    const price = toNum(e.target.value);
+    if (!svc || price == null || price < 0) { if (svc) e.target.value = svc.base || ""; return; }
+    if (price !== (svc.base || 0)) { repriceService(key, r, svc, price); if (key === "new") saveDraft(); refreshSaveBar(key); rerenderKeep(); }
+  });
 
   // ── запчасти списком: название · откуда · закупка (v18) ─────────────────────
   // В таблице по-прежнему три колонки: O «Запчасти» (уходит клиенту в отчёте — только
@@ -1520,7 +1544,7 @@
   // равных — та же закупка; без p.item (поставщика вписали руками) — единственная позиция с такой закупкой.
   function holdOffer(H, p, key, r) {
     const { dev, op } = partMeta(p, key, r), cost = toNum(p.cost);
-    const same = ((dev && op && S.supp?.map?.get(dev + "|" + op)) || []).filter(o => H.re.test(o.s));
+    const same = ((dev && op && suppList(dev, op)) || []).filter(o => H.re.test(o.s));
     const clean = t => String(t || "").replace(/\s*·\s*(в Сочи|под заказ).*$/, "").trim();
     const byItem = p.item ? same.filter(o => clean(o.t) === p.item) : [];
     const byCost = (byItem.length ? byItem : same).filter(o => o.c === cost);
@@ -1824,8 +1848,29 @@
   // Лучшая позиция у каждого поставщика: совпадение слов варианта; при равном — та, что лежит
   // в Сочи (Liberti пишет в названии «· в Сочи N шт» / «· под заказ», v36), иначе самая дешёвая.
   const suppHere = t => /· в Сочи (\d+ шт|есть)/.test(String(t || ""));
-  function supplierOffers(dev, op, variant) {
+  // Группы прайса без моделей («Смартфон Android», v80, 24.10.2026): у поставщика позиции на сотни моделей — оставляем те,
+  // в названии которых есть все слова модели из поля «Устройство» («Samsung S8 Plus» → крышки S8 Plus, не S8 и не S9).
+  // Бренды и слова по-русски («самсунг», «редми», «плюс») переводятся; «galaxy», «смартфон» не обязательны.
+  const DEV_RU = { "самсунг": "samsung", "сяоми": "xiaomi", "ксиоми": "xiaomi", "редми": "redmi", "хонор": "honor", "хуавей": "huawei", "хуавэй": "huawei",
+    "реалми": "realme", "поко": "poco", "техно": "tecno", "инфиникс": "infinix", "нокиа": "nokia", "мото": "moto", "оппо": "oppo", "виво": "vivo",
+    "нот": "note", "ноут": "note", "плюс": "plus", "про": "pro", "ультра": "ultra", "лайт": "lite", "макс": "max", "мини": "mini" };
+  const DEV_SOFT = ["смартфон", "телефон", "android", "андроид", "galaxy", "галакси"];
+  const devTokens = t => norm(t).replace(/\+/g, " plus ").split(/[^a-zа-я0-9]+/).filter(Boolean).map(w => DEV_RU[w] || w).filter(w => w.length >= 2 && !DEV_SOFT.includes(w));
+  function curDevText() {
+    const key = curKey(); if (key == null) return "";
+    const r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), k = key + ":" + C.device;
+    return String(S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, C.device) : "")).split("\n")[0];
+  }
+  function suppList(dev, op) {
     const list = S.supp?.map?.get(dev + "|" + op) || [];
+    if (!CANON_SKIP.includes(dev)) return list;
+    const ws = devTokens(curDevText()); if (!ws.length) return [];
+    // «Note 12 4G» не должна подхватывать «Note 12 Pro 4G»: слово-модификатор, которого нет в запросе, исключает позицию.
+    const MOD = ["pro", "plus", "max", "ultra", "lite", "mini", "fe"], wset = new Set(ws);
+    return list.filter(x => { const tt = new Set(devTokens(x.f || x.t)); return ws.every(w => tt.has(w)) && !MOD.some(m => tt.has(m) && !wset.has(m)); });
+  }
+  function supplierOffers(dev, op, variant) {
+    const list = suppList(dev, op);
     const words = norm(variant).split(/[^a-zа-я0-9%]+/).filter(w => w.length > 1);
     const score = t => words.filter(w => norm(t).includes(w)).length;
     const best = new Map();
@@ -1839,6 +1884,7 @@
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const dev = p.dev || (S.svc?.devices ? matchDevice(val(C.device)) : "");
     let op = p.op || opOfPart(p.name);
+    if (dev === "Смартфон Android" && op === "замена заднего стекла") op = "замена задней крышки"; // у Android — крышка (v80)
     // Mac (v60): «Матрица» — это «замена матрицы без крышки», а не «замена дисплея» (у Mac это разные работы в
     // прайсе). Если такой работы у модели нет — ищем работу модели, чья деталь (OP_PART) названа в запчасти.
     if (dev && op && !p.op && S.svc?.list && !S.svc.list.some(x => x.device === dev && x.operation === op)) {
@@ -1879,7 +1925,7 @@
     const open = S.cmp?.key === key && S.cmp.i === i;
     const { dev, op, variant } = partMeta(p, key, r);
     const stock = skCandidates(key, r, p, true) || [];
-    const supp = (dev && op && S.supp?.map?.get(dev + "|" + op)) || [];
+    const supp = (dev && op && suppList(dev, op)) || [];
     if (!open) return (stock.length + supp.length) > 1 ? `<div class="cmp-open"><button type="button" class="linkbtn" data-act="cmp" data-i="${i}">⚖️ Сравнить склады${dev ? "" : ""} <span class="note">(${stock.length + supp.length})</span></button></div>` : "";
     const words = norm(S.cmp.q || "").split(/\s+/).filter(Boolean);
     const vw = norm(variant).split(/[^a-zа-я0-9%]+/).filter(w => w.length > 1);
@@ -1912,7 +1958,7 @@
       const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
       const d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
       const pay = val(C.payment);
-      if (q != null) { const base = baseOf(q, d, pay) + (cost - old); setDirty(key, C.total, String(finalOf(base, d, pay))); }
+      if (q != null) { const base = baseOf(q, d, pay) + (cost - old); setDirty(key, C.total, String(finalOf(base, d, pay))); p.svcAdded = (p.svcAdded || 0) + (cost - old); }
     }
     syncParts(key);
   }
