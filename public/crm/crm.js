@@ -1341,13 +1341,22 @@
       const v = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
       const list = parseParts(v(C.parts), v(C.partFrom), v(C.partCost));
       S.parts.set(key, list.length ? list : [{ name: "", src: "", cost: "" }]);
+      // S взята из списка (одна запчасть с ценой = S) — при очистке списка её надо очищать (v78, syncParts).
+      const comp = composeParts(list).S;
+      if (comp != null && toNum(comp) === toNum(v(C.partCost))) (S.partsSum ||= {})[key] = comp; else if (S.partsSum) delete S.partsSum[key];
     }
     return S.parts.get(key);
   }
+  // S (закупка) — сумма цен из списка. *Исправлено 24.10.2026 (v78):* раньше при списке БЕЗ цен S не трогалась вовсе,
+  // и стёртая цена или удалённая последняя запчасть оставляли закупку в таблице: №7847 — запчасти и «Откуда» пустые,
+  // а S = 6000, и «Чистая работа» ушла в −2000 (10000 − 6000 закупка − 6000 сторонний мастер), убрать было нечем.
+  // Теперь S очищается, если список опустел или S была взята из списка (у старых заказов с суммой «без разбивки» на
+  // несколько запчастей S по-прежнему не трогается — там её не из чего пересчитать).
   function syncParts(key) {
     const { O, U, S: sum } = composeParts(S.parts.get(key) || []);
     setDirty(key, C.parts, O); setDirty(key, C.partFrom, U);
-    if (sum != null) setDirty(key, C.partCost, sum);
+    if (sum != null) { setDirty(key, C.partCost, sum); (S.partsSum ||= {})[key] = sum; return; }
+    if ((!O && !U) || S.partsSum?.[key] != null) { setDirty(key, C.partCost, ""); if (S.partsSum) delete S.partsSum[key]; }
   }
   // ── «Продажа запчастей» (v62, 09.10.2026) ──────────────────────────────────────────
   // Новый тип сделки. Запчасть берётся поиском по всему складу: встаёт в список запчастей с поставщиком и
@@ -4170,8 +4179,8 @@
       syncParts(key);
       const { S: sum } = composeParts(S.parts.get(key));
       const note = $app.querySelector("[data-parts-note]"); if (note && sum != null) note.innerHTML = `Закупка всего: <b>${money(sum)}</b>`;
-      const ro = $app.querySelector("[data-parts-sum]"); if (ro && sum != null) ro.textContent = money(sum);
       const val = x => { const k = key + ":" + x; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, x) : ""); };
+      const ro = $app.querySelector("[data-parts-sum]"); if (ro) ro.textContent = money(val(C.partCost)) || "—"; // и когда закупку очистили (v78)
       const box = $app.querySelector(".margin"); if (box && !S.multi) box.innerHTML = moneySummary(dealKey(val(C.type)), val, r);
       refreshSaveBar(key); return;
     }
