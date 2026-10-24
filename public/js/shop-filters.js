@@ -8,6 +8,7 @@
   const T = (key, ru) => (window.IRON_I18N ? window.IRON_I18N.t(key, ru) : ru);
 
   const IPHONE_SERIES_ORDER = [
+    "Duo",
     "18 Pro Max",
     "18 Pro",
     "18",
@@ -26,6 +27,7 @@
     "14"];
 
   const IPHONE_SERIES_LABEL = {
+    Duo: "iPhone Duo",
     Air: "iPhone Air",
     "17e": "iPhone 17e",
     "16e": "iPhone 16e",
@@ -71,6 +73,7 @@
   function seriesSortKey(series) {
     const idx = IPHONE_SERIES_ORDER.indexOf(series);
     if (series === "Air") return -165.5;
+    if (series === "Duo") return -195;
     const m = String(series || "").match(/^(\d+)\s*(e|pro\s*max|pro|plus)?$/i);
     if (!m) return idx >= 0 ? idx : 999;
     const variant = { "pro max": 0, pro: 1, plus: 2, "": 3, e: 4 }[String(m[2] || "").toLowerCase().replace(/\s+/g, " ")];
@@ -103,6 +106,9 @@
     let series = "";
     if (/^(?:iPhone\s+)?(?:\d{1,2}\s+)?Air\b/i.test(productName)) {
       series = "Air";
+    } else if (/^(?:iPhone\s+)?Duo\b/i.test(productName)) {
+      // iPhone Duo (24.10.2026, предзаказ S4): имя серии — слово, как у Air.
+      series = "Duo";
     } else {
       // Слово «iPhone» необязательно: склад S2 отдаёт «17e 256 Pink» и
       // «Air 256 Gold» — модель без марки, она вынесена в заголовок раздела
