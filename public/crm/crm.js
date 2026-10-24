@@ -26,7 +26,7 @@
     scope: "openid email https://www.googleapis.com/auth/spreadsheets",
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
-    lastCol: "AL", // AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
+    lastCol: "AN", // AM–AN «Предоплата» (24.10.2026, v77); AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
     // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
@@ -68,7 +68,8 @@
     gcontact: 23, // X «Google Contact ID» — пишет оболочка, если контакт заведён заранее (v45)
     payment: 35, // AJ «Оплата» (v62, 09.10.2026): наличные / перевод / карта или QR / счёт на организацию
     tradein: 36, // AK «Трейд-ин» (v71, 17.10.2026): сданные в зачёт устройства продажи, по строке на устройство
-    pawnUntil: 37 }; // AL «Залог: выкупить до» (v73, 22.10.2026) — дата, до которой клиент выкупает устройство
+    pawnUntil: 37, // AL «Залог: выкупить до» (v73, 22.10.2026) — дата, до которой клиент выкупает устройство
+    prepay: 38, prepayKind: 39 }; // AM «Предоплата, ₽», AN «Предоплата: частичная / полная» (v77, 24.10.2026)
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -117,6 +118,8 @@
     [C.payment]: { label: "Оплата" },
     [C.tradein]: { label: "Трейд-ин: сданные устройства" },
     [C.pawnUntil]: { label: "Выкупить до", entered: true, door: true },
+    [C.prepay]: { label: "Предоплата, ₽", num: true },
+    [C.prepayKind]: { label: "Предоплата" },
   };
 
   // Тип сделки (колонка AC). Пусто = ремонт. Ключи — как в DealTypes.js на стороне таблицы.
@@ -695,6 +698,7 @@
 
   // ── экраны ──────────────────────────────────────────────
   function render() {
+    hideSugg?.(); // плавающий список подсказок остался бы у поля, которого после перерисовки уже нет
     if (!DEMO && !S.token) return renderLogin();
     if (S.loading && !S.rows.length) return renderShell(`<div class="spinner">Загружаю базу…</div>`);
     if (S.error && !S.rows.length) return renderShell(`<div class="empty">${esc(S.error)}<div class="row" style="justify-content:center"><button class="btn" data-act="reload">Попробовать ещё раз</button>
@@ -866,7 +870,7 @@
       return telFieldHtml(c, label, v, dirty);
     } else {
       const shown = f.num && !dirty ? String(toNum(v) ?? v) : v;
-      const dl = f.free && S.opts[c]?.length ? ` list="dl-${c}"` : "";
+      const dl = f.free && S.opts[c]?.length ? ` data-list="dl-${c}"` : "";
       input = `<input data-edit="${c}" value="${esc(shown)}"${dl}${spell} ${f.num ? 'inputmode="decimal"' : f.tel ? 'inputmode="tel"' : ""}>` +
         (dl ? `<datalist id="dl-${c}">${S.opts[c].map(o => `<option value="${esc(o)}">`).join("")}</datalist>` : "");
     }
@@ -923,6 +927,15 @@
     </div>`;
   }
 
+  // Свой список вместо системного <select> (v77, 24.10.2026). Владелец: «в оболочке где-то были обычные всплывающие
+  // списки стиля по умолчанию, как на айфоне — сделай как на сайте». Вид — как у статусов (.dd), пункты — золотом при
+  // выборе. Значение — в скрытом поле с прежними data-атрибутами: выбор шлёт ему input и change, обработчики прежние.
+  function selHtml(attrs, value, opts, placeholder = "—") {
+    const list = opts.map(o => typeof o === "string" ? { v: o, t: o } : o), cur = list.find(o => o.v === (value ?? ""));
+    return `<div class="dd sel"><button type="button" class="dd__btn t-none" data-sel-btn aria-expanded="false">${cur && cur.v ? esc(cur.t) : `<span class="dd__ph">${esc(placeholder)}</span>`}<i>▾</i></button>
+      <div class="dd__list sel__list" role="listbox">${list.map(o => `<button type="button" class="dd__opt sel__opt" data-sel-v="${esc(o.v)}" aria-pressed="${o.v === (value ?? "")}">${esc(o.t)}</button>`).join("")}</div>
+      <input type="hidden" data-sel ${attrs} value="${esc(value ?? "")}"></div>`;
+  }
   function choiceButtons(key, col, current, opts, kindOf) {
     const chosen = S.dirty.has(key + ":" + col) ? S.dirty.get(key + ":" + col) : current;
     const list = opts.includes(current) || !current ? opts : [current, ...opts];
@@ -1199,7 +1212,7 @@
     const hitX = x => !q || q.split(" ").every(w => alts(w).some(a => norm(x.operation + " " + x.variant + " " + x.src + " " + (x.title || "") + (x.kind === "stock" ? " склад наличие" : "")).includes(a)));
     const extras = dev ? ppExtras(dev).filter(hitX).slice(0, 60) : [];
     P.extra = extras; // для нажатия: data-svx — номер в этом списке
-    return `<div class="pp"><div class="pp__head"><select data-act="ppdev"><option value="">— модель из прайса —</option>${S.svc.devices.map(d => `<option ${d === dev ? "selected" : ""}>${esc(d)}</option>`).join("")}</select>
+    return `<div class="pp"><div class="pp__head">${selHtml('data-act="ppdev"', dev || "", [{ v: "", t: "— модель из прайса —" }, ...S.svc.devices], "— модель из прайса —")}
       <button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>
       <input class="pp__q" data-act="ppq" value="${esc(P.q || "")}" placeholder="Поиск: дисплей, акб, oled…" autocomplete="off">
       ${dev || q.length >= 2 ? (items.length || extras.length ? `<div class="pp__list">${ppXHtml(extras, x => x.kind === "stock", "📦 На нашем складе")}${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
@@ -1425,8 +1438,8 @@
     const note = sum == null && tableS != null && list.filter(p => p.name).length > 1 ? `Закупка всего в таблице: ${money(tableS)}, без разбивки — впишите по строкам, и сумма пересчитается.` : sum != null ? `Закупка всего: <b>${money(sum)}</b>` : "";
     return `<div class="parts${lock ? " is-lock" : ""}"><div class="parts__head"><span>Запчасть</span><span>Откуда</span><span>Закупка, ₽</span><span></span></div>
       ${list.map((p, i) => `<div class="parts__row">
-        <input data-part="${i}" data-pf="name" value="${esc(p.name)}" list="dl-pname" placeholder="Например, АКБ" spellcheck="true" lang="ru"${lock ? " disabled" : ""}>
-        <input data-part="${i}" data-pf="src" value="${esc(p.src)}" list="dl-psrc" placeholder="Откуда"${lock ? " disabled" : ""}>
+        <input data-part="${i}" data-pf="name" value="${esc(p.name)}" data-list="dl-pname" placeholder="Например, АКБ" spellcheck="true" lang="ru"${lock ? " disabled" : ""}>
+        <input data-part="${i}" data-pf="src" value="${esc(p.src)}" data-list="dl-psrc" placeholder="Откуда"${lock ? " disabled" : ""}>
         <input data-part="${i}" data-pf="cost" value="${esc(p.cost)}" inputmode="decimal" placeholder="0"${lock ? " disabled" : ""}>
         <button type="button" class="linkbtn" data-act="rmpart" data-i="${i}" title="Убрать"${lock ? " disabled" : ""}>✕</button></div>${lock ? "" : supplierChipsHtml(key, r, p, i) + stockPartHtml(key, r, p, i) + compareHtml(key, r, p, i)}`).join("")}
       <div class="parts__foot"><button type="button" class="btn btn--ghost btn--sm" data-act="addpart"${lock ? " disabled" : ""}>＋ Запчасть</button><span class="note" data-parts-note>${note}</span></div>
@@ -1673,6 +1686,34 @@
     if (q != null) setDirty(key, C.total, String(finalOf(baseOf(q, d, old, cr), d, pay, cr)));
     if (key === "new" && S.multi) for (const x of S.extra) { const t = toNum(x[C.total]); if (t != null) x[C.total] = String(Math.round(Math.round(t / (1 + payUp(old))) * (1 + payUp(pay)))); }
     return toNum(val(C.total));
+  }
+  // ── предоплата (v77, 24.10.2026) ──────────────────────────────────────────────────
+  // Владелец: «добавь в заказ поле предоплата с пометкой частичная или полная». AM — сумма, AN — «Частичная» /
+  // «Полная». Сумма не меньше итога — сама становится «Полная», меньше — «Частичная»; кнопка «Полная» ставит сумму
+  // = итог. Ниже — сколько клиент доплатит при выдаче. Где платим мы (выкуп, залог) — поля нет. В заказе из
+  // нескольких устройств предоплата пишется только в первую строку (как трейд-ин), иначе посчиталась бы N раз.
+  function prepayHtml(key, r, val, dk) {
+    if (["buyback", "parts", "pawn"].includes(dk)) return "";
+    const amt = toNum(val(C.prepay)), kind = String(val(C.prepayKind) || ""), q = toNum(val(C.total));
+    const rest = q != null && amt ? Math.max(0, q - amt) : null;
+    if (key !== "new" && !editable(C.prepay, r)) return amt ? `<div class="note">💵 Предоплата ${money(amt)}${kind ? " (" + esc(kind.toLowerCase()) + ")" : ""}${rest != null ? ` · к оплате при выдаче ${money(rest)}` : ""}</div>` : "";
+    const dirty = S.dirty.has(key + ":" + C.prepay) || S.dirty.has(key + ":" + C.prepayKind);
+    return `<div class="field field--prepay${dirty ? " is-dirty" : ""}"><span>Предоплата</span><div class="prepay">
+      <input data-edit="${C.prepay}" value="${esc(amt ?? "")}" inputmode="decimal" placeholder="0" autocomplete="off">
+      <div class="seg">${["Частичная", "Полная"].map(k => `<button type="button" data-act="prepkind" data-v="${k}" aria-pressed="${norm(kind) === norm(k)}">${k}</button>`).join("")}</div></div>
+      <small class="note" data-prepay-rest>${prepayRestText(amt, q)}</small></div>`;
+  }
+  const prepayRestText = (amt, q) => !amt ? "Не вносили" : q == null ? "" : q - amt > 0 ? `К оплате при выдаче: <b>${money(q - amt)}</b>` : "Оплачено полностью";
+  // Сумма вписана — вид ставится сам: не меньше итога — «Полная», меньше — «Частичная», пусто — пусто.
+  function prepayAuto(key, r) {
+    const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+    const amt = toNum(val(C.prepay)), q = toNum(val(C.total));
+    setDirty(key, C.prepayKind, !amt ? "" : q != null && amt >= q ? "Полная" : "Частичная");
+    const box = $app.querySelector(".field--prepay");
+    if (box) {
+      box.querySelectorAll('[data-act="prepkind"]').forEach(b => b.setAttribute("aria-pressed", String(norm(b.dataset.v) === norm(val(C.prepayKind)))));
+      const t = box.querySelector("[data-prepay-rest]"); if (t) t.innerHTML = prepayRestText(amt, q);
+    }
   }
   function discountHtml(key, r, val) {
     const d = parseDiscount(val(C.discount)), unit = S.discUnit?.[key] || (d?.pct != null ? "pct" : "rub");
@@ -2131,10 +2172,10 @@
     const title = a.lockModel ? `<b>${esc(cap(f.node))} · ${esc(f.model)}</b>` : "своя позиция";
     return `<div class="sk-add" id="sk-add">
       <div class="sk-add__title">${a.edit ? "✎ Правка" : "＋ Новая запчасть"}: ${title}</div>
-      ${a.lockModel ? "" : `<div class="grid2">${inp("node", "Деталь (узел)", ` list="dl-sknode" placeholder="например, АКБ"`)}${inp("model", "Модель", ` list="dl-skmodel" placeholder="например, iPhone 13 Pro"`)}</div>`}
+      ${a.lockModel ? "" : `<div class="grid2">${inp("node", "Деталь (узел)", ` data-list="dl-sknode" placeholder="например, АКБ"`)}${inp("model", "Модель", ` data-list="dl-skmodel" placeholder="например, iPhone 13 Pro"`)}</div>`}
       <div class="field"><span>Откуда</span><div class="tchips sk-src">${sup.slice(0, 7).map(s => `<button type="button" class="tchip" data-act="sksrc" data-v="${esc(s)}" aria-pressed="${norm(s) === norm(f.src)}">${esc(isDonor(s) ? "🔧 Снята с донора" : s)}</button>`).join("")}</div>
-        <input data-skf="src" value="${esc(f.src)}" list="dl-sksrc" placeholder="или впишите поставщика"></div>
-      <div class="grid2">${inp("variant", "Качество (вариант)", ` list="dl-sktier" placeholder="например, Оригинал (без привязки)"`)}${inp("color", "Цвет <small class=\"note\">(если важен)</small>", ` list="dl-skcolor"`)}</div>
+        <input data-skf="src" value="${esc(f.src)}" data-list="dl-sksrc" placeholder="или впишите поставщика"></div>
+      <div class="grid2">${inp("variant", "Качество (вариант)", ` data-list="dl-sktier" placeholder="например, Оригинал (без привязки)"`)}${inp("color", "Цвет <small class=\"note\">(если важен)</small>", ` data-list="dl-skcolor"`)}</div>
       <div class="grid3">${inp("cost", dk === "donor" ? "Себестоимость, ₽ <small class=\"note\">(можно 0)</small>" : "Закупка, ₽", ` inputmode="decimal" placeholder="0"`)}${inp("price", dk === "vit" ? "Цена продажи, ₽ <small class=\"note\">(можно пусто)</small>" : "Цена продажи, ₽", ` inputmode="decimal" placeholder="0"`)}${a.edit ? "" : inp("qty", "Количество, шт", ` inputmode="numeric" placeholder="1"`)}</div>
       ${inp("note", dk === "donor" ? "С какого устройства снята <small class=\"note\">(модель, заказ №)</small>" : "Заметка", ` placeholder="${dk === "donor" ? "например, iPhone 13 Pro, заказ №7790" : ""}"`)}
       <div class="row"><button type="button" class="btn btn--red btn--sm" data-act="skaddsave">${a.edit ? "Сохранить позицию" : "Добавить на склад"}</button><button type="button" class="btn btn--ghost btn--sm" data-act="skaddcancel">Отмена</button></div>
@@ -2795,7 +2836,7 @@
       const cols = PER_DEVICE[dk].filter(c => !hidden(c));
       right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${TIN_TYPES.includes(dk) ? tinBox(key, r) : ""}${deviceGrid(cols, c => fh(c))}</section>`);
       right += box(5, extraDevicesHtml(dk) + (TIN_TYPES.includes(dk) ? tinHtml(key, r) : ""));
-      right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}${TIN_TYPES.includes(dk) ? fh(C.pass, { area: true }) : ""}</div>
+      right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}${TIN_TYPES.includes(dk) ? fh(C.pass, { area: true }) : ""}${prepayHtml(key, r, val, dk)}</div>
         ${payHtml(key, r, val, dk)}
         <div class="margin">${groupMoneySummary(dk)}</div></section>`);
     } else {
@@ -2826,7 +2867,7 @@
       : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : rep ? [C.total, "parts", C.extra] : spp ? [C.total, "parts", C.extra] : [C.total, C.partCost, C.extra];
     const partsRo = `<div class="field"><span>Запчасти (закуп), ₽ <small class="note">— сумма из списка запчастей</small></span><div class="ro" data-parts-sum>${esc(money(val(C.partCost)) || "—")}</div></div>`;
     const discBox = DISC_TYPES.includes(dk) && (isNew || editable(C.total, r)) ? discountHtml(key, r, val) : "";
-    html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => c === "parts" ? partsRo : fh(c)).join("")}${discBox}</div>
+    html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => c === "parts" ? partsRo : fh(c)).join("")}${discBox}${prepayHtml(key, r, val, dk)}</div>
       ${dk === "pawn" ? pawnChipsHtml(key, r, val) : ""}
       ${isNew || editable(C.total, r) || editable(C.buyback, r) ? payHtml(key, r, val, dk) : ""}
       <div class="margin">${moneySummary(dk, val, r)}</div></section>`;
@@ -2903,9 +2944,9 @@
     const spell = f.spell ? ' spellcheck="true" lang="ru" autocorrect="on" autocapitalize="sentences"' : ' spellcheck="false"';
     const attr = `data-extra="${i}" data-col="${c}"`;
     let el;
-    if (c === C.master) el = `<select ${attr}><option value="">как у первого</option>${(S.opts[C.master] || []).map(m => `<option ${m === v ? "selected" : ""}>${esc(m)}</option>`).join("")}</select>`;
+    if (c === C.master) el = selHtml(attr, v, [{ v: "", t: "как у первого" }, ...(S.opts[C.master] || [])], "как у первого");
     else if (AREAS.includes(c)) el = `<textarea ${attr} rows="2"${spell}>${esc(v)}</textarea>`;
-    else if (S.opts[c]?.length && !f.free) el = `<select ${attr}><option value="">—</option>${S.opts[c].map(o => `<option ${o === v ? "selected" : ""}>${esc(o)}</option>`).join("")}</select>`;
+    else if (S.opts[c]?.length && !f.free) el = selHtml(attr, v, [{ v: "", t: "—" }, ...S.opts[c]]);
     else el = `<input ${attr} value="${esc(v)}"${spell} ${f.num ? 'inputmode="decimal"' : ""}>`;
     return `<label class="field"><span>${esc(label)}</span>${el}</label>`;
   }
@@ -3367,14 +3408,14 @@
     try {
       // До последней колонки (v71). *Исправлено 17.10.2026:* раньше копия и очистка шли до AG, и «На связи» (AH–AI),
       // «Оплата» (AJ) оставались в строке — новый заказ, легший в неё, унаследовал бы чужой контакт «На связи».
-      const LAST = C.pawnUntil; // последняя колонка листа (v73: AL «Залог: выкупить до»)
+      const LAST = C.prepayKind; // последняя колонка листа (v77: AN «Предоплата: вид»)
       let raw = r.cells.slice(0, LAST + 1);
       if (!DEMO) {
         const chk = await api(`/values/${A1(0, r.row)}`);
         if (String(chk.values?.[0]?.[0] ?? "").trim() !== String(num)) throw new Error("Строка в таблице сдвинулась — обновите список (⟳) и повторите");
         raw = (await api(`/values/${A1(0, r.row, LAST, r.row)}?valueRenderOption=FORMULA`)).values?.[0] || [];
         await ensureTrash();
-        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AO`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AQ`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
           { method: "POST", body: JSON.stringify({ values: [[mskStamp(), S.email || "", r.row, ...raw.map(v => String(v ?? ""))]] }) });
         await api("/values:batchClear", { method: "POST", body: JSON.stringify({ ranges: [`'${CFG.sheet}'!B${r.row}:Q${r.row}`, `'${CFG.sheet}'!S${r.row}:${LETTER(LAST)}${r.row}`] }) });
         await logStatus([[r.row, cell(r, C.status), "Удалён"]]);
@@ -3391,7 +3432,7 @@
   async function restoreOrder() {
     const d = S.lastDeleted; if (!d) return;
     try {
-      const now = (await api(`/values/${A1(1, d.row, C.pawnUntil, d.row)}`)).values?.[0] || [];
+      const now = (await api(`/values/${A1(1, d.row, C.prepayKind, d.row)}`)).values?.[0] || [];
       if (now.some(v => String(v).trim())) return toast(`Строка ${d.row} уже занята — верните заказ вручную с листа «${TRASH}»`, null, true);
       const plain = d.raw.map(v => typeof v === "string" && v.startsWith("=") ? null : v);
       await api(`/values/${A1(0, d.row, d.raw.length - 1, d.row)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [plain] }) });
@@ -3736,7 +3777,7 @@
         const own = perDev.filter(c => String(x[c] ?? "").trim() !== "").map(c => ({ c, v: x[c], old: "" }));
         const ownCols = new Set(own.map(o => o.c));
         // общее — всё, что не поле устройства; мастер «как у первого», если свой не выбран
-        const base = shared.filter(ch => (!perDev.includes(ch.c) || (ch.c === C.master && !ownCols.has(C.master))) && ch.c !== C.tradein && ch.c !== C.buyback); // трейд-ин — только у первого
+        const base = shared.filter(ch => (!perDev.includes(ch.c) || (ch.c === C.master && !ownCols.has(C.master))) && ![C.tradein, C.buyback, C.prepay, C.prepayKind].includes(ch.c)); // трейд-ин и предоплата — только у первого
         devices.push([...base, ...own]);
       }
       let N = devices.length;
@@ -3912,6 +3953,15 @@
       const q = applyPayment(key, r, pay, dk);
       rerenderKeep(); if (key !== "new") refreshSaveBar(key);
       toast(`Оплата: ${pay || "не указана"}${q != null && !["buyback", "parts"].includes(dk) ? ` · итог ${money(q)}${payUp(pay) ? " (+10%)" : ""}` : ""}`);
+      return;
+    }
+    if (act === "prepkind") {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); if (key == null) return;
+      const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+      setDirty(key, C.prepayKind, t.dataset.v);
+      if (t.dataset.v === "Полная" && toNum(val(C.total)) != null) setDirty(key, C.prepay, String(toNum(val(C.total))));
+      refreshSaveBar(key); if (key === "new") saveDraft(); rerenderKeep();
+      if (t.dataset.v === "Частичная" && !toNum(val(C.prepay))) $app.querySelector(`[data-edit="${C.prepay}"]`)?.focus({ preventScroll: true });
       return;
     }
     if (act === "pawnremind") { await pawnRemind(t); return; }
@@ -4126,6 +4176,13 @@
       refreshSaveBar(key); return;
     }
     if (e.type === "change" && (t.dataset.edit === String(C.device) || (t.dataset.extra != null && t.dataset.col === String(C.device)))) {
+      // Вся строка — модель, записанная по-своему («iphone xr», «айфон 13 про макс») → стандартное название (v77).
+      const std = canonByKey().get(devKey(t.value));
+      if (std && std !== t.value.trim()) {
+        const was = t.value.trim(); t.value = std;
+        if (t.dataset.extra != null) S.extra[+t.dataset.extra][C.device] = std; else setDirty(curKey(), C.device, std);
+        toast(`Модель записана стандартно: «${std}» (было «${was}»)`);
+      }
       const sp = splitDeviceSerial_(t.value);
       if (sp && sp.rest !== t.value) {
         t.value = sp.rest;
@@ -4166,6 +4223,7 @@
     if (c === C.issue || c === C.work) t.closest(".field")?.parentElement?.querySelectorAll(".tchips [data-tip]").forEach(b => b.setAttribute("aria-pressed", String(hasPhrase(v, b.dataset.text))));
     if (t.type === "checkbox") t.nextElementSibling.textContent = t.checked ? "Да" : "Нет";
     refreshSaveBar(key);
+    if (c === C.prepay || c === C.total) prepayAuto(key, key === "new" ? null : S.byNum.get(location.hash.slice(2)));
     if (c === C.device && e.type === "input") { clearTimeout(onEdit.dev); onEdit.dev = setTimeout(() => suggestDevice(t.value), 120); }
     if (key === "new" && (c === C.name || c === C.phone)) {
       clearTimeout(onEdit.ac); onEdit.ac = setTimeout(() => suggest(c, t.value), 120);
@@ -4224,19 +4282,43 @@
   // символов». С 2 символов: сначала модели из прайса (как их узнаёт «Работа из прайса»), по частоте в заказах, потом —
   // как модель записывали в заказах раньше (то, чего в прайсе нет: Samsung, Dyson…). Слова ищутся в любом порядке,
   // «13 про макс» = iPhone 13 Pro Max, «эйр м1» = MacBook Air M1. Выбор подставляет строку целиком.
-  const DEV_SYN = { "про": "pro", "макс": "max", "мини": "mini", "плюс": "plus", "эйр": "air", "аир": "air", "се": "se", "макбук": "macbook",
+  // Модели вне прайса (v77): владелец — «стандартизировать все известные модели из базы и не только». В прайсе только
+  // те, что ремонтируем сейчас; старые iPhone, Watch по сериям, AirPods по поколениям — здесь, в том же написании.
+  const CANON_EXTRA = ["iPhone 2G", "iPhone 3G", "iPhone 3GS", "iPhone 4", "iPhone 4S", "iPhone 5", "iPhone 5C", "iPhone 5S", "iPhone SE", "iPhone 6", "iPhone 6 Plus",
+    "iPhone 6S", "iPhone 6S Plus", "iPhone 17 Air", "Apple Watch SE", "Apple Watch Ultra 2", ...[3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => "Apple Watch Series " + n),
+    "AirPods 2", "AirPods 3", "AirPods 4", "AirPods Pro", "AirPods Pro 2", "AirPods Pro 3", "AirPods Max", "iPad Pro", "iPad Air", "iPad mini"];
+  const CANON_SKIP = ["Ноутбуки на Windows", "ПК / системный блок", "Смартфон Android"]; // группы прайса, а не модели
+  // Ключ сравнения написаний: «iPhone Xr», «iphone xr», «айфон хр» → «iphone xr»; «IPhone5s» → «iphone 5s»; «13 ProMax» → «13 pro max».
+  function devKey(v) {
+    let t = norm(v).replace(/айфон|aйфон/g, "iphone").replace(/айпад/g, "ipad").replace(/эпп?л/g, "apple").replace(/(\d)с(?![а-я])/g, "$1s");
+    for (const [a, b] of [["про", "pro"], ["макс", "max"], ["мини", "mini"], ["плюс", "plus"], ["эйр", "air"], ["се", "se"], ["хр", "xr"], ["хс", "xs"], ["икс", "x"], ["вотч", "watch"], ["часы", "watch"]])
+      t = t.replace(new RegExp(`(?<![a-zа-я])${a}(?![a-zа-я])`, "g"), b);
+    return t.replace(/promax/g, "pro max").replace(/(\d)([a-z])/g, "$1 $2").replace(/([a-z])(\d)/g, "$1 $2").replace(/[^a-z0-9а-я+ ]+/g, " ")
+      .replace(/\b(\d) s\b/g, "$1s").replace(/\s+/g, " ").trim();
+  }
+  const canonList = () => [...(S.svc?.devices || []).filter(d => !CANON_SKIP.includes(d)), ...CANON_EXTRA.filter(d => !(S.svc?.devices || []).includes(d))];
+  function canonByKey() {
+    if (S.canonKey?.svc === !!S.svc?.devices) return S.canonKey.m;
+    const m = new Map(); for (const d of canonList()) if (!m.has(devKey(d))) m.set(devKey(d), d);
+    S.canonKey = { svc: !!S.svc?.devices, m }; return m;
+  }
+  const DEV_SYN = { "хр": "xr", "хс": "xs", "икс": "x", "про": "pro", "макс": "max", "мини": "mini", "плюс": "plus", "эйр": "air", "аир": "air", "се": "se", "макбук": "macbook",
     "айпад": "ipad", "аймак": "imac", "часы": "watch", "вотч": "watch", "эпл": "apple", "аирподс": "airpods", "эйрподс": "airpods", "ультра": "ultra", "м1": "m1", "м2": "m2", "м3": "m3", "м4": "m4" };
-  const devWords = q => skWords(q).split(" ").filter(Boolean).map(w => DEV_SYN[w] || w);
+  const devWords = q => skWords(String(q).replace(/(\d)с(?![а-я])/gi, "$1s").replace(/pro ?max/gi, "pro max").replace(/про ?макс/gi, "pro max")).split(" ").filter(Boolean).map(w => DEV_SYN[w] || w);
   function devIndex() {
     const ix = S.devIx;
     if (ix && ix.n === S.rows.length && ix.svc === !!S.svc?.devices) return ix;
-    const raw = new Map(), canon = new Map();
+    // v77: написания одной модели («iPhone Xr», «iphone xr») сливаются в стандартное название (canonByKey) — в подсказках
+    // одна строка с общим числом заказов; «как записывали в заказах» — только то, что ни к одной модели не сводится.
+    const raw = new Map(), canon = new Map(), ck = canonByKey();
     for (const r of S.rows) {
       const d = String(cell(r, C.device) || "").split("\n")[0].trim(); if (d.length < 3) continue;
-      const k = skWords(d), e = raw.get(k) || { text: d, n: 0 }; e.n++; raw.set(k, e);
+      const std = ck.get(devKey(d));
+      if (std) { canon.set(std, (canon.get(std) || 0) + 1); continue; }
+      const k = devKey(d), e = raw.get(k) || { text: d, n: 0 }; e.n++; raw.set(k, e);
     }
-    if (S.svc?.devices) for (const e of raw.values()) { const m = matchDevice(e.text); if (m) canon.set(m, (canon.get(m) || 0) + e.n); }
-    return S.devIx = { n: S.rows.length, svc: !!S.svc?.devices, raw, canon, canonKeys: new Set((S.svc?.devices || []).map(skWords)) };
+    if (S.svc?.devices) for (const e of raw.values()) { const m = matchDevice(e.text); if (m && !CANON_SKIP.includes(m)) canon.set(m, (canon.get(m) || 0) + e.n); }
+    return S.devIx = { n: S.rows.length, svc: !!S.svc?.devices, raw, canon };
   }
   function suggestDevice(value) {
     const box = document.getElementById("ac-dev"); if (!box) return;
@@ -4244,11 +4326,12 @@
     if (q.length < 2) { box.innerHTML = ""; return; }
     if (!S.svc?.list && !S.svc?.loading) loadServices().then(() => suggestDevice($app.querySelector(`[data-edit="${C.device}"]`)?.value));
     const ws = devWords(q), ok = t => { const h = skWords(t); return ws.every(w => h.includes(w)); }, ix = devIndex();
-    if (norm(q) && (S.svc?.devices || []).some(d => norm(d) === norm(q))) { box.innerHTML = ""; return; } // уже выбрано
-    const fromPrice = (S.svc?.devices || []).filter(ok).map(d => ({ text: d, n: ix.canon.get(d) || 0, price: true })).sort((a, b) => b.n - a.n).slice(0, 6);
-    const fromOrders = [...ix.raw.values()].filter(e => ok(e.text) && !ix.canonKeys.has(skWords(e.text)) && e.n > 1).sort((a, b) => b.n - a.n).slice(0, fromPrice.length ? 3 : 8);
+    if (canonList().some(d => d === q)) { box.innerHTML = ""; return; } // уже стандартное название
+    const priceSet = new Set(S.svc?.devices || []);
+    const fromPrice = canonList().filter(ok).map(d => ({ text: d, n: ix.canon.get(d) || 0, price: priceSet.has(d), std: true })).sort((a, b) => b.n - a.n).slice(0, 6);
+    const fromOrders = [...ix.raw.values()].filter(e => ok(e.text) && e.n > 1).sort((a, b) => b.n - a.n).slice(0, fromPrice.length ? 3 : 8);
     const all = [...fromPrice, ...fromOrders];
-    box.innerHTML = all.map(x => `<button type="button" class="ac-item ac-item--dev" data-devpick="${esc(x.text)}"><b>${esc(x.text)}</b><span>${x.price ? "📋 модель из прайса" : "как записывали в заказах"}${x.n ? ` · ${x.n} ${ordersWord(x.n)}` : ""}</span></button>`).join("");
+    box.innerHTML = all.map(x => `<button type="button" class="ac-item ac-item--dev" data-devpick="${esc(x.text)}"><b>${esc(x.text)}</b><span>${x.price ? "📋 модель из прайса" : x.std ? "📱 стандартное название" : "как записывали в заказах"}${x.n ? ` · ${x.n} ${ordersWord(x.n)}` : ""}</span></button>`).join("");
   }
   function suggest(c, value) {
     const box = document.getElementById("ac-" + c); if (!box) return;
@@ -4335,6 +4418,47 @@
     }
     refreshSaveBar(key);
   }
+  // ── свои выпадающие списки и подсказки (v77) ──────────────────────────────────────────
+  // <select> → selHtml (кнопка + список); <datalist> → поле с data-list, подсказки — плавающим списком того же вида.
+  // У datalist без атрибута list браузер свой список не показывает, а <option> внутри остаются источником вариантов.
+  document.addEventListener("click", e => {
+    const open = document.querySelector(".sel.is-open"), b = e.target.closest?.("[data-sel-btn]");
+    if (b) { const w = b.closest(".sel"), was = w === open; open?.classList.remove("is-open"); if (!was) { w.classList.add("is-open"); w.querySelector('.sel__opt[aria-pressed="true"]')?.scrollIntoView({ block: "nearest" }); } return; }
+    const o = e.target.closest?.("[data-sel-v]");
+    if (o) {
+      const w = o.closest(".sel"), inp = w.querySelector("[data-sel]");
+      inp.value = o.dataset.selV; w.classList.remove("is-open");
+      w.querySelector("[data-sel-btn]").innerHTML = (o.dataset.selV ? esc(o.textContent) : `<span class="dd__ph">${esc(o.textContent)}</span>`) + "<i>▾</i>";
+      w.querySelectorAll("[data-sel-v]").forEach(x => x.setAttribute("aria-pressed", String(x === o)));
+      inp.dispatchEvent(new Event("input", { bubbles: true })); inp.dispatchEvent(new Event("change", { bubbles: true }));
+      return;
+    }
+    if (open && !e.target.closest(".sel")) open.classList.remove("is-open");
+  });
+  var suggFor = null, suggMute = false; // var: render() может позвать hideSugg до этой строки
+  function hideSugg() { const p = document.getElementById("sugg-pop"); if (p) p.style.display = "none"; suggFor = null; }
+  function showSugg(inp) {
+    const dl = document.getElementById(inp.dataset.list); if (!dl || suggMute) return hideSugg();
+    const q = norm(inp.value), all = [...new Set([...dl.options].map(o => o.value).filter(Boolean))];
+    const list = (q ? all.filter(v => norm(v).includes(q) && norm(v) !== q) : all).slice(0, 40);
+    if (!list.length) return hideSugg();
+    let pop = document.getElementById("sugg-pop");
+    if (!pop) { pop = document.createElement("div"); pop.id = "sugg-pop"; pop.className = "dd__list sugg-pop"; document.body.appendChild(pop); }
+    const rc = inp.getBoundingClientRect();
+    Object.assign(pop.style, { position: "fixed", left: rc.left + "px", top: rc.bottom + 4 + "px", right: "auto", width: Math.max(rc.width, 220) + "px", maxHeight: Math.max(160, Math.min(320, innerHeight - rc.bottom - 12)) + "px", display: "grid" });
+    pop.innerHTML = list.map(v => `<button type="button" class="dd__opt sel__opt" data-sugg-v="${esc(v)}">${esc(v)}</button>`).join("");
+    suggFor = inp;
+  }
+  document.addEventListener("focusin", e => { if (e.target.matches?.("input[data-list]")) showSugg(e.target); });
+  document.addEventListener("input", e => { if (e.target.matches?.("input[data-list]")) showSugg(e.target); });
+  document.addEventListener("focusout", e => { if (e.target === suggFor) setTimeout(() => { if (document.activeElement !== suggFor) hideSugg(); }, 150); });
+  document.addEventListener("pointerdown", e => {
+    const o = e.target.closest?.("[data-sugg-v]"); if (!o) return;
+    e.preventDefault(); const inp = suggFor; if (!inp) return hideSugg();
+    inp.value = o.dataset.suggV; hideSugg(); suggMute = true;
+    inp.dispatchEvent(new Event("input", { bubbles: true })); inp.dispatchEvent(new Event("change", { bubbles: true })); suggMute = false;
+  });
+  window.addEventListener("scroll", hideSugg, { passive: true });
   // pointerdown, а не click: иначе поле теряет фокус раньше, чем выбор успевает сработать.
   document.addEventListener("pointerdown", e => {
     const it = e.target.closest(".ac-item"); if (!it) return;
@@ -4374,7 +4498,7 @@
       if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`);
     }, 0);
   });
-  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
+  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.dataset.sel != null || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
   window.addEventListener("hashchange", () => { window.scrollTo(0, 0); render(); });
   window.addEventListener("beforeunload", e => { if (S.pendingDoors > 0 || S.skDirty.size || [...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
   // Новая версия на сайте. GitHub Pages отдаёт страницу с кэшем на 10 минут, и 28.09.2026

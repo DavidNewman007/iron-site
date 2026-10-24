@@ -719,3 +719,19 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .pawn-chips { margin-top: 8px; align-items: center; }
 .pawn-chips .note { margin: 0 2px 0 6px; }
 .pawn-acts { align-items: center; gap: 8px; }
+
+/* v77: свои выпадающие списки вместо системных — как на сайте: тёмный список, выбранное и наведённое — золотом */
+.sel .sel__list { display: none; }
+.sel.is-open .sel__list { display: grid; }
+.sel__opt { background: transparent; color: var(--text); font-weight: 600; }
+.sel__opt:hover, .sel__opt[aria-pressed="true"] { background: rgba(212, 160, 18, .14); border-color: rgba(212, 160, 18, .6); color: var(--cream); }
+.sel__opt[aria-pressed="true"]::before { content: ""; }
+.sugg-pop { z-index: 60; background: #141414; }
+.pp__head .sel { flex: 1; min-width: 0; }
+/* v77: предоплата — сумма и вид */
+.prepay { display: flex; gap: 8px; align-items: stretch; }
+.prepay input { flex: 1; min-width: 0; }
+.field--prepay .note { display: block; margin-top: 4px; }
+.grid4 .field--prepay { grid-column: span 2; }
+.prepay input { min-width: 96px; }
+@media (max-width: 560px) { .grid4 .field--prepay { grid-column: 1 / -1; } }
