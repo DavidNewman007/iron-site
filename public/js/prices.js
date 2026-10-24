@@ -478,6 +478,8 @@
   if (!els.root) return;
 
   let allProducts = [];
+  let sortMode = "default";
+  let stockOnly = false;
   let iphoneHybridById = {};
   let iphoneHybridByIdNoPrice = new Map();
   let iphoneHybridByVariantKey = new Map();
@@ -536,6 +538,7 @@
     bindEvents();
     bindMobileCartCountSync();
     renderCart();
+    openCartFromHash();
 
     if (!SHEET_ID) {
       catalogLoadState = "ready";
@@ -1926,9 +1929,17 @@
 
   function bindEvents() {
     initCategoryPicker();
+    buildShopControls();
     els.search?.addEventListener("input", scheduleRenderGrid);
     els.category?.addEventListener("change", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // Раньше смена категории уносила страницу на самый верх, к шапке с
+      // фотографией, — товары приходилось листать заново. Теперь прокручиваем
+      // только если начало списка уже ушло выше экрана, и ровно к поиску.
+      const anchor = document.querySelector("#shop-prices .shop-toolbar");
+      if (anchor && anchor.getBoundingClientRect().top < 0) {
+        const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 0;
+        window.scrollTo({ top: window.scrollY + anchor.getBoundingClientRect().top - headerH - 8, behavior: "smooth" });
+      }
       renderGrid();
     });
     els.cartClear?.addEventListener("click", () => {
@@ -2025,6 +2036,19 @@
     });
 
     picker.dataset.ready = "1";
+  }
+
+  /**
+   * magazin.html#cart — сюда ведёт «Корзина →» с детальной карточки товара
+   * (24.10.2026). На телефоне раскрываем корзину поверх прайса, на компьютере
+   * она и так стоит справа — прокручиваем к ней. Хэш убираем, чтобы при
+   * обновлении страницы корзина не выскакивала снова.
+   */
+  function openCartFromHash() {
+    if (location.hash !== "#cart") return;
+    try { history.replaceState(null, "", location.pathname + location.search); } catch { /* без истории — не страшно */ }
+    if (isMobileShop()) els.cartPanel?.classList.add("is-open");
+    else els.cartPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function isMobileShop() {
@@ -3056,9 +3080,145 @@
 
     return allProducts.filter((p) => {
       if (cat !== "all" && p.category !== cat) return false;
+      if (stockOnly && !isInSochiNow(p)) return false;
       if (!matchesCategoryFilters(p)) return false;
       return matchesSearch(p, plan);
     });
+  }
+
+  /** «В наличии в Сочи»: не под заказ и не предзаказ, и не «0 шт». */
+  function isInSochiNow(p) {
+    return Boolean(p && p.inStock && !p.preorder);
+  }
+
+  // ---- Категории кнопками, сортировка и «только в наличии» (24.10.2026) ----
+  //
+  // До этого категория выбиралась из выпадающего списка: восемнадцать пунктов
+  // вперемешку (iPhone, iPad, AirPods, Gaming, Audio, Dyson, Gadgets, MacBook…),
+  // половина по-английски, пустая «Прочее» и ни одной цифры — чтобы понять, есть
+  // ли вообще Pixel, надо было открыть список и угадать пункт. Теперь это ряд
+  // кнопок, сгруппированный «Apple → другие марки → остальное», с числом
+  // позиций у каждой; пустые категории не показываются. Числа считаются с
+  // учётом поиска: набрал «pixel» — видно, в какой категории нашлось.
+  // Сам <select id="price-category"> остаётся — на нём держится вся логика,
+  // и в мини-приложении Telegram прежний выпадающий список никто не трогал.
+  const CATEGORY_CHIPS = [
+    ["all", "Все", "All"],
+    ["iphone", "iPhone", "iPhone"],
+    ["macbook", "MacBook", "MacBook"],
+    ["ipad", "iPad", "iPad"],
+    ["watch", "Apple Watch", "Apple Watch"],
+    ["airpods", "AirPods", "AirPods"],
+    ["mac", "iMac · Mac mini", "iMac · Mac mini"],
+    ["accessories", "Аксессуары", "Accessories"],
+    ["|"],
+    ["samsung", "Samsung", "Samsung"],
+    ["galaxy_watch", "Galaxy Watch", "Galaxy Watch"],
+    ["xiaomi", "Xiaomi · POCO", "Xiaomi · POCO"],
+    ["android", "Pixel · OnePlus · Honor", "Pixel · OnePlus · Honor"],
+    ["laptops", "Ноутбуки", "Laptops"],
+    ["|"],
+    ["gaming", "Приставки", "Gaming"],
+    ["audio", "Аудио", "Audio"],
+    ["dyson", "Dyson", "Dyson"],
+    ["gadgets", "Гаджеты", "Gadgets"],
+    ["meta", "Очки Meta", "Meta glasses"],
+    ["other", "Прочее", "Other"]];
+
+  function buildShopControls() {
+    const toolbar = document.querySelector("#shop-prices .shop-toolbar");
+    if (!toolbar || toolbar.dataset.controls === "1") return;
+    toolbar.dataset.controls = "1";
+    toolbar.classList.add("shop-toolbar--chips");
+
+    const sort = document.createElement("select");
+    sort.id = "price-sort";
+    sort.className = "shop-sort";
+    sort.setAttribute("aria-label", T("page.sort_aria", "Сортировка"));
+    sort.innerHTML = [
+      ["default", T("page.sort_default", "По моделям")],
+      ["asc", T("page.sort_cheap", "Сначала дешевле")],
+      ["desc", T("page.sort_expensive", "Сначала дороже")]]
+      .map(([v, l]) => `<option value="${v}">${escapeHtml(l)}</option>`)
+      .join("");
+    sort.addEventListener("change", () => {
+      sortMode = sort.value;
+      renderGrid();
+    });
+    toolbar.appendChild(sort);
+
+    const stock = document.createElement("label");
+    stock.className = "shop-stock-toggle";
+    stock.innerHTML = `<input type="checkbox" id="price-stock-only"><span>${escapeHtml(
+      T("page.stock_only", "Только в наличии в Сочи")
+    )}</span>`;
+    stock.querySelector("input").addEventListener("change", (e) => {
+      stockOnly = e.target.checked;
+      renderGrid();
+    });
+    toolbar.appendChild(stock);
+
+    const chips = document.createElement("nav");
+    chips.className = "shop-cats";
+    chips.id = "price-cats";
+    chips.setAttribute("aria-label", T("page.categories_aria", "Категории"));
+    toolbar.insertAdjacentElement("afterend", chips);
+    chips.addEventListener("click", (event) => {
+      const btn = event.target.closest("[data-cat]");
+      if (!btn || !els.category) return;
+      const value = btn.dataset.cat;
+      if (els.category.value === value) return;
+      els.category.value = value;
+      els.category.dispatchEvent(new Event("change", { bubbles: true }));
+      // Подпись старого выпадающего списка — чтобы не врал, если его покажут.
+      const label = document.querySelector("#price-category-trigger .shop-category-picker__label");
+      if (label) label.textContent = els.category.options[els.category.selectedIndex]?.textContent || "";
+    });
+  }
+
+  let categoryChipsSignature = "";
+
+  function renderCategoryChips() {
+    const root = document.getElementById("price-cats");
+    if (!root) return;
+    const plan = prepareQueryPlan((els.search?.value || "").trim());
+    const counts = { all: 0 };
+    for (const p of allProducts) {
+      if (stockOnly && !isInSochiNow(p)) continue;
+      if (!matchesSearch(p, plan)) continue;
+      counts.all += 1;
+      counts[p.category] = (counts[p.category] || 0) + 1;
+    }
+    const active = els.category?.value || "all";
+    const isEn = Boolean(I18N.isEn);
+    const loading = !allProducts.length;
+    const html = [];
+    let pendingSep = false;
+    for (const [cat, ru, en] of CATEGORY_CHIPS) {
+      if (cat === "|") {
+        pendingSep = html.length > 0;
+        continue;
+      }
+      const n = counts[cat] || 0;
+      if (!loading && !n && cat !== active && cat !== "all") continue;
+      if (pendingSep) html.push('<span class="shop-cats__sep" aria-hidden="true"></span>');
+      pendingSep = false;
+      html.push(
+        `<button type="button" class="shop-cat${cat === active ? " is-active" : ""}" data-cat="${cat}" aria-pressed="${
+          cat === active ? "true" : "false"
+        }">${escapeHtml(isEn ? en : ru)}${loading ? "" : `<span class="shop-cat__n">${n}</span>`}</button>`
+      );
+    }
+    const next = html.join("");
+    if (next === categoryChipsSignature) return;
+    categoryChipsSignature = next;
+    root.innerHTML = next;
+    // На телефоне лента прокручивается вбок: выбранная кнопка должна быть на
+    // виду, а не за правым краем (перерисовка сбрасывает прокрутку ленты).
+    const current = root.querySelector(".shop-cat.is-active");
+    if (current && root.scrollWidth > root.clientWidth) {
+      root.scrollLeft = current.offsetLeft - (root.clientWidth - current.offsetWidth) / 2;
+    }
   }
 
   function scheduleRenderGrid() {
@@ -3093,10 +3253,13 @@
       .toLowerCase();
 
     let modelRank = 9999;
-    if (/^iphone 14\b/.test(s)) modelRank = /\bplus\b/.test(s) ? 141 : 140;
-    else if (/^iphone 15\b/.test(s)) modelRank = /\bplus\b/.test(s) ? 151 : 150;
+    // Pro и Pro Max у 14–16 поколений получили свои ранги 24.10.2026: раньше
+    // «iPhone 15 Pro» считался равным базовому 15 и вставал как придётся.
+    const tier = /\bpro max\b/.test(s) ? 4 : /\bpro\b/.test(s) ? 3 : /\bplus\b/.test(s) ? 2 : 1;
+    if (/^iphone 14\b/.test(s)) modelRank = 140 + tier;
+    else if (/^iphone 15\b/.test(s)) modelRank = 150 + tier;
     else if (/^iphone 16e\b/.test(s)) modelRank = 160;
-    else if (/^iphone 16\b/.test(s)) modelRank = /\bplus\b/.test(s) ? 162 : 161;
+    else if (/^iphone 16\b/.test(s)) modelRank = 160 + tier;
     else if (/^iphone 18 pro max\b/.test(s)) modelRank = 184;
     else if (/^iphone 18 pro\b/.test(s)) modelRank = 183;
     else if (/^iphone 18e\b/.test(s)) modelRank = 180;
@@ -3114,14 +3277,41 @@
     return modelRank * 10 + simRank;
   }
 
+  // Изменено 24.10.2026: iPhone идут от новых к старым — так же, как серии в
+  // фильтре слева. Раньше список начинался с iPhone 14, а фильтр — с 18 Pro Max,
+  // и клиенту, открывшему «iPhone», первым экраном показывали самое старое.
+  // Внутри серии порядок SIM прежний: eSIM, потом SIM + eSIM.
   function sortGroups(groups, selectedCategory) {
     if (selectedCategory !== "iphone") return groups;
     return [...groups].sort((a, b) => {
       const ka = getIphoneSectionSortKey(a.section);
       const kb = getIphoneSectionSortKey(b.section);
+      const ma = Math.floor(ka / 10);
+      const mb = Math.floor(kb / 10);
+      if (ma !== mb) {
+        if (ma === 9999) return 1;
+        if (mb === 9999) return -1;
+        return mb - ma;
+      }
       if (ka !== kb) return ka - kb;
       return String(a.section || "").localeCompare(String(b.section || ""), "ru");
     });
+  }
+
+  /**
+   * Сортировка «дешевле / дороже» (24.10.2026): разделы по моделям при ней
+   * не нужны — получается один плоский список. Позиции без цены — в конец.
+   */
+  function applySortMode(groups, items) {
+    if (sortMode === "default") return groups;
+    const dir = sortMode === "desc" ? -1 : 1;
+    const sorted = [...items].sort((a, b) => {
+      const pa = a.price || 0;
+      const pb = b.price || 0;
+      if (!pa !== !pb) return pa ? -1 : 1;
+      return (pa - pb) * dir;
+    });
+    return sorted.length ? [{ section: "", items: sorted }] : [];
   }
 
   function renderProductCard(p, group) {
@@ -3459,7 +3649,8 @@
     syncFiltersColumn();
     const selectedCategory = els.category?.value || "all";
     const filtered = getFiltered();
-    const groups = sortGroups(groupBySection(filtered), selectedCategory);
+    const groups = applySortMode(sortGroups(groupBySection(filtered), selectedCategory), filtered);
+    renderCategoryChips();
 
     if (!groups.length) {
       if (catalogLoadState !== "ready" && !hasActiveShopQuery()) {

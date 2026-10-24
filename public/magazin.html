@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://docs.google.com" crossorigin>
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=2026-09-03-1">
-  <link rel="stylesheet" href="css/shop.css?v=2026-09-19-1">
+  <link rel="stylesheet" href="css/shop.css?v=2026-10-24-1">
   <link rel="stylesheet" href="css/parts.css?v=2026-09-19-1">
 </head>
 <body>
@@ -94,20 +94,6 @@
         <span>В наличии в Сочи — или под заказ 1–2 дня и предзаказ 5–7 дней</span>
         <span><a href="#dostavka">Доставка по России</a></span>
         <span class="shop-board__accent"><a href="#zapchasti">Запчасти — уже доступны</a></span>
-      </div>
-      <!--
-        Строка акции «Подарок подписчикам канала» (план 100, 01.10.2026; с 02.10 — два подарка
-        на выбор: −3000 ₽ на новый iPhone/MacBook или стекло к ремонту) — ОТДЕЛЬНОЙ строкой,
-        а не пунктом в ряду выше: ряд уже заполнен впритык (см. комментарий над табло), лишний
-        пункт снова вытолкнул бы «Запчасти — уже доступны» за правый край. Стили — атрибутом
-        style, чтобы не трогать shop.css ради временной строки; text-transform снят, иначе
-        iPhone превращается в «IPHONE».
-        data-promo-sub: по нему js/main.js не дублирует здесь общую полосу акции, а после
-        15.10.2026 сам прячет эту строку. Из разметки убрать при следующей правке после акции.
-        В Telegram mini-app строка не видна: там скрыта вся .shop-board (shop.css, .tg-miniapp).
-      -->
-      <div class="container shop-board__inner" data-promo-sub style="border-top:1px solid rgba(212,160,18,.22);white-space:normal;justify-content:center;text-align:center;text-transform:none;letter-spacing:.04em;min-height:32px;padding:4px 0">
-        <a href="podpiska.html?src=site">🎁 Подписчикам канала: −3000 ₽ на новый iPhone и MacBook или стекло в подарок к ремонту · получить&nbsp;код&nbsp;→</a>
       </div>
     </div>
 
@@ -179,10 +165,10 @@
             <option value="iphone">iPhone</option>
             <option value="ipad">iPad</option>
             <option value="airpods">AirPods</option>
-            <option value="gaming">Gaming · Console</option>
-            <option value="audio">Audio</option>
+            <option value="gaming">Приставки</option>
+            <option value="audio">Аудио</option>
             <option value="dyson">Dyson</option>
-            <option value="gadgets">Gadgets</option>
+            <option value="gadgets">Гаджеты</option>
             <option value="macbook">MacBook</option>
             <option value="mac">iMac / Mac mini / Studio</option>
             <option value="android">Google Pixel / OnePlus / Honor</option>
@@ -191,8 +177,8 @@
             <option value="galaxy_watch">Samsung Galaxy Watch</option>
             <option value="samsung">Samsung</option>
             <option value="xiaomi">Xiaomi / POCO / Redmi</option>
-            <option value="meta">Meta</option>
-            <option value="accessories">Accessories</option>
+            <option value="meta">Очки Meta</option>
+            <option value="accessories">Аксессуары</option>
             <option value="other">Прочее</option>
           </select>
           </div>
@@ -249,20 +235,29 @@
       </div>
     </section>
 
+    <!--
+      Три карточки под прайсом. До 24.10.2026 это был текст без единой ссылки —
+      человек читал «Trade-in» и не знал, куда нажать. Теперь у каждой своё
+      действие: Trade-in — в чат, б/у — раздел «♻️ Б/у» в боте заказов
+      (?start=bu, worker.js), запчасти — вкладка на этой же странице.
+    -->
     <section style="padding-top:0" id="promo-cards-section">
       <div class="container">
         <div class="cards">
           <article class="card">
             <h3>Trade-in</h3>
-            <p>Сдайте старый iPhone — зачтём в стоимость нового.</p>
+            <p>Сдайте старый iPhone, iPad или MacBook — назовём сумму в чате и зачтём её в стоимость нового.</p>
+            <a class="card-action" href="https://t.me/ironservice" target="_blank" rel="noopener">Оценить в Telegram →</a>
           </article>
           <article class="card">
             <h3>Б/у с проверкой</h3>
-            <p>Проверенные устройства с понятным состоянием.</p>
+            <p>Проверенные устройства с понятным состоянием. Актуальный список с ценами — в нашем боте.</p>
+            <a class="card-action" href="https://t.me/IRON_SERVICE_ORDER_bot?start=bu" target="_blank" rel="noopener">Смотреть б/у →</a>
           </article>
           <article class="card">
             <h3>Запчасти</h3>
-            <p>Дисплеи, АКБ, аксессуары — в сервисе и на заказ.</p>
+            <p>Дисплеи, аккумуляторы, задние стёкла и камеры — деталь отдельно или с установкой у нас.</p>
+            <a class="card-action" href="#zapchasti">Открыть прайс запчастей →</a>
           </article>
         </div>
       </div>
@@ -459,11 +454,11 @@
   <script defer src="js/config.js"></script>
   <script defer src="js/search-dictionary.js?v=2026-09-19-1"></script>
   <script defer src="js/main.js"></script>
-  <script defer src="js/shop-filters.js?v=2026-10-17-1"></script>
+  <script defer src="js/shop-filters.js?v=2026-10-24-1"></script>
   <script defer src="js/order-channels.js?v=2026-07-04-5"></script>
   <script defer src="js/shop-tabs.js?v=2026-09-11-1"></script>
   <script defer src="js/parts.js?v=2026-09-19-3"></script>
   <script defer src="js/pay-markup.js?v=2026-09-18-1"></script>
-  <script defer src="js/prices.js?v=2026-09-29-1"></script>
+  <script defer src="js/prices.js?v=2026-10-24-1"></script>
 </body>
 </html>

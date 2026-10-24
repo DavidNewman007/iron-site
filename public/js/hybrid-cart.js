@@ -600,6 +600,7 @@
       '<span class="cart-mobile-bar__info">' +
       `<strong id="hybrid-cart-count-mobile">0</strong> <span id="hybrid-cart-units">${T("hybrid.items", "шт.")}</span> · <strong id="hybrid-cart-total-mobile">—</strong>` +
       "</span>" +
+      `<a class="hybrid-detail-cart-bar__open" href="${shopCartUrl()}">${T("hybrid.open_cart", "Корзина")} →</a>` +
       '<div class="cart-mobile-bar__actions">' +
       `<button type="button" class="btn btn-primary" id="hybrid-cart-pay-sbp" hidden>${T("cart.pay_sbp", "СБП")}</button>` +
       `<button type="button" class="btn btn-primary" id="hybrid-cart-pay-card" hidden>${T("cart.pay_card", "Картой")}</button>` +
@@ -614,10 +615,33 @@
     revealPayButton();
   }
 
-  function renderMobileCartBar() {
+  /**
+   * Ссылка «Корзина →» ведёт в магазин с открытой корзиной (#cart, его ловит
+   * prices.js). Английские карточки лежат в /en/hybrid-products/ — у них свой
+   * магазин /en/shop.html.
+   */
+  function shopCartUrl() {
+    const isEn = window.IRON_I18N ? window.IRON_I18N.isEn : /^en/i.test(document.documentElement.lang || "");
+    return (isEn ? "/en/shop.html" : "/magazin.html") + "#cart";
+  }
+
+  // До 24.10.2026 панель корзины на детальной карточке была видна ТОЛЬКО при
+  // ширине ≤ 900px: на компьютере «+ Выбрать» клало товар в корзину, но показать
+  // её было негде — корзина «появлялась» лишь после возврата в магазин
+  // (замечание владельца на предзаказе Mac mini). Теперь на широком экране это
+  // плавающая плашка справа внизу; пустая корзина её прячет (класс is-empty).
+  function renderMobileCartBar(highlight) {
     ensureMobileCartBar();
     const cart = readCart();
     const count = cart.length;
+    const bar = document.querySelector(".hybrid-detail-cart-bar");
+    if (bar) {
+      bar.classList.toggle("is-empty", count === 0);
+      if (highlight) {
+        bar.classList.add("is-highlight");
+        window.setTimeout(() => bar.classList.remove("is-highlight"), 900);
+      }
+    }
     const total = cart.reduce((s, p) => s + (p.price || 0), 0);
     const countEl = document.getElementById("hybrid-cart-count-mobile");
     const totalEl = document.getElementById("hybrid-cart-total-mobile");
@@ -732,6 +756,17 @@
         cart.push(buildCartItem(pickBtn, productId));
       }
       writeCart(cart);
+      syncPickBtn(pickBtn);
+      renderMobileCartBar(idx < 0);
+    });
+
+    // Корзину могли поменять в соседней вкладке магазина — подхватываем.
+    window.addEventListener("storage", (event) => {
+      if (event.key !== CART_KEY) return;
+      syncPickBtn(pickBtn);
+      renderMobileCartBar();
+    });
+    window.addEventListener("pageshow", () => {
       syncPickBtn(pickBtn);
       renderMobileCartBar();
     });

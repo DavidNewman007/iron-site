@@ -9,7 +9,13 @@
     "other_category": "Other",
     "category_aria": "Category",
     "filters_aria": "Filter by specification",
-    "payment_note": "Prices are in Russian roubles. Foreign-issued Visa and Mastercard do not work in Russia — please bring cash or pay by a Russian card."
+    "payment_note": "Prices are in Russian roubles. Foreign-issued Visa and Mastercard do not work in Russia — please bring cash or pay by a Russian card.",
+    "sort_aria": "Sort",
+    "sort_default": "By model",
+    "sort_cheap": "Cheapest first",
+    "sort_expensive": "Most expensive first",
+    "stock_only": "In stock in Sochi",
+    "categories_aria": "Categories"
   },
   "shop": {
     "loading": "Loading the price list…",
@@ -184,7 +190,13 @@
     "Ремешок": "Band",
     "Тип": "Type",
     "Бренд": "Brand",
-    "Для устройства": "For device"
+    "Для устройства": "For device",
+    "Процессор": "Processor",
+    "Оперативная память": "Memory (RAM)",
+    "Накопитель": "Storage",
+    "Размер корпуса": "Case size",
+    "Оправа": "Frame",
+    "Поколение": "Generation"
   },
   "filter_prompts": {
     "Выберите серию": "Choose a series",
@@ -203,7 +215,15 @@
     "Выберите бренд": "Choose a brand",
     "Выберите модель": "Choose a model",
     "Что нужно": "What do you need",
-    "Для какого устройства": "Which device is it for"
+    "Для какого устройства": "Which device is it for",
+    "Выберите процессор": "Choose a processor",
+    "Оперативная память": "Memory (RAM)",
+    "Объём накопителя": "Choose the storage",
+    "Объём памяти": "Choose the storage",
+    "Процессор": "Processor",
+    "Размер корпуса": "Case size",
+    "Выберите оправу": "Choose a frame",
+    "Поколение": "Generation"
   },
   "sections": {
     "_комментарий": "Заголовки групп товаров. Часть приходит категорийными строками из таблицы, часть собирает resolveAccessorySection в prices.js. Точное совпадение надёжнее пословного перевода; заголовка нет в списке — работает пословный механизм названий товаров, и он же оставит заголовок русским, если слово незнакомо.",
@@ -243,6 +263,7 @@
   },
   "hybrid": {
     "items": "items",
-    "item_one": "item"
+    "item_one": "item",
+    "open_cart": "Cart"
   }
 }

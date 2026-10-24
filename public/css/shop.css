@@ -199,6 +199,103 @@
   border-color: var(--gold);
 }
 
+/*
+  Категории кнопками, сортировка и «Только в наличии» (24.10.2026).
+  Элементы строит prices.js (buildShopControls); класс shop-toolbar--chips
+  прячет прежний выпадающий список категорий — его <select> остаётся в DOM,
+  на нём держится логика. Кнопки — того же облика, что чипы фильтров.
+*/
+.shop-toolbar--chips .shop-category-picker {
+  display: none;
+}
+
+.shop-toolbar--chips input[type="search"] {
+  flex: 1 1 320px;
+}
+
+.shop-toolbar .shop-sort {
+  flex: 0 0 auto;
+  width: auto;
+  padding-right: 2.2rem;
+  cursor: pointer;
+}
+
+.shop-stock-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--cream-dim);
+  font-size: 0.92rem;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.shop-toolbar .shop-stock-toggle input {
+  flex: 0 0 auto;
+  width: 1.05rem;
+  height: 1.05rem;
+  padding: 0;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+.shop-cats {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin: -0.75rem 0 1.4rem;
+}
+
+.shop-cats__sep {
+  width: 1px;
+  height: 1.4rem;
+  margin: 0 0.25rem;
+  background: rgba(212, 160, 18, 0.3);
+}
+
+.shop-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(212, 160, 18, 0.34);
+  background: rgba(28, 28, 28, 0.84);
+  color: var(--cream);
+  border-radius: 999px;
+  padding: 0.42rem 0.85rem;
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.shop-cat:hover {
+  border-color: rgba(212, 160, 18, 0.65);
+}
+
+.shop-cat.is-active {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: #1c1c1c;
+}
+
+.shop-cat__n {
+  font-size: 0.76rem;
+  color: var(--text-muted, #a89f8c);
+}
+
+.shop-cat.is-active .shop-cat__n {
+  color: rgba(28, 28, 28, 0.7);
+}
+
+.tg-miniapp .shop-cats {
+  margin-top: 0;
+}
+
 .shop-filters {
   margin: -0.5rem 0 1.25rem;
   padding: 0.9rem 1rem 1rem;
@@ -952,6 +1049,41 @@
     flex: 1 1 100%;
   }
 
+  .shop-toolbar .shop-sort {
+    flex: 1 1 auto;
+    padding: 0.55rem 2rem 0.55rem 0.75rem;
+    font-size: 0.88rem;
+  }
+
+  .shop-stock-toggle {
+    font-size: 0.85rem;
+  }
+
+  /* На телефоне категории — одной лентой с прокруткой вбок, а не стеной из
+     четырёх строк над товарами. Разделители групп там лишние. */
+  .shop-cats {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: -0.4rem -1rem 1rem;
+    padding: 0.1rem 1rem 0.4rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .shop-cats::-webkit-scrollbar {
+    display: none;
+  }
+
+  .shop-cats__sep {
+    display: none;
+  }
+
+  .shop-cat {
+    flex: 0 0 auto;
+    padding: 0.38rem 0.75rem;
+    font-size: 0.86rem;
+  }
+
   .shop-category-picker__trigger {
     padding: 0.6rem 0.75rem;
     font-size: 0.95rem;
@@ -1127,6 +1259,106 @@
 
   .hybrid-detail-cart-bar {
     display: flex;
+  }
+
+  /* Плашка карточки товара на телефоне — в две строки: сумма и «Корзина →»
+     сверху, кнопки сеткой снизу. До 24.10.2026 всё стояло в один ряд, и при
+     включённой онлайн-оплате («СБП · 80 200 ₽», «Картой · …») Telegram и MAX
+     уезжали за правый край экрана — заказать в чат было нечем. */
+  .hybrid-detail-cart-bar {
+    flex-wrap: wrap;
+    row-gap: 0.45rem;
+  }
+
+  .hybrid-detail-cart-bar .cart-mobile-bar__info {
+    flex: 1 1 auto;
+  }
+
+  .hybrid-detail-cart-bar .cart-mobile-bar__actions {
+    flex: 1 1 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hybrid-detail-cart-bar .cart-mobile-bar__actions button {
+    min-width: 0;
+    width: 100%;
+  }
+
+  body:has(.hybrid-detail-cart-bar) {
+    padding-bottom: 7.5rem;
+  }
+}
+
+.hybrid-detail-cart-bar__open {
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hybrid-detail-cart-bar__open:hover {
+  text-decoration: underline;
+}
+
+/*
+  Плашка корзины на детальной карточке товара — на широком экране.
+  До 24.10.2026 её не было вовсе (только ≤ 900px): «+ Выбрать» добавлял товар,
+  а корзина появлялась лишь после возврата в магазин. Пустая корзина плашку
+  прячет (класс is-empty ставит hybrid-cart.js).
+*/
+@media (min-width: 901px) {
+  .hybrid-detail-cart-bar {
+    display: flex;
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 89;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.7rem 0.8rem 0.7rem 1.1rem;
+    background: rgba(39, 39, 39, 0.96);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    font-size: 0.9rem;
+    transition: background 0.25s, border-color 0.25s, transform 0.25s;
+  }
+
+  .hybrid-detail-cart-bar.is-empty {
+    display: none;
+  }
+
+  .hybrid-detail-cart-bar.is-highlight {
+    border-color: #bfd488;
+    background: #2f3426;
+    transform: translateY(-3px);
+  }
+
+  .hybrid-detail-cart-bar .cart-mobile-bar__info {
+    color: var(--cream-dim);
+    white-space: nowrap;
+  }
+
+  .hybrid-detail-cart-bar .cart-mobile-bar__info strong {
+    color: var(--gold);
+  }
+
+  .hybrid-detail-cart-bar .cart-mobile-bar__actions {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .hybrid-detail-cart-bar .btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.78rem;
+  }
+
+  .hybrid-detail-cart-bar__open {
+    padding: 0 0.3rem;
   }
 }
 
@@ -1675,6 +1907,13 @@
     display: none;
   }
 
+  /* Бейдж «Уже доступны» в трети ширины ломался на две строки и наезжал на
+     слово «Запчасти» (24.10.2026). На телефоне он лишний: вкладка и так
+     открывает прайс. */
+  .shop-tab__badge {
+    display: none;
+  }
+
   .shop-tab__name {
     font-size: 0.78rem;
     letter-spacing: 0.06em;
@@ -2053,3 +2292,22 @@
   opacity: 0.75;
 }
 
+
+/* Действие в карточках «Trade-in / Б/у / Запчасти» под прайсом (24.10.2026):
+   до этого карточки были текстом без ссылок. margin-top:auto прижимает
+   ссылку к низу — у трёх карточек разная длина текста. */
+.card-action {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  align-self: center;
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.card-action:hover {
+  text-decoration: underline;
+}

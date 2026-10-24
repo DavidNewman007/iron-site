@@ -48,6 +48,13 @@
     return IPHONE_AIR_COLOR_ALIASES[key] || key;
   }
 
+  const COLOR_TYPOS = { silveer: "silver", "space grey": "space gray", "sky-blue": "sky blue" };
+
+  function normalizeColorSpelling(color) {
+    const key = String(color || "").toLowerCase().replace(/\s+/g, " ").trim();
+    return COLOR_TYPOS[key] || key;
+  }
+
   function formatColorLabel(value) {
     return String(value || "")
       .split(" ")
@@ -56,9 +63,18 @@
       .join(" ");
   }
 
+  // Порядок серий: новые сверху, внутри поколения Pro Max → Pro → Plus →
+  // базовая → «e». До 24.10.2026 ключ брался только из IPHONE_SERIES_ORDER, а в
+  // нём не было Pro-версий 14–16 поколений: «15 Pro», «16 Pro Max» получали 999
+  // и уезжали в самый конец ряда, после iPhone 14. Список оставлен как
+  // эталон для известных серий, остальное считается по номеру.
   function seriesSortKey(series) {
     const idx = IPHONE_SERIES_ORDER.indexOf(series);
-    return idx >= 0 ? idx : 999;
+    if (series === "Air") return -165.5;
+    const m = String(series || "").match(/^(\d+)\s*(e|pro\s*max|pro|plus)?$/i);
+    if (!m) return idx >= 0 ? idx : 999;
+    const variant = { "pro max": 0, pro: 1, plus: 2, "": 3, e: 4 }[String(m[2] || "").toLowerCase().replace(/\s+/g, " ")];
+    return -parseInt(m[1], 10) * 10 + (variant ?? 3);
   }
 
   function seriesLabel(series) {
@@ -137,6 +153,11 @@
       if (color.includes("(")) color = color.split("(")[0].trim();
     }
 
+    // Цвет приводится к одному написанию: поставщики пишут «Sky blue» и
+    // «Sky Blue», а то и «Silveer» — в фильтре это были РАЗНЫЕ чипы, и часть
+    // аппаратов пряталась за дублем (24.10.2026). Подпись чипа всё равно
+    // строится formatColorLabel с заглавными буквами.
+    color = normalizeColorSpelling(color);
     color = normalizeAirColor(series, color);
 
     return { series, storage, color, sim };
@@ -1068,7 +1089,7 @@
   // которых не распознан ни один признак (в Dyson так лежат «(Диффузор,
   // распак)» и чужая подставка Sony), просто не фильтруются и видны, пока
   // фильтр не выбран.
-  function createSimpleFamily({ label, facets, parse, order = {}, labels = {}, prompts = {} }) {
+  function createSimpleFamily({ label, facets, parse, order = {}, labels = {}, prompts = {}, format, sortKey }) {
     function getTraits(product) {
       if (!product._shopTraits) product._shopTraits = parse(product.name);
       return product._shopTraits;
@@ -1080,9 +1101,15 @@
     function formatValue(facetId, value) {
       const map = labels[facetId];
       if (map && map[value]) return map[value];
+      const custom = format ? format(facetId, value) : "";
+      if (custom) return custom;
       return formatColorLabel(value);
     }
     function sortValues(facetId, values) {
+      if (sortKey && sortKey[facetId]) {
+        const key = sortKey[facetId];
+        return [...values].sort((a, b) => key(a) - key(b) || a.localeCompare(b, "ru"));
+      }
       const list = order[facetId];
       if (!list) return [...values].sort((a, b) => a.localeCompare(b, "ru"));
       return [...values].sort((a, b) => {
@@ -1241,6 +1268,142 @@
       kind: matchFirst(name, GADGET_KIND_RULES),
       brand: matchFirst(name, GADGET_BRAND_RULES),
     };
+  }
+
+  // --- Общие разборы для категорий, у которых фильтров не было до 24.10.2026:
+  // iMac / Mac mini / Studio, Android, Xiaomi, ноутбуки, Galaxy Watch, Meta.
+  // Владелец: «сделай доработку, чтобы было удобней выбирать и находить модель».
+  // Память — в гигабайтах строкой («256», «1024»), как у iPhone, только «ТБ»
+  // считается из числа: у Android встречается и «1Tb», и «1024Gb».
+  function parseStorageGb(name) {
+    const m = String(name || "").match(/(?:\d+\s*\+\s*)?(\d+)\s*(tb|gb)\b/i);
+    if (!m) return "";
+    const num = parseInt(m[1], 10);
+    return String(/tb/i.test(m[2]) ? num * 1024 : num);
+  }
+
+  function parseRamGb(name) {
+    const m = String(name || "").match(/\b(\d{1,2})\s*\+\s*\d+\s*(?:tb|gb)\b/i);
+    return m ? m[1] : "";
+  }
+
+  function formatGb(value) {
+    const n = parseInt(value, 10);
+    if (!Number.isFinite(n)) return "";
+    if (n >= 1024 && n % 1024 === 0) return `${n / 1024} ${T("filters.tb", "ТБ")}`;
+    return `${n} ${T("filters.gb", "ГБ")}`;
+  }
+
+  const byNumber = (value) => {
+    const n = parseFloat(String(value).replace(/[^\d.]/g, ""));
+    return Number.isFinite(n) ? n : 99999;
+  };
+
+  // Поколение и «уровень» чипа/модели: новые сверху, старшие внутри поколения
+  // выше. «M5 Max» → 5 и Max; «Pixel 11 Pro XL» → 11 и Pro XL.
+  function tierRank(text) {
+    const t = String(text || "").toLowerCase();
+    if (/ultra/.test(t)) return 0;
+    if (/fold|flip/.test(t)) return 1;
+    if (/pro\s*(?:xl|max|plus)/.test(t)) return 2;
+    if (/\bmax\b/.test(t)) return 2;
+    if (/\bpro\b/.test(t)) return 3;
+    if (/\bt\b|\d+t\b/.test(t)) return 4;
+    if (/\bce\d*|\d+[ae]\b|\bfe\b|\blite\b/.test(t)) return 6;
+    return 5;
+  }
+
+  const byGenerationDesc = (value) => {
+    const m = String(value || "").match(/(\d+(?:\.\d+)?)/);
+    const gen = m ? parseFloat(m[1]) : 0;
+    return -gen * 10 + tierRank(value);
+  };
+
+  // Модели разных марок в одном ряду: сначала по марке, внутри — новые
+  // сверху. Без этого «Honor 600» обгонял Pixel 11 просто из-за числа 600.
+  function byBrandThenGeneration(prefixes) {
+    return (value) => {
+      const v = String(value || "").toLowerCase();
+      let idx = prefixes.findIndex((p) => v.startsWith(p));
+      if (idx < 0) idx = prefixes.length;
+      return idx * 100000 + byGenerationDesc(value);
+    };
+  }
+
+  function parseMacTraits(name) {
+    const n = String(name || "");
+    const model = /imac/i.test(n) ? "imac" : /mac\s*mini/i.test(n) ? "mini" : /mac\s*studio/i.test(n) ? "studio" : /mac\s*pro/i.test(n) ? "macpro" : "";
+    const chip = n.match(/\b(M\d)(\s+(?:Pro|Max|Ultra))?\b/i);
+    return {
+      model,
+      chip: chip ? (chip[1].toUpperCase() + (chip[2] ? " " + chip[2].trim().replace(/^./, (c) => c.toUpperCase()) : "")) : "",
+      ram: parseRamGb(n),
+      storage: parseStorageGb(n),
+    };
+  }
+
+  // «Google Pixel 11 Pro XL 16+ 512Gb …» → линейка «Pixel 11 Pro XL».
+  function parseAndroidTraits(name) {
+    const n = String(name || "").replace(/^[^\p{L}\p{N}]+/u, "");
+    const brand = /pixel|google/i.test(n) ? "google" : /oneplus/i.test(n) ? "oneplus" : /honor/i.test(n) ? "honor" : "";
+    const kind = /watch/i.test(n) ? "watch" : /\bband\b/i.test(n) ? "band" : "phone";
+    let line = "";
+    if (kind === "phone") {
+      const m =
+        n.match(/\b(Pixel\s+\d+[a]?(?:\s+Pro(?:\s+(?:XL|Fold))?)?)/i) ||
+        n.match(/\b(Nord\s+(?:CE)?\d+)/i) ||
+        n.match(/\bHonor\s+([A-Z]?\d+[a-z]?)/i);
+      if (m) line = (brand === "honor" ? "Honor " : "") + m[1].replace(/\s+/g, " ");
+    }
+    return { brand, kind, line, storage: kind === "phone" ? parseStorageGb(n) : "" };
+  }
+
+  // Xiaomi, Redmi и POCO: семейство → линейка → память. Планшеты и бытовая
+  // техника отдельным «типом», чтобы не смешивались с телефонами.
+  function parseXiaomiTraits(name) {
+    const n = String(name || "");
+    const kind = /\bpad\b/i.test(n) ? "pad" : /vacuum|fryer|пылесос|фритюр/i.test(n) ? "home" : "phone";
+    let family = "";
+    if (/^poco\b/i.test(n)) family = "poco";
+    else if (/^redmi\b/i.test(n)) family = "redmi";
+    else if (/^xiaomi\b/i.test(n)) family = "xiaomi";
+    let line = "";
+    if (kind === "phone") {
+      const m =
+        n.match(/^(Poco\s+[FXM]\d+(?:\s+(?:Pro\s+Max|Pro|Ultra))?)/i) ||
+        n.match(/^(Redmi\s+Note\s+\d+[A-Z]?(?:\s+Pro(?:\s+(?:Plus|Max))?)?)/i) ||
+        n.match(/^(Redmi\s+[A]?\d+[A-Z]?(?:\s+Pro)?)/i) ||
+        n.match(/^(Xiaomi\s+(?:MIX\s+Flip|\d+[T]?(?:\s+(?:Pro\s+Max|Pro|Ultra))?))/i);
+      if (m) line = m[1].replace(/\s+/g, " ").replace(/^poco/i, "POCO");
+    }
+    return { family, kind, line, storage: kind === "home" ? "" : parseStorageGb(n) };
+  }
+
+  function parseLaptopTraits(name) {
+    const n = String(name || "");
+    const brand = /^hp\b/i.test(n) ? "hp" : /^lenovo\b/i.test(n) ? "lenovo" : "";
+    const kind = /\btab\b/i.test(n) ? "tablet" : "laptop";
+    const cpu = /ryzen/i.test(n) ? "amd" : /intel|core/i.test(n) ? "intel" : "";
+    return { brand, kind, cpu: kind === "laptop" ? cpu : "", ram: parseRamGb(n) };
+  }
+
+  function parseGalaxyWatchTraits(name) {
+    const n = String(name || "");
+    const m = n.match(/Watch\s+(Ultra|\d+(?:\s+Classic)?)/i);
+    const size = n.match(/(\d{2})\s*mm/i);
+    return {
+      line: m ? "Watch " + m[1].replace(/\s+/g, " ") : "",
+      size: size ? size[1] : "",
+    };
+  }
+
+  const META_FRAMES = ["wayfarer", "skyler", "headliner", "aviator", "zena", "adventurer", "starfire", "fury", "hstn"];
+
+  function parseMetaTraits(name) {
+    const n = String(name || "");
+    const frame = META_FRAMES.find((f) => new RegExp("\\b" + f + "\\b", "i").test(n)) || "";
+    const gen = n.match(/Gen\s*(\d)/i);
+    return { frame, gen: gen ? gen[1] : "" };
   }
 
   const samsungFacets = [
@@ -1473,6 +1636,94 @@
         brand: { whoop: "Whoop", google: "Google", gopro: "GoPro", canon: "Canon", fujifilm: "Fujifilm" },
       },
       prompts: { kind: "Что нужно", brand: "Выберите бренд" },
+    }),
+    mac: createSimpleFamily({
+      label: "Mac",
+      facets: [
+        { id: "model", label: "Модель" },
+        { id: "chip", label: "Процессор" },
+        { id: "ram", label: "Оперативная память" },
+        { id: "storage", label: "Накопитель" }],
+      parse: parseMacTraits,
+      order: { model: ["mini", "imac", "studio", "macpro"] },
+      labels: { model: { imac: "iMac", mini: "Mac mini", studio: "Mac Studio", macpro: "Mac Pro" } },
+      format: (facetId, value) => (facetId === "storage" || facetId === "ram" ? formatGb(value) : value),
+      sortKey: { chip: byGenerationDesc, ram: byNumber, storage: byNumber },
+      prompts: { model: "Выберите модель", chip: "Выберите процессор", ram: "Оперативная память", storage: "Объём накопителя" },
+    }),
+    android: createSimpleFamily({
+      label: "Android",
+      facets: [
+        { id: "brand", label: "Бренд" },
+        { id: "kind", label: "Тип" },
+        { id: "line", label: "Модель" },
+        { id: "storage", label: "Память" }],
+      parse: parseAndroidTraits,
+      order: { brand: ["google", "oneplus", "honor"], kind: ["phone", "watch", "band"] },
+      labels: {
+        brand: { google: "Google Pixel", oneplus: "OnePlus", honor: "Honor" },
+        kind: { phone: "Смартфоны", watch: "Часы", band: "Браслеты" },
+      },
+      format: (facetId, value) => (facetId === "storage" ? formatGb(value) : value),
+      sortKey: { line: byBrandThenGeneration(["pixel", "nord", "honor"]), storage: byNumber },
+      prompts: { brand: "Выберите бренд", kind: "Что нужно", line: "Выберите модель", storage: "Объём памяти" },
+    }),
+    xiaomi: createSimpleFamily({
+      label: "Xiaomi",
+      facets: [
+        { id: "family", label: "Бренд" },
+        { id: "kind", label: "Тип" },
+        { id: "line", label: "Модель" },
+        { id: "storage", label: "Память" }],
+      parse: parseXiaomiTraits,
+      order: { family: ["xiaomi", "redmi", "poco"], kind: ["phone", "pad", "home"] },
+      labels: {
+        family: { xiaomi: "Xiaomi", redmi: "Redmi", poco: "POCO" },
+        kind: { phone: "Смартфоны", pad: "Планшеты", home: "Для дома" },
+      },
+      format: (facetId, value) => (facetId === "storage" ? formatGb(value) : value),
+      sortKey: { line: byBrandThenGeneration(["xiaomi", "redmi note", "redmi", "poco"]), storage: byNumber },
+      prompts: { family: "Выберите бренд", kind: "Что нужно", line: "Выберите модель", storage: "Объём памяти" },
+    }),
+    laptops: createSimpleFamily({
+      label: "Ноутбуки",
+      facets: [
+        { id: "brand", label: "Бренд" },
+        { id: "kind", label: "Тип" },
+        { id: "cpu", label: "Процессор" },
+        { id: "ram", label: "Оперативная память" }],
+      parse: parseLaptopTraits,
+      order: { brand: ["lenovo", "hp"], kind: ["laptop", "tablet"], cpu: ["intel", "amd"] },
+      labels: {
+        brand: { hp: "HP", lenovo: "Lenovo" },
+        kind: { laptop: "Ноутбуки", tablet: "Планшеты" },
+        cpu: { intel: "Intel", amd: "AMD Ryzen" },
+      },
+      format: (facetId, value) => (facetId === "ram" ? formatGb(value) : value),
+      sortKey: { ram: byNumber },
+      prompts: { brand: "Выберите бренд", kind: "Что нужно", cpu: "Процессор", ram: "Оперативная память" },
+    }),
+    galaxy_watch: createSimpleFamily({
+      label: "Galaxy Watch",
+      facets: [
+        { id: "line", label: "Модель" },
+        { id: "size", label: "Размер корпуса" }],
+      parse: parseGalaxyWatchTraits,
+      format: (facetId, value) => (facetId === "size" ? `${value} мм` : value),
+      sortKey: { line: byGenerationDesc, size: byNumber },
+      prompts: { line: "Выберите модель", size: "Размер корпуса" },
+    }),
+    meta: createSimpleFamily({
+      label: "Meta",
+      facets: [
+        { id: "frame", label: "Оправа" },
+        { id: "gen", label: "Поколение" }],
+      parse: parseMetaTraits,
+      order: { frame: META_FRAMES },
+      labels: { frame: { hstn: "Oakley HSTN" } },
+      format: (facetId, value) => (facetId === "gen" ? `Gen ${value}` : ""),
+      sortKey: { gen: (v) => -parseInt(v, 10) },
+      prompts: { frame: "Выберите оправу", gen: "Поколение" },
     }),
     samsung: {
       label: "Samsung",
