@@ -735,3 +735,7 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .grid4 .field--prepay { grid-column: span 2; }
 .prepay input { min-width: 96px; }
 @media (max-width: 560px) { .grid4 .field--prepay { grid-column: 1 / -1; } }
+/* v79: работы из прайса в этой сессии — снять «✕» целиком (работа, итог, запчасть) */
+.svc-log { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+.svc-chip { display: inline-flex; align-items: center; gap: 4px; }
+.svc-chip .linkbtn { padding: 0 2px; }

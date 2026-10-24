@@ -1198,7 +1198,7 @@
   }
   function pricePickHtml(key, deviceText) {
     const P = S.pp?.key === key ? S.pp : null;
-    if (!P?.open) return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppopen">📋 Работа из прайса</button>`;
+    if (!P?.open) return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppopen">📋 Работа из прайса</button>${svcLogHtml(key)}`;
     if (!S.svc?.list) return `<div class="pp"><div class="note">${S.svc?.error ? "Прайс не загрузился: " + esc(S.svc.error) : "Загружаю прайс…"}</div></div>`;
     const dev = P.dev ?? matchDevice(deviceText), q = norm(P.q || "");
     // Поиск: слова запроса ищутся в работе и варианте; без модели — по всему прайсу (с моделью в строке).
@@ -1279,6 +1279,9 @@
   function addServiceObj(key, r, x, part) {
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const work = cap(x.operation) + (x.variant ? ` (${x.variant})` : "");
+    // Что добавили — запомнить (v79): «✕» убирает работу из «Выполненных работ», её цену из итога и запчасть разом.
+    const svc = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), work, base: x.price || 0 };
+    ((S.svcLog ||= {})[key] ||= []).push(svc);
     setDirty(key, C.work, addPhrase(val(C.work), work));
     if (x.price) {
       const d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total)), base = (q == null ? 0 : baseOf(q, d, pay)) + x.price;
@@ -1289,7 +1292,7 @@
       const src = part ? part.src : (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, ""])[1];
       const cost = part ? part.cost : x.part_cost;
       const list = partsOf(key, r).filter(p => p.name || p.src || p.cost);
-      const row = { name: partBase + (x.variant ? ` (${x.variant})` : ""), src, cost: cost ? String(cost) : "", dev: x.device, op: x.operation, var: x.variant || "", fromSvc: true };
+      const row = { name: partBase + (x.variant ? ` (${x.variant})` : ""), src, cost: cost ? String(cost) : "", dev: x.device, op: x.operation, var: x.variant || "", fromSvc: true, svcId: svc.id };
       if (part?.stock) row.stock = part.stock; // с нашей полки — спишется при сохранении, как кнопка «взять со склада»
       list.push(row);
       S.parts.set(key, list); syncParts(key);
@@ -1298,6 +1301,45 @@
     if (days && (had == null || days > had)) setDirty(key, C.warranty, days + " дней");
     const y = window.scrollY; render(); window.scrollTo(0, y);
     toast(`Добавлено: ${work}${x.price ? " — " + (x.price_is_from ? "от " : "") + money(x.price) + ". Итого " + money(val(C.total)) : ""}`, null, true);
+  }
+
+  // ── снять работу из прайса целиком (v79, 24.10.2026) ─────────────────────────────────────
+  // Владелец: «выбираешь работы из прайса, потом удаляешь оттуда же крестиком — они остаются в заполненном поле и в
+  // сумме; если хочется что-то переделать, приходится удалять в двух местах. Можно, чтобы при удалении запчасти или работы
+  // из прайса они убирались и с других мест и из расчёта?». Теперь «✕» у такой работы убирает: фразу из «Выполненных
+  // работ», её цену из «Итого» (с учётом скидки и оплаты, как при добавлении) и её запчасть из списка (с закупкой).
+  // В этой же сессии всё известно точно (S.svcLog: фраза и сумма, у запчасти — svcId). У запчасти, записанной раньше,
+  // работа узнаётся по названию «Деталь (вариант)» ↔ «Замена … (вариант)», цена — из прайса этой модели; тогда сначала
+  // вопрос, что именно уберётся (цену могли поменять руками).
+  const valOf = (key, r) => c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
+  function minusTotal(key, r, base) {
+    const val = valOf(key, r), d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total));
+    if (!base || q == null) return;
+    const left = Math.max(0, baseOf(q, d, pay) - base);
+    setDirty(key, C.total, left ? String(finalOf(left, d, pay)) : ""); // убрали всё — пусто, а не «0» (0 — это «бесплатно»)
+  }
+  function removeService(key, r, svc) {
+    const val = valOf(key, r);
+    if (hasPhrase(val(C.work), svc.work)) setDirty(key, C.work, removePhrase(val(C.work), svc.work));
+    minusTotal(key, r, svc.base);
+    const list = partsOf(key, r), left = list.filter(p => p.svcId !== svc.id);
+    if (left.length !== list.length) { S.parts.set(key, left.length ? left : [{ name: "", src: "", cost: "" }]); syncParts(key); }
+    if (S.svcLog?.[key]) S.svcLog[key] = S.svcLog[key].filter(x => x.id !== svc.id);
+    toast(`Убрано: ${svc.work}${svc.base ? ` (−${money(svc.base)})` : ""} — из работ, итога и запчастей. Итого ${money(val(C.total)) || "—"}`, null, true);
+  }
+  // Запчасть, записанная раньше: «Дисплейный модуль (In-Cell TFT Full HD)» → работа «Замена дисплея (In-Cell TFT Full HD)».
+  function serviceOfPart(key, r, p) {
+    const m = String(p.name || "").match(/^(.+?)\s*\((.+)\)\s*$/), base = (m ? m[1] : String(p.name || "")).trim(), variant = m ? m[2].trim() : "";
+    const op = p.op || Object.keys(OP_PART).find(o => norm(OP_PART[o]) === norm(base)); if (!op) return null;
+    const work = cap(op) + (variant ? ` (${variant})` : "");
+    if (!hasPhrase(valOf(key, r)(C.work), work)) return null;
+    const dev = p.dev || (S.svc?.devices ? matchDevice(valOf(key, r)(C.device)) : "");
+    const hit = (S.svc?.list || []).find(x => x.device === dev && norm(x.operation) === norm(op) && norm(x.variant || "") === norm(variant));
+    return { work, base: hit?.price || 0, guess: true };
+  }
+  function svcLogHtml(key) {
+    const log = S.svcLog?.[key] || []; if (!log.length) return "";
+    return `<div class="svc-log"><span class="note">Из прайса:</span>${log.map(x => `<span class="chip svc-chip">${esc(x.work)}${x.base ? " · " + money(x.base) : ""}<button type="button" class="linkbtn" data-act="svcrm" data-id="${esc(x.id)}" title="Убрать из работ, итога и запчастей">✕</button></span>`).join("")}</div>`;
   }
 
   // ── запчасти списком: название · откуда · закупка (v18) ─────────────────────
@@ -1606,7 +1648,7 @@
   }
   function startSaleFromPawn(r) {
     for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-    S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
+    S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); if (S.svcLog) delete S.svcLog.new; S.pp = null;
     S.draft = true; S.newClient = null;
     const set = (c, v) => { if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); };
     const type = typeOptions().find(o => dealKey(o) === "sale_used") || "Продажа б/у";
@@ -3472,7 +3514,7 @@
   }
   function startNewFrom(r, warranty) {
     for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-    S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null;
+    S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); if (S.svcLog) delete S.svcLog.new; S.pp = null;
     S.draft = true; S.newClient = clientOfRow(r)?.key || null;
     const set = (c, v) => { if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); };
     set(C.status, CFG.newStatus); set(C.date, today()); set(C.type, "Ремонт");
@@ -3493,7 +3535,7 @@
     const dirty = [...S.dirty].filter(([k]) => k.startsWith("new:"));
     const meaningful = dirty.some(([k, v]) => ![C.status, C.date, C.type].includes(+k.split(":")[1]) && String(v ?? "").trim());
     if (!meaningful && !S.extra.length && !S.tins.new) { store.del("crm.draft"); return; }
-    store.set("crm.draft", { at: Date.now(), dirty, multi: S.multi, extra: S.extra, tins: S.tins.new || null, parts: S.parts.get("new") || null, touched: !!S.newStatusTouched });
+    store.set("crm.draft", { at: Date.now(), dirty, multi: S.multi, extra: S.extra, tins: S.tins.new || null, parts: S.parts.get("new") || null, svc: S.svcLog?.new || null, touched: !!S.newStatusTouched });
   }
   function restoreDraft() {
     const d = store.get("crm.draft");
@@ -3501,6 +3543,7 @@
     for (const [k, v] of d.dirty) S.dirty.set(k, v);
     S.multi = !!d.multi; S.extra = d.extra || []; if (d.tins) S.tins.new = d.tins; S.newStatusTouched = !!d.touched;
     if (d.parts) S.parts.set("new", d.parts);
+    if (d.svc) (S.svcLog ||= {}).new = d.svc; // что добавлено из прайса — чтобы «✕» и после перезагрузки снимал всё (v79)
     setTimeout(() => toast("Восстановлен незаконченный заказ. «Отмена» внизу — начать заново", null, true), 50);
     return true;
   }
@@ -3717,7 +3760,7 @@
       const quiet = [[r, list], ...others].filter(([, l]) => l.some(ch => ch.c === C.status && isSilent(ch.v)));
       if (quiet.length) await logStatus(quiet.map(([x, l]) => { const ch = l.find(c => c.c === C.status); return [x.row, ch.old, ch.v]; }));
       for (const ch of list) { r.cells[ch.c] = String(ch.w ?? ""); S.dirty.delete(key + ":" + ch.c); }
-      S.parts.delete(key); delete S.tins[key]; if (S.pp?.key === key) S.pp = null;
+      S.parts.delete(key); delete S.tins[key]; if (S.svcLog) delete S.svcLog[key]; if (S.pp?.key === key) S.pp = null;
       for (const [x, l] of others) { for (const ch of l) x.cells[ch.c] = String(ch.w ?? ""); index(x); }
       const stamp = today().slice(0, 5) + today().slice(5);
       for (const [x, l] of [[r, list], ...others]) { const st = l.find(ch => ch.c === C.status); if (st) S.since.set(x.row, { ts: stamp, st: String(st.v) }); }
@@ -3835,7 +3878,7 @@
       }
       S.clients = null;
       for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-      S.draft = null; S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); S.pp = null; S.newClient = null; store.del("crm.draft");
+      S.draft = null; S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); if (S.svcLog) delete S.svcLog.new; S.pp = null; S.newClient = null; store.del("crm.draft");
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
       const soldMsg = await markUsedSold(made).catch(() => " · ⚠️ в боте не отмечено «Продано»");
@@ -4104,6 +4147,14 @@
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), list = partsOf(key, r);
       if (act === "addpart") list.push({ name: "", src: "", cost: "" });
       else {
+        const p = list[+t.dataset.i];
+        // Запчасть работы из прайса (v79): убрать и работу, и её цену из итога.
+        const svc = (p?.svcId && (S.svcLog?.[key] || []).find(x => x.id === p.svcId)) || (p && !p.sale && !p.stock ? serviceOfPart(key, r, p) : null);
+        if (svc && (!svc.guess || confirm(`Убрать вместе с запчастью и работу «${svc.work}» из «Выполненных работ»${svc.base ? ` и ${money(svc.base)} из итога (цена по прайсу)` : ""}?\n\nОтмена — убрать только запчасть.`))) {
+          if (svc.guess) { list.splice(+t.dataset.i, 1); if (!list.length) list.push({ name: "", src: "", cost: "" }); syncParts(key); removeService(key, r, { ...svc, id: "" }); }
+          else removeService(key, r, svc);
+          const y = window.scrollY; render(); window.scrollTo(0, y); return true;
+        }
         const [gone] = list.splice(+t.dataset.i, 1); if (!list.length) list.push({ name: "", src: "", cost: "" }); syncParts(key);
         // Продажа запчастей: убрали позицию со склада — её цена уходит из итога (v62).
         if (gone?.sale) { const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
@@ -4113,8 +4164,9 @@
       const y = window.scrollY; render(); window.scrollTo(0, y);
       if (act === "addpart") $app.querySelector(`[data-part="${list.length - 1}"][data-pf="name"]`)?.focus();
     }
+    else if (act === "svcrm") { const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); const svc = (S.svcLog?.[key] || []).find(x => x.id === t.dataset.id); if (svc) { removeService(key, r, svc); const y = window.scrollY; render(); window.scrollTo(0, y); } }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); S.parts.delete(key); delete S.tins[key]; S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; S.supSent = {}; store.del("crm.draft"); location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); S.parts.delete(key); delete S.tins[key]; if (S.svcLog) delete S.svcLog[key]; S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; S.supSent = {}; store.del("crm.draft"); location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
