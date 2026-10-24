@@ -1516,7 +1516,7 @@
         <input data-part="${i}" data-pf="name" value="${esc(p.name)}" data-list="dl-pname" placeholder="Например, АКБ" spellcheck="true" lang="ru"${lock ? " disabled" : ""}>
         <input data-part="${i}" data-pf="src" value="${esc(p.src)}" data-list="dl-psrc" placeholder="Откуда"${lock ? " disabled" : ""}>
         <input data-part="${i}" data-pf="cost" value="${esc(p.cost)}" inputmode="decimal" placeholder="0"${lock ? " disabled" : ""}>
-        <button type="button" class="linkbtn" data-act="rmpart" data-i="${i}" title="Убрать"${lock ? " disabled" : ""}>✕</button></div>${lock ? "" : supplierChipsHtml(key, r, p, i) + stockPartHtml(key, r, p, i) + compareHtml(key, r, p, i)}`).join("")}
+        <button type="button" class="linkbtn" data-act="rmpart" data-i="${i}" title="Убрать"${lock ? " disabled" : ""}>✕</button></div>${lock ? "" : enterChipsHtml(i, p) + supplierChipsHtml(key, r, p, i) + stockPartHtml(key, r, p, i) + compareHtml(key, r, p, i)}`).join("")}
       <div class="parts__foot"><button type="button" class="btn btn--ghost btn--sm" data-act="addpart"${lock ? " disabled" : ""}>＋ Запчасть</button><span class="note" data-parts-note>${note}</span></div>
       ${holdHtml(key, r, list)}
       ${stockOrderHtml(r, lock)}
@@ -1869,8 +1869,22 @@
     const MOD = ["pro", "plus", "max", "ultra", "lite", "mini", "fe"], wset = new Set(ws);
     return list.filter(x => { const tt = new Set(devTokens(x.f || x.t)); return ws.every(w => tt.has(w)) && !MOD.some(m => tt.has(m) && !wset.has(m)); });
   }
-  function supplierOffers(dev, op, variant) {
-    const list = suppList(dev, op);
+  // Клавиатура: какой Enter (v81, 24.10.2026). Владелец: «в клавиатуре нужно сделать заранее выбор — какой энтр,
+  // вертикальный или горизонтальный, — и с учётом этого искать у поставщика». Как пишут поставщики: вертикальный —
+  // «Г-образный вертикальный», «верт. Enter», «UK», «EU»; горизонтальный — «Прямоугольный горизонтальный», «Прямой
+  // Enter», «гор. Enter», «US». Выбор пишется в название запчасти («Клавиатура (Enter вертикальный)») — виден в заказе
+  // и переживает перезагрузку; позиции без пометки Enter в названии не отсекаются (по ним не скажешь).
+  const enterOf = t => { const v = norm(t); return /вертик|верт\.|г-образ|г образ|\buk\b|\beu\b/.test(v) ? "v" : /горизонт|гор\.|прямоуг|прямой|\bus\b|\busa\b/.test(v) ? "h" : ""; };
+  const isKbd = p => /клавиатур|топкейс/i.test(String(p?.name || "")) || /клавиатур/i.test(String(p?.op || ""));
+  const enterFit = (want, t) => !want || !enterOf(t) || enterOf(t) === want;
+  function enterChipsHtml(i, p) {
+    if (!isKbd(p)) return "";
+    const want = enterOf(p.name);
+    return `<div class="tchips kb-enter"><span class="note">Enter:</span>${[["h", "горизонтальный (US)"], ["v", "вертикальный «Г» (UK/EU)"]].map(([v, t]) =>
+      `<button type="button" class="tchip" data-act="kbenter" data-i="${i}" data-v="${v}" aria-pressed="${want === v}">${t}</button>`).join("")}${want ? "" : `<span class="note">— выберите, поставщики подберутся под него</span>`}</div>`;
+  }
+  function supplierOffers(dev, op, variant, want = "") {
+    const list = suppList(dev, op).filter(x => enterFit(want, x.f || x.t));
     const words = norm(variant).split(/[^a-zа-я0-9%]+/).filter(w => w.length > 1);
     const score = t => words.filter(w => norm(t).includes(w)).length;
     const best = new Map();
@@ -1903,7 +1917,7 @@
     if (!S.supp?.map || !String(p.name).trim()) return "";
     const { dev, op, variant } = partMeta(p, key, r);
     if (!dev || !op) return "";
-    const offers = supplierOffers(dev, op, variant);
+    const offers = supplierOffers(dev, op, variant, isKbd(p) ? enterOf(p.name) : "");
     if (!offers.length) return "";
     return `<div class="psup"><span class="note">${esc(dev)}:</span>${offers.map(x => `<button type="button" class="psup__c${norm(x.s) === norm(p.src) ? " is-on" : ""}" data-psup="${i}" data-s="${esc(x.s)}" data-c="${x.c}" data-t="${esc(x.t)}" title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">${esc(x.s)} <b>${money(x.c)}</b>${suppHere(x.t) ? ` <span class="psup__here">в Сочи</span>` : ""}</button>`).join("")}</div>`;
   }
@@ -1925,7 +1939,8 @@
     const open = S.cmp?.key === key && S.cmp.i === i;
     const { dev, op, variant } = partMeta(p, key, r);
     const stock = skCandidates(key, r, p, true) || [];
-    const supp = (dev && op && suppList(dev, op)) || [];
+    const want = isKbd(p) ? enterOf(p.name) : "";
+    const supp = ((dev && op && suppList(dev, op)) || []).filter(x => enterFit(want, x.f || x.t)); // Enter клавиатуры (v81)
     if (!open) return (stock.length + supp.length) > 1 ? `<div class="cmp-open"><button type="button" class="linkbtn" data-act="cmp" data-i="${i}">⚖️ Сравнить склады${dev ? "" : ""} <span class="note">(${stock.length + supp.length})</span></button></div>` : "";
     const words = norm(S.cmp.q || "").split(/\s+/).filter(Boolean);
     const vw = norm(variant).split(/[^a-zа-я0-9%]+/).filter(w => w.length > 1);
@@ -4053,6 +4068,14 @@
       toast(`Оплата: ${pay || "не указана"}${q != null && !["buyback", "parts"].includes(dk) ? ` · итог ${money(q)}${payUp(pay) ? " (+10%)" : ""}` : ""}`);
       return;
     }
+    if (act === "kbenter") {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); if (key == null) return;
+      const p = partsOf(key, r)[+t.dataset.i]; if (!p) return;
+      const base = String(p.name || "").replace(/\s*\(Enter [^)]*\)\s*$/i, "").trim() || "Клавиатура";
+      p.name = `${base} (Enter ${t.dataset.v === "v" ? "вертикальный" : "горизонтальный"})`;
+      // Выбранная раньше позиция поставщика с другим Enter больше не подходит — её цена остаётся, но подсветим выбор заново.
+      syncParts(key); refreshSaveBar(key); if (key === "new") saveDraft(); rerenderKeep(); return;
+    }
     if (act === "prepkind") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); if (key == null) return;
       const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
@@ -4261,6 +4284,8 @@
     if (t.dataset.part != null) {
       const key = curKey(); if (key == null) return;
       const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
+      // Вписали «клавиатура» руками — после выхода из поля сразу кнопки Enter (v81).
+      if (e.type === "change") { if (t.dataset.pf === "name" && isKbd({ name: t.value })) rerenderKeep(); return; }
       partsOf(key, r)[+t.dataset.part][t.dataset.pf] = t.value;
       if (t.dataset.pf === "src") { const pp = partsOf(key, r)[+t.dataset.part]; if (pp.stock && !skSrcMatch(t.value, S.stock?.byKey?.get(pp.stock))) delete pp.stock; }
       if (t.dataset.pf === "src" && S.supp?.map) {
@@ -4605,7 +4630,7 @@
       if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`);
     }, 0);
   });
-  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.dataset.sel != null || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
+  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.dataset.sel != null || e.target.dataset.pf === "name" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
   window.addEventListener("hashchange", () => { window.scrollTo(0, 0); render(); });
   window.addEventListener("beforeunload", e => { if (S.pendingDoors > 0 || S.skDirty.size || [...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
   // Новая версия на сайте. GitHub Pages отдаёт страницу с кэшем на 10 минут, и 28.09.2026
