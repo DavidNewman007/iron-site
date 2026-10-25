@@ -62,6 +62,8 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=2026-08-19-3">
+  <link rel="stylesheet" href="css/home.css?v=2026-10-25-1">
+  <link rel="preload" as="image" href="assets/home/hero-poster.webp" fetchpriority="high">
 </head>
 <body class="page-home">
   <header class="site-header">
@@ -91,88 +93,74 @@
   </header>
 
   <main>
-    <section class="hero">
-      <div class="hero-sunburst hero-sunburst--a" aria-hidden="true"></div>
-      <div class="hero-sunburst hero-sunburst--b" aria-hidden="true"></div>
-      <div class="hero-sunburst-glow" aria-hidden="true"></div>
-      <div class="container hero-grid">
-        <div>
-          <span class="hero-badge">Сочи · с 2014 года</span>
-          <h1>IRON SERVICE</h1>
-          <p class="hero-lead">Специализированный сервис по ремонту техники Apple. Новая и б/у техника. Лофт-мастерская, металл на фасаде, надёжность без компромиссов.</p>
-          <div class="hero-stats">
-            <div class="stat">
-              <strong>100</strong>
-              <span>дней гарантии на работу</span>
-            </div>
-            <div class="stat">
-              <strong>2014</strong>
-              <span>год основания</span>
-            </div>
-            <div class="stat">
-              <strong>Apple</strong>
-              <span>только Apple</span>
-            </div>
-          </div>
-          <div class="hero-actions">
-            <a href="kontakty.html#zayavka" class="btn btn-primary">Оставить заявку</a>
-            <a href="https://t.me/ironservice" class="btn btn-secondary" target="_blank" rel="noopener">Telegram-канал</a>
-          </div>
-        </div>
-        <div class="hero-poster">
-          <a
-            href="https://t.me/ironservice"
-            class="hero-poster-link"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Telegram-канал IRON SERVICE @ironservice"
-          >
-            <picture>
-              <source srcset="assets/poster-factory.webp" type="image/webp">
-              <img src="assets/poster-factory.png" alt="IRON SERVICE — подписаться в Telegram" width="600" height="750">
-            </picture>
-          </a>
+    <!--
+      Главная — гибрид A+B (план 118, выбран владельцем 25.10.2026). До этого первым экраном стоял постер с
+      Железным человеком Marvel (чужой персонаж и бренд) — заменён своим героем. Видео-фон: LTX 2.5 локально,
+      фигура героя вклеена из чистого кадра (знак и гребень не плывут), свечение глаз и знака пульсирует слоем,
+      наезд камеры — CSS (css/home.css). Цифр, которые устаревают молча (число позиций, цены техники), здесь нет;
+      «АКБ iPhone от …» считается из data/services.json скриптом внизу страницы.
+    -->
+    <section class="home-hero">
+      <div class="home-hero__media">
+        <video id="home-video" autoplay muted loop playsinline preload="auto" poster="assets/home/hero-poster.webp" disablepictureinpicture aria-hidden="true">
+          <source src="assets/home/hero-loop.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="container home-hero__inner">
+        <span class="hero-badge">Ремонт и магазин Apple в Сочи · с 2014 года</span>
+        <h1>Железные парни <em>чинят Apple</em></h1>
+        <p class="home-hero__lead">Ремонт iPhone, MacBook, iPad и Apple Watch с гарантией 100 дней. Новая и проверенная б/у техника — в наличии в Сочи или под заказ за 1–2 дня. Московская, 5.</p>
+        <div class="home-board"><span>Прайс обновляется каждый день</span><span>100 дней гарантии</span><span>Доставка по России</span><span>С 2014 года</span></div>
+        <div class="home-entries">
+          <a class="home-entry home-entry--main" href="uslugi.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5l4 4L8 20H4v-4z"/><path d="M13 7l4 4"/></svg><span><b>Цена ремонта</b><small>модель → поломка → цена</small></span></a>
+          <a class="home-entry " href="magazin.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10.5 5.5h3"/></svg><span><b>Купить технику</b><small>iPhone, MacBook, iPad, Watch</small></span></a>
+          <a class="home-entry " href="magazin.html#zapchasti"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg><span><b>Запчасти</b><small>отдельно или с установкой</small></span></a>
+          <a class="home-entry " href="https://t.me/IRON_SERVICE_ORDER_bot?start=bu" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5.3L4 15"/><path d="M4 20v-5h5"/></svg><span><b>Б/у и trade-in</b><small>сдайте старое — зачтём в новое</small></span></a>
         </div>
       </div>
     </section>
 
     <section>
       <div class="container">
-        <h2 class="section-title">Почему IRON SERVICE</h2>
-        <p class="section-sub">Мы не универсальный «компьютерный» сервис — только Apple, только опыт и честные сроки.</p>
-        <div class="cards">
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">◉</div>
-            <h3>Ремонт любой сложности</h3>
-            <p>iPhone, iPad, MacBook, iMac, Apple Watch. Замена дисплеев, аккумуляторов, плат, восстановление после влаги.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">◎</div>
-            <h3>100 дней гарантии</h3>
-            <p>Самая длинная гарантия на выполненные работы в городе — и одна из лучших в стране. Отвечаем за результат.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">◈</div>
-            <h3>Новая и б/у техника</h3>
-            <p>Продажа, trade-in, подбор устройства под задачу. Актуальные цены в нашем Telegram.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">▦</div>
-            <h3>Запчасти и аксессуары</h3>
-            <p>Оригинальные и качественные аналоги. Стекла, чехлы, зарядки — всё для Apple в одном месте.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">◌</div>
-            <h3>Бесплатные консультации</h3>
-            <p>По ремонту, выбору техники и программному обеспечению — без обязательств. Звоните или пишите в Telegram.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">⌾</div>
-            <h3>Бесплатная диагностика</h3>
-            <p>В большинстве случаев диагностика бесплатна, если иное не оговорено заранее.</p>
-            <p class="card-note">Платная диагностика возможна при разборке iMac и Apple Watch, а также при попадании влаги — когда без промежуточного ремонта нельзя определить перспективы и стоимость.</p>
-          </article>
+        <h2 class="section-title">Что вам нужно</h2>
+        <p class="section-sub">Ремонт, новая техника, запчасти и обмен — всё в одной мастерской.</p>
+        <div class="home-cards">
+          <a class="home-card home-reveal" href="uslugi.html"><img src="assets/home/card-remont.webp" alt="Ремонт iPhone в мастерской IRON SERVICE" width="900" height="600" loading="lazy"><span><b>Ремонт</b><small id="home-akb">1000+ услуг по прайсу</small></span></a>
+          <a class="home-card home-reveal" href="magazin.html"><img src="assets/home/card-kupit.webp" alt="Купить iPhone в Сочи" width="900" height="600" loading="lazy"><span><b>Купить</b><small>iPhone, MacBook, iPad, Watch</small></span></a>
+          <a class="home-card home-reveal" href="magazin.html#zapchasti"><img src="assets/home/card-zapchasti.webp" alt="Запчасти для Apple" width="900" height="600" loading="lazy"><span><b>Запчасти</b><small>дисплеи, АКБ, корпуса</small></span></a>
+          <a class="home-card home-reveal" href="https://t.me/IRON_SERVICE_ORDER_bot?start=bu" target="_blank" rel="noopener"><img src="assets/home/card-bu.webp" alt="Б/у техника и trade-in" width="900" height="600" loading="lazy"><span><b>Б/у и trade-in</b><small>старое — в зачёт нового</small></span></a>
         </div>
+      </div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="container">
+        <h2 class="section-title">Как мы работаем</h2>
+        <p class="section-sub">От ремонта до посылки в другой город — всё делаем сами.</p>
+        <div class="home-how">
+          <article class="home-reveal"><img src="assets/home/how-remont.webp" alt="" width="900" height="600" loading="lazy"><div><h3>Ремонт любой сложности</h3><p>Дисплеи, аккумуляторы, платы, восстановление после воды. Диагностика в большинстве случаев бесплатна.</p><a href="uslugi.html">Цена ремонта →</a></div></article>
+          <article class="home-reveal"><img src="assets/home/how-vitrina.webp" alt="" width="900" height="600" loading="lazy"><div><h3>Новая и проверенная техника</h3><p>iPhone, MacBook, iPad, Watch, Samsung, Xiaomi. Прайс каждый день — в наличии или под заказ за 1–2 дня.</p><a href="magazin.html">Открыть магазин →</a></div></article>
+          <article class="home-reveal"><img src="assets/home/how-posylka.webp" alt="" width="900" height="600" loading="lazy"><div><h3>Отправим в любой город</h3><p>СДЭК, Яндекс Доставка, Почта России. Плёнка, жёсткая коробка, страховка на полную стоимость.</p><a href="magazin.html#dostavka">Условия доставки →</a></div></article>
+          <article class="home-reveal"><img src="assets/home/how-vydacha.webp" alt="" width="900" height="600" loading="lazy"><div><h3>Выдаём с проверкой и гарантией</h3><p>Включаем и проверяем при вас, отдаём чек и гарантийный талон. 100 дней гарантии на работу.</p><a href="garantiya.html">Про гарантию →</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="container">
+        <div class="home-cat home-reveal"><img src="assets/home/kupidon.webp" alt="Кот Купидон — талисман канала IRON SERVICE" width="900" height="600" loading="lazy"><div><b>Купидон — талисман канала</b><p>Курильский бобтейл, домашний кот нашего мастера. Иногда появляется в роликах и на картинках <a href="https://t.me/ironservice" target="_blank" rel="noopener">канала @ironservice</a>.</p></div></div>
+      </div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="container">
+        <div class="home-stamps">
+          <div class="home-stamp"><b>100</b><span>дней гарантии на ремонт</span></div>
+          <div class="home-stamp"><b>2014</b><span>работаем в Сочи с этого года</span></div>
+          <div class="home-stamp"><b>0 ₽</b><span>диагностика в большинстве случаев</span></div>
+          <div class="home-stamp"><b>РФ</b><span>отправляем СДЭК, Яндексом и Почтой</span></div>
+        </div>
+        <p class="home-stamps-note">Платная диагностика возможна при разборке iMac и Apple Watch и после попадания влаги — когда без промежуточного ремонта нельзя определить перспективы и стоимость.</p>
       </div>
     </section>
 
@@ -186,37 +174,6 @@
           <a class="review-link" href="https://g.page/r/CU0JqTAgtdT-EAI/review" target="_blank" rel="noopener noreferrer">Google</a>
           <a class="review-link" href="https://yandex.ru/profile/1716684342" target="_blank" rel="noopener noreferrer">Яндекс</a>
           <a class="review-link" href="https://vk.ru/ironservicesochi" target="_blank" rel="noopener noreferrer">ВКонтакте</a>
-        </div>
-      </div>
-    </section>
-
-    <section style="padding-top:0">
-      <div class="container">
-        <div class="loft-note">
-          Лофт-интерьер: деревянный стол из слэба, металлические буквы на входе, рабочая атмосфера мастерской — без витринного «салона связи».
-        </div>
-        <div class="poster-strip">
-          <a href="kontakty.html#zayavka" class="poster-action poster-frame--crop">
-            <picture>
-              <source srcset="assets/poster-macbook.webp" type="image/webp">
-              <img src="assets/poster-macbook.png" alt="Заказать обратный звонок — IRON SERVICE" loading="lazy" width="400" height="500">
-            </picture>
-            <span class="poster-action__label">Заказать обратный звонок</span>
-          </a>
-          <a href="magazin.html" class="poster-action">
-            <picture>
-              <source srcset="assets/poster-sochi.webp" type="image/webp">
-              <img src="assets/poster-sochi.png" alt="Купить iPhone или MacBook в Сочи" loading="lazy" width="400" height="500">
-            </picture>
-            <span class="poster-action__label">Купить iPhone / MacBook</span>
-          </a>
-          <a href="uslugi.html" class="poster-action">
-            <picture>
-              <source srcset="assets/poster-prometheus.webp" type="image/webp">
-              <img src="assets/poster-prometheus.png" alt="Определить стоимость ремонта онлайн" loading="lazy" width="400" height="500">
-            </picture>
-            <span class="poster-action__label">Определить актуальную цену на ремонт онлайн</span>
-          </a>
         </div>
       </div>
     </section>
@@ -265,5 +222,35 @@
   <script defer src="js/i18n.js?v=2026-08-19-3"></script>
   <script defer src="js/config.js"></script>
   <script defer src="js/main.js"></script>
+  <script>
+    // Видео-фон: если браузер не запустил автовоспроизведение (энергосбережение, Safari) — пробуем при первом
+    // касании или прокрутке. Блоки проявляются при прокрутке. «АКБ iPhone от …» — из прайса ремонта, когда
+    // карточка дошла до экрана (services.json тяжёлый, на первый экран его не тянем).
+    (function () {
+      var v = document.getElementById("home-video");
+      if (v) {
+        v.muted = true; v.defaultMuted = true;
+        var go = function () { var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+        go(); v.addEventListener("loadeddata", go);
+        ["pointerdown", "touchstart", "scroll", "keydown"].forEach(function (e) { window.addEventListener(e, go, { once: true, passive: true }); });
+      }
+      var akb = document.getElementById("home-akb");
+      function price() {
+        fetch("data/services.json").then(function (r) { return r.json(); }).then(function (d) {
+          var min = Infinity;
+          (d.services || []).forEach(function (s) {
+            if (/^iPhone/.test(s.device) && /аккумулятор/i.test(s.operation) && s.price > 0 && s.price < min) min = s.price;
+          });
+          if (akb && isFinite(min)) akb.textContent = "АКБ iPhone от " + min.toLocaleString("ru-RU") + " ₽";
+        }).catch(function () {});
+      }
+      if (!("IntersectionObserver" in window)) { document.querySelectorAll(".home-reveal").forEach(function (e) { e.classList.add("is-in"); }); price(); return; }
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
+      }, { threshold: 0.15 });
+      document.querySelectorAll(".home-reveal").forEach(function (e) { io.observe(e); });
+      if (akb) { var io2 = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io2.disconnect(); price(); } }); io2.observe(akb); }
+    })();
+  </script>
 </body>
 </html>
