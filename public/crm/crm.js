@@ -2956,16 +2956,19 @@
       html += `<section class="block"><h3>Статус</h3>${statusBlock}
         <div class="row row--report">${reportBtn}${reviewBtn(key, r)}</div></section>`;
     }
-    left += box(2, html); html = "";
+    // v85 (25.10.2026), владелец: «блок статус и клиент поменять местами» — клиент сразу под типом сделки, статус после
+    // него (и после «Что продаём» у новой продажи). order — для телефона, где колонки сливаются в одну ленту.
+    const statusBox = html ? box(3, html) : ""; html = "";
 
-    if (isNew && (dk === "sale_used" || dk === "sale_new")) left += box(2, goodsBlock(dk) + importBlock());
     html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
       ${isNew ? `<div id="pre-contact" class="note pre-contact">${preNoteText()}</div><div id="client-devs">${clientDevicesHtml(currentNewClient())}</div>` : ""}
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
       ${proxyHtml(key, r, isNew, val, fh)}
       ${!isNew && canCreate() ? clientActions(r, dk) : ""}
     </section>`;
-    left += box(3, html); html = "";
+    left += box(2, html); html = "";
+    if (isNew && (dk === "sale_used" || dk === "sale_new")) left += box(2, goodsBlock(dk) + importBlock());
+    left += statusBox;
 
     const multiBox = isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>${esc(TYPE_UI[dk].multi)}</b></label>` : "";
     if (isNew && S.multi) {
@@ -3753,6 +3756,7 @@
   function histHtml(r) {
     const num = String(cell(r, C.num)).trim();
     if (S.histOpen !== num) return `<button type="button" class="btn btn--ghost btn--sm" data-act="histopen">🕘 История изменений</button>`;
+    requestAnimationFrame(() => { const l = $app.querySelector(".hist__list"); if (l) l.scrollTop = l.scrollHeight; }); // свежее внизу — список прокручен к нему
     const head = `<div class="hist__head"><b>🕘 История изменений</b><button type="button" class="linkbtn" data-act="histopen">свернуть</button></div>`;
     if (!S.jr?.list) return `<div class="hist">${head}<div class="note">${S.jr?.error ? "Журнал не прочитался: " + esc(S.jr.error) : "Читаю журнал…"}</div></div>`;
     const born = jrKey(cell(r, C.date)).slice(0, 8); // строку освободил удалённый заказ — его статусы не наши
@@ -3761,17 +3765,17 @@
     const st = (S.hist.get(r.row) || []).filter(x => !born || x.k.slice(0, 8) >= born)
       .filter(x => !jr.some(y => isStatusField(y.field) && norm(y.b).startsWith(norm(x.b)) && Math.abs(jrMin(y.k) - jrMin(x.k)) <= 3))
       .map(x => ({ ...x, who: "", field: "Статус", from: "история статусов" }));
-    const all = [...jr, ...st].sort((a, b) => b.k.localeCompare(a.k));
+    // v85: по времени — старые сверху, новые снизу (владелец: «сортировку изменений сделать наоборот»; в v84 новые были сверху).
+    const all = [...jr, ...st].sort((a, b) => a.k.localeCompare(b.k));
     if (!all.length) return `<div class="hist">${head}<div class="note">Пока пусто: журнал ведётся с 25.10.2026, статусы — с начала «Истории статусов».</div></div>`;
-    const shown = S.histAll === num ? all : all.slice(0, 30);
+    const shown = S.histAll === num ? all : all.slice(-30); // длинная история — 30 последних, ранние по кнопке сверху
     const who = x => x.who ? esc(x.who.split("@")[0]) : "—";
     const val = v => v === "" ? `<i>пусто</i>` : esc(v);
-    return `<div class="hist">${head}<div class="hist__list">${shown.map(x => `<div class="hist__row">
+    return `<div class="hist">${head}${shown.length < all.length ? `<button type="button" class="linkbtn" data-act="histall">показать ранние (${all.length - shown.length})</button>` : ""}<div class="hist__list">${shown.map(x => `<div class="hist__row">
         <span class="hist__when">${esc(x.ts.slice(0, 5))} ${esc(x.ts.slice(11, 16))}</span>
         <span class="hist__who" title="${esc(x.who || "автор не записан")}${x.from ? " · " + esc(x.from) : ""}">${who(x)}${x.from === "таблица" ? " · табл." : ""}</span>
         <span class="hist__f">${esc(x.field)}</span>
-        <span class="hist__ch">${x.a !== "" || !/^Заказ /.test(x.field) ? `<s>${val(x.a)}</s> → ` : ""}<b>${val(x.b)}</b></span></div>`).join("")}</div>
-      ${shown.length < all.length ? `<button type="button" class="linkbtn" data-act="histall">показать всё (${all.length})</button>` : ""}</div>`;
+        <span class="hist__ch">${x.a !== "" || !/^Заказ /.test(x.field) ? `<s>${val(x.a)}</s> → ` : ""}<b>${val(x.b)}</b></span></div>`).join("")}</div></div>`;
   }
   // only — номера дверей, которые звать (кнопка «Повторить» зовёт только упавшие).
   // v39 (03.10.2026): двери идут независимо — раньше сбой первой обрывал цикл, и вторая (сообщения
