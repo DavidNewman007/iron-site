@@ -1,0 +1,105 @@
+{
+  "product_id": "google-pixel-10a-8-128gb-obsidian-5g-великобритания-s4-41300",
+  "category": "android",
+  "file_slug": "google-pixel-10a-8-128gb-obsidian-5g-s4-41300",
+  "name": "Google Pixel 10a 8+ 128Gb Obsidian 5G",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S4)",
+  "price": 41300,
+  "catalog_url": "https://store.google.com/gb/config/pixel_10a?hl=en-GB",
+  "catalog_title": "Google Pixel 10a 8/128 ГБ, Obsidian (чёрный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,3\" pOLED Actua, 1080×2424 (422 ppi), 60–120 Гц, до 2000 нит HDR / 3000 нит пик"
+    },
+    {
+      "key": "Защитное стекло",
+      "value": "Corning Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "Google Tensor G4 + чип безопасности Titan M2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "48 Мп (f/1.7, OIS) + 13 Мп сверхширокоугольная (120°), Super Zoom до 8x"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "13 Мп, f/2.2, 96°"
+    },
+    {
+      "key": "Видео",
+      "value": "4K 30/60 к/с (основная), 4K 30 к/с (фронтальная)"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5100 мАч (типично), 30+ ч работы"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная до 50% за ~30 мин (зарядное 45 Вт USB-C PPS, продаётся отдельно); беспроводная Qi"
+    },
+    {
+      "key": "SIM",
+      "value": "nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, Wi-Fi 6E, Bluetooth 6, NFC, GPS/ГЛОНАСС/Galileo/BeiDou"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68 (пыль и вода)"
+    },
+    {
+      "key": "Разблокировка",
+      "value": "сканер отпечатка пальца, распознавание лица"
+    },
+    {
+      "key": "Корпус",
+      "value": "матовая композитная задняя панель, рамка из сатинированного алюминия"
+    },
+    {
+      "key": "Размеры",
+      "value": "153,9 × 73 × 9 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "183 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Obsidian (чёрный)"
+    },
+    {
+      "key": "ОС",
+      "value": "Android 16 (на старте), 7 лет обновлений ОС и безопасности"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/8dGxtwPX3Irx_kmnAdaVZw9EEwpJ4Ce0dhIBFxF_MOSV7EE3IGdLENQGLIFVtoFDxHGFWXRoA2vX4kq7YbSlj9A4xafqfMBW9h-g=w1200-rp",
+    "https://lh3.googleusercontent.com/Zi-CXX_GzU1VUXGcIBg_xL4WB5VVeY_TaM072xdXwUXaHgaRz23eVbq0UJ4mdiw5LuXq4CprbE-2N7dxSiWpfGxkMU2KtmB-CaI=w1200-rp",
+    "https://lh3.googleusercontent.com/KBvC1YPHiEVGNoTiavYXuB72B7dcOItGtCvBqFu_I6mdNRlDCObURtAQtw-4BUN-_JYN6knXGOF2Nt5stdRPoXiDanVfAgflEA=w1200-rp",
+    "https://lh3.googleusercontent.com/THFGRoJi4862stlR99C6fiX3XOUCeTStEQD6o7HxkiyvgxZwSs6rYlx5yCAs5GAAenDJX2kaYABZi_KU6kSC2iM_t3GlyDiZKw=w1200-rp"
+  ],
+  "images_local": [
+    "assets/product-images/4206ea801f047628c902622b.jpg",
+    "assets/product-images/e3ac12727e6324d5a1e648b9.jpg",
+    "assets/product-images/26405f2ee1b512f5a5b921da.jpg",
+    "assets/product-images/15e9bbc4158dea8a0238b1e0.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google pixel 10a 8 128gb obsidian 5g~s4",
+  "photo_source": "https://store.google.com/gb/config/pixel_10a?hl=en-GB",
+  "updated_at": "2026-10-25T12:23:54.023291Z"
+}

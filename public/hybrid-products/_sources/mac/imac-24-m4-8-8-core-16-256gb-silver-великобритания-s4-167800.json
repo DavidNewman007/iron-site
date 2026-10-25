@@ -1,0 +1,101 @@
+{
+  "product_id": "imac-24-m4-8-8-core-16-256gb-silver-великобритания-s4-167800",
+  "category": "mac",
+  "file_slug": "imac-24-m4-8-8-core-16-256gb-silver-s4-167800",
+  "name": "iMac 24 M4 8/8 Core 16+ 256Gb Silver",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S4)",
+  "price": 167800,
+  "catalog_url": "https://www.apple.com/shop/product/fwuc3ll/a/Refurbished-24-inch-iMac-Apple-M4-Chip-with-8-Core-CPU-and-8-Core-GPU-Silver",
+  "catalog_title": "Apple iMac 24\" M4 (8/8 ядер), 16 ГБ, 256 ГБ, серебристый",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Apple M4, 8-ядерный CPU (4 производительных и 4 энергоэффективных ядра)"
+    },
+    {
+      "key": "Графика",
+      "value": "8-ядерный GPU, аппаратная трассировка лучей"
+    },
+    {
+      "key": "Neural Engine",
+      "value": "16 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ объединённой памяти (пропускная способность 120 ГБ/с)"
+    },
+    {
+      "key": "Накопитель",
+      "value": "SSD 256 ГБ"
+    },
+    {
+      "key": "Дисплей",
+      "value": "24\" Retina 4.5K (фактическая диагональ 23,5\"), 4480×2520, 218 пикс/дюйм, 500 нит, цветовой охват P3, True Tone, стандартное стекло"
+    },
+    {
+      "key": "Камера",
+      "value": "12 Мп Center Stage с поддержкой Desk View, видео 1080p"
+    },
+    {
+      "key": "Звук",
+      "value": "шесть динамиков с компенсацией вибраций, пространственное аудио Dolby Atmos, три студийных микрофона"
+    },
+    {
+      "key": "Порты",
+      "value": "2 × Thunderbolt / USB 4 (до 40 Гбит/с), разъём 3,5 мм для наушников"
+    },
+    {
+      "key": "Ethernet",
+      "value": "нет"
+    },
+    {
+      "key": "Внешние мониторы",
+      "value": "один до 6K 60 Гц"
+    },
+    {
+      "key": "Беспроводная связь",
+      "value": "Wi‑Fi 6E (802.11ax), Bluetooth 5.3"
+    },
+    {
+      "key": "Клавиатура и мышь",
+      "value": "Magic Keyboard (без Touch ID) и Magic Mouse в цвет корпуса"
+    },
+    {
+      "key": "Размеры",
+      "value": "ширина 54,7 см, высота 46,1 см, подставка 14,7 × 13 см"
+    },
+    {
+      "key": "Вес",
+      "value": "4,42 кг"
+    },
+    {
+      "key": "Цвет",
+      "value": "серебристый"
+    },
+    {
+      "key": "Комплект",
+      "value": "блок питания 143 Вт, кабель питания 2 м, кабель USB‑C для зарядки клавиатуры и мыши"
+    },
+    {
+      "key": "Операционная система",
+      "value": "macOS"
+    }
+  ],
+  "images_remote": [
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-imac-silver-202502?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-imac-silver-202502_AV1?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-imac-silver-202502_AV2?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/imac-silver-selection-hero-202410?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+  ],
+  "images_local": [
+    "assets/product-images/e128cf3d8195c4ecaf177489.jpg",
+    "assets/product-images/daf7ae85ad9dd4b677d36ae9.jpg",
+    "assets/product-images/ecbd3487c0dbffcdc7d346a5.jpg",
+    "assets/product-images/78b5d3280f6f243f3302e51c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "imac 24 m4 8 8 core 16 256gb silver~s4",
+  "photo_source": "https://www.apple.com/shop/product/fwuc3ll/a/Refurbished-24-inch-iMac-Apple-M4-Chip-with-8-Core-CPU-and-8-Core-GPU-Silver",
+  "updated_at": "2026-10-25T12:24:00.151993Z"
+}

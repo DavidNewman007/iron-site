@@ -1,0 +1,95 @@
+{
+  "product_id": "hp-255r-g10-15-6-amd-ryzen-5-7535u-16-512gb-silver-европа-s4-60000",
+  "category": "laptops",
+  "file_slug": "hp-255r-g10-15-6-amd-ryzen-5-7535u-16-512gb-silver-s4-60000",
+  "name": "HP 255R G10 15.6 AMD Ryzen 5 7535U 16+ 512Gb Silver",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 60000,
+  "catalog_url": "https://www.hpshop.co.za/products/hp-255r-g10-15-6-inch-fhd-laptop-amd-ryzen-5-7535u-512gb-ssd-16gb-ram-win-11-home-silver-376866",
+  "catalog_title": "Ноутбук HP 255R G10 15,6″ Ryzen 5 7535U, 16 ГБ, 512 ГБ, серебристый",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "AMD Ryzen 5 7535U"
+    },
+    {
+      "key": "Ядра и частота",
+      "value": "6 ядер, 12 потоков, до 4,55 ГГц, кэш L3 16 МБ"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Тип памяти",
+      "value": "DDR5-4800, 2 слота SO-DIMM"
+    },
+    {
+      "key": "Накопитель",
+      "value": "512 ГБ SSD (M.2, PCIe NVMe)"
+    },
+    {
+      "key": "Экран",
+      "value": "15,6″, 1920×1080 (Full HD), SVA, 250 нит, 45% NTSC, антибликовое"
+    },
+    {
+      "key": "Сенсорный экран",
+      "value": "нет"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "AMD Radeon 660M (встроенная)"
+    },
+    {
+      "key": "Порты",
+      "value": "1× USB-C 10 Гбит/с (USB PD, DisplayPort 1.4), 2× USB-A 5 Гбит/с, HDMI 1.4b, аудиоразъём 3,5 мм, разъём питания"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 6 (2×2), Bluetooth 5.4"
+    },
+    {
+      "key": "Веб-камера",
+      "value": "720p HD"
+    },
+    {
+      "key": "Клавиатура",
+      "value": "полноразмерная с цифровым блоком"
+    },
+    {
+      "key": "Батарея",
+      "value": "41 Вт·ч (HP Long Life); адаптер 45 Вт"
+    },
+    {
+      "key": "Вес",
+      "value": "от 1,66 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "359,8 × 236 × 11,7–15,7 мм"
+    },
+    {
+      "key": "Цвет",
+      "value": "Turbo Silver (серебристый)"
+    }
+  ],
+  "images_remote": [
+    "https://cdn.shopify.com/s/files/1/0733/2711/6521/files/3ac1f390-5a14-4c53-8abb-dd56eb306067-0.jpg",
+    "https://cdn.shopify.com/s/files/1/0733/2711/6521/files/3ac1f390-5a14-4c53-8abb-dd56eb306067_355088.jpg",
+    "https://cdn.shopify.com/s/files/1/0733/2711/6521/files/3ac1f390-5a14-4c53-8abb-dd56eb306067_355089.jpg",
+    "https://cdn.shopify.com/s/files/1/0733/2711/6521/files/3ac1f390-5a14-4c53-8abb-dd56eb306067_355092.jpg",
+    "https://cdn.shopify.com/s/files/1/0733/2711/6521/files/3ac1f390-5a14-4c53-8abb-dd56eb306067_355091.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/47e4b02268a5f6e871ccb57b.jpg",
+    "assets/product-images/6bf3629e19211f2f4702f813.jpg",
+    "assets/product-images/4188603d929b5eea81d8d703.jpg",
+    "assets/product-images/278aec4dfbbdb85caf66d517.jpg",
+    "assets/product-images/a16c41a93bb9b542c8bb5719.jpg"
+  ],
+  "manual": true,
+  "manual_key": "hp 255r g10 15 6 amd ryzen 5 7535u 16 512gb silver~s4",
+  "photo_source": "https://www.hpshop.co.za/products/hp-255r-g10-15-6-inch-fhd-laptop-amd-ryzen-5-7535u-512gb-ssd-16gb-ram-win-11-home-silver-376866",
+  "updated_at": "2026-10-25T12:24:05.284283Z"
+}

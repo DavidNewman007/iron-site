@@ -1,0 +1,99 @@
+{
+  "product_id": "hp-omnibook-3-bu0305dx-16-core-ultra-5-225u-8-512gb-silver-сша-s4-61300",
+  "category": "laptops",
+  "file_slug": "hp-omnibook-3-bu0305dx-16-core-ultra-5-225u-8-512gb-silver-s4-61300",
+  "name": "HP Omnibook 3 BU0305DX 16 Core Ultra 5-225U 8+ 512Gb Silver",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 61300,
+  "catalog_url": "https://www.hp.com/us-en/shop/pdp/hp-omnibook-3-laptop-16t-bu000-16-dq7f6av-1",
+  "catalog_title": "Ноутбук HP OmniBook 3 16-bu0305dx 16″ сенсорный, Core Ultra 5 225U, 8 ГБ, 512 ГБ, Mica Silver",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Core Ultra 5-225U"
+    },
+    {
+      "key": "Ядра и частота",
+      "value": "12 ядер, 14 потоков, до 4,8 ГГц, кэш 12 МБ"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ"
+    },
+    {
+      "key": "Тип памяти",
+      "value": "LPDDR5x-7467, распаяна на плате"
+    },
+    {
+      "key": "Накопитель",
+      "value": "512 ГБ SSD (M.2, PCIe Gen4 NVMe)"
+    },
+    {
+      "key": "Экран",
+      "value": "16″, 1920×1200 (WUXGA, у HP — «2K»), IPS, сенсорный"
+    },
+    {
+      "key": "Сенсорный экран",
+      "value": "да"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "Intel Graphics (встроенная)"
+    },
+    {
+      "key": "Порты",
+      "value": "2× USB-C 10 Гбит/с (USB PD 3.1, DisplayPort 1.4), 2× USB-A 5 Гбит/с, HDMI 2.1, аудиоразъём 3,5 мм"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 7 (2×2), Bluetooth 6.0"
+    },
+    {
+      "key": "Веб-камера",
+      "value": "Full HD 1080p с HDR, шторка, кнопка отключения микрофона"
+    },
+    {
+      "key": "Клавиатура",
+      "value": "полноразмерная с цифровым блоком"
+    },
+    {
+      "key": "Батарея",
+      "value": "41 Вт·ч; адаптер 45 Вт USB-C GaN"
+    },
+    {
+      "key": "Вес",
+      "value": "1,64 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "358,6 × 251,7 × 14,7 мм"
+    },
+    {
+      "key": "Цвет",
+      "value": "Mica Silver (крышка и рамка клавиатуры), основание Iron Gray"
+    },
+    {
+      "key": "ОС",
+      "value": "Windows 11 Home"
+    }
+  ],
+  "images_remote": [
+    "https://hp.widen.net/content/w3zprsoje0/png/w3zprsoje0.png",
+    "https://hp.widen.net/content/y8uf7hx9ew/png/y8uf7hx9ew.png",
+    "https://hp.widen.net/content/1wwldbq2dk/png/1wwldbq2dk.png",
+    "https://hp.widen.net/content/iswjdtckxa/png/iswjdtckxa.png",
+    "https://hp.widen.net/content/axprjy4nxq/png/axprjy4nxq.png"
+  ],
+  "images_local": [
+    "assets/product-images/1d71d04a109f548939d51a31.jpg",
+    "assets/product-images/d3f44c5c75d35a0ce6f42d12.jpg",
+    "assets/product-images/010fdb1fc15cb34f1e48c613.jpg",
+    "assets/product-images/ab554d9bd687b43ab5d8a0d0.jpg",
+    "assets/product-images/558c24c505ef9947d66faaff.jpg"
+  ],
+  "manual": true,
+  "manual_key": "hp omnibook 3 bu0305dx 16 core ultra 5 225u 8 512gb silver~s4",
+  "photo_source": "https://www.hp.com/us-en/shop/pdp/hp-omnibook-3-laptop-16t-bu000-16-dq7f6av-1",
+  "updated_at": "2026-10-25T12:24:05.163392Z"
+}

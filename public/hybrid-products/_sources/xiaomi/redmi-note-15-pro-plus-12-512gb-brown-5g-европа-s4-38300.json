@@ -1,0 +1,97 @@
+{
+  "product_id": "redmi-note-15-pro-plus-12-512gb-brown-5g-европа-s4-38300",
+  "category": "xiaomi",
+  "file_slug": "redmi-note-15-pro-plus-12-512gb-brown-5g-s4-38300",
+  "name": "Redmi Note 15 Pro Plus 12+ 512Gb Brown 5G",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 38300,
+  "catalog_url": "https://www.mi.com/global/product/redmi-note-15-pro-plus-5g/specs/",
+  "catalog_title": "Xiaomi Redmi Note 15 Pro+ 5G 12/512 ГБ, Mocha Brown (коричневый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,83\" CrystalRes AMOLED, 1,5K (2772×1280), до 120 Гц, пиковая яркость 3200 нит, HDR10+, Dolby Vision, Corning Gorilla Glass Victus 2"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 7s Gen 4 (4 нм), 8 ядер до 2,7 ГГц, графика Adreno"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ (LPDDR4X)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ (UFS 2.2)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "200 Мп (f/1.7, 1/1.4\", оптическая стабилизация) + 8 Мп сверхширокоугольная; видео 4K 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп (f/2.2), видео 1080p 60 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6500 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 100 Вт (HyperCharge), USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "две nano-SIM или nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 6E, Bluetooth 5.4, ИК-порт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP66, IP68, IP69, IP69K"
+    },
+    {
+      "key": "Безопасность",
+      "value": "сканер отпечатков в экране, разблокировка по лицу"
+    },
+    {
+      "key": "Звук",
+      "value": "стереодинамики, Dolby Atmos, Hi-Res"
+    },
+    {
+      "key": "Размеры",
+      "value": "163,34 × 78,31 × 8,47 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "208 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Mocha Brown (коричневый)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 2"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/958_item_uk/25/12/2025/82458e8e6f6af4408d36df5041187e9b.png",
+    "https://i05.appmifile.com/105_item_uk/25/12/2025/4795af459f384d6c778991de1ad6722c.png",
+    "https://i05.appmifile.com/114_item_uk/25/12/2025/fbd66d1933866106a7935e3bdc50f90f.png",
+    "https://i05.appmifile.com/575_item_uk/25/12/2025/48015460d16ba35667a09d79fb31b94f.png"
+  ],
+  "images_local": [
+    "assets/product-images/f0ac8d9932ffebaa349ab489.jpg",
+    "assets/product-images/af82efafc5cf10d1a486cfba.jpg",
+    "assets/product-images/dc99879fa234d525fe8f455d.jpg",
+    "assets/product-images/c94644e1b4dca34b9149d68a.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi note 15 pro plus 12 512gb brown 5g~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-note-15-pro-plus-5g/specs/",
+  "updated_at": "2026-10-25T12:23:46.039875Z"
+}

@@ -1,0 +1,95 @@
+{
+  "product_id": "redmi-pad-2-8-256gb-graphite-gray-европа-s4-24200",
+  "category": "xiaomi",
+  "file_slug": "redmi-pad-2-8-256gb-graphite-gray-s4-24200",
+  "name": "Redmi Pad 2 8+ 256Gb Graphite Gray",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 24200,
+  "catalog_url": "https://www.mi.com/global/product/redmi-pad-2/specs/",
+  "catalog_title": "Планшет Xiaomi Redmi Pad 2 8/256 ГБ, Graphite Gray (серый графит)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "11\", IPS LCD, 2560×1600 (2,5K), 274 ppi, до 90 Гц, 16:10, 500 нит (600 нит в режиме улицы)"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G100-Ultra (6 нм), 8 ядер: 2×A76 2,2 ГГц + 6×A55 2,0 ГГц; GPU Mali-G57 MC2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ LPDDR4X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ UFS 2.2"
+    },
+    {
+      "key": "Карта памяти",
+      "value": "microSD до 2 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "8 Мп, f/2.0, видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "5 Мп, f/2.2, видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "9000 мА·ч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "18 Вт, USB Type-C (USB 2.0); блок питания в комплекте зависит от региона поставки"
+    },
+    {
+      "key": "SIM",
+      "value": "нет (версия Wi-Fi)"
+    },
+    {
+      "key": "Связь",
+      "value": "Wi-Fi 5 (802.11ac), Bluetooth 5.3; без NFC и сотовой связи"
+    },
+    {
+      "key": "Звук",
+      "value": "4 динамика с Dolby Atmos, разъём 3,5 мм"
+    },
+    {
+      "key": "Размеры",
+      "value": "254,58 × 166,04 × 7,36 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "510 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Graphite Gray (серый графит)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 2 (Android 15)"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/819_item_jp/07/07/2025/eb00d0880f65ddea5090cad2e74f4014.png",
+    "https://i02.appmifile.com/455_item_jp/07/07/2025/7ec2ceb9b6153988c72d905d136020d7.png",
+    "https://i02.appmifile.com/495_item_jp/07/07/2025/592f297ac8e36f90b2a0f20505a25cd8.png",
+    "https://i02.appmifile.com/210_item_jp/07/07/2025/0b8974c861b3764701456775fa912176.png",
+    "https://i02.appmifile.com/67_item_my/20/07/2026/1baf6dc521ef577b645fe946cc5c9db4.png"
+  ],
+  "images_local": [
+    "assets/product-images/e3235e201d821556548bbd1d.jpg",
+    "assets/product-images/ad8cc47fc06afbe7b7ce9dbf.jpg",
+    "assets/product-images/f2e57c8495900f1008defeba.jpg",
+    "assets/product-images/15cabe78342d5281b9b2ee1c.jpg",
+    "assets/product-images/9fc066ebeea1c8b898aeaf6c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi pad 2 8 256gb graphite gray~s4",
+  "photo_source": "https://www.mi.com/global/product/redmi-pad-2/specs/",
+  "updated_at": "2026-10-25T12:23:46.486809Z"
+}

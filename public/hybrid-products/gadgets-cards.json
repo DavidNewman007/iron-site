@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-24T12:03:46.389Z",
-  "count": 58,
+  "generated_at": "2026-10-25T12:24:15.312Z",
+  "count": 62,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -465,6 +465,38 @@
       "name": "Whoop MG SuperKnit Luxe Obsidian Life",
       "warehouse": "(S4)",
       "price": 34100
+    },
+    "google-fitbit-air-fog-s4-12600": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-fog-s4-12600.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-fog-s4-12600.html",
+      "cover": "assets/product-images/58d99235700e3bc864262981.jpg",
+      "name": "Google Fitbit Air Fog",
+      "warehouse": "(S4)",
+      "price": 12600
+    },
+    "whoop-5-0-superknit-obsidian-peak-европа-s4-24700": {
+      "url": "hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-24700.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-24700.html",
+      "cover": "assets/product-images/14727cb6df731ff8ae6ed8f4.jpg",
+      "name": "Whoop 5.0 SuperKnit Obsidian Peak",
+      "warehouse": "(S4)",
+      "price": 24700
+    },
+    "whoop-mg-superknit-luxe-obsidian-life-сша-s4-32100": {
+      "url": "hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-32100.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-32100.html",
+      "cover": "assets/product-images/dc19fcde756b291fbf288162.jpg",
+      "name": "Whoop MG SuperKnit Luxe Obsidian Life",
+      "warehouse": "(S4)",
+      "price": 32100
+    },
+    "whoop-mg-superknit-luxe-obsidian-life-европа-s4-33900": {
+      "url": "hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-33900.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-33900.html",
+      "cover": "assets/product-images/dc19fcde756b291fbf288162.jpg",
+      "name": "Whoop MG SuperKnit Luxe Obsidian Life",
+      "warehouse": "(S4)",
+      "price": 33900
     }
   }
 }

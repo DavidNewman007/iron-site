@@ -1,0 +1,95 @@
+{
+  "product_id": "lenovo-loq-15arp10-15-6-amd-ryzen-7-170-16-512gb-luna-grey-сша-s4-88600",
+  "category": "laptops",
+  "file_slug": "lenovo-loq-15arp10-15-6-amd-ryzen-7-170-16-512gb-luna-grey-s4-88600",
+  "name": "Lenovo LOQ 15ARP10 15.6 AMD Ryzen 7-170 16+ 512Gb Luna Grey",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 88600,
+  "catalog_url": "https://psref.lenovo.com/Product/LOQ/LOQ_15ARP10E",
+  "catalog_title": "Игровой ноутбук Lenovo LOQ Essential 15ARP10 15,6″ Ryzen 7 170, 16 ГБ, 512 ГБ, Luna Grey",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "AMD Ryzen 7-170"
+    },
+    {
+      "key": "Ядра и частота",
+      "value": "8 ядер, 16 потоков, 3,2–4,75 ГГц, кэш L3 16 МБ"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Тип памяти",
+      "value": "DDR5-4800, 1 модуль SO-DIMM, второй слот свободен"
+    },
+    {
+      "key": "Накопитель",
+      "value": "512 ГБ SSD (M.2 2242, PCIe 4.0 NVMe); второй слот M.2"
+    },
+    {
+      "key": "Экран",
+      "value": "15,6″, 1920×1080 (Full HD), IPS, 300 нит, 100% sRGB, 144 Гц, AMD FreeSync, антибликовое"
+    },
+    {
+      "key": "Сенсорный экран",
+      "value": "нет"
+    },
+    {
+      "key": "Видеокарта",
+      "value": "NVIDIA GeForce RTX 3050 6 ГБ или RTX 4050 6 ГБ (TGP 65 Вт) — зависит от партии"
+    },
+    {
+      "key": "Порты",
+      "value": "2× USB-A 5 Гбит/с, 1× USB-C 5 Гбит/с (зарядка USB PD 65–100 Вт), HDMI 2.1, Ethernet RJ-45, кардридер, аудиоразъём 3,5 мм"
+    },
+    {
+      "key": "Беспроводные сети",
+      "value": "Wi-Fi 6 (2×2), Bluetooth 5.2"
+    },
+    {
+      "key": "Веб-камера",
+      "value": "HD 720p со шторкой"
+    },
+    {
+      "key": "Клавиатура",
+      "value": "с белой подсветкой и цифровым блоком"
+    },
+    {
+      "key": "Батарея",
+      "value": "57,5 Вт·ч, быстрая зарядка Rapid Charge Pro; блок питания 135 Вт"
+    },
+    {
+      "key": "Вес",
+      "value": "от 1,8 кг"
+    },
+    {
+      "key": "Размеры",
+      "value": "359,2 × 236 × 19,9–22,95 мм"
+    },
+    {
+      "key": "Цвет",
+      "value": "Luna Grey (серый)"
+    }
+  ],
+  "images_remote": [
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/LOQ/LOQ_15ARP10E/Compressedimage/LOQ_15ARP10E_CT1_01.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/LOQ/LOQ_15ARP10E/Compressedimage/LOQ_15ARP10E_CT1_04.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/LOQ/LOQ_15ARP10E/Compressedimage/LOQ_15ARP10E_CT2_01.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/LOQ/LOQ_15ARP10E/Compressedimage/LOQ_15ARP10E_CT1_08.png",
+    "https://psrefstuff.lenovo.com/syspool/Sys/Image/LOQ/LOQ_15ARP10E/Compressedimage/LOQ_15ARP10E_CT1_03.png"
+  ],
+  "images_local": [
+    "assets/product-images/02dd78a78c7e71dd8c1c3024.jpg",
+    "assets/product-images/62263ae3a440785074e82dfd.jpg",
+    "assets/product-images/ac7536c50b6094d476d97e66.jpg",
+    "assets/product-images/94aeec15d120073179f0fd90.jpg",
+    "assets/product-images/40d4981ea93491c22973ecdf.jpg"
+  ],
+  "manual": true,
+  "manual_key": "lenovo loq 15arp10 15 6 amd ryzen 7 170 16 512gb luna grey~s4",
+  "photo_source": "https://psref.lenovo.com/Product/LOQ/LOQ_15ARP10E",
+  "updated_at": "2026-10-25T12:24:05.716171Z"
+}

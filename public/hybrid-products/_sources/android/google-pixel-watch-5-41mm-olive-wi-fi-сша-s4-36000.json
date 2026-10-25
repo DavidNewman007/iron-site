@@ -1,0 +1,99 @@
+{
+  "product_id": "google-pixel-watch-5-41mm-olive-wi-fi-сша-s4-36000",
+  "category": "android",
+  "file_slug": "google-pixel-watch-5-41mm-olive-wi-fi-s4-36000",
+  "name": "Google Pixel Watch 5 41mm Olive Wi-Fi",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 36000,
+  "catalog_url": "https://store.google.com/gb/config/pixel_watch_5?hl=en-GB",
+  "catalog_title": "Смарт-часы Google Pixel Watch 5 41 мм (Wi-Fi), корпус Satin Pyrite, ремешок Olive (оливковый)",
+  "specs": [
+    {
+      "key": "Размер корпуса",
+      "value": "41 мм, толщина 12,3 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "31,0 г (без ремешка)"
+    },
+    {
+      "key": "Корпус",
+      "value": "алюминий (100% переработанный), Satin Pyrite (сатинированный пирит)"
+    },
+    {
+      "key": "Ремешок",
+      "value": "Active Band 2-го поколения, Olive (оливковый); в комплекте размеры S и L (обхват 130–210 мм)"
+    },
+    {
+      "key": "Экран",
+      "value": "AMOLED LTPO Actua 360, 320 ppi, 1–60 Гц, до 3000 нит, Always-on"
+    },
+    {
+      "key": "Защитное стекло",
+      "value": "Corning Gorilla Glass 5 (изогнутое 3D)"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon W5 Gen 2 + сопроцессор Cortex-M55"
+    },
+    {
+      "key": "Память",
+      "value": "64 ГБ"
+    },
+    {
+      "key": "Связь",
+      "value": "Bluetooth 6.0, Wi-Fi 802.11 a/b/g/n/ac/ax (2,4/5 ГГц), NFC, UWB; без LTE (версия Wi-Fi)"
+    },
+    {
+      "key": "Навигация",
+      "value": "двухчастотный GPS: GPS, Galileo, ГЛОНАСС, BeiDou, QZSS"
+    },
+    {
+      "key": "Датчики",
+      "value": "оптический пульсометр, ЭКГ, SpO2, температура кожи, cEDA (кожно-гальваническая реакция), акселерометр, гироскоп, барометр, магнитометр, компас, высотомер, датчик освещённости"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "332 мАч"
+    },
+    {
+      "key": "Автономность",
+      "value": "до 30 ч с Always-on, до 48 ч в режиме экономии"
+    },
+    {
+      "key": "Зарядка",
+      "value": "док-станция Quick Charge: 50% примерно за 15 минут"
+    },
+    {
+      "key": "Защита",
+      "value": "5 ATM, IP68"
+    },
+    {
+      "key": "Управление",
+      "value": "сенсорный экран, тактильная заводная головка, боковая кнопка, жесты одной рукой"
+    },
+    {
+      "key": "Звук",
+      "value": "микрофон и динамик"
+    },
+    {
+      "key": "ОС и совместимость",
+      "value": "Wear OS 7.0; телефоны на Android 12 и новее"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/bsSp5uzf4_a3cW1clHfU_1yClGy5CYFn5s_uMFNgIQqQvcpCk6PR-0sheEWxcMYUn7cwiOLrBH2fXGTh92KhHozlivjZaQlKqg=w1200-rp",
+    "https://lh3.googleusercontent.com/M0dMPSVJoH54GLO8CaXEHs9SlIdOjJUIl-9-eELEpQlcmLIGHZSkoLRVygxDTOUr15nIVZg3VxxoimUDXJPg9YJTksmVPCk4IM0=w1200-rp",
+    "https://lh3.googleusercontent.com/rluRlejz32YjISthK42q_gQjvFED7CrfUuhwE5EXFpYeuG9mUDCucs1G7cYB7xwxTvAswTmX-_GcTsnJHJU170slCL5SF2ANXl4=w1200-rp"
+  ],
+  "images_local": [
+    "assets/product-images/b23e8c62419cb6433d26ad6a.jpg",
+    "assets/product-images/aacb8552594b837f40a86323.jpg",
+    "assets/product-images/f1f547dbcd52c310f59d6b1c.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google pixel watch 5 41mm olive wi fi~s4",
+  "photo_source": "https://store.google.com/gb/config/pixel_watch_5?hl=en-GB",
+  "updated_at": "2026-10-25T12:23:54.643713Z"
+}

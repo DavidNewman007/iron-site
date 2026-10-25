@@ -1,0 +1,95 @@
+{
+  "product_id": "google-pixel-8-8-256gb-obsidian-5g-сша-s4-38600",
+  "category": "android",
+  "file_slug": "google-pixel-8-8-256gb-obsidian-5g-s4-38600",
+  "name": "Google Pixel 8 8+ 256Gb Obsidian 5G",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 38600,
+  "catalog_url": "https://store.google.com/us/config/refurbished_pixel_8?hl=en-US",
+  "catalog_title": "Google Pixel 8 8/256 ГБ, Obsidian (чёрный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,2\" Actua OLED, 1080×2400 (428 ppi), 60–120 Гц, HDR, до 1400 нит (HDR) / 2000 нит (пик)"
+    },
+    {
+      "key": "Процессор",
+      "value": "Google Tensor G3 (4 нм) + чип безопасности Titan M2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ UFS 3.1, без слота карт памяти"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп широкоугольная (f/1.68, OIS) + 12 Мп сверхширокоугольная с автофокусом (f/2.2, 125,8°); Super Res Zoom до 8×; видео 4K 60 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "10,5 Мп (f/2.2, 95°), видео 4K 60 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "4575 мАч (типичная ёмкость; минимальная 4485 мАч)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "Проводная до 27 Вт (USB-C PD 3.0 PPS), беспроводная до 18 Вт (Pixel Stand 2) / Qi, обратная беспроводная (Battery Share)"
+    },
+    {
+      "key": "SIM",
+      "value": "nano-SIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, Wi-Fi 7 (в зависимости от региона), Bluetooth 5.3, NFC, USB Type-C 3.2"
+    },
+    {
+      "key": "Разблокировка",
+      "value": "Подэкранный сканер отпечатков, разблокировка по лицу"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68 (пыль и вода); стекло Corning Gorilla Glass Victus спереди и сзади"
+    },
+    {
+      "key": "Корпус",
+      "value": "Глянцевое стекло и матовая алюминиевая рамка"
+    },
+    {
+      "key": "Размеры",
+      "value": "150,5 × 70,8 × 8,9 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "187 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Obsidian (чёрный)"
+    },
+    {
+      "key": "ОС",
+      "value": "Вышел с Android 14; 7 лет обновлений ОС и безопасности (до октября 2030 г.)"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/lV34bHcwk8E_HgBPad9ONQozpz9q3IM_lh-B56zpU6TmLEMbOpC6fsD2RN4EJy-AEZVhhKRVPmBk5JWyrcwHQcNHJVnb2CUtaL8=s1200",
+    "https://lh3.googleusercontent.com/g7wPOXGIQvRJIwdGCTz5oCi-MHRqZ9n2mZzzuF0hBqXQLqJEULUrICKmP-FMA6OfJyyyKawqm958RX-QP007DtZxuWFe7KpIQIQ=s1200",
+    "https://lh3.googleusercontent.com/1FtSx3aYojMVmKiC1VEUhxuH5GFQUagLzERCQ0F68BKDrZQ1uv3PPQ9mnEsd-YLA5K2hsp0tF3JaHFy-FbtK-LAzR2enuphFEGpX=s1200"
+  ],
+  "images_local": [
+    "assets/product-images/97a436af125fa40d3e5cde1b.jpg",
+    "assets/product-images/5512e8d17d9b2fe0c60cc574.jpg",
+    "assets/product-images/b45c289ba9985eed31a1f964.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google pixel 8 8 256gb obsidian 5g~s4",
+  "photo_source": "https://store.google.com/us/config/refurbished_pixel_8?hl=en-US",
+  "updated_at": "2026-10-25T12:23:53.888821Z"
+}

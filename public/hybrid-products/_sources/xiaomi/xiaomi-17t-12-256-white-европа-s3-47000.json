@@ -1,0 +1,85 @@
+{
+  "product_id": "xiaomi-17t-12-256-white-европа-s3-47000",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-17t-12-256-white-s3-47000",
+  "name": "Xiaomi 17T 12/256 White",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 47000,
+  "catalog_url": "https://www.mi.com/global/product/xiaomi-17t/specs/",
+  "catalog_title": "Xiaomi 17T 12/256 ГБ, Opal White (белый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,59\" AMOLED, 2756×1268, 120 Гц, пиковая яркость до 3500 нит, Dolby Vision, HDR10+, Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Dimensity 8500-Ultra (4 нм), до 3,4 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ (UFS 4.1)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "Leica: 50 Мп основная (Light Fusion 800, f/1.7, OIS) + 50 Мп перископ 115 мм (OIS) + 12 Мп сверхширокоугольная (15 мм); видео до 4K 60 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "6500 мА·ч (кремний-углеродный; в китайской версии — 7000 мА·ч)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 67 Вт, обратная проводная 22,5 Вт"
+    },
+    {
+      "key": "SIM",
+      "value": "nano-SIM + nano-SIM / eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 6E, Bluetooth 6.0, ИК-порт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68, сканер отпечатков в экране"
+    },
+    {
+      "key": "Размеры",
+      "value": "157,6 × 75,2 × 8,17 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "200 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "белый перламутровый (Opal White)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 (Android 16)"
+    }
+  ],
+  "images_remote": [
+    "https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1780661993.3457655.png",
+    "https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-17t/pc/8101887b2595913a8aecd27c1dea3f32.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/3fc46d99db20240b67e76048.jpg",
+    "assets/product-images/19b5b0380480c33f2c195be8.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi 17t 12 256 white~s3",
+  "photo_source": "https://www.mi.com/global/product/xiaomi-17t/specs/",
+  "updated_at": "2026-10-25T12:22:30.365801Z"
+}

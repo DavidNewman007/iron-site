@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-24T12:03:46.340Z",
-  "count": 123,
+  "generated_at": "2026-10-25T12:24:15.264Z",
+  "count": 125,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -985,6 +985,22 @@
       "name": "iPad Smart Keyboard Folio Black",
       "warehouse": "(S4)",
       "price": 15900
+    },
+    "-pencil-pro-mx2d3-s1-12600": {
+      "url": "hybrid-products/accessories/pencil-pro-mx2d3-s1-12600.html",
+      "url_en": "en/hybrid-products/accessories/pencil-pro-mx2d3-s1-12600.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "🖊 Pencil Pro MX2D3",
+      "warehouse": "(S1)",
+      "price": 12600
+    },
+    "apple-pencil-pro-s4-11600": {
+      "url": "hybrid-products/accessories/apple-pencil-pro-s4-11600.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-pro-s4-11600.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "Apple Pencil Pro",
+      "warehouse": "(S4)",
+      "price": 11600
     }
   }
 }

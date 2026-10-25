@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-24T12:03:46.356Z",
-  "count": 218,
+  "generated_at": "2026-10-25T12:24:15.279Z",
+  "count": 220,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -1745,6 +1745,22 @@
       "name": "Marshall Major V Headphones Black",
       "warehouse": "(S4)",
       "price": 8200
+    },
+    "sony-wh-1000xm6-wireless-headphones-platinum-silver-s4-30000": {
+      "url": "hybrid-products/audio/sony-wh-1000xm6-wireless-headphones-platinum-silver-s4-30000.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm6-wireless-headphones-platinum-silver-s4-30000.html",
+      "cover": "assets/product-images/35f09fd7265041ab68570a70.jpg",
+      "name": "Sony WH-1000XM6 Wireless Headphones Platinum Silver",
+      "warehouse": "(S4)",
+      "price": 30000
+    },
+    "marshall-acton-iii-blue-s4-31900": {
+      "url": "hybrid-products/audio/marshall-acton-iii-blue-s4-31900.html",
+      "url_en": "en/hybrid-products/audio/marshall-acton-iii-blue-s4-31900.html",
+      "cover": "assets/product-images/1e1aa229645988c85a12c072.jpg",
+      "name": "Marshall Acton III Blue",
+      "warehouse": "(S4)",
+      "price": 31900
     }
   }
 }

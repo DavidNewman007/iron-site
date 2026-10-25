@@ -1,0 +1,83 @@
+{
+  "product_id": "xiaomi-robot-vacuum-e12-white-европа-s4-23200",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-robot-vacuum-e12-white-s4-23200",
+  "name": "Xiaomi Robot Vacuum E12 White",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S4)",
+  "price": 23200,
+  "catalog_url": "https://www.mi.com/de/product/xiaomi-robot-vacuum-e12/specs/",
+  "catalog_title": "Робот-пылесос Xiaomi Robot Vacuum E12, White (белый)",
+  "specs": [
+    {
+      "key": "Тип",
+      "value": "робот-пылесос с влажной уборкой (сухая и влажная уборка)"
+    },
+    {
+      "key": "Модель",
+      "value": "B112"
+    },
+    {
+      "key": "Мощность всасывания",
+      "value": "до 4000 Па, 4 уровня"
+    },
+    {
+      "key": "Номинальная мощность",
+      "value": "35 Вт"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "2600 мА·ч (номинальная ёмкость 2500 мА·ч), 14,4 В"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 110 минут в стандартном режиме"
+    },
+    {
+      "key": "Влажная уборка",
+      "value": "комбинированный контейнер 2-в-1 (пыль + вода), 3 уровня подачи воды"
+    },
+    {
+      "key": "Навигация",
+      "value": "зигзагообразный маршрут, датчики препятствий и перепадов высоты"
+    },
+    {
+      "key": "Фильтрация",
+      "value": "трёхступенчатая"
+    },
+    {
+      "key": "Управление",
+      "value": "приложение Xiaomi Home (Mi Home), Google Assistant и Amazon Alexa, голосовые оповещения, расписание уборки"
+    },
+    {
+      "key": "Размеры",
+      "value": "Ø 325 × 80 мм; зарядная станция 146 × 122 × 87,5 мм"
+    },
+    {
+      "key": "Цвет",
+      "value": "White (белый)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "робот, зарядная станция, блок питания, контейнер 2-в-1, держатель салфетки с салфеткой, боковая щётка, 2 фильтра, щёточка для чистки, инструкция"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/418_item_de/12/05/2023/2857ddbc0592856d7392e06d0e33303d.png",
+    "https://i05.appmifile.com/707_item_de/12/05/2023/58bf7b03d5ed443917a0bc82c198137e.png",
+    "https://i05.appmifile.com/391_item_de/12/05/2023/7a092caaf9ae81256b02fca6e32ebd5f.png",
+    "https://i05.appmifile.com/664_item_de/12/05/2023/314bdadde05f63306d9916371c6b05c8.png",
+    "https://i05.appmifile.com/235_item_de/12/05/2023/3aae3e3aa5ded392571a10103c118320.png"
+  ],
+  "images_local": [
+    "assets/product-images/14119fffb6d30d72690c2be3.jpg",
+    "assets/product-images/6b0a2bd0759cada5779d5729.jpg",
+    "assets/product-images/0cb4bf13e52efe6979825b12.jpg",
+    "assets/product-images/03a794f19a4d708c529fee57.jpg",
+    "assets/product-images/cde6330c9f21cea45f94773d.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi robot vacuum e12 white~s4",
+  "photo_source": "https://www.mi.com/de/product/xiaomi-robot-vacuum-e12/specs/",
+  "updated_at": "2026-10-25T12:23:48.080114Z"
+}

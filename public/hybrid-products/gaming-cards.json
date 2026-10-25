@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-24T12:03:46.365Z",
-  "count": 132,
+  "generated_at": "2026-10-25T12:24:15.288Z",
+  "count": 136,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -1057,6 +1057,38 @@
       "name": "Sony DualSense wireless Marathon",
       "warehouse": "(S4)",
       "price": 10500
+    },
+    "oculus-meta-quest-3s-128gb-white-япония-s4-36300": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-36300.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-36300.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 128Gb White",
+      "warehouse": "(S4)",
+      "price": 36300
+    },
+    "oculus-meta-quest-3s-128gb-white-сша-s4-37900": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-37900.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-37900.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 128Gb White",
+      "warehouse": "(S4)",
+      "price": 37900
+    },
+    "oculus-meta-quest-3s-256gb-white-япония-s4-44100": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-256gb-white-s4-44100.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-256gb-white-s4-44100.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 256Gb White",
+      "warehouse": "(S4)",
+      "price": 44100
+    },
+    "sony-playstation-vr-2-white-европа-s4-45000": {
+      "url": "hybrid-products/gaming/sony-playstation-vr-2-white-s4-45000.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-vr-2-white-s4-45000.html",
+      "cover": "assets/product-images/474636c856161f23c0651f48.jpg",
+      "name": "Sony Playstation VR 2 White",
+      "warehouse": "(S4)",
+      "price": 45000
     }
   }
 }

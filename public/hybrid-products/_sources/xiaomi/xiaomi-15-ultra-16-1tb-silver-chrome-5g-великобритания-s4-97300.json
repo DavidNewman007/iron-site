@@ -1,0 +1,93 @@
+{
+  "product_id": "xiaomi-15-ultra-16-1tb-silver-chrome-5g-великобритания-s4-97300",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-15-ultra-16-1tb-silver-chrome-5g-s4-97300",
+  "name": "Xiaomi 15 Ultra 16+ 1Tb Silver Chrome 5G",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S4)",
+  "price": 97300,
+  "catalog_url": "https://www.mi.com/global/product/xiaomi-15-ultra/specs/",
+  "catalog_title": "Xiaomi 15 Ultra 16/1 ТБ, Silver Chrome (серебристый хром)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,73\", AMOLED WQHD+, 3200×1440 (522 ppi), 1–120 Гц, до 3200 нит, Dolby Vision, HDR10+"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Elite (3 нм)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "1 ТБ (UFS 4.1)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "Leica: 50 Мп 1\" LYT-900 (f/1.63, OIS) + перископ 200 Мп 100 мм (f/2.6, OIS) + телеобъектив 50 Мп 70 мм (f/1.8, OIS) + сверхширокоугольная 50 Мп 14 мм (115°)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5410 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 90 Вт HyperCharge, беспроводная 80 Вт"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM, nano-SIM + eSIM или 2 eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 7, Bluetooth 6.0"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Размеры",
+      "value": "161,3 × 75,3 × 9,48 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "229 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Silver Chrome (серебристый хром)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 2 (Android 15)"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/698_item_it/24/02/2025/8d34982e29eeafb35f3ee28a1faae9f0.png",
+    "https://i05.appmifile.com/942_item_it/24/02/2025/e60d9efa3aae973cf7a0c88fc0ad12ee.png",
+    "https://i05.appmifile.com/735_item_it/24/02/2025/e5976480310de80dfa06158b049c0546.png",
+    "https://i05.appmifile.com/47_item_it/24/02/2025/262031a11aa2e8067a5212339f14e89d.png",
+    "https://i05.appmifile.com/234_item_it/24/02/2025/6dd1c1022d3fcac63c577f61e2a83552.png",
+    "https://i05.appmifile.com/969_item_it/24/02/2025/47d5482a111ae5c537ff434e31f6391f.png"
+  ],
+  "images_local": [
+    "assets/product-images/4c22205c9c009e236cfa40b6.jpg",
+    "assets/product-images/0e3ac03727094b1d13825512.jpg",
+    "assets/product-images/773f8566663d87b08241c052.jpg",
+    "assets/product-images/e8e6eebbe0c703b8c8e48c90.jpg",
+    "assets/product-images/532dadbe04f06d6f277a69cb.jpg",
+    "assets/product-images/21434e647b80a171c5eaaf54.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi 15 ultra 16 1tb silver chrome 5g~s4",
+  "photo_source": "https://www.mi.com/global/product/xiaomi-15-ultra/specs/",
+  "updated_at": "2026-10-25T12:23:47.102506Z"
+}
