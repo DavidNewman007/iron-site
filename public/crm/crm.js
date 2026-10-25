@@ -1272,6 +1272,8 @@
     s = s.replace(/^[\s,.-]+/, "").trim();
     return (s || String(t || "")).slice(0, 60);
   }
+  // У MOS в индексе «АКБ на iP 13» без класса — класс в разделе прайса (H: «…, раздел «IC SMART (Под привязку, статус Б/У)»»).
+  const mosLabel = o => { const sec = String(o.f || "").match(/раздел «(.+)»$/)?.[1] || ""; return sec ? (/^акб на|на ip|^дисплей/i.test(o.t) ? sec : `${o.t} · ${sec}`) : o.t; };
   function ppExtras(dev) {
     const ops = [...new Set(S.svc.list.filter(x => x.device === dev && OP_PART[norm(x.operation)]).map(x => x.operation))];
     const out = [];
@@ -1281,8 +1283,12 @@
       if (nodes && models.length) for (const x of S.stock.rows)
         if (x.qty > 0 && x.cost != null && models.includes(x.model) && nodes.includes(norm(x.node)) && !skMacMismatch(dev, op, x))
           out.push({ kind: "stock", operation: op, variant: x.variant + (x.color ? ", " + skColor(x.color) : ""), src: x.src, cost: x.cost, stock: x.key, qty: x.qty, ...w });
-      for (const o of suppList(dev, op)) if (norm(o.s) !== "moslcd")
-        out.push({ kind: "supp", operation: op, variant: ppShort(o.t, dev), title: o.t, src: o.s, cost: o.c, here: suppHere(o.t), ...w });
+      // MOS обычно уже в прайсе, но не всегда: вариант прайса берётся у склада, где дешевле (Liberti, полка Витали), и тогда
+      // деталь MOS этого варианта пропадала из списка совсем. v86 (25.10.2026), владелец: «почему не видит в оболочке АКБ BOX
+      // ориг чип от мосов» — BOX на iPhone 13 был от Liberti. Теперь MOS показывается, если его закупки нет среди строк прайса.
+      const inPrice = new Set(S.svc.list.filter(x => x.device === dev && x.operation === op && /mos/i.test(x.part_source || "")).map(x => x.part_cost));
+      for (const o of suppList(dev, op)) if (norm(o.s) !== "moslcd" || !inPrice.has(o.c))
+        out.push({ kind: "supp", operation: op, variant: norm(o.s) === "moslcd" ? mosLabel(o) : ppShort(o.t, dev), title: o.t, src: o.s, cost: o.c, here: suppHere(o.t), ...w });
     }
     for (const x of out) { x.device = dev; x.price = Math.ceil((x.work + x.cost) / 100) * 100; }
     const rank = x => x.kind === "stock" ? 0 : x.here ? 1 : 2;
