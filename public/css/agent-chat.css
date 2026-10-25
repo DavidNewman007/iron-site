@@ -1,0 +1,156 @@
+/* Окно помощника IRON SERVICE (план 123). Отдельный файл, не styles.css: над общим файлом работают параллельно
+   (план 28 §7). Цвета — токены сайта из styles.css, с запасными значениями на случай страницы без него. */
+
+.iac-launcher {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border: 1px solid var(--gold, #d4a012);
+  border-radius: 999px;
+  background: var(--black, #141414);
+  color: var(--cream, #f5e6c8);
+  font: 600 16px/1 var(--font-display, "Oswald", "Arial Narrow", sans-serif);
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+.iac-launcher:hover { background: var(--charcoal, #2a2a2a); }
+.iac-launcher:focus-visible { outline: 2px solid var(--gold, #d4a012); outline-offset: 3px; }
+.iac-launcher-icon { font-size: 18px; }
+
+.iac-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 84px;
+  z-index: 9001;
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  height: min(600px, calc(100vh - 120px));
+  border: 1px solid var(--surface-border, rgba(255, 255, 255, 0.13));
+  border-radius: 14px;
+  background: var(--black, #141414);
+  color: var(--text, #f1ede3);
+  font: 16px/1.4 var(--font-body, "PT Sans Narrow", Arial, sans-serif);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  /* Общие стили сайта дают section/header/form свои отступы и фон — окно от них отгорожено. */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.iac-panel *, .iac-panel *::before, .iac-panel *::after { box-sizing: border-box; }
+.iac-panel header, .iac-panel form { position: static; margin: 0; min-height: 0; height: auto; box-shadow: none; }
+.iac-panel[hidden] { display: none; }
+
+.iac-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--surface-border, rgba(255, 255, 255, 0.13));
+  background: var(--charcoal, #2a2a2a);
+}
+.iac-title { font: 600 17px/1.2 var(--font-display, "Oswald", "Arial Narrow", sans-serif); color: var(--cream, #f5e6c8); }
+.iac-close {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted, #b1a796);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+.iac-close:hover { color: var(--cream, #f5e6c8); background: rgba(255, 255, 255, 0.06); }
+
+.iac-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overscroll-behavior: contain;
+}
+.iac-msg { max-width: 88%; }
+.iac-agent { align-self: flex-start; }
+.iac-user { align-self: flex-end; }
+.iac-text {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.iac-agent .iac-text { background: var(--charcoal, #2a2a2a); border-top-left-radius: 4px; }
+.iac-user .iac-text { background: var(--slab, #3a332a); color: var(--cream, #f5e6c8); border-top-right-radius: 4px; }
+.iac-typing .iac-text { color: var(--text-muted, #b1a796); font-style: italic; }
+
+.iac-buttons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.iac-chip {
+  display: inline-block;
+  padding: 6px 10px;
+  border: 1px solid var(--gold, #d4a012);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cream, #f5e6c8);
+  font: 15px/1.2 var(--font-body, "PT Sans Narrow", Arial, sans-serif);
+  text-decoration: none;
+  cursor: pointer;
+}
+.iac-chip:hover { background: rgba(212, 160, 18, 0.14); }
+.iac-chip:focus-visible { outline: 2px solid var(--gold, #d4a012); outline-offset: 2px; }
+
+.iac-turnstile:empty { display: none; }
+.iac-turnstile { display: flex; justify-content: center; padding: 0 14px 8px; }
+
+.iac-form {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--surface-border, rgba(255, 255, 255, 0.13));
+  background: var(--charcoal, #2a2a2a);
+}
+.iac-input {
+  flex: 1;
+  resize: none;
+  min-height: 40px;
+  max-height: 120px;
+  padding: 9px 12px;
+  border: 1px solid var(--surface-border, rgba(255, 255, 255, 0.13));
+  border-radius: 10px;
+  background: var(--black, #141414);
+  color: var(--text, #f1ede3);
+  font: 16px/1.35 var(--font-body, "PT Sans Narrow", Arial, sans-serif); /* 16px — iOS не увеличивает страницу при фокусе */
+}
+.iac-input:focus { outline: none; border-color: var(--gold, #d4a012); }
+.iac-send {
+  width: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--gold, #d4a012);
+  color: var(--black, #141414);
+  font-size: 18px;
+  cursor: pointer;
+}
+.iac-send:disabled { opacity: 0.5; cursor: default; }
+
+/* Телефон: окно на весь экран, кнопка вызова прячется, пока окно открыто. */
+@media (max-width: 520px) {
+  .iac-launcher { right: 12px; bottom: 12px; padding: 11px 15px; }
+  .iac-panel { inset: 0; width: auto; height: 100%; height: 100dvh; border-radius: 0; border: 0; }
+  .iac-open .iac-launcher { display: none; }
+  .iac-open body { overflow: hidden; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .iac-msg { animation: iac-in 0.18s ease-out; }
+  @keyframes iac-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+}
