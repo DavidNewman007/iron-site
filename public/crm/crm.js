@@ -743,6 +743,13 @@
   // хочется структурнее, чтобы быстрее найти заказ». Теперь три строки с постоянными местами:
   // №, клиент крупно и статус цветной плашкой справа; устройство и неисправность; дата
   // приёма, возраст, мастер и сумма. Плюс вид «Строки» — по одной строке на заказ, как в таблице.
+  // v89 (25.10.2026), владелец выбрал из предложенного: «под устройством — что с ним». Выполненная работа, а пока её нет —
+  // неисправность: заказ узнаётся без открытия карточки. Одна серая строка с многоточием; тип сделки (не ремонт) — впереди.
+  function riWhat(r, dk) {
+    const flat = c => String(cell(r, c) ?? "").replace(/\s*\n+\s*/g, " · ").trim();
+    const t = [dk !== "repair" ? String(cell(r, C.type) || "") : "", flat(C.work) || flat(C.issue)].filter(Boolean).join(" · ");
+    return t ? `<small title="${esc(t)}">${mark(t)}</small>` : "";
+  }
   function itemHtml(r) {
     const st = cell(r, C.status), age = daysSince(cell(r, C.date));
     const old = !isFinal(st) && age != null && age > 14;
@@ -753,7 +760,7 @@
       <span class="ri__num">№${mark(cell(r, C.num))}</span>
       <span class="ri__date">${esc(date.slice(0, 5))}<small${old ? ' class="is-old"' : ""}>${esc(ageTxt)}</small></span>
       <span class="ri__name">${mark(cell(r, C.name) || "без имени")}${S.q && cell(r, C.phone) ? `<small>${mark(cell(r, C.phone))}</small>` : ""}${String(cell(r, C.contactPhone) ?? "").trim() ? `<small title="Уведомления уходят человеку на связи">📲 ${mark(cell(r, C.contactName) || cell(r, C.contactPhone))}</small>` : ""}</span>
-      <span class="ri__dev">${mark(cell(r, C.device) || "—")}${dk !== "repair" ? ` <small>${esc(cell(r, C.type))}</small>` : ""}</span>
+      <span class="ri__dev">${mark(cell(r, C.device) || "—")}${riWhat(r, dk)}</span>
       <span class="ri__st">${stChip}</span>
       <span class="ri__sum">${money(cell(r, C.total))}</span>
     </div>`;

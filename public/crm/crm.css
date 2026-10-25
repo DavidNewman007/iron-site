@@ -133,6 +133,7 @@ h1, h2, h3, .btn, .tab, .st, .chip--big, .more { font-family: var(--font-display
 .ri__name { font-weight: 700; color: var(--cream); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ri__name small, .ri__dev small { display: block; font-weight: 400; color: var(--muted); font-size: .8rem; }
 .ri__dev { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .95rem; }
+.ri__dev small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } /* v89: работа / неисправность под устройством */
 .ri__st { justify-self: end; min-width: 0; max-width: 100%; } /* v88: плашки — к правому краю, ровно у суммы */
 .ri__st .chip { white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; display: inline-block; line-height: 24px; }
 .ri__sum { text-align: right; font-family: var(--font-display); color: var(--cream); }
