@@ -272,7 +272,7 @@
 
   const DEMO = new URLSearchParams(location.search).has("demo");
   const S = { token: null, email: "", rows: [], byNum: new Map(), gid: 0, loadedAt: 0, loading: false,
-    since: new Map(), tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [],
+    since: new Map(), hist: new Map(), jr: null, histOpen: null, tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [],
     parts: new Map(), svc: null, pp: null, view: null, // parts: ключ карточки → строки запчастей; svc — прайс сайта; pp — окно «работа из прайса»
     stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", src: "", only: null, limit: 150 }, skAdd: null, skSend: new Map(), skSent: null, tins: {} }; // склад Витали (v31); skSend/skSent — брак на возврат (v48)
   const $app = document.getElementById("app");
@@ -430,7 +430,7 @@
 
   // ── загрузка ────────────────────────────────────────────
   async function load() {
-    S.loading = true; S.error = ""; render();
+    S.loading = true; S.error = ""; S.jr = null; S.hist = new Map(); render();
     try {
       if (DEMO) {
         const rows = await fetch("demo.json?v=3").then(r => r.json());
@@ -3012,7 +3012,7 @@
 
     html += `<section class="block"><h3>Прочее</h3><div class="grid3">${fh(C.date)}${isNew ? "" : fh(C.issued)}${fh(C.source)}</div>
       ${!isNew && !DEMO ? `<div class="row"><a class="btn btn--ghost" href="${sheetLink(r.row, C.num)}" target="_blank" rel="noopener">Открыть строку в таблице ↗</a></div>` : ""}
-      ${!isNew ? `<div class="row">${deleteBox(r)}</div>` : ""}</section>`;
+      ${!isNew ? `<div class="row">${histHtml(r)}</div><div class="row">${deleteBox(r)}</div>` : ""}</section>`;
     left += box(7, html);
     return `<div class="card-grid"><div class="col">${left}</div><div class="col">${right}</div></div>`;
   }
@@ -3127,8 +3127,10 @@
   async function loadHistory() {
     if (DEMO) return;
     const v = await api(`/values/${encodeURIComponent("'История статусов'!A2:D")}`);
-    for (const [ts, where, , st] of v.values || []) {
-      const m = String(where || "").match(/(\d+)/); if (m) S.since.set(+m[1], { ts: String(ts || ""), st: String(st || "") });
+    for (const [ts, where, old, st] of v.values || []) {
+      const m = String(where || "").match(/(\d+)/); if (!m) continue;
+      S.since.set(+m[1], { ts: String(ts || ""), st: String(st || "") });
+      const h = S.hist.get(+m[1]) || []; h.push({ ts: String(ts || ""), k: jrKey(ts), a: String(old || ""), b: String(st || "") }); S.hist.set(+m[1], h); // v84 — для «🕘 Истории»
     }
     const n = location.hash.match(/^#\/(\d+)/)?.[1];
     if (n && ![...S.dirty.keys()].length) render();
@@ -3556,6 +3558,7 @@
         await api("/values:batchClear", { method: "POST", body: JSON.stringify({ ranges: [`'${CFG.sheet}'!B${r.row}:Q${r.row}`, `'${CFG.sheet}'!S${r.row}:${LETTER(LAST)}${r.row}`] }) });
         await logStatus([[r.row, cell(r, C.status), "Удалён"]]);
       }
+      journal([[num, r.row, "Заказ удалён", cell(r, C.status), `копия на листе «${TRASH}»`]]);
       S.lastDeleted = { row: r.row, num, raw };
       for (const k of [...S.dirty.keys()]) if (k.startsWith(r.row + ":")) S.dirty.delete(k);
       S.rows = S.rows.filter(x => x !== r); S.byNum.delete(String(num)); S.clients = null; S.delAsk = null;
@@ -3575,6 +3578,7 @@
       const f = d.raw.map((v, i) => typeof v === "string" && v.startsWith("=") ? { range: `'${CFG.sheet}'!${LETTER(i)}${d.row}`, values: [[v]] } : null).filter(Boolean);
       if (f.length) await api("/values:batchUpdate", { method: "POST", body: JSON.stringify({ valueInputOption: "USER_ENTERED", data: f }) });
       await logStatus([[d.row, "Удалён", d.raw[C.status] || "Пусто"]]);
+      journal([[d.num, d.row, "Заказ возвращён", "удалён", String(d.raw[C.status] || "")]]);
       S.lastDeleted = null; toast(`Заказ №${d.num} возвращён`); await load(); location.hash = "#/" + d.num;
     } catch (e) { toast("Не удалось вернуть: " + e.message, null, true); }
   }
@@ -3695,6 +3699,79 @@
     const ts = mskStamp();
     await api(`/values/${encodeURIComponent("'История статусов'!A:D")}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
       { method: "POST", body: JSON.stringify({ values: items.map(([row, old, v]) => [ts, "Строка " + row, String(old || "Пусто"), String(v)]) }) });
+  }
+  // ── журнал изменений заказа (v84, 25.10.2026, план 93 §11.69) ───────────────────────────
+  // Владелец выбрал из предложенного: «история изменений заказа — кто и когда менял сумму, статус, запчасти»
+  // (случаи вроде №7847, где не понять, откуда в итоге взялись −2000, разбирались бы за минуту). Каждая сохранённая
+  // правка поля — строка листа «Журнал изменений» книги БАЗА: когда (МСК), №, строка, кто (почта входа), поле, было,
+  // стало, откуда. Правки отсюда пишет оболочка («оболочка»); правки руками в таблице — onEditTrigger (Contact.js,
+  // «таблица»). Дверь зовёт тот же обработчик с triggerUid "crm-door", и он их пропускает — иначе по две строки на
+  // правку. Запись — в фоне: сбой журнала сохранение не отменяет. Пароль (K) — только «•••», без самого пароля.
+  // В карточке — «🕘 История изменений»: журнал и старая «История статусов» (до v84 — только статусы и без автора).
+  const JOURNAL = "Журнал изменений", JOURNAL_HEAD = ["Когда", "№ заказа", "Строка", "Кто", "Поле", "Было", "Стало", "Откуда"];
+  const JOURNAL_SKIP = [C.gcontact, C.labor]; // ID контакта пишет сама оболочка, R — формула таблицы
+  const jrKey = ts => { const m = String(ts || "").match(/(\d{2})\.(\d{2})\.(\d{4})(?:[ ,]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/); return m ? `${m[3]}${m[2]}${m[1]}${(m[4] || "0").padStart(2, "0")}${m[5] || "00"}${m[6] || "00"}` : ""; };
+  const jrMin = k => k ? Date.UTC(+k.slice(0, 4), +k.slice(4, 6) - 1, +k.slice(6, 8), +k.slice(8, 10), +k.slice(10, 12)) / 6e4 : 0;
+  const jrParse = ([ts, num, row, who, field, a, b, from]) => ({ ts: String(ts || ""), k: jrKey(ts), num: String(num ?? "").trim(), row: +row || 0,
+    who: String(who || ""), field: String(field || ""), a: String(a ?? ""), b: String(b ?? ""), from: String(from || "") });
+  function jrVal(c, v) {
+    if (S.bools.has(c)) return isTrue(v) ? "✓" : "—";
+    if (c === C.pass) return String(v ?? "").trim() ? "•••" : "";
+    return String(v ?? "").slice(0, 300);
+  }
+  // Строки журнала из списка изменений save(): [№, строка, поле, было, стало]. ch.w — то, что реально ушло в клетку.
+  const jrRows = (num, row, list) => list.filter(ch => !JOURNAL_SKIP.includes(ch.c) && !ch.formula && jrVal(ch.c, ch.old) !== jrVal(ch.c, ch.w ?? ch.v))
+    .map(ch => [String(num), row, F[ch.c]?.label || LETTER(ch.c), jrVal(ch.c, ch.old), jrVal(ch.c, ch.w ?? ch.v)]);
+  async function ensureJournal() {
+    const meta = await api("?fields=sheets(properties(title))");
+    if (meta.sheets.some(x => x.properties.title === JOURNAL)) return;
+    await api(":batchUpdate", { method: "POST", body: JSON.stringify({ requests: [{ addSheet: { properties: { title: JOURNAL, gridProperties: { frozenRowCount: 1 } } } }] }) });
+    await api(`/values/${encodeURIComponent(`'${JOURNAL}'!A1`)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [JOURNAL_HEAD] }) });
+  }
+  async function journal(items) {
+    if (!items.length) return;
+    const ts = mskStamp(), rows = items.map(([num, row, f, a, b]) => [ts, String(num), row, S.email || "", f, a, b, "оболочка"]);
+    if (DEMO && !S.jr?.list) S.jr = { list: [] };
+    if (S.jr?.list) S.jr.list.push(...rows.map(jrParse)); // открытая «История» видит правку сразу
+    if (DEMO) return;
+    const put = () => api(`/values/${encodeURIComponent(`'${JOURNAL}'!A:H`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, { method: "POST", body: JSON.stringify({ values: rows }) });
+    try { await put(); }
+    catch {
+      try { await ensureJournal(); await put(); }
+      catch (e) { console.warn("журнал изменений:", e); toast("Сохранено, но в «Журнал изменений» не записалось: " + e.message, null, true); }
+    }
+  }
+  async function loadJournal() {
+    if (S.jr?.list || S.jr?.loading) return;
+    S.jr = { loading: true };
+    try {
+      const v = DEMO ? {} : await api(`/values/${encodeURIComponent(`'${JOURNAL}'!A2:H`)}`).catch(e => /parse range|not found/i.test(e.message) ? {} : Promise.reject(e));
+      S.jr = { list: (v.values || []).map(jrParse) };
+    } catch (e) { S.jr = { error: e.message }; }
+  }
+  const isStatusField = f => norm(f).startsWith("статус");
+  function histHtml(r) {
+    const num = String(cell(r, C.num)).trim();
+    if (S.histOpen !== num) return `<button type="button" class="btn btn--ghost btn--sm" data-act="histopen">🕘 История изменений</button>`;
+    const head = `<div class="hist__head"><b>🕘 История изменений</b><button type="button" class="linkbtn" data-act="histopen">свернуть</button></div>`;
+    if (!S.jr?.list) return `<div class="hist">${head}<div class="note">${S.jr?.error ? "Журнал не прочитался: " + esc(S.jr.error) : "Читаю журнал…"}</div></div>`;
+    const born = jrKey(cell(r, C.date)).slice(0, 8); // строку освободил удалённый заказ — его статусы не наши
+    const jr = S.jr.list.filter(x => x.num === num);
+    // «История статусов»: статусы, поставленные через дверь, уже есть в журнале — дубль узнаём по статусу и времени (±3 мин).
+    const st = (S.hist.get(r.row) || []).filter(x => !born || x.k.slice(0, 8) >= born)
+      .filter(x => !jr.some(y => isStatusField(y.field) && norm(y.b).startsWith(norm(x.b)) && Math.abs(jrMin(y.k) - jrMin(x.k)) <= 3))
+      .map(x => ({ ...x, who: "", field: "Статус", from: "история статусов" }));
+    const all = [...jr, ...st].sort((a, b) => b.k.localeCompare(a.k));
+    if (!all.length) return `<div class="hist">${head}<div class="note">Пока пусто: журнал ведётся с 25.10.2026, статусы — с начала «Истории статусов».</div></div>`;
+    const shown = S.histAll === num ? all : all.slice(0, 30);
+    const who = x => x.who ? esc(x.who.split("@")[0]) : "—";
+    const val = v => v === "" ? `<i>пусто</i>` : esc(v);
+    return `<div class="hist">${head}<div class="hist__list">${shown.map(x => `<div class="hist__row">
+        <span class="hist__when">${esc(x.ts.slice(0, 5))} ${esc(x.ts.slice(11, 16))}</span>
+        <span class="hist__who" title="${esc(x.who || "автор не записан")}${x.from ? " · " + esc(x.from) : ""}">${who(x)}${x.from === "таблица" ? " · табл." : ""}</span>
+        <span class="hist__f">${esc(x.field)}</span>
+        <span class="hist__ch">${x.a !== "" || !/^Заказ /.test(x.field) ? `<s>${val(x.a)}</s> → ` : ""}<b>${val(x.b)}</b></span></div>`).join("")}</div>
+      ${shown.length < all.length ? `<button type="button" class="linkbtn" data-act="histall">показать всё (${all.length})</button>` : ""}</div>`;
   }
   // only — номера дверей, которые звать (кнопка «Повторить» зовёт только упавшие).
   // v39 (03.10.2026): двери идут независимо — раньше сбой первой обрывал цикл, и вторая (сообщения
@@ -3840,6 +3917,7 @@
       };
       await Promise.all([r, ...others.keys()].map(check));
       await Promise.all([list.length ? writeCells(r.row, list) : null, ...[...others].map(([x, l]) => writeCells(x.row, l))]);
+      journal([...jrRows(num, r.row, list), ...[...others].flatMap(([x, l]) => jrRows(cell(x, C.num), x.row, l))]); // v84, в фоне
       const skMsg = skOps.length ? await skWriteOff(num, skOps) : "";
       // Тихое закрытие: дверь не зовём (клиенту ничего), историю пишем сами.
       const quiet = [[r, list], ...others].filter(([, l]) => l.some(ch => ch.c === C.status && isSilent(ch.v)));
@@ -3956,6 +4034,8 @@
         return { num, row, list };
       });
       await Promise.all(made.map(m => writeCells(m.row, m.list)));
+      journal(made.map(m => { const v = c => String(m.list.find(ch => ch.c === c)?.w ?? "").trim(); // v84: одна строка на заказ, а не по полю
+        return [m.num, m.row, "Заказ создан", "", [v(C.type) || "Ремонт", v(C.device), v(C.status) || CFG.newStatus, v(C.total) && "итого " + money(v(C.total))].filter(Boolean).join(" · ")]; }));
       const skMsg = skOps.length ? await skWriteOff(made[0].num, skOps) : "";
       for (const m of made) {
         const cells = []; cells[C.num] = m.num; for (const ch of m.list) if (!ch.formula) cells[ch.c] = String(ch.w ?? "");
@@ -4151,6 +4231,8 @@
     } else if (act === "logout") signOut();
     else if (act === "relogin") { const sid = sidGet(); if (sid) authPost("logout", { sid }).catch(() => {}); store.del("crm.sid"); store.del("crm.tok"); store.del("crm.who"); S.token = null; S.error = ""; S.rows = []; render(); }
     else if (act === "reload") { if (!DEMO && !S.token) render(); else if (location.hash === "#/sklad") { await loadStock(true); render(); } else load(); }
+    else if (act === "histopen") { const n = String(cell(S.byNum.get(location.hash.slice(2)) || { cells: [] }, C.num)).trim(); S.histOpen = S.histOpen === n ? null : n; rerenderKeep(); if (S.histOpen) loadJournal().then(() => rerenderKeep()); }
+    else if (act === "histall") { S.histAll = S.histOpen; rerenderKeep(); }
     else if (act === "delask" || act === "delno") { S.delAsk = act === "delask" ? curKey() : null; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "delyes") { t.disabled = true; t.textContent = "Удаляю…"; deleteOrder(location.hash.slice(2)); }
     else if (act === "view") { S.view = t.dataset.v; store.set("crm.view", S.view); renderList(); }
