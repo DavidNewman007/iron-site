@@ -1216,7 +1216,42 @@
     S.opPop[fam] = { n: S.rows.length, m };
     return m;
   }
-  function pricePickHtml(key, deviceText) {
+  // ── работы под неисправность (v87, 25.10.2026) ───────────────────────────────────────────
+  // Владелец: «когда вписываю неисправность — чтобы при выборе „Работа из прайса“ сначала выходили предлагаемые варианты,
+  // которые соответствуют неисправности». Слова поля «Неисправность» → работы прайса. Что написано раньше, то и выше:
+  // главную жалобу обычно пишут первой. Не узнали ни слова — прежний порядок (частые у этой техники сверху, v76).
+  // Границы слова для кириллицы — руками: \b в JS без флага u видит только латиницу.
+  const NW = "(?:^|[^а-яёa-z0-9])";
+  const ISSUE_OPS = [
+    [/задн[а-яё]* (крышк|стекл|панел)|крышк[а-яё]* (задн|разбит)|корпус|погнут|рамк/, ["замена заднего стекла", "замена задней крышки", "замена корпуса"]],
+    [/стекл[а-яё]* камер|камер[а-яё]* стекл|линз/, ["замена стекла камеры", "замена камеры"]],
+    [/камер|не фокус|размыт/, ["замена камеры", "замена стекла камеры"]],
+    [/экран|диспле|матриц|изображ|полос|сенсор|тачскрин|мерца|пятн|подсветк|не реагир|разбит(?![а-яё]*(?: [а-яё]+){0,2} (?:задн|крышк|камер))|трещин|скол/,
+      ["замена дисплея", "переклейка стекла дисплея", "замена стекла", "замена сенсора", "замена матрицы без крышки", "полировка стекла"]],
+    [/акб|аккумул|батаре|разряжа|держит заряд|вздул|[её]мкост|износ/, ["замена аккумулятора"]],
+    [/заряж|заряд|разъ[её]м|lightning|type ?-?c|порт|usb/, ["замена нижнего шлейфа", "замена разъёма зарядки"]],
+    [/слыш|динамик|звук|тих|хрип|микрофон|собеседник/, ["замена динамика", "замена нижнего шлейфа"]],
+    [/кнопк|громкост|вибро|фонарик|вспышк|шлейф/, ["замена шлейфа"]],
+    [/клавиатур|клавиш|топкейс/, ["замена клавиатуры"]],
+    [/тачпад|трекпад/, ["замена тачпада"]],
+    [/влаг|зали|вод[аыуой]|утоп|окисл|корроз/, ["ремонт после залития", "диагностика", "ремонт платы"]],
+    [/не включ|не запуск|перезагр|выключа|грее|нагрев|завис|петл|на яблок|не грузит|плат[аеуы]|не видит сим|нет сети|wi-?fi|bluetooth|блютуз/, ["диагностика", "ремонт платы", "замена материнской платы"]],
+    [new RegExp(`прошив|обнов|${NW}по(?:[^а-яёa-z0-9]|$)|ios|пароль|забыл|icloud|айклауд|apple ?id|сброс|ошибк|переустанов|установк|${NW}ос(?:[^а-яёa-z0-9]|$)|windows|винд|macos`), ["установка ПО"]],
+    [/перен[оеё]с|перенест|данных|бэкап|резервн/, ["перенос данных"]],
+    [/чистк|профилакт|термопаст|шум|пыл|медленн|тормоз|апгрейд|ssd|hdd|диск|памят|озу|оперативн/,
+      ["профилактика", "апгрейд: диск, память, профилактика", "апгрейд: увеличение оперативной памяти", "замена накопителя (ssd)", "замена диска на ssd с установкой по"]],
+    [/диагност/, ["диагностика"]],
+  ];
+  // Работа → место в выдаче (0 — первая), только для узнанных; null — неисправность пуста или слова не узнаны.
+  function issueRank(text) {
+    const t = norm(text); if (!t) return null;
+    const hits = ISSUE_OPS.map(([re, ops], i) => ({ at: t.search(re), i, ops })).filter(h => h.at >= 0).sort((a, b) => a.at - b.at || a.i - b.i);
+    if (!hits.length) return null;
+    const rank = new Map();
+    for (const h of hits) for (const op of h.ops) if (!rank.has(norm(op))) rank.set(norm(op), rank.size);
+    return rank;
+  }
+  function pricePickHtml(key, deviceText, issueText) {
     const P = S.pp?.key === key ? S.pp : null;
     if (!P?.open) return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppopen">📋 Работа из прайса</button>${svcLogHtml(key)}`;
     if (!S.svc?.list) return `<div class="pp"><div class="note">${S.svc?.error ? "Прайс не загрузился: " + esc(S.svc.error) : "Загружаю прайс…"}</div></div>`;
@@ -1227,15 +1262,19 @@
     const hit = x => { const t = norm(x.operation + " " + (x.variant || "") + (dev ? "" : " " + x.device)); return !q || q.split(" ").every(w => alts(w).some(a => t.includes(a))); };
     // Частые у этой техники работы — сверху (v76), варианты одной работы остаются рядом в прежнем порядке.
     const pop = opPopularity(familyOf(dev || deviceText));
+    // Под неисправность (v87) — выше всего; дальше как было: частые у этой техники, затем порядок прайса.
+    const rk = issueRank(issueText), rOf = op => rk?.has(norm(op)) ? rk.get(norm(op)) : Infinity;
     const items = S.svc.list.map((x, i) => ({ x, i })).filter(({ x }) => (dev ? x.device === dev : q.length >= 2) && hit(x))
-      .sort((a, b) => (pop.get(b.x.operation) || 0) - (pop.get(a.x.operation) || 0) || a.i - b.i).slice(0, 80);
+      .sort((a, b) => (rOf(a.x.operation) - rOf(b.x.operation)) || (pop.get(b.x.operation) || 0) - (pop.get(a.x.operation) || 0) || a.i - b.i).slice(0, 80);
+    const fitN = items.filter(({ x }) => rOf(x.operation) < Infinity).length;
+    const secHtml = j => !fitN || fitN === items.length ? "" : j === 0 ? `<div class="pp__sub">🎯 Под неисправность</div>` : j === fitN ? `<div class="pp__sub">Остальные работы</div>` : "";
     const hitX = x => !q || q.split(" ").every(w => alts(w).some(a => norm(x.operation + " " + x.variant + " " + x.src + " " + (x.title || "") + (x.kind === "stock" ? " склад наличие" : "")).includes(a)));
-    const extras = dev ? ppExtras(dev).filter(hitX).slice(0, 60) : [];
+    const extras = dev ? ppExtras(dev).filter(hitX).sort((a, b) => (rOf(a.operation) - rOf(b.operation)) || 0).slice(0, 60) : [];
     P.extra = extras; // для нажатия: data-svx — номер в этом списке
     return `<div class="pp"><div class="pp__head">${selHtml('data-act="ppdev"', dev || "", [{ v: "", t: "— модель из прайса —" }, ...S.svc.devices], "— модель из прайса —")}
       <button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>
       <input class="pp__q" data-act="ppq" value="${esc(P.q || "")}" placeholder="Поиск: дисплей, акб, oled…" autocomplete="off">
-      ${dev || q.length >= 2 ? (items.length || extras.length ? `<div class="pp__list">${ppXHtml(extras, x => x.kind === "stock", "📦 На нашем складе")}${items.map(({ x, i }) => `<button type="button" class="pp__item" data-svc="${i}">
+      ${dev || q.length >= 2 ? (items.length || extras.length ? `<div class="pp__list">${ppXHtml(extras, x => x.kind === "stock", "📦 На нашем складе")}${items.map(({ x, i }, j) => `${secHtml(j)}<button type="button" class="pp__item" data-svc="${i}">
         <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}${dev ? "" : ` <span class="note">· ${esc(x.device)}</span>`}</b>
         <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : x.price_free ? "бесплатно" : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_cost)}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${ppXHtml(extras, x => x.kind !== "stock", "Другие поставщики")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
         : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка или ищите по всему прайсу.</div>`}
@@ -2991,7 +3030,7 @@
       ${multiBox}${TIN_TYPES.includes(dk) && (isNew || editable(C.buyback, r)) ? tinBox(key, r) : ""}
       <div class="grid2"><div>${fh(C.device)}${isNew || editable(C.device, r) ? `<div class="ac" id="ac-dev"></div>` : ""}</div>${fh(C.imei)}</div>
       <div class="wide-area">${fh(C.issue)}${tips("issue", C.issue)}</div>
-      <div class="wide-area">${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device)) : ""}</div>
+      <div class="wide-area">${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device), val(C.issue)) : ""}</div>
       ${spp ? `<div class="field field--parts"><span>Что продаём — со склада или от поставщика</span>${(isNew || editable(C.parts, r)) ? spPickHtml(key, r) : ""}${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
         : rep ? `<div class="field field--parts"><span>Запчасти <small class="note">(клиенту в отчёте уходят только названия)</small></span>${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
         : `<div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>`}
