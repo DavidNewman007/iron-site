@@ -479,7 +479,6 @@
 
   let allProducts = [];
   let sortMode = "default";
-  let stockOnly = false;
   let iphoneHybridById = {};
   let iphoneHybridByIdNoPrice = new Map();
   let iphoneHybridByVariantKey = new Map();
@@ -535,6 +534,7 @@
       const q = new URLSearchParams(location.search).get("q");
       if (q && els.search) els.search.value = q.slice(0, 60);
     } catch { /* старый браузер без URLSearchParams — просто без поиска */ }
+    readUrlState();
     bindEvents();
     bindMobileCartCountSync();
     renderCart();
@@ -1932,6 +1932,7 @@
     buildShopControls();
     els.search?.addEventListener("input", scheduleRenderGrid);
     els.category?.addEventListener("change", () => {
+      if (els.category.value !== "all") activeGroup = groupOfCategory(els.category.value);
       // Раньше смена категории уносила страницу на самый верх, к шапке с
       // фотографией, — товары приходилось листать заново. Теперь прокручиваем
       // только если начало списка уже ушло выше экрана, и ровно к поиску.
@@ -2861,9 +2862,40 @@
     return window.matchMedia("(max-width: 900px)").matches;
   }
 
+  // Сколько позиций останется, если выбрать значение. Нулевые значения прячем
+  // (кроме выбранного): чип, который приводит к пустому списку, только мешает.
+  // Длинные группы (цвета iPhone — 25 штук) свёрнуты до FACET_VISIBLE с «Ещё N».
+  // Добавлено 24.10.2026 по исследованию Baymard: числа у фильтров и свёрнутые
+  // длинные списки — два главных отличия удобного каталога от неудобного.
+  const FACET_VISIBLE = 8;
+
+  function facetValueCounts(registry, products, active, facetId, options) {
+    const plan = currentPlan || prepareQueryPlan((els.search?.value || "").trim());
+    const base = products.filter((p) => matchesAvail(p) && matchesSearch(p, plan));
+    const counts = {};
+    for (const value of options) {
+      const want = { ...active, [facetId]: value };
+      let n = 0;
+      for (const p of base) if (registry.matches(p, want)) n += 1;
+      counts[value] = n;
+    }
+    return counts;
+  }
+
   function buildFilterGroupHtml(registry, products, active, facet, includeAllChip, hideLabel) {
-    const options = registry.collectOptions(products, facet.id, { ...active, [facet.id]: "" });
+    const allOptions = registry.collectOptions(products, facet.id, { ...active, [facet.id]: "" });
+    const counts = facetValueCounts(registry, products, active, facet.id, allOptions);
+    let options = allOptions.filter((v) => counts[v] > 0 || active[facet.id] === v);
     if (!options.length) return "";
+    const moreKey = (els.category?.value || "") + ":" + facet.id;
+    let hiddenCount = 0;
+    if (options.length > FACET_VISIBLE + 2 && !expandedFacets.has(moreKey)) {
+      const head = options.slice(0, FACET_VISIBLE);
+      const chosen = active[facet.id];
+      if (chosen && !head.includes(chosen)) head.push(chosen);
+      hiddenCount = options.length - head.length;
+      options = head;
+    }
 
     const chips = [];
     if (includeAllChip) {
@@ -2878,7 +2910,16 @@
       chips.push(
         `<button type="button" class="shop-filter-chip${isActive ? " is-active" : ""}" data-facet="${escapeHtml(
           facet.id
-        )}" data-value="${escapeHtml(value)}">${escapeHtml(registry.formatValue(facet.id, value))}</button>`
+        )}" data-value="${escapeHtml(value)}">${escapeHtml(registry.formatValue(facet.id, value))}<span class="shop-filter-chip__n">${
+          counts[value] || 0
+        }</span></button>`
+      );
+    }
+    if (hiddenCount) {
+      chips.push(
+        `<button type="button" class="shop-filter-more" data-more="${escapeHtml(moreKey)}">${escapeHtml(
+          T("filters.more", "Ещё")
+        )} ${hiddenCount}</button>`
       );
     }
 
@@ -2917,6 +2958,12 @@
   }
 
   function bindFilterChipHandlers(root, active, rerender) {
+    root.querySelectorAll("[data-more]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        expandedFacets.add(btn.dataset.more);
+        rerender();
+      });
+    });
     root.querySelectorAll(".shop-filter-chip").forEach((btn) => {
       btn.addEventListener("click", () => {
         const facetId = btn.dataset.facet || "";
@@ -3077,59 +3124,137 @@
     const q = (els.search?.value || "").trim();
     const cat = els.category?.value || "all";
     const plan = prepareQueryPlan(q);
+    const groupCats = cat === "all" ? activeGroupCats() : null;
 
     return allProducts.filter((p) => {
       if (cat !== "all" && p.category !== cat) return false;
-      if (stockOnly && !isInSochiNow(p)) return false;
+      if (groupCats && !groupCats.includes(p.category)) return false;
+      if (!matchesAvail(p)) return false;
       if (!matchesCategoryFilters(p)) return false;
       return matchesSearch(p, plan);
     });
   }
 
-  /** «В наличии в Сочи»: не под заказ и не предзаказ, и не «0 шт». */
-  function isInSochiNow(p) {
-    return Boolean(p && p.inStock && !p.preorder);
+  // ---- Каталог: группы → подкатегории, наличие, сортировка (24.10.2026) ----
+  //
+  // История. До 24.10 категория выбиралась выпадающим списком из 18 пунктов
+  // вперемешку (половина по-английски, пустая «Прочее», ни одной цифры). Утром
+  // 24.10 его заменили сплошным рядом из 20 кнопок — владелец: «не сказал бы, что
+  // стало удобней». Теперь два уровня, как у крупных магазинов техники: сверху
+  // шесть групп плитками со значками (Apple, Android, ноутбуки, игры и гаджеты,
+  // аксессуары), под ними — подкатегории только выбранной группы. Выбранная
+  // группа без подкатегории показывает все товары группы.
+  // Сам <select id="price-category"> остаётся носителем состояния: на нём
+  // держатся фильтры, мобильный подбор и ссылки ?q=.
+  const CATEGORY_LABELS = {
+    iphone: ["iPhone", "iPhone"],
+    macbook: ["MacBook", "MacBook"],
+    ipad: ["iPad", "iPad"],
+    watch: ["Apple Watch", "Apple Watch"],
+    airpods: ["AirPods", "AirPods"],
+    mac: ["iMac · Mac mini", "iMac · Mac mini"],
+    samsung: ["Samsung", "Samsung"],
+    xiaomi: ["Xiaomi · POCO · Redmi", "Xiaomi · POCO · Redmi"],
+    android: ["Pixel · OnePlus · Honor", "Pixel · OnePlus · Honor"],
+    galaxy_watch: ["Galaxy Watch", "Galaxy Watch"],
+    laptops: ["HP · Lenovo", "HP · Lenovo"],
+    gaming: ["Приставки", "Gaming"],
+    audio: ["Наушники и колонки", "Audio"],
+    dyson: ["Dyson", "Dyson"],
+    gadgets: ["Камеры и трекеры", "Cameras & trackers"],
+    meta: ["Очки Meta", "Meta glasses"],
+    accessories: ["Аксессуары", "Accessories"],
+    other: ["Прочее", "Other"],
+  };
+
+  const CATEGORY_GROUPS = [
+    { id: "all", ru: "Все товары", en: "Everything", hintRu: "весь прайс", hintEn: "full price list", icon: "all", cats: null },
+    { id: "apple", ru: "Apple", en: "Apple", hintRu: "iPhone, MacBook, iPad, Watch", hintEn: "iPhone, MacBook, iPad, Watch", icon: "apple",
+      cats: ["iphone", "macbook", "ipad", "watch", "airpods", "mac"] },
+    { id: "android", ru: "Android", en: "Android", hintRu: "Samsung, Xiaomi, Pixel", hintEn: "Samsung, Xiaomi, Pixel", icon: "android",
+      cats: ["samsung", "xiaomi", "android", "galaxy_watch"] },
+    { id: "laptops", ru: "Ноутбуки", en: "Laptops", hintRu: "HP, Lenovo на Windows", hintEn: "HP, Lenovo, Windows", icon: "laptop",
+      cats: ["laptops"] },
+    { id: "fun", ru: "Игры и гаджеты", en: "Gaming & gadgets", hintRu: "PlayStation, Dyson, аудио", hintEn: "PlayStation, Dyson, audio", icon: "game",
+      cats: ["gaming", "audio", "dyson", "gadgets", "meta"] },
+    { id: "accessories", ru: "Аксессуары", en: "Accessories", hintRu: "чехлы, зарядки, AirTag", hintEn: "cases, chargers, AirTag", icon: "plug",
+      cats: ["accessories", "other"] }];
+
+  const GROUP_ICONS = {
+    all: '<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>',
+    apple: '<rect x="6.5" y="2.5" width="11" height="19" rx="2.4"/><path d="M10.5 5.3h3"/><circle cx="12" cy="18.2" r=".6"/>',
+    android: '<rect x="5.5" y="2.5" width="13" height="19" rx="2"/><path d="M5.5 6h13M5.5 18h13"/><circle cx="12" cy="4.3" r=".5"/>',
+    laptop: '<rect x="4.5" y="4.5" width="15" height="10.5" rx="1.4"/><path d="M2.5 18.5h19l-1.5-3.5h-16z"/>',
+    game: '<path d="M7 8.5h10a4 4 0 0 1 3.9 4.9l-.9 3.9a2 2 0 0 1-3.4.9L14.5 16h-5l-2.1 2.2a2 2 0 0 1-3.4-.9l-.9-3.9A4 4 0 0 1 7 8.5z"/><path d="M8 11v3M6.5 12.5h3"/><circle cx="15.5" cy="11.5" r=".6"/><circle cx="17" cy="13.5" r=".6"/>',
+    plug: '<path d="M9 3v4M15 3v4"/><path d="M6.5 7h11v3.5a5.5 5.5 0 0 1-11 0z"/><path d="M12 16v5"/>',
+  };
+
+  let activeGroup = "all";
+  let availMode = "all";
+  const expandedFacets = new Set();
+  let currentPlan = null;
+
+  function groupById(id) {
+    return CATEGORY_GROUPS.find((g) => g.id === id) || CATEGORY_GROUPS[0];
   }
 
-  // ---- Категории кнопками, сортировка и «только в наличии» (24.10.2026) ----
-  //
-  // До этого категория выбиралась из выпадающего списка: восемнадцать пунктов
-  // вперемешку (iPhone, iPad, AirPods, Gaming, Audio, Dyson, Gadgets, MacBook…),
-  // половина по-английски, пустая «Прочее» и ни одной цифры — чтобы понять, есть
-  // ли вообще Pixel, надо было открыть список и угадать пункт. Теперь это ряд
-  // кнопок, сгруппированный «Apple → другие марки → остальное», с числом
-  // позиций у каждой; пустые категории не показываются. Числа считаются с
-  // учётом поиска: набрал «pixel» — видно, в какой категории нашлось.
-  // Сам <select id="price-category"> остаётся — на нём держится вся логика,
-  // и в мини-приложении Telegram прежний выпадающий список никто не трогал.
-  const CATEGORY_CHIPS = [
-    ["all", "Все", "All"],
-    ["iphone", "iPhone", "iPhone"],
-    ["macbook", "MacBook", "MacBook"],
-    ["ipad", "iPad", "iPad"],
-    ["watch", "Apple Watch", "Apple Watch"],
-    ["airpods", "AirPods", "AirPods"],
-    ["mac", "iMac · Mac mini", "iMac · Mac mini"],
-    ["accessories", "Аксессуары", "Accessories"],
-    ["|"],
-    ["samsung", "Samsung", "Samsung"],
-    ["galaxy_watch", "Galaxy Watch", "Galaxy Watch"],
-    ["xiaomi", "Xiaomi · POCO", "Xiaomi · POCO"],
-    ["android", "Pixel · OnePlus · Honor", "Pixel · OnePlus · Honor"],
-    ["laptops", "Ноутбуки", "Laptops"],
-    ["|"],
-    ["gaming", "Приставки", "Gaming"],
-    ["audio", "Аудио", "Audio"],
-    ["dyson", "Dyson", "Dyson"],
-    ["gadgets", "Гаджеты", "Gadgets"],
-    ["meta", "Очки Meta", "Meta glasses"],
-    ["other", "Прочее", "Other"]];
+  function groupOfCategory(cat) {
+    const g = CATEGORY_GROUPS.find((x) => x.cats && x.cats.includes(cat));
+    return g ? g.id : "all";
+  }
+
+  function activeGroupCats() {
+    return activeGroup === "all" ? null : groupById(activeGroup).cats;
+  }
+
+  function categoryLabel(cat) {
+    const pair = CATEGORY_LABELS[cat];
+    if (!pair) return cat;
+    return I18N.isEn ? pair[1] : pair[0];
+  }
+
+  /** Наличие: в Сочи · под заказ 1–2 дня (склад S3) · предзаказ 5–7 дней (S4). */
+  function availKind(p) {
+    if (PREORDER_NEW_WAREHOUSE_RE.test(String((p && p.warehouse) || ""))) return "pre57";
+    if (p && p.preorder) return "order12";
+    return "stock";
+  }
+
+  function matchesAvail(p) {
+    return availMode === "all" || availKind(p) === availMode;
+  }
+
+  const AVAIL_LABELS = {
+    all: ["Любое наличие", "Any availability"],
+    stock: ["В наличии в Сочи", "In stock in Sochi"],
+    order12: ["Под заказ, 1–2 дня", "To order, 1–2 days"],
+    pre57: ["Предзаказ, 5–7 дней", "Pre-order, 5–7 days"],
+  };
+
+  function availLabel(mode) {
+    const pair = AVAIL_LABELS[mode] || AVAIL_LABELS.all;
+    return I18N.isEn ? pair[1] : pair[0];
+  }
 
   function buildShopControls() {
     const toolbar = document.querySelector("#shop-prices .shop-toolbar");
     if (!toolbar || toolbar.dataset.controls === "1") return;
     toolbar.dataset.controls = "1";
     toolbar.classList.add("shop-toolbar--chips");
+
+    const avail = document.createElement("select");
+    avail.id = "price-avail";
+    avail.className = "shop-sort shop-avail";
+    avail.setAttribute("aria-label", T("page.avail_aria", "Наличие"));
+    avail.innerHTML = Object.keys(AVAIL_LABELS)
+      .map((v) => `<option value="${v}">${escapeHtml(availLabel(v))}</option>`)
+      .join("");
+    avail.value = availMode;
+    avail.addEventListener("change", () => {
+      availMode = avail.value;
+      renderGrid();
+    });
+    toolbar.appendChild(avail);
 
     const sort = document.createElement("select");
     sort.id = "price-sort";
@@ -3141,84 +3266,272 @@
       ["desc", T("page.sort_expensive", "Сначала дороже")]]
       .map(([v, l]) => `<option value="${v}">${escapeHtml(l)}</option>`)
       .join("");
+    sort.value = sortMode;
     sort.addEventListener("change", () => {
       sortMode = sort.value;
       renderGrid();
     });
     toolbar.appendChild(sort);
 
-    const stock = document.createElement("label");
-    stock.className = "shop-stock-toggle";
-    stock.innerHTML = `<input type="checkbox" id="price-stock-only"><span>${escapeHtml(
-      T("page.stock_only", "Только в наличии в Сочи")
-    )}</span>`;
-    stock.querySelector("input").addEventListener("change", (e) => {
-      stockOnly = e.target.checked;
-      renderGrid();
-    });
-    toolbar.appendChild(stock);
+    const groups = document.createElement("nav");
+    groups.className = "shop-groups";
+    groups.id = "price-groups";
+    groups.setAttribute("aria-label", T("page.categories_aria", "Категории"));
+    const subcats = document.createElement("div");
+    subcats.className = "shop-cats";
+    subcats.id = "price-cats";
+    toolbar.insertAdjacentElement("afterend", groups);
+    groups.insertAdjacentElement("afterend", subcats);
 
-    const chips = document.createElement("nav");
-    chips.className = "shop-cats";
-    chips.id = "price-cats";
-    chips.setAttribute("aria-label", T("page.categories_aria", "Категории"));
-    toolbar.insertAdjacentElement("afterend", chips);
-    chips.addEventListener("click", (event) => {
+    const applied = document.createElement("div");
+    applied.className = "shop-applied";
+    applied.id = "price-applied";
+    applied.setAttribute("aria-live", "polite");
+    document.querySelector("#shop-prices .shop-layout")?.insertAdjacentElement("beforebegin", applied);
+
+    groups.addEventListener("click", (event) => {
+      const btn = event.target.closest("[data-group]");
+      if (!btn) return;
+      const g = groupById(btn.dataset.group);
+      activeGroup = g.id;
+      const target = g.cats && g.cats.length === 1 ? g.cats[0] : "all";
+      setCategory(target, true);
+    });
+
+    subcats.addEventListener("click", (event) => {
       const btn = event.target.closest("[data-cat]");
-      if (!btn || !els.category) return;
-      const value = btn.dataset.cat;
-      if (els.category.value === value) return;
-      els.category.value = value;
-      els.category.dispatchEvent(new Event("change", { bubbles: true }));
-      // Подпись старого выпадающего списка — чтобы не врал, если его покажут.
-      const label = document.querySelector("#price-category-trigger .shop-category-picker__label");
-      if (label) label.textContent = els.category.options[els.category.selectedIndex]?.textContent || "";
+      if (!btn) return;
+      setCategory(btn.dataset.cat, true);
+    });
+
+    applied.addEventListener("click", (event) => {
+      const btn = event.target.closest("[data-clear]");
+      if (!btn) return;
+      const what = btn.dataset.clear;
+      if (what === "all") {
+        resetCategoryFiltersForSelection();
+        availMode = "all";
+        if (els.search) els.search.value = "";
+        activeGroup = "all";
+        syncControlValues();
+        setCategory("all", false);
+        return;
+      }
+      if (what === "group") {
+        activeGroup = "all";
+        setCategory("all", false);
+        return;
+      }
+      if (what === "cat") {
+        setCategory("all", false);
+        return;
+      }
+      if (what === "avail") availMode = "all";
+      if (what === "q" && els.search) els.search.value = "";
+      if (what.startsWith("facet:")) {
+        const active = getActiveCategoryFilters();
+        active[what.slice(6)] = "";
+      }
+      syncControlValues();
+      renderGrid();
     });
   }
 
-  let categoryChipsSignature = "";
+  /** Меняет категорию через сам <select>, чтобы сработали все прежние обработчики. */
+  function setCategory(value, keepGroup) {
+    if (!els.category) return;
+    if (!keepGroup && value === "all") {
+      /* группа уже выставлена вызывающим */
+    }
+    if (value !== "all") activeGroup = groupOfCategory(value);
+    if (els.category.value === value) {
+      renderGrid();
+      return;
+    }
+    els.category.value = value;
+    els.category.dispatchEvent(new Event("change", { bubbles: true }));
+  }
 
-  function renderCategoryChips() {
-    const root = document.getElementById("price-cats");
-    if (!root) return;
-    const plan = prepareQueryPlan((els.search?.value || "").trim());
+  function syncControlValues() {
+    const a = document.getElementById("price-avail");
+    if (a) a.value = availMode;
+    const s = document.getElementById("price-sort");
+    if (s) s.value = sortMode;
+  }
+
+  function groupIconSvg(icon) {
+    return `<svg class="shop-group__icon" viewBox="0 0 24 24" aria-hidden="true">${GROUP_ICONS[icon] || ""}</svg>`;
+  }
+
+  let categoryNavSignature = "";
+
+  /**
+   * Плитки групп, подкатегории, числа в «Наличии» и строка «Найдено N · фильтры ×».
+   * Числа учитывают поиск и наличие (но не фасеты) — набрал «pixel», видно, где нашлось.
+   */
+  function renderCategoryNav(foundCount) {
+    const groupsRoot = document.getElementById("price-groups");
+    const catsRoot = document.getElementById("price-cats");
+    if (!groupsRoot || !catsRoot) return;
+    const plan = currentPlan || prepareQueryPlan((els.search?.value || "").trim());
     const counts = { all: 0 };
+    const availCounts = { all: 0, stock: 0, order12: 0, pre57: 0 };
+    const cat = els.category?.value || "all";
+    const scopeCats = cat !== "all" ? [cat] : activeGroupCats();
     for (const p of allProducts) {
-      if (stockOnly && !isInSochiNow(p)) continue;
       if (!matchesSearch(p, plan)) continue;
+      if (!scopeCats || scopeCats.includes(p.category)) {
+        availCounts.all += 1;
+        availCounts[availKind(p)] += 1;
+      }
+      if (!matchesAvail(p)) continue;
       counts.all += 1;
       counts[p.category] = (counts[p.category] || 0) + 1;
     }
-    const active = els.category?.value || "all";
-    const isEn = Boolean(I18N.isEn);
     const loading = !allProducts.length;
-    const html = [];
-    let pendingSep = false;
-    for (const [cat, ru, en] of CATEGORY_CHIPS) {
-      if (cat === "|") {
-        pendingSep = html.length > 0;
-        continue;
+    const isEn = Boolean(I18N.isEn);
+
+    const groupHtml = CATEGORY_GROUPS.map((g) => {
+      const n = g.cats ? g.cats.reduce((sum, c) => sum + (counts[c] || 0), 0) : counts.all;
+      if (!loading && !n && g.id !== activeGroup && g.id !== "all") return "";
+      const on = g.id === activeGroup;
+      return `<button type="button" class="shop-group${on ? " is-active" : ""}" data-group="${g.id}" aria-pressed="${on}">
+          ${groupIconSvg(g.icon)}
+          <span class="shop-group__text"><span class="shop-group__name">${escapeHtml(isEn ? g.en : g.ru)}${
+            loading ? "" : ` <span class="shop-group__n">${n}</span>`
+          }</span><span class="shop-group__hint">${escapeHtml(isEn ? g.hintEn : g.hintRu)}</span></span>
+        </button>`;
+    }).join("");
+
+    const group = groupById(activeGroup);
+    let catsHtml = "";
+    if (group.cats && group.cats.length > 1) {
+      const total = group.cats.reduce((sum, c) => sum + (counts[c] || 0), 0);
+      const allLabel = isEn ? `All ${group.en}` : `Все ${group.id === "fun" ? "гаджеты" : group.ru}`;
+      const items = [
+        `<button type="button" class="shop-cat${cat === "all" ? " is-active" : ""}" data-cat="all">${escapeHtml(allLabel)}${
+          loading ? "" : `<span class="shop-cat__n">${total}</span>`
+        }</button>`];
+      for (const c of group.cats) {
+        const n = counts[c] || 0;
+        if (!loading && !n && c !== cat) continue;
+        items.push(
+          `<button type="button" class="shop-cat${c === cat ? " is-active" : ""}" data-cat="${c}">${escapeHtml(categoryLabel(c))}${
+            loading ? "" : `<span class="shop-cat__n">${n}</span>`
+          }</button>`
+        );
       }
-      const n = counts[cat] || 0;
-      if (!loading && !n && cat !== active && cat !== "all") continue;
-      if (pendingSep) html.push('<span class="shop-cats__sep" aria-hidden="true"></span>');
-      pendingSep = false;
-      html.push(
-        `<button type="button" class="shop-cat${cat === active ? " is-active" : ""}" data-cat="${cat}" aria-pressed="${
-          cat === active ? "true" : "false"
-        }">${escapeHtml(isEn ? en : ru)}${loading ? "" : `<span class="shop-cat__n">${n}</span>`}</button>`
-      );
+      catsHtml = items.join("");
     }
-    const next = html.join("");
-    if (next === categoryChipsSignature) return;
-    categoryChipsSignature = next;
-    root.innerHTML = next;
-    // На телефоне лента прокручивается вбок: выбранная кнопка должна быть на
-    // виду, а не за правым краем (перерисовка сбрасывает прокрутку ленты).
-    const current = root.querySelector(".shop-cat.is-active");
-    if (current && root.scrollWidth > root.clientWidth) {
-      root.scrollLeft = current.offsetLeft - (root.clientWidth - current.offsetWidth) / 2;
+
+    const signature = groupHtml + "|" + catsHtml;
+    if (signature !== categoryNavSignature) {
+      categoryNavSignature = signature;
+      groupsRoot.innerHTML = groupHtml;
+      catsRoot.innerHTML = catsHtml;
+      catsRoot.hidden = !catsHtml;
+      // На телефоне ленты прокручиваются вбок: выбранное — на виду.
+      for (const root of [groupsRoot, catsRoot]) {
+        const current = root.querySelector(".is-active");
+        if (current && root.scrollWidth > root.clientWidth) {
+          root.scrollLeft = current.offsetLeft - (root.clientWidth - current.offsetWidth) / 2;
+        }
+      }
     }
+
+    const availSelect = document.getElementById("price-avail");
+    if (availSelect && !loading) {
+      for (const option of availSelect.options) {
+        const n = availCounts[option.value] || 0;
+        option.textContent = `${availLabel(option.value)} · ${n}`;
+        option.disabled = !n && option.value !== availMode;
+      }
+    }
+
+    renderAppliedFilters(foundCount, loading);
+  }
+
+  function renderAppliedFilters(foundCount, loading) {
+    const root = document.getElementById("price-applied");
+    if (!root) return;
+    const cat = els.category?.value || "all";
+    const chips = [];
+    const chip = (key, label) =>
+      `<button type="button" class="shop-applied__chip" data-clear="${escapeHtml(key)}" aria-label="${escapeHtml(
+        T("filters.remove", "Убрать")
+      )}: ${escapeHtml(label)}">${escapeHtml(label)} <span aria-hidden="true">×</span></button>`;
+    if (cat !== "all") chips.push(chip("cat", categoryLabel(cat)));
+    else if (activeGroup !== "all") chips.push(chip("group", I18N.isEn ? groupById(activeGroup).en : groupById(activeGroup).ru));
+    const registry = getCategoryFilterRegistry();
+    if (registry) {
+      const active = getActiveCategoryFilters();
+      for (const facet of registry.facets) {
+        if (active[facet.id]) chips.push(chip("facet:" + facet.id, registry.formatValue(facet.id, active[facet.id])));
+      }
+    }
+    if (availMode !== "all") chips.push(chip("avail", availLabel(availMode)));
+    const q = (els.search?.value || "").trim();
+    if (q) chips.push(chip("q", `«${q}»`));
+    const found = loading ? "" : `<span class="shop-applied__found">${escapeHtml(T("shop.found", "Найдено"))}: <b>${foundCount}</b></span>`;
+    const reset = chips.length > 1
+      ? `<button type="button" class="shop-applied__reset" data-clear="all">${escapeHtml(T("filters.reset_all", "Сбросить всё"))}</button>`
+      : "";
+    root.innerHTML = found + chips.join("") + reset;
+  }
+
+  // ---- Состояние в адресе страницы (24.10.2026) ----
+  // magazin.html?cat=iphone&f_series=17 Pro&avail=stock&sort=asc&q=… — «Назад» с
+  // карточки товара возвращает ровно туда, где человек был, а ссылкой на
+  // подборку можно поделиться. Пишется replaceState, историю не засоряем.
+  function readUrlState() {
+    let params;
+    try { params = new URLSearchParams(location.search); } catch { return; }
+    const cat = params.get("cat");
+    const hasCat = cat && [...(els.category?.options || [])].some((o) => o.value === cat);
+    if (hasCat) {
+      els.category.value = cat;
+      activeGroup = groupOfCategory(cat);
+    } else {
+      const g = params.get("g");
+      if (g && CATEGORY_GROUPS.some((x) => x.id === g)) activeGroup = g;
+    }
+    const avail = params.get("avail");
+    if (avail && AVAIL_LABELS[avail]) availMode = avail;
+    const sort = params.get("sort");
+    if (sort === "asc" || sort === "desc") sortMode = sort;
+    if (hasCat) {
+      const state = {};
+      for (const [key, value] of params) {
+        if (key.startsWith("f_") && value) state[key.slice(2)] = value.slice(0, 60);
+      }
+      if (Object.keys(state).length) categoryFilterState[cat] = state;
+    }
+  }
+
+  let lastUrlState = "";
+
+  function writeUrlState() {
+    const params = new URLSearchParams();
+    const q = (els.search?.value || "").trim();
+    const cat = els.category?.value || "all";
+    if (cat !== "all") params.set("cat", cat);
+    else if (activeGroup !== "all") params.set("g", activeGroup);
+    if (cat !== "all" && categoryFilterState[cat]) {
+      for (const [key, value] of Object.entries(categoryFilterState[cat])) {
+        if (value) params.set("f_" + key, value);
+      }
+    }
+    if (availMode !== "all") params.set("avail", availMode);
+    if (sortMode !== "default") params.set("sort", sortMode);
+    if (q) params.set("q", q.slice(0, 60));
+    const qs = params.toString();
+    if (qs === lastUrlState) return;
+    lastUrlState = qs;
+    try {
+      history.replaceState(history.state, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
+      // «← К результатам» на карточке товара ведёт сюда (hybrid-cart.js).
+      sessionStorage.setItem("iron_shop_last", location.pathname + (qs ? "?" + qs : ""));
+    } catch { /* без истории или хранилища — просто без памяти */ }
   }
 
   function scheduleRenderGrid() {
@@ -3648,9 +3961,11 @@
     renderCategoryFilters();
     syncFiltersColumn();
     const selectedCategory = els.category?.value || "all";
+    currentPlan = prepareQueryPlan((els.search?.value || "").trim());
     const filtered = getFiltered();
     const groups = applySortMode(sortGroups(groupBySection(filtered), selectedCategory), filtered);
-    renderCategoryChips();
+    renderCategoryNav(filtered.length);
+    writeUrlState();
 
     if (!groups.length) {
       if (catalogLoadState !== "ready" && !hasActiveShopQuery()) {

@@ -220,33 +220,188 @@
   cursor: pointer;
 }
 
-.shop-stock-toggle {
-  display: inline-flex;
+/* Группы каталога плитками (24.10.2026, второй заход): Apple · Android ·
+   Ноутбуки · Игры и гаджеты · Аксессуары. Облик — как у вкладок в шапке
+   магазина (.shop-tab): тёмная плитка, значок, имя и подсказка. */
+.shop-groups {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: -0.6rem 0 0.8rem;
+}
+
+.shop-group {
+  display: flex;
   align-items: center;
-  gap: 0.45rem;
-  color: var(--cream-dim);
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid rgba(212, 160, 18, 0.3);
+  border-radius: 12px;
+  background: rgba(18, 18, 18, 0.78);
+  color: var(--cream);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.shop-group:hover {
+  border-color: rgba(212, 160, 18, 0.7);
+  transform: translateY(-1px);
+}
+
+.shop-group.is-active {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: #1c1c1c;
+}
+
+.shop-group__icon {
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.shop-group.is-active .shop-group__icon {
+  stroke: #1c1c1c;
+}
+
+.shop-group__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.shop-group__name {
+  font-family: var(--font-display);
   font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   white-space: nowrap;
-  cursor: pointer;
-  user-select: none;
 }
 
-.shop-toolbar .shop-stock-toggle input {
-  flex: 0 0 auto;
-  width: 1.05rem;
-  height: 1.05rem;
-  padding: 0;
-  accent-color: var(--gold);
-  cursor: pointer;
+.shop-group__n {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  color: var(--text-muted);
 }
 
+.shop-group__hint {
+  font-size: 0.78rem;
+  line-height: 1.2;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shop-group.is-active .shop-group__n,
+.shop-group.is-active .shop-group__hint {
+  color: rgba(28, 28, 28, 0.72);
+}
+
+/* Подкатегории выбранной группы */
 .shop-cats {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.45rem;
-  margin: -0.75rem 0 1.4rem;
+  margin: 0 0 1rem;
+}
+
+.shop-cats[hidden] {
+  display: none;
+}
+
+/* «Найдено N · выбранные фильтры ×» над сеткой */
+.shop-applied {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.5rem;
+  margin: 0 0 1rem;
+  min-height: 1.6rem;
+}
+
+.shop-applied__found {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin-right: 0.3rem;
+}
+
+.shop-applied__found b {
+  color: var(--cream);
+}
+
+.shop-applied__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid rgba(212, 160, 18, 0.5);
+  background: rgba(212, 160, 18, 0.12);
+  color: var(--cream);
+  border-radius: 999px;
+  padding: 0.22rem 0.65rem;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.shop-applied__chip span {
+  color: var(--gold);
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.shop-applied__chip:hover {
+  border-color: var(--gold);
+}
+
+.shop-applied__reset {
+  border: none;
+  background: none;
+  color: var(--gold);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Числа и «Ещё N» в группах фильтров */
+.shop-filter-chip__n {
+  margin-left: 0.35rem;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.shop-filter-chip.is-active .shop-filter-chip__n {
+  color: var(--cream-dim);
+}
+
+.shop-filter-more {
+  border: 1px dashed rgba(212, 160, 18, 0.45);
+  background: transparent;
+  color: var(--gold);
+  border-radius: 999px;
+  padding: 0.38rem 0.8rem;
+  font: inherit;
+  font-size: 0.86rem;
+  cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+  .shop-groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .shop-cats__sep {
@@ -1055,16 +1210,40 @@
     font-size: 0.88rem;
   }
 
-  .shop-stock-toggle {
-    font-size: 0.85rem;
+  /* На телефоне группы — лентой с прокруткой вбок, подсказки под именем
+     прячутся, чтобы плитка была низкой. */
+  .shop-groups {
+    display: flex;
+    overflow-x: auto;
+    margin: -0.3rem -1rem 0.6rem;
+    padding: 0.1rem 1rem 0.3rem;
+    scrollbar-width: none;
   }
 
-  /* На телефоне категории — одной лентой с прокруткой вбок, а не стеной из
-     четырёх строк над товарами. Разделители групп там лишние. */
+  .shop-groups::-webkit-scrollbar {
+    display: none;
+  }
+
+  .shop-group {
+    flex: 0 0 auto;
+    padding: 0.5rem 0.7rem;
+  }
+
+  .shop-group__hint {
+    display: none;
+  }
+
+  .shop-group__icon {
+    flex-basis: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Подкатегории на телефоне — тоже лентой с прокруткой вбок. */
   .shop-cats {
     flex-wrap: nowrap;
     overflow-x: auto;
-    margin: -0.4rem -1rem 1rem;
+    margin: 0 -1rem 0.8rem;
     padding: 0.1rem 1rem 0.4rem;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
@@ -1261,104 +1440,11 @@
     display: flex;
   }
 
-  /* Плашка карточки товара на телефоне — в две строки: сумма и «Корзина →»
-     сверху, кнопки сеткой снизу. До 24.10.2026 всё стояло в один ряд, и при
-     включённой онлайн-оплате («СБП · 80 200 ₽», «Картой · …») Telegram и MAX
-     уезжали за правый край экрана — заказать в чат было нечем. */
-  .hybrid-detail-cart-bar {
-    flex-wrap: wrap;
-    row-gap: 0.45rem;
-  }
-
-  .hybrid-detail-cart-bar .cart-mobile-bar__info {
-    flex: 1 1 auto;
-  }
-
-  .hybrid-detail-cart-bar .cart-mobile-bar__actions {
-    flex: 1 1 100%;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .hybrid-detail-cart-bar .cart-mobile-bar__actions button {
-    min-width: 0;
-    width: 100%;
-  }
-
-  body:has(.hybrid-detail-cart-bar) {
-    padding-bottom: 7.5rem;
-  }
-}
-
-.hybrid-detail-cart-bar__open {
-  color: var(--gold);
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.hybrid-detail-cart-bar__open:hover {
-  text-decoration: underline;
-}
-
-/*
-  Плашка корзины на детальной карточке товара — на широком экране.
-  До 24.10.2026 её не было вовсе (только ≤ 900px): «+ Выбрать» добавлял товар,
-  а корзина появлялась лишь после возврата в магазин. Пустая корзина плашку
-  прячет (класс is-empty ставит hybrid-cart.js).
-*/
-@media (min-width: 901px) {
-  .hybrid-detail-cart-bar {
-    display: flex;
-    position: fixed;
-    right: 1.5rem;
-    bottom: 1.5rem;
-    z-index: 89;
-    align-items: center;
-    gap: 0.9rem;
-    padding: 0.7rem 0.8rem 0.7rem 1.1rem;
-    background: rgba(39, 39, 39, 0.96);
-    border: 2px solid var(--gold);
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-    font-size: 0.9rem;
-    transition: background 0.25s, border-color 0.25s, transform 0.25s;
-  }
-
+  /* Плашка карточки товара на телефоне — коротко: «N шт · сумма · Корзина»,
+     кнопки заказа в выезжающей панели (24.10.2026, второй заход). Пустая
+     корзина плашку прячет. */
   .hybrid-detail-cart-bar.is-empty {
     display: none;
-  }
-
-  .hybrid-detail-cart-bar.is-highlight {
-    border-color: #bfd488;
-    background: #2f3426;
-    transform: translateY(-3px);
-  }
-
-  .hybrid-detail-cart-bar .cart-mobile-bar__info {
-    color: var(--cream-dim);
-    white-space: nowrap;
-  }
-
-  .hybrid-detail-cart-bar .cart-mobile-bar__info strong {
-    color: var(--gold);
-  }
-
-  .hybrid-detail-cart-bar .cart-mobile-bar__actions {
-    display: flex;
-    gap: 0.4rem;
-  }
-
-  .hybrid-detail-cart-bar .btn {
-    padding: 0.5rem 0.8rem;
-    font-size: 0.78rem;
-  }
-
-  .hybrid-detail-cart-bar__open {
-    padding: 0 0.3rem;
   }
 }
 
@@ -2310,4 +2396,20 @@
 
 .card-action:hover {
   text-decoration: underline;
+}
+
+/* Строка «Обновлено: … · N позиций» над товарами дублирует табло вверху
+   страницы и с 24.10.2026 разрывала навигацию каталога (группы → подкатегории →
+   «Найдено»). На английской странице и в мини-приложении Telegram табло нет или
+   оно скрыто — там строка остаётся. */
+:root:not(.tg-miniapp) main:has(.shop-board) #price-updated {
+  display: none;
+}
+
+/* Телефон: «Наличие» и сортировка — рядом, а не друг под другом. */
+@media (max-width: 900px) {
+  .shop-toolbar .shop-sort {
+    flex: 1 1 0;
+    min-width: 0;
+  }
 }

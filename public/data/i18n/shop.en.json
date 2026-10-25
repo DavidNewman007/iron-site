@@ -15,7 +15,8 @@
     "sort_cheap": "Cheapest first",
     "sort_expensive": "Most expensive first",
     "stock_only": "In stock in Sochi",
-    "categories_aria": "Categories"
+    "categories_aria": "Categories",
+    "avail_aria": "Availability"
   },
   "shop": {
     "loading": "Loading the price list…",
@@ -32,7 +33,8 @@
     "selected": "✓ Selected",
     "details": "details",
     "nothing_found": "Nothing found. Try a different model, or ask us.",
-    "cash_price": "Price shown is for cash payment"
+    "cash_price": "Price shown is for cash payment",
+    "found": "Found"
   },
   "cart": {
     "title": "Cart",
@@ -178,7 +180,10 @@
     "without_anc": "Without ANC",
     "standard_case": "Standard case",
     "wireless_case": "Wireless case",
-    "mm": "mm"
+    "mm": "mm",
+    "reset_all": "Reset all",
+    "more": "More",
+    "remove": "Remove"
   },
   "filter_labels": {
     "Серия": "Series",

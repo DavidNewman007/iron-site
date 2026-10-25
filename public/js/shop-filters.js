@@ -1438,6 +1438,10 @@
       getTraits: getIphoneTraits,
       isFilterable: isIphoneFilterable,
       matches(product, filters) {
+        // Без выбранного фильтра — показываем всё (24.10.2026): раньше позиция с
+        // нераспознанным названием пропадала из категории целиком — у iPhone так
+        // было скрыто 16 из 642. Пропадать она должна из фильтра, а не из магазина.
+        if (!Object.values(filters || {}).some(Boolean)) return true;
         if (!isIphoneFilterable(product)) return false;
         const traits = getIphoneTraits(product);
         return Object.entries(filters || {}).every(([facetId, value]) => traitMatchesFilter(traits, facetId, value));
@@ -1476,6 +1480,10 @@
       getTraits: getMacbookTraits,
       isFilterable: isMacbookFilterable,
       matches(product, filters) {
+        // Без выбранного фильтра — показываем всё (24.10.2026): раньше позиция с
+        // нераспознанным названием пропадала из категории целиком — у iPhone так
+        // было скрыто 16 из 642. Пропадать она должна из фильтра, а не из магазина.
+        if (!Object.values(filters || {}).some(Boolean)) return true;
         if (!isMacbookFilterable(product)) return false;
         const traits = getMacbookTraits(product);
         return Object.entries(filters || {}).every(([facetId, value]) => traitMatchesFilter(traits, facetId, value));
@@ -1495,6 +1503,10 @@
       getTraits: getIpadTraits,
       isFilterable: isIpadFilterable,
       matches(product, filters) {
+        // Без выбранного фильтра — показываем всё (24.10.2026): раньше позиция с
+        // нераспознанным названием пропадала из категории целиком — у iPhone так
+        // было скрыто 16 из 642. Пропадать она должна из фильтра, а не из магазина.
+        if (!Object.values(filters || {}).some(Boolean)) return true;
         if (!isIpadFilterable(product)) return false;
         const traits = getIpadTraits(product);
         return Object.entries(filters || {}).every(([facetId, value]) => traitMatchesFilter(traits, facetId, value));
@@ -1514,6 +1526,10 @@
       getTraits: getAirpodsTraits,
       isFilterable: isAirpodsFilterable,
       matches(product, filters) {
+        // Без выбранного фильтра — показываем всё (24.10.2026): раньше позиция с
+        // нераспознанным названием пропадала из категории целиком — у iPhone так
+        // было скрыто 16 из 642. Пропадать она должна из фильтра, а не из магазина.
+        if (!Object.values(filters || {}).some(Boolean)) return true;
         if (!isAirpodsFilterable(product)) return false;
         const traits = getAirpodsTraits(product);
         return Object.entries(filters || {}).every(([facetId, value]) => traitMatchesFilter(traits, facetId, value));
@@ -1737,6 +1753,10 @@
       getTraits: getSamsungTraits,
       isFilterable: isSamsungFilterable,
       matches(product, filters) {
+        // Без выбранного фильтра — показываем всё (24.10.2026): раньше позиция с
+        // нераспознанным названием пропадала из категории целиком — у iPhone так
+        // было скрыто 16 из 642. Пропадать она должна из фильтра, а не из магазина.
+        if (!Object.values(filters || {}).some(Boolean)) return true;
         if (!isSamsungFilterable(product)) return false;
         const traits = getSamsungTraits(product);
         return Object.entries(filters || {}).every(([facetId, value]) => traitMatchesFilter(traits, facetId, value));

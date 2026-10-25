@@ -592,68 +592,226 @@
       .catch(() => {});
   }
 
-  function ensureMobileCartBar() {
-    if (document.querySelector(".hybrid-detail-cart-bar")) return;
+  // ---- Навигация и корзина на странице товара (24.10.2026, второй заход) ----
+  //
+  // Утром 24.10 корзину на компьютере сделали плавающей плашкой внизу справа —
+  // владелец: «где-то сбоку внизу растянута, неудобно, хотя куча места». И со
+  // страницы товара некуда было пойти, кроме «Назад». Теперь как у магазинов
+  // техники: над товаром — крошки «Магазин › Apple › iPhone», «← К результатам»
+  // (магазин с теми же фильтрами, адрес хранит prices.js в sessionStorage),
+  // соседние категории и поиск; корзина — кнопка в шапке и выезжающая панель.
+  // На телефоне внизу короткая плашка «N шт · сумма · Корзина».
+  // Карточек 24,5 тыс. и все собраны генератором, поэтому всё это строится
+  // здесь, в скрипте, а не в разметке страниц.
+
+  // Копия групп из prices.js (CATEGORY_GROUPS/CATEGORY_LABELS) — меняются вместе.
+  const PD_GROUPS = [
+    { id: "apple", ru: "Apple", en: "Apple", cats: ["iphone", "macbook", "ipad", "watch", "airpods", "mac"] },
+    { id: "android", ru: "Android", en: "Android", cats: ["samsung", "xiaomi", "android", "galaxy_watch"] },
+    { id: "laptops", ru: "Ноутбуки", en: "Laptops", cats: ["laptops"] },
+    { id: "fun", ru: "Игры и гаджеты", en: "Gaming & gadgets", cats: ["gaming", "audio", "dyson", "gadgets", "meta"] },
+    { id: "accessories", ru: "Аксессуары", en: "Accessories", cats: ["accessories", "other"] }];
+  const PD_LABELS = {
+    iphone: ["iPhone", "iPhone"], macbook: ["MacBook", "MacBook"], ipad: ["iPad", "iPad"],
+    watch: ["Apple Watch", "Apple Watch"], airpods: ["AirPods", "AirPods"], mac: ["iMac · Mac mini", "iMac · Mac mini"],
+    samsung: ["Samsung", "Samsung"], xiaomi: ["Xiaomi · POCO · Redmi", "Xiaomi · POCO · Redmi"],
+    android: ["Pixel · OnePlus · Honor", "Pixel · OnePlus · Honor"], galaxy_watch: ["Galaxy Watch", "Galaxy Watch"],
+    laptops: ["HP · Lenovo", "HP · Lenovo"], gaming: ["Приставки", "Gaming"], audio: ["Наушники и колонки", "Audio"],
+    dyson: ["Dyson", "Dyson"], gadgets: ["Камеры и трекеры", "Cameras & trackers"], meta: ["Очки Meta", "Meta glasses"],
+    accessories: ["Аксессуары", "Accessories"], other: ["Прочее", "Other"],
+  };
+
+  function isEnPage() {
+    return window.IRON_I18N ? Boolean(window.IRON_I18N.isEn) : /^en/i.test(document.documentElement.lang || "");
+  }
+
+  function shopUrl(query) {
+    return (isEnPage() ? "/en/shop.html" : "/magazin.html") + (query || "");
+  }
+
+  function pageCategory() {
+    const m = decodeURIComponent(location.pathname).match(/\/hybrid-products\/([a-z_]+)\//);
+    return m ? m[1] : "";
+  }
+
+  function pdLabel(cat) {
+    const pair = PD_LABELS[cat];
+    return pair ? pair[isEnPage() ? 1 : 0] : cat;
+  }
+
+  /** «← К результатам» — туда, откуда пришли (фильтры в адресе), иначе в категорию. */
+  function backToResultsUrl(cat) {
+    try {
+      const last = sessionStorage.getItem("iron_shop_last");
+      const shopPath = shopUrl("").replace(/\?.*$/, "");
+      if (last && last.startsWith(shopPath)) return last;
+    } catch (_) { /* без хранилища — просто категория */ }
+    return shopUrl(cat ? "?cat=" + encodeURIComponent(cat) : "");
+  }
+
+  function ensureShopNav() {
+    const wrap = getDetailWrap();
+    if (!wrap || wrap.querySelector(".pd-nav")) return;
+    const en = isEnPage();
+    const cat = pageCategory();
+    const group = PD_GROUPS.find((g) => g.cats.includes(cat));
+    const name = (wrap.querySelector("h1")?.textContent || "").trim();
+    const crumbs = [`<a href="${shopUrl("")}">${en ? "Shop" : "Магазин"}</a>`];
+    if (group) crumbs.push(`<a href="${shopUrl("?g=" + group.id)}">${escapeHtml(en ? group.en : group.ru)}</a>`);
+    if (cat && !(group && group.cats.length === 1)) crumbs.push(`<a href="${shopUrl("?cat=" + cat)}">${escapeHtml(pdLabel(cat))}</a>`);
+    if (name) crumbs.push(`<span aria-current="page">${escapeHtml(name)}</span>`);
+
+    const siblings = group && group.cats.length > 1
+      ? group.cats
+          .map((c) => `<a class="pd-nav__cat${c === cat ? " is-active" : ""}" href="${shopUrl("?cat=" + c)}">${escapeHtml(pdLabel(c))}</a>`)
+          .join("")
+      : "";
+
+    const nav = document.createElement("nav");
+    nav.className = "pd-nav";
+    nav.setAttribute("aria-label", en ? "Shop navigation" : "Навигация по магазину");
+    nav.innerHTML =
+      `<div class="pd-nav__crumbs">${crumbs.join('<span class="pd-nav__sep" aria-hidden="true">›</span>')}</div>` +
+      `<div class="pd-nav__row">` +
+      `<a class="pd-nav__back" href="${escapeHtml(backToResultsUrl(cat))}">← ${en ? "Back to results" : "К результатам"}</a>` +
+      (siblings ? `<div class="pd-nav__cats">${siblings}<a class="pd-nav__cat pd-nav__cat--all" href="${shopUrl("")}">${en ? "All categories" : "Все разделы"}</a></div>` : `<div class="pd-nav__cats"><a class="pd-nav__cat pd-nav__cat--all" href="${shopUrl("")}">${en ? "All categories" : "Все разделы"}</a></div>`) +
+      `<form class="pd-nav__search" action="${shopUrl("")}" method="get" role="search">` +
+      `<input type="search" name="q" placeholder="${en ? "Search: iPhone 16, MacBook Air…" : "Поиск: iPhone 16, MacBook Air…"}" aria-label="${en ? "Search the shop" : "Поиск по магазину"}">` +
+      `</form></div>`;
+    wrap.insertBefore(nav, wrap.firstChild);
+  }
+
+  function ensureCartUi() {
+    if (document.querySelector(".pd-cart")) return;
+    const en = isEnPage();
+
+    // Кнопка корзины в шапке (вместо прежней плашки внизу на компьютере).
+    const headerInner = document.querySelector(".site-header .header-inner");
+    if (headerInner) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "pd-cart-btn";
+      btn.setAttribute("aria-haspopup", "dialog");
+      btn.innerHTML =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.2l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.1L21 8H6.1"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>' +
+        `<span class="pd-cart-btn__label">${en ? "Cart" : "Корзина"}</span><b class="pd-cart-btn__n" id="hybrid-cart-count">0</b>`;
+      btn.addEventListener("click", () => toggleCartPanel());
+      headerInner.appendChild(btn);
+    }
+
+    const panel = document.createElement("aside");
+    panel.className = "pd-cart";
+    panel.id = "pd-cart";
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-label", en ? "Cart" : "Корзина");
+    panel.hidden = true;
+    panel.innerHTML =
+      `<div class="pd-cart__head"><h3>${en ? "Cart" : "Корзина"} <span id="pd-cart-n">0</span></h3>` +
+      `<button type="button" class="pd-cart__close" aria-label="${en ? "Close" : "Закрыть"}">×</button></div>` +
+      '<ul class="pd-cart__list" id="pd-cart-list"></ul>' +
+      `<div class="pd-cart__sum"><span>${en ? "Total" : "Итого"}</span><strong id="hybrid-cart-total-mobile">—</strong></div>` +
+      '<div class="pd-cart__actions">' +
+      `<button type="button" class="btn btn-primary" id="hybrid-cart-telegram">${en ? "Reserve in Telegram" : "Забронировать в Telegram"}</button>` +
+      `<button type="button" class="btn btn-primary" id="hybrid-cart-max">${en ? "Reserve in MAX" : "Забронировать в MAX"}</button>` +
+      `<button type="button" class="btn btn-primary" id="hybrid-cart-pay-sbp" hidden>${T("cart.pay_sbp", "СБП")}</button>` +
+      `<button type="button" class="btn btn-primary" id="hybrid-cart-pay-card" hidden>${T("cart.pay_card", "Картой")}</button>` +
+      `<a class="btn btn-secondary" href="${shopUrl("#cart")}">${en ? "Open in the shop" : "Открыть в магазине"}</a>` +
+      "</div>";
+    document.body.appendChild(panel);
+    panel.querySelector(".pd-cart__close").addEventListener("click", () => toggleCartPanel(false));
+    panel.querySelector("#hybrid-cart-pay-sbp")?.addEventListener("click", () => openPayment("sbp"));
+    panel.querySelector("#hybrid-cart-pay-card")?.addEventListener("click", () => openPayment("card"));
+    panel.querySelector("#hybrid-cart-telegram")?.addEventListener("click", openTelegramOrder);
+    panel.querySelector("#hybrid-cart-max")?.addEventListener("click", openMaxOrder);
+    panel.querySelector("#pd-cart-list").addEventListener("click", (event) => {
+      const btn = event.target.closest("[data-remove]");
+      if (!btn) return;
+      writeCart(readCart().filter((item) => !idsLookEqual(item?.id, btn.dataset.remove)));
+      const pickBtn = document.getElementById("pickBtn");
+      if (pickBtn) syncPickBtn(pickBtn);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") toggleCartPanel(false);
+    });
+    document.addEventListener("click", (event) => {
+      if (panel.hidden) return;
+      if (panel.contains(event.target) || event.target.closest(".pd-cart-btn, .hybrid-detail-cart-bar, #pickBtn")) return;
+      toggleCartPanel(false);
+    });
+
+    // Телефон: короткая плашка внизу — сумма и «Корзина», кнопки заказа в панели.
     const bar = document.createElement("div");
     bar.className = "cart-mobile-bar hybrid-detail-cart-bar";
     bar.innerHTML =
       '<span class="cart-mobile-bar__info">' +
-      `<strong id="hybrid-cart-count-mobile">0</strong> <span id="hybrid-cart-units">${T("hybrid.items", "шт.")}</span> · <strong id="hybrid-cart-total-mobile">—</strong>` +
+      `<strong id="hybrid-cart-count-mobile">0</strong> <span id="hybrid-cart-units">${T("hybrid.items", "шт.")}</span> · <strong id="hybrid-cart-sum-mobile">—</strong>` +
       "</span>" +
-      `<a class="hybrid-detail-cart-bar__open" href="${shopCartUrl()}">${T("hybrid.open_cart", "Корзина")} →</a>` +
-      '<div class="cart-mobile-bar__actions">' +
-      `<button type="button" class="btn btn-primary" id="hybrid-cart-pay-sbp" hidden>${T("cart.pay_sbp", "СБП")}</button>` +
-      `<button type="button" class="btn btn-primary" id="hybrid-cart-pay-card" hidden>${T("cart.pay_card", "Картой")}</button>` +
-      '<button type="button" class="btn btn-primary" id="hybrid-cart-telegram">Telegram</button>' +
-      '<button type="button" class="btn btn-primary" id="hybrid-cart-max">MAX</button>' +
-      "</div>";
+      `<button type="button" class="btn btn-primary">${en ? "Cart" : "Корзина"}</button>`;
+    bar.querySelector("button").addEventListener("click", () => toggleCartPanel());
     document.body.appendChild(bar);
-    bar.querySelector("#hybrid-cart-pay-sbp")?.addEventListener("click", () => openPayment("sbp"));
-    bar.querySelector("#hybrid-cart-pay-card")?.addEventListener("click", () => openPayment("card"));
-    bar.querySelector("#hybrid-cart-telegram")?.addEventListener("click", openTelegramOrder);
-    bar.querySelector("#hybrid-cart-max")?.addEventListener("click", openMaxOrder);
     revealPayButton();
   }
 
-  /**
-   * Ссылка «Корзина →» ведёт в магазин с открытой корзиной (#cart, его ловит
-   * prices.js). Английские карточки лежат в /en/hybrid-products/ — у них свой
-   * магазин /en/shop.html.
-   */
-  function shopCartUrl() {
-    const isEn = window.IRON_I18N ? window.IRON_I18N.isEn : /^en/i.test(document.documentElement.lang || "");
-    return (isEn ? "/en/shop.html" : "/magazin.html") + "#cart";
+  function toggleCartPanel(force) {
+    const panel = document.getElementById("pd-cart");
+    if (!panel) return;
+    const open = typeof force === "boolean" ? force : panel.hidden;
+    panel.hidden = !open;
+    document.querySelector(".pd-cart-btn")?.setAttribute("aria-expanded", open ? "true" : "false");
   }
 
-  // До 24.10.2026 панель корзины на детальной карточке была видна ТОЛЬКО при
-  // ширине ≤ 900px: на компьютере «+ Выбрать» клало товар в корзину, но показать
-  // её было негде — корзина «появлялась» лишь после возврата в магазин
-  // (замечание владельца на предзаказе Mac mini). Теперь на широком экране это
-  // плавающая плашка справа внизу; пустая корзина её прячет (класс is-empty).
+  // Имя прежней функции оставлено: её зовут writeCart, clearCart и обработчики.
   function renderMobileCartBar(highlight) {
-    ensureMobileCartBar();
+    ensureCartUi();
     const cart = readCart();
     const count = cart.length;
-    const bar = document.querySelector(".hybrid-detail-cart-bar");
-    if (bar) {
-      bar.classList.toggle("is-empty", count === 0);
-      if (highlight) {
-        bar.classList.add("is-highlight");
-        window.setTimeout(() => bar.classList.remove("is-highlight"), 900);
+    const total = cart.reduce((s, p) => s + (p.price || 0), 0);
+    const totalLabel = count ? formatPrice(total) : "—";
+    const set = (id, text) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    };
+    set("hybrid-cart-count", String(count));
+    set("hybrid-cart-count-mobile", String(count));
+    set("pd-cart-n", String(count));
+    set("hybrid-cart-total-mobile", totalLabel);
+    set("hybrid-cart-sum-mobile", totalLabel);
+    // «1 items» читается как недоделка — на английском единственное число.
+    set("hybrid-cart-units", count === 1 ? T("hybrid.item_one", "шт.") : T("hybrid.items", "шт."));
+    document.querySelector(".pd-cart-btn")?.classList.toggle("has-items", count > 0);
+    document.querySelector(".hybrid-detail-cart-bar")?.classList.toggle("is-empty", count === 0);
+
+    const list = document.getElementById("pd-cart-list");
+    if (list) {
+      list.innerHTML = count
+        ? cart
+            .map(
+              (item) =>
+                `<li><span class="pd-cart__name">${escapeHtml(item.name || "")}<small>${escapeHtml(
+                  [item.priceLabel || formatPrice(item.price || 0), item.country].filter(Boolean).join(" · ")
+                )}</small></span><button type="button" class="pd-cart__remove" data-remove="${escapeHtml(
+                  item.id
+                )}" aria-label="${isEnPage() ? "Remove" : "Убрать"}">×</button></li>`
+            )
+            .join("")
+        : `<li class="pd-cart__empty">${isEnPage() ? "The cart is empty" : "Корзина пуста — нажмите «+ Выбрать»"}</li>`;
+    }
+    document.querySelectorAll("#hybrid-cart-telegram, #hybrid-cart-max, #hybrid-cart-pay-sbp, #hybrid-cart-pay-card").forEach((b) => {
+      b.disabled = !count;
+    });
+    // Подписи «СБП · сумма» пересчитываются при каждом изменении корзины,
+    // а не только при загрузке страницы (иначе первая покупка шла без суммы).
+    if (count && !document.getElementById("hybrid-cart-pay-sbp")?.hidden) renderPayButtons();
+
+    if (highlight) {
+      // Добавили товар: на компьютере открываем панель, на телефоне мигает плашка.
+      if (window.matchMedia("(min-width: 901px)").matches) toggleCartPanel(true);
+      const target = document.querySelector(".hybrid-detail-cart-bar");
+      if (target) {
+        target.classList.add("is-highlight");
+        window.setTimeout(() => target.classList.remove("is-highlight"), 900);
       }
     }
-    const total = cart.reduce((s, p) => s + (p.price || 0), 0);
-    const countEl = document.getElementById("hybrid-cart-count-mobile");
-    const totalEl = document.getElementById("hybrid-cart-total-mobile");
-    if (countEl) countEl.textContent = String(count);
-    // «1 items» читается как недоделка — на английском единственное число.
-    const unitsEl = document.getElementById("hybrid-cart-units");
-    if (unitsEl) {
-      unitsEl.textContent = count === 1
-        ? T("hybrid.item_one", "шт.")
-        : T("hybrid.items", "шт.");
-    }
-    if (totalEl) totalEl.textContent = count ? formatPrice(total) : "—";
   }
 
   function getCartIndex(cart, productId) {
@@ -773,6 +931,7 @@
 
     syncPickBtn(pickBtn);
     syncLivePrice(pickBtn);
+    ensureShopNav();
     renderMobileCartBar();
   }
 

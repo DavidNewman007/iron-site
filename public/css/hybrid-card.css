@@ -30,3 +30,59 @@ td:first-child { width:38%; color:var(--text-muted); }
 .lightbox img.is-swiping { cursor:grabbing; }
 .lightbox-close { position:absolute; top:16px; right:16px; width:40px; height:40px; border:none; background:rgba(0,0,0,.35); color:#fff; cursor:pointer; }
 @media (max-width: 900px) { .detail-grid { grid-template-columns:1fr; } }
+
+/* ---- Навигация и корзина на странице товара (24.10.2026). Строит hybrid-cart.js. ---- */
+.pd-nav { margin: .2rem 0 1rem; }
+.pd-nav__crumbs { display:flex; flex-wrap:wrap; align-items:center; gap:.35rem; font-size:.88rem; color:var(--text-muted); margin-bottom:.6rem; }
+.pd-nav__crumbs a { color:var(--cream-dim); text-decoration:none; }
+.pd-nav__crumbs a:hover { color:var(--gold); text-decoration:underline; }
+.pd-nav__crumbs [aria-current] { color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:28rem; }
+.pd-nav__sep { color:rgba(212,160,18,.6); }
+.pd-nav__row { display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; padding:.6rem; border:1px solid rgba(212,160,18,.25); border-radius:12px; background:rgba(18,18,18,.6); }
+.pd-nav__back { flex:0 0 auto; padding:.45rem .85rem; border-radius:999px; background:var(--gold); color:#1c1c1c; font-family:var(--font-display); font-size:.82rem; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; white-space:nowrap; }
+.pd-nav__back:hover { filter:brightness(1.08); }
+.pd-nav__cats { display:flex; flex-wrap:wrap; gap:.4rem; flex:1 1 auto; min-width:0; }
+.pd-nav__cat { padding:.36rem .75rem; border:1px solid rgba(212,160,18,.34); border-radius:999px; background:rgba(28,28,28,.84); color:var(--cream); font-size:.86rem; text-decoration:none; white-space:nowrap; }
+.pd-nav__cat:hover { border-color:rgba(212,160,18,.7); }
+.pd-nav__cat.is-active { border-color:var(--gold); background:rgba(212,160,18,.18); }
+.pd-nav__cat--all { border-style:dashed; color:var(--gold); }
+.pd-nav__search { flex:0 1 260px; margin:0; }
+.pd-nav__search input { width:100%; padding:.5rem .8rem; border:1px solid rgba(212,160,18,.38); border-radius:999px; background:rgba(28,28,28,.84); color:var(--cream); font:inherit; font-size:.9rem; }
+.pd-nav__search input:focus { outline:none; border-color:var(--gold); }
+
+.pd-cart-btn { margin-left:auto; display:inline-flex; align-items:center; gap:.45rem; padding:.5rem .9rem; border:1px solid rgba(212,160,18,.5); border-radius:999px; background:rgba(18,18,18,.7); color:var(--cream); font-family:var(--font-display); font-size:.85rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
+.pd-cart-btn svg { width:20px; height:20px; fill:none; stroke:var(--gold); stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.pd-cart-btn__n { min-width:1.4rem; padding:.05rem .4rem; border-radius:999px; background:rgba(255,255,255,.1); color:var(--cream-dim); font-family:var(--font-body); letter-spacing:0; text-align:center; }
+.pd-cart-btn.has-items { border-color:var(--gold); }
+.pd-cart-btn.has-items .pd-cart-btn__n { background:var(--red); color:var(--cream); }
+
+.pd-cart { position:fixed; z-index:120; top:calc(var(--header-h, 88px) + .6rem); right:max(1rem, calc((100vw - 1200px) / 2)); width:min(380px, calc(100vw - 2rem)); max-height:calc(100vh - var(--header-h, 88px) - 1.6rem); display:flex; flex-direction:column; background:#232323; border:1px solid var(--gold); border-radius:14px; box-shadow:0 18px 40px rgba(0,0,0,.55); }
+.pd-cart[hidden] { display:none; }
+.pd-cart__head { display:flex; align-items:center; justify-content:space-between; padding:.8rem 1rem .5rem; }
+.pd-cart__head h3 { margin:0; font-family:var(--font-display); font-size:1.1rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); }
+.pd-cart__head h3 span { color:var(--cream-dim); }
+.pd-cart__close { border:none; background:none; color:var(--cream); font-size:1.6rem; line-height:1; cursor:pointer; }
+.pd-cart__list { list-style:none; margin:0; padding:0 1rem; overflow:auto; flex:1 1 auto; }
+.pd-cart__list li { display:flex; align-items:flex-start; justify-content:space-between; gap:.6rem; padding:.55rem 0; border-bottom:1px solid rgba(255,255,255,.08); }
+.pd-cart__name { font-size:.92rem; color:var(--cream); line-height:1.3; }
+.pd-cart__name small { display:block; color:var(--text-muted); font-size:.8rem; }
+.pd-cart__remove { border:none; background:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer; }
+.pd-cart__remove:hover { color:var(--red-bright); }
+.pd-cart__empty { color:var(--text-muted); font-size:.9rem; justify-content:center !important; }
+.pd-cart__sum { display:flex; justify-content:space-between; align-items:baseline; padding:.7rem 1rem; color:var(--text-muted); }
+.pd-cart__sum strong { font-family:var(--font-display); font-size:1.35rem; color:var(--gold); }
+.pd-cart__actions { display:grid; gap:.45rem; padding:0 1rem 1rem; }
+.pd-cart__actions .btn { width:100%; padding:.6rem .8rem; font-size:.8rem; }
+.pd-cart__actions .btn:disabled { opacity:.45; cursor:not-allowed; }
+
+@media (max-width: 900px) {
+  /* Телефон: «← К результатам» и поиск в первой строке, категории — лентой ниже. */
+  .pd-nav__search { flex:1 1 140px; }
+  .pd-nav__cats { order:3; flex:1 1 100%; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; }
+  .pd-nav__cats::-webkit-scrollbar { display:none; }
+  .pd-nav__crumbs [aria-current] { max-width:14rem; }
+  .pd-cart-btn__label { display:none; }
+  .pd-cart { top:auto; bottom:0; right:0; left:0; width:auto; max-height:80vh; border-radius:14px 14px 0 0; }
+}
+/* «← Назад в Магазин» в шапке дублирует «← К результатам» в навигации — прячем. */
+.site-header .header-phone[href$="magazin.html"], .site-header .header-phone[href$="shop.html"] { display:none; }
