@@ -1,34 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" width="640" height="600" role="img" aria-label="Анимация: принудительная перезагрузка iPhone 8 и новее — рука нажимает громкость вверх, громкость вниз, затем держит боковую кнопку 10–20 секунд до яблока">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" width="640" height="600" role="img" aria-label="Анимация: рука держит iPhone — большой палец нажимает громкость вверх, затем громкость вниз, указательный держит боковую кнопку 10–20 секунд до яблока">
   <!-- Анимированная схема для помощника сайта, бота заказов и агента лички (план 123).
-       v3–v4 26.10.2026 по замечаниям владельца: «пальцы отдельно смотрятся странно; последнее нажатие зафиксировать в
-       натуральную величину ожидания по времени и потом нормальный логотип нарисовать».
-       Цикл 24 с: рука жмёт «громкость +» и «громкость −», вторая рука держит боковую 15 с (счётчик), экран гаснет,
-       появляется яблоко. Только CSS-анимация: SVG в <img> скрипты не выполняет. Видео для мессенджеров —
-       scripts/svg-anim-to-mp4.mjs из этого же файла. -->
+       v5 26.10.2026: рука переделана полностью по просьбе владельца («анимация не нравится, переделай руку полностью»;
+       раньше — «пальцы отдельно смотрятся странно», «палец похож на фак»). Теперь одна рука ДЕРЖИТ телефон, как в
+       жизни: большой палец на левом торце жмёт громкость, указательный обхватывает правый край и держит боковую,
+       ладонь — под телефоном. Цикл 24 с; удержание — 15 с в реальном времени со счётчиком; экран гаснет, яблоко.
+       Только CSS-анимация: SVG в <img> скрипты не выполняет. Видео — scripts/svg-anim-to-mp4.mjs из этого файла. -->
   <style>
     text { font-family: Arial, Helvetica, sans-serif; }
-    .lh { animation: lh 24s infinite ease-in-out; }
-    .rh { animation: rh 24s infinite ease-in-out; }
+    .th { animation: th 24s infinite ease-in-out; }
+    .ix { animation: ix 24s infinite ease-in-out; }
     .v1 { animation: v1 24s infinite; } .v2 { animation: v2 24s infinite; } .sb { animation: sb 24s infinite; }
     .bar { animation: bar 24s infinite linear; transform-box: fill-box; transform-origin: left center; }
     .off { animation: off 24s infinite; } .logo { animation: logo 24s infinite; }
     .s1 { animation: s1 24s infinite; } .s2 { animation: s2 24s infinite; }
     .s3 { animation: s3 24s infinite; } .s4 { animation: s4 24s infinite; }
     .c { opacity: 0; animation: c 24s infinite; }
-    @keyframes lh {
-      0%, 3.3% { transform: translate(-30px, 178px); }
-      5.4% { transform: translate(233px, 178px); } 5.8%, 7.1% { transform: translate(240px, 178px); } 7.5%, 9.2% { transform: translate(233px, 178px); }
-      10.8% { transform: translate(233px, 232px); } 11.25%, 12.5% { transform: translate(240px, 232px); } 12.9%, 14.2% { transform: translate(233px, 232px); }
-      16.3%, 100% { transform: translate(-30px, 232px); }
+    /* большой палец: жмёт «громкость +», скользит к «громкость −», жмёт; к концу цикла возвращается */
+    @keyframes th {
+      0%, 5.2% { transform: translate(0, 0); } 5.8%, 7.1% { transform: translate(4px, 0); } 7.5%, 9.2% { transform: translate(0, 0); }
+      10.8% { transform: translate(0, 54px); } 11.25%, 12.5% { transform: translate(4px, 54px); } 12.9%, 96% { transform: translate(0, 54px); }
+      100% { transform: translate(0, 0); }
     }
-    @keyframes rh {
-      0%, 14.2% { transform: translate(700px, 208px); } 18.3% { transform: translate(407px, 208px); }
-      18.75%, 81.25% { transform: translate(400px, 208px); } 82.5% { transform: translate(407px, 208px); }
-      85.4%, 100% { transform: translate(700px, 208px); }
-    }
-    @keyframes v1 { 0%, 5.7%, 7.2%, 100% { fill: #d4a012; transform: translateX(0); } 5.8%, 7.1% { fill: #ffd54a; transform: translateX(5px); } }
-    @keyframes v2 { 0%, 11.2%, 12.6%, 100% { fill: #d4a012; transform: translateX(0); } 11.25%, 12.5% { fill: #ffd54a; transform: translateX(5px); } }
-    @keyframes sb { 0%, 18.7%, 81.3%, 100% { fill: #d4a012; transform: translateX(0); } 18.75%, 81.25% { fill: #ffd54a; transform: translateX(-5px); } }
+    /* указательный: держит боковую 15 с */
+    @keyframes ix { 0%, 18.3% { transform: translateX(0); } 18.75%, 81.25% { transform: translateX(-5px); } 82.5%, 100% { transform: translateX(0); } }
+    @keyframes v1 { 0%, 5.7%, 7.2%, 100% { fill: #d4a012; } 5.8%, 7.1% { fill: #ffe27a; } }
+    @keyframes v2 { 0%, 11.2%, 12.6%, 100% { fill: #d4a012; } 11.25%, 12.5% { fill: #ffe27a; } }
+    @keyframes sb { 0%, 18.7%, 81.3%, 100% { fill: #d4a012; } 18.75%, 81.25% { fill: #ffe27a; } }
     @keyframes bar { 0%, 18.75% { transform: scaleX(0); } 81.25%, 100% { transform: scaleX(1); } }
     @keyframes off { 0%, 26.5% { opacity: 0; } 28%, 99.5% { opacity: 1; } 100% { opacity: 0; } }
     @keyframes logo { 0%, 78.5% { opacity: 0; } 80%, 99.5% { opacity: 1; } 100% { opacity: 0; } }
@@ -36,104 +33,116 @@
     @keyframes s2 { 0%, 8.4% { opacity: 0; } 9%, 15.9% { opacity: 1; } 16.4%, 100% { opacity: 0; } }
     @keyframes s3 { 0%, 15.9% { opacity: 0; } 16.4%, 78.8% { opacity: 1; } 79.4%, 100% { opacity: 0; } }
     @keyframes s4 { 0%, 78.8% { opacity: 0; } 79.4%, 99.5% { opacity: 1; } 100% { opacity: 0; } }
-    /* счётчик секунд удержания: каждая цифра видна 1 с из 24, сдвиг — animation-delay */
     @keyframes c { 0%, 4.1% { opacity: 1; } 4.17%, 100% { opacity: 0; } }
     @media (prefers-reduced-motion: reduce) {
-      .lh, .rh, .v1, .v2, .sb, .bar, .off, .logo, .s1, .s2, .s3, .s4, .c { animation: none; }
-      .lh { transform: translate(233px, 178px); } .rh { transform: translate(700px, 208px); }
+      .th, .ix, .v1, .v2, .sb, .bar, .off, .logo, .s1, .s2, .s3, .s4, .c { animation: none; }
       .s2, .s3, .s4, .off, .logo { opacity: 0; }
     }
   </style>
-
-  <rect width="640" height="600" rx="22" fill="#1b1b1b"/>
-  <text x="320" y="46" text-anchor="middle" fill="#f5e6c8" font-size="28" font-weight="700">Перезагрузка iPhone 8 и новее</text>
-
-  <!-- телефон -->
   <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9a17b"/><stop offset="0.55" stop-color="#ebb994"/><stop offset="1" stop-color="#d69c75"/>
+    </linearGradient>
+    <linearGradient id="skinV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#efc2a0"/><stop offset="1" stop-color="#d49a73"/>
+    </linearGradient>
     <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#22324a"/><stop offset="1" stop-color="#3a2340"/>
     </linearGradient>
   </defs>
+
+  <rect width="640" height="600" rx="22" fill="#1b1b1b"/>
+  <text x="320" y="46" text-anchor="middle" fill="#f5e6c8" font-size="28" font-weight="700">Перезагрузка iPhone 8 и новее</text>
+
+  <!-- пальцы за телефоном (средний, безымянный, мизинец): видны подушечки справа -->
+  <g stroke="#a8714f" stroke-width="1.6">
+    <rect x="300" y="250" width="124" height="33" rx="16.5" fill="url(#skinV)"/>
+    <rect x="300" y="304" width="118" height="32" rx="16" fill="url(#skinV)"/>
+    <rect x="300" y="354" width="106" height="28" rx="14" fill="url(#skinV)"/>
+  </g>
+  <!-- ладонь за телефоном и рукав -->
+  <path d="M150 600 C150 520 160 450 182 404 C196 372 214 344 236 330 L330 330 C380 332 418 356 424 390 C430 424 420 470 400 520 L392 600 Z"
+        fill="url(#skin)" stroke="#a8714f" stroke-width="2"/>
+  <path d="M120 600 C126 560 140 530 160 512 L400 512 C410 540 414 570 414 600 Z" fill="#3c4250"/>
+
+  <!-- телефон -->
   <rect x="245" y="72" width="150" height="320" rx="30" fill="#2f2f2f" stroke="#90897f" stroke-width="3"/>
   <rect x="256" y="83" width="128" height="298" rx="21" fill="url(#wall)"/>
   <rect x="298" y="91" width="44" height="12" rx="6" fill="#141414"/>
   <text x="320" y="160" text-anchor="middle" fill="#dfe6f1" font-size="34" font-weight="300">9:41</text>
   <text x="320" y="246" text-anchor="middle" fill="#b9c4d6" font-size="15">экран завис</text>
-  <!-- экран гаснет, затем яблоко на чёрном — как при настоящей перезагрузке -->
   <rect class="off" x="256" y="83" width="128" height="298" rx="21" fill="#000"/>
   <g class="logo" transform="translate(293 196) scale(2.25)">
     <path fill="#f4f4f4" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
   </g>
 
-  <!-- кнопки: громкость слева, боковая справа -->
+  <!-- кнопки -->
   <rect class="v1" x="236" y="158" width="10" height="40" rx="3"/>
   <rect class="v2" x="236" y="212" width="10" height="40" rx="3"/>
   <rect class="sb" x="394" y="176" width="10" height="64" rx="3"/>
 
-  <!-- номера у кнопок (рука их не закрывает) -->
-  <circle cx="222" cy="128" r="16" fill="#d4a012"/><text x="222" y="134" text-anchor="middle" fill="#141414" font-size="18" font-weight="700">1</text>
-  <circle cx="222" cy="288" r="16" fill="#d4a012"/><text x="222" y="294" text-anchor="middle" fill="#141414" font-size="18" font-weight="700">2</text>
-  <circle cx="422" cy="148" r="16" fill="#d4a012"/><text x="422" y="154" text-anchor="middle" fill="#141414" font-size="18" font-weight="700">3</text>
-
-  <!-- Рука: указывающий жест 👉 — указательный палец сверху, под ним согнутые средний, безымянный и мизинец (костяшки
-       ступенькой) и большой палец. v4 26.10.2026: владелец — «палец похож на фак»: в v3 из кулака торчал один палец
-       посередине, без видимых согнутых пальцев. Кончик указательного — в начале координат, анимация ведёт его к кнопке. -->
-  <defs>
-    <g id="hand">
-      <rect x="-268" y="-20" width="92" height="78" rx="10" fill="#3c4250"/>
-      <rect x="-184" y="-23" width="16" height="84" rx="6" fill="#2c313c"/>
-      <path d="M-170 -14 C-150 -20 -112 -20 -92 -14 C-78 -10 -70 2 -70 16 L-70 40 C-70 56 -84 64 -102 64 L-150 64 C-166 64 -174 52 -174 38 L-174 4 C-174 -6 -176 -12 -170 -14 Z" fill="#e2ac85" stroke="#b9805a" stroke-width="2"/>
-      <rect x="-96" y="10" width="38" height="17" rx="8.5" fill="#dca07a" stroke="#b9805a" stroke-width="2"/>
-      <rect x="-100" y="27" width="34" height="17" rx="8.5" fill="#dca07a" stroke="#b9805a" stroke-width="2"/>
-      <rect x="-104" y="44" width="28" height="16" rx="8" fill="#dca07a" stroke="#b9805a" stroke-width="2"/>
-      <path d="M-150 6 C-128 -2 -100 2 -84 6 C-74 9 -74 20 -86 21 C-106 23 -130 22 -150 22 Z" fill="#e8b591" stroke="#b9805a" stroke-width="2"/>
-      <path d="M-92 7 C-84 8 -82 16 -90 18" stroke="#c9946f" stroke-width="1.5" fill="none"/>
-      <path d="M-104 -12 L-12 -11 C-4 -11 0 -6 0 0 C0 6 -4 11 -12 11 L-96 11 C-104 11 -108 6 -108 0 C-108 -7 -108 -12 -104 -12 Z" fill="#e8b591" stroke="#b9805a" stroke-width="2"/>
-      <path d="M-22 -11 L-8 -10 C-3 -9 -2 -5 -4 -3 L-22 -4 Z" fill="#f6d6c0" stroke="#c9946f" stroke-width="1.2"/>
-      <path d="M-44 -11 q3 6 0 11 M-70 -11 q3 6 0 11" stroke="#b9805a" stroke-width="1.6" fill="none"/>
+  <!-- указательный: обхватывает правый край, подушечка на боковой кнопке. Палец за корпусом — видна только часть
+       правее края телефона (clipPath), поэтому он рисуется поверх кнопки и не залезает на экран. -->
+  <clipPath id="rightOfPhone"><rect x="393" y="150" width="120" height="110"/></clipPath>
+  <g clip-path="url(#rightOfPhone)">
+    <g class="ix">
+      <rect x="300" y="192" width="126" height="32" rx="16" fill="url(#skinV)" stroke="#a8714f" stroke-width="1.6"/>
     </g>
-  </defs>
-  <g class="lh"><use href="#hand"/></g>
-  <g class="rh"><use href="#hand" transform="scale(-1 1)"/></g>
+  </g>
 
-  <!-- полоска удержания 15 с -->
-  <rect x="220" y="410" width="200" height="9" rx="4.5" fill="#333"/>
-  <rect class="bar" x="220" y="410" width="200" height="9" rx="4.5" fill="#d4a012"/>
+  <!-- большой палец: вдоль левого торца, кончик на кнопке громкости -->
+  <g class="th">
+    <path d="M196 476 C192 420 196 334 206 270 C212 232 220 198 228 178 C232 168 246 166 249 176 C252 192 252 230 250 266 C247 330 246 410 248 476 Z"
+          fill="url(#skin)" stroke="#a8714f" stroke-width="2"/>
+    <path d="M231 182 C234 173 245 172 247 181 L246 204 C243 210 234 210 232 204 Z" fill="#f6dccb" stroke="#c99374" stroke-width="1.2"/>
+    <path d="M210 304 C218 308 232 308 242 304" stroke="#a8714f" stroke-width="1.5" fill="none"/>
+  </g>
 
-  <!-- субтитры -->
-  <rect x="0" y="436" width="640" height="164" fill="#111"/>
-  <g class="s1">
-    <text x="320" y="500" text-anchor="middle" fill="#ffd54a" font-size="40" font-weight="700">1 · Громкость +</text>
-    <text x="320" y="548" text-anchor="middle" fill="#f5e6c8" font-size="27">нажать и сразу отпустить</text>
-  </g>
-  <g class="s2" opacity="0">
-    <text x="320" y="500" text-anchor="middle" fill="#ffd54a" font-size="40" font-weight="700">2 · Громкость −</text>
-    <text x="320" y="548" text-anchor="middle" fill="#f5e6c8" font-size="27">нажать и сразу отпустить</text>
-  </g>
-  <g class="s3" opacity="0">
-    <text x="320" y="500" text-anchor="middle" fill="#ffd54a" font-size="40" font-weight="700">3 · Держите боковую</text>
-    <text x="320" y="548" text-anchor="middle" fill="#f5e6c8" font-size="25">10–20 секунд, экран погаснет — не отпускайте</text>
-  </g>
-  <g class="s4" opacity="0">
-    <text x="320" y="500" text-anchor="middle" fill="#7fd48a" font-size="40" font-weight="700">Появилось яблоко ✓</text>
-    <text x="320" y="548" text-anchor="middle" fill="#f5e6c8" font-size="27">отпускайте — телефон загружается</text>
-  </g>
+  <!-- номера кнопок — левее и правее руки -->
+  <circle cx="178" cy="178" r="16" fill="#d4a012"/><text x="178" y="184" text-anchor="middle" fill="#141414" font-size="18" font-weight="700">1</text>
+  <line x1="194" y1="178" x2="222" y2="178" stroke="#d4a012" stroke-width="2"/>
+  <circle cx="178" cy="232" r="16" fill="#d4a012"/><text x="178" y="238" text-anchor="middle" fill="#141414" font-size="18" font-weight="700">2</text>
+  <line x1="194" y1="232" x2="222" y2="232" stroke="#d4a012" stroke-width="2"/>
+  <circle cx="470" cy="208" r="16" fill="#d4a012"/><text x="470" y="214" text-anchor="middle" fill="#141414" font-size="18" font-weight="700">3</text>
+  <line x1="432" y1="208" x2="454" y2="208" stroke="#d4a012" stroke-width="2"/>
+
   <!-- счётчик удержания: 1…15 с со сдвигом от начала удержания (4,5 с) -->
   <g font-size="34" font-weight="700" fill="#ffd54a" text-anchor="middle">
-    <text class="c" x="560" y="402" style="animation-delay:4.5s">1 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:5.5s">2 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:6.5s">3 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:7.5s">4 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:8.5s">5 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:9.5s">6 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:10.5s">7 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:11.5s">8 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:12.5s">9 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:13.5s">10 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:14.5s">11 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:15.5s">12 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:16.5s">13 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:17.5s">14 с</text>
-    <text class="c" x="560" y="402" style="animation-delay:18.5s">15 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:4.5s">1 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:5.5s">2 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:6.5s">3 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:7.5s">4 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:8.5s">5 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:9.5s">6 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:10.5s">7 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:11.5s">8 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:12.5s">9 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:13.5s">10 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:14.5s">11 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:15.5s">12 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:16.5s">13 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:17.5s">14 с</text>
+    <text class="c" x="540" y="262" style="animation-delay:18.5s">15 с</text>
   </g>
+
+  <!-- субтитры и полоска удержания -->
+  <rect x="0" y="436" width="640" height="164" fill="#111"/>
+  <g class="s1">
+    <text x="320" y="496" text-anchor="middle" fill="#ffd54a" font-size="40" font-weight="700">1 · Громкость +</text>
+    <text x="320" y="542" text-anchor="middle" fill="#f5e6c8" font-size="27">нажать и сразу отпустить</text>
+  </g>
+  <g class="s2" opacity="0">
+    <text x="320" y="496" text-anchor="middle" fill="#ffd54a" font-size="40" font-weight="700">2 · Громкость −</text>
+    <text x="320" y="542" text-anchor="middle" fill="#f5e6c8" font-size="27">нажать и сразу отпустить</text>
+  </g>
+  <g class="s3" opacity="0">
+    <text x="320" y="496" text-anchor="middle" fill="#ffd54a" font-size="40" font-weight="700">3 · Держите боковую</text>
+    <text x="320" y="542" text-anchor="middle" fill="#f5e6c8" font-size="25">10–20 секунд, экран погаснет — не отпускайте</text>
+  </g>
+  <g class="s4" opacity="0">
+    <text x="320" y="496" text-anchor="middle" fill="#7fd48a" font-size="40" font-weight="700">Появилось яблоко ✓</text>
+    <text x="320" y="542" text-anchor="middle" fill="#f5e6c8" font-size="27">отпускайте — телефон загружается</text>
+  </g>
+  <rect x="170" y="568" width="300" height="9" rx="4.5" fill="#333"/>
+  <rect class="bar" x="170" y="568" width="300" height="9" rx="4.5" fill="#d4a012"/>
 </svg>
