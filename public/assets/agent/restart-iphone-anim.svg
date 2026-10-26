@@ -10,6 +10,8 @@
     .th { animation: th 24s infinite ease-in-out; }
     .ix { animation: ix 24s infinite ease-in-out; }
     .v1 { animation: v1 24s infinite; } .v2 { animation: v2 24s infinite; } .sb { animation: sb 24s infinite; }
+    .sbg { animation: sbg 24s infinite; }
+    @keyframes sbg { 0%, 18.7%, 81.3%, 100% { opacity: 0; } 18.75%, 81.25% { opacity: 0.45; } }
     .bar { animation: bar 24s infinite linear; transform-box: fill-box; transform-origin: left center; }
     .off { animation: off 24s infinite; } .logo { animation: logo 24s infinite; }
     .s1 { animation: s1 24s infinite; } .s2 { animation: s2 24s infinite; }
@@ -22,7 +24,12 @@
       100% { transform: translate(0, 0); }
     }
     /* указательный: держит боковую 15 с */
-    @keyframes ix { 0%, 18.3% { transform: translateX(0); } 18.75%, 81.25% { transform: translateX(-5px); } 82.5%, 100% { transform: translateX(0); } }
+    /* указательный: до шага 3 лежит НИЖЕ боковой кнопки (раньше всю анимацию лежал поперёк и «резал её пополам» —
+       замечание владельца 26.10), на шаге 3 поднимается на кнопку, жмёт и держит, потом опускается */
+    @keyframes ix {
+      0%, 15.5% { transform: translate(0, 0); } 18.3% { transform: translate(0, -44px); }
+      18.75%, 81.25% { transform: translate(-5px, -44px); } 82.5% { transform: translate(0, -44px); } 86%, 100% { transform: translate(0, 0); }
+    }
     @keyframes v1 { 0%, 5.7%, 7.2%, 100% { fill: #d4a012; } 5.8%, 7.1% { fill: #ffe27a; } }
     @keyframes v2 { 0%, 11.2%, 12.6%, 100% { fill: #d4a012; } 11.25%, 12.5% { fill: #ffe27a; } }
     @keyframes sb { 0%, 18.7%, 81.3%, 100% { fill: #d4a012; } 18.75%, 81.25% { fill: #ffe27a; } }
@@ -56,9 +63,9 @@
 
   <!-- пальцы за телефоном (средний, безымянный, мизинец): видны подушечки справа -->
   <g stroke="#a8714f" stroke-width="1.6">
-    <rect x="300" y="250" width="124" height="33" rx="16.5" fill="url(#skinV)"/>
-    <rect x="300" y="304" width="118" height="32" rx="16" fill="url(#skinV)"/>
-    <rect x="300" y="354" width="106" height="28" rx="14" fill="url(#skinV)"/>
+    <rect x="300" y="282" width="124" height="36" rx="18" fill="url(#skinV)"/>
+    <rect x="300" y="324" width="118" height="34" rx="17" fill="url(#skinV)"/>
+    <rect x="300" y="362" width="106" height="28" rx="14" fill="url(#skinV)"/>
   </g>
   <!-- ладонь за телефоном и рукав -->
   <path d="M150 600 C150 520 160 450 182 404 C196 372 214 344 236 330 L330 330 C380 332 418 356 424 390 C430 424 420 470 400 520 L392 600 Z"
@@ -79,14 +86,15 @@
   <!-- кнопки -->
   <rect class="v1" x="236" y="158" width="10" height="40" rx="3"/>
   <rect class="v2" x="236" y="212" width="10" height="40" rx="3"/>
-  <rect class="sb" x="394" y="176" width="10" height="64" rx="3"/>
+  <rect class="sbg" x="391" y="181" width="16" height="54" rx="6" fill="#ffd54a" opacity="0"/>
+  <rect class="sb" x="394" y="184" width="10" height="48" rx="3"/>
 
   <!-- указательный: обхватывает правый край, подушечка на боковой кнопке. Палец за корпусом — видна только часть
        правее края телефона (clipPath), поэтому он рисуется поверх кнопки и не залезает на экран. -->
-  <clipPath id="rightOfPhone"><rect x="393" y="150" width="120" height="110"/></clipPath>
+  <clipPath id="rightOfPhone"><rect x="393" y="150" width="120" height="140"/></clipPath>
   <g clip-path="url(#rightOfPhone)">
     <g class="ix">
-      <rect x="300" y="192" width="126" height="32" rx="16" fill="url(#skinV)" stroke="#a8714f" stroke-width="1.6"/>
+      <rect x="300" y="232" width="128" height="40" rx="20" fill="url(#skinV)" stroke="#a8714f" stroke-width="1.6"/>
     </g>
   </g>
 
