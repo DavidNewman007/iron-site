@@ -170,6 +170,7 @@
     return new Promise((resolve) => {
       const done = (v) => { if (tsResolve) { tsResolve(v); tsResolve = null; } };
       tsResolve = resolve;
+      tsBox.hidden = false;
       setTimeout(() => { if (tsResolve === resolve) { tsError = tsError || "timeout"; done(null); } }, 45000);
       if (widgetId !== null) {
         window.turnstile.reset(widgetId);
@@ -181,7 +182,8 @@
         language: LANG,
         retry: "never",
         // Пройдено — окошко убираем: оно висело в окне чата и после проверки (владелец 26.10.2026).
-        callback: (t) => { done(t); hideTurnstile(); },
+        // Turnstile после успеха ещё дорисовывает «Успешно» и может вернуть окошко — убираем с задержкой и прячем блок.
+        callback: (t) => { done(t); hideTurnstile(); setTimeout(hideTurnstile, 800); },
         "error-callback": (code) => { tsError = String(code || "error"); done(null); return true; },
         "expired-callback": () => {},
       });
@@ -192,6 +194,7 @@
     try { if (widgetId !== null) window.turnstile.remove(widgetId); } catch { /* уже нет */ }
     widgetId = null;
     tsBox.replaceChildren();
+    tsBox.hidden = true;
   }
 
   /** Запасной вход (26.10.2026): Turnstile ругается на VPN и некоторые браузеры (600010 — «похоже на бота»), а живой

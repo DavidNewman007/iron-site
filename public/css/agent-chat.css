@@ -109,7 +109,7 @@
 .iac-chip:hover { background: rgba(212, 160, 18, 0.14); }
 .iac-chip:focus-visible { outline: 2px solid var(--gold, #d4a012); outline-offset: 2px; }
 
-.iac-turnstile:empty { display: none; }
+.iac-turnstile:empty, .iac-turnstile[hidden] { display: none; }
 .iac-turnstile { display: flex; justify-content: center; padding: 0 14px 8px; }
 
 .iac-form {
