@@ -75,12 +75,81 @@
   }
 
   var input = root.querySelector(".rs-input");
-  var chips = root.querySelector('[data-group="family"]');
-  var opChips = root.querySelector('[data-group="operation"]');
   var results = root.querySelector(".rs-results");
   var status = root.querySelector(".rs-status");
 
   var deviceSelect = root.querySelector(".rs-device");
+
+  // ── Подбор «как в Новой технике» (26.10.2026) ─────────────────────────────
+  // Владелец: «сделай меню и фильтры в услугах ремонта по такому же принципу, как в новой технике». До этого
+  // здесь были красные чипы семей, лента из ~30 видов работ без чисел и модель отдельным списком внизу, а выдача
+  // молча обрезалась на 40 карточках. Теперь устройство то же, что у магазина (prices.js, план 27 §14–15):
+  // строка поиска с «Моделью» и сортировкой → группы плитками со значками и числами → второй уровень (поколение
+  // iPhone, Air/Pro, конкретная техника группы) → «Что нужно сделать» с числами, нулевые скрыты, длинный ряд
+  // свёрнут в «Ещё N» → над списком «Найдено N» и выбранные фильтры с ×. Классы — магазинные (.shop-group,
+  // .shop-cat, .shop-applied из css/shop.css), чтобы два каталога не разъехались при правке стилей.
+  // Состояние в адресе: uslugi.html?g=iphone&s=15&op=замена дисплея&m=iPhone 15&sort=asc&q=… (replaceState).
+  var panel = root.querySelector(".rs-panel");
+  panel.classList.add("rs-panel--shop");
+  var toolbar = document.createElement("div");
+  toolbar.className = "rs-toolbar";
+  toolbar.appendChild(root.querySelector(".rs-field"));
+  toolbar.appendChild(deviceSelect);
+  var sortSelect = document.createElement("select");
+  sortSelect.className = "rs-sort";
+  sortSelect.setAttribute("aria-label", EN ? "Sorting" : "Сортировка");
+  toolbar.appendChild(sortSelect);
+  var groupsNav = document.createElement("nav");
+  groupsNav.className = "shop-groups rs-groups";
+  groupsNav.setAttribute("aria-label", EN ? "Devices" : "Техника");
+  var subRow = document.createElement("div");
+  subRow.className = "shop-cats rs-subs";
+  var opsBox = document.createElement("div");
+  opsBox.className = "rs-ops";
+  var opsLabel = document.createElement("span");
+  opsLabel.className = "rs-ops__label";
+  var opChips = document.createElement("div");
+  opChips.className = "shop-cats rs-ops__list";
+  opsBox.appendChild(opsLabel);
+  opsBox.appendChild(opChips);
+  panel.innerHTML = "";
+  [toolbar, groupsNav, subRow, opsBox, status].forEach(function (el) { panel.appendChild(el); });
+  var applied = document.createElement("div");
+  applied.className = "shop-applied rs-applied";
+  applied.setAttribute("aria-live", "polite");
+  root.querySelector(".rs-layout").insertAdjacentElement("beforebegin", applied);
+
+  var GROUPS = [
+    { id: "all", ru: "Все услуги", en: "All services", hintRu: "весь прайс", hintEn: "full price list", icon: "all", fams: null },
+    { id: "iphone", ru: "iPhone", en: "iPhone", hintRu: "от 7 до 17 Pro Max", hintEn: "7 to 17 Pro Max", icon: "phone", fams: ["iphone"] },
+    { id: "mac", ru: "MacBook", en: "MacBook", hintRu: "Air и Pro", hintEn: "Air and Pro", icon: "laptop", fams: ["mac"] },
+    { id: "desk", ru: "Компьютеры", en: "Desktops", hintRu: "iMac, Mac mini, ПК", hintEn: "iMac, Mac mini, PC", icon: "desktop", fams: ["imac", "macmini", "desktop"] },
+    { id: "small", ru: "iPad и часы", en: "iPad & Watch", hintRu: "iPad, Watch, AirPods", hintEn: "iPad, Watch, AirPods", icon: "watch", fams: ["ipad", "watch", "airpods"] },
+    { id: "other", ru: "Другая техника", en: "Other devices", hintRu: "Android, ноутбуки Windows", hintEn: "Android, Windows laptops", icon: "android", fams: ["android", "laptop"] }
+  ];
+  var ICONS = {
+    all: '<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>',
+    phone: '<rect x="6.5" y="2.5" width="11" height="19" rx="2.4"/><path d="M10.5 5.3h3"/><circle cx="12" cy="18.2" r=".6"/>',
+    laptop: '<rect x="4.5" y="4.5" width="15" height="10.5" rx="1.4"/><path d="M2.5 18.5h19l-1.5-3.5h-16z"/>',
+    desktop: '<rect x="2.5" y="3.5" width="19" height="13" rx="1.6"/><path d="M9 20.5h6M12 16.5v4"/>',
+    watch: '<rect x="6.5" y="6.5" width="11" height="11" rx="3"/><path d="M9 6.5l.7-3.5h4.6l.7 3.5M9 17.5l.7 3.5h4.6l.7-3.5"/>',
+    android: '<rect x="5.5" y="2.5" width="13" height="19" rx="2"/><path d="M5.5 6h13M5.5 18h13"/><circle cx="12" cy="4.3" r=".5"/>'
+  };
+  var activeGroup = "all";
+  var activeSub = "";
+  var sortMode = "default";
+  var opsExpanded = false;
+  var PAGE = 40;
+  var shown = PAGE;
+  var OPS_VISIBLE = 10;
+  // Порядок «Что нужно сделать»: сначала то, с чем чаще приходят, служебные работы (диагностика, ПО, перенос
+  // данных) — в конце. По одному числу карточек первыми вставали «установка ПО» и «диагностика»: они есть у
+  // каждой модели, а ищут их реже всего.
+  var OPS_FIRST = ["замена дисплея", "замена аккумулятора", "замена заднего стекла", "переклейка стекла дисплея",
+    "замена камеры", "замена стекла камеры", "замена разъёма зарядки", "замена нижнего шлейфа", "замена динамика",
+    "ремонт после залития", "замена корпуса", "замена матрицы без крышки", "замена клавиатуры", "замена тачпада",
+    "профилактика", "замена накопителя (SSD)", "ремонт платы", "замена шлейфа", "замена сенсора"];
+  var OPS_LAST = ["диагностика", "установка ПО", "перенос данных"];
   var cartBox = root.querySelector(".rs-cart");
   var cartList = root.querySelector(".rs-cart-list");
   var cartTotal = root.querySelector(".rs-cart-total");
@@ -99,7 +168,6 @@
   var services = [];
   var families = [];
   var quality = null;
-  var activeFamily = "";
   var activeOperation = "";
   var activeDevice = "";
   var cart = [];
@@ -200,10 +268,8 @@
     [/refurb|reglue|glass only/, "переклейка"]
   ];
 
+  /** Совпадение с текстом поиска; фильтры групп, работ и модели проверяет passes(). */
   function matches(service, query) {
-    if (activeFamily && service.family !== activeFamily) return false;
-    if (activeOperation && service.operation !== activeOperation) return false;
-    if (activeDevice && service.device !== activeDevice) return false;
     if (!query) return true;
 
     var haystack = normalize(service.device + " " + service.operation + " " + (service.variant || "") + " " + (service.models || ""));
@@ -233,9 +299,10 @@
 
   function render(list) {
     results.innerHTML = "";
+    status.hidden = Boolean(list.length);
     if (!list.length) {
       status.textContent = t("nothing_found", "Ничего не нашли. Напишите нам — подскажем по вашей модели.");
-      return;
+      return 0;
     }
 
     // Группируем по устройству и услуге: клиенту важен выбор варианта, а не
@@ -247,12 +314,14 @@
       if (!groups[key]) { groups[key] = []; order.push(key); }
       groups[key].push(s);
     });
+    // Сортировка по цене — по самой дешёвой цене карточки, как «Сначала дешевле» в магазине.
+    if (sortMode !== "default") {
+      var minOf = function (key) { return Math.min.apply(null, groups[key].map(function (s) { return Number(s.price) || 0; })); };
+      order.sort(function (a, b) { return sortMode === "asc" ? minOf(a) - minOf(b) : minOf(b) - minOf(a); });
+    }
 
-    status.textContent = EN
-      ? t("found", "", { n: order.length, services: order.length === 1 ? t("service_one", "") : t("service_many", "") })
-      : "Нашли " + order.length + " " + plural(order.length, "услугу", "услуги", "услуг");
-
-    order.slice(0, 40).forEach(function (key) {
+    // До 26.10.2026 показывались первые 40 карточек, остальные молча пропадали («Нашли 779», а видно 40).
+    order.slice(0, shown).forEach(function (key) {
       var items = groups[key].slice().sort(function (a, b) { return a.price - b.price; });
       var head = items[0];
       var card = document.createElement("article");
@@ -320,6 +389,16 @@
       }
       results.appendChild(card);
     });
+    if (order.length > shown) {
+      var more = document.createElement("button");
+      more.type = "button";
+      more.className = "btn btn-secondary rs-more";
+      var rest = Math.min(PAGE, order.length - shown);
+      more.textContent = EN ? "Show " + rest + " more" : "Показать ещё " + rest + " из " + (order.length - shown);
+      more.addEventListener("click", function () { shown += PAGE; apply(true); });
+      results.appendChild(more);
+    }
+    return order.length;
   }
 
   /** Разбор качеств запчастей — под поиском, свёрнутый. */
@@ -520,113 +599,285 @@
     return many;
   }
 
-  function apply() {
-    syncReset();
-    render(services.filter(function (s) { return matches(s, input.value.trim()); }));
+  // ── Фильтры, числа и навигация (26.10.2026) ───────────────────────────────
+  function groupById(id) {
+    for (var i = 0; i < GROUPS.length; i++) if (GROUPS[i].id === id) return GROUPS[i];
+    return GROUPS[0];
   }
-
+  function groupOfFamily(fam) {
+    for (var i = 1; i < GROUPS.length; i++) if (GROUPS[i].fams.indexOf(fam) !== -1) return GROUPS[i].id;
+    return "all";
+  }
+  function inGroup(s, gid) {
+    var g = groupById(gid);
+    return !g.fams || g.fams.indexOf(s.family) !== -1;
+  }
+  /** Поколение iPhone по названию модели: «iPhone 15 Pro» → «15», «iPhone XS Max» → «X», «iPhone SE 2022» → «SE». */
+  function iphoneSeries(device) {
+    if (/\bSE\b/.test(device)) return "SE";
+    var m = /iPhone\s+(\d+)/.exec(device);
+    if (m) return m[1];
+    return /iPhone\s+X/.test(device) ? "X" : "";
+  }
   /**
-   * Кнопки выбора техники — из прайса, а не из разметки.
-   *
-   * Изменено 18.08.2026. В uslugi.html лежали ровно два <button> — iPhone и
-   * MacBook. Когда в прайс добавились iPad, часы, iMac, ноутбуки и Android,
-   * страница о них знала (услуги приходили в services.json и находились поиском),
-   * но отфильтровать по технике было нельзя: кнопки для них никто не написал.
-   * Теперь список строится из data.families, и новая техника появляется на сайте
-   * сама — ровно как в боте.
+   * Второй уровень внутри группы — как подкатегории магазина. В группе из нескольких семей это сама техника
+   * (iMac · Mac mini · ПК), у iPhone — поколение, у MacBook — Air / Pro. У группы «Все» второго уровня нет.
    */
-  function renderFamilyChips() {
-    if (!families.length) return;
-    chips.innerHTML = "";
-    families.forEach(function (f) {
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.setAttribute("data-family", f.key);
-      btn.textContent = famName(f);
-      if (f.key === activeFamily) btn.classList.add("is-active");
-      chips.appendChild(btn);
-    });
+  function subOf(s, gid) {
+    var g = groupById(gid);
+    if (!g.fams) return "";
+    if (g.fams.length > 1) return s.family;
+    if (s.family === "iphone") return iphoneSeries(s.device);
+    if (s.family === "mac") return /Air/.test(s.device) ? "air" : /Pro/.test(s.device) ? "pro" : "";
+    return "";
   }
-
-  /** Подпись семьи: на английской версии — из словаря, если он её знает. */
+  function subLabel(key) {
+    if (activeGroup === "iphone") return key === "X" ? "iPhone X · XS · XR" : "iPhone " + key;
+    if (activeGroup === "mac") return key === "air" ? "MacBook Air" : "MacBook Pro";
+    var f = families.filter(function (x) { return x.key === key; })[0];
+    return f ? famName(f) : key;
+  }
+  function subRank(key) {
+    if (/^\d+$/.test(key)) return -Number(key);   // новые поколения первыми
+    return { X: 1, SE: 2, air: -2, pro: -1 }[key] || 0;
+  }
+  /** Подпись фамилии техники: на английской версии — из словаря, если он её знает. */
   function famName(f) {
     if (EN && DICT && DICT.families && DICT.families[f.key]) return DICT.families[f.key];
     return f.label;
   }
-
-  chips.addEventListener("click", function (e) {
-    var btn = e.target.closest("button[data-family]");
-    if (!btn) return;
-    var family = btn.getAttribute("data-family");
-    activeFamily = activeFamily === family ? "" : family;
-    Array.prototype.forEach.call(chips.querySelectorAll("button"), function (b) {
-      b.classList.toggle("is-active", b.getAttribute("data-family") === activeFamily);
+  function opLabel(operation) {
+    return (EN && DICT && DICT.op_labels && DICT.op_labels[operation]) ||
+      OPERATION_LABELS[operation] || operation.replace(/\s*\(.*\)$/, "");
+  }
+  /** Проходит ли услуга фильтры; skip — какой фильтр не учитывать (для чисел у его же кнопок). */
+  function passes(s, skip) {
+    if (skip !== "group" && !inGroup(s, activeGroup)) return false;
+    if (skip !== "group" && skip !== "sub" && activeSub && subOf(s, activeGroup) !== activeSub) return false;
+    if (skip !== "op" && activeOperation && s.operation !== activeOperation) return false;
+    if (skip !== "device" && skip !== "group" && skip !== "sub" && activeDevice && s.device !== activeDevice) return false;
+    return true;
+  }
+  /** Число карточек (устройство + услуга) — то, что человек видит списком. */
+  function cardCount(list, keyFn) {
+    var seen = {}, out = {};
+    list.forEach(function (s) {
+      var k = keyFn(s), card = s.device + "|" + s.operation;
+      if (seen[k + "§" + card]) return;
+      seen[k + "§" + card] = true;
+      out[k] = (out[k] || 0) + 1;
     });
-    // Виды работ у iPhone и MacBook разные — пересобираем список под выбранное
-    // семейство, иначе половина кнопок ведёт в пустую выдачу.
-    renderOperationChips();
-    renderDeviceOptions();
-    apply();
-  });
+    return out;
+  }
+  function esc(text) { return escape(text).replace(/"/g, "&quot;"); }
+  function icon(name) {
+    return '<svg class="shop-group__icon" viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || "") + "</svg>";
+  }
 
-  opChips.addEventListener("click", function (e) {
-    var btn = e.target.closest("button[data-operation]");
-    if (!btn) return;
-    var operation = btn.getAttribute("data-operation");
-    activeOperation = activeOperation === operation ? "" : operation;
-    Array.prototype.forEach.call(opChips.querySelectorAll("button"), function (b) {
-      b.classList.toggle("is-active", b.getAttribute("data-operation") === activeOperation);
-    });
-    renderDeviceOptions();
-    apply();
-  });
+  function renderNav(textOk) {
+    // Группы: числа без учёта самой группы, её второго уровня и модели.
+    var poolG = services.filter(function (s, i) { return textOk[i] && passes(s, "group"); });
+    var famCards = cardCount(poolG, function (s) { return s.family; });
+    var total = cardCount(poolG, function () { return "all"; }).all || 0;
+    groupsNav.innerHTML = GROUPS.map(function (g) {
+      var n = g.fams ? g.fams.reduce(function (sum, f) { return sum + (famCards[f] || 0); }, 0) : total;
+      if (!n && g.id !== activeGroup && g.id !== "all") return "";
+      var on = g.id === activeGroup;
+      return '<button type="button" class="shop-group' + (on ? " is-active" : "") + '" data-group="' + g.id + '" aria-pressed="' + on + '">' +
+        icon(g.icon) + '<span class="shop-group__text"><span class="shop-group__name">' + escape(EN ? g.en : g.ru) +
+        ' <span class="shop-group__n">' + n + '</span></span><span class="shop-group__hint">' + escape(EN ? g.hintEn : g.hintRu) +
+        "</span></span></button>";
+    }).join("");
 
-  /** Кнопки видов работ — только те, что реально есть у выбранного семейства. */
-  function renderOperationChips() {
-    var pool = services.filter(function (s) { return !activeFamily || s.family === activeFamily; });
-    var seen = {};
+    // Второй уровень.
+    var g = groupById(activeGroup), subs = [];
+    if (g.fams) {
+      var poolS = services.filter(function (s, i) { return textOk[i] && passes(s, "sub"); });
+      var subCards = cardCount(poolS, function (s) { return subOf(s, activeGroup); });
+      subs = Object.keys(subCards).filter(function (k) { return k; });
+      if (activeSub && subs.indexOf(activeSub) === -1) subs.push(activeSub);
+      subs.sort(function (a, b) { return subRank(a) - subRank(b); });
+      var allN = Object.keys(subCards).reduce(function (sum, k) { return sum + subCards[k]; }, 0);
+      subRow.innerHTML = subs.length > 1 || activeSub
+        ? '<button type="button" class="shop-cat' + (!activeSub ? " is-active" : "") + '" data-sub="">' +
+            escape(EN ? "All " + g.en : "Все " + (g.id === "small" ? "устройства" : g.ru)) + '<span class="shop-cat__n">' + allN + "</span></button>" +
+          subs.map(function (k) {
+            return '<button type="button" class="shop-cat' + (k === activeSub ? " is-active" : "") + '" data-sub="' + esc(k) + '">' +
+              escape(subLabel(k)) + '<span class="shop-cat__n">' + (subCards[k] || 0) + "</span></button>";
+          }).join("")
+        : "";
+    } else {
+      subRow.innerHTML = "";
+    }
+    subRow.hidden = !subRow.innerHTML;
+
+    // «Что нужно сделать»: числа без учёта самой работы; нулевые скрыты, самые частые — первыми.
+    var poolO = services.filter(function (s, i) { return textOk[i] && passes(s, "op"); });
+    var opCards = cardCount(poolO, function (s) { return s.operation; });
+    var ops = Object.keys(opCards);
+    if (activeOperation && ops.indexOf(activeOperation) === -1) ops.push(activeOperation);
+    var rank = function (op) {
+      var i = OPS_FIRST.indexOf(op);
+      if (i !== -1) return i;
+      return OPS_LAST.indexOf(op) !== -1 ? 1000 + OPS_LAST.indexOf(op) : 500;
+    };
+    ops.sort(function (a, b) { return rank(a) - rank(b) || (opCards[b] || 0) - (opCards[a] || 0) || opLabel(a).localeCompare(opLabel(b)); });
+    var visible = ops, hiddenN = 0;
+    if (!opsExpanded && ops.length > OPS_VISIBLE + 2) {
+      visible = ops.slice(0, OPS_VISIBLE);
+      if (activeOperation && visible.indexOf(activeOperation) === -1) visible.push(activeOperation);
+      hiddenN = ops.length - visible.length;
+    }
+    opsLabel.textContent = EN ? "What needs doing" : "Что нужно сделать";
+    opChips.innerHTML = visible.map(function (op) {
+      return '<button type="button" class="shop-cat' + (op === activeOperation ? " is-active" : "") + '" data-operation="' + esc(op) + '">' +
+        escape(opLabel(op)) + '<span class="shop-cat__n">' + (opCards[op] || 0) + "</span></button>";
+    }).join("") + (hiddenN
+      ? '<button type="button" class="shop-cat shop-cat--more" data-more="1">' + (EN ? "More" : "Ещё") + " " + hiddenN + "</button>"
+      : (opsExpanded && ops.length > OPS_VISIBLE + 2 ? '<button type="button" class="shop-cat shop-cat--more" data-more="0">' + (EN ? "Less" : "Свернуть") + "</button>" : ""));
+    opsBox.hidden = !ops.length;
+
+    renderDeviceOptions(textOk);
+    renderSortOptions();
+  }
+
+  /** Список моделей: только подходящие под группу, второй уровень и работу, с числом карточек. */
+  function renderDeviceOptions(textOk) {
+    var pool = services.filter(function (s, i) { return textOk[i] && passes(s, "device"); });
+    var cards = cardCount(pool, function (s) { return s.device; });
     var list = [];
-    pool.forEach(function (s) {
-      if (!seen[s.operation]) { seen[s.operation] = true; list.push(s.operation); }
-    });
-    list.sort();
-    if (activeOperation && list.indexOf(activeOperation) === -1) activeOperation = "";
-    opChips.innerHTML = "";
-    list.forEach(function (operation) {
-      var b = document.createElement("button");
-      b.type = "button";
-      b.setAttribute("data-operation", operation);
-      // «замена дисплея» → «дисплей». Через отсечение слова «замена» получается
-      // родительный падеж («аккумулятора»), поэтому подписи заданы явно.
-      b.textContent = (EN && DICT && DICT.op_labels && DICT.op_labels[operation])
-        || OPERATION_LABELS[operation]
-        || operation.replace(/\s*\(.*\)$/, "");
-      if (operation === activeOperation) b.classList.add("is-active");
-      opChips.appendChild(b);
+    services.forEach(function (s) { if (cards[s.device] && list.indexOf(s.device) === -1) list.push(s.device); });
+    if (activeDevice && list.indexOf(activeDevice) === -1) list.push(activeDevice);
+    deviceSelect.innerHTML = "";
+    var all = document.createElement("option");
+    all.value = "";
+    all.textContent = (EN ? "All models" : "Все модели") + " · " + list.length;
+    deviceSelect.appendChild(all);
+    list.forEach(function (d) {
+      var o = document.createElement("option");
+      o.value = d;
+      o.textContent = deviceName(d) + " · " + (cards[d] || 0);
+      if (d === activeDevice) o.selected = true;
+      deviceSelect.appendChild(o);
     });
   }
 
-  var resetBtn = root.querySelector(".rs-reset");
-  resetBtn.addEventListener("click", function (e) {
-    e.preventDefault();
-    activeFamily = "";
-    activeOperation = "";
-    activeDevice = "";
-    input.value = "";
-    Array.prototype.forEach.call(root.querySelectorAll(".rs-chips button"), function (b) {
-      b.classList.remove("is-active");
+  function renderSortOptions() {
+    if (sortSelect.options.length) { sortSelect.value = sortMode; return; }
+    [["default", EN ? "By model" : "По моделям"], ["asc", EN ? "Cheapest first" : "Сначала дешевле"],
+     ["desc", EN ? "Most expensive first" : "Сначала дороже"]].forEach(function (p) {
+      var o = document.createElement("option");
+      o.value = p[0]; o.textContent = p[1];
+      sortSelect.appendChild(o);
     });
-    renderOperationChips();
-    renderDeviceOptions();
+    sortSelect.value = sortMode;
+  }
+
+  function renderApplied(found) {
+    var chips = [];
+    var chip = function (key, label) {
+      return '<button type="button" class="shop-applied__chip" data-clear="' + key + '" aria-label="' + (EN ? "Remove" : "Убрать") + ": " +
+        esc(label) + '">' + escape(label) + ' <span aria-hidden="true">×</span></button>';
+    };
+    if (activeSub) chips.push(chip("sub", subLabel(activeSub)));
+    else if (activeGroup !== "all") chips.push(chip("group", EN ? groupById(activeGroup).en : groupById(activeGroup).ru));
+    if (activeOperation) chips.push(chip("op", opLabel(activeOperation)));
+    if (activeDevice) chips.push(chip("device", deviceName(activeDevice)));
+    var q = input.value.trim();
+    if (q) chips.push(chip("q", "«" + q + "»"));
+    applied.innerHTML = '<span class="shop-applied__found">' + (EN ? "Found" : "Найдено") + ": <b>" + found + "</b> " +
+      (EN ? (found === 1 ? "service" : "services") : plural(found, "услуга", "услуги", "услуг")) + "</span>" + chips.join("") +
+      (chips.length > 1 ? '<button type="button" class="shop-applied__reset" data-clear="all">' + (EN ? "Reset all" : "Сбросить всё") + "</button>" : "");
+  }
+
+  var lastQs = null;
+  function writeUrl() {
+    var p = new URLSearchParams();
+    if (activeGroup !== "all") p.set("g", activeGroup);
+    if (activeSub) p.set("s", activeSub);
+    if (activeOperation) p.set("op", activeOperation);
+    if (activeDevice) p.set("m", activeDevice);
+    if (sortMode !== "default") p.set("sort", sortMode);
+    var q = input.value.trim();
+    if (q) p.set("q", q.slice(0, 60));
+    var qs = p.toString();
+    if (qs === lastQs) return;
+    lastQs = qs;
+    try { history.replaceState(history.state, "", location.pathname + (qs ? "?" + qs : "") + location.hash); } catch (e) { /* file:// и старые браузеры */ }
+  }
+  function readUrl() {
+    var p;
+    try { p = new URLSearchParams(location.search); } catch (e) { return; }
+    var q = p.get("q");
+    if (q) input.value = q.slice(0, 60);
+    var m = p.get("m");
+    var hit = m && services.filter(function (s) { return s.device === m; })[0];
+    var g = p.get("g");
+    if (hit) { activeDevice = m; activeGroup = groupOfFamily(hit.family); activeSub = subOf(hit, activeGroup); }
+    else if (g && GROUPS.some(function (x) { return x.id === g; })) activeGroup = g;
+    var s = p.get("s");
+    if (s && !hit) activeSub = s.slice(0, 40);
+    var op = p.get("op");
+    if (op && services.some(function (x) { return x.operation === op; })) activeOperation = op;
+    var sort = p.get("sort");
+    if (sort === "asc" || sort === "desc") sortMode = sort;
+  }
+
+  /** keepPage — «Показать ещё» листает дальше, любое другое действие возвращает к первым 40. */
+  function apply(keepPage) {
+    if (!keepPage) shown = PAGE;
+    var q = input.value.trim();
+    var textOk = services.map(function (s) { return matches(s, q); });
+    renderNav(textOk);
+    var found = render(services.filter(function (s, i) { return textOk[i] && passes(s); }));
+    renderApplied(found);
+    writeUrl();
+  }
+
+  groupsNav.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-group]");
+    if (!btn) return;
+    activeGroup = btn.getAttribute("data-group");
+    activeSub = "";
+    if (activeDevice && !services.some(function (s) { return s.device === activeDevice && inGroup(s, activeGroup); })) activeDevice = "";
     apply();
   });
-
-  function syncReset() {
-    resetBtn.hidden = !(activeFamily || activeOperation || activeDevice || input.value.trim());
-  }
-
+  subRow.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-sub]");
+    if (!btn) return;
+    activeSub = btn.getAttribute("data-sub");
+    if (activeDevice && !services.some(function (s) { return s.device === activeDevice && (!activeSub || subOf(s, activeGroup) === activeSub); })) activeDevice = "";
+    apply();
+  });
+  opChips.addEventListener("click", function (e) {
+    var more = e.target.closest("[data-more]");
+    if (more) { opsExpanded = more.getAttribute("data-more") === "1"; apply(true); return; }
+    var btn = e.target.closest("[data-operation]");
+    if (!btn) return;
+    var op = btn.getAttribute("data-operation");
+    activeOperation = activeOperation === op ? "" : op;
+    apply();
+  });
+  applied.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-clear]");
+    if (!btn) return;
+    var what = btn.getAttribute("data-clear");
+    if (what === "sub") activeSub = "";
+    if (what === "group" || what === "all") { activeGroup = "all"; activeSub = ""; }
+    if (what === "op" || what === "all") activeOperation = "";
+    if (what === "device" || what === "all") activeDevice = "";
+    if (what === "q" || what === "all") input.value = "";
+    apply();
+  });
+  // Выбрал модель — группа и второй уровень встают по ней, как категория в магазине.
   deviceSelect.addEventListener("change", function () {
     activeDevice = deviceSelect.value;
+    var hit = activeDevice && services.filter(function (s) { return s.device === activeDevice; })[0];
+    if (hit) { activeGroup = groupOfFamily(hit.family); activeSub = subOf(hit, activeGroup); }
+    apply();
+  });
+  sortSelect.addEventListener("change", function () {
+    sortMode = sortSelect.value;
     apply();
   });
 
@@ -678,31 +929,6 @@
       });
   });
 
-  /** Список моделей — только те, что подходят под остальные фильтры. */
-  function renderDeviceOptions() {
-    var pool = services.filter(function (s) {
-      return (!activeFamily || s.family === activeFamily) &&
-             (!activeOperation || s.operation === activeOperation);
-    });
-    var seen = {};
-    var list = [];
-    pool.forEach(function (s) { if (!seen[s.device]) { seen[s.device] = true; list.push(s.device); } });
-    if (activeDevice && list.indexOf(activeDevice) === -1) activeDevice = "";
-    deviceSelect.innerHTML = "";
-    var all = document.createElement("option");
-    all.value = "";
-    all.textContent = EN ? t("all_models_count", "", { n: list.length })
-      : "все модели (" + list.length + ")";
-    deviceSelect.appendChild(all);
-    list.forEach(function (d) {
-      var o = document.createElement("option");
-      o.value = d;
-      o.textContent = deviceName(d);
-      if (d === activeDevice) o.selected = true;
-      deviceSelect.appendChild(o);
-    });
-  }
-
   var timer = null;
   input.addEventListener("input", function () {
     clearTimeout(timer);
@@ -747,19 +973,11 @@
         });
       }
       quality = data.quality || null;
-      renderFamilyChips();
       renderQualityGuide();
-      renderOperationChips();
-      renderDeviceOptions();
       // Ссылка из ролика (28.09.2026): uslugi.html?q=батарея#repair-search — поиск заполнен сразу. Владелец: «QR и ссылки
       // должны вести максимально на то, о чём ролик» (ролик про вздутую батарею ведёт на цены замены батареи).
-      try {
-        var q = new URLSearchParams(location.search).get("q");
-        if (q) input.value = q.slice(0, 60);
-      } catch (e) { /* старый браузер — без поиска из ссылки */ }
-      status.textContent = EN
-        ? t("loaded", "", { n: services.length })
-        : "Прайс на " + services.length + " услуг. Начните вводить модель или что случилось.";
+      // С 26.10.2026 из адреса читаются и группа, поколение, работа, модель и сортировка (readUrl).
+      readUrl();
       apply();
     })
     .catch(function () {

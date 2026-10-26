@@ -1690,3 +1690,54 @@ input[type="radio"]:checked { border-color: var(--gold); }
 input[type="radio"]:checked::before { content: ""; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--gold); }
 input[type="checkbox"]:focus-visible, input[type="radio"]:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 input[type="checkbox"]:disabled, input[type="radio"]:disabled { opacity: 0.45; cursor: default; }
+
+/* ——— Услуги ремонта: подбор как в «Новой технике» (26.10.2026) ———
+   Владелец: «сделай меню и фильтры в услугах ремонта по такому же принципу, как в новой технике». Разметку строит
+   js/repair-search.js на магазинных классах (.shop-group, .shop-cat, .shop-applied из css/shop.css); здесь — только
+   то, чем раздел отличается: без рамки-панели, строка поиска с «Моделью» и сортировкой, подпись «Что нужно сделать». */
+.rs-panel.rs-panel--shop { background: none; border: 0; box-shadow: none; padding: 0; }
+.rs-toolbar { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1rem; }
+.rs-toolbar .rs-field { flex: 1 1 340px; min-width: 0; }
+.rs-toolbar .rs-input,
+.rs-toolbar select {
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--cream);
+  background-color: rgba(28, 28, 28, 0.84);
+  border: 1px solid rgba(212, 160, 18, 0.38);
+  border-radius: 10px;
+  box-shadow: none;
+}
+.rs-toolbar select { flex: 0 1 auto; width: auto; max-width: 20rem; }
+.rs-toolbar .rs-input:focus, .rs-toolbar select:focus { outline: none; border-color: var(--gold); box-shadow: none; }
+.rs-groups.shop-groups { margin: 0 0 0.8rem; }
+.rs-subs.shop-cats { margin: 0 0 0.9rem; }
+.rs-ops { margin: 0 0 0.6rem; }
+.rs-ops[hidden] { display: none; }
+.rs-ops__label {
+  display: block;
+  margin: 0 0 0.45rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.rs-ops__list.shop-cats { margin: 0; }
+.shop-cat--more { border-style: dashed; color: var(--gold); }
+.rs-panel--shop .rs-status { margin-top: 0.8rem; }
+.rs-panel--shop .rs-status[hidden] { display: none; }
+.rs-applied.shop-applied { margin: 0.4rem 0 1rem; }
+.rs-more { grid-column: 1 / -1; justify-self: center; margin-top: 0.5rem; }
+@media (max-width: 900px) {
+  .rs-toolbar { gap: 0.5rem; }
+  .rs-toolbar .rs-field { flex: 1 1 100%; }
+  .rs-toolbar select { flex: 1 1 0; min-width: 0; max-width: none; padding: 0.6rem 2rem 0.6rem 0.75rem; font-size: 0.9rem; }
+  /* Длинная лента работ на телефоне — тоже вбок, как группы, а не на полэкрана вниз. */
+  .rs-ops__list.shop-cats, .rs-subs.shop-cats { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 0.2rem; }
+  .rs-ops__list.shop-cats::-webkit-scrollbar, .rs-subs.shop-cats::-webkit-scrollbar { display: none; }
+}
+/* Плашка корзины услуг на телефоне: .cart-mobile-bar { display: flex } в shop.css перебивал атрибут hidden, и пустая
+   плашка «0 усл. · — · Корзина» висела внизу всегда (найдено 26.10.2026 при переделке подбора). */
+.rs-cart-bar[hidden] { display: none !important; }
