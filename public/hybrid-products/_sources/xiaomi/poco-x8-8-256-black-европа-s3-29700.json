@@ -1,0 +1,97 @@
+{
+  "product_id": "poco-x8-8-256-black-европа-s3-29700",
+  "category": "xiaomi",
+  "file_slug": "poco-x8-8-256-black-s3-29700",
+  "name": "Poco X8 8/256 Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 29700,
+  "catalog_url": "https://www.po.co/global/product/poco-x8/specs/",
+  "catalog_title": "POCO X8 8/256 ГБ, Black (чёрный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,83\", AMOLED, 2772×1280 (1.5K), до 120 Гц, пиковая яркость 3500 нит, Gorilla Glass Victus 2"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 6s Gen 4 (4 нм), 8 ядер до 2,4 ГГц, GPU Adreno 710"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "8 ГБ LPDDR4X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ UFS 3.1"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8, OIS) + 2 Мп (датчик глубины); видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "16 Мп (f/2.4)"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "8340 мА·ч (Si/C)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "67 Вт HyperCharge, обратная проводная 22,5 Вт, USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "2 × nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 5 (2,4/5 ГГц), Bluetooth 5.1, ИК-порт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP66 / IP68 / IP69 / IP69K"
+    },
+    {
+      "key": "Прочее",
+      "value": "стереодинамики Dolby Atmos, сканер отпечатка в экране"
+    },
+    {
+      "key": "Размеры",
+      "value": "163,45 × 78,27 × 8,6 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "223 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Black (чёрный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 16, Xiaomi HyperOS 3"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/358_operatorx_operatorx_xm/21/08/2026/a43a4f4a843299e5befe24503661c07d.png",
+    "https://i02.appmifile.com/454_operatorx_operatorx_xm/21/08/2026/e4f9ec0b2d491489c8bcd23b2b0dca1d.png",
+    "https://i02.appmifile.com/419_operatorx_operatorx_xm/21/08/2026/6bac243392d9f3624af74c0a83545565.png",
+    "https://i02.appmifile.com/25_operatorx_operatorx_xm/21/08/2026/de690918c9678973b0ebd6ab1b988132.png",
+    "https://i02.appmifile.com/824_operatorx_operatorx_xm/21/08/2026/afc8dc3ac3ddae26795f9723b5525ff7.png",
+    "https://i02.appmifile.com/981_operatorx_operatorx_xm/21/08/2026/3ba716828a3b513a869efbba49778ee5.png"
+  ],
+  "images_local": [
+    "assets/product-images/d8a72174f4b617a4a3911737.jpg",
+    "assets/product-images/b77aba1cc6366de4f3dcc923.jpg",
+    "assets/product-images/52270cb6f974450869831aff.jpg",
+    "assets/product-images/8e3edf8c893e09993dc1f938.jpg",
+    "assets/product-images/5f281bbdab95cf469bf9703d.jpg",
+    "assets/product-images/bb90006723a6179293743486.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco x8 8 256 black~s3",
+  "photo_source": "https://www.po.co/global/product/poco-x8/specs/",
+  "updated_at": "2026-10-26T14:13:21.910224Z"
+}

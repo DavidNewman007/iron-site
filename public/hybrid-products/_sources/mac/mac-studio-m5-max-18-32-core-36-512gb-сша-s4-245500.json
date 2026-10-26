@@ -1,0 +1,89 @@
+{
+  "product_id": "mac-studio-m5-max-18-32-core-36-512gb-сша-s4-245500",
+  "category": "mac",
+  "file_slug": "mac-studio-m5-max-18-32-core-36-512gb-s4-245500",
+  "name": "Mac Studio M5 Max 18/32 Core 36+ 512Gb",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 245500,
+  "catalog_url": "https://www.apple.com/shop/buy-mac/mac-studio/m5-max-chip-18-core-cpu-32-core-gpu-36gb-memory-512gb-storage",
+  "catalog_title": "Apple Mac Studio M5 Max (18/32 ядер), 36 ГБ, 512 ГБ",
+  "specs": [
+    {
+      "key": "Процессор",
+      "value": "Apple M5 Max, 18-ядерный CPU (6 суперъядер и 12 производительных ядер)"
+    },
+    {
+      "key": "Графика",
+      "value": "32-ядерный GPU с нейроускорителями, аппаратная трассировка лучей"
+    },
+    {
+      "key": "Neural Engine",
+      "value": "16 ядер"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "36 ГБ объединённой памяти (пропускная способность 460 ГБ/с)"
+    },
+    {
+      "key": "Накопитель",
+      "value": "SSD 512 ГБ"
+    },
+    {
+      "key": "Порты сзади",
+      "value": "4 × Thunderbolt 5 (до 120 Гбит/с), 2 × USB‑A (до 5 Гбит/с), HDMI 2.1, Ethernet 10 Гбит/с, разъём 3,5 мм для наушников"
+    },
+    {
+      "key": "Порты спереди",
+      "value": "2 × USB‑C (до 10 Гбит/с), слот SDXC (UHS‑II)"
+    },
+    {
+      "key": "Внешние мониторы",
+      "value": "до пяти мониторов (четыре 6K 60 Гц через Thunderbolt и пятый через HDMI)"
+    },
+    {
+      "key": "Беспроводная связь",
+      "value": "чип Apple N1: Wi‑Fi 7 (802.11be), Bluetooth 6, Thread"
+    },
+    {
+      "key": "Видеодвижок",
+      "value": "два кодировщика видео и два движка ProRes, декодирование AV1"
+    },
+    {
+      "key": "Блок питания",
+      "value": "встроенный, до 480 Вт"
+    },
+    {
+      "key": "Размеры",
+      "value": "19,7 × 19,7 × 9,5 см"
+    },
+    {
+      "key": "Вес",
+      "value": "2,7 кг"
+    },
+    {
+      "key": "Цвет",
+      "value": "серебристый"
+    },
+    {
+      "key": "Операционная система",
+      "value": "macOS"
+    }
+  ],
+  "images_remote": [
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-studio-chip-unselect-202608-gallery-1?wid=1200&hei=769&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-studio-chip-unselect-202608-gallery-2?wid=1200&hei=769&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-studio-chip-unselect-202608-gallery-3?wid=1200&hei=769&fmt=jpeg&qlt=90",
+    "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mac-studio-chip-unselect-202608-gallery-4?wid=1200&hei=769&fmt=jpeg&qlt=90"
+  ],
+  "images_local": [
+    "assets/product-images/0bc8d6a11b1a993a842805fe.jpg",
+    "assets/product-images/d13d873d97260c69329b9732.jpg",
+    "assets/product-images/b730a37185f8ecff608d671b.jpg",
+    "assets/product-images/745c020541fec9b1fafe45df.jpg"
+  ],
+  "manual": true,
+  "manual_key": "mac studio m5 max 18 32 core 36 512gb~s4",
+  "photo_source": "https://www.apple.com/shop/buy-mac/mac-studio/m5-max-chip-18-core-cpu-32-core-gpu-36gb-memory-512gb-storage",
+  "updated_at": "2026-10-26T14:15:35.107638Z"
+}

@@ -1,0 +1,97 @@
+{
+  "product_id": "poco-c95-pro-6-128-blue-европа-s3-19600",
+  "category": "xiaomi",
+  "file_slug": "poco-c95-pro-6-128-blue-s3-19600",
+  "name": "Poco C95 Pro 6/128 Blue",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 19600,
+  "catalog_url": "https://www.po.co/global/product/poco-c95-pro/specs/",
+  "catalog_title": "POCO C95 Pro 6/128 ГБ, Blue (синий)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9\", IPS LCD, 1600×720, до 120 Гц, 675 нит (тип.) / 825 нит (HBM), Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G91-Ultra (12 нм), 8 ядер до 2,0 ГГц, GPU Mali-G52 MC2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "6 ГБ LPDDR4X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ eMMC 5.1, microSD до 2 ТБ"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп (f/1.8) + вспомогательный модуль; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп (f/2.05); видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мА·ч (Si/C)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "45 Вт проводная, обратная проводная 22,5 Вт, USB Type-C"
+    },
+    {
+      "key": "SIM",
+      "value": "2 × nano-SIM (гибридный слот с microSD)"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), NFC, Wi-Fi 5 (2,4/5 ГГц), Bluetooth 5.4"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64"
+    },
+    {
+      "key": "Прочее",
+      "value": "разъём 3,5 мм, FM-радио, сканер отпечатка в кнопке питания"
+    },
+    {
+      "key": "Размеры",
+      "value": "170,12 × 78,42 × 8,8 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "232 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Blue (синий)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 16, Xiaomi HyperOS 3"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/453_operatorx_operatorx_xm/08/09/2026/72749e7ed1bb452ad36cec3d4ae0f219.png",
+    "https://i02.appmifile.com/422_operatorx_operatorx_xm/08/09/2026/248b84b32f66337556001990b711e5f0.png",
+    "https://i02.appmifile.com/539_operatorx_operatorx_xm/08/09/2026/2f1a8fc4e76dea5e2a4dd0bc245b0754.png",
+    "https://i02.appmifile.com/867_operatorx_operatorx_xm/08/09/2026/18a41d982a6a6a465baa83eec3d2fa04.png",
+    "https://i02.appmifile.com/168_operatorx_operatorx_xm/08/09/2026/c8798a5b3cc2b2b2eb742f3602bea9f7.png",
+    "https://i02.appmifile.com/563_operatorx_operatorx_xm/08/09/2026/5cbcce91da4e2e69fdb9c9de0f9c7945.png"
+  ],
+  "images_local": [
+    "assets/product-images/57cac3bec00ef9ccf2d83749.jpg",
+    "assets/product-images/6d04392b1896f84102e7fd72.jpg",
+    "assets/product-images/b390c764f20049e52b0ed366.jpg",
+    "assets/product-images/be6563572c9f8d34fdce286f.jpg",
+    "assets/product-images/435acfafa645afa80c934da8.jpg",
+    "assets/product-images/92794420f72b8b8c716c3df7.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco c95 pro 6 128 blue~s3",
+  "photo_source": "https://www.po.co/global/product/poco-c95-pro/specs/",
+  "updated_at": "2026-10-26T14:13:19.247317Z"
+}

@@ -1,0 +1,99 @@
+{
+  "product_id": "google-pixel-watch-5-41mm-canyon-wi-fi-сша-s4-35500",
+  "category": "android",
+  "file_slug": "google-pixel-watch-5-41mm-canyon-wi-fi-s4-35500",
+  "name": "Google Pixel Watch 5 41mm Canyon Wi-Fi",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 35500,
+  "catalog_url": "https://store.google.com/gb/config/pixel_watch_5?hl=en-GB",
+  "catalog_title": "Смарт-часы Google Pixel Watch 5 41 мм (Wi-Fi), корпус Champagne Gold, ремешок Canyon (коралловый)",
+  "specs": [
+    {
+      "key": "Размер корпуса",
+      "value": "41 мм, толщина 12,3 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "31,0 г (без ремешка)"
+    },
+    {
+      "key": "Корпус",
+      "value": "алюминий (100% переработанный), Champagne Gold (шампань)"
+    },
+    {
+      "key": "Ремешок",
+      "value": "Active Band 2-го поколения, Canyon (коралловый); в комплекте размеры S и L (обхват 130–210 мм)"
+    },
+    {
+      "key": "Экран",
+      "value": "AMOLED LTPO Actua 360, 320 ppi, 1–60 Гц, до 3000 нит, Always-on"
+    },
+    {
+      "key": "Защитное стекло",
+      "value": "Corning Gorilla Glass 5 (изогнутое 3D)"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon W5 Gen 2 + сопроцессор Cortex-M55"
+    },
+    {
+      "key": "Память",
+      "value": "64 ГБ"
+    },
+    {
+      "key": "Связь",
+      "value": "Bluetooth 6.0, Wi-Fi 802.11 a/b/g/n/ac/ax (2,4/5 ГГц), NFC, UWB; без LTE (версия Wi-Fi)"
+    },
+    {
+      "key": "Навигация",
+      "value": "двухчастотный GPS: GPS, Galileo, ГЛОНАСС, BeiDou, QZSS"
+    },
+    {
+      "key": "Датчики",
+      "value": "оптический пульсометр, ЭКГ, SpO2, температура кожи, cEDA (кожно-гальваническая реакция), акселерометр, гироскоп, барометр, магнитометр, компас, высотомер, датчик освещённости"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "332 мАч"
+    },
+    {
+      "key": "Автономность",
+      "value": "до 30 ч с Always-on, до 48 ч в режиме экономии"
+    },
+    {
+      "key": "Зарядка",
+      "value": "док-станция Quick Charge: 50% примерно за 15 минут"
+    },
+    {
+      "key": "Защита",
+      "value": "5 ATM, IP68"
+    },
+    {
+      "key": "Управление",
+      "value": "сенсорный экран, тактильная заводная головка, боковая кнопка, жесты одной рукой"
+    },
+    {
+      "key": "Звук",
+      "value": "микрофон и динамик"
+    },
+    {
+      "key": "ОС и совместимость",
+      "value": "Wear OS 7.0; телефоны на Android 12 и новее"
+    }
+  ],
+  "images_remote": [
+    "https://lh3.googleusercontent.com/AvrDngdvJfnYiaW-Iigv62luPA8J7ZK-HGbcx-aM1q8MNRRfV0Novt_Q4rCGmKZIn11hKvy8m-UCb7C_v_uE4ySJjZYV_8f6ZP8=w1200-rp",
+    "https://lh3.googleusercontent.com/MC9EarkKqNCqzaDlJVOirwylUigpLtfh8e1A5ldsJVelFWCBKeGtOrhP3HEHWaiNxxVfu664IYWfG8lkWGqSniQCAlnRd7KfsZg=w1200-rp",
+    "https://lh3.googleusercontent.com/B1eDtGjs1JjkRlXLMzheZXAIGLyXwYtI6AkNw6jVXeb2SDiOVxlbVLaiOLQ2uIJ2NKpfu1C8jT5_MLYj-nvExhqD83RER5iS8rQ=w1200-rp"
+  ],
+  "images_local": [
+    "assets/product-images/fe15fa1467f80e5ac8c65933.jpg",
+    "assets/product-images/f93c8d109df7b692a3b9dfb3.jpg",
+    "assets/product-images/79dc9d7f61ac89147538a8a1.jpg"
+  ],
+  "manual": true,
+  "manual_key": "google pixel watch 5 41mm canyon wi fi~s4",
+  "photo_source": "https://store.google.com/gb/config/pixel_watch_5?hl=en-GB",
+  "updated_at": "2026-10-26T14:15:27.649142Z"
+}

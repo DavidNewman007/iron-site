@@ -1,0 +1,296 @@
+{
+  "product_id": "google-pixel-9-12-128gb-obsidian-5g-сша-s4-48000",
+  "category": "android",
+  "file_slug": "google-pixel-9-12-128gb-obsidian-5g-s4-48000",
+  "name": "Google Pixel 9 12+ 128Gb Obsidian 5G",
+  "country": "🇺🇸 США",
+  "warehouse": "(S4)",
+  "price": 48000,
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/google/pixel-9/Smartphone_Google_Pixel_9_12_128GB_Obsidian",
+  "catalog_title": "Google Pixel 9 12/128GB, Obsidian",
+  "specs": [
+    {
+      "key": "Диагональ",
+      "value": "6.3\""
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "OLED"
+    },
+    {
+      "key": "Разрешение",
+      "value": "2424x1080"
+    },
+    {
+      "key": "Соотношение сторон",
+      "value": "20:9"
+    },
+    {
+      "key": "Яркость",
+      "value": "1800 кд/м² HBM | 2700 кд/м² в пиковом режиме"
+    },
+    {
+      "key": "Частота обновления",
+      "value": "120 Гц"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "422 пикселей/дюйм"
+    },
+    {
+      "key": "Автоматический поворот экрана",
+      "value": "есть"
+    },
+    {
+      "key": "Поддержка HDR",
+      "value": "есть"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ"
+    },
+    {
+      "key": "Слот для карты памяти",
+      "value": "нет"
+    },
+    {
+      "key": "Встроенный динамик",
+      "value": "есть"
+    },
+    {
+      "key": "Количество основных (тыловых) камер",
+      "value": "2"
+    },
+    {
+      "key": "Размер пикселя",
+      "value": "1.2 µm"
+    },
+    {
+      "key": "Размер фотоматрицы",
+      "value": "1/1.31\""
+    },
+    {
+      "key": "Сверхширокоугольная камера",
+      "value": "48 МП, f/1.7, 123˚, 1/2.55\""
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50 Мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "f/1.7"
+    },
+    {
+      "key": "Максимальное разрешение видео",
+      "value": "4К"
+    },
+    {
+      "key": "Максимальная частота кадров видеосъёмки",
+      "value": "240 кадров/с"
+    },
+    {
+      "key": "Автофокусировка основной камеры",
+      "value": "есть"
+    },
+    {
+      "key": "Оптическая стабилизация",
+      "value": "есть"
+    },
+    {
+      "key": "Тип вспышки",
+      "value": "тыльная, светодиодная"
+    },
+    {
+      "key": "Функции сверхширокоугольной камеры",
+      "value": "автофокус"
+    },
+    {
+      "key": "Максимальная частота кадров видео при максимальном разрешении",
+      "value": "60 кадров/с"
+    },
+    {
+      "key": "Сверхзамедленная съёмка",
+      "value": "240 кадров/с"
+    },
+    {
+      "key": "Фокусное расстояние объектива",
+      "value": "25 мм"
+    },
+    {
+      "key": "Запись видеороликов",
+      "value": "есть"
+    },
+    {
+      "key": "Размер пикселя фронтальной камеры",
+      "value": "1.22 µm"
+    },
+    {
+      "key": "Фокусное расстояние объектива фронтальной камеры",
+      "value": "20 мм"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "10.5 МП"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "f/2.2"
+    },
+    {
+      "key": "Размер фотоматрицы фронтальной камеры",
+      "value": "1/3.1\""
+    },
+    {
+      "key": "Функции фронтальной камеры",
+      "value": "автофокус"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "nano SIM + eSIM"
+    },
+    {
+      "key": "Беспроводные модули",
+      "value": "Bluetooth 5.3, Wi-Fi 802.11 a/b/g/n/ac/6e/7, tri-band"
+    },
+    {
+      "key": "Спутниковая навигация",
+      "value": "GPS, GLONASS, GALILEO, BDS, QZSS, NavIC"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-Type-C"
+    },
+    {
+      "key": "Стандарт сотовой связи",
+      "value": "GSM / HSPA / LTE / 5G"
+    },
+    {
+      "key": "Модуль NFC (бесконтактная оплата)",
+      "value": "есть"
+    },
+    {
+      "key": "Возможности Bluetooth",
+      "value": "A2DP, LE, aptX HD"
+    },
+    {
+      "key": "Режим работы нескольких SIM-карт",
+      "value": "попеременный"
+    },
+    {
+      "key": "Система A-GPS",
+      "value": "есть"
+    },
+    {
+      "key": "Режим полета",
+      "value": "есть"
+    },
+    {
+      "key": "Диапазоны частот 5G",
+      "value": "1, 2, 3, 5, 7, 8, 12, 14, 20, 25, 26, 28, 30, 38, 40, 41, 66, 71, 75, 76, 77, 78, 79 SA/NSA/Sub6"
+    },
+    {
+      "key": "Диапазоны частот 4G (LTE)",
+      "value": "1, 2, 3, 4, 5, 7, 8, 12, 13, 14, 17, 18, 19, 20, 21, 25, 26, 28, 29, 30, 32, 38, 39, 40, 41, 42, 48, 66, 71, 75"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "4700 мАч"
+    },
+    {
+      "key": "Мощность",
+      "value": "27 Вт"
+    },
+    {
+      "key": "Разъём питания",
+      "value": "USB-Type-C"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Реверсивная зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Материал",
+      "value": "Алюминий"
+    },
+    {
+      "key": "Длина",
+      "value": "15,28 см"
+    },
+    {
+      "key": "Ширина",
+      "value": "7,2 см"
+    },
+    {
+      "key": "Толщина",
+      "value": "0,85 см"
+    },
+    {
+      "key": "Устойчивое к царапинам стекло",
+      "value": "Gorilla Glass Victus 2"
+    },
+    {
+      "key": "Вес",
+      "value": "199 г"
+    },
+    {
+      "key": "Материал задней панели",
+      "value": "стекло"
+    },
+    {
+      "key": "Цвет",
+      "value": "Чёрный"
+    },
+    {
+      "key": "Расположение сканера отпечатка пальца",
+      "value": "дисплей"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android 14"
+    },
+    {
+      "key": "Управление",
+      "value": "голосовой набор, голосовое управление"
+    },
+    {
+      "key": "Датчики",
+      "value": "акселерометр, гироскоп, датчик приближения, компас, барометр"
+    },
+    {
+      "key": "Класс водонепроницаемости",
+      "value": "IP68"
+    },
+    {
+      "key": "Страна производства",
+      "value": "Вьетнам"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Google_Pixel_9_12_128GB_Obsidian/Smartphone_Google_Pixel_9_12_128GB_Obsidian-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Google_Pixel_9_12_128GB_Obsidian/Smartphone_Google_Pixel_9_12_128GB_Obsidian-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Google_Pixel_9_12_128GB_Obsidian/Smartphone_Google_Pixel_9_12_128GB_Obsidian-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Google_Pixel_9_12_128GB_Obsidian/Smartphone_Google_Pixel_9_12_128GB_Obsidian-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Google_Pixel_9_12_128GB_Obsidian/Smartphone_Google_Pixel_9_12_128GB_Obsidian-5-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/0da865a8ced7ac9fe9f29437.jpg",
+    "assets/product-images/bd54cea75d809496bb11c407.jpg",
+    "assets/product-images/bd4469ebcb11f71e5654b92a.jpg",
+    "assets/product-images/5df55604bdc507c483027b3a.jpg",
+    "assets/product-images/d6ed5595ed952831f4da6129.jpg"
+  ],
+  "updated_at": "2026-10-26T14:15:03.553135Z"
+}

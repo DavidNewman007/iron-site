@@ -1,0 +1,62 @@
+{
+  "product_id": "dyson-hs07-copper-nickel-европа-s3-37300",
+  "category": "dyson",
+  "file_slug": "dyson-hs07-copper-nickel-s3-37300",
+  "name": "Dyson HS07 Copper/Nickel",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 37300,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-corrale-hs07-cooper-nickel",
+  "catalog_title": "выпрямитель для волос Dyson Corrale HS07, Copper/Nickel",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Dyson Corrale HS07"
+    },
+    {
+      "key": "Длина сетевого шнура",
+      "value": "2.2 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "55 Вт"
+    },
+    {
+      "key": "Ширина",
+      "value": "41 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "292 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "45 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "561 г"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-cooper/hs07-cooper-dr-store-318-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-cooper/hs07-cooper-dr-store-315-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-cooper/hs07-cooper-dr-store-13-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-cooper/hs07-cooper-dr-store-317-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-cooper/hs07-cooper-dr-store-319-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-cooper/hs07-cooper-dr-store-320-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-cooper/hs07-cooper-dr-store-316-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-cooper/hs07-cooper-dr-store-314-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/4e1cb60b9f7541f7c4a05475.jpg",
+    "assets/product-images/781bb9b8a9889948c3795381.jpg",
+    "assets/product-images/9bac788b453f1dbd75e8bb18.jpg",
+    "assets/product-images/1adba79b68e43595d191e6bb.jpg",
+    "assets/product-images/527a62cdafb3bb693354ac6f.jpg",
+    "assets/product-images/5550d9e069dc948d60859373.jpg",
+    "assets/product-images/fb2f9ca55307b440daee3b8b.jpg",
+    "assets/product-images/c4b21c084965e4d5f4eef473.jpg"
+  ],
+  "updated_at": "2026-10-26T14:12:39.583255Z"
+}

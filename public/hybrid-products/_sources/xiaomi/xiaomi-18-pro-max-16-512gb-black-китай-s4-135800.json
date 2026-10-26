@@ -1,0 +1,87 @@
+{
+  "product_id": "xiaomi-18-pro-max-16-512gb-black-китай-s4-135800",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-18-pro-max-16-512gb-black-s4-135800",
+  "name": "Xiaomi 18 Pro Max 16+ 512Gb Black",
+  "country": "🇨🇳 Китай",
+  "warehouse": "(S4)",
+  "price": 135800,
+  "catalog_url": "https://www.mi.com/shop/buy/detail?product_id=25526",
+  "catalog_title": "Xiaomi 18 Pro Max 16/512 ГБ, Black (чёрный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9\" LTPO AMOLED, 2624×1208, до 120 Гц, пиковая яркость до 4000 нит, Dolby Vision, HDR10+"
+    },
+    {
+      "key": "Второй экран",
+      "value": "2,9\" AMOLED на задней панели, 976×596, 120 Гц"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Elite Gen 6 Extreme (第六代骁龙8超级至尊版, 2 нм), до 5,01 ГГц"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ (UFS 4.1), без слота карт памяти"
+    },
+    {
+      "key": "Основная камера",
+      "value": "Leica: 200 Мп основная (1/1,28\", f/1.7, OIS) + 200 Мп перископ 3,2x (75 мм, OIS) + 50 Мп сверхширокоугольная (17 мм); видео до 8K"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "50 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "8500 мА·ч (кремний-углеродный)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 100 Вт, беспроводная 50 Вт, обратная беспроводная 27 Вт"
+    },
+    {
+      "key": "SIM",
+      "value": "2 × nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 7, Bluetooth 6.0, UWB, ИК-порт, USB Type-C 3.2"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68, ультразвуковой сканер отпечатков в экране"
+    },
+    {
+      "key": "Размеры",
+      "value": "163,4 × 77,6 × 8,39 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "235–240 г (зависит от цвета)"
+    },
+    {
+      "key": "Цвет",
+      "value": "чёрный (黑色)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 4 (Android 17), китайская версия"
+    }
+  ],
+  "images_remote": [
+    "https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1789972717.67477796.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/0308aa4232bc10567562dd45.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi 18 pro max 16 512gb black~s4",
+  "photo_source": "https://www.mi.com/shop/buy/detail?product_id=25526",
+  "updated_at": "2026-10-26T14:14:41.206677Z"
+}
