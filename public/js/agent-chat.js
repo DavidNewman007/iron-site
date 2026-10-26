@@ -111,7 +111,7 @@
   function scrollDown() { log.scrollTop = log.scrollHeight; }
 
   // Картинки — только свои схемы помощника (сервер проверяет так же, guard.js cleanImage).
-  const SAFE_IMAGE = /^\/assets\/agent\/[\w-]{1,60}\.(?:svg|png|jpg|webp)$/;
+  const SAFE_IMAGE = /^\/assets\/agent\/[\w-]{1,60}\.(?:svg|png|jpg|webp)(?:\?v=\d{1,6})?$/; // ?v= — против кэша
 
   function addMessage(role, text, buttons, image) {
     const box = el("div", `iac-msg iac-${role === "user" ? "user" : "agent"}`);
