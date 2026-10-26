@@ -99,9 +99,20 @@
 
   function scrollDown() { log.scrollTop = log.scrollHeight; }
 
-  function addMessage(role, text, buttons) {
+  // Картинки — только свои схемы помощника (сервер проверяет так же, guard.js cleanImage).
+  const SAFE_IMAGE = /^\/assets\/agent\/[\w-]{1,60}\.(?:svg|png|jpg|webp)$/;
+
+  function addMessage(role, text, buttons, image) {
     const box = el("div", `iac-msg iac-${role === "user" ? "user" : "agent"}`);
     box.append(el("p", "iac-text", String(text || "")));
+    if (image && SAFE_IMAGE.test(String(image.src || ""))) {
+      const img = el("img", "iac-image");
+      img.src = image.src;
+      img.alt = String(image.alt || "");
+      img.loading = "lazy";
+      img.addEventListener("load", scrollDown);
+      box.append(img);
+    }
     const btns = (buttons || []).filter((b) => b && b.text);
     if (btns.length) {
       const row = el("div", "iac-buttons");
@@ -169,11 +180,18 @@
         appearance: "interaction-only",
         language: LANG,
         retry: "never",
-        callback: (t) => done(t),
+        // Пройдено — окошко убираем: оно висело в окне чата и после проверки (владелец 26.10.2026).
+        callback: (t) => { done(t); hideTurnstile(); },
         "error-callback": (code) => { tsError = String(code || "error"); done(null); return true; },
         "expired-callback": () => {},
       });
     });
+  }
+
+  function hideTurnstile() {
+    try { if (widgetId !== null) window.turnstile.remove(widgetId); } catch { /* уже нет */ }
+    widgetId = null;
+    tsBox.replaceChildren();
   }
 
   /** Запасной вход (26.10.2026): Turnstile ругается на VPN и некоторые браузеры (600010 — «похоже на бота»), а живой
@@ -198,8 +216,7 @@
     try { ts = await turnstileToken(); } catch { ts = null; }
     let pow = null;
     if (!ts) {
-      tsBox.replaceChildren(); // окошко «сбой проверки» больше не нужно
-      widgetId = null;
+      hideTurnstile(); // окошко «сбой проверки» больше не нужно
       try { pow = await solvePow(); } catch { pow = null; }
     }
     wait.remove();
@@ -222,7 +239,7 @@
     if (token) {
       const { status, data } = await api("/chat/history", "GET");
       if (status === 200 && Array.isArray(data.messages)) {
-        for (const m of data.messages) addMessage(m.role, m.text, m.buttons);
+        for (const m of data.messages) addMessage(m.role, m.text, m.buttons, m.image);
         return;
       }
       token = null;
@@ -255,7 +272,7 @@
         typing.remove();
       }
       const reply = res.data.reply || { text: T.failed, buttons: FALLBACK };
-      addMessage("agent", reply.text, reply.buttons);
+      addMessage("agent", reply.text, reply.buttons, reply.image);
     } finally {
       busy = false;
       sendBtn.disabled = false;

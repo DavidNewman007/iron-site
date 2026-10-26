@@ -91,6 +91,7 @@
 }
 .iac-agent .iac-text { background: var(--charcoal, #2a2a2a); border-top-left-radius: 4px; }
 .iac-user .iac-text { background: var(--slab, #3a332a); color: var(--cream, #f5e6c8); border-top-right-radius: 4px; }
+.iac-image { display: block; width: 100%; max-width: 340px; height: auto; margin-top: 6px; border-radius: 10px; }
 .iac-typing .iac-text { color: var(--text-muted, #b1a796); font-style: italic; }
 
 .iac-buttons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
