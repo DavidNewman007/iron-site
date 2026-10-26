@@ -1,37 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" width="640" height="600" role="img" aria-label="Анимация: рука держит iPhone — большой палец нажимает громкость вверх, затем громкость вниз, указательный держит боковую кнопку 10–20 секунд до яблока">
   <!-- Анимированная схема для помощника сайта, бота заказов и агента лички (план 123).
-       v5 26.10.2026: рука переделана полностью по просьбе владельца («анимация не нравится, переделай руку полностью»;
-       раньше — «пальцы отдельно смотрятся странно», «палец похож на фак»). Теперь одна рука ДЕРЖИТ телефон, как в
-       жизни: большой палец на левом торце жмёт громкость, указательный обхватывает правый край и держит боковую,
-       ладонь — под телефоном. Цикл 24 с; удержание — 15 с в реальном времени со счётчиком; экран гаснет, яблоко.
+       v10 (fable) 26.10.2026: рука перерисована заново по фото владельца — одна левая рука держит телефон, как в жизни:
+       большой палец вдоль левого торца жмёт громкость (два сегмента, сужение к кончику, ноготь сбоку), указательный
+       обхватывает правый край и держит боковую, средний/безымянный/мизинец выглядывают подушечками справа, под телефоном
+       ладонь в его тени. Цикл 24 с; удержание — 15 с в реальном времени со счётчиком; экран гаснет, яблоко.
        Только CSS-анимация: SVG в <img> скрипты не выполняет. Видео — scripts/svg-anim-to-mp4.mjs из этого файла. -->
   <style>
     text { font-family: Arial, Helvetica, sans-serif; }
-    .th { animation: th 24s infinite ease-in-out; }
+    .thb { animation: thb 24s infinite ease-in-out; }
+    .th { animation: th 24s infinite ease-in-out; transform-origin: 224px 300px; }
     .ix { animation: ix 24s infinite ease-in-out; }
     .v1 { animation: v1 24s infinite; } .v2 { animation: v2 24s infinite; } .sb { animation: sb 24s infinite; }
-    .sbg { animation: sbg 24s infinite; }
+    .sbg { animation: sbg 24s infinite; } .v1g { animation: v1g 24s infinite; } .v2g { animation: v2g 24s infinite; }
     @keyframes sbg { 0%, 18.7%, 81.3%, 100% { opacity: 0; } 18.75%, 81.25% { opacity: 0.45; } }
+    @keyframes v1g { 0%, 5.7%, 7.2%, 100% { opacity: 0; } 5.8%, 7.1% { opacity: 0.5; } }
+    @keyframes v2g { 0%, 11.2%, 12.6%, 100% { opacity: 0; } 11.25%, 12.5% { opacity: 0.5; } }
     .bar { animation: bar 24s infinite linear; transform-box: fill-box; transform-origin: left center; }
     .off { animation: off 24s infinite; } .logo { animation: logo 24s infinite; }
     .s1 { animation: s1 24s infinite; } .s2 { animation: s2 24s infinite; }
     .s3 { animation: s3 24s infinite; } .s4 { animation: s4 24s infinite; }
     .c { opacity: 0; animation: c 24s infinite; }
-    /* большой палец: жмёт «громкость +», скользит к «громкость −», жмёт; к концу цикла возвращается */
-    @keyframes th {
-      0%, 5.2% { transform: translate(0, 0); } 5.8%, 7.1% { transform: translate(4px, 0); } 7.5%, 9.2% { transform: translate(0, 0); }
-      10.8% { transform: translate(0, 54px); } 11.25%, 12.5% { transform: translate(4px, 54px); } 12.9% { transform: translate(0, 54px); }
-      /* отпустил «громкость −» — палец уходит вниз и в сторону, чтобы не казалось, что он всё ещё держит кнопку
-         (владелец 26.10.2026); возвращается к «громкость +» только перед новым кругом */
-      15.5%, 95% { transform: translate(-30px, 125px) rotate(-4deg); }
+    /* большой палец — два слоя: .thb (палец + бугор ладони) чуть съезжает вниз вместе с хватом, .th (сам палец)
+       доезжает до кнопки, жмёт («+», потом «−»), после «−» отводится от торца — поворот вокруг пястного сустава
+       (224,300) и вниз, чтобы было видно: кнопок он больше не касается; возвращается только перед новым кругом */
+    @keyframes thb {
+      0%, 9.2% { transform: translate(0, 0); }
+      10.8%, 12.9% { transform: translate(0, 36px); }
+      15.5%, 95% { transform: translate(-8px, 82px); }
       100% { transform: translate(0, 0); }
     }
-    /* указательный: держит боковую 15 с */
-    /* указательный: до шага 3 лежит НИЖЕ боковой кнопки (раньше всю анимацию лежал поперёк и «резал её пополам» —
-       замечание владельца 26.10), на шаге 3 поднимается на кнопку, жмёт и держит, потом опускается */
+    @keyframes th {
+      0%, 5.2% { transform: translate(0, 0) rotate(0deg); } 5.8%, 7.1% { transform: translate(4px, 0) rotate(0deg); } 7.5%, 9.2% { transform: translate(0, 0) rotate(0deg); }
+      10.8% { transform: translate(0, 18px) rotate(0deg); } 11.25%, 12.5% { transform: translate(4px, 18px) rotate(0deg); } 12.9% { transform: translate(0, 18px) rotate(0deg); }
+      15.5%, 95% { transform: translate(0, 12px) rotate(-8deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+    /* указательный: до шага 3 лежит НИЖЕ боковой кнопки, на шаге 3 поднимается на кнопку, жмёт и держит 15 с, потом опускается */
     @keyframes ix {
-      0%, 15.5% { transform: translate(0, 0); } 18.3% { transform: translate(0, -44px); }
-      18.75%, 81.25% { transform: translate(-5px, -44px); } 82.5% { transform: translate(0, -44px); } 86%, 100% { transform: translate(0, 0); }
+      0%, 15.5% { transform: translate(0, 0); } 18.3% { transform: translate(0, -52px); }
+      18.75%, 81.25% { transform: translate(-5px, -52px); } 82.5% { transform: translate(0, -52px); } 86%, 100% { transform: translate(0, 0); }
     }
     @keyframes v1 { 0%, 5.7%, 7.2%, 100% { fill: #d4a012; } 5.8%, 7.1% { fill: #ffe27a; } }
     @keyframes v2 { 0%, 11.2%, 12.6%, 100% { fill: #d4a012; } 11.25%, 12.5% { fill: #ffe27a; } }
@@ -45,39 +52,48 @@
     @keyframes s4 { 0%, 78.8% { opacity: 0; } 79.4%, 99.5% { opacity: 1; } 100% { opacity: 0; } }
     @keyframes c { 0%, 4.1% { opacity: 1; } 4.17%, 100% { opacity: 0; } }
     @media (prefers-reduced-motion: reduce) {
-      .th, .ix, .v1, .v2, .sb, .bar, .off, .logo, .s1, .s2, .s3, .s4, .c { animation: none; }
+      .thb, .th, .ix, .v1, .v2, .sb, .sbg, .v1g, .v2g, .bar, .off, .logo, .s1, .s2, .s3, .s4, .c { animation: none; }
       .s2, .s3, .s4, .off, .logo { opacity: 0; }
     }
   </style>
   <defs>
-    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#d9a17b"/><stop offset="0.55" stop-color="#ebb994"/><stop offset="1" stop-color="#d69c75"/>
+    <!-- кожа: свет слева-сверху, тень у телефона -->
+    <linearGradient id="handG" gradientUnits="userSpaceOnUse" x1="178" y1="0" x2="256" y2="0">
+      <stop offset="0" stop-color="#f3c2a1"/><stop offset="0.55" stop-color="#eab48f"/><stop offset="1" stop-color="#d4916a"/>
     </linearGradient>
-    <linearGradient id="skinV" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#efc2a0"/><stop offset="1" stop-color="#d49a73"/>
+    <linearGradient id="palmG" gradientUnits="userSpaceOnUse" x1="0" y1="390" x2="0" y2="440">
+      <stop offset="0" stop-color="#c98463"/><stop offset="1" stop-color="#e3a884"/>
+    </linearGradient>
+    <linearGradient id="fingerG" gradientUnits="userSpaceOnUse" x1="394" y1="0" x2="434" y2="0">
+      <stop offset="0" stop-color="#c9825f"/><stop offset="0.35" stop-color="#e8ad88"/><stop offset="1" stop-color="#f2bf9e"/>
     </linearGradient>
     <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#22324a"/><stop offset="1" stop-color="#3a2340"/>
     </linearGradient>
+    <clipPath id="rightOfPhone"><rect x="396" y="150" width="120" height="150"/></clipPath>
   </defs>
 
   <rect width="640" height="600" rx="22" fill="#1b1b1b"/>
   <text x="320" y="46" text-anchor="middle" fill="#f5e6c8" font-size="28" font-weight="700">Перезагрузка iPhone 8 и новее</text>
 
-  <!-- пальцы за телефоном (средний, безымянный, мизинец): видны подушечки справа -->
-  <g stroke="#a8714f" stroke-width="1.6">
-    <rect x="300" y="282" width="124" height="36" rx="18" fill="url(#skinV)"/>
-    <rect x="300" y="324" width="118" height="34" rx="17" fill="url(#skinV)"/>
-    <rect x="300" y="362" width="106" height="28" rx="14" fill="url(#skinV)"/>
+  <!-- ладонь за телефоном: видна полоска под ним (в тени корпуса) и ребро ладони справа под мизинцем -->
+  <path d="M214 470 L214 356 C216 342 228 334 248 334 L390 336 C396 338 398 350 398 372 C400 386 404 396 404 410 C404 426 402 450 400 470 Z"
+        fill="url(#palmG)" stroke="#b9755a" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M262 414 C300 424 350 422 392 410" stroke="#b9755a" stroke-width="1.4" fill="none" opacity="0.5"/>
+  <path d="M300 430 C330 436 360 434 386 426" stroke="#b9755a" stroke-width="1.2" fill="none" opacity="0.35"/>
+
+  <!-- пальцы за телефоном: мизинец, безымянный, средний (снизу вверх, верхний перекрывает нижний) -->
+  <g stroke="#b9755a" stroke-width="2" stroke-linejoin="round">
+    <path d="M370 353 C386 352 398 351 405 352 C413 354 417 360 417 368 C417 376 413 382 405 383 C396 385 386 385 370 385 Z" fill="url(#fingerG)"/>
+    <path d="M398 356 C404 355 410 358 413 363" stroke="#fff" stroke-width="3" fill="none" opacity="0.18" stroke-linecap="round"/>
+    <ellipse cx="409" cy="368" rx="5" ry="7.5" fill="#f6d2c1" stroke="#d9a58f" stroke-width="1"/>
+    <path d="M370 317 C390 316 406 315 414 316 C424 318 428 326 428 334 C428 343 424 350 415 352 C404 354 390 353 370 353 Z" fill="url(#fingerG)"/>
+    <path d="M402 320 C410 319 418 322 423 328" stroke="#fff" stroke-width="3" fill="none" opacity="0.18" stroke-linecap="round"/>
+    <ellipse cx="419" cy="334" rx="6" ry="9" fill="#f6d2c1" stroke="#d9a58f" stroke-width="1"/>
+    <path d="M370 280 C392 279 410 278 418 279 C429 281 433 289 433 298 C433 307 429 314 419 316 C408 318 392 317 370 317 Z" fill="url(#fingerG)"/>
+    <path d="M404 283 C413 282 421 285 427 291" stroke="#fff" stroke-width="3" fill="none" opacity="0.18" stroke-linecap="round"/>
+    <ellipse cx="424" cy="298" rx="6.5" ry="9.5" fill="#f6d2c1" stroke="#d9a58f" stroke-width="1"/>
   </g>
-  <!-- ладонь за телефоном и рукав -->
-  <!-- ладонь (v7, 26.10.2026 — «немного перерисовать форму ладони в основании»): слева мягкая подушка под большим пальцем,
-       справа плавный переход от мизинца к запястью, ладонная складка под телефоном -->
-  <path d="M188 600 C184 548 176 486 190 440 C200 408 220 382 246 366 L396 362 C412 368 420 388 418 414 C416 446 404 486 398 524 L394 600 Z"
-        fill="url(#skin)" stroke="#a8714f" stroke-width="2"/>
-  <path d="M258 414 C292 426 344 426 392 410" stroke="#b9805a" stroke-width="1.6" fill="none" opacity="0.7"/>
-  <path d="M300 432 C330 438 362 436 386 428" stroke="#b9805a" stroke-width="1.3" fill="none" opacity="0.5"/>
-  <path d="M160 600 C166 566 176 540 190 524 L400 524 C408 548 410 574 410 600 Z" fill="#3c4250"/>
 
   <!-- телефон -->
   <rect x="245" y="72" width="150" height="320" rx="30" fill="#2f2f2f" stroke="#90897f" stroke-width="3"/>
@@ -90,36 +106,51 @@
     <path fill="#f4f4f4" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
   </g>
 
-  <!-- кнопки -->
+  <!-- кнопки и подсветка нажатия -->
+  <rect class="v1g" x="230" y="151" width="20" height="54" rx="7" fill="#ffd54a" opacity="0"/>
+  <rect class="v2g" x="230" y="205" width="20" height="54" rx="7" fill="#ffd54a" opacity="0"/>
   <rect class="v1" x="236" y="158" width="10" height="40" rx="3"/>
   <rect class="v2" x="236" y="212" width="10" height="40" rx="3"/>
   <rect class="sbg" x="391" y="181" width="16" height="54" rx="6" fill="#ffd54a" opacity="0"/>
   <rect class="sb" x="394" y="184" width="10" height="48" rx="3"/>
 
+  <!-- линии от номеров к кнопкам — под большим пальцем, он их прикрывает, пока лежит на торце -->
+  <line x1="194" y1="178" x2="234" y2="178" stroke="#d4a012" stroke-width="2"/>
+  <line x1="194" y1="232" x2="234" y2="232" stroke="#d4a012" stroke-width="2"/>
+
   <!-- указательный: обхватывает правый край, подушечка на боковой кнопке. Палец за корпусом — видна только часть
        правее края телефона (clipPath), поэтому он рисуется поверх кнопки и не залезает на экран. -->
-  <clipPath id="rightOfPhone"><rect x="393" y="150" width="120" height="140"/></clipPath>
   <g clip-path="url(#rightOfPhone)">
-    <g class="ix">
-      <rect x="300" y="232" width="128" height="40" rx="20" fill="url(#skinV)" stroke="#a8714f" stroke-width="1.6"/>
+    <g class="ix" stroke="#b9755a" stroke-width="2" stroke-linejoin="round">
+      <path d="M370 242 C392 241 410 240 418 241 C429 243 433 251 433 260 C433 269 429 276 419 278 C408 280 392 279 370 279 Z" fill="url(#fingerG)"/>
+      <path d="M404 245 C413 244 421 247 427 253" stroke="#fff" stroke-width="3" fill="none" opacity="0.18" stroke-linecap="round"/>
+      <ellipse cx="424" cy="260" rx="6.5" ry="9.5" fill="#f6d2c1" stroke="#d9a58f" stroke-width="1"/>
     </g>
   </g>
 
-  <!-- большой палец: вдоль левого торца, кончик на кнопке громкости -->
-  <g class="th">
-    <path d="M196 476 C192 420 196 334 206 270 C212 232 220 198 228 178 C232 168 246 166 249 176 C252 192 252 230 250 266 C247 330 246 410 248 476 Z"
-          fill="url(#skin)" stroke="#a8714f" stroke-width="2"/>
-    <path d="M231 182 C234 173 245 172 247 181 L246 204 C243 210 234 210 232 204 Z" fill="#f6dccb" stroke="#c99374" stroke-width="1.2"/>
-    <path d="M210 304 C218 308 232 308 242 304" stroke="#a8714f" stroke-width="1.5" fill="none"/>
+  <!-- большой палец: две фаланги под небольшим углом (кончик к кнопке), ноготь сбоку; основание уходит под бугор
+       большого пальца (тенар), который нарисован поверх тем же градиентом и съезжает вместе с хватом -->
+  <g class="thb">
+    <g class="th">
+      <path d="M235 164 C245 164 253 171 253 184 C253 198 250 212 247 224 C244 232 242 237 241 242 C240 256 242 278 245 292 C247 300 250 322 252 346 L252 470 L196 470 C196 420 198 372 200 330 C200 318 200 308 200 300 C200 282 200 262 200 244 C199 236 200 230 203 226 C208 212 213 196 219 182 C222 174 228 164 235 164 Z"
+            fill="url(#handG)" stroke="#b9755a" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M224 176 C214 190 208 206 206 226 C204 248 204 272 205 296" stroke="#fff" stroke-width="5" fill="none" opacity="0.16" stroke-linecap="round"/>
+      <ellipse cx="229" cy="180" rx="6.5" ry="11" transform="rotate(-15 229 180)" fill="#f8ddd0" stroke="#d9a58f" stroke-width="1"/>
+      <ellipse cx="227" cy="176" rx="2.2" ry="3.5" transform="rotate(-15 227 176)" fill="#fff" opacity="0.5"/>
+      <path d="M202 237 C206 233 211 232 216 234" stroke="#c98b68" stroke-width="1.3" fill="none" opacity="0.45" stroke-linecap="round"/>
+    </g>
+    <!-- бугор большого пальца и ребро ладони слева -->
+    <path d="M200 300 C190 310 181 332 178 372 C177 400 180 436 186 470 L252 470 L252 326 C244 318 232 310 220 306 C212 303 206 300 200 300 Z" fill="url(#handG)"/>
+    <path d="M200 300 C190 310 181 332 178 372 C177 400 180 436 186 470" stroke="#b9755a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M200 300 C208 299 216 301 224 305" stroke="#c98b68" stroke-width="1.3" fill="none" opacity="0.4" stroke-linecap="round"/>
+    <path d="M186 330 C183 352 182 380 184 410" stroke="#fff" stroke-width="5" fill="none" opacity="0.12" stroke-linecap="round"/>
   </g>
 
-  <!-- номера кнопок — левее и правее руки -->
+  <!-- номера кнопок -->
   <circle cx="178" cy="178" r="16" fill="#d4a012"/><text x="178" y="184" text-anchor="middle" fill="#141414" font-size="18" font-weight="700">1</text>
-  <line x1="194" y1="178" x2="222" y2="178" stroke="#d4a012" stroke-width="2"/>
   <circle cx="178" cy="232" r="16" fill="#d4a012"/><text x="178" y="238" text-anchor="middle" fill="#141414" font-size="18" font-weight="700">2</text>
-  <line x1="194" y1="232" x2="222" y2="232" stroke="#d4a012" stroke-width="2"/>
   <circle cx="470" cy="208" r="16" fill="#d4a012"/><text x="470" y="214" text-anchor="middle" fill="#141414" font-size="18" font-weight="700">3</text>
-  <line x1="432" y1="208" x2="454" y2="208" stroke="#d4a012" stroke-width="2"/>
+  <line x1="436" y1="208" x2="454" y2="208" stroke="#d4a012" stroke-width="2"/>
 
   <!-- счётчик удержания: 1…15 с со сдвигом от начала удержания (4,5 с) -->
   <g font-size="34" font-weight="700" fill="#ffd54a" text-anchor="middle">
