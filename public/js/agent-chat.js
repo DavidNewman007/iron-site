@@ -150,11 +150,16 @@
     });
   }
 
-  /** Одноразовый пропуск Turnstile. Обычно проверка проходит незаметно; окошко появляется, только если нужно. */
+  let tsError = null;
+
+  /** Одноразовый пропуск Turnstile. Обычно проверка проходит незаметно; окошко появляется, только если нужно.
+   *  Не пустил (ошибка, скрипт не загрузился, молчит 45 с) — null, и дальше запасной вход задачкой. */
   async function turnstileToken() {
-    await loadTurnstile();
+    try { await loadTurnstile(); } catch { tsError = "script"; return null; }
     return new Promise((resolve) => {
+      const done = (v) => { if (tsResolve) { tsResolve(v); tsResolve = null; } };
       tsResolve = resolve;
+      setTimeout(() => { if (tsResolve === resolve) { tsError = tsError || "timeout"; done(null); } }, 45000);
       if (widgetId !== null) {
         window.turnstile.reset(widgetId);
         return;
@@ -163,20 +168,45 @@
         sitekey: SITEKEY,
         appearance: "interaction-only",
         language: LANG,
-        callback: (t) => { if (tsResolve) { tsResolve(t); tsResolve = null; } },
-        "error-callback": () => { if (tsResolve) { tsResolve(null); tsResolve = null; } },
+        retry: "never",
+        callback: (t) => done(t),
+        "error-callback": (code) => { tsError = String(code || "error"); done(null); return true; },
         "expired-callback": () => {},
       });
     });
+  }
+
+  /** Запасной вход (26.10.2026): Turnstile ругается на VPN и некоторые браузеры (600010 — «похоже на бота»), а живой
+   *  человек не должен упираться в стену. Сервер даёт задачку, браузер ищет nonce: SHA-256(salt + nonce) с нужным
+   *  числом нулевых бит в начале — 1–3 секунды. Такому диалогу сервер ставит пределы строже. */
+  async function solvePow() {
+    const { status, data } = await api("/chat/challenge", "GET");
+    if (status !== 200 || !data.salt) return null;
+    const enc = new TextEncoder();
+    const zeroBits = (b) => { let n = 0; for (const x of b) { if (x === 0) { n += 8; continue; } return n + Math.clz32(x) - 24; } return n; };
+    for (let i = 0; i < 5000000; i++) {
+      const nonce = i.toString(36);
+      const h = new Uint8Array(await crypto.subtle.digest("SHA-256", enc.encode(data.salt + nonce)));
+      if (zeroBits(h) >= data.bits) return { ...data, nonce };
+    }
+    return null;
   }
 
   async function startNew() {
     const wait = addMessage("agent", T.checking);
     let ts = null;
     try { ts = await turnstileToken(); } catch { ts = null; }
+    let pow = null;
+    if (!ts) {
+      tsBox.replaceChildren(); // окошко «сбой проверки» больше не нужно
+      widgetId = null;
+      try { pow = await solvePow(); } catch { pow = null; }
+    }
     wait.remove();
-    if (!ts) { addMessage("agent", T.failed, FALLBACK); return false; }
-    const { status, data } = await api("/chat/start", "POST", { turnstile: ts, lang: LANG, page: location.pathname });
+    if (!ts && !pow) { addMessage("agent", T.failed, FALLBACK); return false; }
+    const { status, data } = await api("/chat/start", "POST", ts
+      ? { turnstile: ts, lang: LANG, page: location.pathname }
+      : { pow, turnstileError: tsError, lang: LANG, page: location.pathname });
     if (status !== 200 || !data.token) {
       const reply = data.reply || { text: T.failed, buttons: FALLBACK };
       addMessage("agent", reply.text, reply.buttons);
