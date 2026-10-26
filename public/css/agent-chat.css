@@ -154,6 +154,18 @@
   font: 16px/1.35 var(--font-body, "PT Sans Narrow", Arial, sans-serif); /* 16px — iOS не увеличивает страницу при фокусе */
 }
 .iac-input:focus { outline: none; border-color: var(--gold, #d4a012); }
+.iac-attach {
+  width: 40px;
+  border: 1px solid var(--surface-border, rgba(255, 255, 255, 0.13));
+  border-radius: 10px;
+  background: transparent;
+  color: var(--cream, #f5e6c8);
+  font-size: 18px;
+  cursor: pointer;
+}
+.iac-attach:hover { border-color: var(--gold, #d4a012); }
+.iac-attach:disabled { opacity: 0.5; cursor: default; }
+.iac-preview { max-width: 220px; margin-left: auto; cursor: default; }
 .iac-send {
   width: 44px;
   border: 0;

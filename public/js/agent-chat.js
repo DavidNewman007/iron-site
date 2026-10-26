@@ -26,6 +26,9 @@
       typing: "печатает…",
       failed: "Не получилось связаться с помощником. Напишите мастеру напрямую:",
       restart: "Начнём заново — прошлый разговор закрыт.",
+      attach: "Прислать фото или видео поломки",
+      looking: "смотрю фото…",
+      badFile: "Не получилось открыть файл. Пришлите фото (JPG, PNG) или видео до 2 минут.",
     },
     en: {
       launcher: "Ask a technician",
@@ -39,6 +42,9 @@
       typing: "typing…",
       failed: "Couldn't reach the assistant. Message us directly:",
       restart: "Starting over — the previous chat has ended.",
+      attach: "Send a photo or video of the problem",
+      looking: "looking at the photo…",
+      badFile: "Couldn't open the file. Send a photo (JPG, PNG) or a video up to 2 minutes.",
     },
   }[LANG];
 
@@ -98,7 +104,16 @@
   const sendBtn = el("button", "iac-send", "➤");
   sendBtn.type = "submit";
   sendBtn.setAttribute("aria-label", T.send);
-  form.append(input, sendBtn);
+  // Фото и видео поломки (этап 3, 26.10.2026): кадры ужимает браузер, видео на сервер не уходит — только 6 кадров.
+  const attachBtn = el("button", "iac-attach", "📎");
+  attachBtn.type = "button";
+  attachBtn.setAttribute("aria-label", T.attach);
+  attachBtn.title = T.attach;
+  const fileInput = el("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*,video/*";
+  fileInput.hidden = true;
+  form.append(attachBtn, fileInput, input, sendBtn);
   panel.append(head, log, tsBox, form);
   document.body.append(launcher, panel);
 
@@ -315,6 +330,100 @@
     }
   }
 
+  /** Картинка → JPEG не больше max px по длинной стороне. */
+  function toJpeg(source, w, h, max, quality) {
+    const k = Math.min(1, max / Math.max(w, h));
+    const c = document.createElement("canvas");
+    c.width = Math.round(w * k);
+    c.height = Math.round(h * k);
+    c.getContext("2d").drawImage(source, 0, 0, c.width, c.height);
+    return c.toDataURL("image/jpeg", quality);
+  }
+
+  function loadImage(url) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = url;
+    });
+  }
+
+  /** 6 кадров видео по всей длине — модели этого хватает понять, что происходит (мерцает, перезагружается…). */
+  async function videoFrames(url) {
+    const v = document.createElement("video");
+    v.muted = true;
+    v.playsInline = true;
+    v.preload = "auto";
+    v.src = url;
+    await new Promise((resolve, reject) => { v.onloadedmetadata = resolve; v.onerror = reject; });
+    if (!v.duration || v.duration > 125) throw new Error("long");
+    const frames = [];
+    for (const part of [0.08, 0.25, 0.42, 0.58, 0.75, 0.92]) {
+      v.currentTime = v.duration * part;
+      await new Promise((resolve) => { v.onseeked = resolve; });
+      frames.push(toJpeg(v, v.videoWidth, v.videoHeight, 960, 0.8));
+    }
+    return frames;
+  }
+
+  function addPreview(url, isVideo) {
+    const box = el("div", "iac-msg iac-user iac-has-image");
+    const img = el("img", "iac-image iac-preview");
+    img.src = url;
+    img.alt = isVideo ? "видео" : "фото";
+    box.append(img);
+    log.append(box);
+    scrollDown();
+  }
+
+  async function sendMedia(file) {
+    if (!file || busy) return;
+    const isVideo = file.type.startsWith("video/");
+    const url = URL.createObjectURL(file);
+    let images;
+    try {
+      if (isVideo) {
+        images = await videoFrames(url);
+        addPreview(images[2], true);
+      } else {
+        const img = await loadImage(url);
+        images = [toJpeg(img, img.naturalWidth, img.naturalHeight, 1280, 0.85)];
+        addPreview(images[0], false);
+      }
+    } catch {
+      addMessage("agent", T.badFile);
+      return;
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+    busy = true;
+    sendBtn.disabled = true;
+    attachBtn.disabled = true;
+    try {
+      if (!token && !(await startNew())) return;
+      const caption = input.value.trim().slice(0, 1000);
+      input.value = "";
+      autosize();
+      const typing = addMessage("agent", T.looking);
+      typing.classList.add("iac-typing");
+      const payload = { kind: isVideo ? "video" : "photo", images, text: caption };
+      let res = await api("/chat/media", "POST", payload);
+      if (res.status === 401 || res.status === 410) {
+        token = null;
+        store.del();
+        if (await startNew()) res = await api("/chat/media", "POST", payload);
+      }
+      typing.remove();
+      const reply = res.data.reply || { text: T.failed, buttons: FALLBACK };
+      addMessage("agent", reply.text, reply.buttons, reply.image);
+    } finally {
+      busy = false;
+      sendBtn.disabled = false;
+      attachBtn.disabled = false;
+    }
+  }
+
   function autosize() {
     input.style.height = "auto";
     input.style.height = `${Math.min(input.scrollHeight, 120)}px`;
@@ -347,6 +456,8 @@
   closeBtn.addEventListener("click", close);
   panel.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
   form.addEventListener("submit", (e) => { e.preventDefault(); send(input.value); });
+  attachBtn.addEventListener("click", () => fileInput.click());
+  fileInput.addEventListener("change", () => { const f = fileInput.files && fileInput.files[0]; fileInput.value = ""; sendMedia(f); });
   input.addEventListener("input", autosize);
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(input.value); }
