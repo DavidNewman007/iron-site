@@ -29,6 +29,12 @@
       attach: "Прислать фото или видео поломки",
       looking: "смотрю фото…",
       badFile: "Не получилось открыть файл. Пришлите фото (JPG, PNG) или видео до 2 минут.",
+      mic: "Сказать голосом",
+      micStop: "Остановить и отправить",
+      listening: "Говорите… нажмите ■, когда закончите",
+      hearing: "расшифровываю…",
+      noMic: "Нет доступа к микрофону. Разрешите его в настройках браузера или напишите текстом.",
+      tooShort: "Запись слишком короткая — нажмите 🎤 и говорите.",
     },
     en: {
       launcher: "Ask a technician",
@@ -45,6 +51,12 @@
       attach: "Send a photo or video of the problem",
       looking: "looking at the photo…",
       badFile: "Couldn't open the file. Send a photo (JPG, PNG) or a video up to 2 minutes.",
+      mic: "Speak",
+      micStop: "Stop and send",
+      listening: "Listening… tap ■ when done",
+      hearing: "transcribing…",
+      noMic: "No microphone access. Allow it in the browser settings or type your message.",
+      tooShort: "The recording is too short — tap 🎤 and speak.",
     },
   }[LANG];
 
@@ -113,7 +125,15 @@
   fileInput.type = "file";
   fileInput.accept = "image/*,video/*";
   fileInput.hidden = true;
-  form.append(attachBtn, fileInput, input, sendBtn);
+  // Голос (план 123 §14, 26.10.2026: владелец — «чтобы принимал голосовой ввод»): запись в браузере, расшифровка —
+  // whisper на Маке, как голосовые в личке. Нет записи звука в браузере — кнопки нет.
+  const canRecord = Boolean(window.MediaRecorder && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  const micBtn = el("button", "iac-attach iac-mic", "🎤");
+  micBtn.type = "button";
+  micBtn.setAttribute("aria-label", T.mic);
+  micBtn.title = T.mic;
+  micBtn.hidden = !canRecord;
+  form.append(attachBtn, fileInput, micBtn, input, sendBtn);
   panel.append(head, log, tsBox, form);
   document.body.append(launcher, panel);
 
@@ -424,6 +444,101 @@
     }
   }
 
+  // ---- Голос ----
+  const VOICE_MAX_MS = 60000;
+  const VOICE_TYPES = ["audio/webm;codecs=opus", "audio/ogg;codecs=opus", "audio/mp4", "audio/webm"];
+  let rec = null;
+
+  function blobToDataUrl(blob) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result));
+      r.onerror = reject;
+      r.readAsDataURL(blob);
+    });
+  }
+
+  async function startVoice() {
+    if (busy || rec) return;
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
+    } catch {
+      addMessage("agent", T.noMic);
+      return;
+    }
+    const mimeType = VOICE_TYPES.find((t) => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)) || "";
+    const recorder = new MediaRecorder(stream, { ...(mimeType ? { mimeType } : {}), audioBitsPerSecond: 32000 });
+    const chunks = [];
+    const started = Date.now();
+    rec = { recorder, stream, started, timer: setTimeout(() => stopVoice(), VOICE_MAX_MS) };
+    recorder.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
+    recorder.onstop = () => {
+      stream.getTracks().forEach((t) => t.stop()); // микрофон отпускаем сразу — значок записи в браузере гаснет
+      const ms = Date.now() - started;
+      const blob = new Blob(chunks, { type: recorder.mimeType || mimeType || "audio/webm" });
+      if (ms < 800 || blob.size < 1500) {
+        addMessage("agent", T.tooShort);
+        return;
+      }
+      sendVoice(blob);
+    };
+    recorder.start();
+    micBtn.textContent = "■";
+    micBtn.classList.add("iac-rec");
+    micBtn.setAttribute("aria-label", T.micStop);
+    micBtn.title = T.micStop;
+    input.placeholder = T.listening;
+    attachBtn.disabled = true;
+    sendBtn.disabled = true;
+  }
+
+  function stopVoice() {
+    if (!rec) return;
+    clearTimeout(rec.timer);
+    const { recorder } = rec;
+    rec = null;
+    micBtn.textContent = "🎤";
+    micBtn.classList.remove("iac-rec");
+    micBtn.setAttribute("aria-label", T.mic);
+    micBtn.title = T.mic;
+    input.placeholder = T.placeholder;
+    attachBtn.disabled = false;
+    sendBtn.disabled = false;
+    if (recorder.state !== "inactive") recorder.stop();
+  }
+
+  async function sendVoice(blob) {
+    if (busy) return;
+    busy = true;
+    sendBtn.disabled = true;
+    attachBtn.disabled = true;
+    micBtn.disabled = true;
+    try {
+      if (!token && !(await startNew())) return;
+      const mine = addMessage("user", "🎤 …");
+      const typing = addMessage("agent", T.hearing);
+      typing.classList.add("iac-typing");
+      const payload = { audio: await blobToDataUrl(blob), mime: blob.type };
+      let res = await api("/chat/voice", "POST", payload);
+      if (res.status === 401 || res.status === 410) {
+        token = null;
+        store.del();
+        if (await startNew()) res = await api("/chat/voice", "POST", payload);
+      }
+      typing.remove();
+      const said = String(res.data.transcript || "").trim();
+      mine.querySelector(".iac-text").textContent = said ? `🎤 ${said}` : "🎤";
+      const reply = res.data.reply || { text: T.failed, buttons: FALLBACK };
+      addMessage("agent", reply.text, reply.buttons, reply.image);
+    } finally {
+      busy = false;
+      sendBtn.disabled = false;
+      attachBtn.disabled = false;
+      micBtn.disabled = false;
+    }
+  }
+
   function autosize() {
     input.style.height = "auto";
     input.style.height = `${Math.min(input.scrollHeight, 120)}px`;
@@ -441,6 +556,7 @@
   }
 
   function close() {
+    stopVoice();
     panel.hidden = true;
     launcher.setAttribute("aria-expanded", "false");
     document.documentElement.classList.remove("iac-open");
@@ -457,6 +573,7 @@
   panel.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
   form.addEventListener("submit", (e) => { e.preventDefault(); send(input.value); });
   attachBtn.addEventListener("click", () => fileInput.click());
+  micBtn.addEventListener("click", () => (rec ? stopVoice() : startVoice()));
   fileInput.addEventListener("change", () => { const f = fileInput.files && fileInput.files[0]; fileInput.value = ""; sendMedia(f); });
   input.addEventListener("input", autosize);
   input.addEventListener("keydown", (e) => {
