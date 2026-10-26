@@ -1,0 +1,270 @@
+{
+  "product_id": "xiaomi-15-ultra-16-512gb-white-5g-великобритания-s4-90900",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-15-ultra-16-512gb-white-5g-s4-90900",
+  "name": "Xiaomi 15 Ultra 16+ 512Gb White 5G",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S4)",
+  "price": 90900,
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/xiaomi/mi/Xiaomi_15_Ultra_16_512GB_White",
+  "catalog_title": "Xiaomi 15 Ultra 16/512GB, White",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Смартфон"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6.73\""
+    },
+    {
+      "key": "Технология дисплея",
+      "value": "AMOLED"
+    },
+    {
+      "key": "Разрешение",
+      "value": "3200x1440"
+    },
+    {
+      "key": "Соотношение сторон",
+      "value": "20:9"
+    },
+    {
+      "key": "Частота обновления",
+      "value": "120 Гц"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "522 пикселей/дюйм"
+    },
+    {
+      "key": "Поддержка HDR",
+      "value": "есть"
+    },
+    {
+      "key": "Тип HDR",
+      "value": "HDR10+"
+    },
+    {
+      "key": "Количество цветов экрана",
+      "value": "68 млрд"
+    },
+    {
+      "key": "Особенности экрана",
+      "value": "безрамочный"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Elite"
+    },
+    {
+      "key": "Максимальная частота процессора",
+      "value": "4.32 ГГц"
+    },
+    {
+      "key": "Конфигурация процессора",
+      "value": "2x Oryon Prime 4.32 ГГц, 6x Oryon Performance 3.53 ГГц"
+    },
+    {
+      "key": "Количество ядер процессора",
+      "value": "8"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "Adreno 830"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ"
+    },
+    {
+      "key": "Слот для карты памяти",
+      "value": "нет"
+    },
+    {
+      "key": "Встроенный динамик",
+      "value": "стереодинамики"
+    },
+    {
+      "key": "Количество основных (тыловых) камер",
+      "value": "4"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "200+50+50+50 Мп"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "f/1.65"
+    },
+    {
+      "key": "Формат видеосъемки",
+      "value": "Full HD, Ultra HD 4K, Ultra HD 8K"
+    },
+    {
+      "key": "Разрешение видео",
+      "value": "7680x4320 (30 кадр./сек.), 3840х2160 (30, 60, 120 кадр./сек.) 1920х1080 (30, 60 кадр./сек.) 720р (30 кадр./сек.)"
+    },
+    {
+      "key": "Угол обзора",
+      "value": "115°"
+    },
+    {
+      "key": "Тип модулей камеры",
+      "value": "широкоугольный, сверхширокоугольный, телеобъектив, перископ"
+    },
+    {
+      "key": "Тип вспышки",
+      "value": "двойная светодиодная"
+    },
+    {
+      "key": "Режимы и функции фотосъемки",
+      "value": "автофокусировка, вспышка, распознование лиц, оптический зум, замедленная видеосъемка"
+    },
+    {
+      "key": "Количество фронтальных камер",
+      "value": "1"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "32 Мпикс"
+    },
+    {
+      "key": "Разрешение снимков фронтальной камеры",
+      "value": "3840x2160"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "f/2.0"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 Nano-SIM + eSim"
+    },
+    {
+      "key": "Сотовая и беспроводная сеть",
+      "value": "Bluetooth 5.4, Wi-Fi 802.11 n/ac/ax/be"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB-Type-C"
+    },
+    {
+      "key": "ИК-порт",
+      "value": "есть"
+    },
+    {
+      "key": "Режим работы нескольких SIM-карт",
+      "value": "режим ожидания"
+    },
+    {
+      "key": "Системы навигации",
+      "value": "A-GPS, BeiDou, GPS, Galileo, QZSS, ГЛОНАСС"
+    },
+    {
+      "key": "Диапазоны частот 5G",
+      "value": "FDD-5G 1800 (B3), FDD-5G 2100 (B1), FDD-5G 2600 (B7), SDL-5G 1500 (B75), TDD-5G 2300 (B40), TDD-5G 2500 (B41), TDD-5G 2600 (B38), TDD-5G 3500 (B78), TDD-5G 3700 (B77)"
+    },
+    {
+      "key": "Диапазоны частот 4G (LTE)",
+      "value": "FDD-LTE 700 (B12), FDD-LTE 700 (B13), FDD-LTE 700 (B17), FDD-LTE 700 (B28), FDD-LTE 800 (B20), FDD-LTE 850 (B5), FDD-LTE 850 (B18), FDD-LTE 850 (B19), FDD-LTE 850 (B26), FDD-LTE 900 (B8), FDD-LTE 1700 (B4), FDD-LTE 1700 (B66), FDD-LTE 1800 (B3), FDD-LTE 1"
+    },
+    {
+      "key": "Диапазоны частот 3G",
+      "value": "UMTS 850 (B5), UMTS 900 (B8), UMTS 1700 (B4), UMTS 1900 (B2), UMTS 2100 (B1)"
+    },
+    {
+      "key": "Диапазоны частот 2G",
+      "value": "GSM 850 (B5), GSM 900 (B8), GSM 1800 (B3), GSM 1900 (B2)"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "5410 мАч"
+    },
+    {
+      "key": "Напряжение питания ЗУ",
+      "value": "100-240 В/50-60 Гц"
+    },
+    {
+      "key": "Мощность",
+      "value": "90 Вт"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Стандарты быстрой зарядки",
+      "value": "Hyper Charge 90W"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Материал",
+      "value": "Aлюминий, стекло, искусственная кожа"
+    },
+    {
+      "key": "Ширина",
+      "value": "75.03 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "161.3 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "9.4 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "229 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Белый"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android"
+    },
+    {
+      "key": "Технологии",
+      "value": "система камер Leica, быстрая зарядка Hyper Charge 90W, Wi-Fi Direct, Wi-Fi Display, Wi-Fi Hotspot"
+    },
+    {
+      "key": "Страна производства",
+      "value": "Китай"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_Ultra_16_512GB_White_15UW/Xiaomi_15_Ultra_16_512GB_White_15UW-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_Ultra_16_512GB_White_15UW/Xiaomi_15_Ultra_16_512GB_White_15UW-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_Ultra_16_512GB_White_15UW/Xiaomi_15_Ultra_16_512GB_White_15UW-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_Ultra_16_512GB_White_15UW/Xiaomi_15_Ultra_16_512GB_White_15UW-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_Ultra_16_512GB_White_15UW/Xiaomi_15_Ultra_16_512GB_White_15UW-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_Ultra_16_512GB_White_15UW/Xiaomi_15_Ultra_16_512GB_White_15UW-6-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_Ultra_16_512GB_White_15UW/Xiaomi_15_Ultra_16_512GB_White_15UW-7-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Xiaomi_15_Ultra_16_512GB_White_15UW/Xiaomi_15_Ultra_16_512GB_White_15UW-8-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/652848079756c42cef5d9fd1.jpg",
+    "assets/product-images/8fb3e3ec8954b39e3d9e8941.jpg",
+    "assets/product-images/6f4c739c74e74a6f1c13dfc2.jpg",
+    "assets/product-images/4f4daeca93ae2c47fba1d554.jpg",
+    "assets/product-images/f6001f1671411e2dfebce2f9.jpg",
+    "assets/product-images/a23bbb2ce3b15ec2cd03018b.jpg",
+    "assets/product-images/ec616d17453f390300e65735.jpg",
+    "assets/product-images/083e944dc715c9f3b1b5bbb2.jpg"
+  ],
+  "updated_at": "2026-10-26T14:14:39.771603Z"
+}

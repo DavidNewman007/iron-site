@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-25T12:24:15.288Z",
-  "count": 136,
+  "generated_at": "2026-10-26T14:15:48.947Z",
+  "count": 139,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -1089,6 +1089,30 @@
       "name": "Sony Playstation VR 2 White",
       "warehouse": "(S4)",
       "price": 45000
+    },
+    "sony-playstation-5-slim-disc-оаэ-s4-80100": {
+      "url": "hybrid-products/gaming/sony-playstation-5-slim-disc-s4-80100.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-5-slim-disc-s4-80100.html",
+      "cover": "assets/product-images/b69ddd0b1caaeea46a30c8f4.jpg",
+      "name": "Sony PlayStation 5 SLIM Disc",
+      "warehouse": "(S4)",
+      "price": 80100
+    },
+    "sony-playstation-5-slim-digital-825gb-оаэ-s4-75600": {
+      "url": "hybrid-products/gaming/sony-playstation-5-slim-digital-825gb-s4-75600.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-5-slim-digital-825gb-s4-75600.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "Sony PlayStation 5 SLIM Digital 825Gb",
+      "warehouse": "(S4)",
+      "price": 75600
+    },
+    "sony-playstation-portal-white-s4-26900": {
+      "url": "hybrid-products/gaming/sony-playstation-portal-white-s4-26900.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-portal-white-s4-26900.html",
+      "cover": "assets/product-images/9e175dd37be85181eac35fa5.jpg",
+      "name": "Sony PlayStation Portal White",
+      "warehouse": "(S4)",
+      "price": 26900
     }
   }
 }

@@ -1,0 +1,89 @@
+{
+  "product_id": "xiaomi-14-ultra-16-512gb-white-5g-великобритания-s4-66400",
+  "category": "xiaomi",
+  "file_slug": "xiaomi-14-ultra-16-512gb-white-5g-s4-66400",
+  "name": "Xiaomi 14 Ultra 16+ 512Gb White 5G",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S4)",
+  "price": 66400,
+  "catalog_url": "https://www.mi.com/global/product/xiaomi-14-ultra/specs/",
+  "catalog_title": "Xiaomi 14 Ultra 16/512 ГБ, White (белый)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,73\", AMOLED LTPO, 3200×1440 (522 ppi), 1–120 Гц, до 3000 нит, Dolby Vision, HDR10+"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Gen 3 (4 нм)"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "512 ГБ (UFS 4.0)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "Leica: 50 Мп 1\" LYT-900 (диафрагма f/1.63–4.0, OIS) + телеобъектив 50 Мп 75 мм (f/1.8, OIS) + перископ 50 Мп 120 мм (f/2.5, OIS) + сверхширокоугольная 50 Мп 12 мм (122°)"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "5000 мАч"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 90 Вт HyperCharge, беспроводная 80 Вт, обратная беспроводная"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 7, Bluetooth 5.4, USB-C 3.2 Gen 2"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68"
+    },
+    {
+      "key": "Размеры",
+      "value": "161,4 × 75,3 × 9,2 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "219,8 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "White (белый)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS (Android 14)"
+    }
+  ],
+  "images_remote": [
+    "https://i05.appmifile.com/948_item_pl/21/02/2024/ed7639f2c66fdcba97f029aa36dee699.jpg",
+    "https://i05.appmifile.com/263_item_pl/04/11/2025/c288fcf2122680b1e740eef15b0e8aed.png",
+    "https://i05.appmifile.com/443_item_pl/04/11/2025/8b3e3928c243528832f2d01af83468e9.png",
+    "https://i05.appmifile.com/452_item_pl/04/11/2025/6e9f7671a5b6ba8887e5c4ccb7bbff73.png"
+  ],
+  "images_local": [
+    "assets/product-images/2df039c1a002161a167bb509.jpg",
+    "assets/product-images/51feb2f5580487049bc2b1f6.jpg",
+    "assets/product-images/b83bd2f97088c544740dc520.jpg",
+    "assets/product-images/175cf5e6f4e1710abb4785c6.jpg"
+  ],
+  "manual": true,
+  "manual_key": "xiaomi 14 ultra 16 512gb white 5g~s4",
+  "photo_source": "https://www.mi.com/global/product/xiaomi-14-ultra/specs/",
+  "updated_at": "2026-10-26T14:14:35.797437Z"
+}

@@ -1,0 +1,60 @@
+{
+  "product_id": "dyson-hd07-nickel-copper-европа-s3-27500",
+  "category": "dyson",
+  "file_slug": "dyson-hd07-nickel-copper-s3-27500",
+  "name": "Dyson HD07 Nickel/Copper",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 27500,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-vypryamiteli/dyson-corrale-hs07-nickel-fuchsia",
+  "catalog_title": "выпрямитель для волос Dyson Corrale HS07, Nickel/Fuchsia",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Dyson Corrale HS07"
+    },
+    {
+      "key": "Длина сетевого шнура",
+      "value": "2.2 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "55 Вт"
+    },
+    {
+      "key": "Ширина",
+      "value": "41 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "292 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "45 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "561 г"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-nickel/hs07-nickel-dr-store-112-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-nickel/hs07-nickel-dr-store-118-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-nickel/hs07-nickel-dr-store-110-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-nickel/hs07-nickel-dr-store-115-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-nickel/hs07-nickel-dr-store-120-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-nickel/hs07-nickel-dr-store-113-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hs07-nickel/hs07-nickel-dr-store-114-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/dbc3a45d1eda056a8b8b8007.jpg",
+    "assets/product-images/6351642a56b48f50723d523f.jpg",
+    "assets/product-images/7e128456e74dbda36235be4d.jpg",
+    "assets/product-images/f35d74279e2178d256063dc9.jpg",
+    "assets/product-images/0867110bd0fcdadc8a7b064a.jpg",
+    "assets/product-images/820d9c5082308b3b7bf18954.jpg",
+    "assets/product-images/b3177280f3319fcca1c9b8b9.jpg"
+  ],
+  "updated_at": "2026-10-26T14:12:16.301725Z"
+}
