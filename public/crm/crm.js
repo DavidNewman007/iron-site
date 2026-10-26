@@ -3016,6 +3016,7 @@
       ${isNew ? `<div id="pre-contact" class="note pre-contact">${preNoteText()}</div><div id="client-devs">${clientDevicesHtml(currentNewClient())}</div>` : ""}
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
       ${proxyHtml(key, r, isNew, val, fh)}
+      ${!isNew && canCreate() ? msgHtml(r) : ""}
       ${!isNew && canCreate() ? clientActions(r, dk) : ""}
     </section>`;
     left += box(2, html); html = "";
@@ -3648,6 +3649,62 @@
     return new Date(d.getFullYear(), d.getMonth(), d.getDate() + days);
   }
   const ru = d => `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
+  // ── «✉️ Написать клиенту» (v90, 26.10.2026, план 93 §11.72) ─────────────────────────────────
+  // Владелец: «добавь возможность написать клиенту прямо из оболочки — отдельная кнопка, которая открывает поле для ввода
+  // сообщения; сообщение — во все возможные каналы, где есть клиент; обратно от него в оболочку не надо; если в заказе
+  // несколько номеров — выбор, на какой или на несколько; если оставили для связи другого человека — чтобы можно было
+  // выбрать только его». Получатели — галочками: номера клиента (D) и того, кто на связи (AI). По умолчанию — как у
+  // уведомлений о статусе: на связи другой человек → только он, иначе все номера клиента. Отправка — дверь `crm-msg`
+  // (ClientMessage.js): Telegram @ironsochi, WhatsApp, MAX — куда номер есть; номера дверь сверяет с заказом. Ответы
+  // клиента в оболочку не приходят. Что ушло — строкой «Сообщение клиенту» в «Журнал изменений» (v84).
+  function msgTargets(r) {
+    const name = String(cell(r, C.name) || "").split("\n")[0].trim(), cname = String(cell(r, C.contactName) || "").trim();
+    const same = cname && norm(cname) === norm(name); // в AH то же имя — «на связи» сам клиент, это его второй номер
+    const out = [], seen = new Set();
+    const add = (p, who, proxy) => { if (!seen.has(p.d)) { seen.add(p.d); out.push({ d: p.d, text: p.text, who, proxy }); } };
+    for (const p of phones(cell(r, C.phone))) add(p, name || "клиент", false);
+    for (const p of phones(cell(r, C.contactPhone))) add(p, same ? name || "клиент" : cname || "на связи", !same);
+    return out;
+  }
+  const msgLine = x => [["Telegram", x.telegram], ["WhatsApp", x.whatsapp], ["MAX", x.max]]
+    .map(([n, v]) => `${n} ${v === "ok" ? "✓" : "—"}`).join(" · ");
+  function msgHtml(r) {
+    const num = String(cell(r, C.num)).trim(), m = S.msg?.num === num ? S.msg : null;
+    if (!m) return `<div class="row"><button type="button" class="btn btn--sm" data-act="msgopen">✉️ Написать клиенту</button></div>`;
+    const list = msgTargets(r);
+    return `<div class="cmsg"><div class="cmsg__head"><b>✉️ Сообщение клиенту</b><button type="button" class="linkbtn" data-act="msgclose">закрыть</button></div>
+      ${list.length ? `<div class="cmsg__to"><span class="note">Кому:</span>${list.map(x => `<label class="check cmsg__who"><input type="checkbox" data-act="msgto" data-d="${x.d}" ${m.sel.has(x.d) ? "checked" : ""}>
+        <span>${x.proxy ? "📲 " : ""}${esc(x.who)} <small>${esc(x.text)}</small></span></label>`).join("")}</div>`
+        : `<p class="note">В заказе нет разборчивого номера — впишите телефон и сохраните.</p>`}
+      <textarea class="cmsg__text" data-msgtext rows="4" placeholder="Текст сообщения" ${m.busy ? "disabled" : ""}>${esc(m.text || "")}</textarea>
+      <div class="row cmsg__go"><button type="button" class="btn btn--red btn--sm" data-act="msgsend"${m.busy || !list.length ? " disabled" : ""}>${m.busy ? "Отправляю…" : "Отправить"}</button>
+        <span class="note">Уйдёт в Telegram, WhatsApp и MAX — туда, где номер есть. Ответы клиента сюда не приходят.</span></div>
+      ${m.done ? `<div class="cmsg__done">✓ Отправлено в ${esc(m.done.at)}:${m.done.results.map(x => `<div>${esc(list.find(y => y.d === digits(x.phone))?.text || x.phone)} — ${msgLine(x)}</div>`).join("")}</div>` : ""}</div>`;
+  }
+  async function msgSend() {
+    const r = S.byNum.get(location.hash.slice(2)), m = S.msg; if (!r || !m) return;
+    const text = String($app.querySelector("[data-msgtext]")?.value ?? m.text ?? "").trim(); m.text = text;
+    const list = msgTargets(r).filter(x => m.sel.has(x.d));
+    if (!list.length) return toast("Отметьте, на какой номер отправить");
+    if (!text) return toast("Напишите текст сообщения");
+    const num = String(cell(r, C.num)).trim();
+    const call = again => DEMO
+      ? Promise.resolve({ ok: true, at: mskStamp().slice(11, 16), results: list.map(x => ({ phone: "+" + x.d, telegram: "ok", whatsapp: "ok", max: "нет в MAX", ok: true })) })
+      : doorPost(CFG.doors[0], "crm-msg", JSON.stringify({ token: S.token, row: r.row, num, phones: list.map(x => x.d), text, again }))
+        .then(({ text: x }) => { try { return JSON.parse(x); } catch { return { ok: false, error: "дверь ответила не JSON" }; } });
+    m.busy = true; m.done = null; rerenderKeep();
+    try {
+      let j = await call(false);
+      if (!j.ok && j.already && confirm(`Это сообщение уже уходило в ${j.already}. Отправить ещё раз?`)) j = await call(true);
+      if (!j.ok) { if (!j.already) toast("Не ушло: " + (j.error || "дверь не ответила"), null, true); return; }
+      const res = j.results || [];
+      m.done = { at: j.at, results: res }; m.text = "";
+      journal([[num, r.row, "Сообщение клиенту", "", `${text.slice(0, 240)} → ${res.map(x => `${x.phone}: ${msgLine(x)}`).join("; ")}`]]);
+      const miss = res.filter(x => !x.ok).map(x => x.phone);
+      toast(`✉️ №${num}: сообщение ушло${miss.length ? ` (не дошло на ${miss.join(", ")})` : ""}`, null, true);
+    } catch (e) { toast("Не ушло: " + e.message, null, true); }
+    finally { m.busy = false; rerenderKeep(); }
+  }
   function clientActions(r, dk) {
     let w = "";
     if ((dk === "repair" || dk === "other") && norm(cell(r, C.status)).startsWith("выполнен")) {
@@ -3827,7 +3884,7 @@
         <span class="hist__when">${esc(x.ts.slice(0, 5))} ${esc(x.ts.slice(11, 16))}</span>
         <span class="hist__who" title="${esc(x.who || "автор не записан")}${x.from ? " · " + esc(x.from) : ""}">${who(x)}${x.from === "таблица" ? " · табл." : ""}</span>
         <span class="hist__f">${esc(x.field)}</span>
-        <span class="hist__ch">${x.a !== "" || !/^Заказ /.test(x.field) ? `<s>${val(x.a)}</s> → ` : ""}<b>${val(x.b)}</b></span></div>`).join("")}</div></div>`;
+        <span class="hist__ch">${x.a !== "" || !/^(Заказ |Сообщение )/.test(x.field) ? `<s>${val(x.a)}</s> → ` : ""}<b>${val(x.b)}</b></span></div>`).join("")}</div></div>`;
   }
   // only — номера дверей, которые звать (кнопка «Повторить» зовёт только упавшие).
   // v39 (03.10.2026): двери идут независимо — раньше сбой первой обрывал цикл, и вторая (сообщения
@@ -4271,6 +4328,14 @@
       rerenderKeep(); return;
     }
     if (act === "holdsend") { await holdSend(t); return; }
+    if (act === "msgopen") { // v90: по умолчанию — как уведомления о статусе (на связи другой человек → только он)
+      const r = S.byNum.get(location.hash.slice(2)); if (!r) return;
+      const list = msgTargets(r), px = list.filter(x => x.proxy);
+      S.msg = { num: String(cell(r, C.num)).trim(), sel: new Set((px.length ? px : list).map(x => x.d)), text: "" };
+      rerenderKeep(); $app.querySelector("[data-msgtext]")?.focus(); return;
+    }
+    if (act === "msgclose") { S.msg = null; rerenderKeep(); return; }
+    if (act === "msgsend") { await msgSend(); return; }
     if (act === "longlogin") { try { await codeSignIn(lastEmail()); toast("🔐 Вход запомнен на 30 дней — без окон Google", null, true); } catch (e) { toast(e.message, null, true); } render(); return; }
     if (act === "dd") { const k = curKey() + ":" + t.dataset.c; S.ddOpen = S.ddOpen === k ? null : k; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
     if (act === "login") {
@@ -4404,6 +4469,8 @@
     if (t.dataset.skq != null) { skSet(t.dataset.skq, t.value); return; }
     if (t.dataset.act === "skbsel") return; // галочка «на возврат» — обработана кликом
     if (t.dataset.holdtext != null) { const st = S.hold?.[curKey() + "|" + t.dataset.holdtext]; if (st) st.text = t.value; return; }
+    if (t.dataset.msgtext != null) { if (S.msg) S.msg.text = t.value; return; }
+    if (t.dataset.act === "msgto") { if (S.msg) { t.checked ? S.msg.sel.add(t.dataset.d) : S.msg.sel.delete(t.dataset.d); } return; }
     if (t.dataset.act === "spq") { clearTimeout(onEdit.sp); onEdit.sp = setTimeout(() => { S.spq = t.value; const pos = t.selectionStart; rerenderKeep(); const q = $app.querySelector(".sp__q"); if (q) { q.focus({ preventScroll: true }); q.setSelectionRange(pos, pos); } }, 150); return; }
     if (t.dataset.skbq != null) { const x = S.stock?.byKey?.get(t.dataset.skbq), n = Math.floor(+t.value.replace(",", ".")) || 0; if (x && S.skSend.has(x.key)) { S.skSend.set(x.key, Math.max(1, Math.min(x.def, n || 1))); skSendLabel(); } return; }
     if (t.dataset.skf != null) { if (S.skAdd) S.skAdd.f[t.dataset.skf] = t.value; return; }

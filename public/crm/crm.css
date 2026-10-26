@@ -763,3 +763,17 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
   .hist__row { grid-template-columns: auto minmax(0, 1fr); }
   .hist__f, .hist__ch { grid-column: 1 / -1; }
 }
+/* v90: «✉️ Написать клиенту» — получатели галочками, текст, итог по каналам */
+.cmsg { width: 100%; border: 1px solid var(--line-strong); border-radius: 12px; padding: 10px 12px; margin-top: 8px; display: grid; gap: 8px; }
+.cmsg__head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.cmsg__head b { color: var(--cream); }
+.cmsg__to { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.cmsg__who { display: inline-flex; align-items: center; gap: 6px; margin: 0; }
+.cmsg__who small { color: var(--muted); margin-left: 4px; }
+.cmsg__text { width: 100%; min-height: 96px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--field); color: var(--text); padding: 8px 10px; font: inherit; resize: vertical; }
+.cmsg__text:focus { outline: none; border-color: var(--gold); }
+.cmsg__go { align-items: center; gap: 8px 12px; }
+.cmsg__done { font-size: .9rem; color: var(--text); border-top: 1px dashed var(--line-strong); padding-top: 6px; }
+.cmsg__done div { color: var(--muted); }
+.cmsg__who { font-size: 1rem; min-height: 36px; }
+.cmsg__who input { width: 22px; height: 22px; }
