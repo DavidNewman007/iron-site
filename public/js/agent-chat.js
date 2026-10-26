@@ -18,6 +18,8 @@
       launcher: "Спросить мастера",
       title: "Помощник IRON SERVICE",
       close: "Закрыть",
+      wide: "Развернуть окно",
+      zoom: "Нажмите, чтобы увеличить",
       placeholder: "Модель и что случилось…",
       send: "Отправить",
       checking: "Проверяем, что вы не робот…",
@@ -29,6 +31,8 @@
       launcher: "Ask a technician",
       title: "IRON SERVICE assistant",
       close: "Close",
+      wide: "Expand chat",
+      zoom: "Tap to enlarge",
       placeholder: "Device and what happened…",
       send: "Send",
       checking: "Checking that you are not a robot…",
@@ -74,7 +78,14 @@
   const closeBtn = el("button", "iac-close", "×");
   closeBtn.type = "button";
   closeBtn.setAttribute("aria-label", T.close);
-  head.append(el("strong", "iac-title", T.title), closeBtn);
+  // Развернуть окно (владелец 26.10.2026: «очень мелко, не видно»): шире и выше; на телефоне окно и так во весь экран.
+  const wideBtn = el("button", "iac-wide", "⤢");
+  wideBtn.type = "button";
+  wideBtn.setAttribute("aria-label", T.wide);
+  wideBtn.setAttribute("aria-pressed", "false");
+  const headBtns = el("div", "iac-head-btns");
+  headBtns.append(wideBtn, closeBtn);
+  head.append(el("strong", "iac-title", T.title), headBtns);
   const log = el("div", "iac-log");
   log.setAttribute("aria-live", "polite");
   const tsBox = el("div", "iac-turnstile");
@@ -111,6 +122,11 @@
       img.alt = String(image.alt || "");
       img.loading = "lazy";
       img.addEventListener("load", scrollDown);
+      img.title = T.zoom;
+      img.tabIndex = 0;
+      img.addEventListener("click", () => zoomImage(image));
+      img.addEventListener("keydown", (e) => { if (e.key === "Enter") zoomImage(image); });
+      box.classList.add("iac-has-image");
       box.append(img);
     }
     const btns = (buttons || []).filter((b) => b && b.text);
@@ -134,6 +150,22 @@
     log.append(box);
     scrollDown();
     return box;
+  }
+
+  /** Картинка на весь экран: нажать — увеличить, нажать ещё раз или Esc — закрыть. */
+  function zoomImage(image) {
+    const layer = el("div", "iac-zoom");
+    layer.setAttribute("role", "dialog");
+    layer.setAttribute("aria-label", String(image.alt || ""));
+    const big = el("img", "iac-zoom-img");
+    big.src = image.src;
+    big.alt = String(image.alt || "");
+    layer.append(big);
+    const shut = () => { layer.remove(); document.removeEventListener("keydown", onKey, true); };
+    const onKey = (e) => { if (e.key === "Escape") { e.stopPropagation(); shut(); } };
+    layer.addEventListener("click", shut);
+    document.addEventListener("keydown", onKey, true);
+    document.body.append(layer);
   }
 
   async function api(path, method, body) {
@@ -307,6 +339,11 @@
   }
 
   launcher.addEventListener("click", () => (panel.hidden ? open() : close()));
+  wideBtn.addEventListener("click", () => {
+    const on = panel.classList.toggle("iac-panel-wide");
+    wideBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    scrollDown();
+  });
   closeBtn.addEventListener("click", close);
   panel.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
   form.addEventListener("submit", (e) => { e.preventDefault(); send(input.value); });

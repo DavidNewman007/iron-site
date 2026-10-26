@@ -57,6 +57,12 @@
   background: var(--charcoal, #2a2a2a);
 }
 .iac-title { font: 600 17px/1.2 var(--font-display, "Oswald", "Arial Narrow", sans-serif); color: var(--cream, #f5e6c8); }
+.iac-head-btns { display: flex; gap: 4px; }
+.iac-wide { width: 32px; height: 32px; border: 0; border-radius: 8px; background: transparent; color: var(--text-muted, #b1a796); font-size: 18px; line-height: 1; cursor: pointer; }
+.iac-wide:hover, .iac-wide[aria-pressed="true"] { color: var(--cream, #f5e6c8); background: rgba(255, 255, 255, 0.06); }
+/* Развёрнутое окно: шире и выше, крупнее текст. */
+.iac-panel.iac-panel-wide { width: min(760px, calc(100vw - 40px)); height: min(920px, calc(100vh - 110px)); font-size: 18px; }
+.iac-panel-wide .iac-msg { max-width: 92%; }
 .iac-close {
   width: 32px;
   height: 32px;
@@ -91,7 +97,23 @@
 }
 .iac-agent .iac-text { background: var(--charcoal, #2a2a2a); border-top-left-radius: 4px; }
 .iac-user .iac-text { background: var(--slab, #3a332a); color: var(--cream, #f5e6c8); border-top-right-radius: 4px; }
-.iac-image { display: block; width: 100%; max-width: 340px; height: auto; margin-top: 6px; border-radius: 10px; }
+.iac-msg.iac-has-image { max-width: 100%; width: 100%; }
+.iac-image { display: block; width: 100%; height: auto; margin-top: 6px; border-radius: 12px; cursor: zoom-in; }
+.iac-image:focus-visible { outline: 2px solid var(--gold, #d4a012); outline-offset: 2px; }
+
+/* Картинка на весь экран (нажать — увеличить). */
+.iac-zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.88);
+  cursor: zoom-out;
+}
+.iac-zoom-img { max-width: min(96vw, 900px); max-height: 92vh; width: 100%; height: auto; object-fit: contain; border-radius: 14px; }
 .iac-typing .iac-text { color: var(--text-muted, #b1a796); font-style: italic; }
 
 .iac-buttons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
@@ -146,7 +168,8 @@
 /* Телефон: окно на весь экран, кнопка вызова прячется, пока окно открыто. */
 @media (max-width: 520px) {
   .iac-launcher { right: 12px; bottom: 12px; padding: 11px 15px; }
-  .iac-panel { inset: 0; width: auto; height: 100%; height: 100dvh; border-radius: 0; border: 0; }
+  .iac-panel, .iac-panel.iac-panel-wide { inset: 0; width: auto; height: 100%; height: 100dvh; border-radius: 0; border: 0; }
+  .iac-wide { display: none; } /* на телефоне окно и так во весь экран */
   .iac-open .iac-launcher { display: none; }
   .iac-open body { overflow: hidden; }
 }
