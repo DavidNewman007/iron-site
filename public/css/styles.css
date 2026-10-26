@@ -1580,3 +1580,113 @@ section {
     grid-column: 1 / -1;
   }
 }
+
+/* ——— Единый вид списков, галочек и переключателей (26.10.2026) ———
+   Владелец: «эти меню сделай в стиле сайта, как другие всплывающие меню; остальные элементы приведи к одному
+   стилю». Раньше закрытые <select> показывали серую системную стрелку, а раскрытые — белое меню macOS;
+   галочки и переключатели тоже были системные. Теперь стрелка своя, золотая, а раскрытый список на компьютере
+   рисует js/main.js (ironSelect) в облике меню категорий магазина (.shop-category-picker__menu). На телефоне
+   остаётся системный выбор: колесо iOS и лист Android удобнее пальцем. */
+html body select:not([multiple]):not([size]) {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23d4a012' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.95rem center;
+  background-size: 12px 8px;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+html body select:not([multiple]):not([size]).is-menu-open { border-color: var(--gold); }
+select option, select optgroup { background: #161616; color: var(--cream); }
+
+.iron-menu {
+  position: fixed;
+  z-index: 1000;
+  margin: 0;
+  padding: 0.4rem;
+  list-style: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: rgba(18, 18, 18, 0.98);
+  border: 1px solid rgba(212, 160, 18, 0.38);
+  border-radius: 12px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55);
+  font-family: var(--font-body);
+  animation: iron-menu-in 0.12s ease-out;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 160, 18, 0.45) transparent;
+}
+/* Только сдвиг, без прозрачности: если анимация не пойдёт (фоновая вкладка), меню всё равно видно. */
+@keyframes iron-menu-in { from { transform: translateY(-4px); } }
+.iron-menu::-webkit-scrollbar { width: 8px; }
+.iron-menu::-webkit-scrollbar-thumb { background: rgba(212, 160, 18, 0.45); border-radius: 8px; border: 2px solid rgba(18, 18, 18, 0.98); }
+.iron-menu::-webkit-scrollbar-track { background: transparent; }
+@media (prefers-reduced-motion: reduce) { .iron-menu { animation: none; } }
+.iron-menu__group {
+  padding: 0.55rem 0.75rem 0.25rem;
+  font: 600 0.72rem/1.2 var(--font-display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.iron-menu__option {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  color: var(--cream);
+  cursor: pointer;
+  font-size: 0.98rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.iron-menu__option::before {
+  content: "";
+  flex: 0 0 0.9rem;
+  height: 0.9rem;
+  background: no-repeat center / 0.8rem url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5.2l3.4 3.3L11 1.5' fill='none' stroke='%23d4a012' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  opacity: 0;
+}
+.iron-menu__option.is-selected::before { opacity: 1; }
+.iron-menu__option.is-hot {
+  background: rgba(212, 160, 18, 0.12);
+  border-color: rgba(212, 160, 18, 0.28);
+}
+.iron-menu__option.is-selected { color: #fff6df; }
+.iron-menu__option.is-selected.is-hot { background: rgba(212, 160, 18, 0.18); border-color: rgba(212, 160, 18, 0.55); }
+.iron-menu__option[aria-disabled="true"] { color: var(--text-muted); cursor: default; background: none; border-color: transparent; }
+
+/* Галочки и переключатели — золотая рамка, золотая отметка. */
+input[type="checkbox"], input[type="radio"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 0 0 auto;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0 0.45rem 0 0;
+  vertical-align: -0.2rem;
+  border: 1.5px solid rgba(212, 160, 18, 0.6);
+  background: rgba(20, 20, 20, 0.8);
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+input[type="checkbox"] { border-radius: 4px; }
+input[type="radio"] { border-radius: 50%; }
+input[type="checkbox"]:hover, input[type="radio"]:hover { border-color: var(--gold); }
+input[type="checkbox"]:checked { background: var(--gold); border-color: var(--gold); }
+input[type="checkbox"]:checked::before {
+  content: "";
+  width: 0.7rem;
+  height: 0.55rem;
+  background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5.2l3.4 3.3L11 1.5' fill='none' stroke='%23141414' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+input[type="radio"]:checked { border-color: var(--gold); }
+input[type="radio"]:checked::before { content: ""; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--gold); }
+input[type="checkbox"]:focus-visible, input[type="radio"]:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+input[type="checkbox"]:disabled, input[type="radio"]:disabled { opacity: 0.45; cursor: default; }

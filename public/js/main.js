@@ -250,3 +250,118 @@
   }
 })();
 /* <<< IRON-SUBBAR END <<< */
+
+/* >>> IRON-SELECT (26.10.2026) >>>
+   Раскрытый список <select> в облике сайта. Владелец: «эти меню сделай в стиле сайта, как другие всплывающие меню».
+   Системное меню macOS (белое, с синей полосой) стилями не перекрасить, поэтому на компьютере (точный указатель)
+   его открытие перехватывается: сам <select> остаётся полем и носителем значения, а под ним открывается наше меню
+   (.iron-menu) — как меню категорий магазина. Выбор пишется в select.value и шлёт input/change, поэтому все прежние
+   обработчики (наличие, сортировка, пункт выдачи, модель в «Услугах») работают без правок. Меню строится заново
+   при каждом открытии — подписи со счётчиками («Любое наличие · 2278») всегда свежие. На телефоне остаётся
+   системный выбор. Отказаться для конкретного списка — атрибут data-native. */
+(function () {
+  if (!window.matchMedia || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  var open = null;   // { sel, menu, items, hot }
+
+  function usable(sel) {
+    return sel && sel.tagName === "SELECT" && !sel.multiple && !(sel.size > 1) && !sel.disabled && !sel.hasAttribute("data-native");
+  }
+  function close(refocus) {
+    if (!open) return;
+    var o = open; open = null;
+    o.menu.remove(); o.sel.classList.remove("is-menu-open"); o.sel.setAttribute("aria-expanded", "false");
+    if (refocus) o.sel.focus({ preventScroll: true });
+  }
+  function setHot(i, scroll) {
+    if (!open) return;
+    var it = open.items;
+    if (open.hot >= 0 && it[open.hot]) it[open.hot].el.classList.remove("is-hot");
+    open.hot = i;
+    if (i >= 0 && it[i]) { it[i].el.classList.add("is-hot"); if (scroll) it[i].el.scrollIntoView({ block: "nearest" }); }
+  }
+  function choose(i) {
+    var o = open; if (!o || !o.items[i] || o.items[i].opt.disabled) return;
+    var changed = o.sel.selectedIndex !== o.items[i].opt.index;
+    o.sel.selectedIndex = o.items[i].opt.index;
+    close(true);
+    if (changed) {
+      o.sel.dispatchEvent(new Event("input", { bubbles: true }));
+      o.sel.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  }
+  function place(sel, menu) {
+    var r = sel.getBoundingClientRect(), gap = 6, below = innerHeight - r.bottom - gap - 8, above = r.top - gap - 8;
+    menu.style.minWidth = r.width + "px";
+    menu.style.left = Math.max(8, Math.min(r.left, innerWidth - menu.offsetWidth - 8)) + "px";
+    var up = below < Math.min(menu.scrollHeight, 260) && above > below;
+    menu.style.maxHeight = Math.min(420, up ? above : below) + "px";
+    menu.style.top = (up ? r.top - gap - menu.offsetHeight : r.bottom + gap) + "px";
+  }
+  function show(sel) {
+    close(false);
+    var menu = document.createElement("ul"), items = [];
+    menu.className = "iron-menu"; menu.setAttribute("role", "listbox");
+    if (sel.getAttribute("aria-label")) menu.setAttribute("aria-label", sel.getAttribute("aria-label"));
+    var lastGroup = null;
+    Array.prototype.forEach.call(sel.options, function (opt) {
+      if (opt.hidden) return;
+      var g = opt.parentNode && opt.parentNode.tagName === "OPTGROUP" ? opt.parentNode : null;
+      if (g && g !== lastGroup) {
+        var h = document.createElement("li"); h.className = "iron-menu__group"; h.setAttribute("role", "presentation");
+        h.textContent = g.label; menu.appendChild(h);
+      }
+      lastGroup = g;
+      var li = document.createElement("li");
+      li.className = "iron-menu__option" + (opt.selected ? " is-selected" : "");
+      li.setAttribute("role", "option"); li.setAttribute("aria-selected", opt.selected ? "true" : "false");
+      if (opt.disabled) li.setAttribute("aria-disabled", "true");
+      li.textContent = opt.textContent;
+      var idx = items.length; items.push({ el: li, opt: opt });
+      li.addEventListener("mousemove", function () { if (open && open.hot !== idx) setHot(idx, false); });
+      li.addEventListener("click", function () { choose(idx); });
+      menu.appendChild(li);
+    });
+    document.body.appendChild(menu);
+    open = { sel: sel, menu: menu, items: items, hot: -1, typed: "", typedAt: 0 };
+    sel.classList.add("is-menu-open"); sel.setAttribute("aria-expanded", "true");
+    place(sel, menu);
+    var cur = items.findIndex(function (x) { return x.opt.selected; });
+    setHot(cur, true);
+  }
+  function step(d) {
+    var it = open.items, i = open.hot;
+    for (var n = 0; n < it.length; n++) { i = (i + d + it.length) % it.length; if (!it[i].opt.disabled) break; }
+    setHot(i, true);
+  }
+
+  document.addEventListener("mousedown", function (e) {
+    var sel = e.target.closest && e.target.closest("select");
+    if (open && !open.menu.contains(e.target) && sel !== open.sel) close(false);
+    if (!usable(sel) || e.button !== 0) return;
+    e.preventDefault(); sel.focus({ preventScroll: true });
+    if (open && open.sel === sel) close(false); else show(sel);
+  }, true);
+  document.addEventListener("keydown", function (e) {
+    var sel = e.target;
+    if (!open) {
+      if (usable(sel) && (e.key === " " || e.key === "Enter" || ((e.key === "ArrowDown" || e.key === "ArrowUp") && e.altKey))) { e.preventDefault(); show(sel); }
+      return;
+    }
+    if (e.key === "Escape") { e.preventDefault(); close(true); }
+    else if (e.key === "Tab") close(false);
+    else if (e.key === "ArrowDown") { e.preventDefault(); step(1); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); step(-1); }
+    else if (e.key === "Home") { e.preventDefault(); setHot(0, true); }
+    else if (e.key === "End") { e.preventDefault(); setHot(open.items.length - 1, true); }
+    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); choose(open.hot); }
+    else if (e.key.length === 1) {   // поиск по первым буквам, как у системного списка
+      var now = Date.now(); open.typed = (now - open.typedAt < 700 ? open.typed : "") + e.key.toLowerCase(); open.typedAt = now;
+      var q = open.typed, f = open.items.findIndex(function (x) { return !x.opt.disabled && x.opt.textContent.trim().toLowerCase().indexOf(q) === 0; });
+      if (f >= 0) { e.preventDefault(); setHot(f, true); }
+    }
+  }, true);
+  addEventListener("resize", function () { close(false); });
+  addEventListener("scroll", function (e) { if (open && !open.menu.contains(e.target)) close(false); }, true);
+  addEventListener("blur", function () { close(false); });
+})();
+/* <<< IRON-SELECT END <<< */
