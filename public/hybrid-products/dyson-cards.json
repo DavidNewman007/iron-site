@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-26T14:15:48.967Z",
-  "count": 375,
+  "generated_at": "2026-10-27T12:54:38.254Z",
+  "count": 383,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -3001,6 +3001,70 @@
       "name": "Dyson HT01 Prussian Blue",
       "warehouse": "(S3)",
       "price": 31700
+    },
+    "-hs08-jasper-plum-s2-43800": {
+      "url": "hybrid-products/dyson/hs08-jasper-plum-s2-43800.html",
+      "url_en": "en/hybrid-products/dyson/hs08-jasper-plum-s2-43800.html",
+      "cover": "assets/product-images/cb2b76fbce4463f5d7d430fc.jpg",
+      "name": "👱‍♀HS08 Jasper Plum",
+      "warehouse": "(S2)",
+      "price": 43800
+    },
+    "-hs08-red-velvet-gold-s2-40700": {
+      "url": "hybrid-products/dyson/hs08-red-velvet-gold-s2-40700.html",
+      "url_en": "en/hybrid-products/dyson/hs08-red-velvet-gold-s2-40700.html",
+      "cover": "assets/product-images/3d055f96e29fd2c24f4fda49.jpg",
+      "name": "👱‍♀HS08 Red Velvet/Gold",
+      "warehouse": "(S2)",
+      "price": 40700
+    },
+    "-hs08-apricot-topaz-s2-39600": {
+      "url": "hybrid-products/dyson/hs08-apricot-topaz-s2-39600.html",
+      "url_en": "en/hybrid-products/dyson/hs08-apricot-topaz-s2-39600.html",
+      "cover": "assets/product-images/414299834c0fdce97ae8e390.jpg",
+      "name": "👱‍♀️HS08 Apricot/Topaz",
+      "warehouse": "(S2)",
+      "price": 39600
+    },
+    "-hd17-r-pro-apricot-topaz-s2-35000": {
+      "url": "hybrid-products/dyson/hd17-r-pro-apricot-topaz-s2-35000.html",
+      "url_en": "en/hybrid-products/dyson/hd17-r-pro-apricot-topaz-s2-35000.html",
+      "cover": "assets/product-images/49c5844fc9874055352cd773.jpg",
+      "name": "👱‍♀️HD17 R Pro Apricot/Topaz",
+      "warehouse": "(S2)",
+      "price": 35000
+    },
+    "-ht01-apricot-topaz-s2-37100": {
+      "url": "hybrid-products/dyson/ht01-apricot-topaz-s2-37100.html",
+      "url_en": "en/hybrid-products/dyson/ht01-apricot-topaz-s2-37100.html",
+      "cover": "assets/product-images/5889de94e02e4dc95d31b629.jpg",
+      "name": "👩HT01 Apricot/Topaz",
+      "warehouse": "(S2)",
+      "price": 37100
+    },
+    "-ht01-nickel-cooper-s2-33000": {
+      "url": "hybrid-products/dyson/ht01-nickel-cooper-s2-33000.html",
+      "url_en": "en/hybrid-products/dyson/ht01-nickel-cooper-s2-33000.html",
+      "cover": "assets/product-images/b028af352d0c4e82aa81fbc7.jpg",
+      "name": "👩HT01 Nickel Cooper",
+      "warehouse": "(S2)",
+      "price": 33000
+    },
+    "-ht01-ceramic-pink-s2-34500": {
+      "url": "hybrid-products/dyson/ht01-ceramic-pink-s2-34500.html",
+      "url_en": "en/hybrid-products/dyson/ht01-ceramic-pink-s2-34500.html",
+      "cover": "assets/product-images/120eb497b86281b86175915a.jpg",
+      "name": "👩HT01 Ceramic Pink",
+      "warehouse": "(S2)",
+      "price": 34500
+    },
+    "-ht01-prussian-blue-copper-s2-33500": {
+      "url": "hybrid-products/dyson/ht01-prussian-blue-copper-s2-33500.html",
+      "url_en": "en/hybrid-products/dyson/ht01-prussian-blue-copper-s2-33500.html",
+      "cover": "assets/product-images/a943b8f7d9da186f03984e66.jpg",
+      "name": "👩HT01 Prussian Blue/Copper",
+      "warehouse": "(S2)",
+      "price": 33500
     }
   }
 }

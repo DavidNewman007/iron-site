@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-26T14:15:48.939Z",
-  "count": 232,
+  "generated_at": "2026-10-27T12:54:38.234Z",
+  "count": 238,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -1857,6 +1857,54 @@
       "name": "Sony WH-1000XM6 Wireless Headphones Platinum Silver",
       "warehouse": "(S4)",
       "price": 29000
+    },
+    "buds-core-white-оаэ-s3-5600": {
+      "url": "hybrid-products/audio/buds-core-white-s3-5600.html",
+      "url_en": "en/hybrid-products/audio/buds-core-white-s3-5600.html",
+      "cover": "assets/product-images/c89f5d0852ae2924cb559f59.jpg",
+      "name": "Buds Core White",
+      "warehouse": "(S3)",
+      "price": 5600
+    },
+    "buds-3-fe-black-оаэ-s3-8900": {
+      "url": "hybrid-products/audio/buds-3-fe-black-s3-8900.html",
+      "url_en": "en/hybrid-products/audio/buds-3-fe-black-s3-8900.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Buds 3 FE Black",
+      "warehouse": "(S3)",
+      "price": 8900
+    },
+    "buds-3-pro-silver-оаэ-s3-13900": {
+      "url": "hybrid-products/audio/buds-3-pro-silver-s3-13900.html",
+      "url_en": "en/hybrid-products/audio/buds-3-pro-silver-s3-13900.html",
+      "cover": "assets/product-images/9022d9cab6ca8a2548b24a40.jpeg",
+      "name": "Buds 3 Pro Silver",
+      "warehouse": "(S3)",
+      "price": 13900
+    },
+    "buds-4-black-оаэ-s3-12700": {
+      "url": "hybrid-products/audio/buds-4-black-s3-12700.html",
+      "url_en": "en/hybrid-products/audio/buds-4-black-s3-12700.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Buds 4 Black",
+      "warehouse": "(S3)",
+      "price": 12700
+    },
+    "buds-4-pro-black-оаэ-s3-15600": {
+      "url": "hybrid-products/audio/buds-4-pro-black-s3-15600.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-black-s3-15600.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Buds 4 Pro Black",
+      "warehouse": "(S3)",
+      "price": 15600
+    },
+    "buds-4-pro-white-оаэ-s3-15600": {
+      "url": "hybrid-products/audio/buds-4-pro-white-s3-15600.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-white-s3-15600.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Buds 4 Pro White",
+      "warehouse": "(S3)",
+      "price": 15600
     }
   }
 }

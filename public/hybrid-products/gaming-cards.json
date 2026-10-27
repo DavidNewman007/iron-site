@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-26T14:15:48.947Z",
-  "count": 139,
+  "generated_at": "2026-10-27T12:54:38.239Z",
+  "count": 140,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -1113,6 +1113,14 @@
       "name": "Sony PlayStation Portal White",
       "warehouse": "(S4)",
       "price": 26900
+    },
+    "-ps5-slim-digital-825gb-s2-67800": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-67800.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-825gb-s2-67800.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "🎮PS5 Slim Digital 825Gb",
+      "warehouse": "(S2)",
+      "price": 67800
     }
   }
 }

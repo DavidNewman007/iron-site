@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-26T14:15:48.972Z",
-  "count": 62,
+  "generated_at": "2026-10-27T12:54:38.258Z",
+  "count": 64,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -497,6 +497,22 @@
       "name": "Whoop MG SuperKnit Luxe Obsidian Life",
       "warehouse": "(S4)",
       "price": 33900
+    },
+    "-canon-powershot-g7-x-mark-iii-silver-s2-100500": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-100500.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-100500.html",
+      "cover": "assets/product-images/dd1b9655ba8ad1dedcc47b4e.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Silver",
+      "warehouse": "(S2)",
+      "price": 100500
+    },
+    "-canon-powershot-g7-x-mark-iii-black-s2-101500": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-black-s2-101500.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-black-s2-101500.html",
+      "cover": "assets/product-images/333874f719a026e25cd64d37.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Black",
+      "warehouse": "(S2)",
+      "price": 101500
     }
   }
 }

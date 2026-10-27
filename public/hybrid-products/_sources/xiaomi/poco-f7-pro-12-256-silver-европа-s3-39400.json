@@ -1,0 +1,304 @@
+{
+  "product_id": "poco-f7-pro-12-256-silver-европа-s3-39400",
+  "category": "xiaomi",
+  "file_slug": "poco-f7-pro-12-256-silver-s3-39400",
+  "name": "POCO F7 Pro 12/256 Silver",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 39400,
+  "catalog_url": "https://sochi.dr-store.ru/smartfony/xiaomi/poco/poco-f7-pro/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver",
+  "catalog_title": "Poco F7 Pro 5G 12/256GB, Silver",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Смартфон"
+    },
+    {
+      "key": "Модель",
+      "value": "Poco F7 Pro"
+    },
+    {
+      "key": "Поддержка Google Mobile Services",
+      "value": "есть"
+    },
+    {
+      "key": "Диагональ",
+      "value": "6.67\""
+    },
+    {
+      "key": "Разрешение",
+      "value": "3200x1440"
+    },
+    {
+      "key": "Соотношение сторон",
+      "value": "20:9"
+    },
+    {
+      "key": "Тип матрицы",
+      "value": "AMOLED"
+    },
+    {
+      "key": "Частота обновления",
+      "value": "120 Гц"
+    },
+    {
+      "key": "Плотность пикселей",
+      "value": "526 пикселей/дюйм"
+    },
+    {
+      "key": "Контрастность",
+      "value": "5 000 000:1"
+    },
+    {
+      "key": "Поддержка HDR",
+      "value": "есть"
+    },
+    {
+      "key": "Тип HDR",
+      "value": "HDR10+"
+    },
+    {
+      "key": "Количество цветов экрана",
+      "value": "68 млрд"
+    },
+    {
+      "key": "Особенности экрана",
+      "value": "безрамочный"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Gen 3"
+    },
+    {
+      "key": "Техпроцесс",
+      "value": "4 нм"
+    },
+    {
+      "key": "Максимальная частота процессора",
+      "value": "3.3 ГГц"
+    },
+    {
+      "key": "Конфигурация процессора",
+      "value": "1x Cortex-X4 3.39 ГГц, 2x Cortex-A520 2.2 ГГц, 2x Cortex-A720 2.9 ГГц, 3x Cortex-A720 3.1 ГГц"
+    },
+    {
+      "key": "Количество ядер процессора",
+      "value": "8"
+    },
+    {
+      "key": "Графический процессор",
+      "value": "Adreno 750"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "12 ГБ"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "256 ГБ"
+    },
+    {
+      "key": "Тип встроенной памяти",
+      "value": "UFS 4.0"
+    },
+    {
+      "key": "Слот для карты памяти",
+      "value": "нет"
+    },
+    {
+      "key": "Встроенный динамик",
+      "value": "Стереодинамики"
+    },
+    {
+      "key": "Количество основных (тыловых) камер",
+      "value": "2"
+    },
+    {
+      "key": "Разрешение основной камеры",
+      "value": "50 + 8 МП"
+    },
+    {
+      "key": "Диафрагма основной камеры",
+      "value": "f/1.6"
+    },
+    {
+      "key": "Разрешение видео",
+      "value": "1280x720 (30 кадр./сек.), 1280x720 (60 кадр./сек.), 1280x720 (480 кадр./сек.), 1920x1080 (30 кадр./сек.), 1920x1080 (60 кадр./сек.), 1920x1080 (120 кадр./сек.), 1920x1080 (240 кадр./сек.), 3840x2160 (30 кадр./сек.), 3840x2160 (60 кадр./сек.), 3840x2160 (120 кадр./сек.)"
+    },
+    {
+      "key": "Автофокусировка основной камеры",
+      "value": "есть"
+    },
+    {
+      "key": "Оптическая стабилизация",
+      "value": "есть"
+    },
+    {
+      "key": "Тип модулей камеры",
+      "value": "основная камера, сверхширокоугольная камера"
+    },
+    {
+      "key": "Цифровая стабилизация",
+      "value": "есть"
+    },
+    {
+      "key": "Цифровой зум (фото)",
+      "value": "до 20х"
+    },
+    {
+      "key": "Тип вспышки",
+      "value": "двойная светодиодная"
+    },
+    {
+      "key": "Замедленная видеосъемка",
+      "value": "есть"
+    },
+    {
+      "key": "Разрешение фронтальной камеры",
+      "value": "20 Мпикс"
+    },
+    {
+      "key": "Разрешение снимков фронтальной камеры",
+      "value": "1920x1080"
+    },
+    {
+      "key": "Диафрагма фронтальной камеры",
+      "value": "f/2.2"
+    },
+    {
+      "key": "Функции фронтальной камеры",
+      "value": "замедленная съемка, телесуфлер, селфи в замедленной съемке"
+    },
+    {
+      "key": "SIM-карта",
+      "value": "2 × Nano-SIM"
+    },
+    {
+      "key": "Беспроводные модули",
+      "value": "Bluetooth 5.4, Wi-Fi 4 (802.11n), 5 (802.11ac), 6 (802.11ax), 7 (802.11be)"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "ИК-порт",
+      "value": "есть"
+    },
+    {
+      "key": "Модуль NFC (бесконтактная оплата)",
+      "value": "есть"
+    },
+    {
+      "key": "Поддержка 4G LTE-Advanced",
+      "value": "есть"
+    },
+    {
+      "key": "Режим работы нескольких SIM-карт",
+      "value": "режим ожидания"
+    },
+    {
+      "key": "Поддержка VoLTE",
+      "value": "есть"
+    },
+    {
+      "key": "Системы навигации",
+      "value": "A-GPS, BeiDou, GPS, Galileo, QZSS, ГЛОНАСС"
+    },
+    {
+      "key": "Диапазоны частот 5G",
+      "value": "FDD-5G 700 (B28), FDD-5G 850 (B5), FDD-5G 900 (B8), FDD-5G 1800 (B3), FDD-5G 2100 (B1), FDD-5G 2600 (B7), TDD-5G 2300 (B40), TDD-5G 2500 (B41), TDD-5G 2600 (B38), TDD-5G 3500 (B78), TDD-5G 3700 (B77)"
+    },
+    {
+      "key": "Диапазоны частот 4G (LTE)",
+      "value": "FDD-LTE 700 (B28), FDD-LTE 800 (B20), FDD-LTE 850 (B5), FDD-LTE 900 (B8), FDD-LTE 1500 (B32), FDD-LT"
+    },
+    {
+      "key": "Диапазоны частот 3G",
+      "value": "UMTS 850 (B5), UMTS 900 (B8), UMTS 1900 (B2), UMTS 2100 (B1)"
+    },
+    {
+      "key": "Диапазоны частот 2G",
+      "value": "GSM 850 (B5), GSM 900 (B8), GSM 1800 (B3), GSM 1900 (B2)"
+    },
+    {
+      "key": "Ёмкость аккумулятора",
+      "value": "6000 мАч"
+    },
+    {
+      "key": "Быстрая зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Беспроводная зарядка",
+      "value": "есть"
+    },
+    {
+      "key": "Материал",
+      "value": "Стекло, металл"
+    },
+    {
+      "key": "Ширина",
+      "value": "75 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "160.2 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "8.1 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "206 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Серебристый"
+    },
+    {
+      "key": "Стандарт влагозащиты",
+      "value": "IP68"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Android"
+    },
+    {
+      "key": "Сенсор распознавания лица",
+      "value": "есть"
+    },
+    {
+      "key": "Оболочка ОС",
+      "value": "HyperOS 2.0"
+    },
+    {
+      "key": "Датчики",
+      "value": "акселерометр, барометр, гироскоп, датчик освещенности, датчик приближения, компас"
+    },
+    {
+      "key": "Страна производства",
+      "value": "Китай"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver-3-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver-4-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver-5-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver-6-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver/Smartphone_Poco_F7_Pro_5G_12_256GB_Silver-7-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/9e418133fe3182d8ae06885a.jpg",
+    "assets/product-images/30a9ba28e6dd96119559771d.jpg",
+    "assets/product-images/fc97ef6de19552e794b6dfcc.jpg",
+    "assets/product-images/17f73539265797a872a432e6.jpg",
+    "assets/product-images/c0c54a7d88faa9ff71a3b986.jpg",
+    "assets/product-images/b547f9d1e7769493b0001cfa.jpg",
+    "assets/product-images/ce884a3eb4a2f56b53c7b6f5.jpg"
+  ],
+  "updated_at": "2026-10-27T12:54:26.074464Z"
+}
