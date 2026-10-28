@@ -3046,6 +3046,7 @@
       ${dk === "pawn" && !isNew ? pawnActionsHtml(r) : ""}
       ${fh(C.master)}
       <div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.pass, TIN_TYPES.includes(dk) ? { area: true } : {})}</div>
+      ${passBtnHtml(key, r)}
     </section>`;
     right += box(4, html); html = "";
     if (TIN_TYPES.includes(dk)) right += box(5, tinHtml(key, r));
@@ -3649,6 +3650,38 @@
     return new Date(d.getFullYear(), d.getMonth(), d.getDate() + days);
   }
   const ru = d => `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
+  // ── «🔑 Отправить пароль мастеру» (v91, 28.10.2026, план 93; план 94 §22) ────────────────────
+  // Владелец: «добавь в базе кнопку под паролем „отправить пароль мастеру“». Сам пароль уходит мастеру только в
+  // уведомлении о назначении — если K заполнен ДО назначения мастера; пароль, пришедший позже, пересылали руками.
+  // Пароль и мастера дверь `crm-pass` (Google Script/MasterPassword.js) берёт ИЗ ТАБЛИЦЫ, поэтому кнопка — только у
+  // сохранённого заказа и не при несохранённой правке пароля или мастера. В журнал — строка без самого пароля.
+  function passBtnHtml(key, r) {
+    if (key === "new" || !r) return "";
+    const pass = String(cell(r, C.pass) || "").trim(), master = String(cell(r, C.master) || "").trim();
+    if (!pass || !master) return "";
+    const dirty = S.dirty.has(key + ":" + C.pass) || S.dirty.has(key + ":" + C.master);
+    const done = S.passSent?.[String(cell(r, C.num)).trim()];
+    return `<div class="row"><button type="button" class="btn btn--ghost btn--sm" data-act="passmaster"${dirty || S.passBusy ? " disabled" : ""}>${S.passBusy ? "Отправляю…" : "🔑 Отправить пароль мастеру"}</button>${dirty ? `<span class="note">сначала сохраните</span>` : done ? `<span class="note">ушло ${esc(done)}</span>` : ""}</div>`;
+  }
+  async function passSend() {
+    const r = S.byNum.get(location.hash.slice(2)); if (!r) return;
+    const num = String(cell(r, C.num)).trim();
+    const call = again => DEMO
+      ? Promise.resolve({ ok: true, at: mskStamp().slice(11, 16), master: String(cell(r, C.master)) })
+      : doorPost(CFG.doors[0], "crm-pass", JSON.stringify({ token: S.token, row: r.row, num, again }))
+        .then(({ text: x }) => { try { return JSON.parse(x); } catch { return { ok: false, error: "дверь ответила не JSON" }; } });
+    S.passBusy = true; rerenderKeep();
+    try {
+      let j = await call(false);
+      if (!j.ok && j.already && confirm(`Этот пароль уже уходил мастеру в ${j.already}. Отправить ещё раз?`)) j = await call(true);
+      if (!j.ok) { if (!j.already) toast("Не ушло: " + (j.error || "дверь не ответила"), null, true); return; }
+      (S.passSent ||= {})[num] = `${j.master} в ${j.at}`;
+      journal([[num, r.row, "Пароль отправлен мастеру", "", j.master]]);
+      toast(`🔑 №${num}: пароль ушёл мастеру ${j.master}`, null, true);
+    } catch (e) { toast("Не ушло: " + e.message, null, true); }
+    finally { S.passBusy = false; rerenderKeep(); }
+  }
+
   // ── «✉️ Написать клиенту» (v90, 26.10.2026, план 93 §11.72) ─────────────────────────────────
   // Владелец: «добавь возможность написать клиенту прямо из оболочки — отдельная кнопка, которая открывает поле для ввода
   // сообщения; сообщение — во все возможные каналы, где есть клиент; обратно от него в оболочку не надо; если в заказе
@@ -4336,6 +4369,7 @@
     }
     if (act === "msgclose") { S.msg = null; rerenderKeep(); return; }
     if (act === "msgsend") { await msgSend(); return; }
+    if (act === "passmaster") { await passSend(); return; }
     if (act === "longlogin") { try { await codeSignIn(lastEmail()); toast("🔐 Вход запомнен на 30 дней — без окон Google", null, true); } catch (e) { toast(e.message, null, true); } render(); return; }
     if (act === "dd") { const k = curKey() + ":" + t.dataset.c; S.ddOpen = S.ddOpen === k ? null : k; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
     if (act === "login") {
