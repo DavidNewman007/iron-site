@@ -362,14 +362,26 @@
     store.set("crm.tok", { t: x.access_token, exp: Date.now() + ((x.expires_in || 3600) - 60) * 1000 });
     if (x.email) store.set("crm.who", x.email);
   }
-  // Новый токен по ключу сессии. false — ключа нет, он истёк или Google его отозвал.
+  // Новый токен по ключу сессии. false — не вышло; почему — в sidLast: «gone» — ключа нет, он истёк или Google его
+  // отозвал (входить заново); «net» — бот не ответил или ответил сбоем (сеть, VPN, Google), ключ цел.
+  // v92 (28.10.2026), владелец: «у Артура часто просит войти повторно и предоставить разрешения заново; он носит ноутбук
+  // домой и на работу, VPN то включает, то выключает, сети разные». До v92 любой сбой продления (секунды после смены сети
+  // или выхода из сна) выкидывал на экран входа, а «Продолжить» открывал Google с выбором аккаунта и согласием — хотя
+  // сохранённый вход был цел (у Артура один ключ с 11.10, днём продлевается). Теперь: три попытки с паузой, при «net» —
+  // сообщение «нет связи, вход сохранён» и «Повторить», без окон Google; сеть вернулась — продление само.
+  let sidLast = "";
+  const NET_MSG = "Нет связи с сервером входа (бот заказов) — вход сохранён. Проверьте интернет или VPN и нажмите «Повторить»: окна Google не нужны.";
   async function sidRefresh() {
     const sid = sidGet(); if (!sid || DEMO) return false;
-    try {
-      const r = await authPost("refresh", { sid });
-      if (r.ok) { takeToken(r); return true; }
-      if (r.status === 401) store.del("crm.sid");
-    } catch {}
+    for (let i = 0; i < 3; i++) {
+      try {
+        const r = await authPost("refresh", { sid });
+        if (r.ok) { takeToken(r); sidLast = "ok"; return true; }
+        if (r.status === 401) { store.del("crm.sid"); sidLast = "gone"; return false; }
+      } catch { /* сеть: повторить */ }
+      sidLast = "net";
+      if (i < 2) await new Promise(res => setTimeout(res, 1500 * (i + 1)));
+    }
     return false;
   }
   function codeSignIn(hint) {
@@ -414,6 +426,7 @@
     });
     if (r.status === 401 && refreshing && !again) { await refreshing; return api(path, opts, true); }
     if (r.status === 401 && !again && sidGet()) { refreshing ||= sidRefresh().finally(() => { refreshing = null; }); if (await refreshing) return api(path, opts, true); }
+    if (r.status === 401 && sidGet() && sidLast === "net") throw Object.assign(new Error(NET_MSG), { code: "net" }); // v92: ключ цел — не на экран входа
     if (r.status === 401) { store.del("crm.tok"); S.token = null; setTimeout(render, 0); throw Object.assign(new Error("Вход истёк — нажмите «Продолжить»"), { code: 401 }); }
     if (r.status === 403) {
       const why = await r.json().catch(() => ({}));
@@ -441,7 +454,7 @@
           api("?fields=sheets(properties(sheetId,title,gridProperties(rowCount)))"),
           fetch("https://www.googleapis.com/oauth2/v3/userinfo", { headers: { Authorization: "Bearer " + S.token } }).then(r => r.ok ? r.json() : {}),
         ]);
-        S.email = whoR.value?.email || "";
+        S.email = whoR.value?.email || lastEmail(); // v92: адрес не ответил (сеть) — почта с прошлого входа, иначе «Кто» в журнале пустой
         if (metaR.status === "rejected") {
           const e = metaR.reason;
           if (e?.code === 403 && S.email && !e.message.includes(S.email)) e.message = e.message.replace("нет доступа к базе.", `нет доступа к базе. Вы вошли как ${S.email}.`);
@@ -715,7 +728,8 @@
       <img class="login__logo" src="../assets/logo-horizontal.png" alt="IRON SERVICE" width="210" height="56">
       <h1>CRM</h1>
       <p>Вход по Google-аккаунту. Пускает всех, у кого есть доступ к таблице базы, — и только их.</p>
-      ${lastEmail() ? `<button class="btn btn--red" data-act="login" data-hint="${esc(lastEmail())}">Продолжить как <span style="text-transform:none;letter-spacing:0">${esc(lastEmail())}</span></button>
+      ${lastEmail() ? `<button class="btn btn--red" data-act="login" data-hint="${esc(lastEmail())}">${sidGet() && sidLast === "net" ? "Повторить" : `Продолжить как <span style="text-transform:none;letter-spacing:0">${esc(lastEmail())}</span>`}</button>
+        ${sidGet() && sidLast === "net" ? `<div class="row" style="justify-content:center"><button class="btn btn--ghost btn--sm" data-act="login" data-hint="${esc(lastEmail())}" data-hour="1">Войти через Google на час, без бота</button></div>` : ""}
         <div class="row" style="justify-content:center"><button class="btn btn--ghost" data-act="login">Другой аккаунт</button></div>`
         : `<button class="btn btn--red" data-act="login">Войти через Google</button>`}
       ${S.error ? `<p class="note">${esc(S.error)}</p>` : ""}
@@ -4233,6 +4247,13 @@
   };
   setInterval(sidTick, 60e3);
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") sidTick(); });
+  // v92: сеть вернулась (сменили Wi-Fi, включили VPN, вышли из сна) — продлить сразу; на экране «нет связи» — войти самим.
+  window.addEventListener("online", () => {
+    if (S.token) return sidTick();
+    if (!sidGet() || refreshing || DEMO) return;
+    refreshing = sidRefresh().finally(() => { refreshing = null; });
+    refreshing.then(ok => { if (ok) { S.error = ""; load(); } });
+  });
   // Открытый список закрывается кликом мимо него и клавишей Escape.
   document.addEventListener("click", e => {
     if (S.ddOpen && !e.target.closest(".dd")) { S.ddOpen = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
@@ -4373,9 +4394,16 @@
     if (act === "longlogin") { try { await codeSignIn(lastEmail()); toast("🔐 Вход запомнен на 30 дней — без окон Google", null, true); } catch (e) { toast(e.message, null, true); } render(); return; }
     if (act === "dd") { const k = curKey() + ":" + t.dataset.c; S.ddOpen = S.ddOpen === k ? null : k; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
     if (act === "login") {
+      // v92: сохранённый долгий вход цел — сначала он, без окон Google и без экрана согласия.
+      if (sidGet() && t.dataset.hint && !t.dataset.hour) { // «Другой аккаунт» (без подсказки) — как раньше
+        S.error = ""; S.loading = true; render();
+        const ok = await sidRefresh(); S.loading = false;
+        if (ok) { await load(); return; }
+        if (sidLast === "net") { S.error = NET_MSG; render(); return; }
+      }
       // С подсказкой — сначала тихо (без выбора аккаунта). Google попросил подтверждения — следующее
       // нажатие откроет обычное окно (новое окно после неудачи браузер бы заблокировал).
-      if (S.authOn && !inApp()) {
+      if (S.authOn && !inApp() && !t.dataset.hour) {
         try { await codeSignIn(t.dataset.hint || ""); S.error = ""; await load(); }
         catch (err) { S.authOn = false; S.error = err.message + " — следующая попытка обычным входом"; render(); }
         return;
@@ -4924,6 +4952,6 @@
   S.authOn = !!store.get("crm.lg");
   if (!DEMO) fetch(`${CFG.botAuth}/status`).then(r => r.json()).then(x => { const on = !!x.enabled; store.set("crm.lg", on); if (on !== S.authOn) { S.authOn = on; if (!location.hash.startsWith("#/n")) render(); } }).catch(() => {});
   if (DEMO || S.token) load();
-  else if (sidGet()) { S.loading = true; render(); sidRefresh().then(ok => { S.loading = false; ok ? load() : render(); }); }
+  else if (sidGet()) { S.loading = true; render(); sidRefresh().then(ok => { S.loading = false; if (ok) return load(); if (sidLast === "net") S.error = NET_MSG; render(); }); }
   else render();
 })();
