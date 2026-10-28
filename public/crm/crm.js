@@ -3693,7 +3693,7 @@
       if (!j.ok) { if (!j.already) toast("Не ушло: " + (j.error || "дверь не ответила"), null, true); return; }
       (S.passSent ||= {})[num] = `${j.master} в ${j.at}`;
       journal([[num, r.row, "Пароль отправлен мастеру", "", j.master]]);
-      toast(`🔑 №${num}: пароль ушёл мастеру ${j.master}`, null, true);
+      toast(`🔑 №${num}: пароль ушёл мастеру ${j.master}${j.reply ? " — ответом на его «Новый заказ»" : ""}`, null, true); // v94: ответом на уведомление о заказе
     } catch (e) { toast("Не ушло: " + e.message, null, true); }
     finally { S.passBusy = false; rerenderKeep(); }
   }
