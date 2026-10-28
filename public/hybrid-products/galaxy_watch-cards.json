@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-27T12:54:38.271Z",
-  "count": 273,
+  "generated_at": "2026-10-28T13:49:28.911Z",
+  "count": 282,
   "byId": {
     "watch-8-40mm-graphite-оаэ-s2-18800": {
       "url": "hybrid-products/galaxy_watch/watch-8-40mm-graphite-s2-18800.html",
@@ -2185,6 +2185,78 @@
       "name": "Galaxy Watch Ultra 2 47mm LTE Titanium Silver",
       "warehouse": "(S3)",
       "price": 41600
+    },
+    "galaxy-watch-8-40mm-lte-silver-оаэ-s3-22700": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-40mm-lte-silver-s3-22700.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-40mm-lte-silver-s3-22700.html",
+      "cover": "assets/product-images/0e29195520f0a5f21bf1ba14.jpg",
+      "name": "Galaxy Watch 8 40mm LTE Silver",
+      "warehouse": "(S3)",
+      "price": 22700
+    },
+    "galaxy-watch-8-44mm-lte-graphite-оаэ-s3-24800": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-44mm-lte-graphite-s3-24800.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-44mm-lte-graphite-s3-24800.html",
+      "cover": "assets/product-images/1d131de9d5675beef62a2257.jpg",
+      "name": "Galaxy Watch 8 44mm LTE Graphite",
+      "warehouse": "(S3)",
+      "price": 24800
+    },
+    "galaxy-watch-8-44mm-lte-silver-оаэ-s3-23900": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-44mm-lte-silver-s3-23900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-44mm-lte-silver-s3-23900.html",
+      "cover": "assets/product-images/7d7f7978f21f9e05580f4577.jpg",
+      "name": "Galaxy Watch 8 44mm LTE Silver",
+      "warehouse": "(S3)",
+      "price": 23900
+    },
+    "galaxy-watch-ultra-2025-47mm-lte-blue-оаэ-s3-29900": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47mm-lte-blue-s3-29900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47mm-lte-blue-s3-29900.html",
+      "cover": "assets/product-images/8f80ebef9d31df7f3bfa1ac5.jpeg",
+      "name": "Galaxy Watch Ultra (2025) 47mm LTE Blue",
+      "warehouse": "(S3)",
+      "price": 29900
+    },
+    "galaxy-watch-ultra-2025-47mm-lte-gray-оаэ-s3-30200": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47mm-lte-gray-s3-30200.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47mm-lte-gray-s3-30200.html",
+      "cover": "assets/product-images/7b3842ea3d40c51d27404190.jpeg",
+      "name": "Galaxy Watch Ultra (2025) 47mm LTE Gray",
+      "warehouse": "(S3)",
+      "price": 30200
+    },
+    "galaxy-watch-ultra-2025-47mm-lte-silver-оаэ-s3-30200": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47mm-lte-silver-s3-30200.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47mm-lte-silver-s3-30200.html",
+      "cover": "assets/product-images/ccf983295c45295f48b9ba9f.jpg",
+      "name": "Galaxy Watch Ultra (2025) 47mm LTE Silver",
+      "warehouse": "(S3)",
+      "price": 30200
+    },
+    "galaxy-watch-ultra-2025-47mm-lte-white-оаэ-s3-29900": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47mm-lte-white-s3-29900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47mm-lte-white-s3-29900.html",
+      "cover": "assets/product-images/14fe318d77fff2bf942ccecd.jpeg",
+      "name": "Galaxy Watch Ultra (2025) 47mm LTE White",
+      "warehouse": "(S3)",
+      "price": 29900
+    },
+    "galaxy-watch-ultra-2-47mm-lte-titanium-gray-оаэ-s3-41200": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47mm-lte-titanium-gray-s3-41200.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47mm-lte-titanium-gray-s3-41200.html",
+      "cover": "assets/product-images/297bbfe1b281c6b4ad991fb5.jpg",
+      "name": "Galaxy Watch Ultra 2 47mm LTE Titanium Gray",
+      "warehouse": "(S3)",
+      "price": 41200
+    },
+    "galaxy-watch-ultra-2-47mm-lte-titanium-silver-оаэ-s3-41200": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47mm-lte-titanium-silver-s3-41200.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47mm-lte-titanium-silver-s3-41200.html",
+      "cover": "assets/product-images/af5277afe95d91582830a075.jpg",
+      "name": "Galaxy Watch Ultra 2 47mm LTE Titanium Silver",
+      "warehouse": "(S3)",
+      "price": 41200
     }
   }
 }

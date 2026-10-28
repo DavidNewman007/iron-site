@@ -1,0 +1,105 @@
+{
+  "product_id": "redmi-17-4-128-black-европа-s3-17000",
+  "category": "xiaomi",
+  "file_slug": "redmi-17-4-128-black-s3-17000",
+  "name": "Redmi 17 4/128 Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 17000,
+  "catalog_url": "https://www.mi.com/global/product/redmi-17/specs/",
+  "catalog_title": "Xiaomi Redmi 17 4/128 ГБ, Black (чёрный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9\", IPS LCD, 1600×720 (HD+), до 120 Гц, яркость до 825 нит (HBM), Corning Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "MediaTek Helio G91-Ultra (12 нм, 8 ядер, до 2,0 ГГц), графика Mali-G52 MC2"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "4 ГБ LPDDR4X (+ расширение памяти за счёт накопителя)"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "128 ГБ eMMC 5.1, microSD до 2 ТБ (гибридный слот)"
+    },
+    {
+      "key": "Основная камера",
+      "value": "50 Мп, f/1.8 + вспомогательный модуль; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "8 Мп, f/2.05; видео 1080p 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "7500 мАч (тип.)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "проводная 45 Вт (USB Type-C), обратная проводная 22,5 Вт; блок питания в комплект не входит"
+    },
+    {
+      "key": "SIM",
+      "value": "2 nano-SIM (гибридный слот: вторая SIM или microSD)"
+    },
+    {
+      "key": "Связь",
+      "value": "4G LTE (без 5G), NFC, Wi-Fi 2,4/5 ГГц, Bluetooth 5.4, GPS/ГЛОНАСС/Galileo/BeiDou, FM-радио"
+    },
+    {
+      "key": "Защита",
+      "value": "IP64 (пыль и брызги)"
+    },
+    {
+      "key": "Разблокировка",
+      "value": "сканер отпечатка в боковой кнопке, распознавание лица"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "USB Type-C, 3,5 мм для наушников"
+    },
+    {
+      "key": "Размеры",
+      "value": "170,12 × 78,42 × 8,8 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "232 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Black (Чёрный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 (Android 16)"
+    },
+    {
+      "key": "Комплектация",
+      "value": "смартфон, кабель USB Type-C, скрепка для SIM, документация (без блока питания)"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/178_operatorx_operatorx_xm/04/08/2026/d820f4412e33d29ffbab47c7b616049a.png",
+    "https://i02.appmifile.com/814_operatorx_operatorx_xm/04/08/2026/eaaa750d21cb2b0e52e46253f4be2004.png",
+    "https://i02.appmifile.com/608_operatorx_operatorx_xm/04/08/2026/0810ff2f7d8548ffa9ab6b2d3241da97.png",
+    "https://i02.appmifile.com/35_operatorx_operatorx_xm/04/08/2026/cc55653929e29a3352c88bb01a8c9c97.png",
+    "https://i02.appmifile.com/604_operatorx_operatorx_xm/04/08/2026/54044305e62b3dfdfecee8f10759eb51.png",
+    "https://i02.appmifile.com/873_operatorx_operatorx_xm/04/08/2026/e4bcf2af3dc799f9a4f7832687d7b1f5.png"
+  ],
+  "images_local": [
+    "assets/product-images/d3b6f516b9111ef23781794e.jpg",
+    "assets/product-images/d87dff52475b4209d13dfab4.jpg",
+    "assets/product-images/e07ce6b1aae7dbd5a4821282.jpg",
+    "assets/product-images/a163ef17c0310b2d3e7fab7e.jpg",
+    "assets/product-images/8443e9981ab635ea05df5119.jpg",
+    "assets/product-images/a98a78ce96e2867cd96e1e89.jpg"
+  ],
+  "manual": true,
+  "manual_key": "redmi 17 4 128 black~s3",
+  "photo_source": "https://www.mi.com/global/product/redmi-17/specs/",
+  "updated_at": "2026-10-28T13:48:54.677695Z"
+}
