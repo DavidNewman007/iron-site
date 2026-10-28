@@ -179,6 +179,16 @@
 }
 .iac-send:disabled { opacity: 0.5; cursor: default; }
 
+/* Мини-приложение Telegram (класс ставит telegram-miniapp.js): человек и так в боте, а кнопка закрывала бы
+   полосу корзины. 28.10.2026, окно на всём сайте. */
+html.tg-miniapp .iac-launcher, html.tg-miniapp .iac-panel { display: none !important; }
+
+/* Плашка корзины внизу экрана (магазин, карточки, услуги — до 900 px, высота ~55 px): кнопка встаёт над ней,
+   иначе закрывала «Корзину» (проверено 28.10.2026 на 375 px). */
+@media (max-width: 900px) {
+  body:has(.cart-mobile-bar:not([hidden])) .iac-launcher { bottom: 68px; }
+}
+
 /* Телефон: окно на весь экран, кнопка вызова прячется, пока окно открыто. */
 @media (max-width: 520px) {
   .iac-launcher { right: 12px; bottom: 12px; padding: 11px 15px; }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' 'unsafe-inline'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data: blob:; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; media-src blob:; frame-src https://challenges.cloudflare.com; connect-src https://iron-site-agent.4489530.workers.dev">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Удаление данных — IRON SERVICE</title>
   <meta name="description" content="Как удалить данные, которые IRON SERVICE получил из Instagram Direct и других каналов.">
@@ -98,5 +98,6 @@
 
   <script defer src="js/config.js"></script>
   <script defer src="js/main.js"></script>
+  <script src="js/agent-chat.js?v=2026-10-28-1" defer></script>
 </body>
 </html>

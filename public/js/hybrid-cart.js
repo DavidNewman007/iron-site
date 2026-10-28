@@ -108,6 +108,18 @@
     document.head.appendChild(s);
   })();
 
+  // Окно помощника «Спросить мастера» (план 123, этап 6, 28.10.2026) — тем же путём, что и мини-апп: карточек
+  // 27 тыс., адрес воркера и версия окна живут здесь, а не в каждой. Только русские карточки: по-английски помощник
+  // умеет лишь поздороваться. CSP карточки должен пропускать воркер и Turnstile (card_builder.py).
+  (function ensureAgentChat() {
+    if (window.IRON_AGENT_CHAT_LOADED || !/^ru/i.test(document.documentElement.lang || "")) return;
+    window.IRON_AGENT_CHAT_LOADED = true;
+    const s = document.createElement("script");
+    s.src = getScriptBase() + "agent-chat.js?v=2026-10-28-1";
+    s.defer = true;
+    document.head.appendChild(s);
+  })();
+
   function ensureConfig() {
     if (window.IRON_CONFIG?.googleSheetId) return Promise.resolve(window.IRON_CONFIG);
     return new Promise((resolve, reject) => {

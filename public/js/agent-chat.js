@@ -1,6 +1,13 @@
 /**
- * Окно помощника IRON SERVICE (план 123). Подключение:
- *   <script src="js/agent-chat.js" data-api="https://iron-site-agent.4489530.workers.dev" data-sitekey="…" defer></script>
+ * Окно помощника IRON SERVICE (план 123). Подключение — одной строкой, стили окно подтянет само:
+ *   <script src="js/agent-chat.js?v=…" defer></script>
+ * data-api / data-sitekey у тега переопределяют адрес воркера и ключ Turnstile (по умолчанию — боевые).
+ *
+ * С 28.10.2026 окно на всём русском сайте (этап 6): главные страницы и статьи — тегом, карточки товаров — через
+ * hybrid-cart.js (их 27 тыс., как и telegram-miniapp.js). Странице нужен CSP с воркером в connect-src и
+ * challenges.cloudflare.com в script-src/frame-src, иначе окно откроется, но не достучится до помощника.
+ * В мини-приложении Telegram окно спрятано стилем (html.tg-miniapp): там человек и так в боте, а кнопка
+ * закрывала бы полосу корзины.
  *
  * Без сборки и библиотек, как весь сайт. Ответы рисуются только текстом (textContent), ссылки — кнопками и только
  * на свои адреса: даже если сервер или модель вернут что-то не то, разметка и чужая ссылка на страницу не попадут.
@@ -8,9 +15,20 @@
  */
 (() => {
   const script = document.currentScript;
-  const API = script && script.dataset.api;
-  const SITEKEY = script && script.dataset.sitekey;
-  if (!API || !SITEKEY || document.getElementById("iac-launcher")) return;
+  const API = (script && script.dataset.api) || "https://iron-site-agent.4489530.workers.dev";
+  const SITEKEY = (script && script.dataset.sitekey) || "0x4AAAAAAFmWn9pHdjQRBOU9";
+  if (document.getElementById("iac-launcher")) return;
+
+  // Стили: если страница не подключила agent-chat.css сама — берём из той же папки сайта и той же версии, что скрипт.
+  // Кнопку показываем после загрузки стилей, иначе на миг мелькнёт голая кнопка внизу страницы.
+  let cssReady = null;
+  if (script && script.src && !document.querySelector('link[href*="agent-chat.css"]')) {
+    const css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = script.src.replace(/js\/agent-chat\.js/, "css/agent-chat.css");
+    cssReady = new Promise((resolve) => { css.onload = css.onerror = resolve; });
+    document.head.append(css);
+  }
 
   const LANG = (document.documentElement.lang || "ru").startsWith("en") ? "en" : "ru";
   const T = {
@@ -135,6 +153,10 @@
   micBtn.hidden = !canRecord;
   form.append(attachBtn, fileInput, micBtn, input, sendBtn);
   panel.append(head, log, tsBox, form);
+  if (cssReady) {
+    launcher.hidden = true;
+    cssReady.then(() => { launcher.hidden = false; });
+  }
   document.body.append(launcher, panel);
 
   let token = store.get();

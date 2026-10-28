@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com https://telegram.org 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com https://order-bot.4489530.workers.dev https://functions.yandexcloud.net">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data: blob:; script-src 'self' https://docs.google.com https://telegram.org 'unsafe-inline' https://challenges.cloudflare.com; frame-src https://yandex.ru https://yandex.com https://yandex.net https://challenges.cloudflare.com; connect-src 'self' https://docs.google.com https://order-bot.4489530.workers.dev https://functions.yandexcloud.net https://iron-site-agent.4489530.workers.dev; media-src blob:">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <!-- Как можно раньше: определяет открытие как Telegram Mini App (бот
        @IRON_SERVICE_ORDER_bot) и прячет лишнее для мини-приложения. Не
@@ -460,5 +460,6 @@
   <script defer src="js/parts.js?v=2026-09-19-3"></script>
   <script defer src="js/pay-markup.js?v=2026-09-18-1"></script>
   <script defer src="js/prices.js?v=2026-10-25-1"></script>
+  <script src="js/agent-chat.js?v=2026-10-28-1" defer></script>
 </body>
 </html>
