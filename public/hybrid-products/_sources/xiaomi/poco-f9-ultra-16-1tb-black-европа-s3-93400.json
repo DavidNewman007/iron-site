@@ -1,0 +1,97 @@
+{
+  "product_id": "poco-f9-ultra-16-1tb-black-европа-s3-93400",
+  "category": "xiaomi",
+  "file_slug": "poco-f9-ultra-16-1tb-black-s3-93400",
+  "name": "POCO F9 Ultra 16/1TB Black",
+  "country": "🇪🇺 Европа",
+  "warehouse": "(S3)",
+  "price": 93400,
+  "catalog_url": "https://www.mi.com/global/product/poco-f9-ultra/specs/",
+  "catalog_title": "POCO F9 Ultra 16 ГБ/1 ТБ, Black (чёрный)",
+  "specs": [
+    {
+      "key": "Экран",
+      "value": "6,9\" AMOLED (POCO HyperRGB), 2608×1200, до 185 Гц, пиковая яркость до 4500 нит (10000 нит в HDR), HDR10+, Dolby Vision, Gorilla Glass 7i"
+    },
+    {
+      "key": "Процессор",
+      "value": "Qualcomm Snapdragon 8 Elite Gen 5 (3 нм), 8 ядер до 4,6 ГГц, графика Adreno 840; отдельный чип VisionBoost D8"
+    },
+    {
+      "key": "Оперативная память",
+      "value": "16 ГБ LPDDR5X"
+    },
+    {
+      "key": "Встроенная память",
+      "value": "1 ТБ UFS 4.1, без слота карт памяти"
+    },
+    {
+      "key": "Основная камера",
+      "value": "200 Мп (f/1.68, OIS) + 50 Мп перископный телевик 5× (OIS) + 50 Мп сверхширокоугольная; видео до 8K 30 к/с"
+    },
+    {
+      "key": "Фронтальная камера",
+      "value": "32 Мп, видео 4K 30 к/с"
+    },
+    {
+      "key": "Аккумулятор",
+      "value": "8050 мА·ч (кремний-углеродный)"
+    },
+    {
+      "key": "Зарядка",
+      "value": "100 Вт HyperCharge по проводу, 50 Вт беспроводная, обратная 27 Вт проводная / 22,5 Вт беспроводная; USB Type-C 3.2"
+    },
+    {
+      "key": "SIM",
+      "value": "2 SIM: nano-SIM + nano-SIM, nano-SIM + eSIM или eSIM + eSIM"
+    },
+    {
+      "key": "Связь",
+      "value": "5G, NFC, Wi-Fi 7, Bluetooth 6.0, ИК-порт"
+    },
+    {
+      "key": "Защита",
+      "value": "IP68, ультразвуковой сканер отпечатка в экране"
+    },
+    {
+      "key": "Звук",
+      "value": "Звуковая система Bose 2.1 с отдельным сабвуфером, Dolby Atmos"
+    },
+    {
+      "key": "Размеры",
+      "value": "163,49 × 77,94 × 8,74 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "235 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Black (чёрный)"
+    },
+    {
+      "key": "Операционная система",
+      "value": "Xiaomi HyperOS 3 на базе Android 16"
+    }
+  ],
+  "images_remote": [
+    "https://i02.appmifile.com/7_operatorx_operatorx_xm/21/08/2026/1b2a5ab6e18faf510b8565a88e6b60ff.png",
+    "https://i02.appmifile.com/117_operatorx_operatorx_xm/21/08/2026/6b25092993d65ae7019f80ba049c5c22.png",
+    "https://i02.appmifile.com/498_operatorx_operatorx_xm/21/08/2026/1b91a3f8fc2d9c9ca2ec77aac167f28c.png",
+    "https://i02.appmifile.com/534_operatorx_operatorx_xm/21/08/2026/ca9511511fb7b7170df3cdb9335ff898.png",
+    "https://i02.appmifile.com/510_operatorx_operatorx_xm/21/08/2026/09dc211bf277b871e2b3b4e41229b2f0.png",
+    "https://i02.appmifile.com/465_operatorx_operatorx_xm/21/08/2026/9c6b25b553b83a21546543cafa199a0f.png"
+  ],
+  "images_local": [
+    "assets/product-images/4825622810443c627efb2222.jpg",
+    "assets/product-images/2192af6e855f00945fa5bb87.jpg",
+    "assets/product-images/ebe60c466322bec4ee9afb5a.jpg",
+    "assets/product-images/451cb1106c28220445de21d2.jpg",
+    "assets/product-images/11dc248e8b007a5aad32c3f0.jpg",
+    "assets/product-images/54301a3cb3fd44765a80a722.jpg"
+  ],
+  "manual": true,
+  "manual_key": "poco f9 ultra 16 1tb black~s3",
+  "photo_source": "https://www.mi.com/global/product/poco-f9-ultra/specs/",
+  "updated_at": "2026-10-29T13:57:41.589619Z"
+}

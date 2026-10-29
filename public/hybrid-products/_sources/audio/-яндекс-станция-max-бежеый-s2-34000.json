@@ -1,0 +1,95 @@
+{
+  "product_id": "-яндекс-станция-max-бежеый-s2-34000",
+  "category": "audio",
+  "file_slug": "яндекс-станция-max-бежеый-s2-34000",
+  "name": "🔈Яндекс Станция MAX Бежеый",
+  "country": "",
+  "warehouse": "(S2)",
+  "price": 34000,
+  "catalog_url": "https://sochi.dr-store.ru/audio/speakers/yandex-station-max-zigbee-beige",
+  "catalog_title": "Умная колонка Яндекс Станция Макс с Zigbee, бежевая",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Яндекс Станция Макс с Zigbee (YNDX-00053)"
+    },
+    {
+      "key": "Цвет",
+      "value": "бежевый"
+    },
+    {
+      "key": "Суммарная мощность",
+      "value": "65 Вт"
+    },
+    {
+      "key": "Динамики",
+      "value": "2 ВЧ по 15 Вт, 2 СЧ по 10 Вт, НЧ 40 Вт, пассивный излучатель"
+    },
+    {
+      "key": "Диапазон частот",
+      "value": "45–20 000 Гц"
+    },
+    {
+      "key": "Звук",
+      "value": "2 усилителя класса D, Dolby Audio"
+    },
+    {
+      "key": "Микрофоны",
+      "value": "7, распознавание до 7 м"
+    },
+    {
+      "key": "Wi-Fi",
+      "value": "802.11 b/g/n/ac, 2,4 и 5 ГГц"
+    },
+    {
+      "key": "Bluetooth",
+      "value": "5.0 BLE"
+    },
+    {
+      "key": "Умный дом",
+      "value": "встроенный хаб Zigbee 3.0"
+    },
+    {
+      "key": "Разъёмы",
+      "value": "HDMI 2.0, Gigabit Ethernet, AUX OUT, питание"
+    },
+    {
+      "key": "Видео",
+      "value": "вывод на ТВ до 4K Ultra HD"
+    },
+    {
+      "key": "Экран",
+      "value": "монохромный LED-дисплей 25×16 пикселей"
+    },
+    {
+      "key": "Пульт",
+      "value": "в комплекте, YNDX-00402"
+    },
+    {
+      "key": "Питание",
+      "value": "от сети"
+    },
+    {
+      "key": "Размеры",
+      "value": "141 × 141 × 231 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "около 2,7 кг"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/ya-station-max/yandex-station-max-3-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/ya-station-max/yandex-station-max-5-1000x1000.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/audio/ya-station-max/yandex-station-max-4-1000x1000.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/f8e9576798a44e82ad922df9.jpg",
+    "assets/product-images/7cd22f65d3d012ee67c5dc08.jpg",
+    "assets/product-images/e13130156624e856f97ed717.jpg"
+  ],
+  "manual": true,
+  "manual_key": "яндекс станция max бежеый~s2",
+  "photo_source": "https://sochi.dr-store.ru/audio/speakers/yandex-station-max-zigbee-beige",
+  "updated_at": "2026-10-29T13:55:32.816372Z"
+}

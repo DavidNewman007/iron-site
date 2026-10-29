@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-28T13:49:28.837Z",
-  "count": 132,
+  "generated_at": "2026-10-29T13:58:36.868Z",
+  "count": 134,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -1057,6 +1057,22 @@
       "name": "🖊 Pencil Pro MX2D3",
       "warehouse": "(S1)",
       "price": 12500
+    },
+    "-pencil-pro-mx2d3-s1-12200": {
+      "url": "hybrid-products/accessories/pencil-pro-mx2d3-s1-12200.html",
+      "url_en": "en/hybrid-products/accessories/pencil-pro-mx2d3-s1-12200.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "🖊 Pencil Pro MX2D3",
+      "warehouse": "(S1)",
+      "price": 12200
+    },
+    "apple-pencil-usb-c-s2-8700": {
+      "url": "hybrid-products/accessories/apple-pencil-usb-c-s2-8700.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-usb-c-s2-8700.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "Apple Pencil USB-C",
+      "warehouse": "(S2)",
+      "price": 8700
     }
   }
 }
