@@ -19,7 +19,7 @@
   (function () {
     var media = media0, still = media && media.querySelector(".home-hero__still");
     if (!media) return;
-    var shown = false, show = function () { if (!shown) { shown = true; media.classList.remove("is-wait"); } };
+    var shown = false, show = function () { if (!shown) { shown = true; media.classList.remove("is-wait"); media.dispatchEvent(new Event("hero:shown")); } };
     var dec = function (src, img) { img = img || new Image(); if (!img.src) img.src = src; return img.decode ? img.decode().catch(function () {}) : Promise.resolve(); };
     Promise.all([dec(ROOT + "assets/home/hero-poster.webp"), still ? dec(null, still) : null]).then(show);
     setTimeout(show, 2500);
@@ -201,10 +201,13 @@
       }).catch(function () {});
       requestAnimationFrame(tick);
     }
-    // Атласы (до 5,4 МБ) — только после загрузки страницы: на медленной сети они отбирали канал у первого экрана, и
-    // событие load на 1,5 Мбит/с не наступало за 30 с (замер 29.10, вечер). До этого на месте неподвижный герой.
-    function idle() { if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 2000 }); else setTimeout(start, 1000); }
-    if (document.readyState === "complete") idle(); else addEventListener("load", idle, { once: true });
+    // Атласы (до 5,4 МБ) — когда первый экран уже проявился (фон и неподвижный герой раскодированы): раньше они
+    // качались сразу и отбирали канал у первого экрана, на 1,5 Мбит/с событие load не наступало за 30 с. Ждать само
+    // load тоже плохо: его держит карта Яндекса внизу страницы. Запасной срок — 4 с.
+    var begun = false;
+    function idle() { if (begun) return; begun = true; if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 1500 }); else setTimeout(start, 300); }
+    if (media && !media.classList.contains("is-wait")) idle(); else if (media) media.addEventListener("hero:shown", idle, { once: true });
+    setTimeout(idle, 4000);
   })();
   // Блоки проявляются при прокрутке. «АКБ iPhone от …» — из прайса ремонта, когда карточка дошла до экрана
   // (services.json тяжёлый, на первый экран его не тянем).

@@ -31,7 +31,15 @@
     const src = orgId
       ? `https://yandex.ru/map-widget/v1/?z=${z}&ol=biz&oid=${orgId}&l=map`
       : `https://yandex.ru/map-widget/v1/?ll=${lon}%2C${lat}&z=${z}&pt=${lon}%2C${lat}%2Cpm2rdm&l=map`;
-    mapEl.innerHTML = `<iframe src="${src}" allowfullscreen loading="lazy" title="IRON SERVICE на карте"></iframe>`;
+    // Карта вставляется, только когда до неё почти докрутили (29.10.2026): виджет Яндекса тянет десятки рекламных
+    // «синхронизаций» (ads.betweendigital, adriver, …), часть которых сеть рвёт, и держал событие load страницы —
+    // на главной из-за этого поздно включалось слежение героя. loading="lazy" у iframe не спасал: Chrome грузит
+    // «ленивые» iframe с запасом в пару экранов.
+    const put = () => { mapEl.innerHTML = `<iframe src="${src}" allowfullscreen loading="lazy" title="IRON SERVICE на карте"></iframe>`; };
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); put(); } }, { rootMargin: "400px" });
+      io.observe(mapEl);
+    } else put();
   }
 
   // Contact form
