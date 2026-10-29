@@ -38,7 +38,7 @@ UI = {
     "specs": "Specifications",
     "pick": "+ Select",
     "preorder": "🛩️ to order, 1–2 days",
-    "preorder57": "🛩️ to order, 5–7 days",
+    "preorder57": "🛩️ pre-order, 5–7 days",   # как в магазине (prices.js), до 29.10.2026 — «to order»
     "about": "<strong>IRON SERVICE</strong> — Apple shop and repair workshop in Sochi, Moskovskaya Street 5.",
     "order": "Orders:",
     "footer_legal": "Independent Apple service in Sochi. Not an official Apple Inc. website.",

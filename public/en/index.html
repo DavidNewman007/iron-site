@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>iPhone &amp; MacBook Repair in Sochi — IRON SERVICE | English-friendly Apple service</title>
   <meta name="description" content="Apple repair in Sochi, Russia: cracked iPhone screens, water damage, battery replacement, MacBook repair. Independent Apple service since 2014. We assist customers in English via WhatsApp and Telegram. Moskovskaya 5, Sochi.">
@@ -68,6 +68,9 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css?v=2026-08-19-3">
+  <link rel="stylesheet" href="../css/home.css?v=2026-10-29-1">
+  <link rel="preload" as="image" href="../assets/home/hero-poster.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="../assets/home/hero-still.webp" fetchpriority="high">
 </head>
 <body class="page-home">
   <header class="site-header">
@@ -96,49 +99,35 @@
   </header>
 
   <main>
-    <section class="hero">
-      <div class="hero-sunburst hero-sunburst--a" aria-hidden="true"></div>
-      <div class="hero-sunburst hero-sunburst--b" aria-hidden="true"></div>
-      <div class="hero-sunburst-glow" aria-hidden="true"></div>
-      <div class="container hero-grid">
-        <div>
-          <span class="hero-badge">Sochi · since 2014</span>
-          <h1>IRON SERVICE</h1>
-          <p class="hero-lead">Independent Apple repair workshop in the centre of Sochi. Broke your iPhone screen on holiday? Spilled water on your MacBook? Bring it in — most repairs are done the same day.</p>
-          <div class="hero-stats">
-            <div class="stat">
-              <strong>100</strong>
-              <span>days warranty on our work</span>
-            </div>
-            <div class="stat">
-              <strong>2014</strong>
-              <span>year we opened</span>
-            </div>
-            <div class="stat">
-              <strong>Apple</strong>
-              <span>Apple devices only</span>
-            </div>
-          </div>
-          <div class="hero-actions">
-            <a href="https://wa.me/79288509404" class="btn btn-primary" target="_blank" rel="noopener">Message us on WhatsApp</a>
-            <a href="contacts.html" class="btn btn-secondary">How to find us</a>
-          </div>
-          <p class="hero-note">We speak Russian in the workshop, but we handle enquiries in English by text — WhatsApp, Telegram or email. Write to us in English and we will reply in English.</p>
+    <!--
+      Английская главная на виде русской (гибрид A+B, план 118; перевод — 29.10.2026, план 124 §8). До этого здесь стоял
+      постер poster-factory с русской надписью «А ты подписался на наш телеграм канал» и персонажем Marvel. Слои первого
+      экрана и скрипт — общие с русской главной (js/home.js); пути — от data-root="../".
+    -->
+    <section class="home-hero">
+      <div class="home-hero__media" data-root="../">
+        <video id="home-video" autoplay muted loop playsinline preload="auto" poster="../assets/home/hero-poster.webp" disablepictureinpicture aria-hidden="true">
+          <source src="../assets/home/hero-loop.mp4" type="video/mp4">
+        </video>
+        <img class="home-hero__still" src="../assets/home/hero-still.webp" alt="" width="1280" height="704" aria-hidden="true">
+        <canvas class="home-head" id="home-head" aria-hidden="true"></canvas>
+      </div>
+      <script>
+        // Скрыть сцену до прихода фона и героя (снимает js/home.js). Класс ставит скрипт, поэтому без JS сцена видна.
+        document.querySelector(".home-hero__media").classList.add("is-wait");
+      </script>
+      <div class="container home-hero__inner">
+        <span class="hero-badge">Apple repair &amp; shop in Sochi · since 2014</span>
+        <h1>Iron guys <em>fix Apple</em></h1>
+        <p class="home-hero__lead">Independent Apple repair workshop in the centre of Sochi. Broke your iPhone screen on holiday? Spilled water on your MacBook? Bring it in — most repairs are done the same day.</p>
+        <div class="home-board"><span>Prices updated daily</span><span>100-day warranty</span><span>Shipping across Russia</span><span>Since 2014</span></div>
+        <div class="home-entries">
+          <a class="home-entry home-entry--main" href="services.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5l4 4L8 20H4v-4z"/><path d="M13 7l4 4"/></svg><span><b>Repair prices</b><small>model → fault → price</small></span></a>
+          <a class="home-entry" href="shop.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10.5 5.5h3"/></svg><span><b>Buy a device</b><small>iPhone, MacBook, iPad, Watch</small></span></a>
+          <a class="home-entry" href="https://wa.me/79288509404" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.4 18.7z"/><path d="M9 9.5c.3 2 1.8 3.8 4 4.6"/></svg><span><b>WhatsApp us</b><small>we reply in English</small></span></a>
+          <a class="home-entry" href="contacts.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg><span><b>Find us</b><small>Moskovskaya 5, Sochi</small></span></a>
         </div>
-        <div class="hero-poster">
-          <a
-            href="https://t.me/ironservice"
-            class="hero-poster-link"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="IRON SERVICE Telegram channel @ironservice"
-          >
-            <picture>
-              <source srcset="../assets/poster-factory.webp" type="image/webp">
-              <img src="../assets/poster-factory.png" alt="IRON SERVICE — Telegram channel" width="600" height="750">
-            </picture>
-          </a>
-        </div>
+        <p class="home-hero__note">We speak Russian in the workshop, but we handle enquiries in English by text — WhatsApp, Telegram or email. Write to us in English and we will reply in English.</p>
       </div>
     </section>
 
@@ -148,36 +137,60 @@
         <p class="section-sub">Apple only. That is the whole point — we are not a general phone kiosk.</p>
         <div class="cards">
           <article class="card">
-            <div class="card-icon" aria-hidden="true">◉</div>
             <h3>Cracked screens</h3>
             <p>iPhone, iPad and MacBook displays. The most common holiday accident, and usually a same-day fix if the part is in stock.</p>
           </article>
           <article class="card">
-            <div class="card-icon" aria-hidden="true">◎</div>
             <h3>Water damage</h3>
             <p>Sea water, pool, rain, spilled coffee. Bring the device as soon as possible and do not try to charge it — that is what usually kills the board.</p>
           </article>
           <article class="card">
-            <div class="card-icon" aria-hidden="true">◈</div>
             <h3>Batteries</h3>
             <p>Battery draining by lunchtime, phone shutting down in the cold or in the heat. Replacement takes under an hour in most cases.</p>
           </article>
           <article class="card">
-            <div class="card-icon" aria-hidden="true">▦</div>
             <h3>MacBook repair</h3>
             <p>Keyboards, hinges, dust cleaning and thermal service, charging ports, board-level repair after liquid damage.</p>
           </article>
           <article class="card">
-            <div class="card-icon" aria-hidden="true">◌</div>
             <h3>Free diagnostics</h3>
             <p>In most cases we tell you what is wrong and what it costs before you commit to anything.</p>
             <p class="card-note">Diagnostics may be charged for iMac and Apple Watch disassembly, and for liquid damage, where the outcome cannot be judged without partial repair.</p>
           </article>
           <article class="card">
-            <div class="card-icon" aria-hidden="true">⌾</div>
             <h3>Buying and selling</h3>
             <p>New and second-hand iPhone and MacBook, trade-in. Handy if a device is beyond economical repair while you are travelling.</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="container">
+        <h2 class="section-title">How we work</h2>
+        <p class="section-sub">From the repair bench to a parcel for another city — we do it all ourselves.</p>
+        <div class="home-how">
+          <article class="home-reveal"><img src="../assets/home/how-remont.webp" alt="" width="900" height="600" loading="lazy"><div><h3>Repairs of any complexity</h3><p>Screens, batteries, logic boards, liquid damage recovery. Diagnostics are free in most cases.</p><a href="services.html">Repair prices →</a></div></article>
+          <article class="home-reveal"><img src="../assets/home/how-vitrina.webp" alt="" width="900" height="600" loading="lazy"><div><h3>New and checked devices</h3><p>iPhone, MacBook, iPad, Watch, Samsung, Xiaomi. Prices updated every day — in stock or ordered in 1–2 days.</p><a href="shop.html">Open the shop →</a></div></article>
+          <article class="home-reveal"><img src="../assets/home/how-posylka.webp" alt="" width="900" height="600" loading="lazy"><div><h3>We ship to any city</h3><p>CDEK, Yandex Delivery, Russian Post. Film wrap, a rigid box and insurance for the full value.</p><a href="contacts.html">Contacts →</a></div></article>
+          <article class="home-reveal"><img src="../assets/home/how-vydacha.webp" alt="" width="900" height="600" loading="lazy"><div><h3>Checked at handover, with warranty</h3><p>We switch the device on and test it in front of you, and give you a receipt and a warranty card. 100 days of warranty on our work.</p><a href="warranty.html">About the warranty →</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="container">
+        <div class="home-cat home-reveal"><img src="../assets/home/kupidon.webp" alt="Kupidon the cat — mascot of the IRON SERVICE channel" width="900" height="600" loading="lazy"><div><b>Kupidon — our mascot</b><p>A Kurilian Bobtail, our technician's own cat. He sometimes appears in the videos and pictures on <a href="https://t.me/ironservice" target="_blank" rel="noopener">our Telegram channel @ironservice</a>.</p></div></div>
+      </div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="container">
+        <div class="home-stamps">
+          <div class="home-stamp"><b>100</b><span>days of warranty on repairs</span></div>
+          <div class="home-stamp"><b>2014</b><span>the year we opened in Sochi</span></div>
+          <div class="home-stamp"><b>0 ₽</b><span>diagnostics in most cases</span></div>
+          <div class="home-stamp"><b>RU</b><span>shipping by CDEK, Yandex and Russian Post</span></div>
         </div>
       </div>
     </section>
@@ -240,5 +253,6 @@
   <script defer src="../js/i18n.js?v=2026-08-19-3"></script>
   <script defer src="../js/config.js"></script>
   <script defer src="../js/main.js"></script>
+  <script defer src="../js/home.js?v=2026-10-29-3"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com https://order-bot.4489530.workers.dev https://functions.yandexcloud.net">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests; style-src 'self' https://fonts.bunny.net 'unsafe-inline'; font-src https://fonts.bunny.net; img-src 'self' data:; script-src 'self' https://docs.google.com 'unsafe-inline'; frame-src https://yandex.ru https://yandex.com https://yandex.net; connect-src 'self' https://docs.google.com https://order-bot.4489530.workers.dev https://functions.yandexcloud.net">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>iPhone screen repair, water damage, battery — Sochi | IRON SERVICE</title>
   <meta name="description" content="Broken iPhone screen, water-damaged MacBook, dead battery — repaired in Sochi, usually the same day. Prices, timings and what to do before you bring the device in. English-friendly Apple service on Moskovskaya 5.">
@@ -53,6 +53,8 @@
   <link rel="stylesheet" href="../css/styles.css?v=2026-08-19-3">
   <link rel="stylesheet" href="../css/shop.css?v=2026-09-03-4">
   <link rel="stylesheet" href="../css/repair-extra.css?v=2026-08-19-3">
+  <link rel="stylesheet" href="../css/home.css?v=2026-10-29-1">
+  <link rel="preload" as="image" href="../assets/home/how-remont.webp" fetchpriority="high">
 </head>
 <body>
   <header class="site-header">
@@ -81,12 +83,18 @@
   </header>
 
   <main>
-    <div class="page-hero">
-      <div class="container">
-        <h1>Repairs</h1>
-        <p>iPhone, iPad, MacBook, iMac and Apple Watch. Most repairs are finished the same day.</p>
+    <!-- Cover in the style of the home page (plan 124 §8, 29.10.2026); before — a plain grey .page-hero strip. -->
+    <section class="page-cover">
+      <div class="container page-cover__inner">
+        <div>
+          <span class="hero-badge">Apple repair in Sochi · since 2014</span>
+          <h1>Repairs <em>and prices</em></h1>
+          <p class="page-cover__lead">iPhone, iPad, MacBook, iMac and Apple Watch. Most repairs are finished the same day, and every price includes the labour.</p>
+          <div class="home-board"><span>Prices updated daily</span><span>100-day warranty</span><span>Free diagnostics in most cases</span></div>
+        </div>
+        <figure class="page-cover__photo"><img src="../assets/home/how-remont.webp" alt="IRON SERVICE technician repairing an iPhone" width="900" height="600" fetchpriority="high" decoding="async"></figure>
       </div>
-    </div>
+    </section>
 
     <section id="prices">
       <div class="container">
@@ -268,6 +276,7 @@
   <script defer src="../js/i18n.js?v=2026-08-19-3"></script>
   <script defer src="../js/config.js"></script>
   <script defer src="../js/main.js"></script>
+  <script defer src="../js/motion.js?v=2026-10-29-1"></script>
   <script defer src="../js/repair-search.js?v=2026-10-26-1"></script>
   <script defer src="../js/repair-extra.js?v=2026-08-19-3"></script>
 </body>
