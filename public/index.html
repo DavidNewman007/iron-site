@@ -63,8 +63,8 @@
   <link href="https://fonts.bunny.net/css?family=oswald:400,600,700|pt-sans-narrow:400,700" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=2026-08-19-3">
   <link rel="stylesheet" href="css/home.css?v=2026-10-29-1">
-  <link rel="preload" as="image" href="assets/home/hero-poster.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/home/hero-still.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/home/hero-poster.webp?v=2026-10-30b" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/home/hero-still.webp?v=2026-10-30b" fetchpriority="high">
 </head>
 <body class="page-home">
   <header class="site-header">
@@ -97,18 +97,18 @@
     <!--
       Главная — гибрид A+B (план 118, выбран владельцем 25.10.2026). До этого первым экраном стоял постер с
       Железным человеком Marvel (чужой персонаж и бренд) — заменён своим героем. Слои первого экрана: <video> —
-      мастерская БЕЗ героя (лампа качается вместе со светом, дым), hero-still.webp — неподвижный герой до загрузки
-      сетки, <canvas> — герой, который следит за курсором (скрипт внизу). Камера неподвижна. Пока фон и герой не
+      светлая мастерская в размытии, у паяльника живой дымок (с 30.10.2026, раньше — мрачная мастерская), hero-still.webp —
+      неподвижный герой до загрузки, <canvas> — герой, который следит за курсором (скрипт внизу). Камера неподвижна. Пока фон и герой не
       пришли оба, блок скрыт и затем проявляется целиком — без кадра «мастерская без героя» (29.10.2026).
       Цифр, которые устаревают молча (число позиций, цены техники), здесь нет; «АКБ iPhone от …» считается из
       data/services.json скриптом внизу страницы.
     -->
     <section class="home-hero">
       <div class="home-hero__media" data-root="">
-        <video id="home-video" autoplay muted loop playsinline preload="auto" poster="assets/home/hero-poster.webp" disablepictureinpicture aria-hidden="true">
-          <source src="assets/home/hero-loop.mp4" type="video/mp4">
+        <video id="home-video" autoplay muted loop playsinline preload="auto" poster="assets/home/hero-poster.webp?v=2026-10-30b" disablepictureinpicture aria-hidden="true">
+          <source src="assets/home/hero-loop.mp4?v=2026-10-30b" type="video/mp4">
         </video>
-        <img class="home-hero__still" src="assets/home/hero-still.webp" alt="" width="1280" height="704" aria-hidden="true">
+        <img class="home-hero__still" src="assets/home/hero-still.webp?v=2026-10-30b" alt="" width="1280" height="704" aria-hidden="true">
         <canvas class="home-head" id="home-head" aria-hidden="true"></canvas>
       </div>
       <script>
@@ -231,7 +231,7 @@
   <script defer src="js/i18n.js?v=2026-08-19-3"></script>
   <script defer src="js/config.js"></script>
   <script defer src="js/main.js"></script>
-  <script defer src="js/home.js?v=2026-10-30-1"></script>
+  <script defer src="js/home.js?v=2026-10-30-6"></script>
   <script src="js/agent-chat.js?v=2026-10-28-1" defer></script>
 </body>
 </html>
