@@ -24,6 +24,9 @@
 .home-hero__inner { position: relative; padding: 3rem 0 2.6rem; }
 .home-hero h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5.6vw, 4.4rem); line-height: 1; text-transform: uppercase; margin: .9rem 0 .8rem; color: var(--cream); max-width: 14ch; }
 .home-hero h1 em { font-style: normal; color: var(--gold); }
+/* Плашка «Ремонт и магазин Apple в Сочи · с 2014 года» — под заголовком (владелец 30.10.2026: «не нравится, что она над
+   надписью „Железные парни“ — поставь её под надпись»), раньше стояла над ним. */
+.home-hero h1 + .hero-badge { margin: 0 0 1rem; }
 .home-hero__lead { color: var(--cream-dim); font-size: 1.12rem; max-width: 36rem; margin: 0 0 1.4rem; }
 .home-board { display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; margin-bottom: 1.4rem; font: 600 .82rem/1.2 var(--font-display); letter-spacing: .12em; text-transform: uppercase; color: var(--cream-dim); }
 /* Приписка под входами — на английской главной: «в мастерской говорим по-русски, пишите по-английски». */

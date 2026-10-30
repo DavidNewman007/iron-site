@@ -21,7 +21,7 @@
     if (!media) return;
     var shown = false, show = function () { if (!shown) { shown = true; media.classList.remove("is-wait"); media.dispatchEvent(new Event("hero:shown")); } };
     var dec = function (src, img) { img = img || new Image(); if (!img.src) img.src = src; return img.decode ? img.decode().catch(function () {}) : Promise.resolve(); };
-    Promise.all([dec(ROOT + "assets/home/hero-poster.webp?v=2026-10-30e"), still ? dec(null, still) : null]).then(show);
+    Promise.all([dec(ROOT + "assets/home/hero-poster.webp?v=2026-10-30f"), still ? dec(null, still) : null]).then(show);
     setTimeout(show, 2500);
   })();
   // Герой за курсором — атлас v6 (30.10.2026, план 118), приём образца «лягушка» (канал «Вечно перспективный»): ОДИН
