@@ -11,7 +11,10 @@
    мастерская без героя. Класс is-wait ставит скрипт, поэтому без JS сцена видна сразу. */
 .home-hero__media.is-wait { opacity: 0; }
 /* Герой стоит в центре кадра — сдвигаем видео вправо и растворяем левый край в темноте под текстом. */
-.home-hero__media video { position: absolute; top: 0; right: 0; width: 84%; height: 100%; object-fit: cover;
+/* Ширина сцены — не больше двух высот блока (30.10.2026): на сверхшироком окне (владелец, ~3300 px) 84 % ширины давали
+   масштаб ×2,2 — по правилу cover кадр рос по ширине, и голова героя уходила за верхний край. Теперь сцена справа в
+   обычном масштабе, слева — больше тёмного места под текстом. Тот же предел — у неподвижного героя (ниже). */
+.home-hero__media video { position: absolute; top: 0; right: 0; width: 84%; max-width: calc(min(92vh, 820px) * 2); height: 100%; object-fit: cover;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 28%); mask-image: linear-gradient(90deg, transparent 0, #000 28%); }
 /* Камера неподвижна (владелец 25.10.2026: «убрать тряску камеры»). Три попытки наезда дрожали или казались тряской:
    ffmpeg zoompan (целые пиксели), CSS-анимация transform на <video> с mask-image (браузер считал без видеокарты),
@@ -85,7 +88,7 @@
      герой терялся под заголовком (проверка 375 px, 25.10.2026). */
   .home-hero { display: block; min-height: 0; }
   .home-hero__media { position: relative; inset: auto; height: 62vw; max-height: 420px; }
-  .home-hero__media video { width: 100%; object-position: 58% 35%; -webkit-mask-image: none; mask-image: none; }
+  .home-hero__media video { width: 100%; max-width: none; object-position: 58% 35%; -webkit-mask-image: none; mask-image: none; }
   .home-hero__media::after { background: linear-gradient(0deg, rgba(14,14,14,1) 0%, rgba(14,14,14,0) 40%); }
   .home-hero__inner { padding: .6rem 0 2rem; }
   .home-hero h1 { margin-top: .7rem; }
@@ -107,11 +110,11 @@
    Прежние попытки: 15 поз переключением — рывками; сетка рядов LTX (v1–v3) — двоение и скачки корпуса; выгибание
    головы (v4) — «так себе»; неподвижное тело + вклеенная голова (v5) — шов по воротнику и плечу. */
 .home-hero__still, .home-head { position: absolute; pointer-events: none; }
-.home-hero__still { top: 0; right: 0; width: 84%; height: 100%; object-fit: cover;
+.home-hero__still { top: 0; right: 0; width: 84%; max-width: calc(min(92vh, 820px) * 2); height: 100%; object-fit: cover;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 28%); mask-image: linear-gradient(90deg, transparent 0, #000 28%); }
 .home-head { inset: 0; width: 100%; height: 100%; }
 .home-hero__media.is-live .home-hero__still { visibility: hidden; }
-@media (max-width: 900px) { .home-hero__still { width: 100%; object-position: 58% 35%; -webkit-mask-image: none; mask-image: none; } }
+@media (max-width: 900px) { .home-hero__still { width: 100%; max-width: none; object-position: 58% 35%; -webkit-mask-image: none; mask-image: none; } }
 
 /* ——— Обложка внутренних страниц (Услуги, Гарантия и их английские версии) — в стиле главной, 29.10.2026 ———
    Раньше там стояла серая полоса .page-hero с одним заголовком, а внизу «Услуг» — постер с Железным человеком Marvel

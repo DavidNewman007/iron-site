@@ -21,7 +21,7 @@
     if (!media) return;
     var shown = false, show = function () { if (!shown) { shown = true; media.classList.remove("is-wait"); media.dispatchEvent(new Event("hero:shown")); } };
     var dec = function (src, img) { img = img || new Image(); if (!img.src) img.src = src; return img.decode ? img.decode().catch(function () {}) : Promise.resolve(); };
-    Promise.all([dec(ROOT + "assets/home/hero-poster.webp?v=2026-10-30b"), still ? dec(null, still) : null]).then(show);
+    Promise.all([dec(ROOT + "assets/home/hero-poster.webp?v=2026-10-30e"), still ? dec(null, still) : null]).then(show);
     setTimeout(show, 2500);
   })();
   // Герой за курсором — атлас v6 (30.10.2026, план 118), приём образца «лягушка» (канал «Вечно перспективный»): ОДИН
@@ -44,8 +44,8 @@
     var cv = document.getElementById("home-head"), video = document.getElementById("home-video"), media = cv && cv.parentNode;
     if (!cv || !video || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     var FW = 1280, FH = 704, HEAD_X = 705, HEAD_Y = 150, HANDS_Y = 600, fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
-    var BREATH = .0035, BREATH_T = 5200, W_ = 8, VMAX_DEG = 360, DEAD = 70, IDLE = 6000, AV = "2026-10-30v6";   // AV — версия атласов: кэш браузера и Pages
-    var M = null, atl = [], CWc = 0, CHc = 0, COLc = 0, PER = 0, n = 0, VMAX = 0;
+    var BREATH = .0035, BREATH_T = 5200, W_ = 8, VMAX_DEG = 360, DEAD = 70, IDLE = 6000, AV = "2026-10-30v6e";   // AV — версия атласов: кэш браузера и Pages
+    var M = null, atl = [], badgeImg = null, CWc = 0, CHc = 0, COLc = 0, PER = 0, n = 0, VMAX = 0;
     var geo = null, P = 0, Vp = 0, T = 0, D = 0, detent = null, moving = 0, lastMove = 0, nextGlance = 0, glanceEnd = 0, ready = false, last = 0, t0 = 0;
     var DBG = /[?&]herodebug=1/.test(location.search) ? (window.__hero = []) : null;   // замеры плавности (tools/hero-motion.mjs)
     function layout() {
@@ -99,6 +99,12 @@
       if (DBG) DBG.push([Math.round(t), +P.toFixed(3), +T.toFixed(3), detent != null ? 1 : 0, 0, 1, +D.toFixed(3)]);
       c.clearRect(0, 0, cv.width, cv.height);
       frameAt(i0, 1); if (fi > .01) frameAt(i1, fi); c.globalAlpha = 1;
+      // Знак — отдельным слоем в ×2 поверх кадра, по месту груди в этом кадре: запечённый в ячейку знак на большом
+      // экране расплывался (владелец 30.10: «доделать значок нормально»).
+      if (badgeImg && M.emblem) {
+        var p0 = M.emblem.pos[i0], p1 = M.emblem.pos[i1], ex = lerp(p0[0], p1[0], fi), ey = lerp(p0[1], p1[1], fi);
+        c.drawImage(badgeImg, X(ex), Y(ey), M.emblem.w * s * d, Y(ey + M.emblem.h) - Y(ey));
+      }
       var pulse = .5 - .5 * Math.cos(t / 5200 * 6.2832), b0 = M.badge[i0], b1 = M.badge[i1];
       var b = [lerp(b0[0], b1[0], fi), lerp(b0[1], b1[1], fi), b0[2]];
       c.globalCompositeOperation = "lighter";
@@ -155,11 +161,13 @@
             return window.createImageBitmap ? createImageBitmap(im).then(put) : null;
           });
         }
-        return Promise.all(files.map(function (f, k) { return load(f, function (x) { atl[k] = x; }); }));
+        var jobs = files.map(function (f, k) { return load(f, function (x) { atl[k] = x; }); });
+        if (M.emblem) jobs.push(load(M.emblem.file, function (x) { badgeImg = x; }));
+        return Promise.all(jobs);
       }).then(function () {
         // Прогрев: по одному атласу за кадр рисуется пиксель в САМ видимый холст — загрузка в видеокарту случается
         // сейчас, пока на экране неподвижный герой, а не при первом движении (замер 26.10: заминка 0,35 с).
-        var c = cv.getContext("2d"), k = 0, all = atl;
+        var c = cv.getContext("2d"), k = 0, all = atl.concat(badgeImg ? [badgeImg] : []);
         (function warm() {
           if (k < all.length) { c.drawImage(all[k++], 0, 0, 1, 1, 0, 0, 1, 1); requestAnimationFrame(warm); return; }
           // Первый кадр холста рисуется в том же кадре, где прячется неподвижный герой, — без пустого кадра между ними.
