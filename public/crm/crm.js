@@ -3284,6 +3284,8 @@
   const SUP_GROUPS = [
     { g: "s1", label: "Склад 1 (Double Apple)", src: ["S1", "S4"], contacts: [["erol", "ЭРОЛ"], ["dima", "ДИМА"]] },
     { g: "dr", label: "Dr.Store (склады 2–3)", src: ["S2", "S3"], contacts: [["drstore", "Dr.Store"]] },
+    // Склад 5 — OptSochiMobile (30.10.2026, план 129): Антон, запасной — Коля. Ключи — как SUPPLIER_CONTACTS бота.
+    { g: "s5", label: "OptSochiMobile (склад 5)", src: ["S5"], contacts: [["anton", "АНТОН"], ["kolya", "КОЛЯ"]] },
   ];
   function supplierPanel(picks) {
     const rows = SUP_GROUPS.map(G => ({ ...G, items: picks.filter(p => p.key && G.src.includes(p.source)) })).filter(G => G.items.length);
