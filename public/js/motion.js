@@ -1,7 +1,8 @@
 /**
  * Мелкие анимации магазина и услуг (план 92 §5, выбор владельца 29.10.2026: «только мелкие»):
  *  — счётчик позиций на табло «набегает» до нового числа, время обновления прайса «перещёлкивается»;
- *  — выбранный товар или услуга «летит» в корзину (≤200 мс), счётчик корзины коротко вздрагивает.
+ *  — выбранный товар или услуга «летит» в корзину по мягкой дуге (0,65–0,9 с; до 30.10.2026 — по прямой за 200 мс),
+ *    счётчик корзины мягко вздрагивает.
  *
  * Отдельным файлом и «со стороны»: prices.js и repair-search.js не правятся. Табло слушается через
  * MutationObserver (числа пишет prices.js), кнопки — по клику в фазе перехвата, до их собственных
@@ -79,27 +80,41 @@
   }
   function bump(el) {
     var box = getComputedStyle(el).display === "inline" ? el.parentElement : el;
-    if (box) box.animate([{ transform: "scale(1)" }, { transform: "scale(1.18)" }, { transform: "scale(1)" }], { duration: 200, easing: "ease-out" });
+    if (box) box.animate([{ transform: "scale(1)" }, { transform: "scale(1.14)", offset: .35 }, { transform: "scale(.97)", offset: .7 }, { transform: "scale(1)" }],
+      { duration: 380, easing: "ease-out" });
   }
+  // Изменено 30.10.2026 по просьбе владельца («замедлить и сделать более плавной»): раньше — прямая за 200 мс, смотрелось
+  // рывком. Теперь товар летит по мягкой дуге (подлетает и опускается в корзину) 0,65–0,9 с в зависимости от расстояния,
+  // с плавным разгоном и торможением; уменьшается постепенно и тает только в самом конце. Путь задан ключевыми кадрами
+  // (квадратичная кривая Безье), время между ними — линейное: скорость вдоль дуги ведёт ease() самого пути.
   function fly(from, kind, img) {
     // Цель считается кадром позже: корзина и плашка появляются только после того, как prices.js / repair-search.js
     // обработали тот же клик.
     requestAnimationFrame(function () {
       var to = target(kind);
       if (!to) return;
-      var size = img ? 54 : 18, x0 = from.left + from.width / 2, y0 = from.top + from.height / 2;
+      var size = img ? 60 : 18, x0 = from.left + from.width / 2, y0 = from.top + from.height / 2;
       var x1 = to.r.left + to.r.width / 2, y1 = to.r.top + to.r.height / 2;
+      var dist = Math.hypot(x1 - x0, y1 - y0), lift = Math.min(160, 60 + dist * .22);
+      var cx = (x0 + x1) / 2, cy = Math.min(y0, y1) - lift;                 // вершина дуги — над обеими точками
+      var dur = Math.max(650, Math.min(900, 520 + dist * .35));
       var dot = document.createElement(img ? "img" : "div");
       if (img) { dot.src = img; dot.alt = ""; }
       dot.setAttribute("aria-hidden", "true");
       dot.style.cssText = "position:fixed;left:" + (x0 - size / 2) + "px;top:" + (y0 - size / 2) + "px;width:" + size + "px;height:" + size +
-        "px;border-radius:" + (img ? "10px" : "50%") + ";object-fit:cover;background:#d4a012;box-shadow:0 0 0 2px #d4a012,0 6px 16px rgba(0,0,0,.45);" +
+        "px;border-radius:" + (img ? "12px" : "50%") + ";object-fit:cover;background:#d4a012;box-shadow:0 0 0 2px #d4a012,0 8px 20px rgba(0,0,0,.4);" +
         "z-index:2147483000;pointer-events:none;will-change:transform,opacity";
       document.body.appendChild(dot);
-      var a = dot.animate([
-        { transform: "translate(0,0) scale(1)", opacity: 1 },
-        { transform: "translate(" + (x1 - x0) + "px," + (y1 - y0) + "px) scale(.35)", opacity: .75 }
-      ], { duration: 200, easing: "cubic-bezier(.35,.1,.6,1)" });
+      function ease(k) { return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }   // плавный разгон и торможение
+      var frames = [], N = 24;
+      for (var i = 0; i <= N; i++) {
+        var t = ease(i / N), u = 1 - t;
+        var x = u * u * x0 + 2 * u * t * cx + t * t * x1, y = u * u * y0 + 2 * u * t * cy + t * t * y1;
+        var sc = 1 + .08 * Math.sin(Math.min(1, t / .25) * Math.PI) * (t < .25 ? 1 : 0) - .7 * Math.pow(t, 1.4);   // лёгкий «подхват», потом уменьшение
+        frames.push({ transform: "translate(" + (x - x0).toFixed(1) + "px," + (y - y0).toFixed(1) + "px) scale(" + Math.max(.28, sc).toFixed(3) + ")",
+          opacity: t < .82 ? 1 : 1 - (t - .82) / .18 * .85 });
+      }
+      var a = dot.animate(frames, { duration: dur, easing: "linear" });
       a.onfinish = a.oncancel = function () { dot.remove(); bump(to.el); };
     });
   }
