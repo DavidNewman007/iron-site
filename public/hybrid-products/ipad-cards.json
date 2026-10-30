@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-29T13:58:36.314Z",
-  "count": 1066,
+  "generated_at": "2026-10-30T13:49:30.347Z",
+  "count": 1069,
   "byId": {
     "ipad-11-a16-wi-fi-128gb-blue-j-a-япония-s1-31600": {
       "url": "hybrid-products/ipad/ipad-11-a16-wi-fi-128gb-blue-j-a-s1-31600.html",
@@ -8529,6 +8529,30 @@
       "name": "iPad Pro 11 M5 256 Black Wi-Fi",
       "warehouse": "(S3)",
       "price": 98500
+    },
+    "ipad-11-256-pink-wi-fi-сша-s3-52500": {
+      "url": "hybrid-products/ipad/ipad-11-256-pink-wi-fi-s3-52500.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-256-pink-wi-fi-s3-52500.html",
+      "cover": "assets/product-images/106bcc4b2cba9216a4ff8d4b.jpg",
+      "name": "iPad 11 256 Pink Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 52500
+    },
+    "ipad-11-256-yellow-wi-fi-сша-s3-51500": {
+      "url": "hybrid-products/ipad/ipad-11-256-yellow-wi-fi-s3-51500.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-256-yellow-wi-fi-s3-51500.html",
+      "cover": "assets/product-images/12ab0e68554cce9cf2f0341c.jpg",
+      "name": "iPad 11 256 Yellow Wi-Fi",
+      "warehouse": "(S3)",
+      "price": 51500
+    },
+    "ipad-11-a16-128gb-wi-fi-silver-s5-44800": {
+      "url": "hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-silver-s5-44800.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-a16-128gb-wi-fi-silver-s5-44800.html",
+      "cover": "assets/product-images/583a2d3c9183b1410db105a8.jpg",
+      "name": "iPad 11 A16 128Gb Wi-Fi Silver",
+      "warehouse": "(S5)",
+      "price": 44800
     }
   }
 }

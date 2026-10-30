@@ -1,0 +1,42 @@
+{
+  "product_id": "блок-питания-apple-20w-usb-c-оригинал-s5-2000",
+  "category": "accessories",
+  "file_slug": "блок-питания-apple-20w-usb-c-оригинал-s5-2000",
+  "name": "Блок питания Apple 20W USB-C (оригинал)",
+  "country": "",
+  "warehouse": "(S5)",
+  "price": 2000,
+  "catalog_url": "https://sochi.dr-store.ru/accessories/zaryadnye-ustrojstva/network-chargers/adapter-pitaniya-apple-usb-c-dynamic-power-adapter-40w",
+  "catalog_title": "адаптер питания Apple USB-C Dynamic Power Adapter 40W Оригинал",
+  "specs": [
+    {
+      "key": "Производитель",
+      "value": "Apple"
+    },
+    {
+      "key": "Совместимость",
+      "value": "совместимые устройства Apple и другие устройства с зарядкой через USB‑C"
+    },
+    {
+      "key": "Тип подключения",
+      "value": "USB‑C"
+    },
+    {
+      "key": "Штрихкод",
+      "value": "195950673975"
+    },
+    {
+      "key": "Мощность",
+      "value": "40 Вт, динамически — до 60 Вт"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/accessories/szu/MGTU4-dr-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/accessories/szu/MGTU4-dr1-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/872af81d2652878605303907.jpeg",
+    "assets/product-images/017da8ac354b416bebd6dcac.jpeg"
+  ],
+  "updated_at": "2026-10-30T13:48:04.787904Z"
+}

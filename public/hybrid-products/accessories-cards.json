@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-29T13:58:36.868Z",
-  "count": 134,
+  "generated_at": "2026-10-30T13:49:30.899Z",
+  "count": 137,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -1073,6 +1073,30 @@
       "name": "Apple Pencil USB-C",
       "warehouse": "(S2)",
       "price": 8700
+    },
+    "кабель-apple-usb-c-lightning-оригинал-s5-1900": {
+      "url": "hybrid-products/accessories/кабель-apple-usb-c-lightning-оригинал-s5-1900.html",
+      "url_en": "en/hybrid-products/accessories/кабель-apple-usb-c-lightning-оригинал-s5-1900.html",
+      "cover": "assets/product-images/a3c4d404840cbb388f273639.jpg",
+      "name": "Кабель Apple USB-C — Lightning (оригинал)",
+      "warehouse": "(S5)",
+      "price": 1900
+    },
+    "кабель-apple-usb-c-usb-c-оригинал-s5-1900": {
+      "url": "hybrid-products/accessories/кабель-apple-usb-c-usb-c-оригинал-s5-1900.html",
+      "url_en": "en/hybrid-products/accessories/кабель-apple-usb-c-usb-c-оригинал-s5-1900.html",
+      "cover": "assets/product-images/518ce6ff5c0d0994ed5f178a.jpg",
+      "name": "Кабель Apple USB-C — USB-C (оригинал)",
+      "warehouse": "(S5)",
+      "price": 1900
+    },
+    "блок-питания-apple-20w-usb-c-оригинал-s5-2000": {
+      "url": "hybrid-products/accessories/блок-питания-apple-20w-usb-c-оригинал-s5-2000.html",
+      "url_en": "en/hybrid-products/accessories/блок-питания-apple-20w-usb-c-оригинал-s5-2000.html",
+      "cover": "assets/product-images/872af81d2652878605303907.jpeg",
+      "name": "Блок питания Apple 20W USB-C (оригинал)",
+      "warehouse": "(S5)",
+      "price": 2000
     }
   }
 }

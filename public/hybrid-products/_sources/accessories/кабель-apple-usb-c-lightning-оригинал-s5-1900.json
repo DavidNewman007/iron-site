@@ -1,0 +1,44 @@
+{
+  "product_id": "кабель-apple-usb-c-lightning-оригинал-s5-1900",
+  "category": "accessories",
+  "file_slug": "кабель-apple-usb-c-lightning-оригинал-s5-1900",
+  "name": "Кабель Apple USB-C — Lightning (оригинал)",
+  "country": "",
+  "warehouse": "(S5)",
+  "price": 1900,
+  "catalog_url": "https://sochi.dr-store.ru/accessories/kabeli/Apple_USB-C-Lightning_Cable_1m",
+  "catalog_title": "Кабель Apple USB-C - Lightning Apple, 1м",
+  "specs": [
+    {
+      "key": "Разъём (вход)",
+      "value": "USB-C"
+    },
+    {
+      "key": "Разъём (выход)",
+      "value": "Lightning"
+    },
+    {
+      "key": "Длина кабеля",
+      "value": "1 м"
+    },
+    {
+      "key": "Цвет",
+      "value": "белый"
+    },
+    {
+      "key": "Страна производства",
+      "value": "Вьетнам"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_USB-C-Lightning_Cable_1m/Apple_USB-C-Lightning_Cable_1m-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_USB-C-Lightning_Cable_1m/Apple_USB-C-Lightning_Cable_1m-2-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_USB-C-Lightning_Cable_1m/Apple_USB-C-Lightning_Cable_1m-3-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/a3c4d404840cbb388f273639.jpg",
+    "assets/product-images/639beb7b82e245280693b283.jpg",
+    "assets/product-images/c1db317754982db332c1119f.jpg"
+  ],
+  "updated_at": "2026-10-30T13:47:56.549658Z"
+}

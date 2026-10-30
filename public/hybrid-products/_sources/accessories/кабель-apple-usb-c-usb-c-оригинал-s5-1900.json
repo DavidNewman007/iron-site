@@ -1,0 +1,42 @@
+{
+  "product_id": "кабель-apple-usb-c-usb-c-оригинал-s5-1900",
+  "category": "accessories",
+  "file_slug": "кабель-apple-usb-c-usb-c-оригинал-s5-1900",
+  "name": "Кабель Apple USB-C — USB-C (оригинал)",
+  "country": "",
+  "warehouse": "(S5)",
+  "price": 1900,
+  "catalog_url": "https://sochi.dr-store.ru/accessories/kabeli/Apple_USB-C_to_USB-C_60w_1m_Cable_fabric",
+  "catalog_title": "Кабель Apple USB-C to USB-C 60w 1m, тканевый",
+  "specs": [
+    {
+      "key": "Разъём (вход)",
+      "value": "USB-C"
+    },
+    {
+      "key": "Разъём (выход)",
+      "value": "USB-C"
+    },
+    {
+      "key": "Длина кабеля",
+      "value": "1 м"
+    },
+    {
+      "key": "Цвет",
+      "value": "белый"
+    },
+    {
+      "key": "Страна производства",
+      "value": "Китай"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_USB-C_to_USB-C_60w_1m_Cable_fabric/Apple_USB-C_to_USB-C_60w_1m_Cable_fabric-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Apple_USB-C_to_USB-C_60w_1m_Cable_fabric/Apple_USB-C_to_USB-C_60w_1m_Cable_fabric-2-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/518ce6ff5c0d0994ed5f178a.jpg",
+    "assets/product-images/5ba4e441a2b619b23ceac173.jpg"
+  ],
+  "updated_at": "2026-10-30T13:47:59.412931Z"
+}
