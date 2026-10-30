@@ -87,14 +87,23 @@
   .home-entries, .home-cards, .home-stamps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .home-how { grid-template-columns: 1fr; }
   .home-cat { grid-template-columns: 1fr; }
-  /* Телефон: видео отдельным блоком сверху (герой целиком на виду), текст и кнопки — под ним. Поверх видео
-     герой терялся под заголовком (проверка 375 px, 25.10.2026). */
-  .home-hero { display: block; min-height: 0; }
-  .home-hero__media { position: relative; inset: auto; height: 62vw; max-height: 420px; }
+  /* Телефон: заголовок и плашка — поверх главного изображения, внизу на затемнении; описание, табло и кнопки — под
+     ним (владелец 30.10.2026: «в мобильной версии перенеси эти надписи на главное изображение»). Изменено, раньше
+     (25.10.2026) весь текст стоял под видео: поверх низкого видео (62vw) герой терялся под заголовком — теперь сцена
+     выше (до 112vw), голова и грудь героя остаются над надписью. Сетка: сцена на строках 1–3, заголовок — строка 2,
+     плашка — 3, остальное — ниже; .home-hero__inner «растворён» (display: contents), отступы — у его детей. align-items: start —
+     иначе действовало flex-end с компьютера; padding-top: 0 — общий отступ секции 32 px (на компьютере сцена лежит поверх него)
+     оставлял тёмную полосу над картинкой. */
+  .home-hero { display: grid; grid-template-columns: 100%; grid-template-rows: 1fr auto auto; align-items: start; min-height: 0; padding-top: 0; }
+  .home-hero__media { position: relative; inset: auto; grid-area: 1 / 1 / 4 / 2; height: min(112vw, 560px); max-height: none; }
   .home-hero__media video { width: 100%; max-width: none; object-position: 58% 35%; -webkit-mask-image: none; mask-image: none; }
-  .home-hero__media::after { background: linear-gradient(0deg, rgba(14,14,14,1) 0%, rgba(14,14,14,0) 40%); }
-  .home-hero__inner { padding: .6rem 0 2rem; }
-  .home-hero h1 { margin-top: .7rem; }
+  .home-hero__media::after { background: linear-gradient(0deg, rgba(14,14,14,1) 0%, rgba(14,14,14,.78) 24%, rgba(14,14,14,0) 55%); }
+  .home-hero__inner { display: contents; }
+  .home-hero__inner > * { margin-left: 1rem; margin-right: 1rem; }
+  .home-hero h1 { grid-area: 2 / 1; position: relative; z-index: 2; margin: 0 1rem .55rem; }
+  .home-hero h1 + .hero-badge { grid-area: 3 / 1; position: relative; z-index: 2; justify-self: start; margin: 0 1rem 1rem; }
+  .home-hero__lead { margin-top: 1rem; }
+  .home-hero__inner > :last-child { margin-bottom: 2rem; }
 }
 @media (max-width: 520px) {
   .home-entry { padding: .7rem .7rem; gap: .5rem; }
