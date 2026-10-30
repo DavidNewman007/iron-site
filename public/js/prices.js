@@ -28,8 +28,13 @@
   // складываются в том же порядке, что и листы, поэтому «под заказ» встаёт
   // хвостом каждой секции, а не оттесняет наличие.
   // Prices-4 — предзаказ склада 1 (S4, Double Apple, новые iPhone, 5–7 дней,
-  // добавлен 15.09.2026). Список обязан совпадать с hybrid-cart.js.
-  const SHEET_TABS = ["Prices", "Prices-2", "Prices-3", "Prices-4"];
+  // добавлен 15.09.2026). Prices-5 — склад S5, OptSochiMobile, наличие в Сочи
+  // (30.10.2026). Список обязан совпадать с hybrid-cart.js.
+  const SHEET_TABS = ["Prices", "Prices-2", "Prices-3", "Prices-4", "Prices-5"];
+  // Лист, у которого строки обязаны быть своего склада: пока Apps Script не создал
+  // лист, gviz отдаёт вместо него ПЕРВЫЙ лист книги (см. parseSheetJson), и без
+  // проверки S5 показал бы копию склада 1 под чужой меткой.
+  const TAB_WAREHOUSE_RE = { "Prices-5": /\(?\s*S5\s*\)?/i };
   const PREORDER_SHEET_TABS = ["Prices-3", "Prices-4"];
   const PREORDER_WAREHOUSE_RE = /\(?\s*S[34]\s*\)?/i;
   // Склад 1 в режиме предзаказа: для клиента это «предзаказ», а не «под заказ».
@@ -2225,6 +2230,7 @@
       // Лист под заказ отдал строку не своего склада — это подмена листа
       // самим gviz (см. докстринг), а не товар. Молча пропускаем.
       if (requirePreorder && !preorder) continue;
+      if (TAB_WAREHOUSE_RE[tab] && !TAB_WAREHOUSE_RE[tab].test(warehouse || "")) continue;
       products.push({
         id,
         name,

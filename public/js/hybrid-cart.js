@@ -11,11 +11,14 @@
   // напрямую страница S3-товара показывала «Цена: временно недоступна» и
   // неактивную кнопку «Выбрать». Список обязан совпадать с prices.js.
   // Prices-4 (15.09.2026) — предзаказ склада 1 (S4, новые iPhone, 5–7 дней).
-  const SHEET_TABS = ["Prices", "Prices-2", "Prices-3", "Prices-4"];
+  // Prices-5 (30.10.2026) — склад S5, OptSochiMobile, наличие в Сочи.
+  const SHEET_TABS = ["Prices", "Prices-2", "Prices-3", "Prices-4", "Prices-5"];
   // Ключи обязаны совпадать с prices.js — там же они и записываются (v3 с
   // 15.09.2026: срок eta стал построчным, из колонки «Срок»).
   const CATALOG_CACHE_KEY = "iron_catalog_products_v3";
-  const PRICE_CACHE_KEY = "iron_prices_sheet_Prices_Prices-2_Prices-3_Prices-4_v5";
+  // Исправлено 30.10.2026: здесь стоял «…Prices-4_v5», а prices.js с 23.10 пишет «_v6» — ключи
+  // разошлись, и корзина ни разу не находила готовый прайс в sessionStorage, читая листы заново.
+  const PRICE_CACHE_KEY = "iron_prices_sheet_Prices_Prices-2_Prices-3_Prices-4_Prices-5_v6";
   const PRICE_CACHE_TTL_MS = 30 * 60 * 1000;
   const LEGACY_COUNTRY_TOKENS = new Set([
     "япония",
