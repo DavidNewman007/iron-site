@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-30T13:49:30.978Z",
-  "count": 321,
+  "generated_at": "2026-10-31T13:23:05.279Z",
+  "count": 335,
   "byId": {
     "watch-8-40mm-graphite-оаэ-s2-18800": {
       "url": "hybrid-products/galaxy_watch/watch-8-40mm-graphite-s2-18800.html",
@@ -2569,6 +2569,118 @@
       "name": "Galaxy Watch Ultra 2 47 Black",
       "warehouse": "(S3)",
       "price": 42400
+    },
+    "watch-9-44mm-silver-оаэ-s2-28300": {
+      "url": "hybrid-products/galaxy_watch/watch-9-44mm-silver-s2-28300.html",
+      "url_en": "en/hybrid-products/galaxy_watch/watch-9-44mm-silver-s2-28300.html",
+      "cover": "assets/product-images/e40eeb7dc0db00447e564286.jpg",
+      "name": "Watch 9 44mm Silver",
+      "warehouse": "(S2)",
+      "price": 28300
+    },
+    "watch-ultra-2025-47mm-blue-оаэ-s2-30900": {
+      "url": "hybrid-products/galaxy_watch/watch-ultra-2025-47mm-blue-s2-30900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/watch-ultra-2025-47mm-blue-s2-30900.html",
+      "cover": "assets/product-images/8f80ebef9d31df7f3bfa1ac5.jpeg",
+      "name": "Watch Ultra (2025) 47mm Blue",
+      "warehouse": "(S2)",
+      "price": 30900
+    },
+    "watch-ultra-2025-47mm-gray-оаэ-s2-30900": {
+      "url": "hybrid-products/galaxy_watch/watch-ultra-2025-47mm-gray-s2-30900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/watch-ultra-2025-47mm-gray-s2-30900.html",
+      "cover": "assets/product-images/7b3842ea3d40c51d27404190.jpeg",
+      "name": "Watch Ultra (2025) 47mm Gray",
+      "warehouse": "(S2)",
+      "price": 30900
+    },
+    "watch-ultra-2025-47mm-silver-оаэ-s2-30900": {
+      "url": "hybrid-products/galaxy_watch/watch-ultra-2025-47mm-silver-s2-30900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/watch-ultra-2025-47mm-silver-s2-30900.html",
+      "cover": "assets/product-images/ccf983295c45295f48b9ba9f.jpg",
+      "name": "Watch Ultra (2025) 47mm Silver",
+      "warehouse": "(S2)",
+      "price": 30900
+    },
+    "watch-ultra-2025-47mm-black-оаэ-s2-30900": {
+      "url": "hybrid-products/galaxy_watch/watch-ultra-2025-47mm-black-s2-30900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/watch-ultra-2025-47mm-black-s2-30900.html",
+      "cover": "assets/product-images/297bbfe1b281c6b4ad991fb5.jpg",
+      "name": "Watch Ultra (2025) 47mm Black",
+      "warehouse": "(S2)",
+      "price": 30900
+    },
+    "galaxy-watch-8-40-lte-graphite-оаэ-s3-21800": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-40-lte-graphite-s3-21800.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-40-lte-graphite-s3-21800.html",
+      "cover": "assets/product-images/af4dcf854441bd35c4123f90.jpg",
+      "name": "Galaxy Watch 8 40 LTE Graphite",
+      "warehouse": "(S3)",
+      "price": 21800
+    },
+    "galaxy-watch-8-44-silver-оаэ-s3-19700": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-44-silver-s3-19700.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-44-silver-s3-19700.html",
+      "cover": "assets/product-images/924e91edf6a06fa67647626d.jpg",
+      "name": "Galaxy Watch 8 44 Silver",
+      "warehouse": "(S3)",
+      "price": 19700
+    },
+    "galaxy-watch-8-44-lte-silver-оаэ-s3-23800": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-44-lte-silver-s3-23800.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-44-lte-silver-s3-23800.html",
+      "cover": "assets/product-images/0e29195520f0a5f21bf1ba14.jpg",
+      "name": "Galaxy Watch 8 44 LTE Silver",
+      "warehouse": "(S3)",
+      "price": 23800
+    },
+    "galaxy-watch-8-classic-46-white-оаэ-s3-23800": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-classic-46-white-s3-23800.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-classic-46-white-s3-23800.html",
+      "cover": "assets/product-images/6bb59bb70eaa4aa34db94571.jpeg",
+      "name": "Galaxy Watch 8 Classic 46 White",
+      "warehouse": "(S3)",
+      "price": 23800
+    },
+    "galaxy-watch-9-40-lte-cream-оаэ-s3-26900": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-9-40-lte-cream-s3-26900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-9-40-lte-cream-s3-26900.html",
+      "cover": "assets/product-images/fca03b0890a3b883969e51c8.jpg",
+      "name": "Galaxy Watch 9 40 LTE Cream",
+      "warehouse": "(S3)",
+      "price": 26900
+    },
+    "galaxy-watch-9-44-graphite-оаэ-s3-27900": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-9-44-graphite-s3-27900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-9-44-graphite-s3-27900.html",
+      "cover": "assets/product-images/0cad74e212681711cdcb4a06.jpg",
+      "name": "Galaxy Watch 9 44 Graphite",
+      "warehouse": "(S3)",
+      "price": 27900
+    },
+    "galaxy-watch-ultra-2025-47-blue-оаэ-s3-30100": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47-blue-s3-30100.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47-blue-s3-30100.html",
+      "cover": "assets/product-images/8f80ebef9d31df7f3bfa1ac5.jpeg",
+      "name": "Galaxy Watch Ultra (2025) 47 Blue",
+      "warehouse": "(S3)",
+      "price": 30100
+    },
+    "galaxy-watch-ultra-2025-47-white-оаэ-s3-30200": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47-white-s3-30200.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47-white-s3-30200.html",
+      "cover": "assets/product-images/14fe318d77fff2bf942ccecd.jpeg",
+      "name": "Galaxy Watch Ultra (2025) 47 White",
+      "warehouse": "(S3)",
+      "price": 30200
+    },
+    "galaxy-watch-ultra-2-47-silver-оаэ-s3-41500": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47-silver-s3-41500.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47-silver-s3-41500.html",
+      "cover": "assets/product-images/c8d772970b745ddf6dcf6604.jpeg",
+      "name": "Galaxy Watch Ultra 2 47 Silver",
+      "warehouse": "(S3)",
+      "price": 41500
     }
   }
 }

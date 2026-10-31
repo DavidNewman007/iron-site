@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-30T13:49:30.899Z",
-  "count": 137,
+  "generated_at": "2026-10-31T13:23:05.225Z",
+  "count": 143,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -1097,6 +1097,54 @@
       "name": "Блок питания Apple 20W USB-C (оригинал)",
       "warehouse": "(S5)",
       "price": 2000
+    },
+    "-magic-mouse-3-white-s2-8300": {
+      "url": "hybrid-products/accessories/magic-mouse-3-white-s2-8300.html",
+      "url_en": "en/hybrid-products/accessories/magic-mouse-3-white-s2-8300.html",
+      "cover": "assets/product-images/edc0e0973e1b23e76acb20d6.jpg",
+      "name": "🖱Magic Mouse 3 White",
+      "warehouse": "(S2)",
+      "price": 8300
+    },
+    "сзу-samsung-25w-pd-usb-c-black-s5-1900": {
+      "url": "hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-black-s5-1900.html",
+      "url_en": "en/hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-black-s5-1900.html",
+      "cover": "assets/product-images/ca989145f95693e4e41b4156.png",
+      "name": "СЗУ Samsung 25W PD USB-C Black",
+      "warehouse": "(S5)",
+      "price": 1900
+    },
+    "сзу-samsung-25w-pd-usb-c-white-s5-1900": {
+      "url": "hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-white-s5-1900.html",
+      "url_en": "en/hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-white-s5-1900.html",
+      "cover": "assets/product-images/b85d431d4085bd06673486c1.png",
+      "name": "СЗУ Samsung 25W PD USB-C White",
+      "warehouse": "(S5)",
+      "price": 1900
+    },
+    "сзу-apple-20w-usb-c-оригинал-s5-2000": {
+      "url": "hybrid-products/accessories/сзу-apple-20w-usb-c-оригинал-s5-2000.html",
+      "url_en": "en/hybrid-products/accessories/сзу-apple-20w-usb-c-оригинал-s5-2000.html",
+      "cover": "assets/product-images/789f3f0712e1e824f47baefd.jpeg",
+      "name": "СЗУ Apple 20W USB-C (оригинал)",
+      "warehouse": "(S5)",
+      "price": 2000
+    },
+    "сзу-samsung-45w-pd-usb-c-black-s5-2100": {
+      "url": "hybrid-products/accessories/сзу-samsung-45w-pd-usb-c-black-s5-2100.html",
+      "url_en": "en/hybrid-products/accessories/сзу-samsung-45w-pd-usb-c-black-s5-2100.html",
+      "cover": "assets/product-images/b8cf1b7b683785cf3981ded0.jpg",
+      "name": "СЗУ Samsung 45W PD USB-C Black",
+      "warehouse": "(S5)",
+      "price": 2100
+    },
+    "сзу-samsung-45w-pd-usb-c-white-s5-2100": {
+      "url": "hybrid-products/accessories/сзу-samsung-45w-pd-usb-c-white-s5-2100.html",
+      "url_en": "en/hybrid-products/accessories/сзу-samsung-45w-pd-usb-c-white-s5-2100.html",
+      "cover": "assets/product-images/a5904122aab1068503264ca0.jpg",
+      "name": "СЗУ Samsung 45W PD USB-C White",
+      "warehouse": "(S5)",
+      "price": 2100
     }
   }
 }

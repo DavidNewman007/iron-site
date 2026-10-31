@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-30T13:49:30.915Z",
-  "count": 244,
+  "generated_at": "2026-10-31T13:23:05.237Z",
+  "count": 253,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -1953,6 +1953,78 @@
       "name": "Buds 3 White",
       "warehouse": "(S3)",
       "price": 10200
+    },
+    "-marshall-major-v-cream-s2-8300": {
+      "url": "hybrid-products/audio/marshall-major-v-cream-s2-8300.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-cream-s2-8300.html",
+      "cover": "assets/product-images/21171281248b133c6477961b.jpeg",
+      "name": "🎧Marshall Major V Cream",
+      "warehouse": "(S2)",
+      "price": 8300
+    },
+    "-marshall-major-v-blue-s2-8100": {
+      "url": "hybrid-products/audio/marshall-major-v-blue-s2-8100.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-blue-s2-8100.html",
+      "cover": "assets/product-images/317cb461430cc23754c34ba1.jpg",
+      "name": "🎧Marshall Major V Blue",
+      "warehouse": "(S2)",
+      "price": 8100
+    },
+    "яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6700": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6700.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6700.html",
+      "cover": "assets/product-images/7aa34cfd2c7bd8ea4ee7a430.jpg",
+      "name": "Яндекс Станция Лайт 2 Фиолетовая (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6700
+    },
+    "яндекс-станция-лайт-2-розовый-без-часов-s2-6700": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-розовый-без-часов-s2-6700.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-розовый-без-часов-s2-6700.html",
+      "cover": "assets/product-images/95065d12adfd718e29eda5a3.jpg",
+      "name": "Яндекс Станция Лайт 2 Розовый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6700
+    },
+    "яндекс-станция-лайт-2-кораловый-без-часов-s2-6700": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-кораловый-без-часов-s2-6700.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-кораловый-без-часов-s2-6700.html",
+      "cover": "assets/product-images/674ea8c697dae4dc71233a07.jpg",
+      "name": "Яндекс Станция Лайт 2 Кораловый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6700
+    },
+    "яндекс-станция-лайт-2-зеленый-s2-6600": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-зеленый-s2-6600.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-зеленый-s2-6600.html",
+      "cover": "assets/product-images/5c9af245e70e3122e50ee579.jpg",
+      "name": "Яндекс Станция Лайт 2 Зеленый",
+      "warehouse": "(S2)",
+      "price": 6600
+    },
+    "яндекс-станция-лайт-2-фиолетовый-s2-6600": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-фиолетовый-s2-6600.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-фиолетовый-s2-6600.html",
+      "cover": "assets/product-images/cec3b010164d02009b600a27.jpg",
+      "name": "Яндекс Станция Лайт 2 Фиолетовый",
+      "warehouse": "(S2)",
+      "price": 6600
+    },
+    "яндекс-станция-стрит-черный-s2-11300": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-черный-s2-11300.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-черный-s2-11300.html",
+      "cover": "assets/product-images/0115a93bee7eb333ed6ea597.jpg",
+      "name": "Яндекс Станция Стрит Черный",
+      "warehouse": "(S2)",
+      "price": 11300
+    },
+    "-яндекс-станция-миди-серый-s2-17700": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-серый-s2-17700.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-серый-s2-17700.html",
+      "cover": "assets/product-images/c6bf9c38b4bbd65c057d2f6c.jpeg",
+      "name": "🔈Яндекс Станция Миди Серый",
+      "warehouse": "(S2)",
+      "price": 17700
     }
   }
 }

@@ -1,0 +1,82 @@
+{
+  "product_id": "сзу-samsung-45w-pd-usb-c-black-s5-2100",
+  "category": "accessories",
+  "file_slug": "сзу-samsung-45w-pd-usb-c-black-s5-2100",
+  "name": "СЗУ Samsung 45W PD USB-C Black",
+  "country": "",
+  "warehouse": "(S5)",
+  "price": 2100,
+  "catalog_url": "https://sochi.dr-store.ru/accessories/zaryadnye-ustrojstva/network-chargers/Samsung_Power_Adapter_45W_USB-C_Black",
+  "catalog_title": "СЗУ Samsung Power Adapter 45W USB-C, Black",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Сетевое зарядное устройство"
+    },
+    {
+      "key": "Модель",
+      "value": "EP-TA845"
+    },
+    {
+      "key": "Совместимость",
+      "value": "Супер быстрая зарядка вер.2.0 (Super Fast Charging 2.0) с максимальной мощностью 45Вт совместима с Galaxy Note10+, Note10+ 5G, A91 и рядом будущих устройств SAMSUNG. Супер быстрая зарядка (Super Fast Charging) с максимальной мощностью 25Вт совместима с Galaxy Note 10, Note 10 5G, S10 5G, A90 5G, A80, A70 и рядом будущих устройств SAMSUNG"
+    },
+    {
+      "key": "Длина кабеля",
+      "value": "1 м"
+    },
+    {
+      "key": "Цвет",
+      "value": "Чёрный"
+    },
+    {
+      "key": "Интерфейсы",
+      "value": "USB Type-C"
+    },
+    {
+      "key": "Входное напряжение",
+      "value": "100-240 В"
+    },
+    {
+      "key": "Выходное напряжение (Максимум, Быстрая зарядка)",
+      "value": "PDO : 9V, 15V, 20V / PPS : 3.3-11.0V или 3.3-16.0V или 3.3-21.0V"
+    },
+    {
+      "key": "Выходное напряжение (Максимум, Обычная зарядка)",
+      "value": "5 В"
+    },
+    {
+      "key": "Выходная сила тока (Максимум, Обычная зарядка)",
+      "value": "3 A"
+    },
+    {
+      "key": "Ширина",
+      "value": "53,1 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "30,1 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "89,3 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "112,6 г"
+    },
+    {
+      "key": "Особенности",
+      "value": "Супербыстрая зарядка 2.0 (PD 3.0 PPS Макс. 45W), Съёмный кабель для зарядки (USB Type-C ↔ Type-C, 5A)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Power_Adapter_45W_USB-C_Black/Samsung_Power_Adapter_45W_USB-C_Black-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Power_Adapter_45W_USB-C_Black/Samsung_Power_Adapter_45W_USB-C_Black-2-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/b8cf1b7b683785cf3981ded0.jpg",
+    "assets/product-images/6afcec9abd6de24cdb4c2424.jpg"
+  ],
+  "updated_at": "2026-10-31T13:19:37.698034Z"
+}
