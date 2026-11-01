@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-31T13:23:05.076Z",
-  "count": 514,
+  "generated_at": "2026-11-01T14:08:09.335Z",
+  "count": 517,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -4113,6 +4113,30 @@
       "name": "AirPods 4 ANC",
       "warehouse": "(S5)",
       "price": 16900
+    },
+    "-airpods-5-mkfw4-s1-13800": {
+      "url": "hybrid-products/airpods/airpods-5-mkfw4-s1-13800.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-mkfw4-s1-13800.html",
+      "cover": "assets/product-images/03a5b60909df17ffaa449e5f.jpg",
+      "name": "🎧 AirPods 5 MKFW4",
+      "warehouse": "(S1)",
+      "price": 13800
+    },
+    "airpods-max-2-2026-midnight-европа-s3-44300": {
+      "url": "hybrid-products/airpods/airpods-max-2-2026-midnight-s3-44300.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-2026-midnight-s3-44300.html",
+      "cover": "assets/product-images/1611732bf1dd6c4e9030627a.jpg",
+      "name": "AirPods Max 2 2026 Midnight",
+      "warehouse": "(S3)",
+      "price": 44300
+    },
+    "airpods-max-2-2026-purple-европа-s3-42700": {
+      "url": "hybrid-products/airpods/airpods-max-2-2026-purple-s3-42700.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-2026-purple-s3-42700.html",
+      "cover": "assets/product-images/ed05f9e1384c6ce6df3cef52.jpg",
+      "name": "AirPods Max 2 2026 Purple",
+      "warehouse": "(S3)",
+      "price": 42700
     }
   }
 }

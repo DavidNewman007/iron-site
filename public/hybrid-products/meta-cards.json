@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-31T13:23:05.293Z",
-  "count": 294,
+  "generated_at": "2026-11-01T14:08:09.712Z",
+  "count": 296,
   "byId": {
     "-oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100": {
       "url": "hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100.html",
@@ -2353,6 +2353,22 @@
       "name": "🕶Meta Wayfarer (Gen 2) S50, Matte Black/Transitions Grey (RW4012)",
       "warehouse": "(S2)",
       "price": 37600
+    },
+    "-wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-36100": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-36100.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-36100.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 155 - 53 Size C 601S1Z53",
+      "warehouse": "(S1)",
+      "price": 36100
+    },
+    "-meta-wayfarer-gen-2-s53-matte-black-transitions-grey-rw4012-s2-35500": {
+      "url": "hybrid-products/meta/meta-wayfarer-gen-2-s53-matte-black-transitions-grey-rw4012-s2-35500.html",
+      "url_en": "en/hybrid-products/meta/meta-wayfarer-gen-2-s53-matte-black-transitions-grey-rw4012-s2-35500.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "🕶Meta Wayfarer (Gen 2) S53, Matte Black/Transitions Grey (RW4012)",
+      "warehouse": "(S2)",
+      "price": 35500
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-31T13:23:05.242Z",
-  "count": 158,
+  "generated_at": "2026-11-01T14:08:09.627Z",
+  "count": 161,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -1265,6 +1265,30 @@
       "name": "🎮GamePad PS5 Chroma Teal",
       "warehouse": "(S2)",
       "price": 8600
+    },
+    "-gamepad-ps5-volcanic-red-s2-7800": {
+      "url": "hybrid-products/gaming/gamepad-ps5-volcanic-red-s2-7800.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-volcanic-red-s2-7800.html",
+      "cover": "assets/product-images/6dff1efeecb9f63494cd696c.jpg",
+      "name": "🎮GamePad PS5 Volcanic Red",
+      "warehouse": "(S2)",
+      "price": 7800
+    },
+    "-gamepad-ps5-black-s2-7500": {
+      "url": "hybrid-products/gaming/gamepad-ps5-black-s2-7500.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-black-s2-7500.html",
+      "cover": "assets/product-images/c36248458fe2e350df682200.jpg",
+      "name": "🎮GamePad PS5 Black",
+      "warehouse": "(S2)",
+      "price": 7500
+    },
+    "-gamepad-ps5-camouflage-s2-7600": {
+      "url": "hybrid-products/gaming/gamepad-ps5-camouflage-s2-7600.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-camouflage-s2-7600.html",
+      "cover": "assets/product-images/627bd94cba9e9bc334f6e71b.jpg",
+      "name": "🎮GamePad PS5 Camouflage",
+      "warehouse": "(S2)",
+      "price": 7600
     }
   }
 }

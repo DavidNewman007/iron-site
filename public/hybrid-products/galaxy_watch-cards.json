@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-31T13:23:05.279Z",
-  "count": 335,
+  "generated_at": "2026-11-01T14:08:09.688Z",
+  "count": 346,
   "byId": {
     "watch-8-40mm-graphite-оаэ-s2-18800": {
       "url": "hybrid-products/galaxy_watch/watch-8-40mm-graphite-s2-18800.html",
@@ -2679,6 +2679,94 @@
       "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47-silver-s3-41500.html",
       "cover": "assets/product-images/c8d772970b745ddf6dcf6604.jpeg",
       "name": "Galaxy Watch Ultra 2 47 Silver",
+      "warehouse": "(S3)",
+      "price": 41500
+    },
+    "watch-8-classic-46mm-white-оаэ-s2-27300": {
+      "url": "hybrid-products/galaxy_watch/watch-8-classic-46mm-white-s2-27300.html",
+      "url_en": "en/hybrid-products/galaxy_watch/watch-8-classic-46mm-white-s2-27300.html",
+      "cover": "assets/product-images/6bb59bb70eaa4aa34db94571.jpeg",
+      "name": "Watch 8 Classic 46mm White",
+      "warehouse": "(S2)",
+      "price": 27300
+    },
+    "watch-9-44mm-graphite-оаэ-s2-28300": {
+      "url": "hybrid-products/galaxy_watch/watch-9-44mm-graphite-s2-28300.html",
+      "url_en": "en/hybrid-products/galaxy_watch/watch-9-44mm-graphite-s2-28300.html",
+      "cover": "assets/product-images/0cad74e212681711cdcb4a06.jpg",
+      "name": "Watch 9 44mm Graphite",
+      "warehouse": "(S2)",
+      "price": 28300
+    },
+    "galaxy-watch-8-lte-40-graphite-оаэ-s3-20500": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-lte-40-graphite-s3-20500.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-lte-40-graphite-s3-20500.html",
+      "cover": "assets/product-images/af4dcf854441bd35c4123f90.jpg",
+      "name": "Galaxy Watch 8 LTE 40 Graphite",
+      "warehouse": "(S3)",
+      "price": 20500
+    },
+    "galaxy-watch-8-lte-40-silver-оаэ-s3-22400": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-lte-40-silver-s3-22400.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-lte-40-silver-s3-22400.html",
+      "cover": "assets/product-images/0e29195520f0a5f21bf1ba14.jpg",
+      "name": "Galaxy Watch 8 LTE 40 Silver",
+      "warehouse": "(S3)",
+      "price": 22400
+    },
+    "galaxy-watch-8-lte-44-silver-оаэ-s3-23800": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-lte-44-silver-s3-23800.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-lte-44-silver-s3-23800.html",
+      "cover": "assets/product-images/7d7f7978f21f9e05580f4577.jpg",
+      "name": "Galaxy Watch 8 LTE 44 Silver",
+      "warehouse": "(S3)",
+      "price": 23800
+    },
+    "galaxy-watch-8-lte-classic-46-white-оаэ-s3-26500": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-lte-classic-46-white-s3-26500.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-lte-classic-46-white-s3-26500.html",
+      "cover": "assets/product-images/6bb59bb70eaa4aa34db94571.jpeg",
+      "name": "Galaxy Watch 8 LTE Classic 46 White",
+      "warehouse": "(S3)",
+      "price": 26500
+    },
+    "galaxy-watch-9-lte-40-cream-оаэ-s3-26900": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-9-lte-40-cream-s3-26900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-9-lte-40-cream-s3-26900.html",
+      "cover": "assets/product-images/fca03b0890a3b883969e51c8.jpg",
+      "name": "Galaxy Watch 9 LTE 40 Cream",
+      "warehouse": "(S3)",
+      "price": 26900
+    },
+    "galaxy-watch-9-lte-40-graphite-оаэ-s3-26000": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-9-lte-40-graphite-s3-26000.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-9-lte-40-graphite-s3-26000.html",
+      "cover": "assets/product-images/0cad74e212681711cdcb4a06.jpg",
+      "name": "Galaxy Watch 9 LTE 40 Graphite",
+      "warehouse": "(S3)",
+      "price": 26000
+    },
+    "galaxy-watch-9-lte-44-silver-оаэ-s3-27200": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-9-lte-44-silver-s3-27200.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-9-lte-44-silver-s3-27200.html",
+      "cover": "assets/product-images/e40eeb7dc0db00447e564286.jpg",
+      "name": "Galaxy Watch 9 LTE 44 Silver",
+      "warehouse": "(S3)",
+      "price": 27200
+    },
+    "galaxy-watch-ultra-2-47-titanium-silver-оаэ-s3-40900": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47-titanium-silver-s3-40900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47-titanium-silver-s3-40900.html",
+      "cover": "assets/product-images/af5277afe95d91582830a075.jpg",
+      "name": "Galaxy Watch Ultra 2 47 Titanium Silver",
+      "warehouse": "(S3)",
+      "price": 40900
+    },
+    "galaxy-watch-ultra-2-47-titanium-gray-оаэ-s3-41500": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47-titanium-gray-s3-41500.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2-47-titanium-gray-s3-41500.html",
+      "cover": "assets/product-images/297bbfe1b281c6b4ad991fb5.jpg",
+      "name": "Galaxy Watch Ultra 2 47 Titanium Gray",
       "warehouse": "(S3)",
       "price": 41500
     }
