@@ -3283,7 +3283,7 @@
   // владельцу. Перед отправкой — текст на подтверждение; отметка «📤 запрос …» ложится в комментарий.
   const SUP_GROUPS = [
     { g: "s1", label: "Склад 1 (Double Apple)", src: ["S1"], contacts: [["erol", "ЭРОЛ"], ["dima", "ДИМА"]] },
-    { g: "s4", label: "Предзаказ Double Apple (5–7 дней)", src: ["S4"], contacts: [["da_preorder", "Double Apple"]] },
+    { g: "s4", label: "Предзаказ Double Apple (5–8 дней)", src: ["S4"], contacts: [["da_preorder", "Double Apple"]] },
     { g: "dr", label: "Dr.Store (склады 2–3)", src: ["S2", "S3"], contacts: [["drstore", "Dr.Store"]] },
     // Склад 5 — OptSochiMobile (30.10.2026, план 129): Антон, запасной — Коля. Ключи — как SUPPLIER_CONTACTS бота.
     { g: "s5", label: "OptSochiMobile (склад 5)", src: ["S5"], contacts: [["anton", "АНТОН"], ["kolya", "КОЛЯ"]] },

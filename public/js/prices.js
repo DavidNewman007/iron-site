@@ -27,7 +27,7 @@
   // (склад S3, Dr.Store МСК, добавлен 16.08.2026). Порядок важен: товары
   // складываются в том же порядке, что и листы, поэтому «под заказ» встаёт
   // хвостом каждой секции, а не оттесняет наличие.
-  // Prices-4 — предзаказ склада 1 (S4, Double Apple, новые iPhone, 5–7 дней,
+  // Prices-4 — предзаказ склада 1 (S4, Double Apple, новые iPhone, 5–8 дней,
   // добавлен 15.09.2026). Prices-5 — склад S5, OptSochiMobile, наличие в Сочи
   // (30.10.2026). Список обязан совпадать с hybrid-cart.js.
   const SHEET_TABS = ["Prices", "Prices-2", "Prices-3", "Prices-4", "Prices-5"];
@@ -43,23 +43,23 @@
   // позиции приходит из колонки G публичного листа и лежит в product.eta.
   const PREORDER_ETA_TEXT = I18N.isEn ? "1–2 days" : "1–2 дня";
 
-  /** «1–2 дня» / «5–7 дней» → «1–2 days» / «5–7 days» для английских страниц. */
+  /** «1–2 дня» / «5–8 дней» → «1–2 days» / «5–8 days» для английских страниц. */
   function localizeEta(eta) {
-    const text = String(eta || "").trim();
+    const text = String(eta || "").trim().replace(/\b5[–-]7(?=\s*(?:дн|days))/g, "5–8");
     if (!text) return "";
     return I18N.isEn ? text.replace(/\s*дн(?:я|ей)\s*$/u, " days") : text;
   }
 
   /**
    * Бейдж на карточке и в корзине: «🛩️ под заказ, 1–2 дня» (Dr.Store, S3) или
-   * «🛩️ предзаказ, 5–7 дней» (новые iPhone, S4). Срок берётся из товара, а
+   * «🛩️ предзаказ, 5–8 дней» (новые iPhone, S4). Срок берётся из товара, а
    * не из константы — с 15.09.2026 сроки у складов разные.
    */
   function preorderBadgeText(product) {
     const isNew = PREORDER_NEW_WAREHOUSE_RE.test(String((product && product.warehouse) || ""));
     // Без срока в товаре (позиция, добавленная со страницы карточки) — по складу:
-    // S4 — 5–7 дней, иначе 1–2. Раньше S4 без срока показывался «1–2 дня» (12.10.2026).
-    const eta = localizeEta(product && product.eta) || (isNew ? (I18N.isEn ? "5–7 days" : "5–7 дней") : PREORDER_ETA_TEXT);
+    // S4 — 5–8 дней, иначе 1–2. Раньше S4 без срока показывался «1–2 дня» (12.10.2026).
+    const eta = localizeEta(product && product.eta) || (isNew ? (I18N.isEn ? "5–8 days" : "5–8 дней") : PREORDER_ETA_TEXT);
     if (I18N.isEn) return `🛩️ ${isNew ? "pre-order" : "to order"}, ${eta}`;
     return `🛩️ ${isNew ? "предзаказ" : "под заказ"}, ${eta}`;
   }
@@ -2249,7 +2249,7 @@
         inStock: preorder ? false : !/0\s*шт/i.test(qty),
         preorder,
         // Срок — из колонки «Срок» листа (у Prices-3 «1–2 дня», у Prices-4
-        // «5–7 дней»); запасной вариант — для листа без колонки.
+        // «5–8 дней»); запасной вариант — для листа без колонки.
         eta: preorder ? (String(etaRaw || "").trim() || PREORDER_ETA_TEXT) : "",
       });
     }
@@ -3219,7 +3219,7 @@
     return I18N.isEn ? pair[1] : pair[0];
   }
 
-  /** Наличие: в Сочи · под заказ 1–2 дня (склад S3) · предзаказ 5–7 дней (S4). */
+  /** Наличие: в Сочи · под заказ 1–2 дня (склад S3) · предзаказ 5–8 дней (S4). */
   function availKind(p) {
     if (PREORDER_NEW_WAREHOUSE_RE.test(String((p && p.warehouse) || ""))) return "pre57";
     if (p && p.preorder) return "order12";
@@ -3234,7 +3234,7 @@
     all: ["Любое наличие", "Any availability"],
     stock: ["В наличии в Сочи", "In stock in Sochi"],
     order12: ["Под заказ, 1–2 дня", "To order, 1–2 days"],
-    pre57: ["Предзаказ, 5–7 дней", "Pre-order, 5–7 days"],
+    pre57: ["Предзаказ, 5–8 дней", "Pre-order, 5–8 days"],
   };
 
   function availLabel(mode) {
