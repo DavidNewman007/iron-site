@@ -1,0 +1,33 @@
+{
+  "product_id": "apple-pencil-s4-8200",
+  "category": "accessories",
+  "file_slug": "apple-pencil-s4-8200",
+  "name": "Apple Pencil",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 8200,
+  "catalog_url": "https://sochi.dr-store.ru/apple/apple-gadgets/apple-pencil",
+  "catalog_title": "Apple Pencil в магазине Dr. Store",
+  "specs": [],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/pencil-1-usb-c-dr-store-7-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/pencil-1-usb-c-dr-store-5-700x700.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/pencil-2-dr-store-4-700x700.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/pencil-2-dr-store-5-700x700.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/MX2D3-dr-store2-700x700.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/MX2D3-dr-store1-700x700.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/pencil-1-dr-store-5-700x700.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/apple/pencil/pencil-1-dr-store-1-700x700.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/3d538523d6e220f186331fa3.jpg",
+    "assets/product-images/748520dd156238928283b867.jpg",
+    "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+    "assets/product-images/964434aa527850862a63deda.jpg",
+    "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+    "assets/product-images/9fe3b9d44c0c38b2e8df8cb1.jpeg",
+    "assets/product-images/3d2594c266f2787c8a4d99d3.jpg",
+    "assets/product-images/d1391e0b76bcbb7ba3c709d3.jpg"
+  ],
+  "updated_at": "2026-11-02T17:23:29.121146Z"
+}
