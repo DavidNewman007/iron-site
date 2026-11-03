@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-02T17:29:54.759Z",
-  "count": 272,
+  "generated_at": "2026-11-03T15:38:42.538Z",
+  "count": 282,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -2177,6 +2177,86 @@
       "name": "Sony WH-1000XM6 Wireless Headphones Platinum Silver",
       "warehouse": "(S4)",
       "price": 29400
+    },
+    "samsung-galaxy-buds-3-fe-black-s4-8600": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-3-fe-black-s4-8600.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-3-fe-black-s4-8600.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Samsung Galaxy Buds 3 FE Black",
+      "warehouse": "(S4)",
+      "price": 8600
+    },
+    "samsung-galaxy-buds-3-pro-silver-s4-12800": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-3-pro-silver-s4-12800.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-3-pro-silver-s4-12800.html",
+      "cover": "assets/product-images/9022d9cab6ca8a2548b24a40.jpeg",
+      "name": "Samsung Galaxy Buds 3 Pro Silver",
+      "warehouse": "(S4)",
+      "price": 12800
+    },
+    "samsung-galaxy-buds-4-black-s4-11700": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-black-s4-11700.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-black-s4-11700.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Samsung Galaxy Buds 4 Black",
+      "warehouse": "(S4)",
+      "price": 11700
+    },
+    "samsung-galaxy-buds-4-pro-black-s4-15100": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-pro-black-s4-15100.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-pro-black-s4-15100.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Samsung Galaxy Buds 4 Pro Black",
+      "warehouse": "(S4)",
+      "price": 15100
+    },
+    "samsung-galaxy-buds-4-pro-white-s4-14900": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-pro-white-s4-14900.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-pro-white-s4-14900.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Samsung Galaxy Buds 4 Pro White",
+      "warehouse": "(S4)",
+      "price": 14900
+    },
+    "sony-wh-1000xm5-wireless-headphones-black-s4-22800": {
+      "url": "hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-black-s4-22800.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-black-s4-22800.html",
+      "cover": "assets/product-images/30ef0ddfc5cb2f9219d671c4.jpg",
+      "name": "Sony WH-1000XM5 Wireless Headphones Black",
+      "warehouse": "(S4)",
+      "price": 22800
+    },
+    "sony-wh-1000xm5-wireless-headphones-silver-s4-22800": {
+      "url": "hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-silver-s4-22800.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-silver-s4-22800.html",
+      "cover": "assets/product-images/edd07b230876e2223c264f70.jpg",
+      "name": "Sony WH-1000XM5 Wireless Headphones Silver",
+      "warehouse": "(S4)",
+      "price": 22800
+    },
+    "sony-wh-1000xm6-wireless-headphones-black-s4-29600": {
+      "url": "hybrid-products/audio/sony-wh-1000xm6-wireless-headphones-black-s4-29600.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm6-wireless-headphones-black-s4-29600.html",
+      "cover": "assets/product-images/4ca81b1b57bc23787d7a5ceb.jpg",
+      "name": "Sony WH-1000XM6 Wireless Headphones Black",
+      "warehouse": "(S4)",
+      "price": 29600
+    },
+    "sony-wh-1000xm6-wireless-headphones-platinum-silver-s4-29600": {
+      "url": "hybrid-products/audio/sony-wh-1000xm6-wireless-headphones-platinum-silver-s4-29600.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm6-wireless-headphones-platinum-silver-s4-29600.html",
+      "cover": "assets/product-images/35f09fd7265041ab68570a70.jpg",
+      "name": "Sony WH-1000XM6 Wireless Headphones Platinum Silver",
+      "warehouse": "(S4)",
+      "price": 29600
+    },
+    "marshall-major-v-headphones-black-s4-8300": {
+      "url": "hybrid-products/audio/marshall-major-v-headphones-black-s4-8300.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-headphones-black-s4-8300.html",
+      "cover": "assets/product-images/860e3ff443a5b72e268258d0.jpg",
+      "name": "Marshall Major V Headphones Black",
+      "warehouse": "(S4)",
+      "price": 8300
     }
   }
 }

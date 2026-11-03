@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-02T17:29:54.792Z",
-  "count": 489,
+  "generated_at": "2026-11-03T15:38:42.578Z",
+  "count": 516,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -3913,6 +3913,222 @@
       "name": "Dyson Wash G1 Black",
       "warehouse": "(S3)",
       "price": 34900
+    },
+    "dyson-hs08-jasper-plum-гонконг-s3-42400": {
+      "url": "hybrid-products/dyson/dyson-hs08-jasper-plum-s3-42400.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-jasper-plum-s3-42400.html",
+      "cover": "assets/product-images/cb2b76fbce4463f5d7d430fc.jpg",
+      "name": "Dyson HS08 Jasper Plum",
+      "warehouse": "(S3)",
+      "price": 42400
+    },
+    "dyson-hs08-prussian-blue-великобритания-s3-37000": {
+      "url": "hybrid-products/dyson/dyson-hs08-prussian-blue-s3-37000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-prussian-blue-s3-37000.html",
+      "cover": "assets/product-images/0be37ad63e9c742ac751d335.jpg",
+      "name": "Dyson HS08 Prussian Blue",
+      "warehouse": "(S3)",
+      "price": 37000
+    },
+    "dyson-hs08-red-velvet-гонконг-s3-39700": {
+      "url": "hybrid-products/dyson/dyson-hs08-red-velvet-s3-39700.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-red-velvet-s3-39700.html",
+      "cover": "assets/product-images/3d055f96e29fd2c24f4fda49.jpg",
+      "name": "Dyson HS08 Red Velvet",
+      "warehouse": "(S3)",
+      "price": 39700
+    },
+    "dyson-hs08-red-velvet-без-диффузора-европа-s3-41500": {
+      "url": "hybrid-products/dyson/dyson-hs08-red-velvet-без-диффузора-s3-41500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-red-velvet-без-диффузора-s3-41500.html",
+      "cover": "assets/product-images/3d055f96e29fd2c24f4fda49.jpg",
+      "name": "Dyson HS08 Red Velvet без диффузора",
+      "warehouse": "(S3)",
+      "price": 41500
+    },
+    "dyson-hs09-coanda-2x-apricot-topaz-великобритания-s3-44000": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-apricot-topaz-s3-44000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-apricot-topaz-s3-44000.html",
+      "cover": "assets/product-images/1f01eeb70cce6f791cd24e57.jpg",
+      "name": "Dyson HS09 Coanda 2x Apricot Topaz",
+      "warehouse": "(S3)",
+      "price": 44000
+    },
+    "dyson-hs09-coanda-2x-red-velvet-великобритания-s3-56100": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-red-velvet-s3-56100.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-red-velvet-s3-56100.html",
+      "cover": "assets/product-images/1338d3c531149141d3d15462.jpg",
+      "name": "Dyson HS09 Coanda 2x Red Velvet",
+      "warehouse": "(S3)",
+      "price": 56100
+    },
+    "dyson-hs07-copper-nickel-европа-s3-37700": {
+      "url": "hybrid-products/dyson/dyson-hs07-copper-nickel-s3-37700.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs07-copper-nickel-s3-37700.html",
+      "cover": "assets/product-images/4e1cb60b9f7541f7c4a05475.jpg",
+      "name": "Dyson HS07 Copper/Nickel",
+      "warehouse": "(S3)",
+      "price": 37700
+    },
+    "dyson-ht01-amber-silk-гонконг-s3-37900": {
+      "url": "hybrid-products/dyson/dyson-ht01-amber-silk-s3-37900.html",
+      "url_en": "en/hybrid-products/dyson/dyson-ht01-amber-silk-s3-37900.html",
+      "cover": "assets/product-images/d37c3cf1eab35b23d35914dc.jpg",
+      "name": "Dyson HT01 Amber Silk",
+      "warehouse": "(S3)",
+      "price": 37900
+    },
+    "dyson-ht01-apricot-topaz-великобритания-s3-37200": {
+      "url": "hybrid-products/dyson/dyson-ht01-apricot-topaz-s3-37200.html",
+      "url_en": "en/hybrid-products/dyson/dyson-ht01-apricot-topaz-s3-37200.html",
+      "cover": "assets/product-images/5889de94e02e4dc95d31b629.jpg",
+      "name": "Dyson HT01 Apricot Topaz",
+      "warehouse": "(S3)",
+      "price": 37200
+    },
+    "dyson-ht01-ceramic-pink-южная-корея-s3-37000": {
+      "url": "hybrid-products/dyson/dyson-ht01-ceramic-pink-s3-37000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-ht01-ceramic-pink-s3-37000.html",
+      "cover": "assets/product-images/c8212a33a4debf5f171a68d0.jpg",
+      "name": "Dyson HT01 Ceramic Pink",
+      "warehouse": "(S3)",
+      "price": 37000
+    },
+    "dyson-ht01-prussian-blue-великобритания-s3-32000": {
+      "url": "hybrid-products/dyson/dyson-ht01-prussian-blue-s3-32000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-ht01-prussian-blue-s3-32000.html",
+      "cover": "assets/product-images/a943b8f7d9da186f03984e66.jpg",
+      "name": "Dyson HT01 Prussian Blue",
+      "warehouse": "(S3)",
+      "price": 32000
+    },
+    "dyson-hd07-nickel-copper-европа-s3-28500": {
+      "url": "hybrid-products/dyson/dyson-hd07-nickel-copper-s3-28500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd07-nickel-copper-s3-28500.html",
+      "cover": "assets/product-images/dbc3a45d1eda056a8b8b8007.jpg",
+      "name": "Dyson HD07 Nickel/Copper",
+      "warehouse": "(S3)",
+      "price": 28500
+    },
+    "dyson-hd08-prussian-blue-южная-корея-s3-31600": {
+      "url": "hybrid-products/dyson/dyson-hd08-prussian-blue-s3-31600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd08-prussian-blue-s3-31600.html",
+      "cover": "assets/product-images/0be37ad63e9c742ac751d335.jpg",
+      "name": "Dyson HD08 Prussian Blue",
+      "warehouse": "(S3)",
+      "price": 31600
+    },
+    "dyson-hd16-ceramic-patina-topaz-европа-s3-37600": {
+      "url": "hybrid-products/dyson/dyson-hd16-ceramic-patina-topaz-s3-37600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd16-ceramic-patina-topaz-s3-37600.html",
+      "cover": "assets/product-images/4275a484247b33e00d469516.jpg",
+      "name": "Dyson HD16 Ceramic Patina/Topaz",
+      "warehouse": "(S3)",
+      "price": 37600
+    },
+    "dyson-hd16-plum-copper-великобритания-s3-36100": {
+      "url": "hybrid-products/dyson/dyson-hd16-plum-copper-s3-36100.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd16-plum-copper-s3-36100.html",
+      "cover": "assets/product-images/db42adecb55826d26a702201.jpg",
+      "name": "Dyson HD16 Plum/Copper",
+      "warehouse": "(S3)",
+      "price": 36100
+    },
+    "dyson-hd16-prussian-blue-европа-s3-33200": {
+      "url": "hybrid-products/dyson/dyson-hd16-prussian-blue-s3-33200.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd16-prussian-blue-s3-33200.html",
+      "cover": "assets/product-images/db42adecb55826d26a702201.jpg",
+      "name": "Dyson HD16 Prussian Blue",
+      "warehouse": "(S3)",
+      "price": 33200
+    },
+    "dyson-hd16-red-velvet-gold-европа-s3-39900": {
+      "url": "hybrid-products/dyson/dyson-hd16-red-velvet-gold-s3-39900.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd16-red-velvet-gold-s3-39900.html",
+      "cover": "assets/product-images/21cb34b06a552c57038084f1.jpg",
+      "name": "Dyson HD16 Red Velvet Gold",
+      "warehouse": "(S3)",
+      "price": 39900
+    },
+    "dyson-hd17-apricot-topaz-великобритания-s3-35200": {
+      "url": "hybrid-products/dyson/dyson-hd17-apricot-topaz-s3-35200.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd17-apricot-topaz-s3-35200.html",
+      "cover": "assets/product-images/49c5844fc9874055352cd773.jpg",
+      "name": "Dyson HD17 Apricot Topaz",
+      "warehouse": "(S3)",
+      "price": 35200
+    },
+    "dyson-hd17-ceramic-pink-австралия-s3-34300": {
+      "url": "hybrid-products/dyson/dyson-hd17-ceramic-pink-s3-34300.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd17-ceramic-pink-s3-34300.html",
+      "cover": "assets/product-images/b839c234358b0f5f8347f8c7.jpg",
+      "name": "Dyson HD17 Ceramic Pink",
+      "warehouse": "(S3)",
+      "price": 34300
+    },
+    "dyson-hd17-red-velvet-европа-s3-40900": {
+      "url": "hybrid-products/dyson/dyson-hd17-red-velvet-s3-40900.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd17-red-velvet-s3-40900.html",
+      "cover": "assets/product-images/9140dd733f9188135b708421.jpg",
+      "name": "Dyson HD17 Red Velvet",
+      "warehouse": "(S3)",
+      "price": 40900
+    },
+    "dyson-v11-fluffy-sv15-nickel-red-европа-s3-40200": {
+      "url": "hybrid-products/dyson/dyson-v11-fluffy-sv15-nickel-red-s3-40200.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v11-fluffy-sv15-nickel-red-s3-40200.html",
+      "cover": "assets/product-images/37819f41766c7d75388e2960.jpg",
+      "name": "Dyson V11 Fluffy SV15 Nickel Red",
+      "warehouse": "(S3)",
+      "price": 40200
+    },
+    "dyson-v12-detect-slim-yellow-nickel-великобритания-s3-47200": {
+      "url": "hybrid-products/dyson/dyson-v12-detect-slim-yellow-nickel-s3-47200.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v12-detect-slim-yellow-nickel-s3-47200.html",
+      "cover": "assets/product-images/7cbf51c548f8ad257d9ebfa6.jpg",
+      "name": "Dyson V12 Detect Slim Yellow/Nickel",
+      "warehouse": "(S3)",
+      "price": 47200
+    },
+    "dyson-v12-detect-slim-absolute-sv46-yellow-nickel-европа-s3-47600": {
+      "url": "hybrid-products/dyson/dyson-v12-detect-slim-absolute-sv46-yellow-nickel-s3-47600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v12-detect-slim-absolute-sv46-yellow-nickel-s3-47600.html",
+      "cover": "assets/product-images/7cbf51c548f8ad257d9ebfa6.jpg",
+      "name": "Dyson V12 Detect Slim Absolute SV46 Yellow/Nickel",
+      "warehouse": "(S3)",
+      "price": 47600
+    },
+    "dyson-v12s-detect-slim-submarine-yellow-nickel-европа-s3-51900": {
+      "url": "hybrid-products/dyson/dyson-v12s-detect-slim-submarine-yellow-nickel-s3-51900.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v12s-detect-slim-submarine-yellow-nickel-s3-51900.html",
+      "cover": "assets/product-images/742cd664a7f8c69753640da5.jpg",
+      "name": "Dyson V12S Detect Slim Submarine Yellow/Nickel",
+      "warehouse": "(S3)",
+      "price": 51900
+    },
+    "dyson-v15s-detect-submarine-sv47-yellow-nickel-великобритания-s3-64300": {
+      "url": "hybrid-products/dyson/dyson-v15s-detect-submarine-sv47-yellow-nickel-s3-64300.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v15s-detect-submarine-sv47-yellow-nickel-s3-64300.html",
+      "cover": "assets/product-images/3e262a9d4712fcea13fd0644.jpg",
+      "name": "Dyson V15S Detect Submarine SV47 Yellow/Nickel",
+      "warehouse": "(S3)",
+      "price": 64300
+    },
+    "dyson-wash-g1-black-австралия-s3-35200": {
+      "url": "hybrid-products/dyson/dyson-wash-g1-black-s3-35200.html",
+      "url_en": "en/hybrid-products/dyson/dyson-wash-g1-black-s3-35200.html",
+      "cover": "assets/product-images/521514c19e98620a015133d2.jpg",
+      "name": "Dyson Wash G1 Black",
+      "warehouse": "(S3)",
+      "price": 35200
+    },
+    "dyson-spot-scrub-ai-black-blue-европа-s3-89500": {
+      "url": "hybrid-products/dyson/dyson-spot-scrub-ai-black-blue-s3-89500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-spot-scrub-ai-black-blue-s3-89500.html",
+      "cover": "assets/product-images/fe86ff3412160bf316c05dd5.jpg",
+      "name": "Dyson Spot+Scrub AI Black/Blue",
+      "warehouse": "(S3)",
+      "price": 89500
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-02T17:29:54.743Z",
-  "count": 159,
+  "generated_at": "2026-11-03T15:38:42.519Z",
+  "count": 178,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -1273,6 +1273,158 @@
       "name": "iPad Smart Keyboard Folio Black",
       "warehouse": "(S4)",
       "price": 16000
+    },
+    "apple-pencil-2nd-gen-s4-13900": {
+      "url": "hybrid-products/accessories/apple-pencil-2nd-gen-s4-13900.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-2nd-gen-s4-13900.html",
+      "cover": "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+      "name": "Apple Pencil (2nd Gen)",
+      "warehouse": "(S4)",
+      "price": 13900
+    },
+    "apple-magic-mouse-black-s4-10400": {
+      "url": "hybrid-products/accessories/apple-magic-mouse-black-s4-10400.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-mouse-black-s4-10400.html",
+      "cover": "assets/product-images/082f86c05a019b81f5ea66e2.jpg",
+      "name": "Apple Magic Mouse Black",
+      "warehouse": "(S4)",
+      "price": 10400
+    },
+    "apple-magic-mouse-white-s4-9400": {
+      "url": "hybrid-products/accessories/apple-magic-mouse-white-s4-9400.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-mouse-white-s4-9400.html",
+      "cover": "assets/product-images/edc0e0973e1b23e76acb20d6.jpg",
+      "name": "Apple Magic Mouse White",
+      "warehouse": "(S4)",
+      "price": 9400
+    },
+    "apple-magic-keyboard-white-сша-s4-17400": {
+      "url": "hybrid-products/accessories/apple-magic-keyboard-white-s4-17400.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-keyboard-white-s4-17400.html",
+      "cover": "assets/product-images/9f24e43418498bd1819adb58.jpeg",
+      "name": "Apple Magic Keyboard White",
+      "warehouse": "(S4)",
+      "price": 17400
+    },
+    "apple-magic-keyboard-touch-id-and-numeric-black-оаэ-s4-18300": {
+      "url": "hybrid-products/accessories/apple-magic-keyboard-touch-id-and-numeric-black-s4-18300.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-keyboard-touch-id-and-numeric-black-s4-18300.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "Apple Magic Keyboard Touch ID and Numeric Black",
+      "warehouse": "(S4)",
+      "price": 18300
+    },
+    "apple-magic-keyboard-touch-id-and-numeric-white-оаэ-s4-16400": {
+      "url": "hybrid-products/accessories/apple-magic-keyboard-touch-id-and-numeric-white-s4-16400.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-keyboard-touch-id-and-numeric-white-s4-16400.html",
+      "cover": "assets/product-images/9f24e43418498bd1819adb58.jpeg",
+      "name": "Apple Magic Keyboard Touch ID and Numeric White",
+      "warehouse": "(S4)",
+      "price": 16400
+    },
+    "apple-magic-keyboard-touch-id-and-numeric-white-сша-s4-20800": {
+      "url": "hybrid-products/accessories/apple-magic-keyboard-touch-id-and-numeric-white-s4-20800.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-keyboard-touch-id-and-numeric-white-s4-20800.html",
+      "cover": "assets/product-images/9f24e43418498bd1819adb58.jpeg",
+      "name": "Apple Magic Keyboard Touch ID and Numeric White",
+      "warehouse": "(S4)",
+      "price": 20800
+    },
+    "apple-magic-keyboard-with-numeric-white-сша-s4-19700": {
+      "url": "hybrid-products/accessories/apple-magic-keyboard-with-numeric-white-s4-19700.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-keyboard-with-numeric-white-s4-19700.html",
+      "cover": "assets/product-images/9f24e43418498bd1819adb58.jpeg",
+      "name": "Apple Magic Keyboard with Numeric White",
+      "warehouse": "(S4)",
+      "price": 19700
+    },
+    "apple-magic-keyboard-12-9-white-оаэ-s4-29300": {
+      "url": "hybrid-products/accessories/apple-magic-keyboard-12-9-white-s4-29300.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-keyboard-12-9-white-s4-29300.html",
+      "cover": "assets/product-images/9f24e43418498bd1819adb58.jpeg",
+      "name": "Apple Magic Keyboard 12.9 White",
+      "warehouse": "(S4)",
+      "price": 29300
+    },
+    "ipad-smart-keyboard-black-оаэ-s4-16700": {
+      "url": "hybrid-products/accessories/ipad-smart-keyboard-black-s4-16700.html",
+      "url_en": "en/hybrid-products/accessories/ipad-smart-keyboard-black-s4-16700.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Smart Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 16700
+    },
+    "ipad-air-11-magic-keyboard-black-сша-s4-30900": {
+      "url": "hybrid-products/accessories/ipad-air-11-magic-keyboard-black-s4-30900.html",
+      "url_en": "en/hybrid-products/accessories/ipad-air-11-magic-keyboard-black-s4-30900.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Air 11 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 30900
+    },
+    "ipad-air-11-magic-keyboard-white-сша-s4-29800": {
+      "url": "hybrid-products/accessories/ipad-air-11-magic-keyboard-white-s4-29800.html",
+      "url_en": "en/hybrid-products/accessories/ipad-air-11-magic-keyboard-white-s4-29800.html",
+      "cover": "assets/product-images/9f24e43418498bd1819adb58.jpeg",
+      "name": "iPad Air 11 Magic Keyboard White",
+      "warehouse": "(S4)",
+      "price": 29800
+    },
+    "ipad-air-13-magic-keyboard-black-сша-s4-36400": {
+      "url": "hybrid-products/accessories/ipad-air-13-magic-keyboard-black-s4-36400.html",
+      "url_en": "en/hybrid-products/accessories/ipad-air-13-magic-keyboard-black-s4-36400.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Air 13 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 36400
+    },
+    "ipad-air-13-magic-keyboard-white-сша-s4-35800": {
+      "url": "hybrid-products/accessories/ipad-air-13-magic-keyboard-white-s4-35800.html",
+      "url_en": "en/hybrid-products/accessories/ipad-air-13-magic-keyboard-white-s4-35800.html",
+      "cover": "assets/product-images/9f24e43418498bd1819adb58.jpeg",
+      "name": "iPad Air 13 Magic Keyboard White",
+      "warehouse": "(S4)",
+      "price": 35800
+    },
+    "ipad-pro-11-magic-keyboard-black-индия-s4-30700": {
+      "url": "hybrid-products/accessories/ipad-pro-11-magic-keyboard-black-s4-30700.html",
+      "url_en": "en/hybrid-products/accessories/ipad-pro-11-magic-keyboard-black-s4-30700.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Pro 11 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 30700
+    },
+    "ipad-pro-11-magic-keyboard-black-гонконг-s4-30800": {
+      "url": "hybrid-products/accessories/ipad-pro-11-magic-keyboard-black-s4-30800.html",
+      "url_en": "en/hybrid-products/accessories/ipad-pro-11-magic-keyboard-black-s4-30800.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Pro 11 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 30800
+    },
+    "ipad-smart-keyboard-folio-black-оаэ-s4-16100": {
+      "url": "hybrid-products/accessories/ipad-smart-keyboard-folio-black-s4-16100.html",
+      "url_en": "en/hybrid-products/accessories/ipad-smart-keyboard-folio-black-s4-16100.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Smart Keyboard Folio Black",
+      "warehouse": "(S4)",
+      "price": 16100
+    },
+    "ipad-pro-13-magic-keyboard-white-сша-s4-37200": {
+      "url": "hybrid-products/accessories/ipad-pro-13-magic-keyboard-white-s4-37200.html",
+      "url_en": "en/hybrid-products/accessories/ipad-pro-13-magic-keyboard-white-s4-37200.html",
+      "cover": "assets/product-images/9f24e43418498bd1819adb58.jpeg",
+      "name": "iPad Pro 13 Magic Keyboard White",
+      "warehouse": "(S4)",
+      "price": 37200
+    },
+    "сзу-samsung-25w-pd-usb-c-white-адаптер-samsung-45w-pd-s5-1900": {
+      "url": "hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-white-адаптер-samsung-45w-pd-s5-1900.html",
+      "url_en": "en/hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-white-адаптер-samsung-45w-pd-s5-1900.html",
+      "cover": "assets/product-images/b85d431d4085bd06673486c1.png",
+      "name": "СЗУ Samsung 25W PD USB-C White (адаптер samsung 45w pd)",
+      "warehouse": "(S5)",
+      "price": 1900
     }
   }
 }
