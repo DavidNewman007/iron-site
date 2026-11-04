@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-03T15:38:42.519Z",
-  "count": 178,
+  "generated_at": "2026-11-04T15:30:30.055Z",
+  "count": 191,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -1423,6 +1423,110 @@
       "url_en": "en/hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-white-адаптер-samsung-45w-pd-s5-1900.html",
       "cover": "assets/product-images/b85d431d4085bd06673486c1.png",
       "name": "СЗУ Samsung 25W PD USB-C White (адаптер samsung 45w pd)",
+      "warehouse": "(S5)",
+      "price": 1900
+    },
+    "-magic-mouse-3-black-s2-11200": {
+      "url": "hybrid-products/accessories/magic-mouse-3-black-s2-11200.html",
+      "url_en": "en/hybrid-products/accessories/magic-mouse-3-black-s2-11200.html",
+      "cover": "assets/product-images/082f86c05a019b81f5ea66e2.jpg",
+      "name": "🖱Magic Mouse 3 Black",
+      "warehouse": "(S2)",
+      "price": 11200
+    },
+    "-airtag-1pack-s2-4200": {
+      "url": "hybrid-products/accessories/airtag-1pack-s2-4200.html",
+      "url_en": "en/hybrid-products/accessories/airtag-1pack-s2-4200.html",
+      "cover": "assets/product-images/ee6b5bab498d1ede2c3102bd.jpg",
+      "name": "📍AirTag 1pack",
+      "warehouse": "(S2)",
+      "price": 4200
+    },
+    "-airtag-2-4pack-s2-11800": {
+      "url": "hybrid-products/accessories/airtag-2-4pack-s2-11800.html",
+      "url_en": "en/hybrid-products/accessories/airtag-2-4pack-s2-11800.html",
+      "cover": "assets/product-images/ee6b5bab498d1ede2c3102bd.jpg",
+      "name": "📍AirTag 2 4pack",
+      "warehouse": "(S2)",
+      "price": 11800
+    },
+    "чехол-pitaka-для-iphone-air-sunset-s2-6300": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-air-sunset-s2-6300.html",
+      "url_en": "en/hybrid-products/accessories/чехол-pitaka-для-iphone-air-sunset-s2-6300.html",
+      "cover": "assets/product-images/3111e9539c976c6c5cabf3d0.jpg",
+      "name": "Чехол PITAKA для iPhone Air, Sunset",
+      "warehouse": "(S2)",
+      "price": 6300
+    },
+    "чехол-pitaka-для-iphone-air-black-grey-s2-5700": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-air-black-grey-s2-5700.html",
+      "url_en": "en/hybrid-products/accessories/чехол-pitaka-для-iphone-air-black-grey-s2-5700.html",
+      "cover": "assets/product-images/65bbcfc9b90525a851771831.jpg",
+      "name": "Чехол PITAKA для iPhone Air, Black/Grey",
+      "warehouse": "(S2)",
+      "price": 5700
+    },
+    "чехол-pitaka-для-iphone-17-pro-milky-way-s2-7800": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-milky-way-s2-7800.html",
+      "url_en": "en/hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-milky-way-s2-7800.html",
+      "cover": "assets/product-images/edd4007e494b349a49c96d19.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro, Milky Way",
+      "warehouse": "(S2)",
+      "price": 7800
+    },
+    "чехол-pitaka-для-iphone-17-pro-sunset-s2-7800": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-sunset-s2-7800.html",
+      "url_en": "en/hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-sunset-s2-7800.html",
+      "cover": "assets/product-images/7d87cd99a8c11e067b7465c4.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro, Sunset",
+      "warehouse": "(S2)",
+      "price": 7800
+    },
+    "чехол-pitaka-для-iphone-17-pro-moonrise-s2-7800": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-moonrise-s2-7800.html",
+      "url_en": "en/hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-moonrise-s2-7800.html",
+      "cover": "assets/product-images/d4479b96b262d856135488ba.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro, Moonrise",
+      "warehouse": "(S2)",
+      "price": 7800
+    },
+    "чехол-pitaka-для-iphone-17-pro-black-gray-s2-5600": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-black-gray-s2-5600.html",
+      "url_en": "en/hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-black-gray-s2-5600.html",
+      "cover": "assets/product-images/d9fce22b39457cc8eddb7372.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro, Black/Gray",
+      "warehouse": "(S2)",
+      "price": 5600
+    },
+    "чехол-pitaka-для-iphone-17-pro-black-blue-s2-6300": {
+      "url": "hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-black-blue-s2-6300.html",
+      "url_en": "en/hybrid-products/accessories/чехол-pitaka-для-iphone-17-pro-black-blue-s2-6300.html",
+      "cover": "assets/product-images/131e86da19d697c67a195eda.jpg",
+      "name": "Чехол PITAKA для iPhone 17 Pro, Black/Blue",
+      "warehouse": "(S2)",
+      "price": 6300
+    },
+    "apple-pencil-2-s2-9500": {
+      "url": "hybrid-products/accessories/apple-pencil-2-s2-9500.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-2-s2-9500.html",
+      "cover": "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+      "name": "Apple Pencil 2",
+      "warehouse": "(S2)",
+      "price": 9500
+    },
+    "apple-pencil-pro-s2-12500": {
+      "url": "hybrid-products/accessories/apple-pencil-pro-s2-12500.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-pro-s2-12500.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "Apple Pencil Pro",
+      "warehouse": "(S2)",
+      "price": 12500
+    },
+    "сзу-samsung-25w-pd-usb-c-black-адаптер-samsung-25w-pd-us-s5-1900": {
+      "url": "hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-black-адаптер-samsung-25w-pd-us-s5-1900.html",
+      "url_en": "en/hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-black-адаптер-samsung-25w-pd-us-s5-1900.html",
+      "cover": "assets/product-images/ca989145f95693e4e41b4156.png",
+      "name": "СЗУ Samsung 25W PD USB-C Black (адаптер samsung 25w pd us)",
       "warehouse": "(S5)",
       "price": 1900
     }

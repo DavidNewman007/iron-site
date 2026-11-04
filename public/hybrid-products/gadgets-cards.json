@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-03T15:38:42.584Z",
-  "count": 79,
+  "generated_at": "2026-11-04T15:30:30.105Z",
+  "count": 95,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -633,6 +633,134 @@
       "name": "Whoop MG SuperKnit Luxe Obsidian Life",
       "warehouse": "(S4)",
       "price": 32600
+    },
+    "-canon-powershot-g7-x-mark-iii-silver-s2-102500": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-102500.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-102500.html",
+      "cover": "assets/product-images/dd1b9655ba8ad1dedcc47b4e.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Silver",
+      "warehouse": "(S2)",
+      "price": 102500
+    },
+    "-gopro-max-2-8k-360-s2-32200": {
+      "url": "hybrid-products/gadgets/gopro-max-2-8k-360-s2-32200.html",
+      "url_en": "en/hybrid-products/gadgets/gopro-max-2-8k-360-s2-32200.html",
+      "cover": "assets/product-images/9f9f2c10491a098cbfaf45af.jpg",
+      "name": "📷GoPro Max 2 8K 360",
+      "warehouse": "(S2)",
+      "price": 32200
+    },
+    "-gopro-13-creator-edition-s2-50400": {
+      "url": "hybrid-products/gadgets/gopro-13-creator-edition-s2-50400.html",
+      "url_en": "en/hybrid-products/gadgets/gopro-13-creator-edition-s2-50400.html",
+      "cover": "assets/product-images/ab5a15caa67aea99633334a3.jpg",
+      "name": "📷GoPro 13 Creator Edition",
+      "warehouse": "(S2)",
+      "price": 50400
+    },
+    "dji-osmo-mobile-8p-standard-combo-s2-15100": {
+      "url": "hybrid-products/gadgets/dji-osmo-mobile-8p-standard-combo-s2-15100.html",
+      "url_en": "en/hybrid-products/gadgets/dji-osmo-mobile-8p-standard-combo-s2-15100.html",
+      "cover": "assets/product-images/f846fe415de362bff335adcb.jpg",
+      "name": "DJI Osmo Mobile 8P Standard Combo",
+      "warehouse": "(S2)",
+      "price": 15100
+    },
+    "-instax-mini-13-pink-s2-12300": {
+      "url": "hybrid-products/gadgets/instax-mini-13-pink-s2-12300.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-13-pink-s2-12300.html",
+      "cover": "assets/product-images/8f9254746a3dbd1e1254da29.jpg",
+      "name": "📸instax mini 13 Pink",
+      "warehouse": "(S2)",
+      "price": 12300
+    },
+    "-instax-mini-13-white-s2-12300": {
+      "url": "hybrid-products/gadgets/instax-mini-13-white-s2-12300.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-13-white-s2-12300.html",
+      "cover": "assets/product-images/2463d3d659ca16d6d8f9fe95.jpg",
+      "name": "📸instax mini 13 White",
+      "warehouse": "(S2)",
+      "price": 12300
+    },
+    "-whoop-5-0-one-годовая-подписка-s2-20100": {
+      "url": "hybrid-products/gadgets/whoop-5-0-one-годовая-подписка-s2-20100.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-one-годовая-подписка-s2-20100.html",
+      "cover": "assets/product-images/051fe14d2aab2805ea14e014.jpg",
+      "name": "⌚️Whoop 5.0 One + годовая подписка",
+      "warehouse": "(S2)",
+      "price": 20100
+    },
+    "-whoop-5-0-peak-годовая-подписка-s2-24900": {
+      "url": "hybrid-products/gadgets/whoop-5-0-peak-годовая-подписка-s2-24900.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-peak-годовая-подписка-s2-24900.html",
+      "cover": "assets/product-images/4d9970f26038ca8a77f5df02.jpg",
+      "name": "⌚️Whoop 5.0 Peak + годовая подписка",
+      "warehouse": "(S2)",
+      "price": 24900
+    },
+    "-whoop-5-0-life-годовая-подписка-s2-35900": {
+      "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-35900.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-35900.html",
+      "cover": "assets/product-images/4d9e6703c652a11877f82d11.jpg",
+      "name": "⌚️Whoop 5.0 Life + годовая подписка",
+      "warehouse": "(S2)",
+      "price": 35900
+    },
+    "-google-fitbit-air-stephen-curry-s2-20600": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-stephen-curry-s2-20600.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-stephen-curry-s2-20600.html",
+      "cover": "assets/product-images/f164b529146e45e72f8976fa.jpg",
+      "name": "⌚️Google Fitbit Air Stephen Curry",
+      "warehouse": "(S2)",
+      "price": 20600
+    },
+    "-google-fitbit-air-lavender-s2-14000": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-lavender-s2-14000.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-lavender-s2-14000.html",
+      "cover": "assets/product-images/e601b2e215bd4ee6a0abbc08.jpg",
+      "name": "⌚️Google Fitbit Air Lavender",
+      "warehouse": "(S2)",
+      "price": 14000
+    },
+    "-google-fitbit-air-berry-s2-13200": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-berry-s2-13200.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-berry-s2-13200.html",
+      "cover": "assets/product-images/2ffa2d52407c52f5032fafc2.jpg",
+      "name": "⌚️Google Fitbit Air Berry",
+      "warehouse": "(S2)",
+      "price": 13200
+    },
+    "whoop-5-0-superknit-obsidian-peak-сша-s4-24600": {
+      "url": "hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-24600.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-24600.html",
+      "cover": "assets/product-images/14727cb6df731ff8ae6ed8f4.jpg",
+      "name": "Whoop 5.0 SuperKnit Obsidian Peak",
+      "warehouse": "(S4)",
+      "price": 24600
+    },
+    "whoop-5-0-superknit-obsidian-peak-европа-s4-25600": {
+      "url": "hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-25600.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-25600.html",
+      "cover": "assets/product-images/14727cb6df731ff8ae6ed8f4.jpg",
+      "name": "Whoop 5.0 SuperKnit Obsidian Peak",
+      "warehouse": "(S4)",
+      "price": 25600
+    },
+    "whoop-mg-superknit-luxe-obsidian-life-сша-s4-32900": {
+      "url": "hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-32900.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-32900.html",
+      "cover": "assets/product-images/dc19fcde756b291fbf288162.jpg",
+      "name": "Whoop MG SuperKnit Luxe Obsidian Life",
+      "warehouse": "(S4)",
+      "price": 32900
+    },
+    "whoop-mg-superknit-luxe-obsidian-life-европа-s4-33100": {
+      "url": "hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-33100.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-33100.html",
+      "cover": "assets/product-images/dc19fcde756b291fbf288162.jpg",
+      "name": "Whoop MG SuperKnit Luxe Obsidian Life",
+      "warehouse": "(S4)",
+      "price": 33100
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-03T15:38:42.538Z",
-  "count": 282,
+  "generated_at": "2026-11-04T15:30:30.070Z",
+  "count": 316,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -2257,6 +2257,278 @@
       "name": "Marshall Major V Headphones Black",
       "warehouse": "(S4)",
       "price": 8300
+    },
+    "buds-3-fe-black-оаэ-s2-9500": {
+      "url": "hybrid-products/audio/buds-3-fe-black-s2-9500.html",
+      "url_en": "en/hybrid-products/audio/buds-3-fe-black-s2-9500.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Buds 3 FE black",
+      "warehouse": "(S2)",
+      "price": 9500
+    },
+    "buds-3-silver-оаэ-s2-9500": {
+      "url": "hybrid-products/audio/buds-3-silver-s2-9500.html",
+      "url_en": "en/hybrid-products/audio/buds-3-silver-s2-9500.html",
+      "cover": "assets/product-images/b893049221c10fd33a69ae3d.jpeg",
+      "name": "Buds 3 Silver",
+      "warehouse": "(S2)",
+      "price": 9500
+    },
+    "buds-4-black-оаэ-s2-12900": {
+      "url": "hybrid-products/audio/buds-4-black-s2-12900.html",
+      "url_en": "en/hybrid-products/audio/buds-4-black-s2-12900.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Buds 4 Black",
+      "warehouse": "(S2)",
+      "price": 12900
+    },
+    "buds-4-white-оаэ-s2-12900": {
+      "url": "hybrid-products/audio/buds-4-white-s2-12900.html",
+      "url_en": "en/hybrid-products/audio/buds-4-white-s2-12900.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Buds 4 White",
+      "warehouse": "(S2)",
+      "price": 12900
+    },
+    "buds-4-pro-black-оаэ-s2-16300": {
+      "url": "hybrid-products/audio/buds-4-pro-black-s2-16300.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-black-s2-16300.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Buds 4 Pro Black",
+      "warehouse": "(S2)",
+      "price": 16300
+    },
+    "-marshall-major-v-pitch-black-s2-7800": {
+      "url": "hybrid-products/audio/marshall-major-v-pitch-black-s2-7800.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-pitch-black-s2-7800.html",
+      "cover": "assets/product-images/e241f641411412a4e89d84fb.jpeg",
+      "name": "🎧Marshall Major V Pitch Black",
+      "warehouse": "(S2)",
+      "price": 7800
+    },
+    "-marshall-major-v-black-s2-7800": {
+      "url": "hybrid-products/audio/marshall-major-v-black-s2-7800.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-black-s2-7800.html",
+      "cover": "assets/product-images/e241f641411412a4e89d84fb.jpeg",
+      "name": "🎧Marshall Major V Black",
+      "warehouse": "(S2)",
+      "price": 7800
+    },
+    "-marshall-major-v-brown-s2-7800": {
+      "url": "hybrid-products/audio/marshall-major-v-brown-s2-7800.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-brown-s2-7800.html",
+      "cover": "assets/product-images/ec418e55e0fba3522748d7ee.jpeg",
+      "name": "🎧Marshall Major V Brown",
+      "warehouse": "(S2)",
+      "price": 7800
+    },
+    "marshall-motif-ii-black-s2-12900": {
+      "url": "hybrid-products/audio/marshall-motif-ii-black-s2-12900.html",
+      "url_en": "en/hybrid-products/audio/marshall-motif-ii-black-s2-12900.html",
+      "cover": "assets/product-images/9e914e611e651369fc46d450.jpg",
+      "name": "Marshall Motif II Black",
+      "warehouse": "(S2)",
+      "price": 12900
+    },
+    "marshall-acton-iii-black-s2-23200": {
+      "url": "hybrid-products/audio/marshall-acton-iii-black-s2-23200.html",
+      "url_en": "en/hybrid-products/audio/marshall-acton-iii-black-s2-23200.html",
+      "cover": "assets/product-images/9cfb03393e1fae546b8be195.jpg",
+      "name": "Marshall Acton III, Black",
+      "warehouse": "(S2)",
+      "price": 23200
+    },
+    "marshall-acton-iii-brown-s2-23200": {
+      "url": "hybrid-products/audio/marshall-acton-iii-brown-s2-23200.html",
+      "url_en": "en/hybrid-products/audio/marshall-acton-iii-brown-s2-23200.html",
+      "cover": "assets/product-images/8bfb1d54934cda033b33af60.jpg",
+      "name": "Marshall Acton III, Brown",
+      "warehouse": "(S2)",
+      "price": 23200
+    },
+    "яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6800": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-фиолетовая-без-часов-s2-6800.html",
+      "cover": "assets/product-images/7aa34cfd2c7bd8ea4ee7a430.jpg",
+      "name": "Яндекс Станция Лайт 2 Фиолетовая (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6800
+    },
+    "яндекс-станция-лайт-2-зеленый-без-часов-s2-6200": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-зеленый-без-часов-s2-6200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-зеленый-без-часов-s2-6200.html",
+      "cover": "assets/product-images/45b46141672346f50b991ed8.jpg",
+      "name": "Яндекс Станция Лайт 2 Зеленый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6200
+    },
+    "яндекс-станция-лайт-2-розовый-без-часов-s2-6800": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-розовый-без-часов-s2-6800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-розовый-без-часов-s2-6800.html",
+      "cover": "assets/product-images/95065d12adfd718e29eda5a3.jpg",
+      "name": "Яндекс Станция Лайт 2 Розовый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6800
+    },
+    "яндекс-станция-лайт-2-кораловый-без-часов-s2-6800": {
+      "url": "hybrid-products/audio/яндекс-станция-лайт-2-кораловый-без-часов-s2-6800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-лайт-2-кораловый-без-часов-s2-6800.html",
+      "cover": "assets/product-images/674ea8c697dae4dc71233a07.jpg",
+      "name": "Яндекс Станция Лайт 2 Кораловый (Без часов)",
+      "warehouse": "(S2)",
+      "price": 6800
+    },
+    "яндекс-станция-стрит-черный-s2-11400": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-черный-s2-11400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-черный-s2-11400.html",
+      "cover": "assets/product-images/0115a93bee7eb333ed6ea597.jpg",
+      "name": "Яндекс Станция Стрит Черный",
+      "warehouse": "(S2)",
+      "price": 11400
+    },
+    "яндекс-станция-стрит-зеленый-s2-11200": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-зеленый-s2-11200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-зеленый-s2-11200.html",
+      "cover": "assets/product-images/c2915f101f9dd4ff3c1b2ca9.jpg",
+      "name": "Яндекс Станция Стрит Зеленый",
+      "warehouse": "(S2)",
+      "price": 11200
+    },
+    "яндекс-станция-стрит-фиолетовый-s2-11200": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-фиолетовый-s2-11200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-фиолетовый-s2-11200.html",
+      "cover": "assets/product-images/b662afbe801929e27813207f.jpg",
+      "name": "Яндекс Станция Стрит Фиолетовый",
+      "warehouse": "(S2)",
+      "price": 11200
+    },
+    "яндекс-станция-стрит-оранжевый-s2-11200": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-оранжевый-s2-11200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-оранжевый-s2-11200.html",
+      "cover": "assets/product-images/46a6344452aa0a7890480eb3.jpg",
+      "name": "Яндекс Станция Стрит Оранжевый",
+      "warehouse": "(S2)",
+      "price": 11200
+    },
+    "яндекс-станция-мини-3-черный-s2-11200": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-черный-s2-11200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-черный-s2-11200.html",
+      "cover": "assets/product-images/dc89cc514db8dd9b64b785ba.jpg",
+      "name": "Яндекс Станция Мини 3 Черный",
+      "warehouse": "(S2)",
+      "price": 11200
+    },
+    "яндекс-станция-мини-3-серый-s2-11200": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-серый-s2-11200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-серый-s2-11200.html",
+      "cover": "assets/product-images/494f62ad5f39fa179ceb4db1.jpg",
+      "name": "Яндекс Станция Мини 3 Серый",
+      "warehouse": "(S2)",
+      "price": 11200
+    },
+    "яндекс-станция-мини-3-лиловый-s2-11200": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-лиловый-s2-11200.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-лиловый-s2-11200.html",
+      "cover": "assets/product-images/87f3162798cc8e5104144504.jpg",
+      "name": "Яндекс Станция Мини 3 Лиловый",
+      "warehouse": "(S2)",
+      "price": 11200
+    },
+    "яндекс-станция-мини-3-про-синий-s2-12300": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-про-синий-s2-12300.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-про-синий-s2-12300.html",
+      "cover": "assets/product-images/f764039f14533c26f0c3044b.jpg",
+      "name": "Яндекс Станция Мини 3 Про Синий",
+      "warehouse": "(S2)",
+      "price": 12300
+    },
+    "-яндекс-станция-миди-малиновый-s2-17400": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-малиновый-s2-17400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-малиновый-s2-17400.html",
+      "cover": "assets/product-images/4e164c49778835f0aedc77c3.jpeg",
+      "name": "🔈Яндекс Станция Миди Малиновый",
+      "warehouse": "(S2)",
+      "price": 17400
+    },
+    "-яндекс-станция-миди-изумрудный-s2-17400": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-изумрудный-s2-17400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-изумрудный-s2-17400.html",
+      "cover": "assets/product-images/741ff4a404efe3648d55bf8b.jpg",
+      "name": "🔈Яндекс Станция Миди Изумрудный",
+      "warehouse": "(S2)",
+      "price": 17400
+    },
+    "-яндекс-станция-миди-черный-s2-17400": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-черный-s2-17400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-черный-s2-17400.html",
+      "cover": "assets/product-images/6b3187d94b656b951f87d8ed.jpeg",
+      "name": "🔈Яндекс Станция Миди Черный",
+      "warehouse": "(S2)",
+      "price": 17400
+    },
+    "-яндекс-станция-миди-оранжевый-s2-17400": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-оранжевый-s2-17400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-оранжевый-s2-17400.html",
+      "cover": "assets/product-images/10007a1f74890729ec6c0470.jpeg",
+      "name": "🔈Яндекс Станция Миди Оранжевый",
+      "warehouse": "(S2)",
+      "price": 17400
+    },
+    "-яндекс-станция-миди-серый-s2-17800": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-серый-s2-17800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-серый-s2-17800.html",
+      "cover": "assets/product-images/c6bf9c38b4bbd65c057d2f6c.jpeg",
+      "name": "🔈Яндекс Станция Миди Серый",
+      "warehouse": "(S2)",
+      "price": 17800
+    },
+    "-яндекс-станция-max-зеленый-s2-33800": {
+      "url": "hybrid-products/audio/яндекс-станция-max-зеленый-s2-33800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-зеленый-s2-33800.html",
+      "cover": "assets/product-images/b39a83816d38b8101c4251db.jpeg",
+      "name": "🔈Яндекс Станция MAX Зеленый",
+      "warehouse": "(S2)",
+      "price": 33800
+    },
+    "-яндекс-станция-max-бежеый-s2-34300": {
+      "url": "hybrid-products/audio/яндекс-станция-max-бежеый-s2-34300.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-бежеый-s2-34300.html",
+      "cover": "assets/product-images/f8e9576798a44e82ad922df9.jpg",
+      "name": "🔈Яндекс Станция MAX Бежеый",
+      "warehouse": "(S2)",
+      "price": 34300
+    },
+    "-яндекс-станция-max-черный-s2-33800": {
+      "url": "hybrid-products/audio/яндекс-станция-max-черный-s2-33800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-черный-s2-33800.html",
+      "cover": "assets/product-images/1f04736e3d615bcedf619c73.jpg",
+      "name": "🔈Яндекс Станция MAX Черный",
+      "warehouse": "(S2)",
+      "price": 33800
+    },
+    "buds-4-black-оаэ-s3-13000": {
+      "url": "hybrid-products/audio/buds-4-black-s3-13000.html",
+      "url_en": "en/hybrid-products/audio/buds-4-black-s3-13000.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Buds 4 Black",
+      "warehouse": "(S3)",
+      "price": 13000
+    },
+    "buds-4-pro-black-оаэ-s3-15900": {
+      "url": "hybrid-products/audio/buds-4-pro-black-s3-15900.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-black-s3-15900.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Buds 4 Pro Black",
+      "warehouse": "(S3)",
+      "price": 15900
+    },
+    "marshall-major-v-headphones-black-s4-8400": {
+      "url": "hybrid-products/audio/marshall-major-v-headphones-black-s4-8400.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-headphones-black-s4-8400.html",
+      "cover": "assets/product-images/860e3ff443a5b72e268258d0.jpg",
+      "name": "Marshall Major V Headphones Black",
+      "warehouse": "(S4)",
+      "price": 8400
     }
   }
 }
