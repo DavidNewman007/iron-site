@@ -1,0 +1,54 @@
+{
+  "product_id": "samsung-galaxy-buds-3-pro-white-s4-13900",
+  "category": "audio",
+  "file_slug": "samsung-galaxy-buds-3-pro-white-s4-13900",
+  "name": "Samsung Galaxy Buds 3 Pro White",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 13900,
+  "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/samsung-galaxy-buds-3-pro-white-besprovodnye-naushniki",
+  "catalog_title": "Samsung Galaxy Buds 3 Pro White",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Беспроводные наушники TWS (True Wireless Stereo)"
+    },
+    {
+      "key": "Активное шумоподавление (ANC)",
+      "value": "Да"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 30 часов"
+    },
+    {
+      "key": "Цвет",
+      "value": "Серебристый (Silver)"
+    },
+    {
+      "key": "Управление",
+      "value": "Сенсорное (касания)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav_11zon-6-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2_11zon-6-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3_11zon-6-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/4_11zon-6-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Беспроводные наушники Marshall Major V/ Midnight Blue/abb6bb4c63d0f6e2983f6e3b089bf4e8-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/glav-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/glav-2-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/glav_11zon-4-1200x1200.jpeg"
+  ],
+  "images_local": [
+    "assets/product-images/0f083f8c1eeddced428e1d3f.jpeg",
+    "assets/product-images/4f49d090f9a063b933374ec9.jpeg",
+    "assets/product-images/d8b74bdfb9ba0daa0008a13f.jpeg",
+    "assets/product-images/adad71723ef88c4f1a107da5.jpeg",
+    "assets/product-images/317cb461430cc23754c34ba1.jpg",
+    "assets/product-images/ec418e55e0fba3522748d7ee.jpeg",
+    "assets/product-images/e241f641411412a4e89d84fb.jpeg",
+    "assets/product-images/8651362d4a8fe83d16df29a8.jpeg"
+  ],
+  "updated_at": "2026-11-05T15:57:54.244446Z"
+}

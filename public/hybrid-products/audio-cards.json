@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-04T15:30:30.070Z",
-  "count": 316,
+  "generated_at": "2026-11-05T16:05:27.354Z",
+  "count": 335,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -2529,6 +2529,158 @@
       "name": "Marshall Major V Headphones Black",
       "warehouse": "(S4)",
       "price": 8400
+    },
+    "buds-core-graphite-оаэ-s3-5600": {
+      "url": "hybrid-products/audio/buds-core-graphite-s3-5600.html",
+      "url_en": "en/hybrid-products/audio/buds-core-graphite-s3-5600.html",
+      "cover": "assets/product-images/de7e5559665f154b7f89ee7a.jpg",
+      "name": "Buds Core Graphite",
+      "warehouse": "(S3)",
+      "price": 5600
+    },
+    "buds-core-white-оаэ-s3-5700": {
+      "url": "hybrid-products/audio/buds-core-white-s3-5700.html",
+      "url_en": "en/hybrid-products/audio/buds-core-white-s3-5700.html",
+      "cover": "assets/product-images/c89f5d0852ae2924cb559f59.jpg",
+      "name": "Buds Core White",
+      "warehouse": "(S3)",
+      "price": 5700
+    },
+    "buds-3-fe-black-оаэ-s3-9400": {
+      "url": "hybrid-products/audio/buds-3-fe-black-s3-9400.html",
+      "url_en": "en/hybrid-products/audio/buds-3-fe-black-s3-9400.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Buds 3 FE Black",
+      "warehouse": "(S3)",
+      "price": 9400
+    },
+    "buds-4-black-оаэ-s3-12800": {
+      "url": "hybrid-products/audio/buds-4-black-s3-12800.html",
+      "url_en": "en/hybrid-products/audio/buds-4-black-s3-12800.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Buds 4 Black",
+      "warehouse": "(S3)",
+      "price": 12800
+    },
+    "buds-4-white-оаэ-s3-12600": {
+      "url": "hybrid-products/audio/buds-4-white-s3-12600.html",
+      "url_en": "en/hybrid-products/audio/buds-4-white-s3-12600.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Buds 4 White",
+      "warehouse": "(S3)",
+      "price": 12600
+    },
+    "samsung-galaxy-buds-3-fe-black-s4-8900": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-3-fe-black-s4-8900.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-3-fe-black-s4-8900.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Samsung Galaxy Buds 3 FE Black",
+      "warehouse": "(S4)",
+      "price": 8900
+    },
+    "samsung-galaxy-buds-3-pro-silver-s4-13100": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-3-pro-silver-s4-13100.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-3-pro-silver-s4-13100.html",
+      "cover": "assets/product-images/9022d9cab6ca8a2548b24a40.jpeg",
+      "name": "Samsung Galaxy Buds 3 Pro Silver",
+      "warehouse": "(S4)",
+      "price": 13100
+    },
+    "samsung-galaxy-buds-3-pro-white-s4-13900": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-3-pro-white-s4-13900.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-3-pro-white-s4-13900.html",
+      "cover": "assets/product-images/0f083f8c1eeddced428e1d3f.jpeg",
+      "name": "Samsung Galaxy Buds 3 Pro White",
+      "warehouse": "(S4)",
+      "price": 13900
+    },
+    "samsung-galaxy-buds-4-black-s4-11900": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-black-s4-11900.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-black-s4-11900.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Samsung Galaxy Buds 4 Black",
+      "warehouse": "(S4)",
+      "price": 11900
+    },
+    "samsung-galaxy-buds-4-white-s4-12500": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-white-s4-12500.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-white-s4-12500.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Samsung Galaxy Buds 4 White",
+      "warehouse": "(S4)",
+      "price": 12500
+    },
+    "samsung-galaxy-buds-4-pro-black-s4-15400": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-pro-black-s4-15400.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-pro-black-s4-15400.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Samsung Galaxy Buds 4 Pro Black",
+      "warehouse": "(S4)",
+      "price": 15400
+    },
+    "samsung-galaxy-buds-4-pro-pink-s4-17300": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-pro-pink-s4-17300.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-pro-pink-s4-17300.html",
+      "cover": "assets/product-images/9c24473bcf3b07c8103dfb49.jpg",
+      "name": "Samsung Galaxy Buds 4 Pro Pink",
+      "warehouse": "(S4)",
+      "price": 17300
+    },
+    "samsung-galaxy-buds-4-pro-white-s4-15200": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-pro-white-s4-15200.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-pro-white-s4-15200.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Samsung Galaxy Buds 4 Pro White",
+      "warehouse": "(S4)",
+      "price": 15200
+    },
+    "samsung-galaxy-buds-core-black-s4-4600": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-core-black-s4-4600.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-core-black-s4-4600.html",
+      "cover": "assets/product-images/de7e5559665f154b7f89ee7a.jpg",
+      "name": "Samsung Galaxy Buds Core Black",
+      "warehouse": "(S4)",
+      "price": 4600
+    },
+    "sony-wh-1000xm5-wireless-headphones-black-s4-23300": {
+      "url": "hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-black-s4-23300.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-black-s4-23300.html",
+      "cover": "assets/product-images/30ef0ddfc5cb2f9219d671c4.jpg",
+      "name": "Sony WH-1000XM5 Wireless Headphones Black",
+      "warehouse": "(S4)",
+      "price": 23300
+    },
+    "sony-wh-1000xm5-wireless-headphones-blue-s4-23300": {
+      "url": "hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-blue-s4-23300.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-blue-s4-23300.html",
+      "cover": "assets/product-images/0651eaf4f57db82ba6ebf2ef.jpg",
+      "name": "Sony WH-1000XM5 Wireless Headphones Blue",
+      "warehouse": "(S4)",
+      "price": 23300
+    },
+    "sony-wh-1000xm5-wireless-headphones-silver-s4-23300": {
+      "url": "hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-silver-s4-23300.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-silver-s4-23300.html",
+      "cover": "assets/product-images/edd07b230876e2223c264f70.jpg",
+      "name": "Sony WH-1000XM5 Wireless Headphones Silver",
+      "warehouse": "(S4)",
+      "price": 23300
+    },
+    "sony-wh-1000xm6-wireless-headphones-black-s4-30300": {
+      "url": "hybrid-products/audio/sony-wh-1000xm6-wireless-headphones-black-s4-30300.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm6-wireless-headphones-black-s4-30300.html",
+      "cover": "assets/product-images/4ca81b1b57bc23787d7a5ceb.jpg",
+      "name": "Sony WH-1000XM6 Wireless Headphones Black",
+      "warehouse": "(S4)",
+      "price": 30300
+    },
+    "marshall-major-v-headphones-black-s4-8500": {
+      "url": "hybrid-products/audio/marshall-major-v-headphones-black-s4-8500.html",
+      "url_en": "en/hybrid-products/audio/marshall-major-v-headphones-black-s4-8500.html",
+      "cover": "assets/product-images/860e3ff443a5b72e268258d0.jpg",
+      "name": "Marshall Major V Headphones Black",
+      "warehouse": "(S4)",
+      "price": 8500
     }
   }
 }

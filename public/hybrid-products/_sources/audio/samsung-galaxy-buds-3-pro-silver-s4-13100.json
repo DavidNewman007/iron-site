@@ -1,0 +1,54 @@
+{
+  "product_id": "samsung-galaxy-buds-3-pro-silver-s4-13100",
+  "category": "audio",
+  "file_slug": "samsung-galaxy-buds-3-pro-silver-s4-13100",
+  "name": "Samsung Galaxy Buds 3 Pro Silver",
+  "country": "",
+  "warehouse": "(S4)",
+  "price": 13100,
+  "catalog_url": "https://sochi.dr-store.ru/audio/naushniki/samsung-buds/samsung-galaxy-buds-3-pro-silver-besprovodnye-naushniki",
+  "catalog_title": "Samsung Galaxy Buds 3 Pro Silve",
+  "specs": [
+    {
+      "key": "Тип устройства",
+      "value": "Беспроводные наушники TWS (True Wireless Stereo)"
+    },
+    {
+      "key": "Активное шумоподавление (ANC)",
+      "value": "Да"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 30 часов"
+    },
+    {
+      "key": "Цвет",
+      "value": "Серебристый (Silver)"
+    },
+    {
+      "key": "Управление",
+      "value": "Сенсорное (касания)"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/glav_11zon-5-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/2_11zon-5-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/3_11zon-5-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/4_11zon-5-1200x1200.jpeg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_Buds_Core_White_Wireless_Headphones/Samsung_Galaxy_Buds_Core_White_Wireless_Headphones-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/Samsung_Galaxy_Buds_Core_Black_Wireless_Headphones/Samsung_Galaxy_Buds_Core_Black_Wireless_Headphones-0-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Galaxy Buds 4/n0ja23358c4img2_8b7fa750.jpg-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/Galaxy Buds 4/p9zmsghhjmh2j0n_da2f0595.jpg-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/9022d9cab6ca8a2548b24a40.jpeg",
+    "assets/product-images/7def4bab6b8d63924b4e4db1.jpeg",
+    "assets/product-images/0d05a6b3cdd60594aa9290ed.jpeg",
+    "assets/product-images/1e4a0cf7bfc9e87e63529f8a.jpeg",
+    "assets/product-images/c89f5d0852ae2924cb559f59.jpg",
+    "assets/product-images/de7e5559665f154b7f89ee7a.jpg",
+    "assets/product-images/ba363b8c7973322570287f8a.jpg",
+    "assets/product-images/933de988484624a6bcf6220b.jpg"
+  ],
+  "updated_at": "2026-11-05T15:57:52.824405Z"
+}
