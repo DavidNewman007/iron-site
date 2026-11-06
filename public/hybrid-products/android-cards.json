@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-05T16:05:08.465Z",
-  "count": 361,
+  "generated_at": "2026-11-06T15:12:49.795Z",
+  "count": 365,
   "byId": {
     "oneplus-nord-ce6-8-256gb-pitch-black-европа-s4-33500": {
       "url": "hybrid-products/android/oneplus-nord-ce6-8-256gb-pitch-black-s4-33500.html",
@@ -2889,6 +2889,38 @@
       "name": "Honor 600 8+ 256Gb Orange",
       "warehouse": "(S4)",
       "price": 45300
+    },
+    "google-pixel-11-12-256gb-obsidian-5g-канада-s4-66000": {
+      "url": "hybrid-products/android/google-pixel-11-12-256gb-obsidian-5g-s4-66000.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-12-256gb-obsidian-5g-s4-66000.html",
+      "cover": "assets/product-images/10f15afdfc9d78f850d69636.png",
+      "name": "Google Pixel 11 12+ 256Gb Obsidian 5G",
+      "warehouse": "(S4)",
+      "price": 66000
+    },
+    "google-pixel-11-12-256gb-frost-5g-канада-s4-66000": {
+      "url": "hybrid-products/android/google-pixel-11-12-256gb-frost-5g-s4-66000.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-12-256gb-frost-5g-s4-66000.html",
+      "cover": "assets/product-images/354b17f19435f88f51ba63ce.png",
+      "name": "Google Pixel 11 12+ 256Gb Frost 5G",
+      "warehouse": "(S4)",
+      "price": 66000
+    },
+    "google-pixel-11-pro-12-256gb-obsidian-канада-s4-83600": {
+      "url": "hybrid-products/android/google-pixel-11-pro-12-256gb-obsidian-s4-83600.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-pro-12-256gb-obsidian-s4-83600.html",
+      "cover": "assets/product-images/ae612f87b0bc00e9d8aca62a.png",
+      "name": "Google Pixel 11 Pro 12+ 256Gb Obsidian",
+      "warehouse": "(S4)",
+      "price": 83600
+    },
+    "google-pixel-11-pro-xl-12-256gb-obsidian-канада-s4-88200": {
+      "url": "hybrid-products/android/google-pixel-11-pro-xl-12-256gb-obsidian-s4-88200.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-pro-xl-12-256gb-obsidian-s4-88200.html",
+      "cover": "assets/product-images/ae612f87b0bc00e9d8aca62a.png",
+      "name": "Google Pixel 11 Pro XL 12+ 256Gb Obsidian",
+      "warehouse": "(S4)",
+      "price": 88200
     }
   }
 }

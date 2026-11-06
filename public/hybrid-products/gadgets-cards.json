@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-05T16:05:27.402Z",
-  "count": 101,
+  "generated_at": "2026-11-06T15:13:08.668Z",
+  "count": 110,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -809,6 +809,78 @@
       "name": "Whoop MG SuperKnit Luxe Obsidian Life",
       "warehouse": "(S4)",
       "price": 33000
+    },
+    "-instax-mini-12-green-s2-11200": {
+      "url": "hybrid-products/gadgets/instax-mini-12-green-s2-11200.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-12-green-s2-11200.html",
+      "cover": "assets/product-images/1a01f84477367085647a52ca.jpg",
+      "name": "📸instax mini 12, Green",
+      "warehouse": "(S2)",
+      "price": 11200
+    },
+    "-instax-mini-12-blue-s2-11200": {
+      "url": "hybrid-products/gadgets/instax-mini-12-blue-s2-11200.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-12-blue-s2-11200.html",
+      "cover": "assets/product-images/c7e6071e77cc2bb826b98da9.jpg",
+      "name": "📸instax mini 12, Blue",
+      "warehouse": "(S2)",
+      "price": 11200
+    },
+    "-instax-mini-13-blue-s2-12300": {
+      "url": "hybrid-products/gadgets/instax-mini-13-blue-s2-12300.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-13-blue-s2-12300.html",
+      "cover": "assets/product-images/fb799ea13d8db59767a815f6.jpg",
+      "name": "📸instax mini 13 Blue",
+      "warehouse": "(S2)",
+      "price": 12300
+    },
+    "-instax-mini-link-3-green-s2-12900": {
+      "url": "hybrid-products/gadgets/instax-mini-link-3-green-s2-12900.html",
+      "url_en": "en/hybrid-products/gadgets/instax-mini-link-3-green-s2-12900.html",
+      "cover": "assets/product-images/f082320a01592e1ab19e8e69.jpg",
+      "name": "📸instax mini Link 3, Green",
+      "warehouse": "(S2)",
+      "price": 12900
+    },
+    "google-fitbit-air-lavender-s4-12300": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-lavender-s4-12300.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-lavender-s4-12300.html",
+      "cover": "assets/product-images/e601b2e215bd4ee6a0abbc08.jpg",
+      "name": "Google Fitbit Air Lavender",
+      "warehouse": "(S4)",
+      "price": 12300
+    },
+    "google-fitbit-air-obsidian-s4-12500": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-obsidian-s4-12500.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-obsidian-s4-12500.html",
+      "cover": "assets/product-images/38bf1864c0332f59f4f5c38b.jpg",
+      "name": "Google Fitbit Air Obsidian",
+      "warehouse": "(S4)",
+      "price": 12500
+    },
+    "google-fitbit-air-berry-s4-12300": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-berry-s4-12300.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-berry-s4-12300.html",
+      "cover": "assets/product-images/2ffa2d52407c52f5032fafc2.jpg",
+      "name": "Google Fitbit Air Berry",
+      "warehouse": "(S4)",
+      "price": 12300
+    },
+    "whoop-5-0-superknit-obsidian-peak-европа-s4-24400": {
+      "url": "hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-24400.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-24400.html",
+      "cover": "assets/product-images/14727cb6df731ff8ae6ed8f4.jpg",
+      "name": "Whoop 5.0 SuperKnit Obsidian Peak",
+      "warehouse": "(S4)",
+      "price": 24400
+    },
+    "whoop-mg-superknit-luxe-obsidian-life-сша-s4-32600": {
+      "url": "hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-32600.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-32600.html",
+      "cover": "assets/product-images/dc19fcde756b291fbf288162.jpg",
+      "name": "Whoop MG SuperKnit Luxe Obsidian Life",
+      "warehouse": "(S4)",
+      "price": 32600
     }
   }
 }

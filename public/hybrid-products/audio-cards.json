@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-05T16:05:27.354Z",
-  "count": 335,
+  "generated_at": "2026-11-06T15:13:08.609Z",
+  "count": 340,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -2681,6 +2681,46 @@
       "name": "Marshall Major V Headphones Black",
       "warehouse": "(S4)",
       "price": 8500
+    },
+    "-яндекс-станция-миди-малиновый-s2-16800": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-малиновый-s2-16800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-малиновый-s2-16800.html",
+      "cover": "assets/product-images/4e164c49778835f0aedc77c3.jpeg",
+      "name": "🔈Яндекс Станция Миди Малиновый",
+      "warehouse": "(S2)",
+      "price": 16800
+    },
+    "-яндекс-станция-миди-изумрудный-s2-16800": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-изумрудный-s2-16800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-изумрудный-s2-16800.html",
+      "cover": "assets/product-images/741ff4a404efe3648d55bf8b.jpg",
+      "name": "🔈Яндекс Станция Миди Изумрудный",
+      "warehouse": "(S2)",
+      "price": 16800
+    },
+    "-яндекс-станция-миди-черный-s2-16600": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-черный-s2-16600.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-черный-s2-16600.html",
+      "cover": "assets/product-images/6b3187d94b656b951f87d8ed.jpeg",
+      "name": "🔈Яндекс Станция Миди Черный",
+      "warehouse": "(S2)",
+      "price": 16600
+    },
+    "-яндекс-станция-миди-оранжевый-s2-16000": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-оранжевый-s2-16000.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-оранжевый-s2-16000.html",
+      "cover": "assets/product-images/10007a1f74890729ec6c0470.jpeg",
+      "name": "🔈Яндекс Станция Миди Оранжевый",
+      "warehouse": "(S2)",
+      "price": 16000
+    },
+    "-яндекс-станция-миди-серый-s2-17100": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-серый-s2-17100.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-серый-s2-17100.html",
+      "cover": "assets/product-images/c6bf9c38b4bbd65c057d2f6c.jpeg",
+      "name": "🔈Яндекс Станция Миди Серый",
+      "warehouse": "(S2)",
+      "price": 17100
     }
   }
 }

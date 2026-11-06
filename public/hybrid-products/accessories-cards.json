@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-05T16:05:27.334Z",
-  "count": 214,
+  "generated_at": "2026-11-06T15:13:08.583Z",
+  "count": 216,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -1711,6 +1711,22 @@
       "url_en": "en/hybrid-products/accessories/сзу-samsung-45w-pd-usb-c-black-s5-2200.html",
       "cover": "assets/product-images/b8cf1b7b683785cf3981ded0.jpg",
       "name": "СЗУ Samsung 45W PD USB-C Black",
+      "warehouse": "(S5)",
+      "price": 2200
+    },
+    "apple-pencil-usb-c-s4-8300": {
+      "url": "hybrid-products/accessories/apple-pencil-usb-c-s4-8300.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-usb-c-s4-8300.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "Apple Pencil (USB-C)",
+      "warehouse": "(S4)",
+      "price": 8300
+    },
+    "сзу-samsung-45w-pd-usb-c-white-s5-2200": {
+      "url": "hybrid-products/accessories/сзу-samsung-45w-pd-usb-c-white-s5-2200.html",
+      "url_en": "en/hybrid-products/accessories/сзу-samsung-45w-pd-usb-c-white-s5-2200.html",
+      "cover": "assets/product-images/a5904122aab1068503264ca0.jpg",
+      "name": "СЗУ Samsung 45W PD USB-C White",
       "warehouse": "(S5)",
       "price": 2200
     }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-05T16:05:27.366Z",
-  "count": 231,
+  "generated_at": "2026-11-06T15:13:08.623Z",
+  "count": 233,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -1849,6 +1849,22 @@
       "name": "Sony DualSense wireless Chroma Indigo",
       "warehouse": "(S4)",
       "price": 8600
+    },
+    "-ps5-slim-digital-1tb-s2-70400": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-1tb-s2-70400.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-1tb-s2-70400.html",
+      "cover": "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+      "name": "🎮PS5 Slim Digital 1Tb",
+      "warehouse": "(S2)",
+      "price": 70400
+    },
+    "-ps5-slim-digital-825gb-s2-68400": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-68400.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-825gb-s2-68400.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "🎮PS5 Slim Digital 825Gb",
+      "warehouse": "(S2)",
+      "price": 68400
     }
   }
 }
