@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-06T15:13:08.623Z",
-  "count": 233,
+  "generated_at": "2026-11-07T14:08:12.343Z",
+  "count": 238,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -1865,6 +1865,46 @@
       "name": "🎮PS5 Slim Digital 825Gb",
       "warehouse": "(S2)",
       "price": 68400
+    },
+    "-sony-pulse-elite-black-s2-16300": {
+      "url": "hybrid-products/gaming/sony-pulse-elite-black-s2-16300.html",
+      "url_en": "en/hybrid-products/gaming/sony-pulse-elite-black-s2-16300.html",
+      "cover": "assets/product-images/c69af72d5703c9d95c01790e.jpg",
+      "name": "🎧Sony Pulse Elite, Black",
+      "warehouse": "(S2)",
+      "price": 16300
+    },
+    "-sony-pulse-elite-white-s2-16300": {
+      "url": "hybrid-products/gaming/sony-pulse-elite-white-s2-16300.html",
+      "url_en": "en/hybrid-products/gaming/sony-pulse-elite-white-s2-16300.html",
+      "cover": "assets/product-images/1301064be8906b6740519b6c.jpg",
+      "name": "🎧Sony Pulse Elite, White",
+      "warehouse": "(S2)",
+      "price": 16300
+    },
+    "oculus-meta-quest-3s-128gb-white-япония-s4-37400": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-37400.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-37400.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 128Gb White",
+      "warehouse": "(S4)",
+      "price": 37400
+    },
+    "oculus-meta-quest-3s-128gb-white-сша-s4-37400": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-37400.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-37400.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 128Gb White",
+      "warehouse": "(S4)",
+      "price": 37400
+    },
+    "sony-playstation-5-slim-disc-оаэ-s4-84200": {
+      "url": "hybrid-products/gaming/sony-playstation-5-slim-disc-s4-84200.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-5-slim-disc-s4-84200.html",
+      "cover": "assets/product-images/b69ddd0b1caaeea46a30c8f4.jpg",
+      "name": "Sony PlayStation 5 SLIM Disc",
+      "warehouse": "(S4)",
+      "price": 84200
     }
   }
 }

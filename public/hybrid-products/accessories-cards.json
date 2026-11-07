@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-06T15:13:08.583Z",
-  "count": 216,
+  "generated_at": "2026-11-07T14:08:12.304Z",
+  "count": 218,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -1729,6 +1729,22 @@
       "name": "СЗУ Samsung 45W PD USB-C White",
       "warehouse": "(S5)",
       "price": 2200
+    },
+    "-pencil-pro-mx2d3-s1-12300": {
+      "url": "hybrid-products/accessories/pencil-pro-mx2d3-s1-12300.html",
+      "url_en": "en/hybrid-products/accessories/pencil-pro-mx2d3-s1-12300.html",
+      "cover": "assets/product-images/f7d41c42b17dd3bc467039ad.jpeg",
+      "name": "🖊 Pencil Pro MX2D3",
+      "warehouse": "(S1)",
+      "price": 12300
+    },
+    "сзу-samsung-25w-pd-usb-c-white-адаптер-samsung-45w-pd-us-s5-1900": {
+      "url": "hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-white-адаптер-samsung-45w-pd-us-s5-1900.html",
+      "url_en": "en/hybrid-products/accessories/сзу-samsung-25w-pd-usb-c-white-адаптер-samsung-45w-pd-us-s5-1900.html",
+      "cover": "assets/product-images/b85d431d4085bd06673486c1.png",
+      "name": "СЗУ Samsung 25W PD USB-C White (адаптер samsung 45w pd us)",
+      "warehouse": "(S5)",
+      "price": 1900
     }
   }
 }

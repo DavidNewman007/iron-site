@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-05T16:05:18.712Z",
-  "count": 162,
+  "generated_at": "2026-11-07T14:07:59.393Z",
+  "count": 164,
   "byId": {
     "hp-omnibook-3-bu0305dx-16-core-ultra-5-225u-8-512gb-silver-сша-s4-61100": {
       "url": "hybrid-products/laptops/hp-omnibook-3-bu0305dx-16-core-ultra-5-225u-8-512gb-silver-s4-61100.html",
@@ -1297,6 +1297,22 @@
       "name": "Lenovo Tab + clear case 4+ 128Gb Luna Grey",
       "warehouse": "(S4)",
       "price": 21500
+    },
+    "hp-255-g10-15-6-amd-ryzen-5-7535u-8-512gb-silver-европа-s4-55400": {
+      "url": "hybrid-products/laptops/hp-255-g10-15-6-amd-ryzen-5-7535u-8-512gb-silver-s4-55400.html",
+      "url_en": "en/hybrid-products/laptops/hp-255-g10-15-6-amd-ryzen-5-7535u-8-512gb-silver-s4-55400.html",
+      "cover": "assets/product-images/47e4b02268a5f6e871ccb57b.jpg",
+      "name": "HP 255 G10 15.6 AMD Ryzen 5 7535U 8+ 512Gb Silver",
+      "warehouse": "(S4)",
+      "price": 55400
+    },
+    "lenovo-thinkbook-16g8ial-16-core-ultra-7-255h-16-512gb-arctic-grey-европа-s4-935": {
+      "url": "hybrid-products/laptops/lenovo-thinkbook-16g8ial-16-core-ultra-7-255h-16-512gb-arctic-grey-s4-93500.html",
+      "url_en": "en/hybrid-products/laptops/lenovo-thinkbook-16g8ial-16-core-ultra-7-255h-16-512gb-arctic-grey-s4-93500.html",
+      "cover": "assets/product-images/a32dc1a0de039030a95a9910.jpg",
+      "name": "Lenovo Thinkbook 16G8IAL 16 Core Ultra 7-255H 16+ 512Gb Arctic Grey",
+      "warehouse": "(S4)",
+      "price": 93500
     }
   }
 }

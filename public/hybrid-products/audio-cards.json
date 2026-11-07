@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-06T15:13:08.609Z",
-  "count": 340,
+  "generated_at": "2026-11-07T14:08:12.329Z",
+  "count": 344,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -2721,6 +2721,38 @@
       "name": "🔈Яндекс Станция Миди Серый",
       "warehouse": "(S2)",
       "price": 17100
+    },
+    "яндекс-станция-мини-3-черный-s2-10000": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-черный-s2-10000.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-черный-s2-10000.html",
+      "cover": "assets/product-images/dc89cc514db8dd9b64b785ba.jpg",
+      "name": "Яндекс Станция Мини 3 Черный",
+      "warehouse": "(S2)",
+      "price": 10000
+    },
+    "яндекс-станция-мини-3-серый-s2-10000": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-серый-s2-10000.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-серый-s2-10000.html",
+      "cover": "assets/product-images/494f62ad5f39fa179ceb4db1.jpg",
+      "name": "Яндекс Станция Мини 3 Серый",
+      "warehouse": "(S2)",
+      "price": 10000
+    },
+    "яндекс-станция-мини-3-лиловый-s2-10000": {
+      "url": "hybrid-products/audio/яндекс-станция-мини-3-лиловый-s2-10000.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-мини-3-лиловый-s2-10000.html",
+      "cover": "assets/product-images/87f3162798cc8e5104144504.jpg",
+      "name": "Яндекс Станция Мини 3 Лиловый",
+      "warehouse": "(S2)",
+      "price": 10000
+    },
+    "samsung-galaxy-buds-3-fe-black-s4-9000": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-3-fe-black-s4-9000.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-3-fe-black-s4-9000.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Samsung Galaxy Buds 3 FE Black",
+      "warehouse": "(S4)",
+      "price": 9000
     }
   }
 }

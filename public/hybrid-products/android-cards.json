@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-06T15:12:49.795Z",
-  "count": 365,
+  "generated_at": "2026-11-07T14:07:46.584Z",
+  "count": 376,
   "byId": {
     "oneplus-nord-ce6-8-256gb-pitch-black-европа-s4-33500": {
       "url": "hybrid-products/android/oneplus-nord-ce6-8-256gb-pitch-black-s4-33500.html",
@@ -2921,6 +2921,94 @@
       "name": "Google Pixel 11 Pro XL 12+ 256Gb Obsidian",
       "warehouse": "(S4)",
       "price": 88200
+    },
+    "google-pixel-10-pro-16-256gb-moonstone-5g-канада-s4-88500": {
+      "url": "hybrid-products/android/google-pixel-10-pro-16-256gb-moonstone-5g-s4-88500.html",
+      "url_en": "en/hybrid-products/android/google-pixel-10-pro-16-256gb-moonstone-5g-s4-88500.html",
+      "cover": "assets/product-images/af5c0309189aec98dc6d5d1d.jpg",
+      "name": "Google Pixel 10 Pro 16+ 256Gb Moonstone 5G",
+      "warehouse": "(S4)",
+      "price": 88500
+    },
+    "google-pixel-11-12-256gb-obsidian-5g-канада-s4-66200": {
+      "url": "hybrid-products/android/google-pixel-11-12-256gb-obsidian-5g-s4-66200.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-12-256gb-obsidian-5g-s4-66200.html",
+      "cover": "assets/product-images/10f15afdfc9d78f850d69636.png",
+      "name": "Google Pixel 11 12+ 256Gb Obsidian 5G",
+      "warehouse": "(S4)",
+      "price": 66200
+    },
+    "google-pixel-11-12-256gb-frost-5g-канада-s4-65800": {
+      "url": "hybrid-products/android/google-pixel-11-12-256gb-frost-5g-s4-65800.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-12-256gb-frost-5g-s4-65800.html",
+      "cover": "assets/product-images/354b17f19435f88f51ba63ce.png",
+      "name": "Google Pixel 11 12+ 256Gb Frost 5G",
+      "warehouse": "(S4)",
+      "price": 65800
+    },
+    "google-pixel-11-12-512gb-obsidian-5g-канада-s4-76500": {
+      "url": "hybrid-products/android/google-pixel-11-12-512gb-obsidian-5g-s4-76500.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-12-512gb-obsidian-5g-s4-76500.html",
+      "cover": "assets/product-images/10f15afdfc9d78f850d69636.png",
+      "name": "Google Pixel 11 12+ 512Gb Obsidian 5G",
+      "warehouse": "(S4)",
+      "price": 76500
+    },
+    "google-pixel-11-12-512gb-frost-5g-канада-s4-76500": {
+      "url": "hybrid-products/android/google-pixel-11-12-512gb-frost-5g-s4-76500.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-12-512gb-frost-5g-s4-76500.html",
+      "cover": "assets/product-images/354b17f19435f88f51ba63ce.png",
+      "name": "Google Pixel 11 12+ 512Gb Frost 5G",
+      "warehouse": "(S4)",
+      "price": 76500
+    },
+    "google-pixel-11-pro-12-256gb-obsidian-канада-s4-83400": {
+      "url": "hybrid-products/android/google-pixel-11-pro-12-256gb-obsidian-s4-83400.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-pro-12-256gb-obsidian-s4-83400.html",
+      "cover": "assets/product-images/ae612f87b0bc00e9d8aca62a.png",
+      "name": "Google Pixel 11 Pro 12+ 256Gb Obsidian",
+      "warehouse": "(S4)",
+      "price": 83400
+    },
+    "google-pixel-11-pro-12-256gb-fog-канада-s4-85300": {
+      "url": "hybrid-products/android/google-pixel-11-pro-12-256gb-fog-s4-85300.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-pro-12-256gb-fog-s4-85300.html",
+      "cover": "assets/product-images/6381751c7e8e9ee20bff64b1.png",
+      "name": "Google Pixel 11 Pro 12+ 256Gb Fog",
+      "warehouse": "(S4)",
+      "price": 85300
+    },
+    "google-pixel-11-pro-xl-12-256gb-obsidian-канада-s4-87900": {
+      "url": "hybrid-products/android/google-pixel-11-pro-xl-12-256gb-obsidian-s4-87900.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-pro-xl-12-256gb-obsidian-s4-87900.html",
+      "cover": "assets/product-images/ae612f87b0bc00e9d8aca62a.png",
+      "name": "Google Pixel 11 Pro XL 12+ 256Gb Obsidian",
+      "warehouse": "(S4)",
+      "price": 87900
+    },
+    "google-pixel-11-pro-xl-16-512gb-canyon-канада-s4-113200": {
+      "url": "hybrid-products/android/google-pixel-11-pro-xl-16-512gb-canyon-s4-113200.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-pro-xl-16-512gb-canyon-s4-113200.html",
+      "cover": "assets/product-images/da9146b6fe794910f4b78211.png",
+      "name": "Google Pixel 11 Pro XL 16+ 512Gb Canyon",
+      "warehouse": "(S4)",
+      "price": 113200
+    },
+    "google-pixel-11-pro-fold-16-256gb-obsidian-сша-s4-123900": {
+      "url": "hybrid-products/android/google-pixel-11-pro-fold-16-256gb-obsidian-s4-123900.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-pro-fold-16-256gb-obsidian-s4-123900.html",
+      "cover": "assets/product-images/cd9c5f47f159daed29ced59b.jpg",
+      "name": "Google Pixel 11 Pro Fold 16+ 256Gb Obsidian",
+      "warehouse": "(S4)",
+      "price": 123900
+    },
+    "google-pixel-11-pro-fold-16-512gb-obsidian-сша-s4-130800": {
+      "url": "hybrid-products/android/google-pixel-11-pro-fold-16-512gb-obsidian-s4-130800.html",
+      "url_en": "en/hybrid-products/android/google-pixel-11-pro-fold-16-512gb-obsidian-s4-130800.html",
+      "cover": "assets/product-images/cd9c5f47f159daed29ced59b.jpg",
+      "name": "Google Pixel 11 Pro Fold 16+ 512Gb Obsidian",
+      "warehouse": "(S4)",
+      "price": 130800
     }
   }
 }
