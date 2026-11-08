@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-07T14:08:12.304Z",
-  "count": 218,
+  "generated_at": "2026-11-08T14:21:48.857Z",
+  "count": 220,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -1745,6 +1745,22 @@
       "name": "СЗУ Samsung 25W PD USB-C White (адаптер samsung 45w pd us)",
       "warehouse": "(S5)",
       "price": 1900
+    },
+    "apple-magic-trackpad-white-s4-13400": {
+      "url": "hybrid-products/accessories/apple-magic-trackpad-white-s4-13400.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-trackpad-white-s4-13400.html",
+      "cover": "assets/product-images/edc0e0973e1b23e76acb20d6.jpg",
+      "name": "Apple Magic Trackpad White",
+      "warehouse": "(S4)",
+      "price": 13400
+    },
+    "apple-magic-mouse-white-s4-9000": {
+      "url": "hybrid-products/accessories/apple-magic-mouse-white-s4-9000.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-mouse-white-s4-9000.html",
+      "cover": "assets/product-images/edc0e0973e1b23e76acb20d6.jpg",
+      "name": "Apple Magic Mouse White",
+      "warehouse": "(S4)",
+      "price": 9000
     }
   }
 }

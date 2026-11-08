@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-07T14:08:12.388Z",
-  "count": 112,
+  "generated_at": "2026-11-08T14:21:48.947Z",
+  "count": 113,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -897,6 +897,14 @@
       "name": "Whoop 5.0 SuperKnit Obsidian Peak",
       "warehouse": "(S4)",
       "price": 24400
+    },
+    "-canon-powershot-g7-x-mark-iii-silver-s2-101400": {
+      "url": "hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-101400.html",
+      "url_en": "en/hybrid-products/gadgets/canon-powershot-g7-x-mark-iii-silver-s2-101400.html",
+      "cover": "assets/product-images/dd1b9655ba8ad1dedcc47b4e.jpg",
+      "name": "📷Canon PowerShot G7 X Mark III, Silver",
+      "warehouse": "(S2)",
+      "price": 101400
     }
   }
 }

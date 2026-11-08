@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-07T14:07:46.584Z",
-  "count": 376,
+  "generated_at": "2026-11-08T14:21:28.182Z",
+  "count": 377,
   "byId": {
     "oneplus-nord-ce6-8-256gb-pitch-black-европа-s4-33500": {
       "url": "hybrid-products/android/oneplus-nord-ce6-8-256gb-pitch-black-s4-33500.html",
@@ -3009,6 +3009,14 @@
       "name": "Google Pixel 11 Pro Fold 16+ 512Gb Obsidian",
       "warehouse": "(S4)",
       "price": 130800
+    },
+    "google-pixel-10-12-128gb-obsidian-5g-канада-s4-53800": {
+      "url": "hybrid-products/android/google-pixel-10-12-128gb-obsidian-5g-s4-53800.html",
+      "url_en": "en/hybrid-products/android/google-pixel-10-12-128gb-obsidian-5g-s4-53800.html",
+      "cover": "assets/product-images/cc70e858a4d4e8cc82b5e8be.jpg",
+      "name": "Google Pixel 10 12+ 128Gb Obsidian 5G",
+      "warehouse": "(S4)",
+      "price": 53800
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-07T14:08:12.455Z",
-  "count": 437,
+  "generated_at": "2026-11-08T14:21:49.018Z",
+  "count": 440,
   "byId": {
     "-oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100": {
       "url": "hybrid-products/meta/oakley-hstn-black-prizm-black-polarized-145-51-size-c-s1-39100.html",
@@ -3497,6 +3497,30 @@
       "name": "🕶Wayfarer (Gen 2) S53, Shiny Black/Transitions Graphite Green (RW4012)",
       "warehouse": "(S2)",
       "price": 38900
+    },
+    "-wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-37300": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-37300.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-150-50-size-c-601s1z50-s1-37300.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 150 - 50 Size C 601S1Z50",
+      "warehouse": "(S1)",
+      "price": 37300
+    },
+    "-wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-37300": {
+      "url": "hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-37300.html",
+      "url_en": "en/hybrid-products/meta/wayfarer-gen-2-matte-black-transitions-grey-155-53-size-c-601s1z53-s1-37300.html",
+      "cover": "assets/product-images/0b6d423716f60af06b0b1e57.jpg",
+      "name": "👓 Wayfarer (Gen 2) Matte Black Transitions Grey 155 - 53 Size C 601S1Z53",
+      "warehouse": "(S1)",
+      "price": 37300
+    },
+    "-meta-starfire-kylie-edition-s48-classic-black-transitions-grey-s2-54600": {
+      "url": "hybrid-products/meta/meta-starfire-kylie-edition-s48-classic-black-transitions-grey-s2-54600.html",
+      "url_en": "en/hybrid-products/meta/meta-starfire-kylie-edition-s48-classic-black-transitions-grey-s2-54600.html",
+      "cover": "assets/product-images/6f2411ad0d9f6a6e90d76c57.jpg",
+      "name": "🕶Meta Starfire Kylie Edition S48, Classic Black/Transitions Grey",
+      "warehouse": "(S2)",
+      "price": 54600
     }
   }
 }
