@@ -3013,7 +3013,7 @@
   const blankReminder = () => ({ v: 1, id: crypto.randomUUID(), subject: "", requirements: "", budgetMin: "", budgetMax: "", nextDate: "", owner: S.email || "", targetType: "", parent: "", watch: REM_RULES.watch() });
   function reminderInvalid(m, name, phone) {
     if (!String(name || "").trim() || !phones(phone).length) return "Для напоминания нужны имя и телефон клиента";
-    if (!String(m.subject || "").trim()) return "Впишите, о чём напомнить";
+    if (!REM_RULES.hasCriteria(m)) return "Выберите нужный товар или опишите пожелания клиента";
     const invalid = REM_RULES.invalid(REM_RULES.watch(m.watch)); if (invalid) return invalid;
     for (const k of ["budgetMin", "budgetMax"]) if (m[k] && !/^\d+(?:[.,]\d{1,2})?$/.test(String(m[k]).trim())) return "Бюджет — положительное число";
     if (m.budgetMin && m.budgetMax && toNum(m.budgetMin) > toNum(m.budgetMax)) return "Бюджет от больше бюджета до";
@@ -3032,7 +3032,9 @@
   }
   function reminderFields(m, follow = false) {
     const field = (k, title, type = "text", area = false) => `<label class="field"><span>${title}</span>${area ? `<textarea data-rem-edit="${k}" ${follow ? 'data-follow="1"' : ""} rows="3">${esc(m[k] || "")}</textarea>` : `<input data-rem-edit="${k}" ${follow ? 'data-follow="1"' : ""} type="${type}" value="${esc(m[k] || "")}" ${k.startsWith("budget") ? 'inputmode="decimal"' : ""}>`}</label>`;
-    return reminderClassifiers(m, follow) + field("subject", "О чём напомнить *") + field("requirements", "Задачи, требования, состояние, модель — что важно клиенту", "text", true) +
+    return reminderClassifiers(m, follow) + field("requirements", "Пожелания клиента: задачи, требования, состояние, модель", "text", true) +
+      `<p class="note">Можно оставить пустым, если всё уже задано списками. Предложения получит клиент из этого заказа.</p>` +
+      `<details ${m.subject ? 'open' : ''}><summary>Своё название просьбы — необязательно</summary>${field("subject", "Краткое название для списка заказов")}<p class="note">Без названия подпись сформируется автоматически. В сообщение клиенту оно не входит.</p></details>` +
       `<div class="grid2">${field("budgetMin", "Бюджет от, ₽")}${field("budgetMax", "Бюджет до, ₽")}${field("nextDate", "Следующая проверка / контакт", "date")}${field("owner", "Кто ведёт")}</div>` +
       `<label class="field"><span>Предполагаемый тип сделки — можно выбрать позже</span>${selHtml(`data-rem-edit="targetType" ${follow ? 'data-follow="1"' : ""}`, m.targetType || "", ["", ...typeOptions().filter(x => x !== "Напоминание" && !/trade|трейд/i.test(x))])}</label>`;
   }
@@ -3059,7 +3061,7 @@
       ${detail?`<div class="grid2">${sel('part','Какая деталь')}${sel('quality','Качество детали')}${inp('sku','Артикул / part number — если важен')}</div><p class="note">Бюджет для «с установкой» включает деталь и работу. Совместимость и класс качества обязательны.</p>`:''}
       <details><summary>Дополнительные ограничения и правила уведомления</summary><div class="grid2">${iphone?inp('model','Точные модели — только если диапазона недостаточно','text','Например: iPhone 15 Plus'):''}${sel('event','Когда сообщать')}${sel('policy','Повторные предложения')}${inp('expires','Актуально до','date')}${inp('ramMin','Оперативная память от, ГБ')}${inp('storageMin','Накопитель от, ГБ')}${inp('batteryMin','Состояние аккумулятора от, %')}${inp('chip','Точный чип, например M1 Pro')}${inp('colors','Допустимые цвета через запятую')}${inp('sim','SIM / регион — обязательное условие')}${inp('exclude','Не предлагать (исключения)','text','Например: Intel; розовый')}</div></details>
       <div data-watch-summary="${follow?'follow':'main'}">${watchPreview(w)}</div>
-      <p class="note">В обоих полях ниже можно дописать пожелания своими словами. Списки и текст учитываются вместе.</p>`;
+      <p class="note">В пожеланиях можно уточнить условия своими словами. Списки и текст учитываются вместе.</p>`;
   }
   function reminderRuntime(r) {
     if (!r) return '';
@@ -3077,13 +3079,13 @@
     const budget = m.budgetMin && m.budgetMax ? `от ${money(m.budgetMin)} до ${money(m.budgetMax)}` : m.budgetMax ? `до ${money(m.budgetMax)}` : m.budgetMin ? `от ${money(m.budgetMin)}` : "не указан";
     return `<section class="block reminder-origin"><h3>Исходная просьба клиента${m.convertedAt ? " — сохранена" : ""}</h3>
       ${m.parent ? parent ? `<a href="#/${esc(m.parent)}">Из заказа №${esc(m.parent)}</a>` : `<span class="note">Исходный заказ №${esc(m.parent)} удалён или недоступен</span>` : `<span class="note">Без исходного заказа</span>`}
-      ${m.convertedAt ? `<p><b>${esc(m.subject)}</b></p>${m.requirements ? `<p class="rem-text">${esc(m.requirements)}</p>` : ""}<p class="note">Бюджет: ${esc(budget)} · согласовано ${esc(ru(parseDate(m.convertedAt)))}</p>` : ""}</section>`;
+      ${m.convertedAt ? `<p><b>${esc(REM_RULES.title(m))}</b></p>${m.requirements ? `<p class="rem-text">${esc(m.requirements)}</p>` : ""}<p class="note">Бюджет: ${esc(budget)} · согласовано ${esc(ru(parseDate(m.convertedAt)))}</p>` : ""}</section>`;
   }
   function reminderLinks(key, r, isNew) {
     const kids = r ? S.rows.filter(x => remMeta(x).parent === String(cell(r, C.num)).trim()) : [];
     const checked = kids.length || isNew && S.followup;
     return `<section class="block"><h3>🔔 Просьбы клиента</h3>
-      ${kids.map(x => `<a class="rem-link rem--${reminderState(x)}" href="#/${esc(cell(x, C.num))}"><span aria-hidden="true">☑</span><span><b>№${esc(cell(x, C.num))} · ${esc(remMeta(x).subject)}</b><small>${esc(cell(x, C.status))}${reminderOverdue(x) ? ` · просрочен контакт ${esc(remMeta(x).nextDate)}` : ""}</small></span></a>`).join("")}
+      ${kids.map(x => `<a class="rem-link rem--${reminderState(x)}" href="#/${esc(cell(x, C.num))}"><span aria-hidden="true">☑</span><span><b>№${esc(cell(x, C.num))} · ${esc(REM_RULES.title(remMeta(x)))}</b><small>${esc(cell(x, C.status))}${reminderOverdue(x) ? ` · просрочен контакт ${esc(remMeta(x).nextDate)}` : ""}</small></span></a>`).join("")}
       ${kids.length ? `<p class="note">Связь сохранена · активных ${kids.filter(x => !isFinal(cell(x,C.status))).length} / всего ${kids.length}</p><button type="button" class="btn btn--ghost btn--sm" data-act="remnew">＋ Ещё напоминание</button>` : `<label class="check"><input type="checkbox" data-act="remnew" ${checked ? "checked" : ""}><b>Создать напоминание</b></label>`}
       ${isNew && S.followup ? reminderFields(S.followup, true) + `<p class="note">Создастся отдельный заказ после сохранения этого. Бюджет не входит в стоимость заказа.</p>` : ""}
     </section>`;
@@ -3098,10 +3100,11 @@
       ${r ? `<section class="block">${histHtml(r)}${deleteBox(r)}</section>` : ""}</div><div class="col"><section class="block"><h3>Просьба клиента</h3>${reminderFields(m)}<p class="note">Бюджет — жёсткий предел подбора; для замены включает деталь и работу. Цена сделки записывается отдельно после согласования.</p></section>${reminderRuntime(r)}</div></div>`;
   }
   async function reminderApi(payload) {
+    payload = { ...payload, request: { ...payload.request, label: REM_RULES.title(payload.request) } };
     if (DEMO) {
       const hit = S.rows.find(r => remMeta(r).id === payload.request.id); if (hit) return hit;
       const cells = []; cells[C.num] = String(Math.max(0, ...S.rows.map(r => +cell(r,C.num) || 0)) + 1); cells[C.name] = payload.name; cells[C.phone] = payload.phone;
-      cells[C.device] = payload.request.subject; cells[C.type] = "Напоминание"; cells[C.date] = today(); cells[C.status] = REM_STAGES[0]; cells[C.reminder] = JSON.stringify({ ...payload.request, createdAt: new Date().toISOString() });
+      cells[C.device] = payload.request.label; cells[C.type] = "Напоминание"; cells[C.date] = today(); cells[C.status] = REM_STAGES[0]; cells[C.reminder] = JSON.stringify({ ...payload.request, createdAt: new Date().toISOString() });
       const r = { row: Math.max(1, ...S.rows.map(r => r.row)) + 1, cells }; index(r); S.rows.push(r); S.byNum.set(cells[C.num],r); return r;
     }
     const j = await fetch(CFG.doors[0] + "?action=crm-reminder", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ token: S.token, ...payload }), signal: AbortSignal.timeout(60000) }).then(r => r.json());
@@ -3109,7 +3112,7 @@
     const r = { row: j.row, cells: j.cells }; index(r);
     const old = S.byNum.get(j.num); if (old) S.rows.splice(S.rows.indexOf(old), 1);
     S.rows.push(r); S.byNum.set(j.num, r); S.clients = null;
-    if (!j.existing) journal([[j.num, j.row, "Напоминание создано", "", payload.request.subject + (payload.request.parent ? " · из заказа №" + payload.request.parent : "")]]);
+    if (!j.existing) journal([[j.num, j.row, "Напоминание создано", "", payload.request.label + (payload.request.parent ? " · из заказа №" + payload.request.parent : "")]]);
     return r;
   }
   async function createReminder() {
@@ -4087,7 +4090,7 @@
   function jrVal(c, v) {
     if (S.bools.has(c)) return isTrue(v) ? "✓" : "—";
     if (c === C.pass) return String(v ?? "").trim() ? "•••" : "";
-    if (c === C.reminder) { const m = remMeta({cells:{[C.reminder]:v}}); return [m.subject,m.requirements,m.budgetMin && "от " + m.budgetMin,m.budgetMax && "до " + m.budgetMax,m.nextDate,m.owner,m.targetType,m.watch && [m.watch.enabled===false?"Автоподбор выключен":"Автоподбор включён",...Object.entries(REM_RULES.watch(m.watch)).filter(([k,v])=>k!=="enabled"&&v).map(([k,v])=>REM_RULES.options[k]?.find(x=>x[0]===v)?.[1]||v)].join(" · "),m.convertedType && "→ " + m.convertedType].filter(Boolean).join(" · ").slice(0,1000); }
+    if (c === C.reminder) { const m = remMeta({cells:{[C.reminder]:v}}); return [REM_RULES.title(m),m.requirements,m.budgetMin && "от " + m.budgetMin,m.budgetMax && "до " + m.budgetMax,m.nextDate,m.owner,m.targetType,m.watch && [m.watch.enabled===false?"Автоподбор выключен":"Автоподбор включён",...Object.entries(REM_RULES.watch(m.watch)).filter(([k,v])=>k!=="enabled"&&v).map(([k,v])=>REM_RULES.options[k]?.find(x=>x[0]===v)?.[1]||v)].join(" · "),m.convertedType && "→ " + m.convertedType].filter(Boolean).join(" · ").slice(0,1000); }
     return String(v ?? "").slice(0, 300);
   }
   // Строки журнала из списка изменений save(): [№, строка, поле, было, стало]. ch.w — то, что реально ушло в клетку.
@@ -4797,9 +4800,9 @@
       const w=REM_RULES.watch(m.watch),field=t.dataset.watchEdit;
       if(t.dataset.watchVersion){const versions=new Set(REM_RULES.versionCodes(w.iphoneVariants));t.checked?versions.add(t.dataset.watchVersion):versions.delete(t.dataset.watchVersion);w.iphoneVariants=[...versions].join(',');}
       else {const before=w[field];w[field]=t.type==='checkbox'?t.checked:t.value;if(field==='condition'&&REM_RULES.retailKind(w.kind)&&(before==='used'||w.condition==='used')){w.supply='any';w.maxDays='';}}
-      m.watch=w;
+      m.watch=w; m.label=REM_RULES.title(m);
       const preview=$app.querySelector(`[data-watch-summary="${t.dataset.follow?'follow':'main'}"]`);if(preview)preview.innerHTML=watchPreview(w);
-      if(!t.dataset.follow){setDirty(key,C.reminder,JSON.stringify(m));if(t.dataset.watchEdit==='enabled')setDirty(key,C.reminderStop,!t.checked);}
+      if(!t.dataset.follow){setDirty(key,C.reminder,JSON.stringify(m));setDirty(key,C.device,m.label);if(t.dataset.watchEdit==='enabled')setDirty(key,C.reminderStop,!t.checked);}
       refreshSaveBar(key);if(key==='new')saveDraft();
       if(['kind','condition','category'].includes(t.dataset.watchEdit)&&e.type==='change')rerenderKeep();return;
     }
@@ -4807,7 +4810,8 @@
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
       const m = t.dataset.follow ? S.followup : remDraft(key,r); if (!m) return;
       m[t.dataset.remEdit] = t.value;
-      if (!t.dataset.follow) { setDirty(key,C.reminder,JSON.stringify(m)); if (t.dataset.remEdit === "subject") setDirty(key,C.device,t.value); }
+      m.label=REM_RULES.title(m);
+      if (!t.dataset.follow) { setDirty(key,C.reminder,JSON.stringify(m)); setDirty(key,C.device,m.label); }
       refreshSaveBar(key); if (key === "new") saveDraft(); return;
     }
     if (t.dataset.skq != null) { skSet(t.dataset.skq, t.value); return; }

@@ -97,7 +97,23 @@
     const f=iphoneFilter(w,'',w.category),phone=f.from!=null?`iPhone ${f.from}–${f.to}`:w.category==='iphone'?'iPhone':'';
     return [label('condition',w.condition),phone||label('category',w.category),f.variants.length?f.variants.map(variantLabel).join(' или '):'',w.model,usedBot(w)?'раздел «Б/у техника» в боте':label('supply',w.supply),w.exclude?'Не предлагать: '+w.exclude:''].filter(Boolean).join(' · ');
   }
+  function hasCriteria(m) {
+    const w=watch(m.watch);
+    return !!(String(m.subject||'').trim()||String(m.requirements||'').trim()||
+      !['auto','other'].includes(w.category)||w.model||w.sku||w.part&&w.part!=='other');
+  }
+  // label — подпись в списке. В разбор условий идут только subject/requirements/watch.
+  function title(m) {
+    if(String(m.subject||'').trim())return String(m.subject).trim().slice(0,250);
+    const w=watch(m.watch),f=iphoneFilter(w,'',w.category);
+    const category=options.category.find(x=>x[0]===w.category)?.[1];
+    const device=w.category==='iphone'&&f.from!=null?`iPhone ${f.from}–${f.to}`:!['auto','other'].includes(w.category)?category:'';
+    const detail=[w.condition==='used'?'Б/у':w.condition==='new'?'Новое':'',device,
+      f.variants.map(variantLabel).join(' или '),w.model,
+      w.part?options.part.find(x=>x[0]===w.part)?.[1]:'',w.sku].filter(Boolean).join(' · ');
+    return (detail||String(m.requirements||'').trim().split('\n')[0]||'Напоминание').slice(0,250);
+  }
   const stoppedStatus = v => /неактуально|отказ|закрыт|в работе|выполнен|готов|продан|выкуплен|обмен оформлен|разобран|в залоге|ремонт невозможен|без ремонта|выдан/.test(String(v||'').toLowerCase().replace(/ё/g,'е'));
-  const api={options,defaults,watch,invalid,stoppedStatus,retailKind,usedBot,versionCodes,iphoneFilter,iphoneFits,variantLabel,exclusionIssue,describe};root.IRON_REMINDER_RULES=api;
+  const api={options,defaults,watch,invalid,stoppedStatus,retailKind,usedBot,versionCodes,iphoneFilter,iphoneFits,variantLabel,exclusionIssue,describe,hasCriteria,title};root.IRON_REMINDER_RULES=api;
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
