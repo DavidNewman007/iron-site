@@ -3129,6 +3129,7 @@
     setDirty(key,C.status, dealKey(type) === "repair" ? CFG.newStatus : dealKey(type) === "pawn" ? "В залоге" : "На согласовании");
   }
   function startReminder(r) {
+    if (S.creating) return toast("Дождитесь завершения сохранения заказа", null, true);
     if ([...S.dirty.keys()].some(k => !k.startsWith("new:"))) return toast("Сначала сохраните изменения заказа", null, true);
     if (store.get("crm.draft") && !confirm("Есть незаконченный новый заказ. Начать напоминание вместо него?")) return;
     startNewFrom(r, false);
@@ -3444,6 +3445,7 @@
       <p class="note">Уйдёт с вашего личного Telegram, как кнопка в боте: наличие и резерв, у «под заказ» — доступность; цена — закупочная поставщика, нашей нет. Перед отправкой покажу текст.</p></div>`;
   }
   async function supplierRequest(t) {
+    const epoch = S.newEpoch || 0;
     const c = t.dataset.c, name = t.dataset.name, G = SUP_GROUPS.find(x => x.g === t.dataset.g);
     const keys = (S.gpicks || []).filter(p => p.kind === "new" && p.key && G.src.includes(p.source)).map(p => p.key);
     if (!keys.length) return;
@@ -3452,10 +3454,12 @@
     S.supBusy = c; rerenderKeep();
     try {
       const d = await call({ dry: true });
+      if (epoch !== (S.newEpoch || 0)) return;
       if (!d.ok) throw new Error(d.error || "бот не ответил");
       const warn = [d.already && `⚠️ Этот же запрос ${name} уже ушёл в ${d.already}.`, d.neighbours?.length && `Уже ушло: ${d.neighbours.join(", ")}.`].filter(Boolean).join("\n");
       if (!confirm(`Отправить ${name} с вашего Telegram?\n${warn ? warn + "\n" : ""}\n${d.text}`)) return;
       const r = await call({ again: !!d.already });
+      if (epoch !== (S.newEpoch || 0)) { if (r.ok) toast("Запрос поставщику отправлен; очищенный черновик не изменён", null, true); return; }
       if (!r.ok) throw new Error(r.error || "не ушло");
       (S.supSent ||= {})[c] = r.at;
       const com = String(S.dirty.get("new:" + C.comment) || "").trim(), note = `📤 запрос ${name} ${r.at}`;
@@ -3527,7 +3531,8 @@
       <label class="imp-date"><span>или дата</span><input type="date" data-act="impdate" value="${esc(I.date || "")}" max="${dayISO(0)}"></label></div>${list}</section>`;
   }
   async function loadImports(dates) {
-    S.imp = { ...(S.imp || {}), open: true, loading: true, error: "", orders: [], label: dates.length > 1 ? "сегодня и вчера" : isoToRu(dates[0]) };
+    const epoch = S.newEpoch || 0;
+    const loading = S.imp = { ...(S.imp || {}), open: true, loading: true, error: "", orders: [], label: dates.length > 1 ? "сегодня и вчера" : isoToRu(dates[0]) };
     render();
     const out = [];
     try {
@@ -3555,8 +3560,12 @@
             total: toNum(sum), promo: null });
         }
       }
+      if (epoch !== (S.newEpoch || 0) || S.imp !== loading) return;
       S.imp.orders = out.filter(o => o.items.length);
-    } catch (e) { S.imp.error = "Не удалось загрузить: " + e.message; }
+    } catch (e) {
+      if (epoch !== (S.newEpoch || 0) || S.imp !== loading) return;
+      S.imp.error = "Не удалось загрузить: " + e.message;
+    }
     S.imp.loading = false; render();
   }
   // Выбранный заказ → поля новой продажи: клиент, по устройству на каждую позицию
@@ -3915,10 +3924,36 @@
     }
     return `<div class="row">${w}<button type="button" class="btn btn--ghost btn--sm" data-act="newfor">＋ Новый заказ этому клиенту</button></div>`;
   }
-  function startNewFrom(r, warranty) {
+  // Весь несохранённый заказ — один черновик, включая данные скрытых блоков.
+  // Не трогаем другие карточки и pendingReminder уже сохранённого заказа.
+  function resetNewDraft() {
+    S.newEpoch = (S.newEpoch || 0) + 1;
     for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
-    S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); if (S.svcLog) delete S.svcLog.new; S.pp = null;
-    S.followup = null; S.draft = true; S.newClient = clientOfRow(r)?.key || null;
+    S.parts.delete("new"); delete S.tins.new;
+    if (S.svcLog) delete S.svcLog.new;
+    if (S.discUnit) delete S.discUnit.new;
+    if (S.hold) for (const k of Object.keys(S.hold)) if (k.startsWith("new|")) delete S.hold[k];
+    if (S.pp?.key === "new") S.pp = null;
+    if (S.cmp?.key === "new") S.cmp = null;
+    S.draft = null; S.followup = null; S.multi = false; S.extra = [];
+    S.newStatusTouched = false; S.newClient = null; S.pre = null; S.imp = null;
+    S.gpicks = []; S.supSent = {}; S.proxyOpen = null; S.ddOpen = null;
+    S.spSel = null; S.spq = "";
+    if (S.goods) S.goods = { ...S.goods, open: false, q_new: "", q_used: "" };
+    for (const k of ["dev", "ac", "px", "pq", "cq", "gq", "sp", "t", "sk"]) clearTimeout(onEdit[k]);
+    store.del("crm.draft");
+  }
+  function clearNewForm() {
+    if (location.hash !== "#/new") return;
+    if (S.creating) return toast("Дождитесь завершения сохранения заказа", null, true);
+    resetNewDraft(); renderNew(); window.scrollTo(0, 0);
+    $app.querySelector(`[data-edit="${C.name}"]`)?.focus({ preventScroll: true });
+    toast("Форма очищена — можно создать новый заказ");
+  }
+  function startNewFrom(r, warranty) {
+    if (S.creating) return toast("Дождитесь завершения сохранения заказа", null, true);
+    resetNewDraft();
+    S.draft = true; S.newClient = clientOfRow(r)?.key || null;
     const set = (c, v) => { if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); };
     set(C.status, CFG.newStatus); set(C.date, today()); set(C.type, "Ремонт");
     set(C.name, cell(r, C.name)); set(C.phone, cell(r, C.phone)); set(C.source, "Постоянные");
@@ -3947,7 +3982,7 @@
     S.followup = d.followup || null; S.multi = !!d.multi; S.extra = d.extra || []; if (d.tins) S.tins.new = d.tins; S.newStatusTouched = !!d.touched;
     if (d.parts) S.parts.set("new", d.parts);
     if (d.svc) (S.svcLog ||= {}).new = d.svc; // что добавлено из прайса — чтобы «✕» и после перезагрузки снимал всё (v79)
-    setTimeout(() => toast("Восстановлен незаконченный заказ. «Отмена» внизу — начать заново", null, true), 50);
+    setTimeout(() => toast("Восстановлен незаконченный заказ. «Очистить всё» вверху — начать заново", null, true), 50);
     return true;
   }
 
@@ -3962,7 +3997,7 @@
       S.dirty.set("new:" + C.type, "Ремонт");
     }
     if (dealKey(S.dirty.get("new:" + C.type)) === "reminder" && !remDraft("new",null).id) S.dirty.set("new:" + C.reminder, JSON.stringify(blankReminder()));
-    const head = `<div class="card-head" style="margin-top:14px"><a class="iconbtn" href="#" aria-label="Назад">←</a><h1>Новый заказ</h1></div>`;
+    const head = `<div class="card-head" style="margin-top:14px"><a class="iconbtn" href="#" aria-label="Назад">←</a><h1>Новый заказ</h1><button type="button" class="btn btn--ghost btn--sm" data-act="clearnew" ${S.creating ? "disabled" : ""}>Очистить всё</button></div>`;
     renderShell(head + cardBody("new", null, true) +
       (["repair", "other"].includes(dealKey(S.dirty.get("new:" + C.type))) ? `<p class="note" style="margin:14px 4px 0">Статус — «${esc(CFG.newStatus)}». Номер присвоится следующий по порядку; клиенту уйдёт то же сообщение, что при записи в таблицу.</p>` : `<p class="note" style="margin:14px 4px 0">Номер присвоится следующий по порядку.</p>`), { search: false });
     saveBar("new", 'data-new="1"');
@@ -4396,7 +4431,11 @@
     } catch (e) { busy(false); toast(e.message, null, true); }
     finally { S.creating = false; }
   }
-  function busy(on) { const b = $app.querySelector('[data-act="save"]'); if (b) { b.disabled = on; if (on) b.textContent = "Сохраняю…"; } }
+  function busy(on) {
+    const b = $app.querySelector('[data-act="save"]');
+    if (b) { b.disabled = on; if (on) b.textContent = "Сохраняю…"; }
+    if (location.hash === "#/new") $app.querySelectorAll('[data-act="clearnew"],[data-act="discard"]').forEach(x => { x.disabled = on; });
+  }
 
   // ── события ─────────────────────────────────────────────
   const curKey = () => location.hash === "#/new" ? "new" : S.byNum.get(location.hash.slice(2))?.row;
@@ -4522,6 +4561,7 @@
       refreshSaveBar(key); return;
     }
     const act = t.dataset.act;
+    if (act === "clearnew") { clearNewForm(); return; }
     if (act === "remretry") { await retryReminder(); return; }
     if (act === "remconvert") { S.remConverting = curKey(); render(); return; }
     if (act === "remnew") {
@@ -4726,7 +4766,18 @@
     }
     else if (act === "svcrm") { const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); const svc = (S.svcLog?.[key] || []).find(x => x.id === t.dataset.id); if (svc) { removeService(key, r, svc); const y = window.scrollY; render(); window.scrollTo(0, y); } }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); S.followup = null; S.remConverting = null; S.parts.delete(key); delete S.tins[key]; if (S.svcLog) delete S.svcLog[key]; S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; S.supSent = {}; store.del("crm.draft"); location.hash = ""; } else render(); }
+    else if (act === "discard") {
+      const key = curKey();
+      if (key === "new") {
+        if (S.creating) return toast("Дождитесь завершения сохранения заказа", null, true);
+        resetNewDraft(); location.hash = "";
+      } else {
+        S.followup = null; S.remConverting = null; S.parts.delete(key); delete S.tins[key];
+        if (S.svcLog) delete S.svcLog[key]; S.pp = null;
+        for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k);
+        render();
+      }
+    }
   });
   function onEdit(e) {
     const t = e.target;
