@@ -3036,19 +3036,30 @@
       `<div class="grid2">${field("budgetMin", "Бюджет от, ₽")}${field("budgetMax", "Бюджет до, ₽")}${field("nextDate", "Следующая проверка / контакт", "date")}${field("owner", "Кто ведёт")}</div>` +
       `<label class="field"><span>Предполагаемый тип сделки — можно выбрать позже</span>${selHtml(`data-rem-edit="targetType" ${follow ? 'data-follow="1"' : ""}`, m.targetType || "", ["", ...typeOptions().filter(x => x !== "Напоминание" && !/trade|трейд/i.test(x))])}</label>`;
   }
+  function watchPreview(w) {
+    const issue=REM_RULES.invalid(w);
+    return `<p class="note"><b>Выбранные условия:</b> ${esc(REM_RULES.describe(w))}</p>${issue?`<p class="rem--overdue">${esc(issue)}</p>`:''}`;
+  }
   function reminderClassifiers(m, follow) {
     const w = REM_RULES.watch(m.watch), attrs = k => `data-watch-edit="${k}" ${follow ? 'data-follow="1"' : ''}`;
     const sel = (k,label) => `<label class="field"><span>${label}</span>${selHtml(attrs(k), w[k], REM_RULES.options[k].map(([v,t])=>({v,t})))}</label>`;
-    const inp = (k,label,type='text') => `<label class="field"><span>${label}</span><input ${attrs(k)} type="${type}" value="${esc(w[k])}"></label>`;
-    const detail = ['repair','part'].includes(w.kind), manual = ['contact','manual'].includes(w.kind);
+    const inp = (k,label,type='text',placeholder='') => `<label class="field"><span>${label}</span><input ${attrs(k)} type="${type}" value="${esc(w[k])}"${placeholder?` placeholder="${esc(placeholder)}"`:''}${type==='number'?' min="4" max="99" step="1"':''}></label>`;
+    const detail = ['repair','part'].includes(w.kind), manual = ['contact','manual'].includes(w.kind), retail=REM_RULES.retailKind(w.kind), used=REM_RULES.usedBot(w);
+    const iphone=retail&&w.category==='iphone',selected=new Set(REM_RULES.versionCodes(w.iphoneVariants));
     const r=!follow&&curKey()!=='new'?S.byNum.get(location.hash.slice(2)):null;
     const stop=r&&(isTrue(S.dirty.get(r.row+':'+C.reminderStop)??cell(r,C.reminderStop))||REM_RULES.stoppedStatus(cell(r,C.status)));
     if (manual) return sel('kind','Что отслеживаем') + '<p class="note">Это обычная просьба без складского поиска и автоматических сообщений. Используйте дату следующего контакта.</p>';
+    const source=used?`<p class="note"><b>Источник б/у:</b> раздел «Б/у техника» в боте. Ищем подходящие опубликованные там объявления — отдельно выбирать склад не нужно.</p>`:
+      `<div class="grid2">${sel('supply',retail?'Где искать новые товары':'Где искать деталь')}${inp('maxDays',retail?'Максимальный срок поставки новых, дней':'Максимальный срок поставки, дней')}</div>${retail&&w.condition==='any'?'<p class="note">Выбор складов относится к новым товарам. Б/у всегда ищем в разделе бота.</p>':''}`;
+    const phones=iphone?`<div class="grid2">${inp('iphoneFrom','Поколение iPhone от','number','14')}${inp('iphoneTo','Поколение iPhone до','number','16')}</div>
+      <div class="field"><span>Версии iPhone — можно несколько</span><div class="row" role="group" aria-label="Версии iPhone">${REM_RULES.options.iphoneVersion.map(([v,t])=>`<label class="check"><input type="checkbox" data-watch-edit="iphoneVariants" data-watch-version="${v}" ${follow?'data-follow="1"':''} ${selected.has(v)?'checked':''}><b>${esc(t)}</b></label>`).join('')}</div><small class="note">Например, Plus и Pro Max. Если ничего не отмечено — подойдёт любая версия.</small></div>`:'';
     return `<label class="check"><input type="checkbox" ${attrs('enabled')} ${w.enabled && !stop ? 'checked' : ''}><b>Автоматически искать и сообщать клиенту</b></label>
-      <div class="grid2">${sel('kind','Что отслеживаем')}${sel('category','Категория')}${sel('condition','Состояние товара')}${sel('supply','Где искать')}${inp('model', detail ? 'Точная модель / модификация; несколько — через ;' : 'Модель или допустимые модели — необязательно')}${inp('maxDays','Максимальный срок поставки, дней')}</div>
-      ${detail ? `<div class="grid2">${sel('part','Какая деталь')}${sel('quality','Качество детали')}${inp('sku','Артикул / part number — если важен')}</div><p class="note">Бюджет для «с установкой» включает деталь и работу. Совместимость и класс качества обязательны; неизвестные свойства не считаются совпадением.</p>` : ''}
-      <details><summary>Дополнительные ограничения и правила уведомления</summary><div class="grid2">${sel('event','Когда сообщать')}${sel('policy','Повторные предложения')}${inp('expires','Актуально до','date')}${inp('ramMin','Оперативная память от, ГБ')}${inp('storageMin','Накопитель от, ГБ')}${inp('batteryMin','Состояние аккумулятора от, %')}${inp('chip','Точный чип, например M1 Pro')}${inp('colors','Допустимые цвета через запятую')}${inp('sim','SIM / регион — обязательное условие')}${inp('exclude','Что исключить — через запятую')}</div></details>
-      <p class="note">Можно писать своими словами в обоих полях ниже. Система объединит текст с классификаторами; противоречия и неподтверждённые требования потребуют уточнения.</p>`;
+      <div class="grid2">${sel('kind','Что отслеживаем')}${sel('category','Категория')}${sel('condition',detail?'Состояние детали':'Состояние товара')}</div>${source}${phones}
+      ${!iphone?inp('model',detail?'Точная модель / модификация; несколько — через ;':'Модель или серия — необязательно'):''}
+      ${detail?`<div class="grid2">${sel('part','Какая деталь')}${sel('quality','Качество детали')}${inp('sku','Артикул / part number — если важен')}</div><p class="note">Бюджет для «с установкой» включает деталь и работу. Совместимость и класс качества обязательны.</p>`:''}
+      <details><summary>Дополнительные ограничения и правила уведомления</summary><div class="grid2">${iphone?inp('model','Точные модели — только если диапазона недостаточно','text','Например: iPhone 15 Plus'):''}${sel('event','Когда сообщать')}${sel('policy','Повторные предложения')}${inp('expires','Актуально до','date')}${inp('ramMin','Оперативная память от, ГБ')}${inp('storageMin','Накопитель от, ГБ')}${inp('batteryMin','Состояние аккумулятора от, %')}${inp('chip','Точный чип, например M1 Pro')}${inp('colors','Допустимые цвета через запятую')}${inp('sim','SIM / регион — обязательное условие')}${inp('exclude','Не предлагать (исключения)','text','Например: Intel; розовый')}</div></details>
+      <div data-watch-summary="${follow?'follow':'main'}">${watchPreview(w)}</div>
+      <p class="note">В обоих полях ниже можно дописать пожелания своими словами. Списки и текст учитываются вместе.</p>`;
   }
   function reminderRuntime(r) {
     if (!r) return '';
@@ -4783,10 +4794,14 @@
     const t = e.target;
     if (t.dataset.watchEdit != null) {
       const key=curKey(),r=key==='new'?null:S.byNum.get(location.hash.slice(2)),m=t.dataset.follow?S.followup:remDraft(key,r); if(!m)return;
-      const w=REM_RULES.watch(m.watch);w[t.dataset.watchEdit]=t.type==='checkbox'?t.checked:t.value;m.watch=w;
+      const w=REM_RULES.watch(m.watch),field=t.dataset.watchEdit;
+      if(t.dataset.watchVersion){const versions=new Set(REM_RULES.versionCodes(w.iphoneVariants));t.checked?versions.add(t.dataset.watchVersion):versions.delete(t.dataset.watchVersion);w.iphoneVariants=[...versions].join(',');}
+      else {const before=w[field];w[field]=t.type==='checkbox'?t.checked:t.value;if(field==='condition'&&REM_RULES.retailKind(w.kind)&&(before==='used'||w.condition==='used')){w.supply='any';w.maxDays='';}}
+      m.watch=w;
+      const preview=$app.querySelector(`[data-watch-summary="${t.dataset.follow?'follow':'main'}"]`);if(preview)preview.innerHTML=watchPreview(w);
       if(!t.dataset.follow){setDirty(key,C.reminder,JSON.stringify(m));if(t.dataset.watchEdit==='enabled')setDirty(key,C.reminderStop,!t.checked);}
       refreshSaveBar(key);if(key==='new')saveDraft();
-      if(t.dataset.watchEdit==='kind'&&e.type==='change')rerenderKeep();return;
+      if(['kind','condition','category'].includes(t.dataset.watchEdit)&&e.type==='change')rerenderKeep();return;
     }
     if (t.dataset.remEdit != null) {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
@@ -5188,7 +5203,7 @@
       if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`);
     }, 0);
   });
-  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.dataset.sel != null || e.target.dataset.pf === "name" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
+  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.dataset.sel != null || e.target.dataset.watchEdit != null || e.target.dataset.pf === "name" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
   window.addEventListener("hashchange", () => { window.scrollTo(0, 0); render(); });
   window.addEventListener("beforeunload", e => { if (S.pendingDoors > 0 || S.skDirty.size || [...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
   // Новая версия на сайте. GitHub Pages отдаёт страницу с кэшем на 10 минут, и 28.09.2026
