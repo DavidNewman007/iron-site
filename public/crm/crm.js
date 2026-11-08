@@ -26,7 +26,7 @@
     scope: "openid email https://www.googleapis.com/auth/spreadsheets",
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
-    lastCol: "AO", // AO «Напоминание: данные» (08.11.2026); // AM–AN «Предоплата» (24.10.2026, v77); AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
+    lastCol: "AQ", // AQ — «Напоминание: стоп»; // AP — результат автоматического подбора; // AO «Напоминание: данные» (08.11.2026); // AM–AN «Предоплата» (24.10.2026, v77); AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
     // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
@@ -35,8 +35,8 @@
     // ждало ~45 с Google-контакта; рабочая первой — только для отчёта (L) и отзыва (J), им нужна дата
     // выдачи. Раньше было «всегда рабочая, потом личная».
     doors: [
-      "https://script.google.com/macros/s/AKfycbwHC5_EA-wndVqLcRW0ehkZ_r56Hcji1cqmwGgfCF7vY7a13_35T4ckh5n6YE-GoXO7/exec", // ironsapple, @121 (CRM v98; выкладывается `clasp -u ironsapple`)
-      "https://script.google.com/macros/s/AKfycbyOtzn7cQARc_H9heNEvukPwMhsOapCMc8BNNLi1IBZ9zLABBpb2wJvePbHnpQLPKbr/exec", // личный, @121 (CRM v98)
+      "https://script.google.com/macros/s/AKfycbwHC5_EA-wndVqLcRW0ehkZ_r56Hcji1cqmwGgfCF7vY7a13_35T4ckh5n6YE-GoXO7/exec", // ironsapple, @123 (CRM v99; выкладывается `clasp -u ironsapple`)
+      "https://script.google.com/macros/s/AKfycbyOtzn7cQARc_H9heNEvukPwMhsOapCMc8BNNLi1IBZ9zLABBpb2wJvePbHnpQLPKbr/exec", // личный, @123 (CRM v99)
     ],
     newStatus: "Принят на диагностику",
     // Заказы бота для «Продажи» (план 93 §11.17): бот пишет их в D1 с 26.09.2026.
@@ -69,7 +69,7 @@
     payment: 35, // AJ «Оплата» (v62, 09.10.2026): наличные / перевод / карта или QR / счёт на организацию
     tradein: 36, // AK «Трейд-ин» (v71, 17.10.2026): сданные в зачёт устройства продажи, по строке на устройство
     pawnUntil: 37, // AL «Залог: выкупить до» (v73, 22.10.2026) — дата, до которой клиент выкупает устройство
-    prepay: 38, prepayKind: 39, reminder: 40 }; // AM «Предоплата, ₽», AN «Предоплата: частичная / полная» (v77, 24.10.2026)
+    prepay: 38, prepayKind: 39, reminder: 40, reminderRun: 41, reminderStop: 42 }; // AM «Предоплата, ₽», AN «Предоплата: частичная / полная» (v77, 24.10.2026)
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -121,6 +121,8 @@
     [C.prepay]: { label: "Предоплата, ₽", num: true },
     [C.prepayKind]: { label: "Предоплата" },
     [C.reminder]: { label: "Просьба клиента" },
+    [C.reminderRun]: { label: "Подбор по напоминанию" },
+    [C.reminderStop]: { label: "Остановить автоподбор" },
   };
 
   // Тип сделки (колонка AC). Пусто = ремонт. Ключи — как в DealTypes.js на стороне таблицы.
@@ -281,6 +283,7 @@
     since: new Map(), hist: new Map(), jr: null, histOpen: null, tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [],
     parts: new Map(), svc: null, pp: null, view: null, // parts: ключ карточки → строки запчастей; svc — прайс сайта; pp — окно «работа из прайса»
     stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", src: "", only: null, limit: 150 }, skAdd: null, skSend: new Map(), skSent: null, tins: {} }; // склад Витали (v31); skSend/skSent — брак на возврат (v48)
+  S.bools.add(C.reminderStop);
   const $app = document.getElementById("app");
   const $toast = document.getElementById("toast");
 
@@ -3003,13 +3006,15 @@
   }
 
   // Просьбы — отдельные заказы; AO хранит бюджет и происхождение, Q/AE всегда остаются деньгами сделки.
+  const REM_RULES = globalThis.IRON_REMINDER_RULES;
   const REM_STAGES = ["Ищем / ждём поступления", "Есть вариант", "Сообщили клиенту", "Ждём ответа", "Неактуально / отказ"];
   function remMeta(r) { try { const m = JSON.parse(cell(r, C.reminder) || "null"); return m && typeof m === "object" && !Array.isArray(m) ? m : {}; } catch { return {}; } }
   function remDraft(key, r) { const raw = S.dirty.get(key + ":" + C.reminder); return raw ? remMeta({ cells: { [C.reminder]: raw } }) : r ? remMeta(r) : {}; }
-  const blankReminder = () => ({ v: 1, id: crypto.randomUUID(), subject: "", requirements: "", budgetMin: "", budgetMax: "", nextDate: "", owner: S.email || "", targetType: "", parent: "" });
+  const blankReminder = () => ({ v: 1, id: crypto.randomUUID(), subject: "", requirements: "", budgetMin: "", budgetMax: "", nextDate: "", owner: S.email || "", targetType: "", parent: "", watch: REM_RULES.watch() });
   function reminderInvalid(m, name, phone) {
     if (!String(name || "").trim() || !phones(phone).length) return "Для напоминания нужны имя и телефон клиента";
     if (!String(m.subject || "").trim()) return "Впишите, о чём напомнить";
+    const invalid = REM_RULES.invalid(REM_RULES.watch(m.watch)); if (invalid) return invalid;
     for (const k of ["budgetMin", "budgetMax"]) if (m[k] && !/^\d+(?:[.,]\d{1,2})?$/.test(String(m[k]).trim())) return "Бюджет — положительное число";
     if (m.budgetMin && m.budgetMax && toNum(m.budgetMin) > toNum(m.budgetMax)) return "Бюджет от больше бюджета до";
     return "";
@@ -3027,9 +3032,33 @@
   }
   function reminderFields(m, follow = false) {
     const field = (k, title, type = "text", area = false) => `<label class="field"><span>${title}</span>${area ? `<textarea data-rem-edit="${k}" ${follow ? 'data-follow="1"' : ""} rows="3">${esc(m[k] || "")}</textarea>` : `<input data-rem-edit="${k}" ${follow ? 'data-follow="1"' : ""} type="${type}" value="${esc(m[k] || "")}" ${k.startsWith("budget") ? 'inputmode="decimal"' : ""}>`}</label>`;
-    return field("subject", "О чём напомнить *") + field("requirements", "Задачи, требования, состояние, модель — что важно клиенту", "text", true) +
+    return reminderClassifiers(m, follow) + field("subject", "О чём напомнить *") + field("requirements", "Задачи, требования, состояние, модель — что важно клиенту", "text", true) +
       `<div class="grid2">${field("budgetMin", "Бюджет от, ₽")}${field("budgetMax", "Бюджет до, ₽")}${field("nextDate", "Следующая проверка / контакт", "date")}${field("owner", "Кто ведёт")}</div>` +
       `<label class="field"><span>Предполагаемый тип сделки — можно выбрать позже</span>${selHtml(`data-rem-edit="targetType" ${follow ? 'data-follow="1"' : ""}`, m.targetType || "", ["", ...typeOptions().filter(x => x !== "Напоминание" && !/trade|трейд/i.test(x))])}</label>`;
+  }
+  function reminderClassifiers(m, follow) {
+    const w = REM_RULES.watch(m.watch), attrs = k => `data-watch-edit="${k}" ${follow ? 'data-follow="1"' : ''}`;
+    const sel = (k,label) => `<label class="field"><span>${label}</span>${selHtml(attrs(k), w[k], REM_RULES.options[k].map(([v,t])=>({v,t})))}</label>`;
+    const inp = (k,label,type='text') => `<label class="field"><span>${label}</span><input ${attrs(k)} type="${type}" value="${esc(w[k])}"></label>`;
+    const detail = ['repair','part'].includes(w.kind), manual = ['contact','manual'].includes(w.kind);
+    const r=!follow&&curKey()!=='new'?S.byNum.get(location.hash.slice(2)):null;
+    const stop=r&&(isTrue(S.dirty.get(r.row+':'+C.reminderStop)??cell(r,C.reminderStop))||REM_RULES.stoppedStatus(cell(r,C.status)));
+    if (manual) return sel('kind','Что отслеживаем') + '<p class="note">Это обычная просьба без складского поиска и автоматических сообщений. Используйте дату следующего контакта.</p>';
+    return `<label class="check"><input type="checkbox" ${attrs('enabled')} ${w.enabled && !stop ? 'checked' : ''}><b>Автоматически искать и сообщать клиенту</b></label>
+      <div class="grid2">${sel('kind','Что отслеживаем')}${sel('category','Категория')}${sel('condition','Состояние товара')}${sel('supply','Где искать')}${inp('model', detail ? 'Точная модель / модификация; несколько — через ;' : 'Модель или допустимые модели — необязательно')}${inp('maxDays','Максимальный срок поставки, дней')}</div>
+      ${detail ? `<div class="grid2">${sel('part','Какая деталь')}${sel('quality','Качество детали')}${inp('sku','Артикул / part number — если важен')}</div><p class="note">Бюджет для «с установкой» включает деталь и работу. Совместимость и класс качества обязательны; неизвестные свойства не считаются совпадением.</p>` : ''}
+      <details><summary>Дополнительные ограничения и правила уведомления</summary><div class="grid2">${sel('event','Когда сообщать')}${sel('policy','Повторные предложения')}${inp('expires','Актуально до','date')}${inp('ramMin','Оперативная память от, ГБ')}${inp('storageMin','Накопитель от, ГБ')}${inp('batteryMin','Состояние аккумулятора от, %')}${inp('chip','Точный чип, например M1 Pro')}${inp('colors','Допустимые цвета через запятую')}${inp('sim','SIM / регион — обязательное условие')}${inp('exclude','Что исключить — через запятую')}</div></details>
+      <p class="note">Можно писать своими словами в обоих полях ниже. Система объединит текст с классификаторами; противоречия и неподтверждённые требования потребуют уточнения.</p>`;
+  }
+  function reminderRuntime(r) {
+    if (!r) return '';
+    if(isTrue(cell(r,C.reminderStop))||REM_RULES.stoppedStatus(cell(r,C.status)))return '<section class="block"><h3>Автоподбор остановлен</h3><p class="note">Галочка «Стоп» в таблице либо передача этой просьбы в работу запрещают новые уведомления.</p></section>';
+    let a; try { a = JSON.parse(cell(r,C.reminderRun)||'null'); } catch { return ''; }
+    if (!a) return `<p class="note">Автоподбор: после сохранения запрос попадёт в ближайшую фоновую проверку.</p>`;
+    const status = {parsed:'Условия разобраны — ждём подходящий вариант',review:'Нужно уточнить условия',sent:'Клиент уведомлён',paused:'Автоподбор на паузе',error:'Проверка временно недоступна',unknown:'Результат отправки нужно проверить вручную',sending:'Отправка зарегистрирована — ожидается результат'}[a.status] || a.status || 'Ожидает проверки';
+    return `<section class="block"><h3>Как система поняла просьбу</h3><b>${esc(status)}</b>${S.dirty.has(r.row+':'+C.reminder)?'<p class="note">После сохранения изменённых условий будет новый разбор.</p>':''}
+      ${a.summary?`<p class="rem-text">${esc(a.summary)}</p>`:''}${(a.issues||[]).length?`<p class="rem--overdue">${a.issues.map(esc).join('<br>')}</p>`:''}
+      ${a.offer?`<p>${esc(a.offer.name)} · ${esc(money(a.offer.price))}</p>`:''}${a.checkedAt?`<p class="note">Проверено: ${esc(new Date(a.checkedAt).toLocaleString('ru-RU'))}</p>`:''}</section>`;
   }
   function reminderOrigin(r) {
     const m = remDraft(r.row,r); if (!m.id) return "";
@@ -3053,9 +3082,9 @@
     if (!m.id) { m = blankReminder(); S.dirty.set(key + ":" + C.reminder, JSON.stringify(m)); }
     return `<div class="card-grid"><div class="col"><section class="block"><h3>Тип сделки</h3><b>🔔 Напоминание</b>${isNew ? `<button type="button" class="btn btn--ghost btn--sm" data-choice="${C.type}" data-value="Ремонт">Выбрать другой тип</button>` : ""}</section>
       <section class="block"><h3>Клиент</h3><div class="grid2">${fh(C.name)}${fh(C.phone)}</div>${r ? msgHtml(r) : ""}</section>
-      <section class="block"><h3>Этап напоминания</h3>${r && reminderOverdue(r) ? `<p class="rem--overdue">Просрочен контакт: ${esc(remMeta(r).nextDate)}</p>` : ""}${isNew ? `<b>${esc(REM_STAGES[0])}</b>` : ddHtml(key, C.status, val(C.status) || REM_STAGES[0], REM_STAGES, { allowEmpty: false })}<p class="note">Этапы сохраняются без автоматических сообщений. «Сообщили» — ручная отметка после связи с клиентом.</p></section>
+      <section class="block"><h3>Этап напоминания</h3>${r && reminderOverdue(r) ? `<p class="rem--overdue">Просрочен контакт: ${esc(remMeta(r).nextDate)}</p>` : ""}${isNew ? `<b>${esc(REM_STAGES[0])}</b>` : ddHtml(key, C.status, val(C.status) || REM_STAGES[0], REM_STAGES, { allowEmpty: false })}<p class="note">Ручная смена этапа сама по себе не отправляет сообщение. Автоподбор поставит «Сообщили клиенту» после подтверждённой отправки; вручную отмечайте только после связи.</p></section>
       ${!isNew && S.remConverting === key ? `<section class="block"><h3>Клиент согласен — какой тип сделки?</h3>${choiceButtons(key, C.type, "Напоминание", typeOptions().filter(x => x !== "Напоминание" && !/trade|трейд/i.test(x)), () => "type")}<p class="note">Трейд-ин — через галочку в продаже. После выбора заполните конкретное устройство, цену и остальные поля; затем сохраните.</p></section>` : !isNew && !isFinal(val(C.status)) ? `<button type="button" class="btn btn--red" data-act="remconvert">Клиент согласен — оформить сделку</button>` : ""}
-      ${r ? `<section class="block">${histHtml(r)}${deleteBox(r)}</section>` : ""}</div><div class="col"><section class="block"><h3>Просьба клиента</h3>${reminderFields(m)}<p class="note">Бюджет — ориентир для подбора. Цена сделки появится отдельно после согласования.</p></section></div></div>`;
+      ${r ? `<section class="block">${histHtml(r)}${deleteBox(r)}</section>` : ""}</div><div class="col"><section class="block"><h3>Просьба клиента</h3>${reminderFields(m)}<p class="note">Бюджет — жёсткий предел подбора; для замены включает деталь и работу. Цена сделки записывается отдельно после согласования.</p></section>${reminderRuntime(r)}</div></div>`;
   }
   async function reminderApi(payload) {
     if (DEMO) {
@@ -3724,10 +3753,10 @@
     if (S.trashOk) return;
     const meta = await api("?fields=sheets(properties(sheetId,title,gridProperties(columnCount)))");
     const trash = meta.sheets.find(x => x.properties.title === TRASH)?.properties;
-    if (trash && trash.gridProperties.columnCount < C.reminder + 4) await api(":batchUpdate", { method:"POST", body:JSON.stringify({requests:[{appendDimension:{sheetId:trash.sheetId,dimension:"COLUMNS",length:C.reminder + 4 - trash.gridProperties.columnCount}}]}) });
+    if (trash && trash.gridProperties.columnCount < C.reminderStop + 4) await api(":batchUpdate", { method:"POST", body:JSON.stringify({requests:[{appendDimension:{sheetId:trash.sheetId,dimension:"COLUMNS",length:C.reminderStop + 4 - trash.gridProperties.columnCount}}]}) });
     if (!trash) {
-      await api(":batchUpdate", { method: "POST", body: JSON.stringify({ requests: [{ addSheet: { properties: { title: TRASH, gridProperties: { frozenRowCount: 1, columnCount: C.reminder + 4 } } } }] }) });
-      const head = (await api(`/values/${A1(0, 1, C.reminder, 1)}`)).values?.[0] || [];
+      await api(":batchUpdate", { method: "POST", body: JSON.stringify({ requests: [{ addSheet: { properties: { title: TRASH, gridProperties: { frozenRowCount: 1, columnCount: C.reminderStop + 4 } } } }] }) });
+      const head = (await api(`/values/${A1(0, 1, C.reminderStop, 1)}`)).values?.[0] || [];
       await api(`/values/${encodeURIComponent(`'${TRASH}'!A1`)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [["Когда удалён", "Кто удалил", "Строка", ...head.map(String)]] }) });
     }
     S.trashOk = true;
@@ -3743,14 +3772,14 @@
     try {
       // До последней колонки (v71). *Исправлено 17.10.2026:* раньше копия и очистка шли до AG, и «На связи» (AH–AI),
       // «Оплата» (AJ) оставались в строке — новый заказ, легший в неё, унаследовал бы чужой контакт «На связи».
-      const LAST = C.reminder; // последняя колонка листа (v77: AN «Предоплата: вид»)
+      const LAST = C.reminderStop; // последняя колонка листа (v77: AN «Предоплата: вид»)
       let raw = r.cells.slice(0, LAST + 1);
       if (!DEMO) {
         const chk = await api(`/values/${A1(0, r.row)}`);
         if (String(chk.values?.[0]?.[0] ?? "").trim() !== String(num)) throw new Error("Строка в таблице сдвинулась — обновите список (⟳) и повторите");
         raw = (await api(`/values/${A1(0, r.row, LAST, r.row)}?valueRenderOption=FORMULA`)).values?.[0] || [];
         await ensureTrash();
-        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AR`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AT`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
           { method: "POST", body: JSON.stringify({ values: [[mskStamp(), S.email || "", r.row, ...raw.map(v => String(v ?? ""))]] }) });
         await api("/values:batchClear", { method: "POST", body: JSON.stringify({ ranges: [`'${CFG.sheet}'!B${r.row}:Q${r.row}`, `'${CFG.sheet}'!S${r.row}:${LETTER(LAST)}${r.row}`] }) });
         await logStatus([[r.row, cell(r, C.status), "Удалён"]]);
@@ -3768,7 +3797,7 @@
   async function restoreOrder() {
     const d = S.lastDeleted; if (!d) return;
     try {
-      const now = (await api(`/values/${A1(1, d.row, C.reminder, d.row)}`)).values?.[0] || [];
+      const now = (await api(`/values/${A1(1, d.row, C.reminderStop, d.row)}`)).values?.[0] || [];
       if (now.some(v => String(v).trim())) return toast(`Строка ${d.row} уже занята — верните заказ вручную с листа «${TRASH}»`, null, true);
       const plain = d.raw.map(v => typeof v === "string" && v.startsWith("=") ? null : v);
       await api(`/values/${A1(0, d.row, d.raw.length - 1, d.row)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [plain] }) });
@@ -4012,7 +4041,7 @@
   function jrVal(c, v) {
     if (S.bools.has(c)) return isTrue(v) ? "✓" : "—";
     if (c === C.pass) return String(v ?? "").trim() ? "•••" : "";
-    if (c === C.reminder) { const m = remMeta({cells:{[C.reminder]:v}}); return [m.subject,m.requirements,m.budgetMin && "от " + m.budgetMin,m.budgetMax && "до " + m.budgetMax,m.nextDate,m.owner,m.targetType,m.convertedType && "→ " + m.convertedType].filter(Boolean).join(" · ").slice(0,1000); }
+    if (c === C.reminder) { const m = remMeta({cells:{[C.reminder]:v}}); return [m.subject,m.requirements,m.budgetMin && "от " + m.budgetMin,m.budgetMax && "до " + m.budgetMax,m.nextDate,m.owner,m.targetType,m.watch && [m.watch.enabled===false?"Автоподбор выключен":"Автоподбор включён",...Object.entries(REM_RULES.watch(m.watch)).filter(([k,v])=>k!=="enabled"&&v).map(([k,v])=>REM_RULES.options[k]?.find(x=>x[0]===v)?.[1]||v)].join(" · "),m.convertedType && "→ " + m.convertedType].filter(Boolean).join(" · ").slice(0,1000); }
     return String(v ?? "").slice(0, 300);
   }
   // Строки журнала из списка изменений save(): [№, строка, поле, было, стало]. ch.w — то, что реально ушло в клетку.
@@ -4264,7 +4293,7 @@
       slots.push({ row: idx + 2, num: has ? a : String(++maxNum), hasNum: has });
     }
     const r0 = slots[0].row, r1 = slots[N - 1].row;
-    const probe = await api(`/values/${A1(1, r0, C.reminder, r1)}?valueRenderOption=FORMULA`)
+    const probe = await api(`/values/${A1(1, r0, C.reminderStop, r1)}?valueRenderOption=FORMULA`)
       .catch(e => { throw /400/.test(e.message) ? new Error(`В листе закончились строки (нужна строка ${r1}) — добавьте строки внизу листа в таблице и повторите`) : e; });
     // Занята ли строка: формулы, снятые галочки и одинокая дата приёма (B) — не занятость.
     // 28.09.2026 в строке 7750 осталась только дата: заказ начали вводить в таблице и
@@ -4701,6 +4730,13 @@
   });
   function onEdit(e) {
     const t = e.target;
+    if (t.dataset.watchEdit != null) {
+      const key=curKey(),r=key==='new'?null:S.byNum.get(location.hash.slice(2)),m=t.dataset.follow?S.followup:remDraft(key,r); if(!m)return;
+      const w=REM_RULES.watch(m.watch);w[t.dataset.watchEdit]=t.type==='checkbox'?t.checked:t.value;m.watch=w;
+      if(!t.dataset.follow){setDirty(key,C.reminder,JSON.stringify(m));if(t.dataset.watchEdit==='enabled')setDirty(key,C.reminderStop,!t.checked);}
+      refreshSaveBar(key);if(key==='new')saveDraft();
+      if(t.dataset.watchEdit==='kind'&&e.type==='change')rerenderKeep();return;
+    }
     if (t.dataset.remEdit != null) {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
       const m = t.dataset.follow ? S.followup : remDraft(key,r); if (!m) return;
