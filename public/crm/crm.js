@@ -26,7 +26,7 @@
     scope: "openid email https://www.googleapis.com/auth/spreadsheets",
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
-    lastCol: "AN", // AM–AN «Предоплата» (24.10.2026, v77); AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
+    lastCol: "AO", // AO «Напоминание: данные» (08.11.2026); // AM–AN «Предоплата» (24.10.2026, v77); AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
     // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
@@ -35,8 +35,8 @@
     // ждало ~45 с Google-контакта; рабочая первой — только для отчёта (L) и отзыва (J), им нужна дата
     // выдачи. Раньше было «всегда рабочая, потом личная».
     doors: [
-      "https://script.google.com/macros/s/AKfycbwHC5_EA-wndVqLcRW0ehkZ_r56Hcji1cqmwGgfCF7vY7a13_35T4ckh5n6YE-GoXO7/exec", // ironsapple, v75 (с 03.10.2026 выкладывается `clasp -u ironsapple`)
-      "https://script.google.com/macros/s/AKfycbyOtzn7cQARc_H9heNEvukPwMhsOapCMc8BNNLi1IBZ9zLABBpb2wJvePbHnpQLPKbr/exec", // личный, v77
+      "https://script.google.com/macros/s/AKfycbwHC5_EA-wndVqLcRW0ehkZ_r56Hcji1cqmwGgfCF7vY7a13_35T4ckh5n6YE-GoXO7/exec", // ironsapple, @121 (CRM v98; выкладывается `clasp -u ironsapple`)
+      "https://script.google.com/macros/s/AKfycbyOtzn7cQARc_H9heNEvukPwMhsOapCMc8BNNLi1IBZ9zLABBpb2wJvePbHnpQLPKbr/exec", // личный, @121 (CRM v98)
     ],
     newStatus: "Принят на диагностику",
     // Заказы бота для «Продажи» (план 93 §11.17): бот пишет их в D1 с 26.09.2026.
@@ -69,7 +69,7 @@
     payment: 35, // AJ «Оплата» (v62, 09.10.2026): наличные / перевод / карта или QR / счёт на организацию
     tradein: 36, // AK «Трейд-ин» (v71, 17.10.2026): сданные в зачёт устройства продажи, по строке на устройство
     pawnUntil: 37, // AL «Залог: выкупить до» (v73, 22.10.2026) — дата, до которой клиент выкупает устройство
-    prepay: 38, prepayKind: 39 }; // AM «Предоплата, ₽», AN «Предоплата: частичная / полная» (v77, 24.10.2026)
+    prepay: 38, prepayKind: 39, reminder: 40 }; // AM «Предоплата, ₽», AN «Предоплата: частичная / полная» (v77, 24.10.2026)
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -120,11 +120,13 @@
     [C.pawnUntil]: { label: "Выкупить до", entered: true, door: true },
     [C.prepay]: { label: "Предоплата, ₽", num: true },
     [C.prepayKind]: { label: "Предоплата" },
+    [C.reminder]: { label: "Просьба клиента" },
   };
 
   // Тип сделки (колонка AC). Пусто = ремонт. Ключи — как в DealTypes.js на стороне таблицы.
   function dealKey(v) {
     const s = norm(v);
+    if (s === "напоминание") return "reminder";
     if (!s || s === "ремонт") return "repair";
     if (s.startsWith("выкуп") && s.includes("запчаст")) return "parts";
     if (s.startsWith("выкуп")) return "buyback";
@@ -201,6 +203,7 @@
       (nums.length ? `<div class="grid4">${nums.map(fieldFn).join("")}</div>` : "");
   }
   const TYPE_UI = {
+    reminder: { multi: "", start: "Ищем / ждём поступления" },
     repair:   { multi: "Клиент сдаёт несколько устройств", start: "Принят на диагностику" },
     buyback:  { multi: "Выкупаем несколько устройств", start: "Выкуплен" },
     parts:    { multi: "Выкупаем на запчасти несколько устройств", start: "Выкуплен" },
@@ -224,13 +227,14 @@
     return out;
   }
   function statusesFor(dk) {
-    const all = doneAfterReady((S.opts[C.status] || []).filter(x => !isSilent(x)));
+    if (dk === "reminder") return REM_STAGES;
+    const all = doneAfterReady((S.opts[C.status] || []).filter(x => !isSilent(x) && !REM_STAGES.includes(x)));
     const pick = names => all.filter(x => names.some(n => norm(x).startsWith(n)));
     if (dk === "repair") return all.filter(x => !DEAL_FINAL.some(n => norm(x).startsWith(n)));
     if (dk === "buyback") return pick(["на согл", "выкуплен"]);
     if (dk === "parts") return pick(["на согл", "выкуплен", "разобран"]);
     if (dk === "tradein") return pick(["на согл", "ждем предоплату", "обмен оформлен"]);
-    if (dk === "sale_used" || dk === "sale_new" || dk === "sale_parts") return pick(["ждем предоплату", "продан"]);
+    if (dk === "sale_used" || dk === "sale_new" || dk === "sale_parts") return pick(["на согл", "ждем предоплату", "продан"]);
     if (dk === "pawn") return pick(["в залоге", "залог выкуплен", "залог не выкуплен"]);
     return all.filter(x => !norm(x).startsWith("залог") && !norm(x).startsWith("в залоге"));
   }
@@ -244,7 +248,7 @@
     return !f.notify && c !== C.name && c !== C.phone && !!r && !isTrue(cell(r, C.report));
   };
 
-  const FINAL = ["выполнен", "отказ от ремонта", "ремонт невозможен", "без ремонта", "продан", "разобран", "выкуплен", "обмен оформлен", "закрыт", "залог выкуплен", "залог не выкуплен"];
+  const FINAL = ["неактуально / отказ", "выполнен", "отказ от ремонта", "ремонт невозможен", "без ремонта", "продан", "разобран", "выкуплен", "обмен оформлен", "закрыт", "залог выкуплен", "залог не выкуплен"];
   // «Закрыт» — архивное закрытие без уведомления клиенту (28.09.2026: 1475 заказов старше
   // двух месяцев закрыты разом). В таблице для простоты просто «Закрыт», в оболочке — с
   // пояснением. Кнопкой в оболочке не ставится; руками в таблице — клиенту ничего не уходит.
@@ -263,6 +267,8 @@
   const statusKind = s => {
     const n = norm(s);
     if (!n) return "new";
+    if (n.startsWith("неактуально")) return "stop";
+    if (["есть вариант", "сообщили клиенту", "ждем ответа"].includes(n)) return "wait";
     if (n.startsWith("готов")) return "ready";
     if (["выполнен", "продан", "выкуплен", "обмен оформлен", "разобран", "закрыт"].some(x => n.startsWith(x))) return "done";
     if (n.startsWith("отказ") || n.startsWith("ремонт невозможен") || n.startsWith("без ремонта")) return "stop";
@@ -490,7 +496,7 @@
   // Поисковые ключи строки считаются один раз при загрузке (и после правки строки), а не
   // на каждое нажатие клавиши: по 7–8 тысячам строк поиск так идёт за миллисекунды.
   function index(r) {
-    r.hay = norm([C.num, C.name, C.phone, C.contactName, C.contactPhone, C.device, C.issue, C.work, C.parts, C.comment, C.master, C.imei, C.type, C.status].map(c => c === C.status ? stLabel(r.cells[c] ?? "") : r.cells[c] ?? "").join(" "));
+    r.hay = norm([C.num, C.name, C.phone, C.contactName, C.contactPhone, C.device, C.issue, C.work, C.parts, C.comment, C.master, C.imei, C.type, C.status, C.reminder].map(c => c === C.status ? stLabel(r.cells[c] ?? "") : r.cells[c] ?? "").join(" "));
     r.ph = phones(r.cells[C.phone]).map(p => p.d);
     // Номер «на связи» — только для поиска (звонит дочь: «я по папиному телефону»). В r.ph его
     // класть нельзя: по r.ph склеивается книга клиентов, и владелец слился бы с человеком на связи.
@@ -644,11 +650,13 @@
 
   // ── выборки для главного экрана ─────────────────────────
   function inWork(r) {
+    if (dealKey(cell(r, C.type)) === "reminder") return false;
     if (isFinal(cell(r, C.status))) return false;
     const age = daysSince(cell(r, C.date));
     return age == null || age <= 365;
   }
   function isStale(r) {
+    if (dealKey(cell(r, C.type)) === "reminder") return reminderOverdue(r);
     if (!inWork(r)) return false;
     if (dealKey(cell(r, C.type)) === "pawn") return pawnLeft(r) != null && pawnLeft(r) < 0; // залог — по сроку выкупа (v73)
     const age = daysSince(cell(r, C.date));
@@ -658,10 +666,11 @@
   function pick() {
     const q = norm(S.q);
     if (q) return search(q);
+    if (S.tab === "reminders") return S.rows.filter(r => dealKey(cell(r, C.type)) === "reminder").sort((a, b) => Number(isFinal(cell(a,C.status))) - Number(isFinal(cell(b,C.status))) || (remMeta(a).nextDate || "9999").localeCompare(remMeta(b).nextDate || "9999"));
     if (S.tab === "stale") return S.rows.filter(isStale).reverse();
     if (S.tab === "work") return S.rows.filter(r => inWork(r) && !isReady(cell(r, C.status))).reverse();
     if (S.tab === "ready") return S.rows.filter(r => inWork(r) && isReady(cell(r, C.status))).reverse();
-    if (S.tab === "done") return S.rows.filter(r => isFinal(cell(r, C.status)) && (daysSince(cell(r, C.issued) || cell(r, C.date)) ?? 999) <= 30).reverse();
+    if (S.tab === "done") return S.rows.filter(r => dealKey(cell(r, C.type)) !== "reminder" && isFinal(cell(r, C.status)) && (daysSince(cell(r, C.issued) || cell(r, C.date)) ?? 999) <= 30).reverse();
     return S.rows.slice().reverse();
   }
   // Поиск одной строкой. Цифры: точный номер заказа → телефон (любая часть, от 4 цифр,
@@ -705,7 +714,7 @@
 
   function counts() {
     let work = 0, ready = 0, stale = 0;
-    for (const r of S.rows) if (inWork(r)) { isReady(cell(r, C.status)) ? ready++ : work++; if (isStale(r)) stale++; }
+    for (const r of S.rows) { if (inWork(r)) isReady(cell(r, C.status)) ? ready++ : work++; if (isStale(r)) stale++; }
     return { work, ready, stale };
   }
 
@@ -739,6 +748,7 @@
   }
 
   function renderShell(body, { search = true } = {}) {
+    if (store.get("crm.pendingReminder")) body = `<div class="longbar">🔔 Заказ сохранён, связанное напоминание ожидает создания. <button class="btn btn--sm" data-act="remretry">Повторить создание</button></div>` + body;
     $app.innerHTML = (DEMO ? `<div class="demo-bar">ДЕМО — выдуманные сделки, в таблицу ничего не пишется</div>` : "") + `
       <header class="top"><div class="top__row">
         <a class="brand" href="#"><img src="../assets/logo-horizontal.png" alt="IRON SERVICE" width="128" height="34"><b>CRM</b></a><div class="top__spacer"></div>
@@ -766,9 +776,9 @@
   }
   function itemHtml(r) {
     const st = cell(r, C.status), age = daysSince(cell(r, C.date));
-    const old = !isFinal(st) && age != null && age > 14;
+    const old = dealKey(cell(r,C.type)) === "reminder" ? reminderOverdue(r) : !isFinal(st) && age != null && age > 14;
     const dk = dealKey(cell(r, C.type)), date = String(cell(r, C.date)).slice(0, 10);
-    const ageTxt = age == null ? "" : age === 0 ? "сегодня" : age + " дн.";
+    const ageTxt = dk === "reminder" ? (reminderOverdue(r) ? "просрочен контакт" : "") : age == null ? "" : age === 0 ? "сегодня" : age + " дн.";
     const stChip = lstHtml(r, st), menu = S.lst?.num === String(cell(r, C.num)).trim() ? " has-menu" : ""; // у элемента overflow:hidden — меню иначе обрежется
     if (S.view === "rows") return `<div class="ritem${menu}" role="button" tabindex="0" data-open="${esc(cell(r, C.num))}">
       <span class="ri__num">№${mark(cell(r, C.num))}</span>
@@ -776,7 +786,7 @@
       <span class="ri__name">${mark(cell(r, C.name) || "без имени")}${S.q && cell(r, C.phone) ? `<small>${mark(cell(r, C.phone))}</small>` : ""}${String(cell(r, C.contactPhone) ?? "").trim() ? `<small title="Уведомления уходят человеку на связи">📲 ${mark(cell(r, C.contactName) || cell(r, C.contactPhone))}</small>` : ""}</span>
       <span class="ri__dev">${mark(cell(r, C.device) || "—")}${riWhat(r, dk)}</span>
       <span class="ri__st">${stChip}</span>
-      <span class="ri__sum">${money(cell(r, C.total))}</span>
+      <span class="ri__sum">${dealKey(cell(r,C.type)) === "reminder" ? esc(remMeta(r).nextDate || "без срока") : money(cell(r, C.total))}</span>
     </div>`;
     return `<div class="item${menu}" role="button" tabindex="0" data-open="${esc(cell(r, C.num))}">
       <div class="item__top"><span class="item__num">№${mark(cell(r, C.num))}</span><span class="item__name">${mark(cell(r, C.name) || "без имени")}</span>${stChip}</div>
@@ -787,7 +797,7 @@
         ${cell(r, C.master) ? `<span>🔧 ${mark(cell(r, C.master))}</span>` : ""}
         ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}
         ${dk === "pawn" && pawnLeft(r) != null ? `<span class="chip${pawnLeft(r) < 0 ? " chip--bad" : ""}">${esc(pawnDue(pawnLeft(r)))}</span>` : ""}
-        <span class="item__sum">${money(cell(r, C.total))}</span></div>
+        <span class="item__sum">${dealKey(cell(r,C.type)) === "reminder" ? esc(remMeta(r).nextDate || "без срока") : money(cell(r, C.total))}</span></div>
     </div>`;
   }
   // ── статус прямо из списка (v39, 03.10.2026) ──────────────────────────────────────
@@ -805,7 +815,7 @@
     const list = statusesFor(dealKey(cell(r, C.type)));
     const opts = list.includes(st) || !st ? list : [st, ...list];
     const menu = !open ? "" : S.lst.v
-      ? `<div class="lst__menu"><p>«${esc(stLabel(S.lst.v))}» — клиенту уйдёт уведомление${groupOf(r)?.shared ? ", статус сменится у всех устройств группы" : ""}.</p>
+      ? `<div class="lst__menu"><p>«${esc(stLabel(S.lst.v))}» — ${dealKey(cell(r,C.type)) === "reminder" ? "этап сохранится без автоматических сообщений" : `клиенту уйдёт уведомление${groupOf(r)?.shared ? ", статус сменится у всех устройств группы" : ""}`}.</p>
         <div class="lst__row"><button type="button" class="btn btn--sm" data-act="lstsave" data-num="${esc(num)}">Сохранить</button><button type="button" class="btn btn--ghost btn--sm" data-act="lstback" data-num="${esc(num)}">Назад</button></div></div>`
       : `<div class="lst__menu" role="listbox">${opts.map(o => `<button type="button" class="dd__opt ${toneOf(C.status, o)}" data-act="lstpick" data-num="${esc(num)}" data-value="${esc(o)}" aria-pressed="${o === st}">${esc(stLabel(o))}</button>`).join("")}</div>`;
     return `<span class="lst${open ? " is-open" : ""}"><button type="button" class="chip chip--${statusKind(st)} lst__btn" data-act="lst" data-num="${esc(num)}" title="Сменить статус">${esc(stLabel(st) || "без статуса")} ▾</button>${menu}</span>`;
@@ -839,7 +849,7 @@
 
   function renderList() {
     const list = pick(), n = counts();
-    const tabs = [["work", "В работе", n.work], ["stale", "⚡ Долго висят", n.stale], ["ready", "Готовы, ждут клиента", n.ready], ["done", "Выданы за 30 дней"], ["all", "Все"]];
+    const tabs = [["reminders", "🔔 Напоминания", S.rows.filter(r => dealKey(cell(r, C.type)) === "reminder" && !isFinal(cell(r, C.status))).length], ["work", "В работе", n.work], ["stale", "⚡ Долго висят", n.stale], ["ready", "Готовы, ждут клиента", n.ready], ["done", "Выданы за 30 дней"], ["all", "Все"]];
     // Долгий вход включили, а это устройство ещё на часовом (v51) — одна кнопка, один раз.
     const longBar = S.authOn && !DEMO && S.token && !sidGet() && !inApp() ? `<div class="longbar">🔐 Можно не входить заново после простоя: <button type="button" class="btn btn--sm" data-act="longlogin">Запомнить вход на 30 дней</button></div>` : "";
     const pawns = S.q ? [] : S.rows.filter(r => dealKey(cell(r, C.type)) === "pawn" && pawnLeft(r) != null && pawnLeft(r) <= 1);
@@ -962,7 +972,7 @@
     const list = opts.includes(current) || !current ? opts : [current, ...opts];
     return `<div class="statuses">${list.map(o => `<button type="button" class="st st--${kindOf(o)}" data-choice="${col}" data-value="${esc(o)}" aria-pressed="${o === chosen}">${esc(col === C.status ? stLabel(o) : o)}</button>`).join("")}</div>`;
   }
-  const typeOptions = () => S.opts[C.type]?.length ? S.opts[C.type] : ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Залог", "Другое"];
+  const typeOptions = () => [...new Set([...(S.opts[C.type]?.length ? S.opts[C.type] : ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Залог", "Другое"]), "Напоминание"])];
 
   // Деньги по типу сделки: что считаем «остаётся нам».
   function moneySummary(key, val, r) {
@@ -2964,6 +2974,7 @@
   const CLOSING = ["выполнен", "продан", "обмен оформлен", "выкуплен", "разобран", "залог выкуплен", "залог не выкуплен"];
   function sumColFor(status, dk) {
     const s = norm(status);
+    if (dk === "reminder") return null;
     // Залог (v73): «в залоге» — без суммы выдачи нечего сообщать клиенту; «не выкуплен» закрывается выданным (AE),
     // «выкуплен» — суммой выкупа (Q). Так же решает таблица (OrderAutofill.js, orderCloseBlocked_).
     if (dk === "pawn") return s.startsWith("в залоге") || s.startsWith("залог не выкуплен") ? C.buyback : s.startsWith("залог выкуплен") ? C.total : null;
@@ -2991,18 +3002,125 @@
     if (!soft) { inp.scrollIntoView({ block: "center", behavior: "smooth" }); inp.focus({ preventScroll: true }); }
   }
 
+  // Просьбы — отдельные заказы; AO хранит бюджет и происхождение, Q/AE всегда остаются деньгами сделки.
+  const REM_STAGES = ["Ищем / ждём поступления", "Есть вариант", "Сообщили клиенту", "Ждём ответа", "Неактуально / отказ"];
+  function remMeta(r) { try { const m = JSON.parse(cell(r, C.reminder) || "null"); return m && typeof m === "object" && !Array.isArray(m) ? m : {}; } catch { return {}; } }
+  function remDraft(key, r) { const raw = S.dirty.get(key + ":" + C.reminder); return raw ? remMeta({ cells: { [C.reminder]: raw } }) : r ? remMeta(r) : {}; }
+  const blankReminder = () => ({ v: 1, id: crypto.randomUUID(), subject: "", requirements: "", budgetMin: "", budgetMax: "", nextDate: "", owner: S.email || "", targetType: "", parent: "" });
+  function reminderInvalid(m, name, phone) {
+    if (!String(name || "").trim() || !phones(phone).length) return "Для напоминания нужны имя и телефон клиента";
+    if (!String(m.subject || "").trim()) return "Впишите, о чём напомнить";
+    for (const k of ["budgetMin", "budgetMax"]) if (m[k] && !/^\d+(?:[.,]\d{1,2})?$/.test(String(m[k]).trim())) return "Бюджет — положительное число";
+    if (m.budgetMin && m.budgetMax && toNum(m.budgetMin) > toNum(m.budgetMax)) return "Бюджет от больше бюджета до";
+    return "";
+  }
+  function reminderOverdue(r) {
+    const m = remMeta(r);
+    return dealKey(cell(r, C.type)) === "reminder" && !isFinal(cell(r, C.status)) && m.nextDate && m.nextDate < dayISO(0);
+  }
+  function reminderState(r) {
+    const st = norm(cell(r, C.status));
+    if (isFinal(st)) return /неактуально|отказ|невозмож|без ремонта|закрыт|не выкуплен/.test(st) ? "closed" : "done";
+    if (dealKey(cell(r, C.type)) !== "reminder") return "deal";
+    if (reminderOverdue(r)) return "overdue";
+    return REM_STAGES.slice(1, 4).some(x => norm(x) === st) ? "wait" : "search";
+  }
+  function reminderFields(m, follow = false) {
+    const field = (k, title, type = "text", area = false) => `<label class="field"><span>${title}</span>${area ? `<textarea data-rem-edit="${k}" ${follow ? 'data-follow="1"' : ""} rows="3">${esc(m[k] || "")}</textarea>` : `<input data-rem-edit="${k}" ${follow ? 'data-follow="1"' : ""} type="${type}" value="${esc(m[k] || "")}" ${k.startsWith("budget") ? 'inputmode="decimal"' : ""}>`}</label>`;
+    return field("subject", "О чём напомнить *") + field("requirements", "Задачи, требования, состояние, модель — что важно клиенту", "text", true) +
+      `<div class="grid2">${field("budgetMin", "Бюджет от, ₽")}${field("budgetMax", "Бюджет до, ₽")}${field("nextDate", "Следующая проверка / контакт", "date")}${field("owner", "Кто ведёт")}</div>` +
+      `<label class="field"><span>Предполагаемый тип сделки — можно выбрать позже</span>${selHtml(`data-rem-edit="targetType" ${follow ? 'data-follow="1"' : ""}`, m.targetType || "", ["", ...typeOptions().filter(x => x !== "Напоминание" && !/trade|трейд/i.test(x))])}</label>`;
+  }
+  function reminderOrigin(r) {
+    const m = remDraft(r.row,r); if (!m.id) return "";
+    const parent = m.parent && S.byNum.has(m.parent);
+    const budget = m.budgetMin && m.budgetMax ? `от ${money(m.budgetMin)} до ${money(m.budgetMax)}` : m.budgetMax ? `до ${money(m.budgetMax)}` : m.budgetMin ? `от ${money(m.budgetMin)}` : "не указан";
+    return `<section class="block reminder-origin"><h3>Исходная просьба клиента${m.convertedAt ? " — сохранена" : ""}</h3>
+      ${m.parent ? parent ? `<a href="#/${esc(m.parent)}">Из заказа №${esc(m.parent)}</a>` : `<span class="note">Исходный заказ №${esc(m.parent)} удалён или недоступен</span>` : `<span class="note">Без исходного заказа</span>`}
+      ${m.convertedAt ? `<p><b>${esc(m.subject)}</b></p>${m.requirements ? `<p class="rem-text">${esc(m.requirements)}</p>` : ""}<p class="note">Бюджет: ${esc(budget)} · согласовано ${esc(ru(parseDate(m.convertedAt)))}</p>` : ""}</section>`;
+  }
+  function reminderLinks(key, r, isNew) {
+    const kids = r ? S.rows.filter(x => remMeta(x).parent === String(cell(r, C.num)).trim()) : [];
+    const checked = kids.length || isNew && S.followup;
+    return `<section class="block"><h3>🔔 Просьбы клиента</h3>
+      ${kids.map(x => `<a class="rem-link rem--${reminderState(x)}" href="#/${esc(cell(x, C.num))}"><span aria-hidden="true">☑</span><span><b>№${esc(cell(x, C.num))} · ${esc(remMeta(x).subject)}</b><small>${esc(cell(x, C.status))}${reminderOverdue(x) ? ` · просрочен контакт ${esc(remMeta(x).nextDate)}` : ""}</small></span></a>`).join("")}
+      ${kids.length ? `<p class="note">Связь сохранена · активных ${kids.filter(x => !isFinal(cell(x,C.status))).length} / всего ${kids.length}</p><button type="button" class="btn btn--ghost btn--sm" data-act="remnew">＋ Ещё напоминание</button>` : `<label class="check"><input type="checkbox" data-act="remnew" ${checked ? "checked" : ""}><b>Создать напоминание</b></label>`}
+      ${isNew && S.followup ? reminderFields(S.followup, true) + `<p class="note">Создастся отдельный заказ после сохранения этого. Бюджет не входит в стоимость заказа.</p>` : ""}
+    </section>`;
+  }
+  function reminderCard(key, r, isNew, val, fh) {
+    let m = remDraft(key, r);
+    if (!m.id) { m = blankReminder(); S.dirty.set(key + ":" + C.reminder, JSON.stringify(m)); }
+    return `<div class="card-grid"><div class="col"><section class="block"><h3>Тип сделки</h3><b>🔔 Напоминание</b>${isNew ? `<button type="button" class="btn btn--ghost btn--sm" data-choice="${C.type}" data-value="Ремонт">Выбрать другой тип</button>` : ""}</section>
+      <section class="block"><h3>Клиент</h3><div class="grid2">${fh(C.name)}${fh(C.phone)}</div>${r ? msgHtml(r) : ""}</section>
+      <section class="block"><h3>Этап напоминания</h3>${r && reminderOverdue(r) ? `<p class="rem--overdue">Просрочен контакт: ${esc(remMeta(r).nextDate)}</p>` : ""}${isNew ? `<b>${esc(REM_STAGES[0])}</b>` : ddHtml(key, C.status, val(C.status) || REM_STAGES[0], REM_STAGES, { allowEmpty: false })}<p class="note">Этапы сохраняются без автоматических сообщений. «Сообщили» — ручная отметка после связи с клиентом.</p></section>
+      ${!isNew && S.remConverting === key ? `<section class="block"><h3>Клиент согласен — какой тип сделки?</h3>${choiceButtons(key, C.type, "Напоминание", typeOptions().filter(x => x !== "Напоминание" && !/trade|трейд/i.test(x)), () => "type")}<p class="note">Трейд-ин — через галочку в продаже. После выбора заполните конкретное устройство, цену и остальные поля; затем сохраните.</p></section>` : !isNew && !isFinal(val(C.status)) ? `<button type="button" class="btn btn--red" data-act="remconvert">Клиент согласен — оформить сделку</button>` : ""}
+      ${r ? `<section class="block">${histHtml(r)}${deleteBox(r)}</section>` : ""}</div><div class="col"><section class="block"><h3>Просьба клиента</h3>${reminderFields(m)}<p class="note">Бюджет — ориентир для подбора. Цена сделки появится отдельно после согласования.</p></section></div></div>`;
+  }
+  async function reminderApi(payload) {
+    if (DEMO) {
+      const hit = S.rows.find(r => remMeta(r).id === payload.request.id); if (hit) return hit;
+      const cells = []; cells[C.num] = String(Math.max(0, ...S.rows.map(r => +cell(r,C.num) || 0)) + 1); cells[C.name] = payload.name; cells[C.phone] = payload.phone;
+      cells[C.device] = payload.request.subject; cells[C.type] = "Напоминание"; cells[C.date] = today(); cells[C.status] = REM_STAGES[0]; cells[C.reminder] = JSON.stringify({ ...payload.request, createdAt: new Date().toISOString() });
+      const r = { row: Math.max(1, ...S.rows.map(r => r.row)) + 1, cells }; index(r); S.rows.push(r); S.byNum.set(cells[C.num],r); return r;
+    }
+    const j = await fetch(CFG.doors[0] + "?action=crm-reminder", { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ token: S.token, ...payload }), signal: AbortSignal.timeout(60000) }).then(r => r.json());
+    if (!j.ok) throw new Error(j.error || "дверь не ответила");
+    const r = { row: j.row, cells: j.cells }; index(r);
+    const old = S.byNum.get(j.num); if (old) S.rows.splice(S.rows.indexOf(old), 1);
+    S.rows.push(r); S.byNum.set(j.num, r); S.clients = null;
+    if (!j.existing) journal([[j.num, j.row, "Напоминание создано", "", payload.request.subject + (payload.request.parent ? " · из заказа №" + payload.request.parent : "")]]);
+    return r;
+  }
+  async function createReminder() {
+    if (S.creating) return;
+    const payload = { request: remDraft("new", null), name: S.dirty.get("new:" + C.name), phone: S.dirty.get("new:" + C.phone) };
+    const why = reminderInvalid(payload.request, payload.name, payload.phone); if (why) return toast(why, null, true);
+    busy(true); S.creating = true;
+    try {
+      const r = await reminderApi(payload);
+      for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
+      store.del("crm.draft"); S.draft = null; S.followup = null;
+      location.hash = "#/" + cell(r, C.num); toast("Напоминание создано ✓");
+    } catch (e) { busy(false); toast("Не создано: " + e.message + ". Можно повторить — ключ сохранён в черновике.", null, true); }
+    finally { S.creating = false; }
+  }
+  async function retryReminder() {
+    if (S.remRetry) return;
+    const p = store.get("crm.pendingReminder"); if (!p) return;
+    S.remRetry = true;
+    try { await reminderApi(p); store.del("crm.pendingReminder"); render(); toast("Связанное напоминание создано ✓"); }
+    catch (e) { render(); toast("Заказ сохранён, напоминание ещё не создано: " + e.message, { label: "Повторить", run: retryReminder }, true); }
+    finally { S.remRetry = false; }
+  }
+  function prepareReminderConversion(key, r, type) {
+    const m = remDraft(key,r);
+    if (!m.convertedAt) { m.convertedAt = new Date().toISOString(); setDirty(key,C.device,""); setDirty(key,C.date,today()); }
+    m.convertedType = type; setDirty(key,C.reminder,JSON.stringify(m));
+    setDirty(key,C.status, dealKey(type) === "repair" ? CFG.newStatus : dealKey(type) === "pawn" ? "В залоге" : "На согласовании");
+  }
+  function startReminder(r) {
+    if ([...S.dirty.keys()].some(k => !k.startsWith("new:"))) return toast("Сначала сохраните изменения заказа", null, true);
+    if (store.get("crm.draft") && !confirm("Есть незаконченный новый заказ. Начать напоминание вместо него?")) return;
+    startNewFrom(r, false);
+    S.dirty.set("new:" + C.type, "Напоминание"); S.dirty.set("new:" + C.status, REM_STAGES[0]);
+    S.dirty.set("new:" + C.reminder, JSON.stringify({ ...blankReminder(), parent: String(cell(r, C.num)).trim() }));
+    saveDraft(); render();
+  }
+
   function cardBody(key, r, isNew) {
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const dk = dealKey(val(C.type));
     const hidden = c => (HIDE[dk] || []).includes(c) && !String(r ? cell(r, c) : "").trim(); // уже заполненное не прячем
     const fh = (c, extra = {}) => hidden(c) ? "" : fieldHtml(key, c, r ? cell(r, c) : "", { row: r?.row, r, force: isNew, label: labelFor(c, dk), ...extra });
+    if (dk === "reminder") return reminderCard(key, r, isNew, val, fh);
     const st = r ? cell(r, C.status) : CFG.newStatus;
     const tel = phones(val(C.phone));
     const typeNow = val(C.type) || "Ремонт";
 
     const box = (order, inner) => `<div class="cg-item" style="order:${order}">${inner}</div>`;
     let html = `<section class="block"><h3>Тип сделки</h3>${
-      editable(C.type, r) || isNew ? choiceButtons(key, C.type, typeNow, isNew ? typeOptions().filter(o => !/trade|трейд/i.test(o) || o === typeNow) : typeOptions(), () => "type") : `<div class="big">${esc(typeNow)}</div>`}
+      editable(C.type, r) || isNew ? choiceButtons(key, C.type, typeNow, isNew ? typeOptions().filter(o => !/trade|трейд/i.test(o) || o === typeNow) : typeOptions().filter(o => o !== "Напоминание" && (!remMeta(r).id || !/trade|трейд/i.test(o))), () => "type") : `<div class="big">${esc(typeNow)}</div>`}
       ${["buyback", "parts", "tradein", "pawn"].includes(dk) ? `<p class="note">${dk === "tradein" ? "Сданное устройство" : dk === "pawn" ? "Перед залогом" : "Перед выкупом"}: iCloud и «Найти iPhone» отключены, IMEI не в розыске, проверены АКБ и экран. Паспортные данные — только в бумажный договор, в таблицу не писать.</p>` : ""}
     </section>`;
     let left = box(1, html), right = ""; html = "";
@@ -3035,7 +3153,7 @@
       ${!isNew && canCreate() ? msgHtml(r) : ""}
       ${!isNew && canCreate() ? clientActions(r, dk) : ""}
     </section>`;
-    left += box(2, html); html = "";
+    left += box(2, html) + box(2, reminderLinks(key, r, isNew)); html = "";
     if (isNew && (dk === "sale_used" || dk === "sale_new")) left += box(2, goodsBlock(dk) + importBlock());
     left += statusBox;
 
@@ -3442,14 +3560,14 @@
       <h1>№${esc(num)}</h1>
       ${accepted ? `<span class="head-meta">принят <b>${esc(accepted)}</b>${age != null ? ` · ${age === 0 ? "сегодня" : age + " дн."}` : ""}</span>` : ""}
       ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}<span class="chip chip--big chip--${statusKind(st)}">${esc(stLabel(st) || "без статуса")}${since ? `<small>с ${esc(since)}</small>` : ""}</span></div>`;
-    renderShell(head + groupBlock(r) + cardBody(r.row, r, false), { search: false });
+    renderShell(head + reminderOrigin(r) + groupBlock(r) + cardBody(r.row, r, false), { search: false });
     saveBar(r.row, `data-num="${esc(num)}"`);
   }
 
   function saveBar(key, attrs) {
     const ks = [...S.dirty.keys()].filter(k => k.startsWith(key + ":"));
     const n = ks.length + skPending(key).length, quietSt = isSilent(S.dirty.get(key + ":" + C.status) ?? "");
-    const notify = ks.some(k => F[+k.split(":")[1]]?.notify && !(quietSt && +k.split(":")[1] === C.status));
+    const notify = dealKey(S.dirty.get(key + ":" + C.type) ?? (key === "new" ? "" : cell(S.byNum.get(location.hash.slice(2)) || {cells:[]}, C.type))) !== "reminder" && ks.some(k => F[+k.split(":")[1]]?.notify && !(quietSt && +k.split(":")[1] === C.status));
     const isNew = key === "new";
     if (isNew) saveDraft();
     $app.insertAdjacentHTML("beforeend", `<div class="savebar"><div class="savebar__in">
@@ -3458,6 +3576,7 @@
     </div></div>`);
   }
   function newLabel() {
+    if (dealKey(S.dirty.get("new:" + C.type)) === "reminder") return "Создать напоминание";
     const k = 1 + (S.multi ? S.extra.filter(x => String(x[C.device] ?? "").trim()).length : 0);
     return k > 1 ? `Создать ${k} ${k < 5 ? "заказа" : "заказов"}` : "Создать заказ";
   }
@@ -3603,10 +3722,12 @@
   const TRASH = "Удалённые заказы";
   async function ensureTrash() {
     if (S.trashOk) return;
-    const meta = await api("?fields=sheets(properties(title))");
-    if (!meta.sheets.some(x => x.properties.title === TRASH)) {
-      await api(":batchUpdate", { method: "POST", body: JSON.stringify({ requests: [{ addSheet: { properties: { title: TRASH, gridProperties: { frozenRowCount: 1 } } } }] }) });
-      const head = (await api(`/values/${A1(0, 1, C.group, 1)}`)).values?.[0] || [];
+    const meta = await api("?fields=sheets(properties(sheetId,title,gridProperties(columnCount)))");
+    const trash = meta.sheets.find(x => x.properties.title === TRASH)?.properties;
+    if (trash && trash.gridProperties.columnCount < C.reminder + 4) await api(":batchUpdate", { method:"POST", body:JSON.stringify({requests:[{appendDimension:{sheetId:trash.sheetId,dimension:"COLUMNS",length:C.reminder + 4 - trash.gridProperties.columnCount}}]}) });
+    if (!trash) {
+      await api(":batchUpdate", { method: "POST", body: JSON.stringify({ requests: [{ addSheet: { properties: { title: TRASH, gridProperties: { frozenRowCount: 1, columnCount: C.reminder + 4 } } } }] }) });
+      const head = (await api(`/values/${A1(0, 1, C.reminder, 1)}`)).values?.[0] || [];
       await api(`/values/${encodeURIComponent(`'${TRASH}'!A1`)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [["Когда удалён", "Кто удалил", "Строка", ...head.map(String)]] }) });
     }
     S.trashOk = true;
@@ -3622,14 +3743,14 @@
     try {
       // До последней колонки (v71). *Исправлено 17.10.2026:* раньше копия и очистка шли до AG, и «На связи» (AH–AI),
       // «Оплата» (AJ) оставались в строке — новый заказ, легший в неё, унаследовал бы чужой контакт «На связи».
-      const LAST = C.prepayKind; // последняя колонка листа (v77: AN «Предоплата: вид»)
+      const LAST = C.reminder; // последняя колонка листа (v77: AN «Предоплата: вид»)
       let raw = r.cells.slice(0, LAST + 1);
       if (!DEMO) {
         const chk = await api(`/values/${A1(0, r.row)}`);
         if (String(chk.values?.[0]?.[0] ?? "").trim() !== String(num)) throw new Error("Строка в таблице сдвинулась — обновите список (⟳) и повторите");
         raw = (await api(`/values/${A1(0, r.row, LAST, r.row)}?valueRenderOption=FORMULA`)).values?.[0] || [];
         await ensureTrash();
-        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AQ`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AR`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
           { method: "POST", body: JSON.stringify({ values: [[mskStamp(), S.email || "", r.row, ...raw.map(v => String(v ?? ""))]] }) });
         await api("/values:batchClear", { method: "POST", body: JSON.stringify({ ranges: [`'${CFG.sheet}'!B${r.row}:Q${r.row}`, `'${CFG.sheet}'!S${r.row}:${LETTER(LAST)}${r.row}`] }) });
         await logStatus([[r.row, cell(r, C.status), "Удалён"]]);
@@ -3647,7 +3768,7 @@
   async function restoreOrder() {
     const d = S.lastDeleted; if (!d) return;
     try {
-      const now = (await api(`/values/${A1(1, d.row, C.prepayKind, d.row)}`)).values?.[0] || [];
+      const now = (await api(`/values/${A1(1, d.row, C.reminder, d.row)}`)).values?.[0] || [];
       if (now.some(v => String(v).trim())) return toast(`Строка ${d.row} уже занята — верните заказ вручную с листа «${TRASH}»`, null, true);
       const plain = d.raw.map(v => typeof v === "string" && v.startsWith("=") ? null : v);
       await api(`/values/${A1(0, d.row, d.raw.length - 1, d.row)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [plain] }) });
@@ -3768,7 +3889,7 @@
   function startNewFrom(r, warranty) {
     for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
     S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); if (S.svcLog) delete S.svcLog.new; S.pp = null;
-    S.draft = true; S.newClient = clientOfRow(r)?.key || null;
+    S.followup = null; S.draft = true; S.newClient = clientOfRow(r)?.key || null;
     const set = (c, v) => { if (String(v ?? "").trim() !== "") S.dirty.set("new:" + c, String(v)); };
     set(C.status, CFG.newStatus); set(C.date, today()); set(C.type, "Ремонт");
     set(C.name, cell(r, C.name)); set(C.phone, cell(r, C.phone)); set(C.source, "Постоянные");
@@ -3788,13 +3909,13 @@
     const dirty = [...S.dirty].filter(([k]) => k.startsWith("new:"));
     const meaningful = dirty.some(([k, v]) => ![C.status, C.date, C.type].includes(+k.split(":")[1]) && String(v ?? "").trim());
     if (!meaningful && !S.extra.length && !S.tins.new) { store.del("crm.draft"); return; }
-    store.set("crm.draft", { at: Date.now(), dirty, multi: S.multi, extra: S.extra, tins: S.tins.new || null, parts: S.parts.get("new") || null, svc: S.svcLog?.new || null, touched: !!S.newStatusTouched });
+    store.set("crm.draft", { at: Date.now(), dirty, multi: S.multi, extra: S.extra, tins: S.tins.new || null, parts: S.parts.get("new") || null, svc: S.svcLog?.new || null, followup: S.followup || null, touched: !!S.newStatusTouched });
   }
   function restoreDraft() {
     const d = store.get("crm.draft");
     if (!d || Date.now() - d.at > 3 * 864e5 || !d.dirty?.length) return false;
     for (const [k, v] of d.dirty) S.dirty.set(k, v);
-    S.multi = !!d.multi; S.extra = d.extra || []; if (d.tins) S.tins.new = d.tins; S.newStatusTouched = !!d.touched;
+    S.followup = d.followup || null; S.multi = !!d.multi; S.extra = d.extra || []; if (d.tins) S.tins.new = d.tins; S.newStatusTouched = !!d.touched;
     if (d.parts) S.parts.set("new", d.parts);
     if (d.svc) (S.svcLog ||= {}).new = d.svc; // что добавлено из прайса — чтобы «✕» и после перезагрузки снимал всё (v79)
     setTimeout(() => toast("Восстановлен незаконченный заказ. «Отмена» внизу — начать заново", null, true), 50);
@@ -3811,6 +3932,7 @@
       S.dirty.set("new:" + C.date, today());
       S.dirty.set("new:" + C.type, "Ремонт");
     }
+    if (dealKey(S.dirty.get("new:" + C.type)) === "reminder" && !remDraft("new",null).id) S.dirty.set("new:" + C.reminder, JSON.stringify(blankReminder()));
     const head = `<div class="card-head" style="margin-top:14px"><a class="iconbtn" href="#" aria-label="Назад">←</a><h1>Новый заказ</h1></div>`;
     renderShell(head + cardBody("new", null, true) +
       (["repair", "other"].includes(dealKey(S.dirty.get("new:" + C.type))) ? `<p class="note" style="margin:14px 4px 0">Статус — «${esc(CFG.newStatus)}». Номер присвоится следующий по порядку; клиенту уйдёт то же сообщение, что при записи в таблицу.</p>` : `<p class="note" style="margin:14px 4px 0">Номер присвоится следующий по порядку.</p>`), { search: false });
@@ -3846,6 +3968,15 @@
       else ch.w = String(ch.v ?? "");
     }
     if (DEMO) return;
+    if (list.some(ch => ch.c === C.reminder)) {
+      const requests = list.map(ch => {
+        let value = typeof ch.w === "boolean" ? {boolValue:ch.w} : typeof ch.w === "number" ? {numberValue:ch.w} : ch.formula ? {formulaValue:ch.w} : {stringValue:ch.w};
+        const d = F[ch.c]?.entered && parseDate(ch.w);
+        if (d) value = {numberValue:Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()) / 864e5 + 25569};
+        return {updateCells:{range:{sheetId:S.gid,startRowIndex:row-1,endRowIndex:row,startColumnIndex:ch.c,endColumnIndex:ch.c+1},rows:[{values:[{userEnteredValue:value}]}],fields:"userEnteredValue"}};
+      });
+      await api(":batchUpdate",{method:"POST",body:JSON.stringify({requests})}); return;
+    }
     const pack = arr => arr.map(ch => ({ range: `'${CFG.sheet}'!${LETTER(ch.c)}${row}`, values: [[ch.w]] }));
     const entered = list.filter(ch => F[ch.c]?.entered || ch.formula), raw = list.filter(ch => !F[ch.c]?.entered && !ch.formula);
     const calls = [];
@@ -3881,6 +4012,7 @@
   function jrVal(c, v) {
     if (S.bools.has(c)) return isTrue(v) ? "✓" : "—";
     if (c === C.pass) return String(v ?? "").trim() ? "•••" : "";
+    if (c === C.reminder) { const m = remMeta({cells:{[C.reminder]:v}}); return [m.subject,m.requirements,m.budgetMin && "от " + m.budgetMin,m.budgetMax && "до " + m.budgetMax,m.nextDate,m.owner,m.targetType,m.convertedType && "→ " + m.convertedType].filter(Boolean).join(" · ").slice(0,1000); }
     return String(v ?? "").slice(0, 300);
   }
   // Строки журнала из списка изменений save(): [№, строка, поле, было, стало]. ch.w — то, что реально ушло в клетку.
@@ -4028,6 +4160,7 @@
   // Уведомления — в фоне: человек видит «Сохранено» сразу после записи в таблицу (~1 с),
   // а не ждёт, пока обе двери разошлют сообщения (раньше это было ~5 с).
   function doorInBackground(r, num, list, only) {
+    if (dealKey(cell(r, C.type)) === "reminder") return;
     if (DEMO || !CFG.doors.length) return;
     const notify = list.some(ch => F[ch.c]?.door);
     if (!notify) return;
@@ -4049,6 +4182,15 @@
     const r = S.byNum.get(num); if (!r) return;
     const key = r.row;
     const list = [...S.dirty].filter(([k]) => k.startsWith(key + ":")).map(([k, v]) => { const c = +k.split(":")[1]; return { c, v, old: cell(r, c) }; });
+    const dkNow = dealKey(S.dirty.get(key + ":" + C.type) ?? cell(r,C.type));
+    if (dkNow === "reminder") { const why = reminderInvalid(remDraft(key,r), S.dirty.get(key + ":" + C.name) ?? cell(r,C.name), S.dirty.get(key + ":" + C.phone) ?? cell(r,C.phone)); if (why) return toast(why,null,true); }
+    if (dealKey(cell(r,C.type)) === "reminder" && dkNow !== "reminder") {
+      const get = c => S.dirty.get(key + ":" + c) ?? cell(r,c);
+      if (!remDraft(key,r).convertedAt || !String(get(C.device)).trim()) return toast("Для сделки укажите конкретное устройство или товар",null,true);
+      if (["sale_new","sale_used","sale_parts"].includes(dkNow) && toNum(get(C.total)) == null) return askSum(C.total,"Для согласованной продажи нужна цена");
+      if (["buyback","parts","pawn"].includes(dkNow) && toNum(get(C.buyback)) == null) return askSum(C.buyback,"Для согласованной сделки нужна сумма выдачи клиенту");
+      if (dkNow === "pawn" && (!get(C.pawnUntil) || toNum(get(C.total)) == null)) return toast("Для залога впишите сумму выкупа и срок",null,true);
+    }
     const skOps = skPending(key); // запчасти со склада Витали — списать после записи заказа
     if (!list.length && !skOps.length) return;
     if (!list.length) { // в заказе ничего не поменялось, только выбрали запчасть со склада
@@ -4060,7 +4202,7 @@
     // Выкуп/trade-in/продажа группой: статус — сразу у всех устройств, отчёт — в первой строке.
     const others = new Map(); // строка → изменения
     const gr = groupOf(r);
-    if (gr?.shared) {
+    if (gr?.shared && dealKey(cell(r, C.type)) !== "reminder") {
       const st = list.find(ch => ch.c === C.status), rep = list.find(ch => ch.c === C.report);
       const add = (x, ch) => { if (!others.has(x)) others.set(x, []); others.get(x).push(ch); };
       if (st) for (const x of gr.rows) if (x !== r && cell(x, C.status) !== st.v) add(x, { c: C.status, v: st.v, old: cell(x, C.status) });
@@ -4085,7 +4227,7 @@
       journal([...jrRows(num, r.row, list), ...[...others].flatMap(([x, l]) => jrRows(cell(x, C.num), x.row, l))]); // v84, в фоне
       const skMsg = skOps.length ? await skWriteOff(num, skOps) : "";
       // Тихое закрытие: дверь не зовём (клиенту ничего), историю пишем сами.
-      const quiet = [[r, list], ...others].filter(([, l]) => l.some(ch => ch.c === C.status && isSilent(ch.v)));
+      const quiet = [[r, list], ...others].filter(([x, l]) => l.some(ch => ch.c === C.status && (isSilent(ch.v) || dealKey(get(C.type)) === "reminder")));
       if (quiet.length) await logStatus(quiet.map(([x, l]) => { const ch = l.find(c => c.c === C.status); return [x.row, ch.old, ch.v]; }));
       for (const ch of list) { r.cells[ch.c] = String(ch.w ?? ""); S.dirty.delete(key + ":" + ch.c); }
       S.parts.delete(key); delete S.tins[key]; if (S.svcLog) delete S.svcLog[key]; if (S.pp?.key === key) S.pp = null;
@@ -4096,7 +4238,7 @@
       render();
       for (const [, l] of quiet) { const i = l.findIndex(ch => ch.c === C.status); if (i >= 0) l.splice(i, 1); } // тихий статус — мимо двери
       const all = [...list, ...[...others.values()].flat()];
-      toast((DEMO ? "Сохранено (демо — в таблицу не пишется)" : quiet.length && !all.some(ch => F[ch.c]?.door) ? "Закрыт без уведомления ✓ Клиенту ничего не отправлено" : all.some(ch => F[ch.c]?.door) ? `Сохранено ✓${others.size ? ` (и у ${others.size} устр. группы)` : ""} Уведомления отправляются…` : "Сохранено ✓") + skMsg, null, true);
+      toast((DEMO ? "Сохранено (демо — в таблицу не пишется)" : dkNow === "reminder" ? "Напоминание сохранено ✓ Без автоматических сообщений" : quiet.length && !all.some(ch => F[ch.c]?.door) ? "Закрыт без уведомления ✓ Клиенту ничего не отправлено" : all.some(ch => F[ch.c]?.door) ? `Сохранено ✓${others.size ? ` (и у ${others.size} устр. группы)` : ""} Уведомления отправляются…` : "Сохранено ✓") + skMsg, null, true);
       // Вписали номер на связи в идущий заказ и статус не меняли — предложить отправить ему статус.
       const cp = list.find(ch => ch.c === C.contactPhone);
       if (cp && phones(cp.v).length && !stCh && !isSilent(cell(r, C.status)) && !all.some(ch => F[ch.c]?.door))
@@ -4110,10 +4252,10 @@
   // Вынесено из create() в v70: тем же путём дописываются строки трейд-ина к уже записанной продаже.
   async function freeSlots(N) {
     let slots;
-    const got = await api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A2:H`)}`);
+    const got = await api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A2:${CFG.lastCol}`)}`);
     const vals = got.values || [];
     let lastData = -1;
-    vals.forEach((r, i) => { if ([C.name, C.phone, C.device, C.issue, C.status].some(c => String(r[c] ?? "").trim())) lastData = i; });
+    vals.forEach((r, i) => { if ([C.name, C.phone, C.device, C.issue, C.status, C.reminder].some(c => String(r[c] ?? "").trim())) lastData = i; });
     let maxNum = Math.max(0, ...vals.map(r => +String(r[0] ?? "").trim() || 0));
     slots = [];
     for (let i = 0; i < N; i++) {
@@ -4122,7 +4264,7 @@
       slots.push({ row: idx + 2, num: has ? a : String(++maxNum), hasNum: has });
     }
     const r0 = slots[0].row, r1 = slots[N - 1].row;
-    const probe = await api(`/values/${A1(1, r0, C.group, r1)}?valueRenderOption=FORMULA`)
+    const probe = await api(`/values/${A1(1, r0, C.reminder, r1)}?valueRenderOption=FORMULA`)
       .catch(e => { throw /400/.test(e.message) ? new Error(`В листе закончились строки (нужна строка ${r1}) — добавьте строки внизу листа в таблице и повторите`) : e; });
     // Занята ли строка: формулы, снятые галочки и одинокая дата приёма (B) — не занятость.
     // 28.09.2026 в строке 7750 осталась только дата: заказ начали вводить в таблице и
@@ -4136,10 +4278,14 @@
   }
 
   async function create() {
+    if (S.creating) return;
+    if (dealKey(S.dirty.get("new:" + C.type)) === "reminder") return createReminder();
+    if (S.followup && store.get("crm.pendingReminder")) return toast("Сначала создайте ожидающее напоминание — кнопка вверху страницы",null,true);
+    if (S.followup) { const why = reminderInvalid(S.followup, S.dirty.get("new:" + C.name), S.dirty.get("new:" + C.phone)); if (why) return toast(why, null, true); }
     const get = c => S.dirty.get("new:" + c) ?? "";
     const skOps = S.multi ? [] : skPending("new"); // запчасти со склада — списать в первый заказ после записи
     if (!String(get(C.name)).trim() && !String(get(C.phone)).trim()) return toast("Нужно имя или телефон клиента");
-    busy(true);
+    busy(true); S.creating = true;
     try {
       // Список полей на каждое устройство: первое — из основных полей формы, остальные —
       // общие поля клиента и сделки плюс свои поля устройства.
@@ -4202,6 +4348,7 @@
       journal(made.map(m => { const v = c => String(m.list.find(ch => ch.c === c)?.w ?? "").trim(); // v84: одна строка на заказ, а не по полю
         return [m.num, m.row, "Заказ создан", "", [v(C.type) || "Ремонт", v(C.device), v(C.status) || CFG.newStatus, v(C.total) && "итого " + money(v(C.total))].filter(Boolean).join(" · ")]; }));
       const skMsg = skOps.length ? await skWriteOff(made[0].num, skOps) : "";
+      if (S.followup) { store.set("crm.pendingReminder", { request: { ...S.followup, parent: made[0].num }, name: get(C.name), phone: get(C.phone) }); S.followup = null; }
       for (const m of made) {
         const cells = []; cells[C.num] = m.num; for (const ch of m.list) if (!ch.formula) cells[ch.c] = String(ch.w ?? "");
         m.rec = { row: m.row, cells }; index(m.rec); S.rows.push(m.rec); S.byNum.set(m.num, m.rec);
@@ -4216,7 +4363,9 @@
       toast((DEMO ? nums + (N > 1 ? " созданы" : " создан") + " (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`) + skMsg + soldMsg, null, true);
       // Двери по очереди, заказ за заказом — как если бы строки заполняли в таблице одну за другой.
       made.reduce((p, m) => p.then(() => doorInBackground(m.rec, m.num, m.list.filter(ch => ch.c !== C.num && !ch.formula))), Promise.resolve());
+      if (store.get("crm.pendingReminder")) await retryReminder();
     } catch (e) { busy(false); toast(e.message, null, true); }
+    finally { S.creating = false; }
   }
   function busy(on) { const b = $app.querySelector('[data-act="save"]'); if (b) { b.disabled = on; if (on) b.textContent = "Сохраняю…"; } }
 
@@ -4307,7 +4456,12 @@
     if (t.dataset.choice != null) {
       const key = curKey(), c = +t.dataset.choice;
       // Пустой тип и «Ремонт» — одно и то же: не считаем это изменением.
-      const v = t.dataset.value, orig = curVal(key, c);
+      const v = t.dataset.value, orig = key === "new" ? S.dirty.get(key + ":" + c) ?? "" : curVal(key, c);
+      if (c === C.type && key !== "new" && v === "Напоминание" && dealKey(orig) !== "reminder") return toast("Создайте отдельное напоминание в блоке «Просьбы клиента»",null,true);
+      if (c === C.type && key !== "new" && dealKey(orig) === "reminder" && v !== "Напоминание") {
+        if (S.remConverting !== key) return toast("Сначала нажмите «Клиент согласен — оформить сделку»");
+        prepareReminderConversion(key, S.byNum.get(location.hash.slice(2)), v);
+      }
       if (c === C.type && key !== "new" && dealKey(v) === "repair" && dealKey(orig) === "repair") S.dirty.delete(key + ":" + c);
       else setDirty(key, c, v);
       if (c === C.status && key === "new") S.newStatusTouched = true;
@@ -4325,6 +4479,13 @@
       }
       if (miss != null) askSum(miss, `Для «${v}» нужна сумма`, true);
       if (c === C.type) {
+        if (key === "new" && dealKey(orig) === "reminder" && v !== "Напоминание") { S.dirty.delete("new:" + C.reminder); S.dirty.delete("new:" + C.device); S.newStatusTouched = false; }
+        if (key === "new" && v === "Напоминание") {
+          if (S.multi || S.extra.length || S.parts.get("new")?.some(p => p.name || p.cost || p.stock) || S.tins.new?.length) { setDirty(key,C.type,orig || "Ремонт"); return toast("Для отдельной просьбы используйте «Создать напоминание» внизу заказа"); }
+          const keep = [C.name,C.phone,C.type,C.date,C.status,C.reminder];
+          for (const k of [...S.dirty.keys()]) if (k.startsWith("new:") && !keep.includes(+k.split(":")[1])) S.dirty.delete(k);
+          S.followup = null; S.newStatusTouched = false;
+        }
         if (key === "new" && !S.newStatusTouched) S.dirty.set("new:" + C.status, TYPE_UI[dealKey(v)].start);
         const y = window.scrollY; render(); window.scrollTo(0, y); return; // подписи и поля меняются по типу
       }
@@ -4332,6 +4493,13 @@
       refreshSaveBar(key); return;
     }
     const act = t.dataset.act;
+    if (act === "remretry") { await retryReminder(); return; }
+    if (act === "remconvert") { S.remConverting = curKey(); render(); return; }
+    if (act === "remnew") {
+      if (curKey() === "new") { S.followup = t.checked ? blankReminder() : null; render(); }
+      else { const r = S.byNum.get(location.hash.slice(2)); if (r) startReminder(r); }
+      return;
+    }
     if (act?.startsWith("lst")) { await lstAct(act, t); return; }
     if (act?.startsWith("sk") && await stockClick(act, t)) return;
     if (act === "supreq") { await supplierRequest(t); return; }
@@ -4529,10 +4697,17 @@
     }
     else if (act === "svcrm") { const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); const svc = (S.svcLog?.[key] || []).find(x => x.id === t.dataset.id); if (svc) { removeService(key, r, svc); const y = window.scrollY; render(); window.scrollTo(0, y); } }
     else if (act === "save") t.dataset.new ? create() : save(t.dataset.num);
-    else if (act === "discard") { const key = curKey(); S.parts.delete(key); delete S.tins[key]; if (S.svcLog) delete S.svcLog[key]; S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; S.supSent = {}; store.del("crm.draft"); location.hash = ""; } else render(); }
+    else if (act === "discard") { const key = curKey(); S.followup = null; S.remConverting = null; S.parts.delete(key); delete S.tins[key]; if (S.svcLog) delete S.svcLog[key]; S.pp = null; for (const k of [...S.dirty.keys()]) if (k.startsWith(key + ":")) S.dirty.delete(k); if (key === "new") { S.draft = null; S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.newClient = null; S.gpicks = []; S.supSent = {}; store.del("crm.draft"); location.hash = ""; } else render(); }
   });
   function onEdit(e) {
     const t = e.target;
+    if (t.dataset.remEdit != null) {
+      const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
+      const m = t.dataset.follow ? S.followup : remDraft(key,r); if (!m) return;
+      m[t.dataset.remEdit] = t.value;
+      if (!t.dataset.follow) { setDirty(key,C.reminder,JSON.stringify(m)); if (t.dataset.remEdit === "subject") setDirty(key,C.device,t.value); }
+      refreshSaveBar(key); if (key === "new") saveDraft(); return;
+    }
     if (t.dataset.skq != null) { skSet(t.dataset.skq, t.value); return; }
     if (t.dataset.act === "skbsel") return; // галочка «на возврат» — обработана кликом
     if (t.dataset.holdtext != null) { const st = S.hold?.[curKey() + "|" + t.dataset.holdtext]; if (st) st.text = t.value; return; }
@@ -4679,7 +4854,7 @@
     return { sig: norm(name) + "|" + ph.map(p => p.d).join(","), name, phone: ph.map(p => p.text).join("\n") };
   }
   function precontact() {
-    if (DEMO || !CFG.doors[0] || !S.token || location.hash !== "#/new") return;
+    if (DEMO || !CFG.doors[0] || !S.token || location.hash !== "#/new" || dealKey(S.dirty.get("new:" + C.type)) === "reminder") return;
     const x = preSig(); if (!x || S.pre?.sig === x.sig) return;
     const pre = S.pre = { sig: x.sig, state: "wait" };
     pre.promise = doorPost(CFG.doors[0], "crm-contact", JSON.stringify({ token: S.token, name: x.name, phone: x.phone }))

@@ -777,3 +777,14 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .cmsg__done div { color: var(--muted); }
 .cmsg__who { font-size: 1rem; min-height: 36px; }
 .cmsg__who input { width: 22px; height: 22px; }
+:root { --rem-search:#69b7ff; --rem-wait:#e8c365; --rem-deal:#bc98fb; --rem-done:#73ca98; --rem-closed:#9d9d9d; --rem-overdue:#ff7979; }
+.rem-link { display:flex; gap:12px; align-items:center; padding:12px; margin:8px 0; border:1px solid currentColor; border-radius:10px; text-decoration:none; overflow-wrap:anywhere; }
+.rem-link>span:first-child { font-size:24px; }
+.rem-link small { display:block; margin-top:4px; font-size:14px; }
+.rem--search { color:var(--rem-search); }
+.rem--wait { color:var(--rem-wait); }
+.rem--deal { color:var(--rem-deal); }
+.rem--done { color:var(--rem-done); }
+.rem--closed { color:var(--rem-closed); }
+.rem--overdue { color:var(--rem-overdue); }
+.rem-text { white-space:pre-wrap; overflow-wrap:anywhere; }
