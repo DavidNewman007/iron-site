@@ -179,6 +179,8 @@
   }
 
   function priceText(s) {
+    if (s.price_on_request) return EN ? "Price on request" : "Цену уточним";
+    if (s.price_free) return EN ? "Free" : "Бесплатно";
     if (s.price_is_from) return t("from", "от ") + money(s.price);
     if (s.price_to && s.price_to !== s.price) return money(s.price) + " — " + money(s.price_to);
     return money(s.price);
@@ -317,14 +319,22 @@
     });
     // Сортировка по цене — по самой дешёвой цене карточки, как «Сначала дешевле» в магазине.
     if (sortMode !== "default") {
-      var minOf = function (key) { return Math.min.apply(null, groups[key].map(function (s) { return Number(s.price) || 0; })); };
-      order.sort(function (a, b) { return sortMode === "asc" ? minOf(a) - minOf(b) : minOf(b) - minOf(a); });
+      var minOf = function (key) {
+        var list = groups[key];
+        if (list[0].operation === "замена заднего стекла") list = list.filter(function (s) { return !s.price_on_request; });
+        return list.length ? Math.min.apply(null, list.map(function (s) { return Number(s.price) || 0; })) : null;
+      };
+      order.sort(function (a, b) {
+        var av = minOf(a), bv = minOf(b);
+        if (av === null || bv === null) return av === bv ? 0 : av === null ? 1 : -1;
+        return sortMode === "asc" ? av - bv : bv - av;
+      });
     }
 
     // До 26.10.2026 показывались первые 40 карточек, остальные молча пропадали («Нашли 779», а видно 40).
     order.slice(0, shown).forEach(function (key) {
       var items = groups[key].slice().sort(function (a, b) {
-        var battery = a.family === "mac" && a.operation === "замена аккумулятора";
+        var battery = (a.family === "mac" && a.operation === "замена аккумулятора") || a.operation === "замена заднего стекла";
         return (battery ? Number(!!a.price_on_request) - Number(!!b.price_on_request) : 0) || a.price - b.price;
       });
       var head = items[0];
@@ -370,7 +380,7 @@
           st.textContent = EN ? "✅ part in stock" : "✅ запчасть в наличии";
           li.appendChild(st);
         }
-        if (s.family === "mac" && s.operation === "замена аккумулятора" && s.price_on_request && s.note) li.appendChild(note(s.note));
+        if (((s.family === "mac" && s.operation === "замена аккумулятора") || s.operation === "замена заднего стекла") && s.price_on_request && s.note) li.appendChild(note(s.note));
         if (!s.options || !s.options.length) li.appendChild(addButton(s, null));
         ul.appendChild(li);
         (s.options || []).forEach(function (o) {
@@ -388,7 +398,7 @@
       // диагностику — тогда под карточкой стояли две строки об одном и том же
       // (видно и на русской версии). Показываем одну.
       var дубльДиагностики = head.requires_diagnostics && /диагностик/i.test(head.note || "");
-      if (head.note && !дубльДиагностики && !(head.family === "mac" && head.operation === "замена аккумулятора" && head.price_on_request)) card.appendChild(note(variantLabel(head.note)));
+      if (head.note && !дубльДиагностики && !(((head.family === "mac" && head.operation === "замена аккумулятора") || head.operation === "замена заднего стекла") && head.price_on_request)) card.appendChild(note(variantLabel(head.note)));
       if (head.requires_diagnostics) {
         card.appendChild(note(t("liquid_note", "Точную цену назовём после диагностики — залития непредсказуемы.")));
       }

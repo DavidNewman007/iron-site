@@ -1122,7 +1122,7 @@
           if (!y) continue;
           if (y.w) x.work = y.w;
           if (y.c) x.part_cost = y.c;
-          if (x.family === "mac" && x.operation === "замена аккумулятора" && y.w && y.c) x.part_price = x.price - y.w;
+          if (((x.family === "mac" && x.operation === "замена аккумулятора") || x.operation === "замена заднего стекла") && y.w && y.c) x.part_price = x.price - y.w;
           if (y.s) x.part_source = y.s;
         }
       }
@@ -1320,7 +1320,7 @@
       <input class="pp__q" data-act="ppq" value="${esc(P.q || "")}" placeholder="Поиск: дисплей, акб, oled…" autocomplete="off">
       ${dev || q.length >= 2 ? (items.length || extras.length ? `<div class="pp__list">${ppXHtml(extras, x => x.kind === "stock", "📦 На нашем складе")}${items.map(({ x, i }, j) => `${secHtml(j)}<button type="button" class="pp__item" data-svc="${i}">
         <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}${dev ? "" : ` <span class="note">· ${esc(x.device)}</span>`}</b>
-        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : x.price_free ? "бесплатно" : x.operation === "замена аккумулятора" && x.work ? "АКБ уточняется · работа " + money(x.work) : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_price || x.part_cost)}${x.part_price && x.part_price !== x.part_cost ? ` (закупка ${money(x.part_cost)})` : ""}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${ppXHtml(extras, x => x.kind !== "stock", "Другие поставщики")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
+        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : x.price_free ? "бесплатно" : x.work && (x.operation === "замена аккумулятора" || x.operation === "замена заднего стекла") ? (x.operation === "замена аккумулятора" ? "АКБ" : "Крышка") + " уточняется · работа " + money(x.work) : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_price || x.part_cost)}${x.part_price && x.part_price !== x.part_cost ? ` (закупка ${money(x.part_cost)})` : ""}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${ppXHtml(extras, x => x.kind !== "stock", "Другие поставщики")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
         : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка или ищите по всему прайсу.</div>`}
       ${S.svc.costError ? `<p class="note">⚠️ Работа и закупка не загрузились (лист «${SVC_SHEET}»: ${esc(S.svc.costError)}) — цены клиенту верные, но без разбивки и без закупки запчасти.</p>` : ""}
       <p class="note">Нажатие добавляет работу в «Выполненные работы», цену — к «Итого», запчасть — в список запчастей. Можно добавить несколько.</p></div>`;
@@ -1343,7 +1343,7 @@
     if (!list.length) return null;
     // АКБ широких Mac-линеек выбираются точным вариантом: общий подбор
     // поставщика не определяет год/тип батареи и тариф этого варианта.
-    if (/^MacBook/.test(dev) && op === "замена аккумулятора" && list.length > 1) return null;
+    if (((/^MacBook/.test(dev) && op === "замена аккумулятора") || op === "замена заднего стекла") && list.length > 1) return null;
     const cnt = new Map(); for (const x of list) cnt.set(x.work, (cnt.get(x.work) || 0) + 1);
     const work = [...cnt].sort((a, b) => b[1] - a[1] || b[0] - a[0])[0][0];
     return { work, warranty_days: list.find(x => x.work === work)?.warranty_days || null };
