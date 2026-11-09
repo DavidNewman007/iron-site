@@ -199,7 +199,7 @@
       [/ (?:эйр|эир|air) /g, " air "],
       [/ (?:про|pro) /g, " pro "],
       [/ (?:макс|max) /g, " max "],
-      [/ м([1-5]) /g, " m$1 "],
+      [/ м([1-6]) /g, " m$1 "],
       // «iphone15» и «13pro» англичанин пишет слитно так же, как русский.
       [/ mac book /g, " macbook "]
     ];
@@ -322,7 +322,10 @@
 
     // До 26.10.2026 показывались первые 40 карточек, остальные молча пропадали («Нашли 779», а видно 40).
     order.slice(0, shown).forEach(function (key) {
-      var items = groups[key].slice().sort(function (a, b) { return a.price - b.price; });
+      var items = groups[key].slice().sort(function (a, b) {
+        var battery = a.family === "mac" && a.operation === "замена аккумулятора";
+        return (battery ? Number(!!a.price_on_request) - Number(!!b.price_on_request) : 0) || a.price - b.price;
+      });
       var head = items[0];
       var card = document.createElement("article");
       card.className = "rs-card";
@@ -366,6 +369,7 @@
           st.textContent = EN ? "✅ part in stock" : "✅ запчасть в наличии";
           li.appendChild(st);
         }
+        if (s.family === "mac" && s.operation === "замена аккумулятора" && s.price_on_request && s.note) li.appendChild(note(s.note));
         if (!s.options || !s.options.length) li.appendChild(addButton(s, null));
         ul.appendChild(li);
         (s.options || []).forEach(function (o) {
@@ -383,7 +387,7 @@
       // диагностику — тогда под карточкой стояли две строки об одном и том же
       // (видно и на русской версии). Показываем одну.
       var дубльДиагностики = head.requires_diagnostics && /диагностик/i.test(head.note || "");
-      if (head.note && !дубльДиагностики) card.appendChild(note(variantLabel(head.note)));
+      if (head.note && !дубльДиагностики && !(head.family === "mac" && head.operation === "замена аккумулятора" && head.price_on_request)) card.appendChild(note(variantLabel(head.note)));
       if (head.requires_diagnostics) {
         card.appendChild(note(t("liquid_note", "Точную цену назовём после диагностики — залития непредсказуемы.")));
       }

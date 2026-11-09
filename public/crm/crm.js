@@ -1122,6 +1122,7 @@
           if (!y) continue;
           if (y.w) x.work = y.w;
           if (y.c) x.part_cost = y.c;
+          if (x.family === "mac" && x.operation === "замена аккумулятора" && y.w && y.c) x.part_price = x.price - y.w;
           if (y.s) x.part_source = y.s;
         }
       }
@@ -1159,6 +1160,8 @@
   const MAC_A = {
     'MacBook Air 11" (2010–2015)': "A1370 A1465",
     'MacBook Air 13" Intel (2010–2020)': "A1237 A1304 A1369 A1466 A1932 A2179",
+    'MacBook 12" Retina (2015–2017)': "A1534",
+    'MacBook Air 13" M5': "A3449", 'MacBook Air 15" M5': "A3448",
     'MacBook Air 13" M1': "A2337", 'MacBook Air 13" M2': "A2681", 'MacBook Air 13" M3': "A3113", 'MacBook Air 13" M4': "A3240",
     'MacBook Air 15" M2–M4': "A2941 A3114 A3241",
     'MacBook Pro 13" (2009–2015)': "A1278 A1425 A1502",
@@ -1180,20 +1183,23 @@
     const a = (t.match(/\ba\s?-?(1\d{3}|2\d{3}|3\d{3})\b/) || [])[1];
     if (a && MAC_BY_A.has("a" + a)) return MAC_BY_A.get("a" + a);
     for (const n of t.match(/\b[123]\d{3}\b/g) || []) if ((+n < 2000 || +n > 2030) && MAC_BY_A.has("a" + n)) return MAC_BY_A.get("a" + n);
-    const chip = +(t.match(/\bm([1-5])\b/) || [])[1] || 0;
-    const size = +(t.match(/(?:^|[^\da-z])(11|13|14|15|16|21|24|27)(?:[.,]\d)?\s*(?:"|дюйм|inch|\s|$)/) || [])[1] || 0;
+    const chip = +(t.replace(/м([1-6])/g, "m$1").match(/\bm([1-6])\b/) || [])[1] || 0;
+    const size = +(t.match(/(?:^|[^\da-z])(11|12|13|14|15|16|21|24|27)(?:[.,]\d)?\s*(?:"|дюйм|inch|\s|$)/) || [])[1] || 0;
     const year = +(t.match(/\b(20[012]\d)\b/) || [])[1] || 0;
     const intel = /intel|интел|touch ?bar|тачбар/.test(t) || (year && year <= 2020 && !chip);
     if (/mac ?mini|macmini|мак ?мини/.test(t)) return "Mac mini";
     if (/imac|аймак/.test(t)) return size === 27 ? 'iMac 27" Intel' : size === 24 || chip ? 'iMac 24" M1 и новее' : size === 21 ? 'iMac 21.5" Intel' : "";
+    if (size === 12 && !chip) return 'MacBook 12" Retina (2015–2017)';
     if (/air|эйр/.test(t)) {
       if (size === 11) return 'MacBook Air 11" (2010–2015)';
-      if (chip >= 2 && size === 15) return 'MacBook Air 15" M2–M4';
-      if (chip >= 1 && chip <= 4) return `MacBook Air 13" M${chip}`;
+      if (chip === 5 && size === 15) return 'MacBook Air 15" M5';
+      if (chip >= 2 && chip <= 4 && size === 15) return 'MacBook Air 15" M2–M4';
+      if (chip >= 1 && chip <= 5) return `MacBook Air 13" M${chip}`;
       return intel ? 'MacBook Air 13" Intel (2010–2020)' : "";
     }
     if (/pro|про/.test(t)) {
-      if (size === 14) return 'MacBook Pro 14" M1–M5';
+      if (size === 14) return chip === 6 ? 'MacBook Pro 14" M6' : 'MacBook Pro 14" M1–M5';
+      if (chip === 6) return "";
       if (size === 16) return chip ? 'MacBook Pro 16" M1–M5' : intel || year === 2019 ? 'MacBook Pro 16" Intel (2019)' : "";
       if (chip) return size === 13 || (!size && chip <= 2) ? 'MacBook Pro 13" M1/M2' : "";
       if (size === 13 && year) return year <= 2015 ? 'MacBook Pro 13" (2009–2015)' : 'MacBook Pro 13" Intel (2016–2020)';
@@ -1229,7 +1235,7 @@
     if (!list.length) return "";
     return `<div class="pp__sub">${title}</div>` + list.map(({ x, j }) => `<button type="button" class="pp__item${x.kind === "stock" ? " is-stock" : ""}" data-svx="${j}">
         <b>${esc(cap(x.operation))} <span class="note">${x.kind === "stock" ? "📦 с полки" : esc(x.src)} · ${esc(x.variant)}</span>${x.here ? ` <span class="psup__here">в Сочи</span>` : ""}</b>
-        <span>${money(x.price)} <em class="note">= работа ${money(x.work)} + запчасть ${money(x.cost)}${x.kind === "stock" ? ` · на полке ${x.qty} шт` + (isVitalya(x.src) ? " (Виталя)" : isDonor(x.src) ? " (донор)" : x.src ? " (" + esc(x.src) + ")" : "") : ""}</em>${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("") + (title.startsWith("📦") ? `<div class="pp__sub">Прайс</div>` : "");
+        <span>${money(x.price)} <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_price || x.cost)}${x.part_price && x.part_price !== x.cost ? ` (закупка ${money(x.cost)})` : ""}${x.kind === "stock" ? ` · на полке ${x.qty} шт` + (isVitalya(x.src) ? " (Виталя)" : isDonor(x.src) ? " (донор)" : x.src ? " (" + esc(x.src) + ")" : "") : ""}</em>${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("") + (title.startsWith("📦") ? `<div class="pp__sub">Прайс</div>` : "");
   }
   // Сколько заказов этой техники с такой работой (v76, 23.10.2026; владелец — «самые часто используемые виды работ
   // перенеси в верх списка»): работа узнаётся в «Выполненных работах» по детали (PART_OP: «акб» → замена
@@ -1310,7 +1316,7 @@
       <input class="pp__q" data-act="ppq" value="${esc(P.q || "")}" placeholder="Поиск: дисплей, акб, oled…" autocomplete="off">
       ${dev || q.length >= 2 ? (items.length || extras.length ? `<div class="pp__list">${ppXHtml(extras, x => x.kind === "stock", "📦 На нашем складе")}${items.map(({ x, i }, j) => `${secHtml(j)}<button type="button" class="pp__item" data-svc="${i}">
         <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}${dev ? "" : ` <span class="note">· ${esc(x.device)}</span>`}</b>
-        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : x.price_free ? "бесплатно" : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_cost)}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${ppXHtml(extras, x => x.kind !== "stock", "Другие поставщики")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
+        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : x.price_free ? "бесплатно" : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_price || x.part_cost)}${x.part_price && x.part_price !== x.part_cost ? ` (закупка ${money(x.part_cost)})` : ""}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${ppXHtml(extras, x => x.kind !== "stock", "Другие поставщики")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
         : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка или ищите по всему прайсу.</div>`}
       ${S.svc.costError ? `<p class="note">⚠️ Работа и закупка не загрузились (лист «${SVC_SHEET}»: ${esc(S.svc.costError)}) — цены клиенту верные, но без разбивки и без закупки запчасти.</p>` : ""}
       <p class="note">Нажатие добавляет работу в «Выполненные работы», цену — к «Итого», запчасть — в список запчастей. Можно добавить несколько.</p></div>`;
@@ -1331,6 +1337,9 @@
   function ppWorkOf(dev, op) {
     const list = S.svc.list.filter(x => x.device === dev && x.operation === op && x.work);
     if (!list.length) return null;
+    // АКБ широких Mac-линеек выбираются точным вариантом: общий подбор
+    // поставщика не определяет год/тип батареи и тариф этого варианта.
+    if (/^MacBook/.test(dev) && op === "замена аккумулятора" && list.length > 1) return null;
     const cnt = new Map(); for (const x of list) cnt.set(x.work, (cnt.get(x.work) || 0) + 1);
     const work = [...cnt].sort((a, b) => b[1] - a[1] || b[0] - a[0])[0][0];
     return { work, warranty_days: list.find(x => x.work === work)?.warranty_days || null };
@@ -1363,7 +1372,11 @@
       for (const o of suppList(dev, op)) if (norm(o.s) !== "moslcd" || !inPrice.has(o.c))
         out.push({ kind: "supp", operation: op, variant: norm(o.s) === "moslcd" ? mosLabel(o) : ppShort(o.t, dev), title: o.t, src: o.s, cost: o.c, here: suppHere(o.t), ...w });
     }
-    for (const x of out) { x.device = dev; x.price = Math.ceil((x.work + x.cost) / 100) * 100; }
+    for (const x of out) {
+      x.device = dev;
+      if (/^MacBook/.test(dev) && x.operation === "замена аккумулятора") { x.part_price = Math.ceil(x.cost / 500) * 500; x.price = x.work + x.part_price; }
+      else x.price = Math.ceil((x.work + x.cost) / 100) * 100;
+    }
     const rank = x => x.kind === "stock" ? 0 : x.here ? 1 : 2;
     return out.sort((a, b) => ops.indexOf(a.operation) - ops.indexOf(b.operation) || rank(a) - rank(b) || a.cost - b.cost);
   }
