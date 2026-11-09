@@ -515,6 +515,12 @@
     var b = document.createElement("button");
     b.type = "button";
     b.className = "rs-add";
+    if (option ? option.on_request : service.price_on_request) {
+      b.textContent = EN ? "Price on request" : "Цену уточним";
+      b.disabled = true;
+      b.title = service.note || (EN ? "A complete quote is needed before ordering" : "Полная цена уточняется перед оформлением");
+      return b;
+    }
     var key = cartKey(service, option);
     var inCart = cart.some(function (c) { return c.key === key; });
     b.textContent = inCart ? t("chosen", "✓ выбрано") : t("choose", "＋ выбрать");
@@ -531,6 +537,7 @@
   }
 
   function toggleCart(service, option) {
+    if (option ? option.on_request : service.price_on_request) return;
     var key = cartKey(service, option);
     var at = cart.findIndex(function (c) { return c.key === key; });
     if (at >= 0) { cart.splice(at, 1); }
