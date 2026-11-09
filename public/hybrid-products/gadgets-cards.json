@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-08T14:21:48.947Z",
-  "count": 113,
+  "generated_at": "2026-11-09T17:36:31.605Z",
+  "count": 114,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -905,6 +905,14 @@
       "name": "📷Canon PowerShot G7 X Mark III, Silver",
       "warehouse": "(S2)",
       "price": 101400
+    },
+    "whoop-mg-superknit-luxe-obsidian-life-сша-s4-32700": {
+      "url": "hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-32700.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-mg-superknit-luxe-obsidian-life-s4-32700.html",
+      "cover": "assets/product-images/dc19fcde756b291fbf288162.jpg",
+      "name": "Whoop MG SuperKnit Luxe Obsidian Life",
+      "warehouse": "(S4)",
+      "price": 32700
     }
   }
 }

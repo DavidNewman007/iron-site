@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-08T14:21:48.938Z",
-  "count": 708,
+  "generated_at": "2026-11-09T17:36:31.596Z",
+  "count": 713,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -5665,6 +5665,46 @@
       "name": "Dyson Wash G1 Black",
       "warehouse": "(S3)",
       "price": 36100
+    },
+    "dyson-hs09-coanda-2x-jasper-plum-таиланд-s3-44600": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-jasper-plum-s3-44600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-jasper-plum-s3-44600.html",
+      "cover": "assets/product-images/436d73c15f3360ad305a0147.jpg",
+      "name": "Dyson HS09 Coanda 2x Jasper Plum",
+      "warehouse": "(S3)",
+      "price": 44600
+    },
+    "dyson-hs08-apricot-topaz-великобритания-s3-38300": {
+      "url": "hybrid-products/dyson/dyson-hs08-apricot-topaz-s3-38300.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-apricot-topaz-s3-38300.html",
+      "cover": "assets/product-images/414299834c0fdce97ae8e390.jpg",
+      "name": "Dyson HS08 Apricot Topaz",
+      "warehouse": "(S3)",
+      "price": 38300
+    },
+    "dyson-hs08-jasper-plum-гонконг-s3-43600": {
+      "url": "hybrid-products/dyson/dyson-hs08-jasper-plum-s3-43600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-jasper-plum-s3-43600.html",
+      "cover": "assets/product-images/cb2b76fbce4463f5d7d430fc.jpg",
+      "name": "Dyson HS08 Jasper Plum",
+      "warehouse": "(S3)",
+      "price": 43600
+    },
+    "dyson-ht03-plum-copper-великобритания-s3-36400": {
+      "url": "hybrid-products/dyson/dyson-ht03-plum-copper-s3-36400.html",
+      "url_en": "en/hybrid-products/dyson/dyson-ht03-plum-copper-s3-36400.html",
+      "cover": "assets/product-images/25b7227f9bb8117afed203e1.jpg",
+      "name": "Dyson HT03 Plum/Copper",
+      "warehouse": "(S3)",
+      "price": 36400
+    },
+    "dyson-spot-scrub-ai-black-blue-европа-s3-91800": {
+      "url": "hybrid-products/dyson/dyson-spot-scrub-ai-black-blue-s3-91800.html",
+      "url_en": "en/hybrid-products/dyson/dyson-spot-scrub-ai-black-blue-s3-91800.html",
+      "cover": "assets/product-images/fe86ff3412160bf316c05dd5.jpg",
+      "name": "Dyson Spot+Scrub AI Black/Blue",
+      "warehouse": "(S3)",
+      "price": 91800
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-08T14:21:48.883Z",
-  "count": 344,
+  "generated_at": "2026-11-09T17:36:31.542Z",
+  "count": 346,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -2753,6 +2753,22 @@
       "name": "Samsung Galaxy Buds 3 FE Black",
       "warehouse": "(S4)",
       "price": 9000
+    },
+    "samsung-galaxy-buds-4-pro-black-s4-15200": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-pro-black-s4-15200.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-pro-black-s4-15200.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Samsung Galaxy Buds 4 Pro Black",
+      "warehouse": "(S4)",
+      "price": 15200
+    },
+    "samsung-galaxy-buds-core-black-s4-4400": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-core-black-s4-4400.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-core-black-s4-4400.html",
+      "cover": "assets/product-images/de7e5559665f154b7f89ee7a.jpg",
+      "name": "Samsung Galaxy Buds Core Black",
+      "warehouse": "(S4)",
+      "price": 4400
     }
   }
 }

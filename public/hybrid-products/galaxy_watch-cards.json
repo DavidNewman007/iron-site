@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-08T14:21:48.983Z",
-  "count": 434,
+  "generated_at": "2026-11-09T17:36:31.641Z",
+  "count": 438,
   "byId": {
     "watch-8-40mm-graphite-оаэ-s2-18800": {
       "url": "hybrid-products/galaxy_watch/watch-8-40mm-graphite-s2-18800.html",
@@ -3473,6 +3473,38 @@
       "name": "Galaxy Watch Ultra 2 47 LTE Silver",
       "warehouse": "(S3)",
       "price": 41200
+    },
+    "galaxy-watch-8-44-graphite-оаэ-s3-20100": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-44-graphite-s3-20100.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-44-graphite-s3-20100.html",
+      "cover": "assets/product-images/fccb3763f72b5c18ff0ea9fc.jpg",
+      "name": "Galaxy Watch 8 44 Graphite",
+      "warehouse": "(S3)",
+      "price": 20100
+    },
+    "galaxy-watch-8-classic-46-lte-white-оаэ-s3-26200": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-classic-46-lte-white-s3-26200.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-classic-46-lte-white-s3-26200.html",
+      "cover": "assets/product-images/6bb59bb70eaa4aa34db94571.jpeg",
+      "name": "Galaxy Watch 8 Classic 46 LTE White",
+      "warehouse": "(S3)",
+      "price": 26200
+    },
+    "galaxy-watch-9-40-silver-оаэ-s3-28400": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-9-40-silver-s3-28400.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-9-40-silver-s3-28400.html",
+      "cover": "assets/product-images/e40eeb7dc0db00447e564286.jpg",
+      "name": "Galaxy Watch 9 40 Silver",
+      "warehouse": "(S3)",
+      "price": 28400
+    },
+    "galaxy-watch-ultra-2025-47-lte-gray-оаэ-s3-30600": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47-lte-gray-s3-30600.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-ultra-2025-47-lte-gray-s3-30600.html",
+      "cover": "assets/product-images/7b3842ea3d40c51d27404190.jpeg",
+      "name": "Galaxy Watch Ultra 2025 47 LTE Gray",
+      "warehouse": "(S3)",
+      "price": 30600
     }
   }
 }
