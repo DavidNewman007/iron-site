@@ -195,6 +195,7 @@
     var map = [
       [/ (?:айфон|iphone) /g, " iphone "],
       [/ (?:макбук|мак бук|macbook) /g, " macbook "],
+      [/ (?:нео|neo) /g, " neo "],
       [/ про макс | pro max /g, " pro max "],
       [/ (?:эйр|эир|air) /g, " air "],
       [/ (?:про|pro) /g, " pro "],

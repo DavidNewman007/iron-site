@@ -1158,6 +1158,8 @@
   // скобки отбрасывались. Теперь сначала номер модели (A1466 → «MacBook Air 13" Intel»), потом чип,
   // диагональ и год. Неоднозначное («MacBook Air 13"» без чипа и года) не угадываем — модель выбирается в списке.
   const MAC_A = {
+    'MacBook Neo': "A3404",
+    'MacBook Pro 17" (2006–2011)': "A1151 A1212 A1229 A1261 A1297",
     'MacBook Air 11" (2010–2015)': "A1370 A1465",
     'MacBook Air 13" Intel (2010–2020)': "A1237 A1304 A1369 A1466 A1932 A2179",
     'MacBook 12" Retina (2015–2017)': "A1534",
@@ -1183,8 +1185,9 @@
     const a = (t.match(/\ba\s?-?(1\d{3}|2\d{3}|3\d{3})\b/) || [])[1];
     if (a && MAC_BY_A.has("a" + a)) return MAC_BY_A.get("a" + a);
     for (const n of t.match(/\b[123]\d{3}\b/g) || []) if ((+n < 2000 || +n > 2030) && MAC_BY_A.has("a" + n)) return MAC_BY_A.get("a" + n);
+    if (/neo|нео/.test(t)) return "MacBook Neo";
     const chip = +(t.replace(/м([1-6])/g, "m$1").match(/\bm([1-6])\b/) || [])[1] || 0;
-    const size = +(t.match(/(?:^|[^\da-z])(11|12|13|14|15|16|21|24|27)(?:[.,]\d)?\s*(?:"|дюйм|inch|\s|$)/) || [])[1] || 0;
+    const size = +(t.match(/(?:^|[^\da-z])(11|12|13|14|15|16|17|21|24|27)(?:[.,]\d)?\s*(?:"|дюйм|inch|\s|$)/) || [])[1] || 0;
     const year = +(t.match(/\b(20[012]\d)\b/) || [])[1] || 0;
     const intel = /intel|интел|touch ?bar|тачбар/.test(t) || (year && year <= 2020 && !chip);
     if (/mac ?mini|macmini|мак ?мини/.test(t)) return "Mac mini";
@@ -1198,6 +1201,7 @@
       return intel ? 'MacBook Air 13" Intel (2010–2020)' : "";
     }
     if (/pro|про/.test(t)) {
+      if (size === 17) return 'MacBook Pro 17" (2006–2011)';
       if (size === 14) return chip === 6 ? 'MacBook Pro 14" M6' : 'MacBook Pro 14" M1–M5';
       if (chip === 6) return "";
       if (size === 16) return chip ? 'MacBook Pro 16" M1–M5' : intel || year === 2019 ? 'MacBook Pro 16" Intel (2019)' : "";
