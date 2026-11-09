@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<yml_catalog date="2026-11-09 12:43">
+<yml_catalog date="2026-11-09 12:53">
 <shop>
 <name>Мастерская ремонта техники, Сочи</name>
 <company>ИП, Сочи, ул. Московская, 5</company>
@@ -991,9 +991,8 @@
 <offer id="d62b70339d6a" available="true"><url>https://1iron.ru/uslugi.html</url><price>14000</price><currencyId>RUR</currencyId><categoryId>2</categoryId><name>Замена аккумулятора MacBook Pro 16&quot; M1–M5 — M3 Pro/Max · A2991</name><description></description></offer>
 <offer id="65d30d5d8094" available="true"><url>https://1iron.ru/uslugi.html</url><price>13500</price><currencyId>RUR</currencyId><categoryId>2</categoryId><name>Замена аккумулятора MacBook Pro 14&quot; M1–M5 — M4 / M4 Pro / M4 Max · A3112/A3185/A3401</name><description></description></offer>
 <offer id="4b0d96cae7d7" available="true"><url>https://1iron.ru/uslugi.html</url><price>15000</price><currencyId>RUR</currencyId><categoryId>2</categoryId><name>Замена аккумулятора MacBook Pro 16&quot; M1–M5 — M4 Pro/Max · A3186/A3403</name><description></description></offer>
-<offer id="4708d0c42519" available="true"><url>https://1iron.ru/uslugi.html</url><price>7000</price><currencyId>RUR</currencyId><categoryId>2</categoryId><name>Замена аккумулятора MacBook Pro 17&quot; (2006–2011) — Unibody 2009–2010 · A1297 · АКБ A1309</name><description></description></offer>
-<offer id="17a6e12b975f" available="true"><url>https://1iron.ru/uslugi.html</url><price>7000</price><currencyId>RUR</currencyId><categoryId>2</categoryId><name>Замена аккумулятора MacBook Pro 17&quot; (2006–2011) — Unibody 2011 · A1297 · АКБ A1383</name><description></description></offer>
 <offer id="44c08b365552" available="true"><url>https://1iron.ru/uslugi.html</url><price>23000</price><currencyId>RUR</currencyId><categoryId>2</categoryId><name>Замена аккумулятора MacBook Neo — 13&quot; A18 Pro · 2026 · A3404</name><description></description></offer>
+<offer id="29a4a2787bc8" available="true"><url>https://1iron.ru/uslugi.html</url><price>2500</price><currencyId>RUR</currencyId><categoryId>2</categoryId><name>Замена аккумулятора MacBook Pro 17&quot; (2006–2011) — Только работа; АКБ по факту</name><description>Цена за работу, запчасть оплачивается отдельно.</description></offer>
 </offers>
 </shop>
 </yml_catalog>
