@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-09T17:36:31.516Z",
-  "count": 232,
+  "generated_at": "2026-11-10T15:51:53.890Z",
+  "count": 234,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -1857,6 +1857,22 @@
       "name": "iPad Pro 11 Magic Keyboard Black",
       "warehouse": "(S4)",
       "price": 31900
+    },
+    "apple-magic-trackpad-black-s4-13700": {
+      "url": "hybrid-products/accessories/apple-magic-trackpad-black-s4-13700.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-trackpad-black-s4-13700.html",
+      "cover": "assets/product-images/082f86c05a019b81f5ea66e2.jpg",
+      "name": "Apple Magic Trackpad Black",
+      "warehouse": "(S4)",
+      "price": 13700
+    },
+    "ipad-pro-13-magic-keyboard-black-сша-s4-39000": {
+      "url": "hybrid-products/accessories/ipad-pro-13-magic-keyboard-black-s4-39000.html",
+      "url_en": "en/hybrid-products/accessories/ipad-pro-13-magic-keyboard-black-s4-39000.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Pro 13 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 39000
     }
   }
 }

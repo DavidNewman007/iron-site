@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-09T17:36:31.556Z",
-  "count": 246,
+  "generated_at": "2026-11-10T15:51:53.931Z",
+  "count": 251,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -1969,6 +1969,46 @@
       "name": "Sony PlayStation 5 SLIM Digital 825Gb",
       "warehouse": "(S4)",
       "price": 79100
+    },
+    "-ps5-slim-disk-1tb-s2-74400": {
+      "url": "hybrid-products/gaming/ps5-slim-disk-1tb-s2-74400.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-disk-1tb-s2-74400.html",
+      "cover": "assets/product-images/710d027896068006fabffb9c.jpg",
+      "name": "🎮PS5 Slim Disk 1TB",
+      "warehouse": "(S2)",
+      "price": 74400
+    },
+    "-ps5-slim-digital-1tb-s2-71400": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-1tb-s2-71400.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-1tb-s2-71400.html",
+      "cover": "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+      "name": "🎮PS5 Slim Digital 1Tb",
+      "warehouse": "(S2)",
+      "price": 71400
+    },
+    "-gamepad-ps5-volcanic-red-s2-8000": {
+      "url": "hybrid-products/gaming/gamepad-ps5-volcanic-red-s2-8000.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-volcanic-red-s2-8000.html",
+      "cover": "assets/product-images/6dff1efeecb9f63494cd696c.jpg",
+      "name": "🎮GamePad PS5 Volcanic Red",
+      "warehouse": "(S2)",
+      "price": 8000
+    },
+    "dualsense-edge-для-ps5-white-s2-20100": {
+      "url": "hybrid-products/gaming/dualsense-edge-для-ps5-white-s2-20100.html",
+      "url_en": "en/hybrid-products/gaming/dualsense-edge-для-ps5-white-s2-20100.html",
+      "cover": "assets/product-images/01cdd1471475c7fd8900934e.jpg",
+      "name": "DualSense EDGE для PS5 White",
+      "warehouse": "(S2)",
+      "price": 20100
+    },
+    "-oculus-quest-3s-128gb-s2-36400": {
+      "url": "hybrid-products/gaming/oculus-quest-3s-128gb-s2-36400.html",
+      "url_en": "en/hybrid-products/gaming/oculus-quest-3s-128gb-s2-36400.html",
+      "cover": "assets/product-images/f453c94d3dbbf65fc61239fe.jpg",
+      "name": "🥽Oculus Quest 3S 128GB",
+      "warehouse": "(S2)",
+      "price": 36400
     }
   }
 }

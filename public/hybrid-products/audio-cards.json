@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-09T17:36:31.542Z",
-  "count": 346,
+  "generated_at": "2026-11-10T15:51:53.916Z",
+  "count": 355,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -2769,6 +2769,78 @@
       "name": "Samsung Galaxy Buds Core Black",
       "warehouse": "(S4)",
       "price": 4400
+    },
+    "buds-3-fe-black-оаэ-s2-9200": {
+      "url": "hybrid-products/audio/buds-3-fe-black-s2-9200.html",
+      "url_en": "en/hybrid-products/audio/buds-3-fe-black-s2-9200.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Buds 3 FE black",
+      "warehouse": "(S2)",
+      "price": 9200
+    },
+    "buds-4-black-оаэ-s2-12300": {
+      "url": "hybrid-products/audio/buds-4-black-s2-12300.html",
+      "url_en": "en/hybrid-products/audio/buds-4-black-s2-12300.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Buds 4 Black",
+      "warehouse": "(S2)",
+      "price": 12300
+    },
+    "buds-4-pro-black-оаэ-s2-16000": {
+      "url": "hybrid-products/audio/buds-4-pro-black-s2-16000.html",
+      "url_en": "en/hybrid-products/audio/buds-4-pro-black-s2-16000.html",
+      "cover": "assets/product-images/0b9239fcfeaf320a424faecf.jpg",
+      "name": "Buds 4 Pro Black",
+      "warehouse": "(S2)",
+      "price": 16000
+    },
+    "-яндекс-дропс-фиолетовый-s2-7800": {
+      "url": "hybrid-products/audio/яндекс-дропс-фиолетовый-s2-7800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-дропс-фиолетовый-s2-7800.html",
+      "cover": "assets/product-images/705c238bbb388b60d22d7594.jpg",
+      "name": "🎧Яндекс Дропс Фиолетовый",
+      "warehouse": "(S2)",
+      "price": 7800
+    },
+    "-яндекс-дропс-белый-s2-7800": {
+      "url": "hybrid-products/audio/яндекс-дропс-белый-s2-7800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-дропс-белый-s2-7800.html",
+      "cover": "assets/product-images/4f571407c8742decf9726cff.jpg",
+      "name": "🎧Яндекс Дропс Белый",
+      "warehouse": "(S2)",
+      "price": 7800
+    },
+    "-яндекс-станция-max-бежевый-s2-33800": {
+      "url": "hybrid-products/audio/яндекс-станция-max-бежевый-s2-33800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-бежевый-s2-33800.html",
+      "cover": "assets/product-images/6a0f79d69b1009dff0a3e465.jpeg",
+      "name": "🔈Яндекс Станция MAX Бежевый",
+      "warehouse": "(S2)",
+      "price": 33800
+    },
+    "samsung-galaxy-buds-4-black-s4-11800": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-black-s4-11800.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-black-s4-11800.html",
+      "cover": "assets/product-images/933de988484624a6bcf6220b.jpg",
+      "name": "Samsung Galaxy Buds 4 Black",
+      "warehouse": "(S4)",
+      "price": 11800
+    },
+    "samsung-galaxy-buds-4-pro-white-s4-15400": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-pro-white-s4-15400.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-pro-white-s4-15400.html",
+      "cover": "assets/product-images/d7e14946e6986e9c91310868.jpg",
+      "name": "Samsung Galaxy Buds 4 Pro White",
+      "warehouse": "(S4)",
+      "price": 15400
+    },
+    "samsung-galaxy-buds-core-black-s4-4300": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-core-black-s4-4300.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-core-black-s4-4300.html",
+      "cover": "assets/product-images/de7e5559665f154b7f89ee7a.jpg",
+      "name": "Samsung Galaxy Buds Core Black",
+      "warehouse": "(S4)",
+      "price": 4300
     }
   }
 }
