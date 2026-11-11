@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-10T15:51:53.634Z",
-  "count": 640,
+  "generated_at": "2026-11-11T15:04:21.089Z",
+  "count": 646,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -5121,6 +5121,54 @@
       "name": "AirPods Max 2 Starlight",
       "warehouse": "(S4)",
       "price": 48200
+    },
+    "-airpods-5-wireless-s2-16500": {
+      "url": "hybrid-products/airpods/airpods-5-wireless-s2-16500.html",
+      "url_en": "en/hybrid-products/airpods/airpods-5-wireless-s2-16500.html",
+      "cover": "assets/product-images/b971cee99de17a92f4f0ca43.jpg",
+      "name": "🔈AirPods 5 Wireless",
+      "warehouse": "(S2)",
+      "price": 16500
+    },
+    "-airpods-pro-3-s2-21500": {
+      "url": "hybrid-products/airpods/airpods-pro-3-s2-21500.html",
+      "url_en": "en/hybrid-products/airpods/airpods-pro-3-s2-21500.html",
+      "cover": "assets/product-images/eb7b97539c279270915a05a4.jpg",
+      "name": "🔈AirPods Pro 3",
+      "warehouse": "(S2)",
+      "price": 21500
+    },
+    "-airpods-max-2026-midnight-s2-46300": {
+      "url": "hybrid-products/airpods/airpods-max-2026-midnight-s2-46300.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2026-midnight-s2-46300.html",
+      "cover": "assets/product-images/1611732bf1dd6c4e9030627a.jpg",
+      "name": "🎧AirPods Max 2026 Midnight",
+      "warehouse": "(S2)",
+      "price": 46300
+    },
+    "airpods-max-2024-blue-европа-s3-40100": {
+      "url": "hybrid-products/airpods/airpods-max-2024-blue-s3-40100.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2024-blue-s3-40100.html",
+      "cover": "assets/product-images/026927b2495d8f4ba255f6b2.jpg",
+      "name": "AirPods Max 2024 Blue",
+      "warehouse": "(S3)",
+      "price": 40100
+    },
+    "airpods-max-2-midnight-уценка-корбка-европа-s3-45200": {
+      "url": "hybrid-products/airpods/airpods-max-2-midnight-уценка-корбка-s3-45200.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-midnight-уценка-корбка-s3-45200.html",
+      "cover": "assets/product-images/1611732bf1dd6c4e9030627a.jpg",
+      "name": "AirPods Max 2 Midnight (уценка корбка)",
+      "warehouse": "(S3)",
+      "price": 45200
+    },
+    "airpods-max-2-purple-европа-s3-44200": {
+      "url": "hybrid-products/airpods/airpods-max-2-purple-s3-44200.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-purple-s3-44200.html",
+      "cover": "assets/product-images/ed05f9e1384c6ce6df3cef52.jpg",
+      "name": "AirPods Max 2 Purple",
+      "warehouse": "(S3)",
+      "price": 44200
     }
   }
 }

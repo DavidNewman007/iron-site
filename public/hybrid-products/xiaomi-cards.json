@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-10T15:51:54.224Z",
-  "count": 2145,
+  "generated_at": "2026-11-11T15:04:21.649Z",
+  "count": 2167,
   "byId": {
     "xiaomi-15-5g-12-256-green-европа-s3-53000": {
       "url": "hybrid-products/xiaomi/xiaomi-15-5g-12-256-green-s3-53000.html",
@@ -17161,6 +17161,182 @@
       "name": "Xiaomi MIX Flip 12+ 512Gb Purple",
       "warehouse": "(S4)",
       "price": 50500
+    },
+    "xiaomi-17-ultra-16-512-starlit-green-европа-s3-98200": {
+      "url": "hybrid-products/xiaomi/xiaomi-17-ultra-16-512-starlit-green-s3-98200.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17-ultra-16-512-starlit-green-s3-98200.html",
+      "cover": "assets/product-images/7bf5a19e12915af09f569e62.jpg",
+      "name": "Xiaomi 17 Ultra 16/512 Starlit Green",
+      "warehouse": "(S3)",
+      "price": 98200
+    },
+    "xiaomi-17-ultra-16-1tb-black-европа-s3-111900": {
+      "url": "hybrid-products/xiaomi/xiaomi-17-ultra-16-1tb-black-s3-111900.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17-ultra-16-1tb-black-s3-111900.html",
+      "cover": "assets/product-images/ea2dc194429ef6ddaeb2689a.jpg",
+      "name": "Xiaomi 17 Ultra 16/1TB Black",
+      "warehouse": "(S3)",
+      "price": 111900
+    },
+    "xiaomi-17-ultra-16-1tb-white-европа-s3-111900": {
+      "url": "hybrid-products/xiaomi/xiaomi-17-ultra-16-1tb-white-s3-111900.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17-ultra-16-1tb-white-s3-111900.html",
+      "cover": "assets/product-images/ccd14a78d2298d2d72668a68.jpg",
+      "name": "Xiaomi 17 Ultra 16/1TB White",
+      "warehouse": "(S3)",
+      "price": 111900
+    },
+    "xiaomi-17t-12-256-black-европа-s3-45900": {
+      "url": "hybrid-products/xiaomi/xiaomi-17t-12-256-black-s3-45900.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17t-12-256-black-s3-45900.html",
+      "cover": "assets/product-images/dcab77fb6a83dab04f524380.jpg",
+      "name": "Xiaomi 17T 12/256 Black",
+      "warehouse": "(S3)",
+      "price": 45900
+    },
+    "xiaomi-17t-12-256-violet-европа-s3-45900": {
+      "url": "hybrid-products/xiaomi/xiaomi-17t-12-256-violet-s3-45900.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17t-12-256-violet-s3-45900.html",
+      "cover": "assets/product-images/b5a6582f48d7dddd17ef67f9.jpg",
+      "name": "Xiaomi 17T 12/256 Violet",
+      "warehouse": "(S3)",
+      "price": 45900
+    },
+    "xiaomi-17t-12-256-white-европа-s3-45900": {
+      "url": "hybrid-products/xiaomi/xiaomi-17t-12-256-white-s3-45900.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17t-12-256-white-s3-45900.html",
+      "cover": "assets/product-images/3fc46d99db20240b67e76048.jpg",
+      "name": "Xiaomi 17T 12/256 White",
+      "warehouse": "(S3)",
+      "price": 45900
+    },
+    "xiaomi-17t-12-512-black-европа-s3-48600": {
+      "url": "hybrid-products/xiaomi/xiaomi-17t-12-512-black-s3-48600.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17t-12-512-black-s3-48600.html",
+      "cover": "assets/product-images/dcab77fb6a83dab04f524380.jpg",
+      "name": "Xiaomi 17T 12/512 Black",
+      "warehouse": "(S3)",
+      "price": 48600
+    },
+    "xiaomi-17t-12-512-violet-европа-s3-48600": {
+      "url": "hybrid-products/xiaomi/xiaomi-17t-12-512-violet-s3-48600.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17t-12-512-violet-s3-48600.html",
+      "cover": "assets/product-images/b5a6582f48d7dddd17ef67f9.jpg",
+      "name": "Xiaomi 17T 12/512 Violet",
+      "warehouse": "(S3)",
+      "price": 48600
+    },
+    "xiaomi-17t-12-512-white-европа-s3-48600": {
+      "url": "hybrid-products/xiaomi/xiaomi-17t-12-512-white-s3-48600.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17t-12-512-white-s3-48600.html",
+      "cover": "assets/product-images/3fc46d99db20240b67e76048.jpg",
+      "name": "Xiaomi 17T 12/512 White",
+      "warehouse": "(S3)",
+      "price": 48600
+    },
+    "redmi-note-17-pro-8-256-black-nfc-европа-s3-32200": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-256-black-nfc-s3-32200.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-256-black-nfc-s3-32200.html",
+      "cover": "assets/product-images/22173115962fa1942a03f52a.jpg",
+      "name": "Redmi Note 17 Pro 8/256 Black (NFC)",
+      "warehouse": "(S3)",
+      "price": 32200
+    },
+    "redmi-note-17-pro-8-256-purple-nfc-европа-s3-32200": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-256-purple-nfc-s3-32200.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-256-purple-nfc-s3-32200.html",
+      "cover": "assets/product-images/fd08ced0420a38cf1e55bf59.jpg",
+      "name": "Redmi Note 17 Pro 8/256 Purple (NFC)",
+      "warehouse": "(S3)",
+      "price": 32200
+    },
+    "redmi-note-17-pro-8-256-satin-orange-nfc-европа-s3-32200": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-256-satin-orange-nfc-s3-32200.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-256-satin-orange-nfc-s3-32200.html",
+      "cover": "assets/product-images/bd6576a435b3319137096ea3.jpg",
+      "name": "Redmi Note 17 Pro 8/256 Satin Orange (NFC)",
+      "warehouse": "(S3)",
+      "price": 32200
+    },
+    "redmi-note-17-pro-8-512-black-nfc-европа-s3-35100": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-512-black-nfc-s3-35100.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-512-black-nfc-s3-35100.html",
+      "cover": "assets/product-images/22173115962fa1942a03f52a.jpg",
+      "name": "Redmi Note 17 Pro 8/512 Black (NFC)",
+      "warehouse": "(S3)",
+      "price": 35100
+    },
+    "redmi-note-17-pro-8-512-purple-nfc-европа-s3-35100": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-512-purple-nfc-s3-35100.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-512-purple-nfc-s3-35100.html",
+      "cover": "assets/product-images/fd08ced0420a38cf1e55bf59.jpg",
+      "name": "Redmi Note 17 Pro 8/512 Purple (NFC)",
+      "warehouse": "(S3)",
+      "price": 35100
+    },
+    "redmi-note-17-pro-max-8-256-black-nfc-европа-s3-37800": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-max-8-256-black-nfc-s3-37800.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-max-8-256-black-nfc-s3-37800.html",
+      "cover": "assets/product-images/b21dd659de8bd6c0cae24ded.jpg",
+      "name": "Redmi Note 17 Pro Max 8/256 Black (NFC)",
+      "warehouse": "(S3)",
+      "price": 37800
+    },
+    "poco-x8-pro-8-256-black-европа-s3-37600": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-8-256-black-s3-37600.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-8-256-black-s3-37600.html",
+      "cover": "assets/product-images/127bfacc5f93ad8b6a4c17ab.jpg",
+      "name": "Poco X8 Pro 8/256 Black",
+      "warehouse": "(S3)",
+      "price": 37600
+    },
+    "poco-x8-pro-8-256-green-европа-s3-37200": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-8-256-green-s3-37200.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-8-256-green-s3-37200.html",
+      "cover": "assets/product-images/10fa7b7e2ff27c0376568587.jpg",
+      "name": "Poco X8 Pro 8/256 Green",
+      "warehouse": "(S3)",
+      "price": 37200
+    },
+    "poco-x8-pro-8-256-white-европа-s3-37600": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-8-256-white-s3-37600.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-8-256-white-s3-37600.html",
+      "cover": "assets/product-images/f5fe6274dee372b125bb8642.jpg",
+      "name": "Poco X8 Pro 8/256 White",
+      "warehouse": "(S3)",
+      "price": 37600
+    },
+    "poco-x8-pro-12-512-green-европа-s3-40900": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-12-512-green-s3-40900.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-12-512-green-s3-40900.html",
+      "cover": "assets/product-images/10fa7b7e2ff27c0376568587.jpg",
+      "name": "Poco X8 Pro 12/512 Green",
+      "warehouse": "(S3)",
+      "price": 40900
+    },
+    "poco-x8-pro-max-12-256-blue-европа-s3-45000": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-max-12-256-blue-s3-45000.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-max-12-256-blue-s3-45000.html",
+      "cover": "assets/product-images/82ede873a3cb6ff4cd6106ca.jpg",
+      "name": "Poco X8 Pro Max 12/256 Blue",
+      "warehouse": "(S3)",
+      "price": 45000
+    },
+    "poco-f8-ultra-12-256-black-европа-s3-57400": {
+      "url": "hybrid-products/xiaomi/poco-f8-ultra-12-256-black-s3-57400.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-f8-ultra-12-256-black-s3-57400.html",
+      "cover": "assets/product-images/fdc788f9e51763ab5c679de5.jpg",
+      "name": "Poco F8 Ultra 12/256 Black",
+      "warehouse": "(S3)",
+      "price": 57400
+    },
+    "poco-f9-ultra-16-1tb-black-европа-s3-92700": {
+      "url": "hybrid-products/xiaomi/poco-f9-ultra-16-1tb-black-s3-92700.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-f9-ultra-16-1tb-black-s3-92700.html",
+      "cover": "assets/product-images/4825622810443c627efb2222.jpg",
+      "name": "Poco F9 Ultra 16/1TB Black",
+      "warehouse": "(S3)",
+      "price": 92700
     }
   }
 }

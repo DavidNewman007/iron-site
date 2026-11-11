@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-10T15:51:53.982Z",
-  "count": 114,
+  "generated_at": "2026-11-11T15:04:21.451Z",
+  "count": 115,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -913,6 +913,14 @@
       "name": "Whoop MG SuperKnit Luxe Obsidian Life",
       "warehouse": "(S4)",
       "price": 32700
+    },
+    "-gopro-13-s2-34300": {
+      "url": "hybrid-products/gadgets/gopro-13-s2-34300.html",
+      "url_en": "en/hybrid-products/gadgets/gopro-13-s2-34300.html",
+      "cover": "assets/product-images/0cb851527304ed6a248fce0d.jpg",
+      "name": "📷GoPro 13",
+      "warehouse": "(S2)",
+      "price": 34300
     }
   }
 }

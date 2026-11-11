@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-10T15:51:53.931Z",
-  "count": 251,
+  "generated_at": "2026-11-11T15:04:21.406Z",
+  "count": 252,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -2009,6 +2009,14 @@
       "name": "🥽Oculus Quest 3S 128GB",
       "warehouse": "(S2)",
       "price": 36400
+    },
+    "-ps5-pro-s2-130500": {
+      "url": "hybrid-products/gaming/ps5-pro-s2-130500.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-s2-130500.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro",
+      "warehouse": "(S2)",
+      "price": 130500
     }
   }
 }

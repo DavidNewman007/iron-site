@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-10T15:51:53.348Z",
-  "count": 1664,
+  "generated_at": "2026-11-11T15:04:20.859Z",
+  "count": 1665,
   "byId": {
     "macbook-neo-13-a18-pro-8-256gb-indigo-mhff4-hn-a-индия-s1-54500": {
       "url": "hybrid-products/macbook/macbook-neo-13-a18-pro-8-256gb-indigo-mhff4-hn-a-s1-54500.html",
@@ -13313,6 +13313,14 @@
       "name": "MacBook Pro 16 PROLED M5 Max 18/40 Core 48+ 2Tb Silver",
       "warehouse": "(S4)",
       "price": 502300
+    },
+    "macbook-air-15-m5-16-512gb-silver-mdv94-ll-a-сша-s1-142000": {
+      "url": "hybrid-products/macbook/macbook-air-15-m5-16-512gb-silver-mdv94-ll-a-s1-142000.html",
+      "url_en": "en/hybrid-products/macbook/macbook-air-15-m5-16-512gb-silver-mdv94-ll-a-s1-142000.html",
+      "cover": "assets/product-images/a6cce842566daf4891aadb3d.jpg",
+      "name": "MacBook Air 15 M5 16+ 512Gb Silver MDV94 LL/A",
+      "warehouse": "(S1)",
+      "price": 142000
     }
   }
 }
