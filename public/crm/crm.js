@@ -1481,7 +1481,7 @@
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const work = cap(x.operation) + (x.variant ? ` (${x.variant})` : "");
     // Что добавили — запомнить (v79): «✕» убирает работу из «Выполненных работ», её цену из итога и запчасть разом.
-    const svc = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), work, base: x.price || 0, beforeWarranty:val(C.warranty) };
+    const svc = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), work, base: x.price || 0, unpriced:x.price==null&&!x.price_free, beforeWarranty:val(C.warranty) };
     ((S.svcLog ||= {})[key] ||= []).push(svc);
     setDirty(key, C.work, addPhrase(val(C.work), work));
     if (x.price) {
@@ -1590,7 +1590,7 @@
   function svcLogHtml(key) {
     const r=key==="new"?null:S.rows.find(x=>x.row===key),log=servicesOf(key,r); if (!log.length) return "";
     // Цена — полем (v80): владелец — «после выбора этой работы из прайса я смог изменить цену этой работы».
-    return `<div class="svc-log">${log.map(x => `<span class="chip svc-chip">${esc(x.work)} · <input class="svc-price" data-svcprice="${esc(x.id)}" value="${esc(serviceAmount(key,r,x) ?? "")}" inputmode="numeric" autocomplete="off" title="Итог услуги вместе с выбранной запчастью — итог заказа пересчитается"> ₽<button type="button" class="linkbtn" data-act="svcrm" data-id="${esc(x.id)}" title="Убрать из работ, итога и запчастей">✕</button></span>`).join("")}</div>${log.some(s=>s.base==null)?`<p class="note">Общий итог сохранён. Укажите суммы всех услуг, чтобы пересчитать его по этой разбивке.</p>`:""}`;
+    return `<div class="svc-log">${log.map(x => `<span class="chip svc-chip">${esc(x.work)} · <input class="svc-price" data-svcprice="${esc(x.id)}" value="${esc(x.unpriced?"":serviceAmount(key,r,x) ?? "")}" inputmode="numeric" autocomplete="off" title="Итог услуги вместе с выбранной запчастью — итог заказа пересчитается"> ₽<button type="button" class="linkbtn" data-act="svcrm" data-id="${esc(x.id)}" title="Убрать из работ, итога и запчастей">✕</button></span>`).join("")}</div>${log.some(s=>s.base==null||s.unpriced)?`<p class="note">Общий итог сохранён. Укажите суммы всех услуг, чтобы пересчитать его по этой разбивке.</p>`:""}`;
   }
 
   // Новая цена работы из прайса: итог −старая +новая (через baseOf/finalOf — скидка и наценка за оплату учтены).
@@ -1598,14 +1598,14 @@
     const val = valOf(key, r), d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total));
     const log=servicesOf(key,r);
     if(log.some(s=>s.base==null)){
-      svc.base=price;
-      if(log.every(s=>s.base!=null))setDirty(key,C.total,String(finalOf(log.reduce((n,s)=>n+(serviceAmount(key,r,s)||0),0),d,pay)));
+      svc.base=price;delete svc.unpriced;
+      if(log.every(s=>s.base!=null&&!s.unpriced))setDirty(key,C.total,String(finalOf(log.reduce((n,s)=>n+(serviceAmount(key,r,s)||0),0),d,pay)));
       stageServiceMeta(key,r);refreshSaveBar(key);return;
     }
     const base = Math.max(0, (q == null ? 0 : baseOf(q, d, pay)) - serviceAmount(key,r,svc) + price);
     setDirty(key, C.total, base ? String(finalOf(base, d, pay)) : "");
     toast(`${svc.work}: ${money(svc.base || 0)} → ${money(price)} · итог ${money(val(C.total)) || "—"}`);
-    svc.base = price;
+    svc.base = price;delete svc.unpriced;
     for(const p of partsOf(key,r))if(p.svcId===svc.id)p.svcAdded=0;
     syncParts(key);stageServiceMeta(key,r);
   }
@@ -1614,7 +1614,7 @@
     const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), svc = servicesOf(key,r).find(x => x.id === id);
     const price = toNum(e.target.value);
     if (!svc || price == null || price < 0) { if (svc) e.target.value = svc.base || ""; return; }
-    if (price !== serviceAmount(key,r,svc)) { repriceService(key, r, svc, price); if (key === "new") saveDraft(); refreshSaveBar(key); rerenderKeep(); }
+    if (svc.unpriced || price !== serviceAmount(key,r,svc)) { repriceService(key, r, svc, price); if (key === "new") saveDraft(); refreshSaveBar(key); rerenderKeep(); }
   });
 
   // ── запчасти списком: название · откуда · закупка (v18) ─────────────────────
