@@ -788,3 +788,14 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .rem--closed { color:var(--rem-closed); }
 .rem--overdue { color:var(--rem-overdue); }
 .rem-text { white-space:pre-wrap; overflow-wrap:anywhere; }
+
+/* v107: работа перед выбором детали, суммы и источники читаются отдельно. */
+.pp__step { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin:10px 0; color:var(--muted); }
+.pp__step b { color:var(--cream); }
+.pp__tariff { margin:10px 0; }
+.pp__offers { max-height:440px; }
+.pp__offers .pp__item { min-width:0; overflow-wrap:anywhere; }
+.pp__offers .pp__item:disabled { opacity:.8; cursor:default; }
+.pp__offers .pp__item strong { color:var(--cream); }
+.pp__item.is-stock { border-color:var(--gold); }
+@media(max-width:600px) { .pp__head { align-items:flex-start; } .pp__offers { max-height:420px; } .pp__step { align-items:flex-start; } .psup__c { max-width:100%; white-space:normal; text-align:left; } }

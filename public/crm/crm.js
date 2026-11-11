@@ -499,6 +499,7 @@
   // Поисковые ключи строки считаются один раз при загрузке (и после правки строки), а не
   // на каждое нажатие клавиши: по 7–8 тысячам строк поиск так идёт за миллисекунды.
   function index(r) {
+    S.tipRevision = (S.tipRevision || 0) + 1;
     r.hay = norm([C.num, C.name, C.phone, C.contactName, C.contactPhone, C.device, C.issue, C.work, C.parts, C.comment, C.master, C.imei, C.type, C.status, C.reminder].map(c => c === C.status ? stLabel(r.cells[c] ?? "") : r.cells[c] ?? "").join(" "));
     r.ph = phones(r.cells[C.phone]).map(p => p.d);
     // Номер «на связи» — только для поиска (звонит дочь: «я по папиному телефону»). В r.ph его
@@ -1011,12 +1012,12 @@
   // фразу в поле через точку — так в базе и пишут («Не включается. Требуется
   // диагностика»); повторное нажатие убирает фразу. Своё можно дописать руками, как раньше.
   const FAMILIES = [
+    ["tablet", /ipad|айпад|планшет|galaxy tab|\btab\b|matepad|pad \d/],
     ["phone", /iphone|айфон|смартфон|телефон|samsung|galaxy|xiaomi|redmi|poco|honor|huawei|realme|oneplus|pixel|nokia|tecno|infinix|vivo|oppo/],
-    ["tablet", /ipad|айпад|планшет|tab\b|galaxy tab/],
     ["watch", /watch|часы/],
     ["audio", /airpods|наушник|колонк|jbl|marshall|beats/],
     ["console", /playstation|ps ?[345]\b|xbox|nintendo|switch|джойстик|геймпад|dual ?sen|dualshock/],
-    ["desktop", /imac|аймак|mac ?mini|мак ?мини|системн|моноблок|\bпк\b|компьютер/],
+    ["desktop", /imac|аймак|mac ?mini|мак ?мини|mac ?studio|mac ?pro|мак ?студио|системн|моноблок|\bпк\b|компьютер/],
     ["laptop", /macbook|макбук|ноутбук|notebook|laptop|ультрабук|asus|acer|lenovo|\bhp\b|dell|msi|matebook|magicbook|thinkpad/],
   ];
   function familyOf(device) { const s = norm(device); return (FAMILIES.find(([, re]) => re.test(s)) || ["other"])[0]; }
@@ -1044,6 +1045,40 @@
       other: ["Чистка", "Установка ПО"],
     },
   };
+  // Дополняем привычные фразы, не меняя текст прежних заказов.
+  const TIP_EXTRA = {
+    issue: {
+      phone: ["Не работает Face ID", "Не работает Touch ID", "Не работает NFC", "Не работает Wi-Fi", "Не работает Bluetooth", "Не работает вибрация", "Не работает беспроводная зарядка", "Не видит SIM-карту", "Не слышно собеседника"],
+      tablet: ["Не работает Face ID", "Не работает Touch ID", "Вздулся АКБ", "Разъём зарядки повреждён", "Не работает Wi-Fi", "Не работает микрофон", "Не работает камера"],
+      laptop: ["Повреждены петли", "Повреждён корпус", "Не работает камера", "Не работает микрофон", "Не работает Wi-Fi", "Не работает USB-порт", "Вздулся АКБ", "Не видит накопитель"],
+      desktop: ["Не видит накопитель", "Не работает USB-порт", "Не работает Wi-Fi", "Не работает камера", "Не работает блок питания"],
+      watch: ["Отклеился дисплей", "Вздулся АКБ", "Не работает колесо Digital Crown", "Не работает кнопка", "Не подключается к телефону"],
+      audio: ["Не заряжается наушник", "Не подключается Bluetooth", "Не работает микрофон", "Хрипит звук", "Не заряжается колонка"],
+      console: ["Повреждён HDMI-разъём", "Перегревается", "Не подключается геймпад", "Не работает привод", "Не заряжается геймпад"]
+    },
+    work: {
+      phone: ["Замена микрофона", "Замена вибромотора", "Чистка разъёма зарядки", "Чистка динамиков", "Перенос данных", "Восстановление данных", "Диагностика Face ID", "Диагностика Touch ID"],
+      tablet: ["Замена задней крышки", "Замена динамика", "Перенос данных", "Восстановление после залития"],
+      laptop: ["Замена разъёма зарядки", "Замена динамика", "Замена вентилятора", "Ремонт петель", "Перенос данных", "Восстановление данных", "Замена дисплейного модуля в сборе"],
+      desktop: ["Замена вентилятора", "Замена дисплея", "Перенос данных", "Восстановление данных"],
+      watch: ["Проклейка дисплея", "Замена кнопки", "Ремонт Digital Crown", "Полировка стекла", "Чистка после влаги"],
+      audio: ["Замена разъёма зарядки", "Ремонт кейса", "Замена динамика", "Замена микрофона"],
+      console: ["Замена HDMI-разъёма", "Ремонт привода", "Замена термопасты", "Ремонт геймпада"]
+    }
+  };
+  function tipPhrases(kind, fam, device = "") {
+    const text=norm(device), apple=/iphone|айфон|ipad|айпад|mac|мак|apple|airpods/.test(text);
+    const home=/(?:iphone|айфон) (?:[4-8](?:s| plus)?|se)\b/.test(text);
+    const face=/iphone|айфон/.test(text)&&!home||/(?:ipad|айпад) pro/.test(text);
+    const touch=/(?:iphone|айфон) (?:5s|[6-8](?:s| plus)?|se)\b/.test(text)||/ipad|айпад|macbook|макбук/.test(text);
+    return [...new Set([...(TYPICAL[kind][fam]||[]),...(TIP_EXTRA[kind][fam]||[]),...TYPICAL[kind].all])].filter(p=>
+      (!device||apple||!/яблоке|кнопк[аи] Home|Face ID|Touch ID/.test(p))&&
+      (!device||fam!=="phone"||home||!/кнопк[аи] Home/.test(p))&&
+      (!device||!/^Не работает Face ID|^Диагностика Face ID/.test(p)||face)&&
+      (!device||!/^Не работает Touch ID|^Диагностика Touch ID/.test(p)||touch)&&
+      (!/колонк|jbl|marshall/.test(text)||!/кейс|наушник/.test(p))&&
+      (fam!=="desktop"||p!=="Не заряжается")&&(fam!=="audio"||p!=="Нет изображения"));
+  }
   const cap = s => String(s ?? "").charAt(0).toUpperCase() + String(s ?? "").slice(1);
   // Фразы поля: куски между точкой, «;» и переводом строки. Запятую не трогаем — ею перечисляют.
   const sentences = text => String(text ?? "").split(/[.;\n]+/).map(s => s.trim()).filter(Boolean);
@@ -1059,11 +1094,11 @@
   // Порядок — по тому, как часто фраза встречается в заказах этой техники (v76, 23.10.2026). Владелец: «самые часто
   // используемые неисправности и виды работ перенеси в верх списка». До v76 порядок был ручной (снят с базы 28.09)
   // и не менялся. Считается по последним 4000 заказам: заказ засчитывается фразе, если в поле есть предложение,
-  // которое ей равно или с неё начинается; при равенстве — прежний порядок. Пересчёт — когда список заказов вырос.
-  function tipsOrder(kind, fam) {
-    const key = kind + "|" + fam, hit = (S.tipFreq ||= {})[key];
-    if (hit && hit.n === S.rows.length) return hit.list;
-    const base = [...new Set([...(TYPICAL[kind][fam] || []), ...TYPICAL[kind].all])], keys = base.map(norm), cnt = base.map(() => 0);
+  // которое ей равно или с неё начинается; при равенстве — прежний порядок. Пересчёт — после загрузки и изменения строки базы.
+  function tipsOrder(kind, fam, device = "") {
+    const key = kind + "|" + fam + "|" + norm(device), hit = (S.tipFreq ||= {})[key];
+    if (hit && hit.n === S.rows.length && hit.rev === S.tipRevision) return hit.list;
+    const base = tipPhrases(kind, fam, device), keys = base.map(norm), cnt = base.map(() => 0);
     const col = kind === "issue" ? C.issue : C.work;
     for (const r of S.rows.slice(-4000)) {
       if (fam !== "other" && familyOf(cell(r, C.device)) !== fam) continue;
@@ -1071,11 +1106,11 @@
       keys.forEach((k, i) => { if (ss.some(x => x === k || x.startsWith(k))) cnt[i]++; });
     }
     const list = base.map((p, i) => ({ p, i, n: cnt[i] })).sort((a, b) => b.n - a.n || a.i - b.i).map(x => x.p);
-    S.tipFreq[key] = { n: S.rows.length, list };
+    S.tipFreq[key] = { n: S.rows.length, rev:S.tipRevision, list };
     return list;
   }
-  function typicalHtml(kind, c, fam, text) {
-    const list = tipsOrder(kind, fam);
+  function typicalHtml(kind, c, fam, text, device = "") {
+    const list = tipsOrder(kind, fam, device);
     const open = S.tipsOpen?.has(c);
     const more = list.filter((p, i) => i >= TIPS_SHOWN && !hasPhrase(text, p)).length;
     return `<div class="tchips${open ? " is-open" : ""}">${list.map((p, i) => `<button type="button" class="tchip${i >= TIPS_SHOWN && !hasPhrase(text, p) ? " tchip--more" : ""}" data-tip="${c}" data-text="${esc(p)}" aria-pressed="${hasPhrase(text, p)}">${esc(p)}</button>`).join("")}${
@@ -1246,7 +1281,7 @@
   // аккумулятора) или по основам слов её названия («профилактика», «прошивка»). Последние 4000 заказов, с кэшем.
   function opPopularity(fam) {
     const hit = (S.opPop ||= {})[fam];
-    if (hit && hit.n === S.rows.length) return hit.m;
+    if (hit && hit.n === S.rows.length && hit.rev === S.tipRevision) return hit.m;
     const ops = [...new Set((S.svc?.list || []).map(x => x.operation))];
     const stems = ops.map(op => norm(op).split(/[^a-zа-я0-9]+/).filter(w => w.length > 4 && w !== "замена").map(w => w.slice(0, 5)));
     const m = new Map();
@@ -1257,7 +1292,7 @@
       ops.forEach((op, i) => { if (stems[i].length && stems[i].every(st => w.includes(st))) seen.add(op); });
       for (const op of seen) m.set(op, (m.get(op) || 0) + 1);
     }
-    S.opPop[fam] = { n: S.rows.length, m };
+    S.opPop[fam] = { n: S.rows.length, rev:S.tipRevision, m };
     return m;
   }
   // ── работы под неисправность (v87, 25.10.2026) ───────────────────────────────────────────
@@ -1295,35 +1330,77 @@
     for (const h of hits) for (const op of h.ops) if (!rank.has(norm(op))) rank.set(norm(op), rank.size);
     return rank;
   }
+  function ppGroups(dev, query, issue) {
+    const q=norm(query||''), words=q.split(/\s+/).filter(Boolean), groups=new Map();
+    for(const [i,x] of (S.svc?.list||[]).entries()) {
+      if(dev?x.device!==dev:q.length<2)continue;
+      const text=norm(x.operation+' '+(x.variant||'')+' '+(dev?'':x.device));
+      if(words.length&&!words.every(w=>(PP_SYN.find(([re])=>re.test(w))?.[1]||[w,w.length>=5?w.slice(0,-1):w]).some(t=>text.includes(t))))continue;
+      const id=x.device+'|'+x.operation;if(!groups.has(id))groups.set(id,{id,device:x.device,operation:x.operation,indices:[]});groups.get(id).indices.push(i);
+    }
+    const rk=issueRank(issue),pop=opPopularity(familyOf(dev)),rank=o=>rk?.get(norm(o))??Infinity;
+    return [...groups.values()].sort((a,b)=>(rank(a.operation)-rank(b.operation))||(pop.get(b.operation)||0)-(pop.get(a.operation)||0));
+  }
+  function ppChoices(key, r, group) {
+    const {device:dev,operation:op}=group, list=S.svc?.list||[], rows=[];
+    list.forEach((x,i)=>{if(x.device===dev&&x.operation===op&&enterFit(group.enter||'',x.variant))rows.push({kind:'service',index:i,title:x.variant||cap(op),source:(SRC_NAME.find(([re])=>re.test(x.part_source||''))||[,x.part_source||'Прайс'])[1],cost:x.part_cost,price:x.price,work:x.work,service:x});});
+    if(!OP_PART[norm(op)])return rows;
+    const want=group.enter||'';
+    for(const o of suppList(dev,op))if(enterFit(want,o.f||o.t)&&!rows.some(r=>r.kind==='service'&&!o.a&&!o.u&&(!o.f||norm(o.f)===norm(o.t))&&norm(r.source)===norm(o.s)&&r.cost===o.c&&norm(r.title)===norm(o.t)))rows.push({kind:'supplier',source:o.s,title:o.f||o.t,cost:o.c,when:o.when,where:cmpWhere(o.s,o.t).a||'Остаток уточняется',offer:o});
+    const context=curDevText(),nodes=OP_STOCK[norm(op)],models=skModelsFor(context&&matchDevice(context)===dev?context:dev,dev),taken=new Map();
+    for(const p of partsOf(key,r))if(p.stock)taken.set(p.stock,(taken.get(p.stock)||0)+1);
+    if(nodes)for(const x of S.stock?.rows||[]){const free=x.qty-(taken.get(x.key)||0);if(free>0&&x.cost!=null&&models.includes(x.model)&&nodes.includes(norm(x.node))&&!skMacMismatch(dev,op,x)&&enterFit(want,x.variant))rows.push({kind:'stock',source:x.src||'Наш склад',title:skShort(x),cost:x.cost,where:'На нашей полке · '+free+' шт',stock:x.key,free});}
+    return rows;
+  }
+  function ppTariff(group, selected) {
+    const list=(S.svc?.list||[]).map((x,i)=>({x,i})).filter(({x})=>x.device===group.device&&x.operation===group.operation&&Number.isFinite(x.work));
+    if(selected!==''&&selected!=null)return list.find(({i})=>i===+selected)?.x||null;
+    return new Set(list.map(({x})=>x.work)).size===1?list[0]?.x:null;
+  }
+  function ppQuote(row, tariff, group) {
+    if(row.kind==='service')return row.service;
+    if(!tariff)return null;
+    const part_price=/^MacBook/.test(group.device)&&group.operation==='замена аккумулятора'?Math.ceil(row.cost/500)*500:row.cost;
+    return {device:group.device,operation:group.operation,variant:ppShort(row.title,group.device),work:tariff.work,part_cost:row.cost,part_price,
+      price:part_price!==row.cost?tariff.work+part_price:Math.ceil((tariff.work+row.cost)/100)*100,warranty_days:tariff.warranty_days};
+  }
+  function choosePriceOffer(key,r,i) {
+    const P=S.pp,row=P?.choices?.[i];if(!P?.group||!row)return;
+    const x=ppQuote(row,ppTariff(P.group,P.tariff),P.group);if(!x)return toast('Выберите вариант работы, чтобы рассчитать итог',null,true);
+    if(row.kind==='stock'&&!ppChoices(key,r,P.group).some(y=>y.stock===row.stock))return toast('Этой позиции уже нет в свободном остатке',null,true);
+    if(P.replacement){const old=P.replacement;P.replacement=null;removeService(key,r,old);}
+    addServiceObj(key,r,x,row.kind==='service'?null:{src:row.source,cost:row.cost,stock:row.stock||null,item:row.title});
+  }
+  function beginPartReplacement(key,r,i,source) {
+    const p=partsOf(key,r)[i],svc=p?.svcId&&(S.svcLog?.[key]||[]).find(s=>s.id===p.svcId);
+    if(!svc||!p.dev||!p.op)return false;
+    S.pp={key,open:true,dev:p.dev,group:{device:p.dev,operation:p.op},q:source||'',tariff:'',replacement:svc};S.cmp=null;
+    rerenderKeep();document.querySelector('.pp')?.scrollIntoView({block:'center',behavior:'smooth'});return true;
+  }
   function pricePickHtml(key, deviceText, issueText) {
-    const P = S.pp?.key === key ? S.pp : null;
-    if (!P?.open) return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppopen">📋 Работа из прайса</button>${svcLogHtml(key)}`;
-    if (!S.svc?.list) return `<div class="pp"><div class="note">${S.svc?.error ? "Прайс не загрузился: " + esc(S.svc.error) : "Загружаю прайс…"}</div></div>`;
-    const dev = P.dev ?? matchDevice(deviceText), q = norm(P.q || "");
-    // Поиск: слова запроса ищутся в работе и варианте; без модели — по всему прайсу (с моделью в строке).
-    // Слово запроса — с основой (v61): «матрица» находит «замена матрицы», «клавиатура» — «клавиатуры».
-    const alts = w => PP_SYN.find(([re]) => re.test(w))?.[1] || (w.length >= 5 ? [w, w.slice(0, -1)] : [w]);
-    const hit = x => { const t = norm(x.operation + " " + (x.variant || "") + (dev ? "" : " " + x.device)); return !q || q.split(" ").every(w => alts(w).some(a => t.includes(a))); };
-    // Частые у этой техники работы — сверху (v76), варианты одной работы остаются рядом в прежнем порядке.
-    const pop = opPopularity(familyOf(dev || deviceText));
-    // Под неисправность (v87) — выше всего; дальше как было: частые у этой техники, затем порядок прайса.
-    const rk = issueRank(issueText), rOf = op => rk?.has(norm(op)) ? rk.get(norm(op)) : Infinity;
-    const items = S.svc.list.map((x, i) => ({ x, i })).filter(({ x }) => (dev ? x.device === dev : q.length >= 2) && hit(x))
-      .sort((a, b) => (rOf(a.x.operation) - rOf(b.x.operation)) || (pop.get(b.x.operation) || 0) - (pop.get(a.x.operation) || 0) || a.i - b.i).slice(0, 80);
-    const fitN = items.filter(({ x }) => rOf(x.operation) < Infinity).length;
-    const secHtml = j => !fitN || fitN === items.length ? "" : j === 0 ? `<div class="pp__sub">🎯 Под неисправность</div>` : j === fitN ? `<div class="pp__sub">Остальные работы</div>` : "";
-    const hitX = x => !q || q.split(" ").every(w => alts(w).some(a => norm(x.operation + " " + x.variant + " " + x.src + " " + (x.title || "") + (x.kind === "stock" ? " склад наличие" : "")).includes(a)));
-    const extras = dev ? ppExtras(dev).filter(hitX).sort((a, b) => (rOf(a.operation) - rOf(b.operation)) || 0).slice(0, 60) : [];
-    P.extra = extras; // для нажатия: data-svx — номер в этом списке
-    return `<div class="pp"><div class="pp__head">${selHtml('data-act="ppdev"', dev || "", [{ v: "", t: "— модель из прайса —" }, ...S.svc.devices], "— модель из прайса —")}
-      <button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>
-      <input class="pp__q" data-act="ppq" value="${esc(P.q || "")}" placeholder="Поиск: дисплей, акб, oled…" autocomplete="off">
-      ${dev || q.length >= 2 ? (items.length || extras.length ? `<div class="pp__list">${ppXHtml(extras, x => x.kind === "stock", "📦 На нашем складе")}${items.map(({ x, i }, j) => `${secHtml(j)}<button type="button" class="pp__item" data-svc="${i}">
-        <b>${esc(cap(x.operation))}${x.variant ? ` <span class="note">${esc(x.variant)}</span>` : ""}${dev ? "" : ` <span class="note">· ${esc(x.device)}</span>`}</b>
-        <span>${x.price ? (x.price_is_from ? "от " : "") + money(x.price) : x.price_free ? "бесплатно" : x.work && (x.operation === "замена аккумулятора" || x.operation === "замена заднего стекла") ? (x.operation === "замена аккумулятора" ? "АКБ" : "Крышка") + " уточняется · работа " + money(x.work) : "цена по диагностике"}${x.work && x.part_cost ? ` <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_price || x.part_cost)}${x.part_price && x.part_price !== x.part_cost ? ` (закупка ${money(x.part_cost)})` : ""}${x.part_source ? " · " + esc((SRC_NAME.find(([re]) => re.test(x.part_source)) || [, x.part_source])[1]) : ""}</em>` : ""}${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("")}${ppXHtml(extras, x => x.kind !== "stock", "Другие поставщики")}</div>` : `<div class="note">${q ? "Ничего не нашлось." : "Для этой модели в прайсе работ нет."}</div>`)
-        : `<div class="note">Не узнал модель по полю «Устройство» — выберите из списка или ищите по всему прайсу.</div>`}
-      ${S.svc.costError ? `<p class="note">⚠️ Работа и закупка не загрузились (лист «${SVC_SHEET}»: ${esc(S.svc.costError)}) — цены клиенту верные, но без разбивки и без закупки запчасти.</p>` : ""}
-      <p class="note">Нажатие добавляет работу в «Выполненные работы», цену — к «Итого», запчасть — в список запчастей. Можно добавить несколько.</p></div>`;
+    const P=S.pp?.key===key?S.pp:null;
+    if(!P?.open)return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppopen">📋 Работа из прайса</button>${svcLogHtml(key)}`;
+    if(!S.svc?.list)return `<div class="pp"><p class="note">${S.svc?.error?'Прайс не загрузился: '+esc(S.svc.error):'Загружаю прайс…'}</p>${S.svc?.error?'<button type="button" class="linkbtn" data-act="ppretry">Повторить загрузку</button>':''}</div>`;
+    const dev=P.dev??matchDevice(deviceText),r=key==='new'?null:S.rows.find(x=>x.row===key);
+    if(P.group&&dev&&P.group.device!==dev){P.group=null;P.replacement=null;P.tariff='';P.q='';P.limit=60;}
+    const head=`<div class="pp__head">${selHtml('data-act="ppdev"',dev||'',[{v:'',t:'— модель из прайса —'},...S.svc.devices],'— модель из прайса —')}<button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>`;
+    const search=`<input class="pp__q" data-act="ppq" value="${esc(P.q||'')}" placeholder="${P.group?'Фильтр запчастей: качество, поставщик, артикул…':'Найти работу: дисплей, АКБ, перенос данных…'}" autocomplete="off">`;
+    const status=`${S.stock?.error?`<p class="note">Полка не загрузилась: ${esc(S.stock.error)}. <button type="button" class="linkbtn" data-act="ppretry">Повторить загрузку</button></p>`:''}${S.svc.costError?`<p class="note">Разбивка цены не загрузилась: ${esc(S.svc.costError)}. Готовые цены из прайса доступны.</p>`:''}${S.supp?.error?`<p class="note">Цены поставщиков не загрузились: ${esc(S.supp.error)}. <button type="button" class="linkbtn" data-act="ppretry">Повторить загрузку</button></p>`:S.supp?.loading?'<p class="note">Загружаю цены поставщиков…</p>':''}`;
+    let body;
+    if(!P.group){
+      const groups=P.groups=ppGroups(dev,P.q,issueText),limit=P.limit||60;
+      body=`<p class="pp__step"><b>1. Выберите работу</b> → 2. Выберите запчасть и источник</p>${search}<div class="pp__list">${groups.slice(0,limit).map((g,i)=>`<button type="button" class="pp__item" data-act="ppgroup" data-i="${i}"><b>${esc(cap(g.operation))}${dev?'':' · '+esc(g.device)}</b><span>${g.indices.length} вариант(ов) в прайсе</span><i>→</i></button>`).join('')}</div><p class="note">${groups.length?'Показано '+Math.min(groups.length,limit)+' из '+groups.length+' работ.':'Выберите модель или введите хотя бы два символа для поиска по всем устройствам.'}</p>${groups.length>limit?'<button type="button" class="linkbtn" data-act="ppmore">Показать ещё 60 работ</button>':''}`;
+    }else{
+      const g=P.group,all=ppChoices(key,r,g),tariff=ppTariff(g,P.tariff),rates=[...new Set(all.filter(o=>o.kind==='service'&&Number.isFinite(o.work)).map(o=>o.work))];
+      const rateOptions=[{v:'',t:rates.length===1?'Работа '+money(rates[0])+' — единый тариф':'— выберите вариант работы для других запчастей —'},...all.filter(o=>o.kind==='service'&&Number.isFinite(o.work)).map(o=>({v:String(o.index),t:o.title+' · работа '+money(o.work)}))];
+      const words=norm(P.q||'').split(/\s+/).filter(Boolean);P.choices=all.filter(o=>words.every(w=>norm(o.source+' '+o.title+' '+(o.offer?.t||'')+' '+o.cost+' '+o.where).includes(w))).sort((a,b)=>({stock:0,service:1,supplier:2}[a.kind]-{stock:0,service:1,supplier:2}[b.kind])||(a.cost??1e9)-(b.cost??1e9));
+      const limit=P.limit||60;
+      body=`<p class="pp__step"><button type="button" class="linkbtn" data-act="ppback">← К работам</button><b>2. ${esc(cap(g.operation))} · ${esc(g.device)}</b></p>${P.replacement?`<p class="note">Выбор заменит добавленную услугу «${esc(P.replacement.work)}» вместе с её запчастью и пересчитает итог.</p>`:""}${/клавиатур|топкейс/i.test(g.operation)?`<label class="field"><span>Клавиатура: форма Enter</span>${selHtml('data-act="ppenter"',g.enter||'',[{v:'',t:'Любой — выбрать по названию'},{v:'h',t:'Горизонтальный (US)'},{v:'v',t:'Вертикальный (UK / EU)'}])}</label><p class="note">У вариантов без пометки Enter раскладку нужно уточнить.</p>`:''}${OP_PART[norm(g.operation)]?`<label class="field pp__tariff"><span>Вариант работы для расчёта с другой запчастью</span>${selHtml('data-act="pptariff"',P.tariff||'',rateOptions,rates.length===1?'Работа '+money(rates[0])+' — единый тариф':'Выберите вариант работы')}</label>${!tariff?'<p class="note">Все закупочные цены показаны ниже. Для итоговой цены другой запчасти выберите тариф работы; готовые варианты прайса можно добавить сразу.</p>':''}`:''}${search}<div class="pp__list pp__offers">${P.choices.slice(0,limit).map((o,i)=>{
+        const x=ppQuote(o,tariff,g),total=x?.price,where=o.where||(o.kind==='service'?'Готовый вариант прайса · наличие уточняется':'Остаток уточняется');
+        return `<button type="button" class="pp__item${o.kind==='stock'?' is-stock':''}" data-act="ppquote" data-i="${i}" ${x?'':'disabled'}><b>${o.kind==='stock'?'📦 Наша полка · ':''}${esc(o.source)} · ${esc(o.title)}</b><span class="note">${esc(where)}${o.when?' · прайс от '+esc(o.when):''}</span><span>${o.cost!=null?'Закупка '+money(o.cost)+' · ':''}${x?.work!=null?'Работа '+money(x.work)+' · ':''}<strong>${total? 'Итого клиенту '+money(total):x?.price_free?'Бесплатно':x?'Цена по диагностике':'Итог — после выбора работы'}</strong></span><i>${x?(P.replacement?'↻':'＋'):'…'}</i></button>`;
+      }).join('')}</div><p class="note">${P.choices.length?'Показано '+Math.min(P.choices.length,limit)+' из '+P.choices.length+' предложений'+(words.length?' по фильтру':'')+'.':'По выбранной работе и фильтру предложений нет.'}</p>${P.choices.length>limit?'<button type="button" class="linkbtn" data-act="ppmore">Показать ещё 60 предложений</button>':''}<p class="note">Добавление заполнит выполненную работу, итог и выбранную запчасть. Наличие у поставщика уточняется перед заказом; полка спишется при сохранении.</p>`;
+    }
+    return `<div class="pp">${head}${body}${status}</div>${svcLogHtml(key)}`;
   }
   // ── «Работа из прайса» — и наш склад, и другие поставщики (v37, 02.10.2026) ─────────────
   // Владелец: «пока не выдаёт работы с запчастями от других поставщиков, кроме мосов». Прайс ремонта
@@ -1337,7 +1414,7 @@
     "замена нижнего шлейфа": ["нижний шлейф"], "замена разъёма зарядки": ["нижний шлейф"], "замена шлейфа": ["шлейф кнопок", "шлейф датчика приближения", "шлейф вспышки"],
     "замена динамика": ["слуховой динамик", "полифонический динамик"],
     // v60 — Mac: «быстрый поиск запчасти на складе, когда добавляешь работу из прайса».
-    "замена матрицы без крышки": ["матрица", "дисплей"], "замена клавиатуры": ["клавиатура", "топкейс"], "замена тачпада": ["тачпад"], "замена накопителя (ssd)": ["ssd"] };
+    "замена матрицы без крышки": ["матрица", "дисплей"], "замена задней крышки": ["задняя крышка", "заднее стекло"], "замена сенсора": ["тачскрин", "сенсор"], "замена клавиатуры": ["клавиатура", "топкейс"], "замена тачпада": ["тачпад"], "замена накопителя (ssd)": ["ssd"] };
   function ppWorkOf(dev, op) {
     const list = S.svc.list.filter(x => x.device === dev && x.operation === op && x.work);
     if (!list.length) return null;
@@ -1396,7 +1473,7 @@
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const work = cap(x.operation) + (x.variant ? ` (${x.variant})` : "");
     // Что добавили — запомнить (v79): «✕» убирает работу из «Выполненных работ», её цену из итога и запчасть разом.
-    const svc = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), work, base: x.price || 0 };
+    const svc = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), work, base: x.price || 0, beforeWarranty:val(C.warranty) };
     ((S.svcLog ||= {})[key] ||= []).push(svc);
     setDirty(key, C.work, addPhrase(val(C.work), work));
     if (x.price) {
@@ -1412,12 +1489,13 @@
       const cost = part ? part.cost : x.part_cost;
       const list = partsOf(key, r).filter(p => p.name || p.src || p.cost);
       const row = { name: partBase + (x.variant ? ` (${x.variant})` : ""), src, cost: cost ? String(cost) : "", dev: x.device, op: x.operation, var: x.variant || "", fromSvc: true, svcId: svc.id };
+      if (part?.item) row.item = part.item;
       if (part?.stock) row.stock = part.stock; // с нашей полки — спишется при сохранении, как кнопка «взять со склада»
       list.push(row);
       S.parts.set(key, list); syncParts(key);
     }
     const days = x.warranty_days, had = toNum(String(val(C.warranty)).match(/\d+/)?.[0]);
-    if (days && (had == null || days > had)) setDirty(key, C.warranty, days + " дней");
+    if (days && (had == null || days > had)) { svc.warrantySet = days + " дней"; setDirty(key, C.warranty, svc.warrantySet); }
     const y = window.scrollY; render(); window.scrollTo(0, y);
     toast(`Добавлено: ${work}${x.price ? " — " + (x.price_is_from ? "от " : "") + money(x.price) + ". Итого " + money(val(C.total)) : ""}`, null, true);
   }
@@ -1445,6 +1523,7 @@
     // вычитаем. Цена, вписанная в строку руками, итог не меняла — её не трогаем.
     const delta = mine.reduce((a, p) => a + (p.svcAdded || 0), 0);
     minusTotal(key, r, (svc.base || 0) + delta);
+    if(svc.warrantySet&&val(C.warranty)===svc.warrantySet&&(S.svcLog?.[key]||[]).length===1)setDirty(key,C.warranty,svc.beforeWarranty||"");
     const left = list.filter(p => !svc.id || p.svcId !== svc.id);
     if (left.length !== list.length) { S.parts.set(key, left.length ? left : [{ name: "", src: "", cost: "" }]); syncParts(key); }
     if (S.svcLog?.[key]) S.svcLog[key] = S.svcLog[key].filter(x => x.id !== svc.id);
@@ -1460,20 +1539,25 @@
     const hit = (S.svc?.list || []).find(x => x.device === dev && norm(x.operation) === norm(op) && norm(x.variant || "") === norm(variant));
     return { work, base: hit?.price || 0, guess: true };
   }
+  function serviceAmount(key,r,svc) {
+    return (svc.base||0)+partsOf(key,r).filter(p=>p.svcId===svc.id).reduce((n,p)=>n+(p.svcAdded||0),0);
+  }
   function svcLogHtml(key) {
     const log = S.svcLog?.[key] || []; if (!log.length) return "";
     // Цена — полем (v80): владелец — «после выбора этой работы из прайса я смог изменить цену этой работы».
-    return `<div class="svc-log"><span class="note">Из прайса:</span>${log.map(x => `<span class="chip svc-chip">${esc(x.work)} · <input class="svc-price" data-svcprice="${esc(x.id)}" value="${esc(x.base || "")}" inputmode="numeric" autocomplete="off" title="Цена работы — итог пересчитается"> ₽<button type="button" class="linkbtn" data-act="svcrm" data-id="${esc(x.id)}" title="Убрать из работ, итога и запчастей">✕</button></span>`).join("")}</div>
-      <p class="note svc-note">Цену работы можно поменять — итог пересчитается; «✕» убирает работу из работ, итога и запчастей.</p>`;
+    return `<div class="svc-log"><span class="note">Из прайса:</span>${log.map(x => `<span class="chip svc-chip">${esc(x.work)} · <input class="svc-price" data-svcprice="${esc(x.id)}" value="${esc(serviceAmount(key,key==="new"?null:S.rows.find(r=>r.row===key),x) || "")}" inputmode="numeric" autocomplete="off" title="Итог услуги вместе с выбранной запчастью — итог заказа пересчитается"> ₽<button type="button" class="linkbtn" data-act="svcrm" data-id="${esc(x.id)}" title="Убрать из работ, итога и запчастей">✕</button></span>`).join("")}</div>
+      <p class="note svc-note">Итог услуги вместе с запчастью можно поменять — сумма заказа пересчитается; «✕» убирает работу из работ, итога и запчастей.</p>`;
   }
 
   // Новая цена работы из прайса: итог −старая +новая (через baseOf/finalOf — скидка и наценка за оплату учтены).
   function repriceService(key, r, svc, price) {
     const val = valOf(key, r), d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total));
-    const base = Math.max(0, (q == null ? 0 : baseOf(q, d, pay)) - (svc.base || 0) + price);
+    const base = Math.max(0, (q == null ? 0 : baseOf(q, d, pay)) - serviceAmount(key,r,svc) + price);
     setDirty(key, C.total, base ? String(finalOf(base, d, pay)) : "");
     toast(`${svc.work}: ${money(svc.base || 0)} → ${money(price)} · итог ${money(val(C.total)) || "—"}`);
     svc.base = price;
+    for(const p of partsOf(key,r))if(p.svcId===svc.id)p.svcAdded=0;
+    syncParts(key);
   }
   document.addEventListener("change", e => {
     const id = e.target.dataset?.svcprice; if (id == null) return;
@@ -1948,7 +2032,7 @@
     [/ssd|накопител/, "замена накопителя (SSD)"], [/динамик/, "замена динамика"], [/разъ[её]м|зарядк/, "замена разъёма зарядки"], [/материнск|плата/, "замена материнской платы"]];
   const opOfPart = name => (PART_OP.find(([re]) => re.test(norm(name))) || [])[1] || "";
   async function loadSupplierPrices() {
-    if (S.supp?.map || S.supp?.loading) return;
+    if (S.supp?.map && !S.supp.error || S.supp?.loading) return;
     S.supp = { loading: true };
     try {
       const map = new Map(), put = (d, o, x) => { const k = d + "|" + o; if (!map.has(k)) map.set(k, []); map.get(k).push(x); };
@@ -1984,7 +2068,16 @@
     return String(S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, C.device) : "")).split("\n")[0];
   }
   function suppList(dev, op) {
-    const list = S.supp?.map?.get(dev + "|" + op) || [];
+    const mac=/^Mac|мак/i.test(dev),aliases=[op];
+    if(mac&&op==='замена матрицы без крышки')aliases.push('замена дисплея');
+    if(op==='замена разъёма зарядки')aliases.push('замена нижнего шлейфа');
+    const seen=new Set(),list=[];
+    for(const operation of aliases)for(const x of S.supp?.map?.get(dev+'|'+operation)||[]){
+      const matrix=/матриц/i.test(x.f||x.t);
+      if(mac&&op==='замена матрицы без крышки'&&!matrix)continue;
+      if(mac&&op==='замена дисплея'&&matrix)continue;
+      const id=[x.s,x.a,x.u,x.f||x.t,x.c].join('|');if(!seen.has(id)){seen.add(id);list.push(x);}
+    }
     if (!CANON_SKIP.includes(dev)) return list;
     const ws = devTokens(curDevText()); if (!ws.length) return [];
     // «Note 12 4G» не должна подхватывать «Note 12 Pro 4G»: слово-модификатор, которого нет в запросе, исключает позицию.
@@ -2036,12 +2129,9 @@
     return { dev, op, variant };
   }
   function supplierChipsHtml(key, r, p, i) {
-    if (!S.supp?.map || !String(p.name).trim()) return "";
-    const { dev, op, variant } = partMeta(p, key, r);
-    if (!dev || !op) return "";
-    const offers = supplierOffers(dev, op, variant, isKbd(p) ? enterOf(p.name) : "");
-    if (!offers.length) return "";
-    return `<div class="psup"><span class="note">${esc(dev)}:</span>${offers.map(x => `<button type="button" class="psup__c${norm(x.s) === norm(p.src) ? " is-on" : ""}" data-psup="${i}" data-s="${esc(x.s)}" data-c="${x.c}" data-t="${esc(x.t)}" title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">${esc(x.s)} <b>${money(x.c)}</b>${suppHere(x.t) ? ` <span class="psup__here">в Сочи</span>` : ""}</button>`).join("")}</div>`;
+    const {dev,op}=partMeta(p,key,r),all=dev&&op?suppList(dev,op).filter(x=>enterFit(isKbd(p)?enterOf(p.name):'',x.f||x.t)):[];
+    const groups=new Map();for(const x of all){if(!groups.has(x.s))groups.set(x.s,[]);groups.get(x.s).push(x);}
+    return groups.size?`<div class="psup"><span class="note">Предложения поставщиков:</span>${[...groups].map(([name,list])=>`<button type="button" class="psup__c" data-act="cmp" data-i="${i}" data-filter="${esc(name)}">${esc(name)} · от ${money(Math.min(...list.map(x=>x.c)))} <span class="note">(${list.length} вариант.)</span></button>`).join('')}</div>`:'';
   }
   // ── «Сравнить склады» по одной запчасти (v38, 02.10.2026) ──────────────────────────
   // Владелец: «ещё бы хорошо иметь кнопку „сравнить склады“ по определённой запчасти». Чипы
@@ -2054,8 +2144,8 @@
     const m = String(t || "").match(/в Сочи (\d+ шт|есть)/);
     if (m) return { a: m[0], here: true };
     if (/под заказ/.test(t)) return { a: "под заказ", here: false };
-    if (isVitalya(s)) return { a: "Ростов, 2–4 дня", here: false };
-    return { a: "", here: false };
+    if (isVitalya(s)) return { a: "Под заказ из Ростова · остаток уточняется", here: false };
+    return { a: "Остаток уточняется", here: false };
   };
   function compareHtml(key, r, p, i) {
     const open = S.cmp?.key === key && S.cmp.i === i;
@@ -2063,7 +2153,7 @@
     const stock = skCandidates(key, r, p, true) || [];
     const want = isKbd(p) ? enterOf(p.name) : "";
     const supp = ((dev && op && suppList(dev, op)) || []).filter(x => enterFit(want, x.f || x.t)); // Enter клавиатуры (v81)
-    if (!open) return (stock.length + supp.length) > 1 ? `<div class="cmp-open"><button type="button" class="linkbtn" data-act="cmp" data-i="${i}">⚖️ Сравнить склады${dev ? "" : ""} <span class="note">(${stock.length + supp.length})</span></button></div>` : "";
+    if (!open) return String(p.name).trim() ? `<div class="cmp-open"><button type="button" class="linkbtn" data-act="cmp" data-i="${i}">⚖️ Сравнить склады${dev ? "" : ""} <span class="note">(${stock.length + supp.length})</span></button></div>` : "";
     const words = norm(S.cmp.q || "").split(/\s+/).filter(Boolean);
     const vw = norm(variant).split(/[^a-zа-я0-9%]+/).filter(w => w.length > 1);
     const rows = [
@@ -2077,10 +2167,10 @@
     return `<div class="cmp"><div class="cmp__head"><b>⚖️ ${esc(dev || "модель не узнана")}${op ? " · " + esc(op) : ""}</b>
       <input class="cmp__q" data-act="cmpq" data-i="${i}" value="${esc(S.cmp.q || "")}" placeholder="Фильтр: soft, оригинал, 3750…" autocomplete="off">
       <button type="button" class="linkbtn" data-act="cmp" data-i="${i}">закрыть</button></div>
-      ${rows.length ? `<div class="cmp__list">${rows.slice(0, 150).map(x => `<button type="button" class="cmp__row${x.here ? " is-here" : ""}${cur(x) ? " is-on" : ""}${like(x) ? " is-like" : ""}" data-act="cmppick" data-i="${i}" data-s="${esc(x.src || "")}" data-c="${x.c ?? ""}" data-t="${esc(x.t || "")}"${x.stock ? ` data-k="${esc(x.k)}"` : ""} title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">
+      ${rows.length ? `<div class="cmp__list">${rows.slice(0, S.cmp.limit || 150).map(x => `<button type="button" class="cmp__row${x.here ? " is-here" : ""}${cur(x) ? " is-on" : ""}${like(x) ? " is-like" : ""}" data-act="cmppick" data-i="${i}" data-s="${esc(x.src || "")}" data-c="${x.c ?? ""}" data-t="${esc(x.t || "")}"${x.stock ? ` data-k="${esc(x.k)}"` : ""} title="${esc(x.t)}${x.when ? " · прайс от " + esc(x.when) : ""}">
         <span class="cmp__s">${esc(x.s)}</span><span class="cmp__t">${esc(x.t)}</span><span class="cmp__a">${esc(x.a)}</span><b>${x.c != null ? money(x.c) : "—"}</b></button>`).join("")}</div>
-      <p class="note">${rows.length} вариант(ов) у ${shops} источник(ов) · дешевле всего: <b>${esc(rows[0].s)}</b> ${rows[0].c != null ? money(rows[0].c) : ""}${vw.length ? " · подходящие по названию варианта подсвечены" : ""}</p>`
-      : `<div class="note">${words.length ? "По фильтру ничего не нашлось." : dev ? "Для этой детали предложений нет." : "Не узнал модель по полю «Устройство»."}</div>`}</div>`;
+      <p class="note">Показано ${Math.min(rows.length,S.cmp.limit||150)} из ${rows.length} вариант(ов) у ${shops} источник(ов) · дешевле всего: <b>${esc(rows[0].s)}</b> ${rows[0].c != null ? money(rows[0].c) : ""}${vw.length ? " · подходящие по названию варианта подсвечены" : ""}</p>`
+      : `<div class="note">${S.supp?.error ? "Не загрузились цены поставщиков: " + esc(S.supp.error) : S.supp?.loading ? "Цены поставщиков ещё загружаются…" : words.length ? "По фильтру ничего не нашлось." : dev ? "Для этой детали предложений нет." : "Не узнал модель по полю «Устройство»."}</div>`}${rows.length>(S.cmp.limit||150)?`<button type="button" class="linkbtn" data-act="cmpmore">Показать ещё 150 вариантов</button>`:""}${S.supp?.error?`<button type="button" class="linkbtn" data-act="supplierretry">Повторить загрузку цен</button>`:""}</div>`;
   }
 
   // Поставщик выбран: закупка — из индекса; у запчасти из прайса — и итог на разницу.
@@ -2090,7 +2180,7 @@
     p.src = supplier; p.cost = String(cost);
     // Название позиции в прайсе склада — для «Попросить отложить» (v56): складу понятнее его же строка.
     if (item) p.item = String(item).replace(/\s*·\s*(в Сочи|под заказ).*$/, "").trim(); else delete p.item;
-    if (p.stock && !skSrcMatch(supplier, S.stock?.byKey?.get(p.stock))) delete p.stock; // сменили поставщика — эта позиция склада уже не подходит
+    if (p.stock) delete p.stock; // сменили поставщика — эта позиция склада уже не подходит
     if (p.fromSvc) {
       const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
       const d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
@@ -2252,7 +2342,7 @@
     const p = partsOf(key, r)[i], x = S.stock?.byKey?.get(k); if (!p || !x) return null;
     if (!String(p.name).trim()) p.name = skShort(x);
     if (x.cost != null) applySupplier(key, r, i, x.src, x.cost); else { p.src = x.src; syncParts(key); }
-    p.stock = k;
+    p.stock = k; syncParts(key);
     return x;
   }
   // Выбрали поставщика: на полке ровно одна подходящая позиция от него — берём её сразу
@@ -3228,7 +3318,7 @@
         <div class="margin">${groupMoneySummary(dk)}</div></section>`);
     } else {
     const rep = dk === "repair" || dk === "other", fam = familyOf(val(C.device)), spp = dk === "sale_parts";
-    const tips = (kind, c) => rep && (isNew || editable(c, r)) ? typicalHtml(kind, c, fam, val(c)) : "";
+    const tips = (kind, c) => rep && (isNew || editable(c, r)) ? typicalHtml(kind, c, fam, val(c), val(C.device)) : "";
     html += `<section class="block"><h3>${rep ? "Ремонт" : spp ? "Запчасти" : "Устройство"}</h3>
       ${multiBox}${TIN_TYPES.includes(dk) && (isNew || editable(C.buyback, r)) ? tinBox(key, r) : ""}
       <div class="grid2"><div>${fh(C.device)}${isNew || editable(C.device, r) ? `<div class="ac" id="ac-dev"></div>` : ""}</div>${fh(C.imei)}</div>
@@ -4522,11 +4612,15 @@
     if (t.dataset.gpick != null) { if (!t.disabled) addGood(t.dataset.kind, +t.dataset.gpick); return; }
     if (t.dataset.act === "cmp") {
       const key = curKey(), i = +t.dataset.i;
-      S.cmp = S.cmp?.key === key && S.cmp.i === i ? null : { key, i, q: "" };
+      S.cmp = S.cmp?.key === key && S.cmp.i === i && !t.dataset.filter ? null : { key, i, q: t.dataset.filter || "", limit:150 };
+      if(S.cmp)Promise.all([loadServices(),loadSupplierPrices(),loadStock()]).then(()=>{if(S.cmp?.key===key)rerenderKeep();});
       const y = window.scrollY; render(); window.scrollTo(0, y); return;
     }
+    if(t.dataset.act==='cmpmore'){if(S.cmp){S.cmp.limit=(S.cmp.limit||150)+150;rerenderKeep();}return;}
+    if(t.dataset.act==='supplierretry'){S.supp=null;loadSupplierPrices().then(()=>rerenderKeep());return;}
     if (t.dataset.act === "cmppick") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), i = +t.dataset.i;
+      if(beginPartReplacement(key,r,i,t.dataset.s))return;
       if (t.dataset.k) { const x = skBind(key, r, i, t.dataset.k); if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`); }
       else if (t.dataset.c) { applySupplier(key, r, i, t.dataset.s, +t.dataset.c, t.dataset.t); toast(`${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[i]?.fromSvc ? " · итог пересчитан" : ""}`); }
       S.cmp = null; const y = window.scrollY; render(); window.scrollTo(0, y); return;
@@ -4547,6 +4641,11 @@
       t.closest(".tchips").querySelectorAll("[data-tip]").forEach(b => b.setAttribute("aria-pressed", String(hasPhrase(v, b.dataset.text))));
       refreshSaveBar(key); return;
     }
+    if(t.dataset.act==='ppgroup'){const P=S.pp,g=P?.groups?.[+t.dataset.i];if(g){P.group=g;P.q='';P.tariff='';P.limit=60;rerenderKeep();}return;}
+    if(t.dataset.act==='ppback'){if(S.pp){S.pp.group=null;S.pp.replacement=null;S.pp.q='';S.pp.limit=60;rerenderKeep();}return;}
+    if(t.dataset.act==='ppmore'){if(S.pp){S.pp.limit=(S.pp.limit||60)+60;rerenderKeep();}return;}
+    if(t.dataset.act==='ppquote'){const key=curKey();choosePriceOffer(key,key==='new'?null:S.byNum.get(location.hash.slice(2)),+t.dataset.i);return;}
+    if(t.dataset.act==='ppretry'){S.svc=null;S.supp=null;if(S.pp)S.pp.tariff='';Promise.all([loadServices(),loadSupplierPrices(),loadStock(true)]).then(()=>rerenderKeep());rerenderKeep();return;}
     if (t.dataset.svc != null) { const key = curKey(); addService(key, key === "new" ? null : S.byNum.get(location.hash.slice(2)), +t.dataset.svc); return; }
     if (t.dataset.svx != null) { const key = curKey(); addExtra(key, key === "new" ? null : S.byNum.get(location.hash.slice(2)), +t.dataset.svx); return; }
     if (t.dataset.q != null) { S.q = t.dataset.q; S.limit = 60; renderList(); return; }
@@ -4865,16 +4964,18 @@
       refreshSaveBar(key); return;
     }
     if (t.dataset.act === "cmpq") {
-      if (!S.cmp) return; S.cmp.q = t.value; const pos = t.selectionStart, y = window.scrollY;
+      if (!S.cmp) return; S.cmp.q = t.value; S.cmp.limit=150; const pos = t.selectionStart, y = window.scrollY;
       clearTimeout(onEdit.cq); onEdit.cq = setTimeout(() => { render(); window.scrollTo(0, y); const q = $app.querySelector(".cmp__q"); if (q) { q.focus({ preventScroll: true }); q.setSelectionRange(pos, pos); } }, 150);
       return;
     }
     if (t.dataset.act === "ppq") {
-      if (!S.pp) return; S.pp.q = t.value; const pos = t.selectionStart, y = window.scrollY;
+      if (!S.pp) return; S.pp.q = t.value; S.pp.limit=60; const pos = t.selectionStart, y = window.scrollY;
       clearTimeout(onEdit.pq); onEdit.pq = setTimeout(() => { render(); window.scrollTo(0, y); const q = $app.querySelector(".pp__q"); if (q) { q.focus({ preventScroll: true }); q.setSelectionRange(pos, pos); } }, 150);
       return;
     }
-    if (t.dataset.act === "ppdev") { if (e.type === "change" && S.pp) { S.pp.dev = t.value; const y = window.scrollY; render(); window.scrollTo(0, y); } return; }
+    if(t.dataset.act==="ppenter"){if(e.type==="change"&&S.pp?.group){S.pp.group.enter=t.value;S.pp.limit=60;rerenderKeep();}return;}
+    if (t.dataset.act === "pptariff") { if(e.type==="change"&&S.pp){S.pp.tariff=t.value;rerenderKeep();}return;}
+    if (t.dataset.act === "ppdev") { if (e.type === "change" && S.pp) { S.pp.dev = t.value; S.pp.group=null; S.pp.replacement=null; S.pp.tariff=""; S.pp.q=""; S.pp.limit=60; const y = window.scrollY; render(); window.scrollTo(0, y); } return; }
     if (t.dataset.part != null) {
       const key = curKey(); if (key == null) return;
       const r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
@@ -4882,17 +4983,6 @@
       if (e.type === "change") { if (t.dataset.pf === "name" && isKbd({ name: t.value })) rerenderKeep(); return; }
       partsOf(key, r)[+t.dataset.part][t.dataset.pf] = t.value;
       if (t.dataset.pf === "src") { const pp = partsOf(key, r)[+t.dataset.part]; if (pp.stock && !skSrcMatch(t.value, S.stock?.byKey?.get(pp.stock))) delete pp.stock; }
-      if (t.dataset.pf === "src" && S.supp?.map) {
-        const p = partsOf(key, r)[+t.dataset.part], m = partMeta(p, key, r);
-        const hit = m.dev && m.op ? supplierOffers(m.dev, m.op, m.variant).find(x => norm(x.s) === norm(t.value)) : null;
-        if (hit && String(hit.c) !== String(p.cost)) {
-          applySupplier(key, r, +t.dataset.part, hit.s, hit.c);
-          const sk = skAuto(key, r, +t.dataset.part, hit.t);
-          const y = window.scrollY; render(); window.scrollTo(0, y);
-          if (sk) toast(`📦 Со склада: ${skShort(sk)}${skFrom(sk)} — спишется при сохранении`);
-          return;
-        }
-      }
       syncParts(key);
       const { S: sum } = composeParts(S.parts.get(key));
       const note = $app.querySelector("[data-parts-note]"); if (note && sum != null) note.innerHTML = `Закупка всего: <b>${money(sum)}</b>`;
