@@ -26,7 +26,7 @@
     scope: "openid email https://www.googleapis.com/auth/spreadsheets",
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
-    lastCol: "AQ", // AQ — «Напоминание: стоп»; // AP — результат автоматического подбора; // AO «Напоминание: данные» (08.11.2026); // AM–AN «Предоплата» (24.10.2026, v77); AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
+    lastCol: "AR", // AR — «Услуги: данные»; AQ — «Напоминание: стоп»; // AP — результат автоматического подбора; // AO «Напоминание: данные» (08.11.2026); // AM–AN «Предоплата» (24.10.2026, v77); AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
     // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
@@ -69,7 +69,7 @@
     payment: 35, // AJ «Оплата» (v62, 09.10.2026): наличные / перевод / карта или QR / счёт на организацию
     tradein: 36, // AK «Трейд-ин» (v71, 17.10.2026): сданные в зачёт устройства продажи, по строке на устройство
     pawnUntil: 37, // AL «Залог: выкупить до» (v73, 22.10.2026) — дата, до которой клиент выкупает устройство
-    prepay: 38, prepayKind: 39, reminder: 40, reminderRun: 41, reminderStop: 42 }; // AM «Предоплата, ₽», AN «Предоплата: частичная / полная» (v77, 24.10.2026)
+    prepay: 38, prepayKind: 39, reminder: 40, reminderRun: 41, reminderStop: 42, serviceMeta: 43 }; // AR — сохранённые суммы услуг и связи деталей;  AM «Предоплата, ₽», AN «Предоплата: частичная / полная» (v77, 24.10.2026)
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -488,6 +488,10 @@
     S.loading = false; render();
   }
   function setRows(list) {
+    const cached=new Set([...S.parts.keys(),...Object.keys(S.svcLog||{}).filter(k=>/^\d+$/.test(k)).map(Number)]);
+    for(const key of cached)if(key!=='new'&&![...S.dirty.keys()].some(k=>k.startsWith(key+':'))&&!(S.parts.get(key)||[]).some(p=>p.stock&&!p.stockRestored)){
+      S.parts.delete(key);if(S.svcLog)delete S.svcLog[key];if(S.partsSum)delete S.partsSum[key];
+    }
     // Строка — заказ, если есть номер И хоть что-то ещё: номера в таблице проставлены
     // заранее на сотни строк вперёд, и пустые заготовки не должны попадать в «В работе».
     S.rows = list.filter(r => String(r.cells[C.num] ?? "").trim() &&
@@ -1348,7 +1352,7 @@
     const want=group.enter||'';
     for(const o of suppList(dev,op))if(enterFit(want,o.f||o.t)&&!rows.some(r=>r.kind==='service'&&!o.a&&!o.u&&(!o.f||norm(o.f)===norm(o.t))&&norm(r.source)===norm(o.s)&&r.cost===o.c&&norm(r.title)===norm(o.t)))rows.push({kind:'supplier',source:o.s,title:o.f||o.t,cost:o.c,when:o.when,where:cmpWhere(o.s,o.t).a||'Остаток уточняется',offer:o});
     const context=curDevText(),nodes=OP_STOCK[norm(op)],models=skModelsFor(context&&matchDevice(context)===dev?context:dev,dev),taken=new Map();
-    for(const p of partsOf(key,r))if(p.stock)taken.set(p.stock,(taken.get(p.stock)||0)+1);
+    for(const p of partsOf(key,r))if(p.stock&&!p.stockRestored)taken.set(p.stock,(taken.get(p.stock)||0)+1);
     if(nodes)for(const x of S.stock?.rows||[]){const free=x.qty-(taken.get(x.key)||0);if(free>0&&x.cost!=null&&models.includes(x.model)&&nodes.includes(norm(x.node))&&!skMacMismatch(dev,op,x)&&enterFit(want,x.variant))rows.push({kind:'stock',source:x.src||'Наш склад',title:skShort(x),cost:x.cost,where:'На нашей полке · '+free+' шт',stock:x.key,free});}
     return rows;
   }
@@ -1377,10 +1381,14 @@
     S.pp={key,open:true,dev:p.dev,group:{device:p.dev,operation:p.op},q:source||'',tariff:'',replacement:svc};S.cmp=null;
     rerenderKeep();document.querySelector('.pp')?.scrollIntoView({block:'center',behavior:'smooth'});return true;
   }
+  function serviceActionsHtml(key, open) {
+    const expanded=!!S.svcInfoOpen?.has(key);
+    return `<div class="svc-actions"><button type="button" class="btn btn--ghost btn--sm" data-act="${open?'ppclose':'ppopen'}" aria-expanded="${!!open}">📋 Работа из прайса</button><button type="button" class="btn btn--ghost btn--sm" data-act="svchelp" aria-expanded="${expanded}" aria-controls="svc-help-${esc(key)}">ⓘ Как изменить услугу</button></div><p class="note svc-note" id="svc-help-${esc(key)}" ${expanded?'':'hidden'}>Итог услуги вместе с запчастью можно поменять — сумма заказа пересчитается; «✕» убирает работу из работ, итога и запчастей.</p>`;
+  }
   function pricePickHtml(key, deviceText, issueText) {
     const P=S.pp?.key===key?S.pp:null;
-    if(!P?.open)return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppopen">📋 Работа из прайса</button>${svcLogHtml(key)}`;
-    if(!S.svc?.list)return `<div class="pp"><p class="note">${S.svc?.error?'Прайс не загрузился: '+esc(S.svc.error):'Загружаю прайс…'}</p>${S.svc?.error?'<button type="button" class="linkbtn" data-act="ppretry">Повторить загрузку</button>':''}</div>`;
+    if(!P?.open)return serviceActionsHtml(key,false)+svcLogHtml(key);
+    if(!S.svc?.list)return serviceActionsHtml(key,true)+`<div class="pp"><p class="note">${S.svc?.error?'Прайс не загрузился: '+esc(S.svc.error):'Загружаю прайс…'}</p>${S.svc?.error?'<button type="button" class="linkbtn" data-act="ppretry">Повторить загрузку</button>':''}</div>`;
     const dev=P.dev??matchDevice(deviceText),r=key==='new'?null:S.rows.find(x=>x.row===key);
     if(P.group&&dev&&P.group.device!==dev){P.group=null;P.replacement=null;P.tariff='';P.q='';P.limit=60;}
     const head=`<div class="pp__head">${selHtml('data-act="ppdev"',dev||'',[{v:'',t:'— модель из прайса —'},...S.svc.devices],'— модель из прайса —')}<button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>`;
@@ -1400,7 +1408,7 @@
         return `<button type="button" class="pp__item${o.kind==='stock'?' is-stock':''}" data-act="ppquote" data-i="${i}" ${x?'':'disabled'}><b>${o.kind==='stock'?'📦 Наша полка · ':''}${esc(o.source)} · ${esc(o.title)}</b><span class="note">${esc(where)}${o.when?' · прайс от '+esc(o.when):''}</span><span>${o.cost!=null?'Закупка '+money(o.cost)+' · ':''}${x?.work!=null?'Работа '+money(x.work)+' · ':''}<strong>${total? 'Итого клиенту '+money(total):x?.price_free?'Бесплатно':x?'Цена по диагностике':'Итог — после выбора работы'}</strong></span><i>${x?(P.replacement?'↻':'＋'):'…'}</i></button>`;
       }).join('')}</div><p class="note">${P.choices.length?'Показано '+Math.min(P.choices.length,limit)+' из '+P.choices.length+' предложений'+(words.length?' по фильтру':'')+'.':'По выбранной работе и фильтру предложений нет.'}</p>${P.choices.length>limit?'<button type="button" class="linkbtn" data-act="ppmore">Показать ещё 60 предложений</button>':''}<p class="note">${OP_PART[norm(g.operation)]?"Добавление заполнит выполненную работу, итог и выбранную запчасть. Наличие у поставщика уточняется перед заказом; полка спишется при сохранении.":"Добавление заполнит выполненную работу и прибавит её цену к итогу заказа."}</p>`;
     }
-    return `<div class="pp">${head}${body}${status}</div>${svcLogHtml(key)}`;
+    return serviceActionsHtml(key,true)+`<div class="pp">${head}${body}${status}</div>${svcLogHtml(key)}`;
   }
   // ── «Работа из прайса» — и наш склад, и другие поставщики (v37, 02.10.2026) ─────────────
   // Владелец: «пока не выдаёт работы с запчастями от других поставщиков, кроме мосов». Прайс ремонта
@@ -1517,7 +1525,8 @@
   }
   function removeService(key, r, svc) {
     const val = valOf(key, r);
-    if (hasPhrase(val(C.work), svc.work)) setDirty(key, C.work, removePhrase(val(C.work), svc.work));
+    if(svc.base==null){toast("Сначала укажите сумму услуги, чтобы убрать её из итога",null,true);return;}
+    if (hasServiceText(val(C.work), svc.work)) setDirty(key, C.work, removeServiceText(val(C.work), svc.work));
     const list = partsOf(key, r), mine = svc.id ? list.filter(p => p.svcId === svc.id) : [];
     // Деталь могли сменить у поставщика после добавления — эта разница попала в итог (applySupplier: svcAdded), её тоже
     // вычитаем. Цена, вписанная в строку руками, итог не меняла — её не трогаем.
@@ -1539,32 +1548,73 @@
     const hit = (S.svc?.list || []).find(x => x.device === dev && norm(x.operation) === norm(op) && norm(x.variant || "") === norm(variant));
     return { work, base: hit?.price || 0, guess: true };
   }
+  function serviceTextPattern(work) {
+    const phrase=String(work||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\s+/g,'\\s+');
+    return new RegExp('(^|[.;\\n]\\s*)'+phrase+'(?=$|[.;\\n])','i');
+  }
+  const hasServiceText=(text,work)=>serviceTextPattern(work).test(String(text||''));
+  const removeServiceText=(text,work)=>String(text||'').replace(serviceTextPattern(work),'').replace(/^[.;\s]+|[.;\s]+$/g,'');
+  function serviceValues(key,r) {
+    return c=>S.dirty.has(key+':'+c)?S.dirty.get(key+':'+c):(r?cell(r,c):'');
+  }
+  function serviceBasis(key,r) {
+    const v=serviceValues(key,r),text=x=>String(x??'').replace(/\r\n/g,'\n').trim();
+    const identity=norm(String(v(C.name)||'').split('\n')[0])+'|'+(phones(v(C.phone))[0]?.d||String(v(C.phone)||'').replace(/\D/g,'')),stamp=seed=>{let n=seed;for(const ch of identity)n=Math.imul(n^ch.charCodeAt(0),16777619);return (n>>>0).toString(36);};
+    return {work:text(v(C.work)),parts:text(v(C.parts)),from:text(v(C.partFrom)),cost:toNum(v(C.partCost)),client:stamp(2166136261)+'-'+stamp(2246822519)};
+  }
+  function storedServices(key,r) {
+    if(!['repair','other'].includes(dealKey(serviceValues(key,r)(C.type))))return null;
+    try{const m=JSON.parse(serviceValues(key,r)(C.serviceMeta)||'null');return m?.v===1&&Array.isArray(m.services)&&Array.isArray(m.parts)&&m.basis&&m.basis.client===serviceBasis(key,r).client?m:null;}catch{return null;}
+  }
+  function servicesOf(key,r) {
+    S.svcLog ||= {};if(Object.prototype.hasOwnProperty.call(S.svcLog,key))return S.svcLog[key];
+    const v=serviceValues(key,r),basis=serviceBasis(key,r),m=storedServices(key,r);
+    if(m&&m.basis.work===basis.work&&m.services.every(s=>s&&typeof s.id==='string'&&typeof s.work==='string'&&(s.base===null||Number.isFinite(s.base)&&s.base>=0))){
+      return S.svcLog[key]=m.services.map(s=>({...s}));
+    }
+    if(!r)return S.svcLog[key]=[];
+    const phrases=String(v(C.work)||'').split(/[;\n]+|(?<!\d)\.|\.(?!\d)/).map(s=>s.trim()).filter(Boolean),total=baseOf(toNum(v(C.total)),parseDiscount(v(C.discount)),v(C.payment));
+    return S.svcLog[key]=phrases.map((work,i)=>({id:'legacy-'+r.row+'-'+i,work,base:phrases.length===1?total:null,legacy:true}));
+  }
+  function stageServiceMeta(key,r) {
+    const v=serviceValues(key,r);if(!['repair','other'].includes(dealKey(v(C.type))))return;
+    const services=servicesOf(key,r).filter(s=>hasServiceText(v(C.work),s.work));
+    if(!services.length&&!v(C.serviceMeta))return;
+    const data={v:1,basis:serviceBasis(key,r),services,parts:partsOf(key,r).map(({stockRestored,...p})=>p)};
+    setDirty(key,C.serviceMeta,JSON.stringify(data));
+  }
   function serviceAmount(key,r,svc) {
-    return (svc.base||0)+partsOf(key,r).filter(p=>p.svcId===svc.id).reduce((n,p)=>n+(p.svcAdded||0),0);
+    if(svc.base==null)return null;
+    return svc.base+partsOf(key,r).filter(p=>p.svcId===svc.id).reduce((n,p)=>n+(p.svcAdded||0),0);
   }
   function svcLogHtml(key) {
-    const log = S.svcLog?.[key] || []; if (!log.length) return "";
+    const r=key==="new"?null:S.rows.find(x=>x.row===key),log=servicesOf(key,r); if (!log.length) return "";
     // Цена — полем (v80): владелец — «после выбора этой работы из прайса я смог изменить цену этой работы».
-    return `<div class="svc-log">${log.map(x => `<span class="chip svc-chip">${esc(x.work)} · <input class="svc-price" data-svcprice="${esc(x.id)}" value="${esc(serviceAmount(key,key==="new"?null:S.rows.find(r=>r.row===key),x) || "")}" inputmode="numeric" autocomplete="off" title="Итог услуги вместе с выбранной запчастью — итог заказа пересчитается"> ₽<button type="button" class="linkbtn" data-act="svcrm" data-id="${esc(x.id)}" title="Убрать из работ, итога и запчастей">✕</button></span>`).join("")}
-      <details class="svc-help"><summary class="linkbtn">ⓘ Как изменить услугу</summary><p class="note svc-note">Итог услуги вместе с запчастью можно поменять — сумма заказа пересчитается; «✕» убирает работу из работ, итога и запчастей.</p></details></div>`;
+    return `<div class="svc-log">${log.map(x => `<span class="chip svc-chip">${esc(x.work)} · <input class="svc-price" data-svcprice="${esc(x.id)}" value="${esc(serviceAmount(key,r,x) ?? "")}" inputmode="numeric" autocomplete="off" title="Итог услуги вместе с выбранной запчастью — итог заказа пересчитается"> ₽<button type="button" class="linkbtn" data-act="svcrm" data-id="${esc(x.id)}" title="Убрать из работ, итога и запчастей">✕</button></span>`).join("")}</div>${log.some(s=>s.base==null)?`<p class="note">Общий итог сохранён. Укажите суммы всех услуг, чтобы пересчитать его по этой разбивке.</p>`:""}`;
   }
 
   // Новая цена работы из прайса: итог −старая +новая (через baseOf/finalOf — скидка и наценка за оплату учтены).
   function repriceService(key, r, svc, price) {
     const val = valOf(key, r), d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total));
+    const log=servicesOf(key,r);
+    if(log.some(s=>s.base==null)){
+      svc.base=price;
+      if(log.every(s=>s.base!=null))setDirty(key,C.total,String(finalOf(log.reduce((n,s)=>n+(serviceAmount(key,r,s)||0),0),d,pay)));
+      stageServiceMeta(key,r);refreshSaveBar(key);return;
+    }
     const base = Math.max(0, (q == null ? 0 : baseOf(q, d, pay)) - serviceAmount(key,r,svc) + price);
     setDirty(key, C.total, base ? String(finalOf(base, d, pay)) : "");
     toast(`${svc.work}: ${money(svc.base || 0)} → ${money(price)} · итог ${money(val(C.total)) || "—"}`);
     svc.base = price;
     for(const p of partsOf(key,r))if(p.svcId===svc.id)p.svcAdded=0;
-    syncParts(key);
+    syncParts(key);stageServiceMeta(key,r);
   }
   document.addEventListener("change", e => {
     const id = e.target.dataset?.svcprice; if (id == null) return;
-    const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), svc = (S.svcLog?.[key] || []).find(x => x.id === id);
+    const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), svc = servicesOf(key,r).find(x => x.id === id);
     const price = toNum(e.target.value);
     if (!svc || price == null || price < 0) { if (svc) e.target.value = svc.base || ""; return; }
-    if (price !== (svc.base || 0)) { repriceService(key, r, svc, price); if (key === "new") saveDraft(); refreshSaveBar(key); rerenderKeep(); }
+    if (price !== serviceAmount(key,r,svc)) { repriceService(key, r, svc, price); if (key === "new") saveDraft(); refreshSaveBar(key); rerenderKeep(); }
   });
 
   // ── запчасти списком: название · откуда · закупка (v18) ─────────────────────
@@ -1606,7 +1656,12 @@
   function partsOf(key, r) {
     if (!S.parts.has(key)) {
       const v = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
-      const list = parseParts(v(C.parts), v(C.partFrom), v(C.partCost));
+      const basis=serviceBasis(key,r),m=storedServices(key,r);
+      const same=m&&m.basis.parts===basis.parts&&m.basis.from===basis.from&&m.basis.cost===basis.cost;
+      const list=same?m.parts.map(p=>({...p,...(p.stock?{stockRestored:true}:{})})):parseParts(v(C.parts),v(C.partFrom),v(C.partCost));
+      const log=r?servicesOf(key,r):(S.svcLog?.[key]||[]),ids=new Set(log.map(s=>s.id));
+      for(const p of list)if(p.svcId&&!ids.has(p.svcId)){delete p.svcId;delete p.fromSvc;delete p.svcAdded;}
+      if(log.length===1)for(const p of list){p.svcId=log[0].id;p.fromSvc=true;}
       S.parts.set(key, list.length ? list : [{ name: "", src: "", cost: "" }]);
       // S взята из списка (одна запчасть с ценой = S) — при очистке списка её надо очищать (v78, syncParts).
       const comp = composeParts(list).S;
@@ -2180,7 +2235,7 @@
     p.src = supplier; p.cost = String(cost);
     // Название позиции в прайсе склада — для «Попросить отложить» (v56): складу понятнее его же строка.
     if (item) p.item = String(item).replace(/\s*·\s*(в Сочи|под заказ).*$/, "").trim(); else delete p.item;
-    if (p.stock) delete p.stock; // сменили поставщика — эта позиция склада уже не подходит
+    if (p.stock) delete p.stock; delete p.stockRestored; // сменили поставщика — эта позиция склада уже не подходит
     if (p.fromSvc) {
       const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
       const d = parseDiscount(val(C.discount)), q = toNum(val(C.total));
@@ -2334,15 +2389,16 @@
     const models = skModelsFor(val(C.device), p.dev);
     if (!models.length) return null;
     const nodes = skNodesOf(p.name), taken = new Map();
-    for (const q of partsOf(key, r)) if (q !== p && q.stock) taken.set(q.stock, (taken.get(q.stock) || 0) + 1);
+    for (const q of partsOf(key, r)) if (q !== p && q.stock && !q.stockRestored) taken.set(q.stock, (taken.get(q.stock) || 0) + 1);
     return S.stock.rows.filter(x => models.includes(x.model) && (!nodes || nodes.includes(norm(x.node))) && !skMacMismatch(val(C.device), p.name, x) && (anySrc || skSrcMatch(p.src, x)))
       .map(x => ({ ...x, free: x.qty - (taken.get(x.key) || 0) })).filter(x => x.free > 0);
   }
   function skBind(key, r, i, k) {
     const p = partsOf(key, r)[i], x = S.stock?.byKey?.get(k); if (!p || !x) return null;
+    const sameSaved=p.stock===k&&p.stockRestored;
     if (!String(p.name).trim()) p.name = skShort(x);
     if (x.cost != null) applySupplier(key, r, i, x.src, x.cost); else { p.src = x.src; syncParts(key); }
-    p.stock = k; syncParts(key);
+    p.stock = k; if(sameSaved)p.stockRestored=true;else delete p.stockRestored; syncParts(key);
     return x;
   }
   // Выбрали поставщика: на полке ровно одна подходящая позиция от него — берём её сразу
@@ -2358,7 +2414,7 @@
     if (r && skWrittenOff(cell(r, C.num)).some(w => w.key === c[0].key)) return null; // уже списывали в этот заказ — пусть решат кнопкой
     return skBind(key, r, i, c[0].key);
   }
-  const skPending = key => (S.parts.get(key) || []).filter(p => p.stock && skSrcMatch(p.src, S.stock?.byKey?.get(p.stock))).map(p => ({ key: p.stock, name: String(p.name).trim() }));
+  const skPending = key => (S.parts.get(key) || []).filter(p => p.stock && !p.stockRestored && skSrcMatch(p.src, S.stock?.byKey?.get(p.stock))).map(p => ({ key: p.stock, name: String(p.name).trim() }));
   // Сколько каждой позиции списано в заказ: сумма движения по номеру заказа.
   function skWrittenOff(num) {
     const n = String(num ?? "").trim(), net = new Map();
@@ -2557,7 +2613,7 @@
     if (!S.stock?.rows) return "";
     const bound = p.stock && S.stock.byKey.get(p.stock);
     if (bound && skSrcMatch(p.src, bound))
-      return `<div class="psk is-on">📦 Со склада: <b>${esc(skShort(bound) + skFrom(bound))}</b> — спишется при сохранении<button type="button" class="linkbtn" data-act="skunbind" data-i="${i}">не со склада</button></div>`;
+      return `<div class="psk is-on">📦 Со склада: <b>${esc(skShort(bound) + skFrom(bound))}</b> — ${p.stockRestored?(r&&skWrittenOff(cell(r,C.num)).some(w=>w.key===p.stock)?"уже списана со склада":"сохранённая привязка; списание проверьте по журналу"):"спишется при сохранении"}<button type="button" class="linkbtn" data-act="skunbind" data-i="${i}">${p.stockRestored?"убрать привязку":"не со склада"}</button></div>`;
     if (!norm(p.src) && !String(p.name).trim()) return ""; // пустая строка — не подсказываем
     if (skCovered(key, r).has(i)) return `<div class="psk is-on"><span>📦 уже списана со склада</span></div>`;
     const c = skCandidates(key, r, p);
@@ -3325,7 +3381,7 @@
       <div class="wide-area">${fh(C.issue)}${tips("issue", C.issue)}</div>
       <div class="wide-area">${fh(C.work)}${tips("work", C.work)}${rep && (isNew || editable(C.work, r)) ? pricePickHtml(key, val(C.device), val(C.issue)) : ""}</div>
       ${spp ? `<div class="field field--parts"><span>Что продаём — со склада или от поставщика</span>${(isNew || editable(C.parts, r)) ? spPickHtml(key, r) : ""}${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
-        : rep ? `<div class="field field--parts"><span>Запчасти <small class="note">(клиенту в отчёте уходят только названия)</small></span>${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
+        : rep ? `<div class="field field--parts">${partsHtml(key, r)}</div><div class="grid3">${fh(C.warranty)}</div>`
         : `<div class="grid3">${fh(C.parts)}${fh(C.partFrom)}${fh(C.warranty)}</div>`}
       ${dk === "sale_used" || String(val(C.linked)).trim() ? fh(C.linked) : ""}
       ${dk === "pawn" && !isNew ? pawnActionsHtml(r) : ""}
@@ -3883,10 +3939,10 @@
     if (S.trashOk) return;
     const meta = await api("?fields=sheets(properties(sheetId,title,gridProperties(columnCount)))");
     const trash = meta.sheets.find(x => x.properties.title === TRASH)?.properties;
-    if (trash && trash.gridProperties.columnCount < C.reminderStop + 4) await api(":batchUpdate", { method:"POST", body:JSON.stringify({requests:[{appendDimension:{sheetId:trash.sheetId,dimension:"COLUMNS",length:C.reminderStop + 4 - trash.gridProperties.columnCount}}]}) });
+    if (trash && trash.gridProperties.columnCount < C.serviceMeta + 4) await api(":batchUpdate", { method:"POST", body:JSON.stringify({requests:[{appendDimension:{sheetId:trash.sheetId,dimension:"COLUMNS",length:C.serviceMeta + 4 - trash.gridProperties.columnCount}}]}) });
     if (!trash) {
-      await api(":batchUpdate", { method: "POST", body: JSON.stringify({ requests: [{ addSheet: { properties: { title: TRASH, gridProperties: { frozenRowCount: 1, columnCount: C.reminderStop + 4 } } } }] }) });
-      const head = (await api(`/values/${A1(0, 1, C.reminderStop, 1)}`)).values?.[0] || [];
+      await api(":batchUpdate", { method: "POST", body: JSON.stringify({ requests: [{ addSheet: { properties: { title: TRASH, gridProperties: { frozenRowCount: 1, columnCount: C.serviceMeta + 4 } } } }] }) });
+      const head = (await api(`/values/${A1(0, 1, C.serviceMeta, 1)}`)).values?.[0] || [];
       await api(`/values/${encodeURIComponent(`'${TRASH}'!A1`)}?valueInputOption=RAW`, { method: "PUT", body: JSON.stringify({ values: [["Когда удалён", "Кто удалил", "Строка", ...head.map(String)]] }) });
     }
     S.trashOk = true;
@@ -3902,14 +3958,14 @@
     try {
       // До последней колонки (v71). *Исправлено 17.10.2026:* раньше копия и очистка шли до AG, и «На связи» (AH–AI),
       // «Оплата» (AJ) оставались в строке — новый заказ, легший в неё, унаследовал бы чужой контакт «На связи».
-      const LAST = C.reminderStop; // последняя колонка листа (v77: AN «Предоплата: вид»)
+      const LAST = C.serviceMeta; // последняя колонка листа (v77: AN «Предоплата: вид»)
       let raw = r.cells.slice(0, LAST + 1);
       if (!DEMO) {
         const chk = await api(`/values/${A1(0, r.row)}`);
         if (String(chk.values?.[0]?.[0] ?? "").trim() !== String(num)) throw new Error("Строка в таблице сдвинулась — обновите список (⟳) и повторите");
         raw = (await api(`/values/${A1(0, r.row, LAST, r.row)}?valueRenderOption=FORMULA`)).values?.[0] || [];
         await ensureTrash();
-        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AT`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+        await api(`/values/${encodeURIComponent(`'${TRASH}'!A:AU`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
           { method: "POST", body: JSON.stringify({ values: [[mskStamp(), S.email || "", r.row, ...raw.map(v => String(v ?? ""))]] }) });
         await api("/values:batchClear", { method: "POST", body: JSON.stringify({ ranges: [`'${CFG.sheet}'!B${r.row}:Q${r.row}`, `'${CFG.sheet}'!S${r.row}:${LETTER(LAST)}${r.row}`] }) });
         await logStatus([[r.row, cell(r, C.status), "Удалён"]]);
@@ -4052,6 +4108,7 @@
     for (const k of [...S.dirty.keys()]) if (k.startsWith("new:")) S.dirty.delete(k);
     S.parts.delete("new"); delete S.tins.new;
     if (S.svcLog) delete S.svcLog.new;
+    S.svcInfoOpen?.delete("new");
     if (S.discUnit) delete S.discUnit.new;
     if (S.hold) for (const k of Object.keys(S.hold)) if (k.startsWith("new|")) delete S.hold[k];
     if (S.pp?.key === "new") S.pp = null;
@@ -4197,6 +4254,7 @@
   function jrVal(c, v) {
     if (S.bools.has(c)) return isTrue(v) ? "✓" : "—";
     if (c === C.pass) return String(v ?? "").trim() ? "•••" : "";
+    if(c===C.serviceMeta){try{const m=JSON.parse(v);return (m.services||[]).map(s=>s.work+": "+(s.base==null?"сумма не указана":money(s.base))).join(" · ").slice(0,1000);}catch{return "";}}
     if (c === C.reminder) { const m = remMeta({cells:{[C.reminder]:v}}); return [REM_RULES.title(m),m.requirements,m.budgetMin && "от " + m.budgetMin,m.budgetMax && "до " + m.budgetMax,m.nextDate,m.owner,m.targetType,m.watch && [m.watch.enabled===false?"Автоподбор выключен":"Автоподбор включён",...Object.entries(REM_RULES.watch(m.watch)).filter(([k,v])=>k!=="enabled"&&v).map(([k,v])=>REM_RULES.options[k]?.find(x=>x[0]===v)?.[1]||v)].join(" · "),m.convertedType && "→ " + m.convertedType].filter(Boolean).join(" · ").slice(0,1000); }
     return String(v ?? "").slice(0, 300);
   }
@@ -4366,6 +4424,7 @@
   async function save(num) {
     const r = S.byNum.get(num); if (!r) return;
     const key = r.row;
+    stageServiceMeta(key,r);
     const list = [...S.dirty].filter(([k]) => k.startsWith(key + ":")).map(([k, v]) => { const c = +k.split(":")[1]; return { c, v, old: cell(r, c) }; });
     const dkNow = dealKey(S.dirty.get(key + ":" + C.type) ?? cell(r,C.type));
     if (dkNow === "reminder") { const why = reminderInvalid(remDraft(key,r), S.dirty.get(key + ":" + C.name) ?? cell(r,C.name), S.dirty.get(key + ":" + C.phone) ?? cell(r,C.phone)); if (why) return toast(why,null,true); }
@@ -4449,7 +4508,7 @@
       slots.push({ row: idx + 2, num: has ? a : String(++maxNum), hasNum: has });
     }
     const r0 = slots[0].row, r1 = slots[N - 1].row;
-    const probe = await api(`/values/${A1(1, r0, C.reminderStop, r1)}?valueRenderOption=FORMULA`)
+    const probe = await api(`/values/${A1(1, r0, C.serviceMeta, r1)}?valueRenderOption=FORMULA`)
       .catch(e => { throw /400/.test(e.message) ? new Error(`В листе закончились строки (нужна строка ${r1}) — добавьте строки внизу листа в таблице и повторите`) : e; });
     // Занята ли строка: формулы, снятые галочки и одинокая дата приёма (B) — не занятость.
     // 28.09.2026 в строке 7750 осталась только дата: заказ начали вводить в таблице и
@@ -4468,6 +4527,7 @@
     if (S.followup && store.get("crm.pendingReminder")) return toast("Сначала создайте ожидающее напоминание — кнопка вверху страницы",null,true);
     if (S.followup) { const why = reminderInvalid(S.followup, S.dirty.get("new:" + C.name), S.dirty.get("new:" + C.phone)); if (why) return toast(why, null, true); }
     const get = c => S.dirty.get("new:" + c) ?? "";
+    stageServiceMeta("new",null);
     const skOps = S.multi ? [] : skPending("new"); // запчасти со склада — списать в первый заказ после записи
     if (!String(get(C.name)).trim() && !String(get(C.phone)).trim()) return toast("Нужно имя или телефон клиента");
     busy(true); S.creating = true;
@@ -4488,7 +4548,7 @@
         const own = perDev.filter(c => String(x[c] ?? "").trim() !== "").map(c => ({ c, v: x[c], old: "" }));
         const ownCols = new Set(own.map(o => o.c));
         // общее — всё, что не поле устройства; мастер «как у первого», если свой не выбран
-        const base = shared.filter(ch => (!perDev.includes(ch.c) || (ch.c === C.master && !ownCols.has(C.master))) && ![C.tradein, C.buyback, C.prepay, C.prepayKind].includes(ch.c)); // трейд-ин и предоплата — только у первого
+        const base = shared.filter(ch => (!perDev.includes(ch.c) || (ch.c === C.master && !ownCols.has(C.master))) && ![C.tradein, C.buyback, C.prepay, C.prepayKind,C.serviceMeta].includes(ch.c)); // трейд-ин и предоплата — только у первого
         devices.push([...base, ...own]);
       }
       let N = devices.length;
@@ -4691,6 +4751,7 @@
       refreshSaveBar(key); return;
     }
     const act = t.dataset.act;
+    if(act === "svchelp"){const key=curKey();S.svcInfoOpen ||= new Set();S.svcInfoOpen.has(key)?S.svcInfoOpen.delete(key):S.svcInfoOpen.add(key);rerenderKeep();return;}
     if (act === "clearnew") { clearNewForm(); return; }
     if (act === "remretry") { await retryReminder(); return; }
     if (act === "remconvert") { S.remConverting = curKey(); render(); return; }
