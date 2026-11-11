@@ -799,3 +799,9 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .pp__offers .pp__item strong { color:var(--cream); }
 .pp__item.is-stock { border-color:var(--gold); }
 @media(max-width:600px) { .pp__head { align-items:flex-start; } .pp__offers { max-height:420px; } .pp__step { align-items:flex-start; } .psup__c { max-width:100%; white-space:normal; text-align:left; } }
+
+/* v108: добавленные услуги в ряд, инструкция открывается отдельно. */
+.svc-help { display:block; }
+.svc-help[open] { flex-basis:100%; }
+.svc-help > summary { cursor:pointer; list-style:none; font-size:.8rem; padding:3px 0; }
+.svc-help > summary::-webkit-details-marker { display:none; }
