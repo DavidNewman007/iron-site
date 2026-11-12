@@ -68,12 +68,22 @@
       location.replace("magazin.html");
       return 0;
     }
-    var сумма = items.reduce(function (s, p) { return s + (Number(p.price) || 0); }, 0);
+    var сумма = items.reduce(function (s, p) { return s + (Number(p.price) || 0) * Math.max(1, Math.min(99, Number(p.orderQty) || 1)); }, 0);
     $("checkout-items").innerHTML = items.map(function (p) {
       return "<li><span>" + экранировать(p.name || "Товар") + "</span><b>" + деньги(p.price) + "</b></li>";
     }).join("");
     $("checkout-goods").textContent = деньги(сумма);
 
+    if (window.IRON_CART_PRICE) {
+      window.IRON_CART_PRICE.update(items, true).then(function(q) {
+        if(!q){$("checkout-pay-note").textContent="Не удалось проверить сумму. Обновите корзину перед оплатой.";$("pay-card").disabled=true;$("pay-sbp").disabled=true;return;}
+        $("checkout-goods").textContent=деньги(q.cashTotal);
+        $("checkout-pay-note").textContent=(q.discount.amount?"Скидка "+деньги(q.discount.amount)+" учтена. ":"")+"Картой к оплате "+деньги(q.payments.card)+". Доставка оплачивается отдельно при получении.";
+        $("pay-card").textContent="Оплатить картой · "+деньги(q.payments.card);$("pay-card").disabled=false;
+        Promise.all([window.IRON_PAY.load(),режимыОплаты()]).then(function(r){$("pay-sbp").hidden=!r[1].sbp_direct;$("pay-sbp").disabled=false;if(r[1].sbp_direct)$("pay-sbp").textContent="Оплатить по СБП · "+деньги(window.IRON_PAY.gross(q.cashTotal,"сбп",r[0]));});
+      });
+      return сумма;
+    }
     if (window.IRON_PAY) {
       Promise.all([window.IRON_PAY.load(), режимыОплаты()]).then(function (r) {
         var rates = r[0], modes = r[1];
@@ -173,7 +183,7 @@
       $("delivery-result").textContent = "Выберите город — посчитаем доставку.";
       return;
     }
-    var сумма = корзина().reduce(function (s, p) { return s + (Number(p.price) || 0); }, 0);
+    var сумма = корзина().reduce(function (s, p) { return s + (Number(p.price) || 0) * Math.max(1, Math.min(99, Number(p.orderQty) || 1)); }, 0);
     $("delivery-result").textContent = "Считаем доставку…";
     cdek({
       action: "calc",
@@ -301,6 +311,8 @@
       данные: {
         recipient: { name: $("f-name").value.trim(), phone: phone },
         delivery: delivery,
+        cartItems: корзина(),
+        pricingVersion: "bundle-v1",
       },
     };
   }

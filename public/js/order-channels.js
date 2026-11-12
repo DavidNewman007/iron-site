@@ -160,11 +160,24 @@
   // в cloudflare-order-bot/src/worker.js) и открываем диплинк на /start у
   // бота: сообщение оператору собирается сервером из каталога с закупочной
   // ценой, клиент его не видит и не может отредактировать ни один символ.
+  var pricingReady;
+  function ensurePricing() {
+    if (global.IRON_CART_PRICE) return Promise.resolve(global.IRON_CART_PRICE);
+    if (pricingReady) return pricingReady;
+    pricingReady = new Promise(function(resolve,reject) {
+      var script=document.querySelector('script[data-cart-pricing]');
+      if(!script){script=document.createElement('script');script.src='/js/cart-pricing.js?v=2026-11-12';script.dataset.cartPricing='1';document.head.appendChild(script);}
+      script.addEventListener('load',function(){resolve(global.IRON_CART_PRICE);});script.addEventListener('error',reject);
+    });
+    return pricingReady;
+  }
+  function pricingPayload(cart) {return global.IRON_CART_PRICE ? global.IRON_CART_PRICE.payload(cart) : {items:cart};}
+
   function submitCartToOrderBot(cart) {
     return fetch(getSiteOrderApiUrl(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cart }),
+      body: JSON.stringify(pricingPayload(cart)),
     }).then(function (r) {
       if (!r.ok) throw new Error("HTTP " + r.status);
       return r.json();
@@ -192,6 +205,11 @@
   }
 
   function openTelegramOrder(cart, options) {
+    ensurePricing().then(function(p){return p.update(cart,true);}).then(function(q){
+      if(!q)throw new Error('quote unavailable');openTelegramOrderReady(cart,options);
+    }).catch(function(){global.alert('Не удалось подтвердить сумму. Проверьте корзину и попробуйте ещё раз.');});
+  }
+  function openTelegramOrderReady(cart, options) {
     ensureTelegramWebApp()
       .then(function (twa) {
         if (isRealTelegramWebApp(twa)) {
@@ -200,7 +218,7 @@
             fetch(getOrderBotApiUrl(), {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ initData: twa.initData, items: cart }),
+              body: JSON.stringify(Object.assign(pricingPayload(cart), { initData: twa.initData })),
             })
               .then(function (r) {
                 if (!r.ok) throw new Error("HTTP " + r.status);
@@ -214,7 +232,7 @@
           }
           // Запуск с reply-клавиатуры: штатный sendData (боту придёт
           // web_app_data, мини-апп закроется сам).
-          twa.sendData(JSON.stringify({ type: "order", items: cart }));
+          twa.sendData(JSON.stringify(Object.assign(pricingPayload(cart), { type: "order" })));
           finishTelegramOrder(twa);
           return;
         }
@@ -226,6 +244,12 @@
   }
 
   function openMaxOrder(cart, options) {
+    ensurePricing().then(function(p){return p.update(cart,true);}).then(function(q){
+      if(!q)throw Error('quote unavailable');
+      openMaxOrderReady(cart.map(function(item){return Object.assign({},item,{checkoutPayment:global.IRON_CART_PRICE.getMethod(),pricingVersion:'bundle-v1'});}),options);
+    }).catch(function(){global.alert('Не удалось подтвердить сумму корзины. Попробуйте ещё раз.');});
+  }
+  function openMaxOrderReady(cart, options) {
     // Раньше здесь строился готовый текст заказа и клиент видел на
     // max-book.html кнопку «Скопировать текст заявки» — убрана: она давала
     // ровно ту же лазейку (лифтить текст и отправлять с любыми правками).

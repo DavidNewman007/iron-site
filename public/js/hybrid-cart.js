@@ -5,6 +5,10 @@
   // <html lang>, как везде на сайте (18.08.2026).
   const T = (key, ru) => (window.IRON_I18N ? window.IRON_I18N.t(key, ru) : ru);
   const CART_KEY = "iron_cart";
+  if (!window.IRON_CART_PRICE && !document.querySelector("script[data-cart-pricing]")) {
+    const script = document.createElement("script"); script.src = "/js/cart-pricing.js?v=2026-11-12";
+    script.dataset.cartPricing = "1"; script.onload = () => window.IRON_CART_PRICE?.update(readCart()); document.head.appendChild(script);
+  }
   const PID_PARAM = "pid";
   // Prices-3 добавлен 28.08.2026: 27.08 для склада «под заказ» начали собирать
   // карточки, а этот скрипт по-прежнему читал только два листа — открытая
@@ -479,9 +483,9 @@
     if (window.IRON_ORDER) return Promise.resolve(window.IRON_ORDER);
     return new Promise((resolve, reject) => {
       const s = document.createElement("script");
-      s.src = getScriptBase() + "order-channels.js?v=2026-07-04-5";
+      s.src = getScriptBase() + "order-channels.js?v=2026-11-12-1";
       s.onload = () => resolve(window.IRON_ORDER);
-      s.onerror = () => reject(new Error("Не удалось загрузить order-channels.js"));
+      s.onerror = () => reject(new Error("Не удалось загрузить order-channels.js?v=2026-11-12-1"));
       document.head.appendChild(s);
     });
   }
@@ -566,6 +570,7 @@
 
   /** Подписи кнопок с суммой: «Оплатить по СБП · 61 900 ₽». */
   function renderPayButtons() {
+    if (window.IRON_CART_PRICE) return;
     const cart = readCart();
     const total = cart.reduce((s, p) => s + (p.price || 0), 0);
     if (!total) return;
@@ -779,6 +784,7 @@
   function renderMobileCartBar(highlight) {
     ensureCartUi();
     const cart = readCart();
+    setTimeout(() => window.IRON_CART_PRICE?.update(cart), 0);
     const count = cart.length;
     const total = cart.reduce((s, p) => s + (p.price || 0), 0);
     const totalLabel = count ? formatPrice(total) : "—";
@@ -798,13 +804,16 @@
 
     const list = document.getElementById("pd-cart-list");
     if (list) {
+      list.onclick = (event) => { const b=event.target.closest("[data-qty]"); if(!b)return;
+        const items=readCart(), item=items.find((x)=>idsLookEqual(x.id,b.dataset.id)); if(!item)return;
+        item.orderQty=Math.max(1,Math.min(99,(Number(item.orderQty)||1)+Number(b.dataset.qty))); writeCart(items); };
       list.innerHTML = count
         ? cart
             .map(
               (item) =>
                 `<li><span class="pd-cart__name">${escapeHtml(item.name || "")}<small>${escapeHtml(
                   [item.priceLabel || formatPrice(item.price || 0), item.country].filter(Boolean).join(" · ")
-                )}</small></span><button type="button" class="pd-cart__remove" data-remove="${escapeHtml(
+                )}</small><span class="cart-quantity"><button type="button" data-qty="-1" data-id="${escapeHtml(item.id)}">−</button><b>${item.orderQty || 1} шт.</b><button type="button" data-qty="1" data-id="${escapeHtml(item.id)}">+</button></span></span><button type="button" class="pd-cart__remove" data-remove="${escapeHtml(
                   item.id
                 )}" aria-label="${isEnPage() ? "Remove" : "Убрать"}">×</button></li>`
             )

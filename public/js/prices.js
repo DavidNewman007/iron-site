@@ -4118,6 +4118,7 @@
   }
 
   function renderCart() {
+    setTimeout(() => window.IRON_CART_PRICE?.update(cart), 0);
     const count = cart.length;
     // Допгарантия — отдельная услуга, но платит клиент одной суммой, поэтому
     // в итог входит наравне с товарами.
@@ -4147,12 +4148,19 @@
         <div class="cart-item__body">
           <strong>${escapeHtml(I18N.productName(p.name))}</strong>
           <span>${escapeHtml(priceLabelOf(p))}${p.country ? " · " + escapeHtml(I18N.country(p.country)) : ""}${p.warehouse ? " · " + escapeHtml(I18N.quantity(p.warehouse)) : ""}${p.preorder ? " · " + escapeHtml(preorderBadgeText(p)) : ""}</span>
+          <span class="cart-quantity"><button type="button" data-qty="-1" data-id="${p.id}" aria-label="Уменьшить количество">−</button><b>${p.orderQty || 1} шт.</b><button type="button" data-qty="1" data-id="${p.id}" aria-label="Увеличить количество">+</button></span>
           ${p.extraWarranty ? `<span class="cart-item__warranty">${escapeHtml(T("cart.extra_warranty_item", `🛡 + гарантия 1 год — ${formatPrice(EXTRA_WARRANTY_PRICE)}`, { price: formatPrice(EXTRA_WARRANTY_PRICE) }))}</span>` : ""}
         </div>
         <button type="button" class="cart-item__remove" data-id="${p.id}" aria-label="${escapeHtml(T("cart.remove", "Убрать"))}">×</button>
       </li>`
       )
       .join("");
+
+    els.cartList.querySelectorAll("[data-qty]").forEach((btn) => btn.addEventListener("click", () => {
+      const item = cart.find((p) => p.id === btn.dataset.id);
+      if (!item) return; item.orderQty = Math.max(1, Math.min(99, (Number(item.orderQty) || 1) + Number(btn.dataset.qty)));
+      saveCart(); renderCart();
+    }));
 
     els.cartList.querySelectorAll(".cart-item__remove").forEach((btn) => {
       btn.addEventListener("click", () => toggleCart(btn.dataset.id));
@@ -4214,6 +4222,7 @@
   }
 
   function renderPayBreakdown(total, count) {
+    if (window.IRON_CART_PRICE) return;
     const box = els.cartPayBreakdown;
     if (!box || !window.IRON_PAY) return;
     if (!payBase() || !count) {
@@ -4320,6 +4329,8 @@
         // А вот допгарантию восстановить неоткуда — это выбор человека,
         // поэтому читаем сохранённый флаг как есть.
         extraWarranty: item.extraWarranty === true,
+        orderQty: Math.max(1, Math.min(99, Math.trunc(Number(item.orderQty) || 1))),
+        ...(item.offerToken ? { offerToken: String(item.offerToken), retailPrice: item.retailPrice } : {}),
       });
     }
     return dedupeCartById(out);
