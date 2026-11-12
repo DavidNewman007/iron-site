@@ -1268,7 +1268,7 @@
   // v83: у «по / прошивка» убран синоним «по» — он совпадал внутри любого слова («под привязку», «после залития»).
   const PP_SYN = [[/^акб|^батар|^аккум/, ["аккумулятор"]], [/^экран|^диспл/, ["диспле", "матриц"]], [/^крышк|^задн/, ["заднего стекла", "корпус"]],
     [/^ссд|^ssd|^диск/, ["ssd", "накопител", "диск"]], [/^клав/, ["клавиатур"]], [/^тач|^трек/, ["тачпад", "сенсор"]], [/^зарядк|^разъ/, ["разъёма зарядки", "разъема зарядки"]],
-    [/^чистк|^профил/, ["профилактик"]], [/^по$|^прошив|^ос$/, ["установка по"]], [/^залит|^влаг/, ["залития"]], [/^вотч|^watch|^час/, ["watch"]]];
+    [/^чистк|^профил/, ["профилактик"]], [/^по$|^po$|^программ|^софт|^приложен/, ["установка по"]], [/^(?:ос|os|oc|оc|oс)$|^систем|^macos$|^макос$/, ["установка ос"]], [/^прош|^переустан/, ["установка"]], [/^залит|^влаг/, ["залития"]], [/^вотч|^watch|^час/, ["watch"]]];
   // Склад — первым блоком, наверху списка (v61). Владелец, 09.10.2026: «не видит деталь на складе, когда
   // добавляю работу из прайса на MacBook Air M1 — замена матрицы; один оригинал есть». Позиция с полки была,
   // но в самом низу — под всеми работами прайса, в блоке «Наш склад и другие поставщики»: её не видели.
@@ -1397,7 +1397,7 @@
     let body;
     if(!P.group){
       const groups=P.groups=ppGroups(dev,P.q,issueText),limit=P.limit||60;
-      body=`<p class="pp__step"><b>1. Выберите работу</b> → 2. Выберите запчасть и источник</p>${search}<div class="pp__list">${groups.slice(0,limit).map((g,i)=>`<button type="button" class="pp__item" data-act="ppgroup" data-i="${i}"><b>${esc(cap(g.operation))}${dev?'':' · '+esc(g.device)}</b><span>${g.indices.length} вариант(ов) в прайсе</span><i>→</i></button>`).join('')}</div><p class="note">${groups.length?'Показано '+Math.min(groups.length,limit)+' из '+groups.length+' работ.':'Выберите модель или введите хотя бы два символа для поиска по всем устройствам.'}</p>${groups.length>limit?'<button type="button" class="linkbtn" data-act="ppmore">Показать ещё 60 работ</button>':''}`;
+      body=`<p class="pp__step"><b>1. Выберите работу</b> → 2. Выберите запчасть и источник</p>${search}<div class="pp__list">${groups.slice(0,limit).map((g,i)=>`<button type="button" class="pp__item" data-act="ppgroup" data-i="${i}"><b>${esc(cap(g.operation))}${dev?'':' · '+esc(g.device)}</b><span>${g.indices.length} вариант(ов) в прайсе</span><i>→</i></button>`).join('')}</div><p class="note">${groups.length?'Показано '+Math.min(groups.length,limit)+' из '+groups.length+' работ.':dev?'Для этой модели по запросу работ не найдено. Измените запрос.':norm(P.q||'').length>=2?'По запросу работ не найдено.':'Выберите модель или введите хотя бы два символа для поиска по всем устройствам.'}</p>${groups.length>limit?'<button type="button" class="linkbtn" data-act="ppmore">Показать ещё 60 работ</button>':''}`;
     }else{
       const g=P.group,all=ppChoices(key,r,g),tariff=ppTariff(g,P.tariff),rates=[...new Set(all.filter(o=>o.kind==='service'&&Number.isFinite(o.work)).map(o=>o.work))];
       const rateOptions=[{v:'',t:rates.length===1?'Работа '+money(rates[0])+' — единый тариф':'— выберите вариант работы для других запчастей —'},...all.filter(o=>o.kind==='service'&&Number.isFinite(o.work)).map(o=>({v:String(o.index),t:o.title+' · работа '+money(o.work)}))];
