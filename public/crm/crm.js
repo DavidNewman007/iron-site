@@ -612,11 +612,11 @@
     const y = window.scrollY; render(); window.scrollTo(0, y);
     toast(`Подставлено: ${x.dev}${x.imei ? " · " + x.imei : ""}`);
   }
-  function findClients(q, limit = 8) {
+  function findClients(q, limit = 8, includeOrders = false) {
     let res;
-    if (isDigitQuery(q)) {
-      const d = normDigits(digits(q)); if (d.length < 4) return [];
-      res = clients().filter(c => [...c.phones.keys()].some(p => p.includes(d)));
+    if (isDigitQuery(q) || includeOrders && /^\s*[№#]\s*\d+\s*$/.test(q)) {
+      const raw=digits(q), d=normDigits(raw); if(d.length<4&&!includeOrders)return [];
+      res=clients().filter(c=>d.length>=4&&[...c.phones.keys()].some(p=>p.includes(d))||includeOrders&&c.rows.some(r=>String(cell(r,C.num)).trim()===raw));
     } else {
       const tokens = norm(q).split(" ").filter(Boolean);
       if (tokens.join("").length < 3) return [];
@@ -910,7 +910,7 @@
     } else {
       const shown = f.num && !dirty ? String(toNum(v) ?? v) : v;
       const dl = f.free && S.opts[c]?.length ? ` data-list="dl-${c}"` : "";
-      input = `<input data-edit="${c}" value="${esc(shown)}"${dl}${spell} ${f.num ? 'inputmode="decimal"' : f.tel ? 'inputmode="tel"' : ""}>` +
+      input = `<input data-edit="${c}" value="${esc(shown)}"${c===C.name?' placeholder="Имя, телефон или № заказа"':""}${dl}${spell} ${f.num ? 'inputmode="decimal"' : f.tel ? 'inputmode="tel"' : ""}>` +
         (dl ? `<datalist id="dl-${c}">${S.opts[c].map(o => `<option value="${esc(o)}">`).join("")}</datalist>` : "");
     }
     return `<label class="field${dirty ? " is-dirty" : ""}"><span>${esc(label)}</span>${input}</label>`;
@@ -3257,7 +3257,7 @@
     let m = remDraft(key, r);
     if (!m.id) { m = blankReminder(); S.dirty.set(key + ":" + C.reminder, JSON.stringify(m)); }
     return `<div class="card-grid"><div class="col"><section class="block"><h3>Тип сделки</h3><b>🔔 Напоминание</b>${isNew ? `<button type="button" class="btn btn--ghost btn--sm" data-choice="${C.type}" data-value="Ремонт">Выбрать другой тип</button>` : ""}</section>
-      <section class="block"><h3>Клиент</h3><div class="grid2">${fh(C.name)}${fh(C.phone)}</div>${r ? msgHtml(r) : ""}</section>
+      <section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew||editable(C.name,r)?`<div class="ac" id="ac-${C.name}"></div>`:""}</div><div>${fh(C.phone)}${isNew||editable(C.phone,r)?`<div class="ac" id="ac-${C.phone}"></div>`:""}</div></div>${r ? msgHtml(r) : ""}</section>
       <section class="block"><h3>Этап напоминания</h3>${r && reminderOverdue(r) ? `<p class="rem--overdue">Просрочен контакт: ${esc(remMeta(r).nextDate)}</p>` : ""}${isNew ? `<b>${esc(REM_STAGES[0])}</b>` : ddHtml(key, C.status, val(C.status) || REM_STAGES[0], REM_STAGES, { allowEmpty: false })}<p class="note">Ручная смена этапа сама по себе не отправляет сообщение. Автоподбор поставит «Сообщили клиенту» после подтверждённой отправки; вручную отмечайте только после связи.</p></section>
       ${!isNew && S.remConverting === key ? `<section class="block"><h3>Клиент согласен — какой тип сделки?</h3>${choiceButtons(key, C.type, "Напоминание", typeOptions().filter(x => x !== "Напоминание" && !/trade|трейд/i.test(x)), () => "type")}<p class="note">Трейд-ин — через галочку в продаже. После выбора заполните конкретное устройство, цену и остальные поля; затем сохраните.</p></section>` : !isNew && !isFinal(val(C.status)) ? `<button type="button" class="btn btn--red" data-act="remconvert">Клиент согласен — оформить сделку</button>` : ""}
       ${r ? `<section class="block">${histHtml(r)}${deleteBox(r)}</section>` : ""}</div><div class="col"><section class="block"><h3>Просьба клиента</h3>${reminderFields(m)}<p class="note">Бюджет — жёсткий предел подбора; для замены включает деталь и работу. Цена сделки записывается отдельно после согласования.</p></section>${reminderRuntime(r)}</div></div>`;
@@ -3353,7 +3353,7 @@
     // него (и после «Что продаём» у новой продажи). order — для телефона, где колонки сливаются в одну ленту.
     const statusBox = html ? box(3, html) : ""; html = "";
 
-    html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
+    html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew || editable(C.name,r) ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew || editable(C.phone,r) ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
       ${isNew ? `<div id="pre-contact" class="note pre-contact">${preNoteText()}</div><div id="client-devs">${clientDevicesHtml(currentNewClient())}</div>` : ""}
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
       ${proxyHtml(key, r, isNew, val, fh)}
@@ -4109,6 +4109,7 @@
     S.parts.delete("new"); delete S.tins.new;
     if (S.svcLog) delete S.svcLog.new;
     S.svcInfoOpen?.delete("new");
+    if(S.clientPick?.card==="new")S.clientPick=null;
     if (S.discUnit) delete S.discUnit.new;
     if (S.hold) for (const k of Object.keys(S.hold)) if (k.startsWith("new|")) delete S.hold[k];
     if (S.pp?.key === "new") S.pp = null;
@@ -4424,6 +4425,7 @@
   async function save(num) {
     const r = S.byNum.get(num); if (!r) return;
     const key = r.row;
+    if(clientPhonePending(key,r))return toast("Выберите номер клиента из списка",null,true);
     stageServiceMeta(key,r);
     const list = [...S.dirty].filter(([k]) => k.startsWith(key + ":")).map(([k, v]) => { const c = +k.split(":")[1]; return { c, v, old: cell(r, c) }; });
     const dkNow = dealKey(S.dirty.get(key + ":" + C.type) ?? cell(r,C.type));
@@ -4527,6 +4529,7 @@
     if (S.followup && store.get("crm.pendingReminder")) return toast("Сначала создайте ожидающее напоминание — кнопка вверху страницы",null,true);
     if (S.followup) { const why = reminderInvalid(S.followup, S.dirty.get("new:" + C.name), S.dirty.get("new:" + C.phone)); if (why) return toast(why, null, true); }
     const get = c => S.dirty.get("new:" + c) ?? "";
+    if(clientPhonePending("new",null))return toast("Выберите номер клиента из списка",null,true);
     stageServiceMeta("new",null);
     const skOps = S.multi ? [] : skPending("new"); // запчасти со склада — списать в первый заказ после записи
     if (!String(get(C.name)).trim() && !String(get(C.phone)).trim()) return toast("Нужно имя или телефон клиента");
@@ -5102,9 +5105,9 @@
     refreshSaveBar(key);
     if (c === C.prepay || c === C.total) prepayAuto(key, key === "new" ? null : S.byNum.get(location.hash.slice(2)));
     if (c === C.device && e.type === "input") { clearTimeout(onEdit.dev); onEdit.dev = setTimeout(() => suggestDevice(t.value), 120); }
-    if (key === "new" && (c === C.name || c === C.phone)) {
-      clearTimeout(onEdit.ac); onEdit.ac = setTimeout(() => suggest(c, t.value), 120);
-      if (c === C.phone && S.newClient) { const cl = clients().find(x => x.key === S.newClient), ds = phones(t.value).map(p => p.d);
+    if (c === C.name || c === C.phone) {
+      clearTimeout(onEdit.ac); onEdit.ac = setTimeout(() => suggest(c,t.value,key), 120);
+      if (key === "new" && c === C.phone && S.newClient) { const cl = clients().find(x => x.key === S.newClient), ds = phones(t.value).map(p => p.d);
         if (cl && ds.length && !ds.some(d => cl.phones.has(d))) { S.newClient = null; const b = document.getElementById("client-devs"); if (b) b.innerHTML = clientDevicesHtml(currentNewClient()); } }
     }
     if (c === C.contactName || c === C.contactPhone) { clearTimeout(onEdit.px); onEdit.px = setTimeout(() => suggestProxy(key, c, t.value), 120); }
@@ -5210,34 +5213,50 @@
     const all = [...fromPrice, ...fromOrders];
     box.innerHTML = all.map(x => `<button type="button" class="ac-item ac-item--dev" data-devpick="${esc(x.text)}"><b>${esc(x.text)}</b><span>${x.price ? "📋 модель из прайса" : x.std ? "📱 стандартное название" : "как записывали в заказах"}${x.n ? ` · ${x.n} ${ordersWord(x.n)}` : ""}</span></button>`).join("");
   }
-  function suggest(c, value) {
+  function suggest(c, value, key = curKey()) {
+    if(key==null||curKey()!==key)return;
     const box = document.getElementById("ac-" + c); if (!box) return;
-    const list = findClients(value);
+    const list = findClients(value,8,c===C.name||/^\s*[№#]/.test(value));
     box.innerHTML = list.map(cl => {
       const p = phonesOf(cl);
-      return `<button type="button" class="ac-item" data-client="${esc(cl.key)}" data-from="${c}"><b>${esc(cl.name)}${cl.aka.length ? ` <small>(также: ${esc(cl.aka.slice(0, 2).join(", "))}${cl.aka.length > 2 ? "…" : ""})</small>` : ""}</b>
-        <span>${cl.count} ${ordersWord(cl.count)} · ${p.length > 1 ? p.length + " телефона" : esc(p[0]?.text || "без телефона")} · последний: ${esc(cell(cl.last, C.device) || "—")}, ${esc(String(cell(cl.last, C.date)).slice(0, 10))}</span></button>`;
+      return `<button type="button" class="ac-item" data-client="${esc(cl.key)}" data-from="${c}" data-card="${esc(key)}"><b>${esc(cl.name)}${cl.aka.length ? ` <small>(также: ${esc(cl.aka.slice(0, 2).join(", "))}${cl.aka.length > 2 ? "…" : ""})</small>` : ""}</b>
+        <span>${cl.count} ${ordersWord(cl.count)} · ${p.length > 1 ? p.length + " телефона" : esc(p[0]?.text || "без телефона")} · №${esc(cell(cl.last,C.num))} · последний: ${esc(cell(cl.last, C.device) || "—")}, ${esc(String(cell(cl.last, C.date)).slice(0, 10))}</span></button>`;
     }).join("");
   }
-  function fillField(c, v) {
+  function fillField(c, v, key = curKey()) {
+    if(key==null)return;
     if (F[c]?.tel) telSet(c, v);
     const inp = $app.querySelector(`[data-edit="${c}"]`); if (inp) inp.value = v;
-    setDirty("new", c, v); inp?.closest(".field")?.classList.add("is-dirty");
+    setDirty(key, c, v); inp?.closest('.field')?.classList.toggle('is-dirty',S.dirty.has(key+':'+c));
   }
-  function pickClient(key, fromPhone) {
-    const cl = clients().find(x => x.key === key); if (!cl) return;
-    S.newClient = cl.key;
-    fillField(C.name, cl.name);
-    const ps = phonesOf(cl), typed = normDigits(digits($app.querySelector(`[data-edit="${C.phone}"]`)?.value || ""));
-    const byTyped = fromPhone && typed.length >= 4 ? ps.find(p => p.d.includes(typed)) : null;
-    const nameBox = document.getElementById("ac-" + C.name), phoneBox = document.getElementById("ac-" + C.phone);
-    nameBox.innerHTML = ""; // «был у нас N заказов» и устройства — в блоке #client-devs ниже
-    if (byTyped || ps.length === 1) { fillField(C.phone, (byTyped || ps[0]).text); phoneBox.innerHTML = ""; }
-    else if (ps.length > 1) phoneBox.innerHTML = `<div class="ac-info">У клиента ${ps.length} телефона — выберите:</div>` +
-      ps.map(p => `<button type="button" class="ac-item" data-phone="${esc(p.text)}"><b>📞 ${esc(p.text)}</b><span>последний раз ${esc(String(p.date).slice(0, 10))}</span></button>`).join("");
-    const box = document.getElementById("client-devs"); if (box) box.innerHTML = clientDevicesHtml(cl);
-    refreshSaveBar("new");
-    precontact();
+  function clientPhonePending(key,r) {
+    return S.clientPick?.card===key&&S.clientPick.pending&&!phones(serviceValues(key,r)(C.phone)).length;
+  }
+  function pickClientPhone(value, expected = curKey(), redraw = true) {
+    const key=curKey();if(key==null||String(expected)!==String(key))return;
+    const cl=clients().find(x=>x.key===S.clientPick?.client),d=phones(value)[0]?.d;
+    fillField(C.phone,value,key);
+    const source=cl&&[...cl.rows].reverse().find(r=>cell(r,C.gcontact)&&phones(cell(r,C.phone)).some(p=>p.d===d));
+    fillField(C.gcontact,source?cell(source,C.gcontact):'',key);
+    if(S.clientPick?.card===key)S.clientPick.pending=false;
+    if(redraw)rerenderKeep();refreshSaveBar(key);if(key==='new')precontact();
+  }
+  function pickClient(clientKey, fromPhone, expected = curKey()) {
+    const key=curKey();if(key==null||String(expected)!==String(key))return;
+    const r=key==='new'?null:S.byNum.get(location.hash.slice(2)),cl=clients().find(x=>x.key===clientKey);if(!cl)return;
+    if(r&&(!editable(C.name,r)||!editable(C.phone,r)))return;
+    if(r&&['repair','other'].includes(dealKey(cell(r,C.type)))){servicesOf(key,r);partsOf(key,r);}
+    const typed=normDigits(digits($app.querySelector(`[data-edit="${C.phone}"]`)?.value??serviceValues(key,r)(C.phone))),ps=phonesOf(cl);
+    const matches=fromPhone&&typed.length>=4?ps.filter(p=>p.d.includes(typed)):[];
+    S.clientPick={card:key,client:cl.key,pending:false};if(key==='new')S.newClient=cl.key;
+    fillField(C.name,cl.name,key);fillField(C.gcontact,'',key);
+    if(matches.length===1||ps.length===1)pickClientPhone((matches.length===1?matches[0]:ps[0]).text,key,false);
+    else{fillField(C.phone,'',key);S.clientPick.pending=ps.length>1;}
+    rerenderKeep();
+    const nameBox=document.getElementById('ac-'+C.name),phoneBox=document.getElementById('ac-'+C.phone);if(nameBox)nameBox.innerHTML='';
+    if(phoneBox)phoneBox.innerHTML=S.clientPick.pending?`<div class="ac-info">У клиента ${ps.length} телефона — выберите:</div>`+ps.map(p=>`<button type="button" class="ac-item" data-phone="${esc(p.text)}" data-card="${esc(key)}"><b>📞 ${esc(p.text)}</b><span>последний раз ${esc(String(p.date).slice(0,10))}</span></button>`).join(''):'';
+    if(key==='new'){const box=document.getElementById('client-devs');if(box)box.innerHTML=clientDevicesHtml(cl);precontact();}
+    refreshSaveBar(key);
   }
   // ── подсказки «на связи» (v41, 03.10.2026) ─────────────────────────────────────────
   // Владелец: «пытаюсь добавить человека для связи в готовом заказе — не выдаёт список поиска».
@@ -5326,6 +5345,7 @@
     pop.innerHTML = list.map(v => `<button type="button" class="dd__opt sel__opt" data-sugg-v="${esc(v)}">${esc(v)}</button>`).join("");
     suggFor = inp;
   }
+  document.addEventListener('focusin',e=>{const c=Number(e.target.dataset?.edit);if(c===C.name||c===C.phone){const key=curKey();clearTimeout(onEdit.ac);onEdit.ac=setTimeout(()=>suggest(c,e.target.value,key),120);}});
   document.addEventListener("focusin", e => { if (e.target.matches?.("input[data-list]")) showSugg(e.target); });
   document.addEventListener("input", e => { if (e.target.matches?.("input[data-list]")) showSugg(e.target); });
   document.addEventListener("focusout", e => { if (e.target === suggFor) setTimeout(() => { if (document.activeElement !== suggFor) hideSugg(); }, 150); });
@@ -5348,8 +5368,8 @@
       document.getElementById("ac-dev").innerHTML = ""; refreshSaveBar(key);
       const y = window.scrollY; render(); window.scrollTo(0, y); return; // семейство техники поменялось — чипы и прайс тоже
     }
-    if (it.dataset.client) pickClient(it.dataset.client, it.dataset.from === String(C.phone));
-    else if (it.dataset.phone) { fillField(C.phone, it.dataset.phone); document.getElementById("ac-" + C.phone).innerHTML = ""; refreshSaveBar("new"); }
+    if (it.dataset.client) pickClient(it.dataset.client, it.dataset.from === String(C.phone),it.dataset.card??curKey());
+    else if (it.dataset.phone) pickClientPhone(it.dataset.phone,it.dataset.card??curKey());
   });
   document.addEventListener("input", onEdit);
   // Форма своей позиции: поставщика вписали руками — перерисовать подписи (донор → «с какого
