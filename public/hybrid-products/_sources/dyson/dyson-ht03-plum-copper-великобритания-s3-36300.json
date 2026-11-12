@@ -1,0 +1,54 @@
+{
+  "product_id": "dyson-ht03-plum-copper-великобритания-s3-36300",
+  "category": "dyson",
+  "file_slug": "dyson-ht03-plum-copper-s3-36300",
+  "name": "Dyson HT03 Plum/Copper",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S3)",
+  "price": 36300,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-pylesosy/pylesos-besprovodnoj-dyson-pencilvac-fluffycones",
+  "catalog_title": "пылесос беспроводной Dyson PencilVac Fluffycones, Matte Black",
+  "specs": [
+    {
+      "key": "Мощность всасывания",
+      "value": "55 Вт"
+    },
+    {
+      "key": "Время работы",
+      "value": "до 30 минут"
+    },
+    {
+      "key": "Материал",
+      "value": "пластик"
+    },
+    {
+      "key": "Ширина",
+      "value": "38 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "1.160 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "266 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "800 г"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/Fluffycones/499044-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/Fluffycones/492689-02-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/Fluffycones/683-PDP-Fluffycone-Gallery-9-ROW-1200x1200.jpg",
+    "https://sochi.dr-store.ru/image/cache/catalog/new products/pylesos-besprovodnoj-dyson-v12s-detect-slim-submarine-complete-yellow-nickel/pylesos-besprovodnoj-dyson-v12s-detect-slim-submarine-complete-yellow-nickel-01-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/25b7227f9bb8117afed203e1.jpg",
+    "assets/product-images/fa63cbb85f13afb5d34633d4.jpg",
+    "assets/product-images/dcb07ae5b11bc166649e6152.jpg",
+    "assets/product-images/742cd664a7f8c69753640da5.jpg"
+  ],
+  "updated_at": "2026-11-12T16:36:32.340652Z"
+}
