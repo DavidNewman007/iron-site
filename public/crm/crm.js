@@ -5219,7 +5219,7 @@
     const list = findClients(value,8,c===C.name||/^\s*[№#]/.test(value));
     box.innerHTML = list.map(cl => {
       const p = phonesOf(cl);
-      return `<button type="button" class="ac-item" data-client="${esc(cl.key)}" data-from="${c}" data-card="${esc(key)}"><b>${esc(cl.name)}${cl.aka.length ? ` <small>(также: ${esc(cl.aka.slice(0, 2).join(", "))}${cl.aka.length > 2 ? "…" : ""})</small>` : ""}</b>
+      return `<button type="button" class="ac-item" data-client="${esc(cl.key)}" data-from="${c}" data-card="${esc(key)}" data-query="${esc(value)}"><b>${esc(cl.name)}${cl.aka.length ? ` <small>(также: ${esc(cl.aka.slice(0, 2).join(", "))}${cl.aka.length > 2 ? "…" : ""})</small>` : ""}</b>
         <span>${cl.count} ${ordersWord(cl.count)} · ${p.length > 1 ? p.length + " телефона" : esc(p[0]?.text || "без телефона")} · №${esc(cell(cl.last,C.num))} · последний: ${esc(cell(cl.last, C.device) || "—")}, ${esc(String(cell(cl.last, C.date)).slice(0, 10))}</span></button>`;
     }).join("");
   }
@@ -5241,13 +5241,13 @@
     if(S.clientPick?.card===key)S.clientPick.pending=false;
     if(redraw)rerenderKeep();refreshSaveBar(key);if(key==='new')precontact();
   }
-  function pickClient(clientKey, fromPhone, expected = curKey()) {
+  function pickClient(clientKey, fromPhone, expected = curKey(), query = null) {
     const key=curKey();if(key==null||String(expected)!==String(key))return;
     const r=key==='new'?null:S.byNum.get(location.hash.slice(2)),cl=clients().find(x=>x.key===clientKey);if(!cl)return;
     if(r&&(!editable(C.name,r)||!editable(C.phone,r)))return;
     if(r&&['repair','other'].includes(dealKey(cell(r,C.type)))){servicesOf(key,r);partsOf(key,r);}
-    const typed=normDigits(digits($app.querySelector(`[data-edit="${C.phone}"]`)?.value??serviceValues(key,r)(C.phone))),ps=phonesOf(cl);
-    const matches=fromPhone&&typed.length>=4?ps.filter(p=>p.d.includes(typed)):[];
+    const typed=normDigits(digits(query??$app.querySelector(`[data-edit="${C.phone}"]`)?.value??serviceValues(key,r)(C.phone))),ps=phonesOf(cl);
+    const matches=fromPhone&&typed.length>=4&&!(query&&/^\s*[№#]/.test(query))?ps.filter(p=>p.d.includes(typed)):[];
     S.clientPick={card:key,client:cl.key,pending:false};if(key==='new')S.newClient=cl.key;
     fillField(C.name,cl.name,key);fillField(C.gcontact,'',key);
     if(matches.length===1||ps.length===1)pickClientPhone((matches.length===1?matches[0]:ps[0]).text,key,false);
@@ -5368,7 +5368,7 @@
       document.getElementById("ac-dev").innerHTML = ""; refreshSaveBar(key);
       const y = window.scrollY; render(); window.scrollTo(0, y); return; // семейство техники поменялось — чипы и прайс тоже
     }
-    if (it.dataset.client) pickClient(it.dataset.client, it.dataset.from === String(C.phone),it.dataset.card??curKey());
+    if (it.dataset.client) pickClient(it.dataset.client, it.dataset.from === String(C.phone),it.dataset.card??curKey(),it.dataset.query??null);
     else if (it.dataset.phone) pickClientPhone(it.dataset.phone,it.dataset.card??curKey());
   });
   document.addEventListener("input", onEdit);
