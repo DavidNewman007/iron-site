@@ -67,10 +67,13 @@
 }
 
 .article-card-image {
+  display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 400 / 260;
-  object-fit: cover;
+  aspect-ratio: 4 / 5;
+  /* Covers come in landscape, square and portrait formats: show every edge. */
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.12);
   border-radius: 8px;
   margin-bottom: 0.9rem;
 }
