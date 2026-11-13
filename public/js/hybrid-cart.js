@@ -122,7 +122,7 @@
     if (window.IRON_AGENT_CHAT_LOADED || !/^ru/i.test(document.documentElement.lang || "")) return;
     window.IRON_AGENT_CHAT_LOADED = true;
     const s = document.createElement("script");
-    s.src = getScriptBase() + "agent-chat.js?v=2026-10-28-1";
+    s.src = getScriptBase() + "agent-chat.js?v=2026-11-13-voice-1";
     s.defer = true;
     document.head.appendChild(s);
   })();

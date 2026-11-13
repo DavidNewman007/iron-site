@@ -85,6 +85,11 @@
     { type: "link", text: "+7 928 850-94-04", url: "tel:+79288509404" },
   ];
   const KEY = "ironAgentToken";
+  const MODE_KEY = "ironAgentReplyMode";
+  let replyPreference='auto';
+  try{const saved=localStorage.getItem(MODE_KEY);if(['voice','text'].includes(saved))replyPreference=saved;}catch{}
+  const audioUrls=new Set();
+  window.addEventListener('pagehide',()=>{for(const url of audioUrls)URL.revokeObjectURL(url);});
   const store = {
     get() { try { return localStorage.getItem(KEY); } catch { return null; } },
     set(v) { try { localStorage.setItem(KEY, v); } catch { /* приватный режим — живём без памяти */ } },
@@ -170,7 +175,7 @@
   // Картинки — только свои схемы помощника (сервер проверяет так же, guard.js cleanImage).
   const SAFE_IMAGE = /^\/assets\/agent\/[\w-]{1,60}\.(?:svg|png|jpg|webp)(?:\?v=\d{1,6})?$/; // ?v= — против кэша
 
-  function addMessage(role, text, buttons, image) {
+  function addMessage(role, text, buttons, image, voice) {
     const box = el("div", `iac-msg iac-${role === "user" ? "user" : "agent"}`);
     box.append(el("p", "iac-text", String(text || "")));
     if (image && SAFE_IMAGE.test(String(image.src || ""))) {
@@ -204,9 +209,54 @@
       }
       if (row.childNodes.length) box.append(row);
     }
+    if(role!=='user'&&voice&&/^[a-f0-9]{24}$/.test(voice.id||''))addVoiceControl(box,voice);
     log.append(box);
     scrollDown();
     return box;
+  }
+
+  function addVoiceControl(box,voice){
+    const row=el('div','iac-voice-controls'),button=el('button','iac-chip'),status=el('span','iac-voice-status');
+    button.type='button';row.append(button,status);box.append(row);
+    let mode=voice.mode==='voice'?'voice':'text',generation=0,audio=null;
+    const label=()=>{button.textContent=mode==='voice'?'Отвечать текстом':'Отвечать голосом';button.setAttribute('aria-pressed',String(mode==='voice'));};
+    const loadAudio=async()=>{
+      if(!voice.eligible)return;
+      const own=++generation;status.textContent='Готовлю голосовой ответ…';
+      const until=Date.now()+24000;
+      try{
+        while(Date.now()<until&&generation===own&&mode==='voice'){
+          const result=await api('/chat/speech-status?id='+voice.id,'GET');
+          if(result.status!==200)break;
+          if(result.data.status==='done'){
+            const r=await fetch(API+'/chat/speech?id='+voice.id,{headers:{Authorization:'Bearer '+token}});
+            if(!r.ok)break;
+            const blob=await r.blob();
+            if(generation!==own||mode!=='voice')break;
+            if(!blob.size||blob.size>1000000)break;
+            const url=URL.createObjectURL(blob);audioUrls.add(url);
+            audio=el('audio','iac-voice-audio');audio.controls=true;audio.preload='metadata';audio.src=url;audio.setAttribute('aria-label','Голосовой ответ');
+            box.insertBefore(audio,box.firstChild);status.textContent='';scrollDown();return;
+          }
+          if(!['new','taken'].includes(result.data.status))break;
+          await new Promise(resolve=>setTimeout(resolve,1200));
+        }
+      }catch{}
+      if(generation===own)status.textContent='Ответ оставил текстом.';
+    };
+    button.addEventListener('click',async()=>{
+      if(button.disabled)return;button.disabled=true;
+      const next=mode==='voice'?'text':'voice';
+      try{
+        const result=await api('/chat/reply-mode','POST',{mode:next,id:voice.id});
+        if(result.status!==200){status.textContent='Не удалось переключить. Попробуйте позже.';return;}
+        mode=next;replyPreference=next;generation++;try{localStorage.setItem(MODE_KEY,next)}catch{}
+        if(audio){audio.pause();const url=audio.src;audio.remove();audio=null;URL.revokeObjectURL(url);audioUrls.delete(url);}
+        status.textContent='';label();
+        if(mode==='voice')loadAudio();
+      }finally{button.disabled=false;}
+    });
+    label();if(mode==='voice')loadAudio();
   }
 
   /** Картинка на весь экран: нажать — увеличить, нажать ещё раз или Esc — закрыть. */
@@ -314,8 +364,8 @@
     wait.remove();
     if (!ts && !pow) { addMessage("agent", T.failed, FALLBACK); return false; }
     const { status, data } = await api("/chat/start", "POST", ts
-      ? { turnstile: ts, lang: LANG, page: location.pathname }
-      : { pow, turnstileError: tsError, lang: LANG, page: location.pathname });
+      ? { turnstile: ts, lang: LANG, page: location.pathname, replyMode:replyPreference }
+      : { pow, turnstileError: tsError, lang: LANG, page: location.pathname, replyMode:replyPreference });
     if (status !== 200 || !data.token) {
       const reply = data.reply || { text: T.failed, buttons: FALLBACK };
       addMessage("agent", reply.text, reply.buttons);
@@ -323,7 +373,7 @@
     }
     token = data.token;
     store.set(token);
-    addMessage("agent", data.reply.text, data.reply.buttons);
+    addMessage("agent", data.reply.text, data.reply.buttons,data.reply.image,data.reply.voice);
     return true;
   }
 
@@ -331,7 +381,7 @@
     if (token) {
       const { status, data } = await api("/chat/history", "GET");
       if (status === 200 && Array.isArray(data.messages)) {
-        for (const m of data.messages) addMessage(m.role, m.text, m.buttons, m.image);
+        for (const m of data.messages) addMessage(m.role, m.text, m.buttons, m.image,m.voice);
         return;
       }
       token = null;
@@ -364,7 +414,7 @@
         typing.remove();
       }
       const reply = res.data.reply || { text: T.failed, buttons: FALLBACK };
-      addMessage("agent", reply.text, reply.buttons, reply.image);
+      addMessage("agent", reply.text, reply.buttons, reply.image,reply.voice);
     } finally {
       busy = false;
       sendBtn.disabled = false;
@@ -458,7 +508,7 @@
       }
       typing.remove();
       const reply = res.data.reply || { text: T.failed, buttons: FALLBACK };
-      addMessage("agent", reply.text, reply.buttons, reply.image);
+      addMessage("agent", reply.text, reply.buttons, reply.image,reply.voice);
     } finally {
       busy = false;
       sendBtn.disabled = false;
@@ -552,7 +602,7 @@
       const said = String(res.data.transcript || "").trim();
       mine.querySelector(".iac-text").textContent = said ? `🎤 ${said}` : "🎤";
       const reply = res.data.reply || { text: T.failed, buttons: FALLBACK };
-      addMessage("agent", reply.text, reply.buttons, reply.image);
+      addMessage("agent", reply.text, reply.buttons, reply.image,reply.voice);
     } finally {
       busy = false;
       sendBtn.disabled = false;
@@ -579,6 +629,7 @@
 
   function close() {
     stopVoice();
+    for(const audio of panel.querySelectorAll("audio"))audio.pause();
     panel.hidden = true;
     launcher.setAttribute("aria-expanded", "false");
     document.documentElement.classList.remove("iac-open");
