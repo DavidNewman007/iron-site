@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-12T16:41:57.375Z",
-  "count": 264,
+  "generated_at": "2026-11-13T15:18:39.549Z",
+  "count": 269,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -2113,6 +2113,46 @@
       "name": "Sony DualSense wireless Red",
       "warehouse": "(S4)",
       "price": 8300
+    },
+    "-ps5-pro-s2-129400": {
+      "url": "hybrid-products/gaming/ps5-pro-s2-129400.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-s2-129400.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro",
+      "warehouse": "(S2)",
+      "price": 129400
+    },
+    "-ps5-slim-disk-1tb-s2-73400": {
+      "url": "hybrid-products/gaming/ps5-slim-disk-1tb-s2-73400.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-disk-1tb-s2-73400.html",
+      "cover": "assets/product-images/710d027896068006fabffb9c.jpg",
+      "name": "🎮PS5 Slim Disk 1TB",
+      "warehouse": "(S2)",
+      "price": 73400
+    },
+    "-ps5-slim-digital-825-s2-68900": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-825-s2-68900.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-825-s2-68900.html",
+      "cover": "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+      "name": "🎮PS5 Slim Digital 825",
+      "warehouse": "(S2)",
+      "price": 68900
+    },
+    "-gamepad-ps5-chroma-teal-s2-8400": {
+      "url": "hybrid-products/gaming/gamepad-ps5-chroma-teal-s2-8400.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-chroma-teal-s2-8400.html",
+      "cover": "assets/product-images/c6f43a8594b4f3ef295a42c2.jpg",
+      "name": "🎮GamePad PS5 Chroma Teal",
+      "warehouse": "(S2)",
+      "price": 8400
+    },
+    "-gamepad-ps5-chroma-indigo-s2-7900": {
+      "url": "hybrid-products/gaming/gamepad-ps5-chroma-indigo-s2-7900.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-chroma-indigo-s2-7900.html",
+      "cover": "assets/product-images/a2ae99d842ae9b7f87e76245.jpg",
+      "name": "🎮GamePad PS5 Chroma Indigo",
+      "warehouse": "(S2)",
+      "price": 7900
     }
   }
 }
