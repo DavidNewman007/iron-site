@@ -25,6 +25,18 @@
 
   let currentOffer = null;
 
+  function safeOfferUrl(value, image = false) {
+    const fallback = image ? "assets/logo-horizontal.png" : "magazin.html";
+    try {
+      const u = new URL(String(value || "").trim(), window.location.origin);
+      if (u.username || u.password || !["https:", "http:"].includes(u.protocol)) return fallback;
+      const own = u.origin === window.location.origin ||
+        (u.protocol === "https:" && ["1iron.ru", "www.1iron.ru"].includes(u.hostname));
+      if (!own && !(image && u.protocol === "https:")) return fallback;
+      return u.href;
+    } catch { return fallback; }
+  }
+
   function formatPrice(value) {
     const price = typeof value === "number" ? value : parseInt(String(value || "").replace(/[^\d]/g, ""), 10);
     return (price || 0).toLocaleString("ru-RU") + " ₽";
@@ -128,11 +140,12 @@
       els.expiry.textContent = "Предложение действует до " + dt.toLocaleString("ru-RU");
     }
     if (els.image) {
-      els.image.src = offer.coverUrl || "assets/logo-horizontal.png";
+      els.image.referrerPolicy = "no-referrer";
+      els.image.src = safeOfferUrl(offer.coverUrl || "assets/logo-horizontal.png", true);
       els.image.alt = offer.productName;
     }
     if (els.catalogLink && offer.baseUrl) {
-      els.catalogLink.href = offer.baseUrl;
+      els.catalogLink.href = safeOfferUrl(offer.baseUrl);
     }
     renderCartBar();
   }
