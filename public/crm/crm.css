@@ -804,3 +804,7 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .svc-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:10px; }
 .svc-actions .btn { margin:0; }
 .svc-note[hidden] { display:none; }
+
+/* CRM115: procurement editing beside selling price, including catalog rows. */
+.sk__cost .sk-cost { display:block; margin-left:auto; padding:3px 0; font-size:.88rem; color:var(--cream); text-decoration:underline dotted; }
+.sk-pr .sk-def__n input { width:130px; max-width:100%; }

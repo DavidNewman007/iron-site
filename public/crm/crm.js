@@ -2266,7 +2266,7 @@
   // запчасти у нас, ждут возврата или замены; на полке (I) их нет, Витале уходят отдельной колонкой.
   // markup — G «Наценка ₽» по тиру, own — S «Своя цена ₽» (v52): заполнена — цена продажи H = она.
   // note — O «Заметка», paid — T «Оплачено, шт» (v58): оплаченные Витале в его таблице остатков не видны.
-  const SK = { node: 0, model: 1, variant: 2, color: 3, cost: 5, markup: 6, price: 7, qty: 8, note: 14, tier: 15, key: 16, def: 17, own: 18, paid: 19 };
+  const SK = { node: 0, model: 1, variant: 2, color: 3, cost: 5, markup: 6, price: 7, qty: 8, note: 14, tier: 15, key: 16, def: 17, own: 18, paid: 19, ownCost: 20 };
   const SK_STEP = 50; // округление цены продажи в листе Витали (scripts/vitalya_markup.json → округление_руб)
   const SKO = { node: 0, model: 1, variant: 2, color: 3, src: 4, cost: 5, note: 6, price: 7, qty: 8, added: 9, who: 10, key: 11, def: 12, paid: 13 };
   const SKO_HEAD = ["Узел", "Модель", "Вариант (качество)", "Цвет", "Поставщик", "Закупка ₽", "Заметка (донор, откуда)", "Цена продажи ₽", "В наличии, шт", "Добавлено", "Кто добавил", "Ключ", "Брак, шт", "Оплачено, шт"];
@@ -2287,6 +2287,12 @@
   const skNewKey = () => "свой | " + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
   const skStr = v => String(v ?? "").trim();
   const skQty = v => Math.max(0, Math.round(toNum(v) ?? 0));
+  function skCostValue(raw) {
+    const t = String(raw ?? "").replace(/[\s₽]/g, "").replace(",", ".");
+    if (!t) return null;
+    const n = Number(t);
+    return /^\d+(?:\.\d{1,2})?$/.test(t) && Number.isFinite(n) && n <= Number.MAX_SAFE_INTEGER ? n : NaN;
+  }
   function skLedgerRow(v) {
     return { ts: String(v[0] ?? ""), key: skStr(v[1]), node: String(v[2] ?? ""), model: String(v[3] ?? ""), variant: String(v[4] ?? ""),
       color: String(v[5] ?? ""), d: toNum(v[6]) ?? 0, order: String(v[7] ?? "").trim(), who: String(v[8] ?? ""), note: String(v[9] ?? ""), src: String(v[10] ?? ""), dd: toNum(v[11]) ?? 0 };
@@ -2305,11 +2311,11 @@
             const h = parseInt(x.id.slice(0, 4), 16);
             const qty = ["АКБ", "заднее стекло"].includes(x.узел) && /iPhone 1[1-5]/.test(x.модель) && h % 4 === 0 ? 1 + h % 3 : 0;
             return { row: i + 2, sheet: CFG.stock.sheet, node: x.узел, model: x.модель, variant: x.вариант, color: x.цвет || "", src: CFG.stock.supplier,
-              cost: Math.round(x.цена / 1.25 / 50) * 50, price: x.цена, auto: x.цена, ownPrice: null, qty, def: 0, had: qty > 0, tier: x.вариант, key: x.id };
+              cost: Math.round(x.цена / 1.25 / 50) * 50, markup: x.цена - Math.round(x.цена / 1.25 / 50) * 50, price: x.цена, auto: x.цена, ownPrice: null, qty, def: 0, had: qty > 0, tier: x.вариант, key: x.id };
           });
           own = keep;
         } else {
-          const ranges = [`'${CFG.stock.sheet}'!A2:T`, `'${CFG.stock.ledger}'!A2:L`, `'${CFG.stock.own}'!A2:N`];
+          const ranges = [`'${CFG.stock.sheet}'!A2:U`, `'${CFG.stock.ledger}'!A2:L`, `'${CFG.stock.own}'!A2:N`];
           const get = list => api(`/values:batchGet?${list.map(x => "ranges=" + encodeURIComponent(x)).join("&")}&valueRenderOption=UNFORMATTED_VALUE`);
           let g;
           try { g = await get(ranges); S.ownMissing = false; }
@@ -2317,7 +2323,7 @@
           rows = (g.valueRanges?.[0]?.values || []).map((v, i) => ({ row: i + 2, sheet: CFG.stock.sheet, node: skStr(v[SK.node]), model: skStr(v[SK.model]),
             variant: skStr(v[SK.variant]), color: skStr(v[SK.color]), src: CFG.stock.supplier, cost: toNum(v[SK.cost]), price: toNum(v[SK.price]), qty: skQty(v[SK.qty]),
             def: skQty(v[SK.def]), had: String(v[SK.qty] ?? "") !== "", tier: skStr(v[SK.tier]), key: skStr(v[SK.key]),
-            ownPrice: toNum(v[SK.own]) > 0 ? toNum(v[SK.own]) : null, auto: skAuto(toNum(v[SK.cost]), toNum(v[SK.markup])),
+            ownCost: toNum(v[SK.ownCost]), markup: toNum(v[SK.markup]), ownPrice: toNum(v[SK.own]) > 0 ? toNum(v[SK.own]) : null, auto: skAuto(toNum(v[SK.cost]), toNum(v[SK.markup])),
             note: skStr(v[SK.note]), paid: skQty(v[SK.paid]) })).filter(x => x.key && x.model);
           ledger = (g.valueRanges?.[1]?.values || []).map(skLedgerRow).filter(x => x.key);
           own = (g.valueRanges?.[2]?.values || []).map((v, i) => ({ row: i + 2, sheet: CFG.stock.own, own: true, node: skStr(v[SKO.node]), model: skStr(v[SKO.model]),
@@ -2570,9 +2576,10 @@
   async function skAddSave(btn) {
     const a = S.skAdd, f = a.f;
     const g = { node: skStr(f.node), model: skStr(f.model), variant: skStr(f.variant), color: skStr(f.color), src: skStr(f.src), note: skStr(f.note),
-      cost: toNum(f.cost), price: toNum(f.price), qty: String(f.qty ?? "").trim() === "" ? 1 : Math.round(toNum(f.qty) ?? NaN) };
+      cost: skCostValue(f.cost), price: toNum(f.price), qty: String(f.qty ?? "").trim() === "" ? 1 : Math.round(toNum(f.qty) ?? NaN) };
     const miss = !g.node ? "деталь (узел)" : !g.model ? "модель" : !g.src ? "откуда (поставщик или донор)" : !g.variant ? "качество" : !a.edit && !(g.qty >= 0) ? "количество" : "";
     if (miss) return toast("Заполните: " + miss);
+    if (g.cost != null && !Number.isFinite(g.cost)) return toast("Закупка — числом не меньше 0, например 1 250,50");
     if (!a.edit && S.stock.rows.some(x => x.own && x.model === g.model && norm(x.node) === norm(g.node) && norm(x.variant) === norm(g.variant) && norm(x.color) === norm(g.color) && norm(x.src) === norm(g.src)))
       return toast("Такая позиция уже есть — поправьте её остаток кнопками −/+");
     btn.disabled = true; btn.textContent = "Сохраняю…";
@@ -2748,8 +2755,8 @@
     const bad = def
       + (x.paid > 0 ? `<em class="sk-paid" title="Оплачено — в таблице остатков Витали эти штуки не видны">💳 оплачено ${x.paid} шт</em>` : "");
     return `<div class="sk__row${x.qty > 0 ? " is-in" : ""}${d ? " is-dirty" : ""}${x.own ? " is-own" : ""}${x.def > 0 ? " has-bad" : ""}" data-skrow="${esc(x.key)}">
-      <div class="sk__name"><b>${esc(x.variant)}</b>${from}${bad}${x.own ? `<button type="button" class="linkbtn sk-edit" data-act="skedit" data-k="${esc(x.key)}" title="Поправить позицию">✎</button>` : `<button type="button" class="linkbtn sk-edit" data-act="skprice" data-k="${esc(x.key)}" title="Цена, оплачено, комментарий">✎</button>`}${sub ? `<span>${sub}</span>` : ""}${skPickHtml(x)}</div>
-      <div class="sk__cost">${x.cost != null ? money(x.cost) : ""}<button type="button" class="linkbtn sk-price${x.ownPrice ? " is-own" : ""}" data-act="skprice" data-k="${esc(x.key)}" title="Своя цена продажи" aria-expanded="${S.skPrice === x.key}">прод. ${x.price != null ? money(x.price) : "—"}${x.ownPrice ? " · своя" : ""} ✎</button></div>
+      <div class="sk__name"><b>${esc(x.variant)}</b>${from}${bad}${x.own ? `<button type="button" class="linkbtn sk-edit" data-act="skedit" data-k="${esc(x.key)}" title="Поправить позицию">✎</button>` : `<button type="button" class="linkbtn sk-edit" data-act="skprice" data-k="${esc(x.key)}" title="Закупка, продажа, оплачено, комментарий">✎</button>`}${sub ? `<span>${sub}</span>` : ""}${skPickHtml(x)}</div>
+      <div class="sk__cost"><button type="button" class="linkbtn sk-cost" data-act="skprice" data-focus="cost" data-k="${esc(x.key)}" title="Изменить закупочную цену" aria-expanded="${S.skPrice === x.key}">закуп. ${x.cost != null ? money(x.cost) : "—"} ✎</button><button type="button" class="linkbtn sk-price${x.ownPrice ? " is-own" : ""}" data-act="skprice" data-k="${esc(x.key)}" title="Своя цена продажи" aria-expanded="${S.skPrice === x.key}">прод. ${x.price != null ? money(x.price) : "—"}${x.ownPrice ? " · своя" : ""} ✎</button></div>
       <div class="sk__qty"><button type="button" data-act="skstep" data-d="-1" data-k="${esc(x.key)}" aria-label="Меньше">−</button><input data-skq="${esc(x.key)}" value="${esc(v)}" placeholder="0" inputmode="numeric" autocomplete="off" aria-label="Остаток, шт"><button type="button" data-act="skstep" data-d="1" data-k="${esc(x.key)}" aria-label="Больше">+</button></div>
     </div>${S.skPrice === x.key ? skPriceHtml(x) : ""}`;
   }
@@ -2812,49 +2819,78 @@
   function skPriceHtml(x) {
     const vit = !x.own, cur = vit ? x.ownPrice : x.price, pay = skPaidable(x);
     return `<div class="sk-def sk-pr" data-skprbox="${esc(x.key)}">
-      <div class="sk-def__top"><label class="sk-def__n">Своя цена, ₽<input data-skpr value="${esc(cur ?? "")}" placeholder="${esc(x.auto ?? "")}" inputmode="numeric" autocomplete="off"></label>
+      <div class="sk-def__top"><label class="sk-def__n">Закупочная цена, ₽<input data-skcost value="${esc(x.cost ?? "")}" placeholder="Можно 0" inputmode="decimal" autocomplete="off"></label><label class="sk-def__n">Цена продажи, ₽<input data-skpr value="${esc(cur ?? "")}" placeholder="${esc(x.auto ?? "")}" inputmode="numeric" autocomplete="off"></label>
       ${pay ? `<label class="sk-def__n">Оплачено, шт<input data-skpaid value="${x.paid || ""}" placeholder="0" inputmode="numeric" autocomplete="off"></label>` : ""}</div>
       <input class="sk-def__note" data-sknote value="${esc(x.note || "")}" placeholder="Комментарий к позиции (Витале не виден)" autocomplete="off">
       <div class="row"><button type="button" class="btn btn--sm" data-act="skprgo" data-k="${esc(x.key)}">Сохранить</button>${vit && x.ownPrice ? `<button type="button" class="btn btn--ghost btn--sm" data-act="skprauto" data-k="${esc(x.key)}">Вернуть авто-цену${x.auto != null ? " — " + money(x.auto) : ""}</button>` : ""}<button type="button" class="linkbtn" data-act="skprclose">отмена</button></div>
-      <p class="note">${vit ? `Авто-цена — закупка ${x.cost != null ? money(x.cost) : "?"} + наценка тира${x.auto != null ? ` = <b>${money(x.auto)}</b>` : " (не задана)"}; своя заменяет её в таблице сразу, на сайте и в боте — после ночного обновления витрины.` : "Своя позиция: цена продажи — из листа «Склад — свои позиции»."}${pay ? ` Оплачено: сколько из ${x.qty || 0} шт на полке уже оплачено Витале — в его таблице остатков будет ${Math.max(0, (x.qty || 0) - (x.paid || 0))} шт; при списании в заказ первыми уходят неоплаченные.` : ""}</p>
+      <p class="note">${vit ? `Изменение закупки пересчитывает авто-цену; своя цена продажи остаётся прежней. Ручная закупка сохраняется при обновлении прайса. Авто-цена — закупка ${x.cost != null ? money(x.cost) : "?"} + наценка тира${x.auto != null ? ` = <b>${money(x.auto)}</b>` : " (не задана)"}; своя заменяет её в таблице сразу, на сайте и в боте — после ночного обновления витрины.` : "Своя позиция: цена продажи — из листа «Склад — свои позиции»."}${pay ? ` Оплачено: сколько из ${x.qty || 0} шт на полке уже оплачено Витале — в его таблице остатков будет ${Math.max(0, (x.qty || 0) - (x.paid || 0))} шт; при списании в заказ первыми уходят неоплаченные.` : ""}</p>
     </div>`;
   }
   async function skPriceApply(t, reset) {
     const k = t.dataset.k, x = S.stock?.byKey?.get(k); if (!x) return;
     const box = $app.querySelector(`[data-skprbox="${CSS.escape(k)}"]`), inp = sel => box?.querySelector(sel);
+    const cost = skCostValue(inp("[data-skcost]")?.value ?? x.cost);
+    if (cost != null && !Number.isFinite(cost) || cost == null && x.cost != null) return toast("Закупка — числом не меньше 0, например 1 250,50");
+    const costCh = cost !== (x.cost ?? null), oldCost = x.cost;
     const raw = String(inp("[data-skpr]")?.value || "").replace(/[\s₽]/g, "").replace(",", ".");
     const n = reset || raw === "" ? null : Math.round(+raw);
-    if (n != null && !(n > 0)) return toast("Цена — числом, например 9500");
+    if (n != null && !(Number.isFinite(n) && n > 0)) return toast("Цена — числом, например 9500");
     const priceNow = x.own ? x.price ?? null : x.ownPrice ?? null, priceCh = (n ?? null) !== priceNow;
     if (priceCh && n == null && x.own) return toast("У своей позиции авто-цены нет — впишите цену");
     const paidEl = inp("[data-skpaid]"), paid = paidEl ? Math.max(0, Math.floor(+String(paidEl.value || "0").replace(",", ".")) || 0) : x.paid || 0;
     if (paid > (x.qty || 0)) return toast(`Оплачено не больше, чем на полке: ${x.qty || 0} шт`);
     const note = String(inp("[data-sknote]")?.value ?? x.note ?? "").trim();
     const paidCh = paid !== (x.paid || 0), noteCh = note !== (x.note || "");
-    if (!priceCh && !paidCh && !noteCh) { S.skPrice = null; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
-    if (priceCh && n != null && x.cost != null && n < x.cost && !confirm(`Цена ${money(n)} ниже закупки ${money(x.cost)}. Сохранить?`)) return;
+    if (!costCh && !priceCh && !paidCh && !noteCh) { S.skPrice = null; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+    if (priceCh && n != null && cost != null && n < cost && !confirm(`Цена ${money(n)} ниже закупки ${money(cost)}. Сохранить?`)) return;
     t.disabled = true;
+    let warning = "";
     try {
+      let live = null;
       if (!DEMO) {
-        // Строку ищем по ключу заново: ночная пересборка могла сдвинуть строки после загрузки склада.
+        // Resolve the stable key again; nightly import can reorder rows.
         const [sh, kc, pc, paidc, notec] = x.own ? [CFG.stock.own, "L", "H", SK_PAIDCOL.own, "G"] : [CFG.stock.sheet, "Q", "S", SK_PAIDCOL.vit, "O"];
         const g = await api(`/values/${encodeURIComponent(`'${sh}'!${kc}2:${kc}`)}?valueRenderOption=UNFORMATTED_VALUE`);
         const i = (g.values || []).findIndex(v => String(v?.[0] ?? "").trim() === k);
         if (i < 0) throw new Error("позиции нет в листе — обновите склад");
         const row = i + 2, data = [];
+        if (costCh) {
+          data.push({ range: `'${sh}'!F${row}`, values: [[cost]] });
+          if (!x.own) data.push({ range: `'${sh}'!U${row}`, values: [[cost]] });
+        }
         if (priceCh) data.push({ range: `'${sh}'!${pc}${row}`, values: [[n ?? ""]] });
         if (paidCh) data.push({ range: `'${sh}'!${paidc}${row}`, values: [[paid || ""]] });
         if (noteCh) data.push({ range: `'${sh}'!${notec}${row}`, values: [[note]] });
         await api("/values:batchUpdate", { method: "POST", body: JSON.stringify({ valueInputOption: "RAW", data }) });
-        // Оплата — в журнал движения: это деньги, история нужна. Штуки на полке не меняются.
-        if (paidCh) await skLog([[mskStamp().slice(0, 16), k, x.node, x.model, x.variant, x.color || "", "", "", S.email || "", `💳 Оплачено${isVitalya(x.src) ? " Витале" : ""}: ${x.paid || 0} → ${paid} шт`, x.src || "", ""]]);
+        if (!x.own && costCh) {
+          try {
+            const reread = await api(`/values/${encodeURIComponent(`'${sh}'!F${row}:H${row}`)}?valueRenderOption=UNFORMATTED_VALUE`);
+            const v = reread.values?.[0];
+            if (toNum(v?.[0]) !== cost) throw new Error("закупка уже изменилась");
+            live = { cost, markup: toNum(v[1]), price: toNum(v[2]) };
+          } catch { warning = "Цена сохранена; обновите склад для проверки авто-цены"; }
+        }
+        const logs = [];
+        if (costCh) logs.push([mskStamp().slice(0, 16), k, x.node, x.model, x.variant, x.color || "", "", "", S.email || "", `Закупка: ${oldCost == null ? "не задана" : oldCost} → ${cost} ₽`, x.src || "", ""]);
+        if (paidCh) logs.push([mskStamp().slice(0, 16), k, x.node, x.model, x.variant, x.color || "", "", "", S.email || "", `💳 Оплачено${isVitalya(x.src) ? " Витале" : ""}: ${x.paid || 0} → ${paid} шт`, x.src || "", ""]);
+        if (logs.length) try { await skLog(logs); S.stock.ledger.push(...logs.map(skLedgerRow)); }
+        catch { warning += (warning ? " · " : "") + "Изменения сохранены, но запись истории не удалась"; }
+      }
+      if (costCh) {
+        x.cost = cost;
+        if (!x.own) {
+          x.ownCost = cost;
+          x.markup = live ? live.markup : DEMO ? x.markup : null;
+          x.auto = skAuto(cost, x.markup);
+          x.price = live ? live.price : x.ownPrice ?? x.auto;
+        }
       }
       if (priceCh) { if (x.own) x.price = n; else { x.ownPrice = n; x.price = n ?? x.auto; } }
       if (paidCh) x.paid = paid;
       if (noteCh) x.note = note;
       S.skPrice = null;
-      toast([priceCh && (n == null ? `цена снова авто: ${x.auto != null ? money(x.auto) : "по наценке"}` : `своя цена ${money(n)}`),
-        paidCh && `оплачено ${paid} шт — Витале видно ${Math.max(0, (x.qty || 0) - paid)} шт (обновится в течение 10 минут)`, noteCh && (note ? "комментарий сохранён" : "комментарий убран")]
+      toast([costCh && `закупка ${money(cost)}`, priceCh && (n == null ? `цена снова авто: ${x.auto != null ? money(x.auto) : "по наценке"}` : `своя цена ${money(n)}`),
+        paidCh && `оплачено ${paid} шт — Витале видно ${Math.max(0, (x.qty || 0) - paid)} шт (обновится в течение 10 минут)`, noteCh && (note ? "комментарий сохранён" : "комментарий убран"), warning]
         .filter(Boolean).join(" · ").replace(/^./, c => c.toUpperCase()), null, true);
     } catch (e) { toast("Не записано: " + e.message, null, true); }
     const y = window.scrollY; render(); window.scrollTo(0, y);
@@ -3005,7 +3041,7 @@
     close();
     if (list.length > shown.length) body += `<button class="more" data-act="skmore">Показать ещё (${list.length - shown.length})</button>`;
     if (f.bad) body += skHistHtml();
-    body += `<p class="note">Цена — закупка (у Витали — из его прайса), «прод.» — цена продажи. Каждое изменение пишется в лист «${esc(CFG.stock.ledger)}». Свои позиции хранятся на листе «${esc(CFG.stock.own)}»; Витале в таблицу уходят только позиции с поставщиком «Виталя», в течение 10 минут. На сайте и в боте остатки Витали обновляются ночью.</p>`;
+    body += `<p class="note">Нажмите «закуп.», чтобы изменить закупочную цену, «прод.» — цену продажи. Ручная закупка сохраняется при обновлении прайса. Изменения остатков пишутся в лист «${esc(CFG.stock.ledger)}». Свои позиции хранятся на листе «${esc(CFG.stock.own)}»; Витале в таблицу уходят только позиции с поставщиком «Виталя», в течение 10 минут. На сайте и в боте остатки Витали обновляются ночью.</p>`;
     renderShell(head + body, { search: false });
     skSaveBar();
   }
@@ -3063,7 +3099,7 @@
     else if (act === "skbadonly") { S.sk.badOnly = !S.sk.badOnly; S.sk.limit = 150; S.skDef = null; rerender(); }
     else if (act === "skdef") { S.skDef = S.skDef === t.dataset.k ? null : t.dataset.k; rerender(); $app.querySelector("[data-skdefnote]")?.focus({ preventScroll: true }); }
     else if (act === "skdefgo") skDefApply(t);
-    else if (act === "skprice") { S.skPrice = S.skPrice === t.dataset.k ? null : t.dataset.k; rerender(); const i = $app.querySelector("[data-skpr]"); if (i) { i.focus({ preventScroll: true }); i.select(); } }
+    else if (act === "skprice") { S.skPrice = S.skPrice === t.dataset.k ? null : t.dataset.k; rerender(); const i = $app.querySelector(t.dataset.focus === "cost" ? "[data-skcost]" : "[data-skpr]"); if (i) { i.focus({ preventScroll: true }); i.select(); } }
     else if (act === "skprgo" || act === "skprauto") skPriceApply(t, act === "skprauto");
     else if (act === "skprclose") { S.skPrice = null; rerender(); }
     else if (act === "skbsel") { const x = S.stock?.byKey?.get(t.dataset.k); if (S.skSend.has(t.dataset.k)) S.skSend.delete(t.dataset.k); else if (x?.def > 0) S.skSend.set(t.dataset.k, x.def); rerender(); }
