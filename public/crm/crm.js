@@ -1016,8 +1016,8 @@
   // фразу в поле через точку — так в базе и пишут («Не включается. Требуется
   // диагностика»); повторное нажатие убирает фразу. Своё можно дописать руками, как раньше.
   const FAMILIES = [
-    ["tablet", /ipad|айпад|планшет|galaxy tab|\btab\b|matepad|pad \d/],
-    ["phone", /iphone|айфон|смартфон|телефон|samsung|galaxy|xiaomi|redmi|poco|honor|huawei|realme|oneplus|pixel|nokia|tecno|infinix|vivo|oppo/],
+    ["tablet", /ipad|айпад|планшет|галакси таб|galaxy tab|\btab\b|matepad|pad \d/],
+    ["phone", /iphone|айфон|смартфон|телефон|samsung|galaxy|xiaomi|redmi|poco|honor|huawei|realme|oneplus|pixel|nokia|tecno|infinix|vivo|oppo|самсунг|галакси|сяоми|ксиоми|редми|поко|хонор|хуавей|хуавэй|реалми|техно|инфиникс|виво|оппо|андроид/],
     ["watch", /watch|часы/],
     ["audio", /airpods|наушник|колонк|jbl|marshall|beats/],
     ["console", /playstation|ps ?[345]\b|xbox|nintendo|switch|джойстик|геймпад|dual ?sen|dualshock/],
@@ -1391,7 +1391,7 @@
     if(!S.svc?.list)return serviceActionsHtml(key,true)+`<div class="pp"><p class="note">${S.svc?.error?'Прайс не загрузился: '+esc(S.svc.error):'Загружаю прайс…'}</p>${S.svc?.error?'<button type="button" class="linkbtn" data-act="ppretry">Повторить загрузку</button>':''}</div>`;
     const dev=P.dev??matchDevice(deviceText),r=key==='new'?null:S.rows.find(x=>x.row===key);
     if(P.group&&dev&&P.group.device!==dev){P.group=null;P.replacement=null;P.tariff='';P.q='';P.limit=60;}
-    const head=`<div class="pp__head">${selHtml('data-act="ppdev"',dev||'',[{v:'',t:'— модель из прайса —'},...S.svc.devices],'— модель из прайса —')}<button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>`;
+    const head=`${dev==='Смартфон Android'?`<p class="note">Подбор деталей для <b>${esc(deviceText)}</b></p>`:''}<div class="pp__head">${selHtml('data-act="ppdev"',dev||'',[{v:'',t:'— модель из прайса —'},...S.svc.devices],'— модель из прайса —')}<button type="button" class="linkbtn" data-act="ppclose">закрыть</button></div>`;
     const search=`<input class="pp__q" data-act="ppq" value="${esc(P.q||'')}" placeholder="${P.group?'Фильтр запчастей: качество, поставщик, артикул…':'Найти работу: дисплей, АКБ, перенос данных…'}" autocomplete="off">`;
     const status=`${S.stock?.error?`<p class="note">Полка не загрузилась: ${esc(S.stock.error)}. <button type="button" class="linkbtn" data-act="ppretry">Повторить загрузку</button></p>`:''}${S.svc.costError?`<p class="note">Разбивка цены не загрузилась: ${esc(S.svc.costError)}. Готовые цены из прайса доступны.</p>`:''}${S.supp?.error?`<p class="note">Цены поставщиков не загрузились: ${esc(S.supp.error)}. <button type="button" class="linkbtn" data-act="ppretry">Повторить загрузку</button></p>`:S.supp?.loading?'<p class="note">Загружаю цены поставщиков…</p>':''}`;
     let body;
@@ -2117,6 +2117,31 @@
     "нот": "note", "ноут": "note", "плюс": "plus", "про": "pro", "ультра": "ultra", "лайт": "lite", "макс": "max", "мини": "mini" };
   const DEV_SOFT = ["смартфон", "телефон", "android", "андроид", "galaxy", "галакси"];
   const devTokens = t => norm(t).replace(/\+/g, " plus ").split(/[^a-zа-я0-9]+/).filter(Boolean).map(w => DEV_RU[w] || w).filter(w => w.length >= 2 && !DEV_SOFT.includes(w));
+  const ANDROID_BRANDS = new Set(['samsung','xiaomi','redmi','poco','honor','huawei','realme','tecno','infinix','oppo','vivo','oneplus','pixel','google','nokia','meizu','zte','sony','lenovo','asus','alcatel','motorola','moto']);
+  function androidSpec(raw) {
+    let t=norm(raw);
+    for(const [ru,en] of Object.entries(DEV_RU))t=t.replace(new RegExp(ru+'(?=$|[^а-я])','g'),en+' ');
+    t=t.replace(new RegExp('\\b('+[...ANDROID_BRANDS].join('|')+')(?=\\d|[a-z]+\\d)','g'),'$1 ')
+      .replace(/\b(note|mate|nova|pova|spark|hot|find|view|reno|mi)\s*(\d)/g,'$1 $2')
+      .replace(/(\d[a-z]?)(pro|plus|ultra|lite|max|mini|fe)\b/g,'$1 $2');
+    const codes=[];
+    t=t.replace(/\b(?:sm[ -]?[a-z]\d{3}[a-z0-9]*|[a-z]{2,5}-[a-z]{1,3}\d[a-z0-9]*)\b/g,c=>{codes.push(c.replace(/^sm[ -]?/,'').replace(/[^a-z0-9]/g,'').replace(/^([a-z]\d{3})[a-z]{1,3}$/,'$1'));return ' ';});
+    t=t.replace(/\b\d+\s*[/+]\s*\d+(?:\s*(?:gb|гб))?\b/g,' ').replace(/\b\d+\s*(?:gb|гб|tb|тб)\b/g,' ')
+      .replace(/\b([a-z]{1,2})\s+(\d{1,3})(?!\d)/g,'$1$2').replace(/\b(\d{1,3})\s+([a-z]{1,2})\b/g,'$1$2');
+    const tokens=t.replace(/\+/g,' plus ').split(/[^a-zа-я0-9]+/).filter(Boolean).filter(w=>!DEV_SOFT.includes(w)&&!['gb','гб','tb','тб','ram','озу','память','цвет','черный','чёрный','белый','синий','зеленый','зелёный','серый','black','white','blue','green','grey','gray'].includes(w));
+    return {text:t,tokens,codes};
+  }
+  function androidPartFits(device, title) {
+    const q=androidSpec(device),c=androidSpec(title),brands=q.tokens.filter(w=>ANDROID_BRANDS.has(w)),core=q.tokens.filter(w=>!ANDROID_BRANDS.has(w));
+    if(!core.some(w=>/\d/.test(w))&&!q.codes.length)return false;
+    if(q.codes.some(code=>c.codes.includes(code)))return true;
+    if(brands.some(w=>!c.tokens.includes(w)))return false;
+    if(q.codes.length&&c.codes.length&&!q.codes.some(code=>c.codes.includes(code)))return false;
+    if(!core.length)return q.codes.some(code=>c.codes.includes(code));
+    const modifiers=['pro','plus','max','ultra','lite','mini','fe'];
+    // Check one compatibility branch, so a shared battery for 9X/9X Pro still fits 9X.
+    return c.text.split(/[\/;|]/).some(branch=>{const ws=new Set(androidSpec(branch).tokens);return core.every(w=>ws.has(w))&&!modifiers.some(w=>ws.has(w)&&!q.tokens.includes(w));});
+  }
   function curDevText() {
     const key = curKey(); if (key == null) return "";
     const r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), k = key + ":" + C.device;
@@ -2134,6 +2159,7 @@
       const id=[x.s,x.a,x.u,x.f||x.t,x.c].join('|');if(!seen.has(id)){seen.add(id);list.push(x);}
     }
     if (!CANON_SKIP.includes(dev)) return list;
+    if(dev === 'Смартфон Android')return list.filter(x=>androidPartFits(curDevText(),x.f||x.t));
     const ws = devTokens(curDevText()); if (!ws.length) return [];
     // «Note 12 4G» не должна подхватывать «Note 12 Pro 4G»: слово-модификатор, которого нет в запросе, исключает позицию.
     const MOD = ["pro", "plus", "max", "ultra", "lite", "mini", "fe"], wset = new Set(ws);
