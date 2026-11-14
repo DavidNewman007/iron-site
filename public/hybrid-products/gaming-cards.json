@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-13T15:18:39.549Z",
-  "count": 269,
+  "generated_at": "2026-11-14T14:34:36.539Z",
+  "count": 281,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -2153,6 +2153,102 @@
       "name": "🎮GamePad PS5 Chroma Indigo",
       "warehouse": "(S2)",
       "price": 7900
+    },
+    "-ps5-slim-digital-825-s2-69900": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-825-s2-69900.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-825-s2-69900.html",
+      "cover": "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+      "name": "🎮PS5 Slim Digital 825",
+      "warehouse": "(S2)",
+      "price": 69900
+    },
+    "-gamepad-ps5-purple-s2-7900": {
+      "url": "hybrid-products/gaming/gamepad-ps5-purple-s2-7900.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-purple-s2-7900.html",
+      "cover": "assets/product-images/7c25cb3c84391cc119714e0f.jpg",
+      "name": "🎮GamePad PS5 Purple",
+      "warehouse": "(S2)",
+      "price": 7900
+    },
+    "-gamepad-ps5-sterling-silver-s2-7900": {
+      "url": "hybrid-products/gaming/gamepad-ps5-sterling-silver-s2-7900.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-sterling-silver-s2-7900.html",
+      "cover": "assets/product-images/cce6b8a3ffe169a9529db48d.jpg",
+      "name": "🎮GamePad PS5 Sterling Silver",
+      "warehouse": "(S2)",
+      "price": 7900
+    },
+    "-gamepad-ps5-camouflage-s2-7900": {
+      "url": "hybrid-products/gaming/gamepad-ps5-camouflage-s2-7900.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-camouflage-s2-7900.html",
+      "cover": "assets/product-images/627bd94cba9e9bc334f6e71b.jpg",
+      "name": "🎮GamePad PS5 Camouflage",
+      "warehouse": "(S2)",
+      "price": 7900
+    },
+    "-oculus-quest-3-512-s2-57700": {
+      "url": "hybrid-products/gaming/oculus-quest-3-512-s2-57700.html",
+      "url_en": "en/hybrid-products/gaming/oculus-quest-3-512-s2-57700.html",
+      "cover": "assets/product-images/f453c94d3dbbf65fc61239fe.jpg",
+      "name": "🥽Oculus Quest 3 512",
+      "warehouse": "(S2)",
+      "price": 57700
+    },
+    "oculus-meta-quest-3s-128gb-white-япония-s4-36900": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-36900.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-36900.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 128Gb White",
+      "warehouse": "(S4)",
+      "price": 36900
+    },
+    "oculus-meta-quest-3s-128gb-white-сша-s4-36900": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-36900.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-36900.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 128Gb White",
+      "warehouse": "(S4)",
+      "price": 36900
+    },
+    "oculus-meta-quest-3s-256gb-white-япония-s4-44500": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-256gb-white-s4-44500.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-256gb-white-s4-44500.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 256Gb White",
+      "warehouse": "(S4)",
+      "price": 44500
+    },
+    "sony-playstation-vr-2-white-европа-s4-46200": {
+      "url": "hybrid-products/gaming/sony-playstation-vr-2-white-s4-46200.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-vr-2-white-s4-46200.html",
+      "cover": "assets/product-images/474636c856161f23c0651f48.jpg",
+      "name": "Sony Playstation VR 2 White",
+      "warehouse": "(S4)",
+      "price": 46200
+    },
+    "sony-playstation-5-slim-disc-оаэ-s4-82100": {
+      "url": "hybrid-products/gaming/sony-playstation-5-slim-disc-s4-82100.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-5-slim-disc-s4-82100.html",
+      "cover": "assets/product-images/b69ddd0b1caaeea46a30c8f4.jpg",
+      "name": "Sony PlayStation 5 SLIM Disc",
+      "warehouse": "(S4)",
+      "price": 82100
+    },
+    "sony-playstation-5-slim-digital-825gb-европа-s4-74400": {
+      "url": "hybrid-products/gaming/sony-playstation-5-slim-digital-825gb-s4-74400.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-5-slim-digital-825gb-s4-74400.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "Sony PlayStation 5 SLIM Digital 825Gb",
+      "warehouse": "(S4)",
+      "price": 74400
+    },
+    "sony-playstation-5-slim-digital-825gb-оаэ-s4-74500": {
+      "url": "hybrid-products/gaming/sony-playstation-5-slim-digital-825gb-s4-74500.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-5-slim-digital-825gb-s4-74500.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "Sony PlayStation 5 SLIM Digital 825Gb",
+      "warehouse": "(S4)",
+      "price": 74500
     }
   }
 }

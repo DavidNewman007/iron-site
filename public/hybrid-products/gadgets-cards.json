@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-13T15:18:39.588Z",
-  "count": 121,
+  "generated_at": "2026-11-14T14:34:36.587Z",
+  "count": 128,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -969,6 +969,62 @@
       "name": "📷Canon PowerShot G7 X Mark III, Black",
       "warehouse": "(S2)",
       "price": 104600
+    },
+    "-google-fitbit-air-lavender-s2-13500": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-lavender-s2-13500.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-lavender-s2-13500.html",
+      "cover": "assets/product-images/e601b2e215bd4ee6a0abbc08.jpg",
+      "name": "⌚️Google Fitbit Air Lavender",
+      "warehouse": "(S2)",
+      "price": 13500
+    },
+    "-google-fitbit-air-berry-s2-13500": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-berry-s2-13500.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-berry-s2-13500.html",
+      "cover": "assets/product-images/2ffa2d52407c52f5032fafc2.jpg",
+      "name": "⌚️Google Fitbit Air Berry",
+      "warehouse": "(S2)",
+      "price": 13500
+    },
+    "-google-fitbit-air-obsidian-s2-13500": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-obsidian-s2-13500.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-obsidian-s2-13500.html",
+      "cover": "assets/product-images/38bf1864c0332f59f4f5c38b.jpg",
+      "name": "⌚️Google Fitbit Air Obsidian",
+      "warehouse": "(S2)",
+      "price": 13500
+    },
+    "google-fitbit-air-lavender-s4-11900": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-lavender-s4-11900.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-lavender-s4-11900.html",
+      "cover": "assets/product-images/e601b2e215bd4ee6a0abbc08.jpg",
+      "name": "Google Fitbit Air Lavender",
+      "warehouse": "(S4)",
+      "price": 11900
+    },
+    "google-fitbit-air-berry-s4-11900": {
+      "url": "hybrid-products/gadgets/google-fitbit-air-berry-s4-11900.html",
+      "url_en": "en/hybrid-products/gadgets/google-fitbit-air-berry-s4-11900.html",
+      "cover": "assets/product-images/2ffa2d52407c52f5032fafc2.jpg",
+      "name": "Google Fitbit Air Berry",
+      "warehouse": "(S4)",
+      "price": 11900
+    },
+    "whoop-5-0-superknit-obsidian-peak-сша-s4-23800": {
+      "url": "hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-23800.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-23800.html",
+      "cover": "assets/product-images/14727cb6df731ff8ae6ed8f4.jpg",
+      "name": "Whoop 5.0 SuperKnit Obsidian Peak",
+      "warehouse": "(S4)",
+      "price": 23800
+    },
+    "whoop-5-0-superknit-obsidian-peak-европа-s4-24000": {
+      "url": "hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-24000.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-superknit-obsidian-peak-s4-24000.html",
+      "cover": "assets/product-images/14727cb6df731ff8ae6ed8f4.jpg",
+      "name": "Whoop 5.0 SuperKnit Obsidian Peak",
+      "warehouse": "(S4)",
+      "price": 24000
     }
   }
 }

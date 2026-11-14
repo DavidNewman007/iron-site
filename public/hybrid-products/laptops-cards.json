@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-12T16:41:43.480Z",
-  "count": 198,
+  "generated_at": "2026-11-14T14:34:26.453Z",
+  "count": 211,
   "byId": {
     "hp-omnibook-3-bu0305dx-16-core-ultra-5-225u-8-512gb-silver-сша-s4-61100": {
       "url": "hybrid-products/laptops/hp-omnibook-3-bu0305dx-16-core-ultra-5-225u-8-512gb-silver-s4-61100.html",
@@ -1585,6 +1585,110 @@
       "name": "Lenovo Tab + clear case 4+ 128Gb Luna Grey",
       "warehouse": "(S4)",
       "price": 21300
+    },
+    "hp-250-g10-15-6-intel-core-5-120u-16-512gb-silver-европа-s4-64000": {
+      "url": "hybrid-products/laptops/hp-250-g10-15-6-intel-core-5-120u-16-512gb-silver-s4-64000.html",
+      "url_en": "en/hybrid-products/laptops/hp-250-g10-15-6-intel-core-5-120u-16-512gb-silver-s4-64000.html",
+      "cover": "assets/product-images/fc3d7faf2628c990c7a6c6e3.jpg",
+      "name": "HP 250 G10 15.6 Intel Core 5-120U 16+ 512Gb Silver",
+      "warehouse": "(S4)",
+      "price": 64000
+    },
+    "hp-255-g10-15-6-amd-ryzen-5-7535u-8-512gb-silver-европа-s4-55100": {
+      "url": "hybrid-products/laptops/hp-255-g10-15-6-amd-ryzen-5-7535u-8-512gb-silver-s4-55100.html",
+      "url_en": "en/hybrid-products/laptops/hp-255-g10-15-6-amd-ryzen-5-7535u-8-512gb-silver-s4-55100.html",
+      "cover": "assets/product-images/47e4b02268a5f6e871ccb57b.jpg",
+      "name": "HP 255 G10 15.6 AMD Ryzen 5 7535U 8+ 512Gb Silver",
+      "warehouse": "(S4)",
+      "price": 55100
+    },
+    "hp-15-fd2043nia-15-6-core-ultra-7-255u-8-512gb-silver-великобритания-s4-67600": {
+      "url": "hybrid-products/laptops/hp-15-fd2043nia-15-6-core-ultra-7-255u-8-512gb-silver-s4-67600.html",
+      "url_en": "en/hybrid-products/laptops/hp-15-fd2043nia-15-6-core-ultra-7-255u-8-512gb-silver-s4-67600.html",
+      "cover": "assets/product-images/21588285222ad28a8ee0554b.jpg",
+      "name": "HP 15 FD2043NIA 15.6 Core Ultra 7-255U 8+ 512Gb Silver",
+      "warehouse": "(S4)",
+      "price": 67600
+    },
+    "hp-15-fc0002nw-15-6-amd-ryzen-7-5825u-16-512gb-silver-европа-s4-63200": {
+      "url": "hybrid-products/laptops/hp-15-fc0002nw-15-6-amd-ryzen-7-5825u-16-512gb-silver-s4-63200.html",
+      "url_en": "en/hybrid-products/laptops/hp-15-fc0002nw-15-6-amd-ryzen-7-5825u-16-512gb-silver-s4-63200.html",
+      "cover": "assets/product-images/26e603a150118156a7237f73.jpg",
+      "name": "HP 15 FC0002NW 15.6 AMD Ryzen 7-5825U 16+ 512Gb Silver",
+      "warehouse": "(S4)",
+      "price": 63200
+    },
+    "lenovo-idea-tab-with-tab-pen-case-4-128gb-luna-grey-оаэ-s4-23800": {
+      "url": "hybrid-products/laptops/lenovo-idea-tab-with-tab-pen-case-4-128gb-luna-grey-s4-23800.html",
+      "url_en": "en/hybrid-products/laptops/lenovo-idea-tab-with-tab-pen-case-4-128gb-luna-grey-s4-23800.html",
+      "cover": "assets/product-images/45beedf3ee104d2737e7c888.jpg",
+      "name": "Lenovo Idea Tab with Tab pen & Case 4+ 128Gb Luna Grey",
+      "warehouse": "(S4)",
+      "price": 23800
+    },
+    "lenovo-idea-tab-with-folio-tab-pen-8-128gb-luna-grey-оаэ-s4-29300": {
+      "url": "hybrid-products/laptops/lenovo-idea-tab-with-folio-tab-pen-8-128gb-luna-grey-s4-29300.html",
+      "url_en": "en/hybrid-products/laptops/lenovo-idea-tab-with-folio-tab-pen-8-128gb-luna-grey-s4-29300.html",
+      "cover": "assets/product-images/9c6cab02579f5483ea161009.jpg",
+      "name": "Lenovo Idea Tab with Folio & Tab pen 8+ 128Gb Luna Grey",
+      "warehouse": "(S4)",
+      "price": 29300
+    },
+    "lenovo-legion-5-15irx10-15-3-intel-core-i7-13650hx-16-1tb-black-европа-s4-149700": {
+      "url": "hybrid-products/laptops/lenovo-legion-5-15irx10-15-3-intel-core-i7-13650hx-16-1tb-black-s4-149700.html",
+      "url_en": "en/hybrid-products/laptops/lenovo-legion-5-15irx10-15-3-intel-core-i7-13650hx-16-1tb-black-s4-149700.html",
+      "cover": "assets/product-images/a062e4c6d1e5e0b9309b575c.jpg",
+      "name": "Lenovo Legion 5 15IRX10 15.3 Intel Core i7-13650HX 16+ 1Tb Black",
+      "warehouse": "(S4)",
+      "price": 149700
+    },
+    "lenovo-thinkbook-16g8ial-16-core-ultra-7-255h-16-512gb-arctic-grey-европа-s4-931": {
+      "url": "hybrid-products/laptops/lenovo-thinkbook-16g8ial-16-core-ultra-7-255h-16-512gb-arctic-grey-s4-93100.html",
+      "url_en": "en/hybrid-products/laptops/lenovo-thinkbook-16g8ial-16-core-ultra-7-255h-16-512gb-arctic-grey-s4-93100.html",
+      "cover": "assets/product-images/a32dc1a0de039030a95a9910.jpg",
+      "name": "Lenovo Thinkbook 16G8IAL 16 Core Ultra 7-255H 16+ 512Gb Arctic Grey",
+      "warehouse": "(S4)",
+      "price": 93100
+    },
+    "lenovo-loq-15irx9-15-6-intel-core-i7-16-512gb-luna-grey-юар-s4-119600": {
+      "url": "hybrid-products/laptops/lenovo-loq-15irx9-15-6-intel-core-i7-16-512gb-luna-grey-s4-119600.html",
+      "url_en": "en/hybrid-products/laptops/lenovo-loq-15irx9-15-6-intel-core-i7-16-512gb-luna-grey-s4-119600.html",
+      "cover": "assets/product-images/17615abbceb0ea1ceaa62ffb.jpg",
+      "name": "Lenovo LOQ 15IRX9 15.6 Intel Core i7 16+ 512Gb Luna Grey",
+      "warehouse": "(S4)",
+      "price": 119600
+    },
+    "lenovo-loq-15irx9-15-6-intel-core-i7-13650hx-16-512gb-luna-grey-индия-s4-115900": {
+      "url": "hybrid-products/laptops/lenovo-loq-15irx9-15-6-intel-core-i7-13650hx-16-512gb-luna-grey-s4-115900.html",
+      "url_en": "en/hybrid-products/laptops/lenovo-loq-15irx9-15-6-intel-core-i7-13650hx-16-512gb-luna-grey-s4-115900.html",
+      "cover": "assets/product-images/17615abbceb0ea1ceaa62ffb.jpg",
+      "name": "Lenovo LOQ 15IRX9 15.6 Intel Core i7-13650HX 16+ 512Gb Luna Grey",
+      "warehouse": "(S4)",
+      "price": 115900
+    },
+    "lenovo-v15-g5-irl-15-6-intel-core-i7-13620h-16-512gb-black-сша-s4-72400": {
+      "url": "hybrid-products/laptops/lenovo-v15-g5-irl-15-6-intel-core-i7-13620h-16-512gb-black-s4-72400.html",
+      "url_en": "en/hybrid-products/laptops/lenovo-v15-g5-irl-15-6-intel-core-i7-13620h-16-512gb-black-s4-72400.html",
+      "cover": "assets/product-images/5316eb2e98cd2aacb831faf7.jpg",
+      "name": "Lenovo V15 G5 IRL 15.6 Intel Core i7-13620H 16+ 512Gb Black",
+      "warehouse": "(S4)",
+      "price": 72400
+    },
+    "lenovo-tab-one-clear-case-4-128gb-luna-grey-оаэ-s4-17900": {
+      "url": "hybrid-products/laptops/lenovo-tab-one-clear-case-4-128gb-luna-grey-s4-17900.html",
+      "url_en": "en/hybrid-products/laptops/lenovo-tab-one-clear-case-4-128gb-luna-grey-s4-17900.html",
+      "cover": "assets/product-images/5dd5965b129101cf20ca5a28.jpg",
+      "name": "Lenovo Tab One + clear case 4+ 128Gb Luna Grey",
+      "warehouse": "(S4)",
+      "price": 17900
+    },
+    "lenovo-tab-clear-case-4-128gb-luna-grey-оаэ-s4-21200": {
+      "url": "hybrid-products/laptops/lenovo-tab-clear-case-4-128gb-luna-grey-s4-21200.html",
+      "url_en": "en/hybrid-products/laptops/lenovo-tab-clear-case-4-128gb-luna-grey-s4-21200.html",
+      "cover": "assets/product-images/f979831f3df3520e14414e96.jpg",
+      "name": "Lenovo Tab + clear case 4+ 128Gb Luna Grey",
+      "warehouse": "(S4)",
+      "price": 21200
     }
   }
 }

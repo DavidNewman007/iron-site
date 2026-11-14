@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-13T15:18:39.538Z",
-  "count": 363,
+  "generated_at": "2026-11-14T14:34:36.525Z",
+  "count": 372,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -2905,6 +2905,78 @@
       "name": "Sony WH-1000XM6 Wireless Headphones Black",
       "warehouse": "(S4)",
       "price": 30000
+    },
+    "buds-core-black-оаэ-s2-6000": {
+      "url": "hybrid-products/audio/buds-core-black-s2-6000.html",
+      "url_en": "en/hybrid-products/audio/buds-core-black-s2-6000.html",
+      "cover": "assets/product-images/de7e5559665f154b7f89ee7a.jpg",
+      "name": "Buds Core Black",
+      "warehouse": "(S2)",
+      "price": 6000
+    },
+    "buds-core-white-оаэ-s2-5400": {
+      "url": "hybrid-products/audio/buds-core-white-s2-5400.html",
+      "url_en": "en/hybrid-products/audio/buds-core-white-s2-5400.html",
+      "cover": "assets/product-images/c89f5d0852ae2924cb559f59.jpg",
+      "name": "Buds Core White",
+      "warehouse": "(S2)",
+      "price": 5400
+    },
+    "яндекс-станция-3-серый-s2-28600": {
+      "url": "hybrid-products/audio/яндекс-станция-3-серый-s2-28600.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-3-серый-s2-28600.html",
+      "cover": "assets/product-images/e1b3c932a11f1c334824e561.jpg",
+      "name": "Яндекс Станция 3 Серый",
+      "warehouse": "(S2)",
+      "price": 28600
+    },
+    "samsung-galaxy-buds-3-fe-black-s4-9300": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-3-fe-black-s4-9300.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-3-fe-black-s4-9300.html",
+      "cover": "assets/product-images/a3b34431d408ef785d89cc50.jpg",
+      "name": "Samsung Galaxy Buds 3 FE Black",
+      "warehouse": "(S4)",
+      "price": 9300
+    },
+    "samsung-galaxy-buds-3-pro-silver-s4-12900": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-3-pro-silver-s4-12900.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-3-pro-silver-s4-12900.html",
+      "cover": "assets/product-images/9022d9cab6ca8a2548b24a40.jpeg",
+      "name": "Samsung Galaxy Buds 3 Pro Silver",
+      "warehouse": "(S4)",
+      "price": 12900
+    },
+    "samsung-galaxy-buds-4-white-s4-12400": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-white-s4-12400.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-white-s4-12400.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Samsung Galaxy Buds 4 White",
+      "warehouse": "(S4)",
+      "price": 12400
+    },
+    "sony-wh-1000xm5-wireless-headphones-black-s4-23000": {
+      "url": "hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-black-s4-23000.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-black-s4-23000.html",
+      "cover": "assets/product-images/30ef0ddfc5cb2f9219d671c4.jpg",
+      "name": "Sony WH-1000XM5 Wireless Headphones Black",
+      "warehouse": "(S4)",
+      "price": 23000
+    },
+    "sony-wh-1000xm5-wireless-headphones-blue-s4-23000": {
+      "url": "hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-blue-s4-23000.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-blue-s4-23000.html",
+      "cover": "assets/product-images/0651eaf4f57db82ba6ebf2ef.jpg",
+      "name": "Sony WH-1000XM5 Wireless Headphones Blue",
+      "warehouse": "(S4)",
+      "price": 23000
+    },
+    "sony-wh-1000xm5-wireless-headphones-silver-s4-23000": {
+      "url": "hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-silver-s4-23000.html",
+      "url_en": "en/hybrid-products/audio/sony-wh-1000xm5-wireless-headphones-silver-s4-23000.html",
+      "cover": "assets/product-images/edd07b230876e2223c264f70.jpg",
+      "name": "Sony WH-1000XM5 Wireless Headphones Silver",
+      "warehouse": "(S4)",
+      "price": 23000
     }
   }
 }
