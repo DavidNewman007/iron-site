@@ -223,7 +223,7 @@
     const loadAudio=async()=>{
       if(!voice.eligible)return;
       const own=++generation;status.textContent='Готовлю голосовой ответ…';
-      const until=Date.now()+24000;
+      const until=Date.now()+120000;
       try{
         while(Date.now()<until&&generation===own&&mode==='voice'){
           const result=await api('/chat/speech-status?id='+voice.id,'GET');
