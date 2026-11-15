@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-14T14:34:36.525Z",
-  "count": 372,
+  "generated_at": "2026-11-15T14:41:45.823Z",
+  "count": 375,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -2977,6 +2977,30 @@
       "name": "Sony WH-1000XM5 Wireless Headphones Silver",
       "warehouse": "(S4)",
       "price": 23000
+    },
+    "buds-core-black-оаэ-s2-5400": {
+      "url": "hybrid-products/audio/buds-core-black-s2-5400.html",
+      "url_en": "en/hybrid-products/audio/buds-core-black-s2-5400.html",
+      "cover": "assets/product-images/de7e5559665f154b7f89ee7a.jpg",
+      "name": "Buds Core Black",
+      "warehouse": "(S2)",
+      "price": 5400
+    },
+    "яндекс-станция-стрит-фиолетовый-s2-10500": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-фиолетовый-s2-10500.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-фиолетовый-s2-10500.html",
+      "cover": "assets/product-images/b662afbe801929e27813207f.jpg",
+      "name": "Яндекс Станция Стрит Фиолетовый",
+      "warehouse": "(S2)",
+      "price": 10500
+    },
+    "яндекс-станция-стрит-оранжевый-s2-10500": {
+      "url": "hybrid-products/audio/яндекс-станция-стрит-оранжевый-s2-10500.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-стрит-оранжевый-s2-10500.html",
+      "cover": "assets/product-images/46a6344452aa0a7890480eb3.jpg",
+      "name": "Яндекс Станция Стрит Оранжевый",
+      "warehouse": "(S2)",
+      "price": 10500
     }
   }
 }

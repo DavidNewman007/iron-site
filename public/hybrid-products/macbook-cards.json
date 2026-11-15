@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-14T14:34:36.046Z",
-  "count": 1836,
+  "generated_at": "2026-11-15T14:41:45.337Z",
+  "count": 1845,
   "byId": {
     "macbook-neo-13-a18-pro-8-256gb-indigo-mhff4-hn-a-индия-s1-54500": {
       "url": "hybrid-products/macbook/macbook-neo-13-a18-pro-8-256gb-indigo-mhff4-hn-a-s1-54500.html",
@@ -14689,6 +14689,78 @@
       "name": "MacBook Pro 14 M5 Max 18/40 Core 128+ 8Tb Silver",
       "warehouse": "(S4)",
       "price": 906400
+    },
+    "macbook-neo-13-a18-pro-8-256gb-blush-mhfh4-сша-s2-69900": {
+      "url": "hybrid-products/macbook/macbook-neo-13-a18-pro-8-256gb-blush-mhfh4-s2-69900.html",
+      "url_en": "en/hybrid-products/macbook/macbook-neo-13-a18-pro-8-256gb-blush-mhfh4-s2-69900.html",
+      "cover": "assets/product-images/5a5562c5b7ed180fe80ad0c1.jpg",
+      "name": "MacBook Neo 13 A18 Pro 8+ 256Gb Blush MHFH4",
+      "warehouse": "(S2)",
+      "price": 69900
+    },
+    "macbook-neo-13-a18-pro-8-512gb-indigo-mhfg4-сша-s2-78100": {
+      "url": "hybrid-products/macbook/macbook-neo-13-a18-pro-8-512gb-indigo-mhfg4-s2-78100.html",
+      "url_en": "en/hybrid-products/macbook/macbook-neo-13-a18-pro-8-512gb-indigo-mhfg4-s2-78100.html",
+      "cover": "assets/product-images/093ebe2c24f53305a43f4ae8.jpg",
+      "name": "MacBook Neo 13 A18 Pro 8+ 512Gb Indigo MHFG4",
+      "warehouse": "(S2)",
+      "price": 78100
+    },
+    "macbook-neo-13-a18-pro-8-512gb-citrus-mhfe4-сша-s2-77600": {
+      "url": "hybrid-products/macbook/macbook-neo-13-a18-pro-8-512gb-citrus-mhfe4-s2-77600.html",
+      "url_en": "en/hybrid-products/macbook/macbook-neo-13-a18-pro-8-512gb-citrus-mhfe4-s2-77600.html",
+      "cover": "assets/product-images/4a14b953281f08b68c55b0ae.jpg",
+      "name": "MacBook Neo 13 A18 Pro 8+ 512Gb Citrus MHFE4",
+      "warehouse": "(S2)",
+      "price": 77600
+    },
+    "macbook-neo-13-a18-pro-8-512gb-silver-mhfc4-сша-s2-77600": {
+      "url": "hybrid-products/macbook/macbook-neo-13-a18-pro-8-512gb-silver-mhfc4-s2-77600.html",
+      "url_en": "en/hybrid-products/macbook/macbook-neo-13-a18-pro-8-512gb-silver-mhfc4-s2-77600.html",
+      "cover": "assets/product-images/e1196a12bc5c8d51816c4333.jpg",
+      "name": "MacBook Neo 13 A18 Pro 8+ 512Gb Silver MHFC4",
+      "warehouse": "(S2)",
+      "price": 77600
+    },
+    "macbook-air-13-m5-16-512gb-starlight-mdha4-сша-s2-114600": {
+      "url": "hybrid-products/macbook/macbook-air-13-m5-16-512gb-starlight-mdha4-s2-114600.html",
+      "url_en": "en/hybrid-products/macbook/macbook-air-13-m5-16-512gb-starlight-mdha4-s2-114600.html",
+      "cover": "assets/product-images/2da7cd968db93fbdf25633c8.jpeg",
+      "name": "MacBook Air 13 M5 16+ 512Gb Starlight MDHA4",
+      "warehouse": "(S2)",
+      "price": 114600
+    },
+    "macbook-air-13-m5-16-512gb-midnight-mdhe4-сша-s2-117700": {
+      "url": "hybrid-products/macbook/macbook-air-13-m5-16-512gb-midnight-mdhe4-s2-117700.html",
+      "url_en": "en/hybrid-products/macbook/macbook-air-13-m5-16-512gb-midnight-mdhe4-s2-117700.html",
+      "cover": "assets/product-images/d175b8d82f4f397e8d14991f.jpeg",
+      "name": "MacBook Air 13 M5 16+ 512Gb Midnight MDHE4",
+      "warehouse": "(S2)",
+      "price": 117700
+    },
+    "macbook-air-13-m5-16-512gb-blue-mdhh4-сша-s2-114000": {
+      "url": "hybrid-products/macbook/macbook-air-13-m5-16-512gb-blue-mdhh4-s2-114000.html",
+      "url_en": "en/hybrid-products/macbook/macbook-air-13-m5-16-512gb-blue-mdhh4-s2-114000.html",
+      "cover": "assets/product-images/261a8c0931ffe90beac7053f.jpeg",
+      "name": "MacBook Air 13 M5 16+ 512Gb Blue MDHH4",
+      "warehouse": "(S2)",
+      "price": 114000
+    },
+    "macbook-air-15-m5-16-512gb-starlight-mdvd4-сша-s2-132000": {
+      "url": "hybrid-products/macbook/macbook-air-15-m5-16-512gb-starlight-mdvd4-s2-132000.html",
+      "url_en": "en/hybrid-products/macbook/macbook-air-15-m5-16-512gb-starlight-mdvd4-s2-132000.html",
+      "cover": "assets/product-images/149dd7674b84eb6d90119180.jpg",
+      "name": "MacBook Air 15 M5 16+ 512Gb Starlight MDVD4 ✈️",
+      "warehouse": "(S2)",
+      "price": 132000
+    },
+    "macbook-air-15-m5-16-512gb-sky-blue-mdvq4-сша-s2-133100": {
+      "url": "hybrid-products/macbook/macbook-air-15-m5-16-512gb-sky-blue-mdvq4-s2-133100.html",
+      "url_en": "en/hybrid-products/macbook/macbook-air-15-m5-16-512gb-sky-blue-mdvq4-s2-133100.html",
+      "cover": "assets/product-images/938a35fbb95576f2c524576a.jpg",
+      "name": "MacBook Air 15 M5 16+ 512Gb Sky Blue MDVQ4 ✈️",
+      "warehouse": "(S2)",
+      "price": 133100
     }
   }
 }

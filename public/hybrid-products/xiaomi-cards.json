@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-14T14:34:36.804Z",
-  "count": 2407,
+  "generated_at": "2026-11-15T14:41:46.112Z",
+  "count": 2417,
   "byId": {
     "xiaomi-15-5g-12-256-green-европа-s3-53000": {
       "url": "hybrid-products/xiaomi/xiaomi-15-5g-12-256-green-s3-53000.html",
@@ -19257,6 +19257,86 @@
       "name": "Xiaomi Smart Air Fryer 4.5L White",
       "warehouse": "(S4)",
       "price": 24200
+    },
+    "redmi-note-17-8-256-black-5g-nfc-европа-s3-25500": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-8-256-black-5g-nfc-s3-25500.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-8-256-black-5g-nfc-s3-25500.html",
+      "cover": "assets/product-images/bc7ab43bb08f05a73393318c.jpg",
+      "name": "Redmi Note 17 8/256 Black (5G, NFC)",
+      "warehouse": "(S3)",
+      "price": 25500
+    },
+    "redmi-note-17-pro-6-128-black-nfc-европа-s3-26600": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-6-128-black-nfc-s3-26600.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-6-128-black-nfc-s3-26600.html",
+      "cover": "assets/product-images/22173115962fa1942a03f52a.jpg",
+      "name": "Redmi Note 17 Pro 6/128 Black (NFC)",
+      "warehouse": "(S3)",
+      "price": 26600
+    },
+    "redmi-note-17-pro-8-256-black-nfc-европа-s3-31300": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-256-black-nfc-s3-31300.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-256-black-nfc-s3-31300.html",
+      "cover": "assets/product-images/22173115962fa1942a03f52a.jpg",
+      "name": "Redmi Note 17 Pro 8/256 Black (NFC)",
+      "warehouse": "(S3)",
+      "price": 31300
+    },
+    "redmi-note-17-pro-8-256-blue-nfc-европа-s3-31300": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-256-blue-nfc-s3-31300.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-256-blue-nfc-s3-31300.html",
+      "cover": "assets/product-images/cf93278785239b111eab2ddf.jpg",
+      "name": "Redmi Note 17 Pro 8/256 Blue (NFC)",
+      "warehouse": "(S3)",
+      "price": 31300
+    },
+    "redmi-note-17-pro-8-256-purple-nfc-европа-s3-31300": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-256-purple-nfc-s3-31300.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-256-purple-nfc-s3-31300.html",
+      "cover": "assets/product-images/fd08ced0420a38cf1e55bf59.jpg",
+      "name": "Redmi Note 17 Pro 8/256 Purple (NFC)",
+      "warehouse": "(S3)",
+      "price": 31300
+    },
+    "redmi-note-17-pro-8-256-satin-orange-nfc-европа-s3-31300": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-256-satin-orange-nfc-s3-31300.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-256-satin-orange-nfc-s3-31300.html",
+      "cover": "assets/product-images/bd6576a435b3319137096ea3.jpg",
+      "name": "Redmi Note 17 Pro 8/256 Satin Orange (NFC)",
+      "warehouse": "(S3)",
+      "price": 31300
+    },
+    "redmi-note-17-pro-8-512-black-nfc-европа-s3-36300": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-512-black-nfc-s3-36300.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-512-black-nfc-s3-36300.html",
+      "cover": "assets/product-images/22173115962fa1942a03f52a.jpg",
+      "name": "Redmi Note 17 Pro 8/512 Black (NFC)",
+      "warehouse": "(S3)",
+      "price": 36300
+    },
+    "redmi-note-17-pro-8-512-blue-nfc-европа-s3-36300": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-512-blue-nfc-s3-36300.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-512-blue-nfc-s3-36300.html",
+      "cover": "assets/product-images/cf93278785239b111eab2ddf.jpg",
+      "name": "Redmi Note 17 Pro 8/512 Blue (NFC)",
+      "warehouse": "(S3)",
+      "price": 36300
+    },
+    "poco-x8-pro-8-512-white-европа-s3-38900": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-8-512-white-s3-38900.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-8-512-white-s3-38900.html",
+      "cover": "assets/product-images/f5fe6274dee372b125bb8642.jpg",
+      "name": "Poco X8 Pro 8/512 White",
+      "warehouse": "(S3)",
+      "price": 38900
+    },
+    "poco-f9-ultra-16-512-black-европа-s3-74400": {
+      "url": "hybrid-products/xiaomi/poco-f9-ultra-16-512-black-s3-74400.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-f9-ultra-16-512-black-s3-74400.html",
+      "cover": "assets/product-images/4825622810443c627efb2222.jpg",
+      "name": "Poco F9 Ultra 16/512 Black",
+      "warehouse": "(S3)",
+      "price": 74400
     }
   }
 }
