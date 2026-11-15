@@ -1017,7 +1017,7 @@
   // диагностика»); повторное нажатие убирает фразу. Своё можно дописать руками, как раньше.
   const FAMILIES = [
     ["tablet", /ipad|айпад|планшет|галакси таб|galaxy tab|\btab\b|matepad|pad \d/],
-    ["phone", /iphone|айфон|смартфон|телефон|samsung|galaxy|xiaomi|redmi|poco|honor|huawei|realme|oneplus|pixel|nokia|tecno|infinix|vivo|oppo|самсунг|галакси|сяоми|ксиоми|редми|поко|хонор|хуавей|хуавэй|реалми|техно|инфиникс|виво|оппо|андроид/],
+    ["phone", /iphone|айфон|смартфон|телефон|samsung|galaxy|xiaomi|redmi|poco|honor|huawei|realme|oneplus|pixel|nokia|tecno|infinix|vivo|oppo|zenfone|rog ?phone|nothing ?phone|cmf ?phone|meizu|(?:motorola|moto)\s*(?:moto\s*)?(?:[geczx]\d|xt\d|edge|razr|one)|blackview\s*bv|doogee\s*[snvx]\d|oukitel\s*(?:wp|c|k)\d|ulefone\s*(?:armor|note|power)|sony\s*xperia|самсунг|галакси|сяоми|ксиоми|редми|поко|хонор|хуавей|хуавэй|реалми|техно|инфиникс|виво|оппо|андроид/],
     ["watch", /watch|часы/],
     ["audio", /airpods|наушник|колонк|jbl|marshall|beats/],
     ["console", /playstation|ps ?[345]\b|xbox|nintendo|switch|джойстик|геймпад|dual ?sen|dualshock/],
@@ -1139,6 +1139,7 @@
     "замена стекла камеры": "Стекло камеры", "замена камеры": "Камера", "замена динамика": "Динамик", "замена клавиатуры": "Клавиатура", "замена корпуса": "Корпус",
     "замена матрицы без крышки": "Матрица", "замена накопителя (ssd)": "SSD", "замена нижнего шлейфа": "Нижний шлейф", "замена разъёма зарядки": "Разъём зарядки",
     "замена сенсора": "Тачскрин", "замена тачпада": "Трекпад", "замена шлейфа": "Шлейф", "замена материнской платы": "Материнская плата" };
+  for (const [op,part] of Object.entries(OP_PART)) OP_PART[norm(op)] = part;
   const SVC_SHEET = "CRM — прайс ремонта";
   async function loadServices() {
     if (S.svc?.list || S.svc?.loading) return;
@@ -1425,7 +1426,7 @@
       const words=norm(P.q||'').split(/\s+/).filter(Boolean);P.choices=all.filter(o=>words.every(w=>norm(o.source+' '+o.title+' '+(o.offer?.t||'')+' '+(o.offer?.a||'')+' '+o.cost+' '+o.where).includes(w))).sort((a,b)=>({stock:0,service:1,supplier:2}[a.kind]-{stock:0,service:1,supplier:2}[b.kind])||(a.cost??1e9)-(b.cost??1e9));
       const limit=P.limit||60;
       body=`<p class="pp__step"><button type="button" class="linkbtn" data-act="ppback">← К работам</button><b>2. ${esc(cap(g.operation))} · ${esc(g.device)}</b></p>${all.some(o=>o.service?.year_from||o.service?.year_to)?'<p class="note">Тариф зависит от года выпуска устройства. Выберите подходящий вариант ниже.</p>':''}${P.replacement?`<p class="note">Выбор заменит добавленную услугу «${esc(P.replacement.work)}» вместе с её запчастью и пересчитает итог.</p>`:""}${/клавиатур|топкейс/i.test(g.operation)?`<label class="field"><span>Клавиатура: форма Enter</span>${selHtml('data-act="ppenter"',g.enter||'',[{v:'',t:'Любой — выбрать по названию'},{v:'h',t:'Горизонтальный (US)'},{v:'v',t:'Вертикальный (UK / EU)'}])}</label><p class="note">У вариантов без пометки Enter раскладку нужно уточнить.</p>`:''}${OP_PART[norm(g.operation)]?`<label class="field pp__tariff"><span>Стоимость работы — можно выбрать вручную</span>${selHtml('data-act="pptariff"',P.tariff||'',rateOptions,rates.length===1?'Работа '+money(rates[0])+' — единый тариф':'Выберите вариант работы')}</label>${!tariff?'<p class="note">Нажмите на нужную запчасть. Для известного варианта работа подставится из прайса; если ставок несколько, предложим выбрать после нажатия.</p>':''}`:''}${search}${ppPendingHtml(P,g)}<div class="pp__list pp__offers">${P.choices.slice(0,limit).map((o,i)=>{
-        const x=ppQuote(o,ppOfferTariff(o,g,P.tariff),g),total=x?.price,where=o.where||(o.kind==='service'?(OP_PART[norm(g.operation)]?'Готовый вариант прайса · наличие уточняется':'Работа без запчастей'):'Остаток уточняется');
+        const x=ppQuote(o,ppOfferTariff(o,g,P.tariff),g),total=x?.price,where=o.where||(o.kind==='service'?(OP_PART[norm(g.operation)]?(o.service?.work_only||Number.isFinite(o.service?.work)&&o.service?.work===o.service?.price&&o.service?.part_cost==null?'Стоимость работы без запчасти':'Готовый вариант прайса · наличие уточняется'):'Работа без запчастей'):'Остаток уточняется');
         return `<button type="button" class="pp__item${o.kind==='stock'?' is-stock':''}${P.pending&&ppOfferKey(P.pending)===ppOfferKey(o)?' is-selected':''}" data-act="ppquote" data-i="${i}"><b>${o.kind==='stock'?'📦 Наша полка · ':''}${esc(o.source)} · ${esc(o.title)}</b><span class="note">${esc(where)}${o.when?' · прайс от '+esc(o.when):''}</span><span>${o.cost!=null?'Закупка '+money(o.cost)+' · ':''}${x?.work!=null?'Работа '+money(x.work)+' · ':''}<strong>${total? 'Итого клиенту '+money(total):x?.price_free?'Бесплатно':x?'Цена по диагностике':'Выбрать запчасть → уточнить стоимость работы'}</strong></span><i>${P.replacement?'↻':'＋'}</i></button>`;
       }).join('')}</div><p class="note">${P.choices.length?'Показано '+Math.min(P.choices.length,limit)+' из '+P.choices.length+' предложений'+(words.length?' по фильтру':'')+'.':'По выбранной работе и фильтру предложений нет.'}</p>${P.choices.length>limit?'<button type="button" class="linkbtn" data-act="ppmore">Показать ещё 60 предложений</button>':''}<p class="note">${OP_PART[norm(g.operation)]?"Добавление заполнит выполненную работу, итог и выбранную запчасть. Наличие у поставщика уточняется перед заказом; полка спишется при сохранении.":"Добавление заполнит выполненную работу и прибавит её цену к итогу заказа."}</p>`;
     }
@@ -1444,6 +1445,7 @@
     "замена динамика": ["слуховой динамик", "полифонический динамик"],
     // v60 — Mac: «быстрый поиск запчасти на складе, когда добавляешь работу из прайса».
     "замена матрицы без крышки": ["матрица", "дисплей"], "замена задней крышки": ["задняя крышка", "заднее стекло"], "замена сенсора": ["тачскрин", "сенсор"], "замена клавиатуры": ["клавиатура", "топкейс"], "замена тачпада": ["тачпад"], "замена накопителя (ssd)": ["ssd"] };
+  for (const [op,nodes] of Object.entries(OP_STOCK)) OP_STOCK[norm(op)] = nodes;
   function ppWorkOf(dev, op) {
     const list = S.svc.list.filter(x => x.device === dev && x.operation === op && x.work);
     if (!list.length) return null;
@@ -2138,15 +2140,17 @@
     "нот": "note", "ноут": "note", "плюс": "plus", "про": "pro", "ультра": "ultra", "лайт": "lite", "макс": "max", "мини": "mini" };
   const DEV_SOFT = ["смартфон", "телефон", "android", "андроид", "galaxy", "галакси"];
   const devTokens = t => norm(t).replace(/\+/g, " plus ").split(/[^a-zа-я0-9]+/).filter(Boolean).map(w => DEV_RU[w] || w).filter(w => w.length >= 2 && !DEV_SOFT.includes(w));
-  const ANDROID_BRANDS = new Set(['samsung','xiaomi','redmi','poco','honor','huawei','realme','tecno','infinix','oppo','vivo','oneplus','pixel','google','nokia','meizu','zte','sony','lenovo','asus','alcatel','motorola','moto']);
+  const ANDROID_BRANDS = new Set(['samsung','xiaomi','redmi','poco','honor','huawei','realme','tecno','infinix','oppo','vivo','oneplus','pixel','google','nokia','meizu','zte','sony','lenovo','asus','alcatel','motorola','moto','blackview','doogee','oukitel','ulefone','itel','tcl','htc','philips','nothing','cmf']);
   function androidSpec(raw) {
-    let t=norm(raw);
+    let t=norm(raw).replace(/[()]/g,' ');
     for(const [ru,en] of Object.entries(DEV_RU))t=t.replace(new RegExp(ru+'(?=$|[^а-я])','g'),en+' ');
     t=t.replace(new RegExp('\\b('+[...ANDROID_BRANDS].join('|')+')(?=\\d|[a-z]+\\d)','g'),'$1 ')
-      .replace(/\b(note|mate|nova|pova|spark|hot|find|view|reno|mi)\s*(\d)/g,'$1 $2')
+      .replace(/\b(note|mate|nova|pova|spark|hot|find|view|reno|mi|edge|phone|zenfone|xperia)\s*(\d)/g,'$1 $2')
       .replace(/(\d[a-z]?)(pro|plus|ultra|lite|max|mini|fe)\b/g,'$1 $2');
+    t=t.replace(/\bxiaomi(?=\s+(?:redmi|poco)\b)/g,'').replace(/\bhuawei(?=\s+honor\b)/g,'');
+    t=t.replace(/\bmotorola\s+(?:moto\s+)?/g,'moto ');
     const codes=[];
-    t=t.replace(/\b(?:sm[ -]?[a-z]\d{3}[a-z0-9]*|[a-z]{2,5}-[a-z]{1,3}\d[a-z0-9]*)\b/g,c=>{codes.push(c.replace(/^sm[ -]?/,'').replace(/[^a-z0-9]/g,'').replace(/^([a-z]\d{3})[a-z]{1,3}$/,'$1'));return ' ';});
+    t=t.replace(/\b(?:sm[ -]?[a-z]\d{3}[a-z0-9]*|rmx\d{4}|cph\d{4}|xt\d{3,4}(?:-\d{1,2})?|m\d{4,}[a-z0-9]{2,}|v\d{4}[a-z]{0,2}|[a-z]{3}-[a-z]{1,3}\d[a-z0-9]*)\b/g,c=>{codes.push(c.replace(/^sm[ -]?/,'').replace(/^(xt\d{3,4})-\d{1,2}$/,'$1').replace(/[^a-z0-9]/g,'').replace(/^([a-z]\d{3})[a-z]{1,3}$/,'$1'));return ' ';});
     t=t.replace(/\b\d+\s*[/+]\s*\d+(?:\s*(?:gb|гб))?\b/g,' ').replace(/\b\d+\s*(?:gb|гб|tb|тб)\b/g,' ')
       .replace(/\b([a-z]{1,2})\s+(\d{1,3})(?!\d)/g,'$1$2').replace(/\b(\d{1,3})\s+([a-z]{1,2})\b/g,'$1$2');
     const tokens=t.replace(/\+/g,' plus ').split(/[^a-zа-я0-9]+/).filter(Boolean).filter(w=>!DEV_SOFT.includes(w)&&!['gb','гб','tb','тб','ram','озу','память','цвет','черный','чёрный','белый','синий','зеленый','зелёный','серый','black','white','blue','green','grey','gray'].includes(w));
