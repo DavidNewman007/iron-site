@@ -1366,8 +1366,9 @@
     if(row.kind==='service')return row.service;
     if(!tariff)return null;
     const part_price=/^MacBook/.test(group.device)&&group.operation==='замена аккумулятора'?Math.ceil(row.cost/500)*500:row.cost;
+    const price=part_price!==row.cost?tariff.work+part_price:Math.ceil((tariff.work+row.cost)/100)*100;
     return {device:group.device,operation:group.operation,variant:ppShort(row.title,group.device),work:tariff.work,part_cost:row.cost,part_price,
-      price:part_price!==row.cost?tariff.work+part_price:Math.ceil((tariff.work+row.cost)/100)*100,warranty_days:tariff.warranty_days};
+      price,price_free:price===0,warranty_days:tariff.warranty_days};
   }
   const ppOfferKey = o => [o.kind,o.source,o.cost,o.title,o.stock||'',o.index??'',o.offer?.a||'',o.offer?.u||''].join('|');
   function ppOfferTariff(row, group, selected) {
@@ -1380,12 +1381,16 @@
   function ppPendingHtml(P, group) {
     const row=P.pending;if(!row)return '';
     const options=(S.svc?.list||[]).map((x,i)=>({x,i})).filter(({x})=>x.device===group.device&&x.operation===group.operation&&Number.isFinite(x.work)&&enterFit(group.enter||'',x.variant));
-    return `<div class="pp__pending" data-pppending><b>Выбрана запчасть: ${esc(row.source)} · ${esc(row.title)}</b><p>Закупка ${money(row.cost)}. Выберите стоимость работы — после нажатия запчасть добавится в заказ.</p><div class="pp__rates">${options.map(({x,i})=>{const quote=ppQuote(row,x,group);return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppratepick" data-rate="${i}">${esc(x.variant||cap(x.operation))} · работа ${money(x.work)} · итог ${money(quote.price)}</button>`;}).join('')}</div>${options.length?'':'<p class="note">Не удалось определить стоимость работы. Повторите загрузку прайса.</p><button type="button" class="linkbtn" data-act="ppretry">Повторить загрузку</button>'}<button type="button" class="linkbtn" data-act="pppendingcancel">Отменить выбор запчасти</button></div>`;
+    return `<div class="pp__pending" data-pppending><b>Выбрана запчасть: ${esc(row.source)} · ${esc(row.title)}</b><p>Закупка ${money(row.cost)}. Выберите стоимость работы — после нажатия запчасть добавится в заказ.</p><div class="pp__rates">${options.map(({x,i})=>{const quote=ppQuote(row,x,group);return `<button type="button" class="btn btn--ghost btn--sm" data-act="ppratepick" data-rate="${i}">${esc(x.variant||cap(x.operation))} · работа ${money(x.work)} · итог ${money(quote.price)}</button>`;}).join('')}</div>${options.length?'':'<p class="note">В прайсе нет отдельной ставки работы. Укажите её для этой запчасти или повторите загрузку прайса.</p><label class="field"><span>Стоимость работы, ₽</span><input data-ppwork inputmode="decimal" placeholder="Укажите сумму, можно 0" autocomplete="off"></label><button type="button" class="btn btn--sm" data-act="ppmanualwork">Добавить с указанной работой</button><button type="button" class="linkbtn" data-act="ppretry">Повторить загрузку</button>'}<button type="button" class="linkbtn" data-act="pppendingcancel">Отменить выбор запчасти</button></div>`;
   }
   function choosePriceOffer(key,r,i) {
     const P=S.pp,row=P?.choices?.[i];if(!P?.group||!row)return;
     const x=ppQuote(row,ppOfferTariff(row,P.group,P.tariff),P.group);
     if(!x){P.pending=row;rerenderKeep();document.querySelector('[data-pppending]')?.scrollIntoView({block:'nearest',behavior:'smooth'});return;}
+    finishPriceOffer(key,r,row,x);
+  }
+  function finishPriceOffer(key,r,row,x) {
+    const P=S.pp;if(!P?.group||P.key!==key)return;
     if(row.kind==='stock'&&!ppChoices(key,r,P.group).some(y=>y.stock===row.stock))return toast('Этой позиции уже нет в свободном остатке',null,true);
     P.pending=null;
     if(P.replacement){const old=P.replacement;P.replacement=null;removeService(key,r,old);}
@@ -1396,6 +1401,13 @@
     const wanted=ppOfferKey(P.pending),row=ppChoices(key,r,P.group).find(x=>ppOfferKey(x)===wanted);
     if(!row){P.pending=null;rerenderKeep();return toast('Предложение изменилось — выберите запчасть заново',null,true);}
     P.tariff=String(rate);P.choices=[row];choosePriceOffer(key,r,0);
+  }
+  function choosePendingWork(key,r,raw) {
+    const P=S.pp,work=skCostValue(raw);if(!P?.pending||!P.group||P.key!==key)return;
+    if(work==null||!Number.isFinite(work))return toast('Укажите стоимость работы числом не меньше 0',null,true);
+    const wanted=ppOfferKey(P.pending),row=ppChoices(key,r,P.group).find(x=>ppOfferKey(x)===wanted);
+    if(!row){P.pending=null;rerenderKeep();return toast('Предложение изменилось — выберите запчасть заново',null,true);}
+    finishPriceOffer(key,r,row,ppQuote(row,{work},P.group));
   }
   function beginPartReplacement(key,r,i,source) {
     const p=partsOf(key,r)[i],svc=p?.svcId&&(S.svcLog?.[key]||[]).find(s=>s.id===p.svcId);
@@ -4796,6 +4808,7 @@
     if(t.dataset.act==='ppgroup'){const P=S.pp,g=P?.groups?.[+t.dataset.i];if(g){P.pending=null;P.group=g;P.q='';P.tariff='';P.limit=60;rerenderKeep();}return;}
     if(t.dataset.act==='ppback'){if(S.pp){S.pp.pending=null;S.pp.group=null;S.pp.replacement=null;S.pp.q='';S.pp.limit=60;rerenderKeep();}return;}
     if(t.dataset.act==='ppmore'){if(S.pp){S.pp.limit=(S.pp.limit||60)+60;rerenderKeep();}return;}
+    if(t.dataset.act==='ppmanualwork'){const key=curKey();choosePendingWork(key,key==='new'?null:S.byNum.get(location.hash.slice(2)),document.querySelector('[data-ppwork]')?.value);return;}
     if(t.dataset.act==='ppratepick'){const key=curKey();choosePendingTariff(key,key==='new'?null:S.byNum.get(location.hash.slice(2)),+t.dataset.rate);return;}
     if(t.dataset.act==='pppendingcancel'){if(S.pp){S.pp.pending=null;rerenderKeep();}return;}
     if(t.dataset.act==='ppquote'){const key=curKey();choosePriceOffer(key,key==='new'?null:S.byNum.get(location.hash.slice(2)),+t.dataset.i);return;}
