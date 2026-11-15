@@ -2140,7 +2140,7 @@
     "нот": "note", "ноут": "note", "плюс": "plus", "про": "pro", "ультра": "ultra", "лайт": "lite", "макс": "max", "мини": "mini" };
   const DEV_SOFT = ["смартфон", "телефон", "android", "андроид", "galaxy", "галакси"];
   const devTokens = t => norm(t).replace(/\+/g, " plus ").split(/[^a-zа-я0-9]+/).filter(Boolean).map(w => DEV_RU[w] || w).filter(w => w.length >= 2 && !DEV_SOFT.includes(w));
-  const ANDROID_BRANDS = new Set(['samsung','xiaomi','redmi','poco','honor','huawei','realme','tecno','infinix','oppo','vivo','oneplus','pixel','google','nokia','meizu','zte','sony','lenovo','asus','alcatel','motorola','moto','blackview','doogee','oukitel','ulefone','itel','tcl','htc','philips','nothing','cmf']);
+  const ANDROID_BRANDS = new Set(['samsung','xiaomi','redmi','poco','honor','huawei','realme','tecno','infinix','oppo','vivo','oneplus','pixel','google','nokia','meizu','zte','sony','lenovo','asus','alcatel','motorola','moto','blackview','doogee','oukitel','ulefone','itel','tcl','htc','philips','nothing','cmf','lg','fly','bq','explay','micromax','wileyfox','tele2','mts','lumia','microsoft','megafon','dns','amoi']);
   function androidSpec(raw) {
     let t=norm(raw).replace(/[()]/g,' ');
     for(const [ru,en] of Object.entries(DEV_RU))t=t.replace(new RegExp(ru+'(?=$|[^а-я])','g'),en+' ');
@@ -2149,6 +2149,7 @@
       .replace(/(\d[a-z]?)(pro|plus|ultra|lite|max|mini|fe)\b/g,'$1 $2');
     t=t.replace(/\bxiaomi(?=\s+(?:redmi|poco)\b)/g,'').replace(/\bhuawei(?=\s+honor\b)/g,'');
     t=t.replace(/\bmotorola\s+(?:moto\s+)?/g,'moto ');
+    t=t.replace(/\bexplay(fresh|vega|tornado|rio|onyx)\b/g,'explay $1').replace(/\btele\s*2\s*(mini|midi|maxi)/g,'tele2 $1').replace(/\bwileyfox(swift|spark)/g,'wileyfox $1');
     const codes=[];
     t=t.replace(/\b(?:sm[ -]?[a-z]\d{3}[a-z0-9]*|rmx\d{4}|cph\d{4}|xt\d{3,4}(?:-\d{1,2})?|m\d{4,}[a-z0-9]{2,}|v\d{4}[a-z]{0,2}|[a-z]{3}-[a-z]{1,3}\d[a-z0-9]*)\b/g,c=>{codes.push(c.replace(/^sm[ -]?/,'').replace(/^(xt\d{3,4})-\d{1,2}$/,'$1').replace(/[^a-z0-9]/g,'').replace(/^([a-z]\d{3})[a-z]{1,3}$/,'$1'));return ' ';});
     t=t.replace(/\b\d+\s*[/+]\s*\d+(?:\s*(?:gb|гб))?\b/g,' ').replace(/\b\d+\s*(?:gb|гб|tb|тб)\b/g,' ')
@@ -2158,14 +2159,15 @@
   }
   function androidPartFits(device, title) {
     const q=androidSpec(device),c=androidSpec(title),brands=q.tokens.filter(w=>ANDROID_BRANDS.has(w)),core=q.tokens.filter(w=>!ANDROID_BRANDS.has(w));
-    if(!core.some(w=>/\d/.test(w))&&!q.codes.length)return false;
+    const named=(brands.includes('explay')&&core.some(w=>['fresh','vega','tornado','rio','onyx'].includes(w)))||(brands.includes('tele2')&&core.some(w=>['mini','midi','maxi'].includes(w)))||(brands.includes('wileyfox')&&core.some(w=>['swift','spark'].includes(w)))||(brands.includes('honor')&&core.includes('play'))||(brands.includes('huawei')&&core.includes('smart')&&core.includes('z'))||(brands.includes('megafon')&&core.includes('login')&&core.includes('plus'));
+    if(!core.some(w=>/\d/.test(w))&&!q.codes.length&&!named)return false;
     if(q.codes.some(code=>c.codes.includes(code)))return true;
     if(brands.some(w=>!c.tokens.includes(w)))return false;
     if(q.codes.length&&c.codes.length&&!q.codes.some(code=>c.codes.includes(code)))return false;
     if(!core.length)return q.codes.some(code=>c.codes.includes(code));
-    const modifiers=['pro','plus','max','ultra','lite','mini','fe'];
+    const modifiers=['pro','plus','max','ultra','lite','mini','fe','play'];
     // Check one compatibility branch, so a shared battery for 9X/9X Pro still fits 9X.
-    return c.text.split(/[\/;|]/).some(branch=>{const ws=new Set(androidSpec(branch).tokens);return core.every(w=>ws.has(w))&&!modifiers.some(w=>ws.has(w)&&!q.tokens.includes(w));});
+    return c.text.split(/[\/;|]/).some(branch=>{const tokens=androidSpec(branch).tokens,ws=new Set(tokens);if(named&&!core.some(w=>/\d/.test(w))){const next=tokens[tokens.lastIndexOf(core[core.length-1])+1];if(next&&/^\d{1,3}$/.test(next))return false;}return core.every(w=>ws.has(w))&&!modifiers.some(w=>ws.has(w)&&!q.tokens.includes(w));});
   }
   function curDevText() {
     const key = curKey(); if (key == null) return "";
