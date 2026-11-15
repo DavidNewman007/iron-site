@@ -808,3 +808,11 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 /* CRM115: procurement editing beside selling price, including catalog rows. */
 .sk__cost .sk-cost { display:block; margin-left:auto; padding:3px 0; font-size:.88rem; color:var(--cream); text-decoration:underline dotted; }
 .sk-pr .sk-def__n input { width:130px; max-width:100%; }
+
+/* CRM117: a supplier part can be selected before resolving a labor tariff. */
+.pp__pending { margin:10px 0; padding:12px; border:1px solid var(--gold); border-radius:10px; background:var(--ready-bg); }
+.pp__pending b { overflow-wrap:anywhere; }
+.pp__pending p { margin:8px 0; }
+.pp__rates { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+.pp__rates .btn { margin:0; white-space:normal; text-align:left; }
+.pp__item.is-selected { border-color:var(--gold); background:var(--ready-bg); }
