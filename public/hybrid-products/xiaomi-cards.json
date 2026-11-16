@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-15T14:41:46.112Z",
-  "count": 2417,
+  "generated_at": "2026-11-16T16:58:42.884Z",
+  "count": 2420,
   "byId": {
     "xiaomi-15-5g-12-256-green-европа-s3-53000": {
       "url": "hybrid-products/xiaomi/xiaomi-15-5g-12-256-green-s3-53000.html",
@@ -19337,6 +19337,30 @@
       "name": "Poco F9 Ultra 16/512 Black",
       "warehouse": "(S3)",
       "price": 74400
+    },
+    "redmi-note-17-pro-max-8-256-black-nfc-европа-s3-37900": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-max-8-256-black-nfc-s3-37900.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-max-8-256-black-nfc-s3-37900.html",
+      "cover": "assets/product-images/b21dd659de8bd6c0cae24ded.jpg",
+      "name": "Redmi Note 17 Pro Max 8/256 Black (NFC)",
+      "warehouse": "(S3)",
+      "price": 37900
+    },
+    "poco-x8-pro-12-512-green-европа-s3-40500": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-12-512-green-s3-40500.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-12-512-green-s3-40500.html",
+      "cover": "assets/product-images/10fa7b7e2ff27c0376568587.jpg",
+      "name": "Poco X8 Pro 12/512 Green",
+      "warehouse": "(S3)",
+      "price": 40500
+    },
+    "poco-x8-pro-max-12-512-orange-европа-s3-49100": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-max-12-512-orange-s3-49100.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-max-12-512-orange-s3-49100.html",
+      "cover": "assets/product-images/261a58fce1bc4017e05470f5.jpg",
+      "name": "Poco X8 Pro Max 12/512 Orange",
+      "warehouse": "(S3)",
+      "price": 49100
     }
   }
 }

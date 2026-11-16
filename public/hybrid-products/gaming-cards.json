@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-15T14:41:45.838Z",
-  "count": 281,
+  "generated_at": "2026-11-16T16:58:42.550Z",
+  "count": 289,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -2249,6 +2249,70 @@
       "name": "Sony PlayStation 5 SLIM Digital 825Gb",
       "warehouse": "(S4)",
       "price": 74500
+    },
+    "-ps5-pro-2tb-s2-135700": {
+      "url": "hybrid-products/gaming/ps5-pro-2tb-s2-135700.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-2tb-s2-135700.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro 2TB",
+      "warehouse": "(S2)",
+      "price": 135700
+    },
+    "-ps5-slim-disk-1tb-s2-75500": {
+      "url": "hybrid-products/gaming/ps5-slim-disk-1tb-s2-75500.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-disk-1tb-s2-75500.html",
+      "cover": "assets/product-images/710d027896068006fabffb9c.jpg",
+      "name": "🎮PS5 Slim Disk 1TB",
+      "warehouse": "(S2)",
+      "price": 75500
+    },
+    "-ps5-slim-digital-1tb-s2-73400": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-1tb-s2-73400.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-1tb-s2-73400.html",
+      "cover": "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+      "name": "🎮PS5 Slim Digital 1TB",
+      "warehouse": "(S2)",
+      "price": 73400
+    },
+    "-ps5-slim-digital-825gb-s2-69900": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-69900.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-825gb-s2-69900.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "🎮PS5 Slim Digital 825GB",
+      "warehouse": "(S2)",
+      "price": 69900
+    },
+    "ps-vr2-s2-41000": {
+      "url": "hybrid-products/gaming/ps-vr2-s2-41000.html",
+      "url_en": "en/hybrid-products/gaming/ps-vr2-s2-41000.html",
+      "cover": "assets/product-images/eee8f146c8f5648d0877ab61.jpg",
+      "name": "PS VR2",
+      "warehouse": "(S2)",
+      "price": 41000
+    },
+    "ps-vr2-horizon-s2-41500": {
+      "url": "hybrid-products/gaming/ps-vr2-horizon-s2-41500.html",
+      "url_en": "en/hybrid-products/gaming/ps-vr2-horizon-s2-41500.html",
+      "cover": "assets/product-images/53ba5b9e8fd4d1ad012d5513.jpg",
+      "name": "PS VR2+Horizon",
+      "warehouse": "(S2)",
+      "price": 41500
+    },
+    "ps5-portal-white-s2-24900": {
+      "url": "hybrid-products/gaming/ps5-portal-white-s2-24900.html",
+      "url_en": "en/hybrid-products/gaming/ps5-portal-white-s2-24900.html",
+      "cover": "assets/product-images/9e175dd37be85181eac35fa5.jpg",
+      "name": "PS5 Portal White",
+      "warehouse": "(S2)",
+      "price": 24900
+    },
+    "ps5-portal-black-s2-24900": {
+      "url": "hybrid-products/gaming/ps5-portal-black-s2-24900.html",
+      "url_en": "en/hybrid-products/gaming/ps5-portal-black-s2-24900.html",
+      "cover": "assets/product-images/807f53163a7f14597ff54836.jpg",
+      "name": "PS5 Portal Black",
+      "warehouse": "(S2)",
+      "price": 24900
     }
   }
 }
