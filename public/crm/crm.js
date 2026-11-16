@@ -1141,20 +1141,20 @@
     "замена сенсора": "Тачскрин", "замена тачпада": "Трекпад", "замена шлейфа": "Шлейф", "замена материнской платы": "Материнская плата" };
   for (const [op,part] of Object.entries(OP_PART)) OP_PART[norm(op)] = part;
   const SVC_SHEET = "CRM — прайс ремонта";
-  async function loadServices() {
-    if (S.svc?.list || S.svc?.loading) return;
-    S.svc = { loading: true };
+  async function loadServices(force=false) {
+    if (!force && S.svc?.list || S.svc?.loading) return;
+    const previous = S.svc; S.svc = { ...previous, loading: true };
     try {
       const [j, cost] = await Promise.all([
         fetch("/data/services.json", { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error("прайс не ответил (" + r.status + ")"); return r.json(); }),
-        DEMO ? null : api(`/values/${encodeURIComponent(`'${SVC_SHEET}'!A2:H`)}`).catch(e => ({ error: e.message }))]);
+        DEMO ? null : api(`/values/${encodeURIComponent(`'${SVC_SHEET}'!A2:I`)}`).catch(e => ({ error: e.message }))]);
       const list = (j.services || []).filter(x => x.device && x.operation);
       if (DEMO) for (const x of list) {
         const w = Math.min(6000, Math.max(1000, Math.round(x.price / 400) * 100));
         if (x.variant && OP_PART[norm(x.operation)] && x.price > w) Object.assign(x, { work: w, part_cost: x.price - w, part_source: "MOS-LCD" });
       } else if (!cost.error) {
         // A устройство, B работа, C вариант, D № повтора, E цена клиенту, F работа, G закупка, H поставщик
-        const by = new Map((cost.values || []).map(([d, o, v, n, , w, c, s]) => [`${d}|${o}|${v || ""}|${toNum(n) || 1}`, { w: toNum(w), c: toNum(c), s: s || "" }]));
+        const by = new Map((cost.values || []).map(([d, o, v, n, , w, c, s, item]) => [`${d}|${o}|${v || ""}|${toNum(n) || 1}`, { w: toNum(w), c: toNum(c), s: s || "", item: item || "" }]));
         const seen = new Map();
         for (const x of list) {
           const b = `${x.device}|${x.operation}|${x.variant || ""}`, n = (seen.get(b) || 0) + 1, y = by.get(b + "|" + n);
@@ -1164,6 +1164,7 @@
           if (y.c) x.part_cost = y.c;
           if (((x.family === "mac" && x.operation === "замена аккумулятора") || x.operation === "замена заднего стекла") && y.w && y.c) x.part_price = x.price - y.w;
           if (y.s) x.part_source = y.s;
+          if (y.item) x.part_item = y.item;
         }
       }
       // v83 (24.10.2026): варианты одной услуги — отдельными строками. Владелец: «добавь в оболочку и в общий прайс прошивку
@@ -1186,7 +1187,7 @@
       }
       list.splice(0, list.length, ...flat);
       S.svc = { list, devices: [...new Set((j.services || []).map(x => x.device))], costError: cost?.error || "" };
-    } catch (e) { S.svc = { error: e.message }; }
+    } catch (e) { S.svc = { ...previous, loading: false, error: e.message }; }
   }
   // Модель из поля «Устройство»: самое длинное имя прайса, все слова которого есть в тексте
   // («iPhone 13 Pro Max» → «iPhone 13 Pro Max», а не «iPhone 13»). Скобки с годами не в счёт.
@@ -1348,7 +1349,7 @@
   }
   function ppChoices(key, r, group) {
     const {device:dev,operation:op}=group, list=S.svc?.list||[], rows=[];
-    list.forEach((x,i)=>{if(x.device===dev&&x.operation===op&&enterFit(group.enter||'',x.variant))rows.push({kind:'service',index:i,title:x.variant||cap(op),source:(SRC_NAME.find(([re])=>re.test(x.part_source||''))||[,x.part_source||'Прайс'])[1],cost:x.part_cost,price:x.price,work:x.work,service:x});});
+    list.forEach((x,i)=>{if(x.device===dev&&x.operation===op&&enterFit(group.enter||'',x.variant)&&serviceOfferVisible(x))rows.push({kind:'service',index:i,title:x.variant||cap(op),source:(SRC_NAME.find(([re])=>re.test(x.part_source||''))||[,x.part_source||'Прайс'])[1],cost:x.part_cost,price:x.price,work:x.work,service:x});});
     if(!OP_PART[norm(op)])return rows;
     const want=group.enter||'';
     for(const o of suppList(dev,op))if(enterFit(want,o.f||o.t)&&!rows.some(r=>r.kind==='service'&&!o.a&&!o.u&&(!o.f||norm(o.f)===norm(o.t))&&norm(r.source)===norm(o.s)&&r.cost===o.c&&norm(r.title)===norm(o.t)))rows.push({kind:'supplier',source:o.s,title:o.f||o.t,cost:o.c,when:o.when,where:cmpWhere(o.s,o.t).a||'Остаток уточняется',offer:o});
@@ -1391,6 +1392,8 @@
   }
   function finishPriceOffer(key,r,row,x) {
     const P=S.pp;if(!P?.group||P.key!==key)return;
+    if(row.kind==='service'&&(!(S.svc?.list||[]).includes(row.service)||!serviceOfferVisible(row.service)))return toast('Предложение обновилось. Выберите запчасть заново',null,true);
+    if(row.kind==='supplier'&&!suppList(P.group.device,P.group.operation).includes(row.offer))return toast('Предложение обновилось. Выберите запчасть заново',null,true);
     if(row.kind==='stock'&&!ppChoices(key,r,P.group).some(y=>y.stock===row.stock))return toast('Этой позиции уже нет в свободном остатке',null,true);
     P.pending=null;
     if(P.replacement){const old=P.replacement;P.replacement=null;removeService(key,r,old);}
@@ -1794,7 +1797,7 @@
   function partsHtml(key, r) {
     const list = partsOf(key, r);
     const again = () => { if (location.hash === "#/new" || /^#\/\d+/.test(location.hash)) { const y = window.scrollY; render(); window.scrollTo(0, y); } };
-    if (!S.supp && !S.suppTried) { S.suppTried = true; Promise.all([loadServices(), loadSupplierPrices(), loadStock()]).then(again); }
+    if (!S.supp && !S.suppTried) { S.suppTried = true; Promise.all([loadServices(), loadSupplierPrices(), loadStock(), refreshSupplierPrices()]).then(again); }
     // Склад держим свежим (его правят и другие), но перерисовку не вклиниваем в набор текста.
     else if (!S.stock || skStale()) loadStock(true).then(() => { const a = document.activeElement; if (!(a && $app.contains(a) && /INPUT|TEXTAREA/.test(a.tagName))) again(); });
     const lock = !editable(C.parts, r) && key !== "new";
@@ -2121,10 +2124,11 @@
     [/корпус/, "замена корпуса"], [/тачскрин|сенсор/, "замена сенсора"], [/клавиатур|топкейс/, "замена клавиатуры"], [/тачпад|трекпад/, "замена тачпада"],
     [/ssd|накопител/, "замена накопителя (SSD)"], [/динамик/, "замена динамика"], [/разъ[её]м|зарядк/, "замена разъёма зарядки"], [/материнск|плата/, "замена материнской платы"]];
   const opOfPart = name => (PART_OP.find(([re]) => re.test(norm(name))) || [])[1] || "";
-  async function loadSupplierPrices() {
-    if (S.supp?.map && !S.supp.error || S.supp?.loading) return;
-    S.supp = { loading: true };
+  async function loadSupplierPrices(force=false) {
+    if (!force && S.supp?.map && !S.supp.error || S.supp?.loading) return;
+    const previous=S.supp; S.supp = { ...previous, loading: true };
     try {
+      let revision="";
       const map = new Map(), put = (d, o, x) => { const k = d + "|" + o; if (!map.has(k)) map.set(k, []); map.get(k).push(x); };
       if (DEMO) {
         // Прайс могли начать грузить параллельно (partsHtml зовёт оба сразу) — тогда loadServices вернётся
@@ -2134,13 +2138,45 @@
         while (S.svc?.loading && !S.svc?.list) await new Promise(res => setTimeout(res, 100));
         for (const x of S.svc?.list || []) if (x.part_cost) put(x.device, x.operation, { s: (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, "MosLCD"])[1], t: x.variant || "", c: x.part_cost });
       } else {
-        const v = await api(`/values/${encodeURIComponent(`'${SUPP_SHEET}'!A2:I`)}`);
-        // G–I (v65): ссылка на товар, полное наименование, артикул — для «Попросить отложить».
-        for (const [d, o, sp, t, c, when, u, f, a] of v.values || []) if (toNum(c)) put(d, o, { s: sp, t, c: toNum(c), when, u: u || "", f: f || "", a: a || "" });
+        const v=await api(`/values:batchGet?ranges=${encodeURIComponent(`'${SUPP_SHEET}'!A2:J`)}&ranges=${encodeURIComponent(`'${SUPP_SHEET}'!K1`)}`);
+        revision=v.valueRanges?.[1]?.values?.[0]?.[0]||'';
+        for(const [d,o,sp,t,c,when,u,f,a,stock] of v.valueRanges?.[0]?.values||[])
+          if(toNum(c)&&(!stockOnlySupplier(sp)||String(stock)==='1'))put(d,o,{s:sp,t,c:toNum(c),when,u:u||'',f:f||'',a:a||'',stock:String(stock)==='1'});
       }
-      S.supp = { map };
-    } catch (e) { S.supp = { error: e.message, map: new Map() }; }
+      S.supp = {map,revision};
+      return true;
+    } catch(e) { S.supp={...previous,loading:false,error:e.message};return false; }
   }
+  const stockSupplierKey = name => /^(?:liberti(?:\.ru)?)$/i.test(String(name||'').trim())?'liberti':/^(?:скаймоби|skymoby(?:\.ru)?)$/i.test(String(name||'').trim())?'skymoby':'';
+  const stockOnlySupplier = name => !!stockSupplierKey(name);
+  function serviceOfferVisible(x) {
+    if(!stockOnlySupplier(x.part_source)||!x.part_cost)return true;
+    // This is only a filter for new offers. Keep the original catalog for old
+    // order restoration and for approved labor rates after a part disappears.
+    if(!x.part_item)return false;
+    return suppList(x.device,x.operation).some(o=>stockSupplierKey(o.s)===stockSupplierKey(x.part_source)&&o.c===x.part_cost&&norm(o.f||o.t).includes(norm(x.part_item).slice(0,160)));
+  }
+  let supplierRefreshBusy=false;
+  async function refreshSupplierPrices() {
+    if(DEMO||!S.token||!S.supp?.map||S.supp.loading||S.svc?.loading||supplierRefreshBusy)return;
+    supplierRefreshBusy=true;
+    try {
+      const v=await api(`/values/${encodeURIComponent(`'${SUPP_SHEET}'!K1`)}`),revision=v.values?.[0]?.[0];
+      if(!revision||revision===S.supp.revision&&!S.svc?.error&&!S.svc?.costError&&!S.supp.error)return;
+      if(!await loadSupplierPrices(true))return;
+      await loadServices(true);
+      if(S.pp){S.pp.tariff='';S.pp.pending=null;}
+      S.supplierViewDirty=true; refreshSupplierView();
+    }catch{}finally{supplierRefreshBusy=false;}
+  }
+
+  function refreshSupplierView() {
+    if(!S.supplierViewDirty||document.activeElement?.matches?.('input,textarea,select'))return;
+    S.supplierViewDirty=false;
+    if(location.hash==='#/new'||/^#\/\d+/.test(location.hash))rerenderKeep();
+  }
+  document.addEventListener('focusout',()=>{if(S.supplierViewDirty)setTimeout(refreshSupplierView,0);});
+
   // Лучшая позиция у каждого поставщика: совпадение слов варианта; при равном — та, что лежит
   // в Сочи (Liberti пишет в названии «· в Сочи N шт» / «· под заказ», v36), иначе самая дешёвая.
   const suppHere = t => /· в Сочи (\d+ шт|есть)/.test(String(t || ""));
@@ -2295,7 +2331,13 @@
 
   // Поставщик выбран: закупка — из индекса; у запчасти из прайса — и итог на разницу.
   function applySupplier(key, r, i, supplier, cost, item) {
-    const list = partsOf(key, r), p = list[i]; if (!p) return;
+    const list = partsOf(key, r), p = list[i]; if (!p) return false;
+    if(stockOnlySupplier(supplier)){
+      const {dev,op}=partMeta(p,key,r),clean=t=>norm(String(t||'').replace(/\s*·\s*(в Сочи|под заказ).*$/,''));
+      if(!suppList(dev,op).some(o=>stockSupplierKey(o.s)===stockSupplierKey(supplier)&&o.c===cost&&(!item||clean(o.t)===clean(item)||clean(o.f)===clean(item)))){
+        toast('Предложение обновилось. Выберите запчасть заново',null,true);return false;
+      }
+    }
     const old = toNum(p.cost) ?? 0;
     p.src = supplier; p.cost = String(cost);
     // Название позиции в прайсе склада — для «Попросить отложить» (v56): складу понятнее его же строка.
@@ -4786,12 +4828,12 @@
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), i = +t.dataset.i;
       if(beginPartReplacement(key,r,i,t.dataset.s))return;
       if (t.dataset.k) { const x = skBind(key, r, i, t.dataset.k); if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`); }
-      else if (t.dataset.c) { applySupplier(key, r, i, t.dataset.s, +t.dataset.c, t.dataset.t); toast(`${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[i]?.fromSvc ? " · итог пересчитан" : ""}`); }
+      else if (t.dataset.c) { if(applySupplier(key, r, i, t.dataset.s, +t.dataset.c, t.dataset.t)===false){rerenderKeep();return;} toast(`${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[i]?.fromSvc ? " · итог пересчитан" : ""}`); }
       S.cmp = null; const y = window.scrollY; render(); window.scrollTo(0, y); return;
     }
     if (t.dataset.psup != null) {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
-      applySupplier(key, r, +t.dataset.psup, t.dataset.s, +t.dataset.c, t.dataset.t);
+      if(applySupplier(key, r, +t.dataset.psup, t.dataset.s, +t.dataset.c, t.dataset.t)===false){rerenderKeep();return;}
       const sk = skAuto(key, r, +t.dataset.psup, t.dataset.t);
       const y = window.scrollY; render(); window.scrollTo(0, y);
       toast(sk ? `📦 Со склада: ${skShort(sk)}${skFrom(sk)} — спишется при сохранении` : `${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[+t.dataset.psup]?.fromSvc ? " · итог пересчитан" : ""}`);
@@ -5017,7 +5059,7 @@
       if (miss != null) { askSum(miss, "Отчёт клиенту без суммы не отправить"); return; }
       S.dirty.set(key + ":" + C.report, CFG.reportValue); t.textContent = "Отчёт уйдёт после «Сохранить»"; t.disabled = true; refreshSaveBar(key);
     }
-    else if (act === "ppopen") { S.pp = { key: curKey(), open: true }; const y = window.scrollY; render(); window.scrollTo(0, y); Promise.all([loadServices(), loadSupplierPrices(), loadStock()]).then(() => { if (S.pp?.open) { const y2 = window.scrollY; render(); window.scrollTo(0, y2); } }); }
+    else if (act === "ppopen") { S.pp = { key: curKey(), open: true }; const y = window.scrollY; render(); window.scrollTo(0, y); Promise.all([loadServices(), loadSupplierPrices(), loadStock(), refreshSupplierPrices()]).then(() => { if (S.pp?.open) { const y2 = window.scrollY; render(); window.scrollTo(0, y2); } }); }
     else if (act === "newfor" || act === "warranty") { const r = S.byNum.get(location.hash.slice(2)); if (r) startNewFrom(r, act === "warranty"); }
     else if (act === "discunit") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)); if (key == null) return;
@@ -5515,8 +5557,9 @@
     } catch {}
   }
   setInterval(checkUpdate, 600e3); setTimeout(checkUpdate, 5000);
+  setInterval(() => { if(document.visibilityState === "visible") refreshSupplierPrices(); }, 60e3);
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") checkUpdate();
+    if (document.visibilityState === "visible") { checkUpdate(); refreshSupplierPrices(); }
     if (document.visibilityState === "visible" && S.rows.length && Date.now() - S.loadedAt > 120e3 && !S.dirty.size && !location.hash.startsWith("#/")) load();
   });
 
