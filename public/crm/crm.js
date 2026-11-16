@@ -4766,7 +4766,13 @@
 
   // ── события ─────────────────────────────────────────────
   const curKey = () => location.hash === "#/new" ? "new" : S.byNum.get(location.hash.slice(2))?.row;
-  const curVal = (key, c) => key === "new" ? "" : cell(S.byNum.get(location.hash.slice(2)), c);
+  // A save can originate in the list, without any order in the URL.
+  // Compare with the row being edited, including when another card is open.
+  const curVal = (key, c) => {
+    if (key === "new") return "";
+    const r = S.rows.find(x => x.row === Number(key));
+    return r ? cell(r, c) : "";
+  };
   function setDirty(key, c, v) {
     const orig = curVal(key, c);
     const same = S.bools.has(c) ? isTrue(v) === isTrue(orig) : F[c]?.num ? toNum(v) === toNum(orig) && String(v).trim() !== "" : F[c]?.tel ? telNorm(v) === telNorm(orig) : String(v) === String(orig);
