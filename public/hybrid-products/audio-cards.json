@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-16T16:58:42.532Z",
-  "count": 375,
+  "generated_at": "2026-11-17T16:43:59.651Z",
+  "count": 377,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -3001,6 +3001,22 @@
       "name": "Яндекс Станция Стрит Оранжевый",
       "warehouse": "(S2)",
       "price": 10500
+    },
+    "-яндекс-станция-миди-черный-s2-16800": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-черный-s2-16800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-черный-s2-16800.html",
+      "cover": "assets/product-images/6b3187d94b656b951f87d8ed.jpeg",
+      "name": "🔈Яндекс Станция Миди Черный",
+      "warehouse": "(S2)",
+      "price": 16800
+    },
+    "-яндекс-станция-миди-серый-s2-17400": {
+      "url": "hybrid-products/audio/яндекс-станция-миди-серый-s2-17400.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-миди-серый-s2-17400.html",
+      "cover": "assets/product-images/c6bf9c38b4bbd65c057d2f6c.jpeg",
+      "name": "🔈Яндекс Станция Миди Серый",
+      "warehouse": "(S2)",
+      "price": 17400
     }
   }
 }

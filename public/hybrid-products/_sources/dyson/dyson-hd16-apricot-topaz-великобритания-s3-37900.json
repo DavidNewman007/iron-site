@@ -1,0 +1,72 @@
+{
+  "product_id": "dyson-hd16-apricot-topaz-великобритания-s3-37900",
+  "category": "dyson",
+  "file_slug": "dyson-hd16-apricot-topaz-s3-37900",
+  "name": "Dyson HD16 Apricot Topaz",
+  "country": "🇬🇧 Великобритания",
+  "warehouse": "(S3)",
+  "price": 37900,
+  "catalog_url": "https://sochi.dr-store.ru/dyson/dyson-feny/dyson-supersonic-hd16-apricot-topaz",
+  "catalog_title": "Фен Dyson Supersonic Nural HD16, Apricot/Topaz",
+  "specs": [
+    {
+      "key": "Модель",
+      "value": "Supersonic Nural HD16"
+    },
+    {
+      "key": "Производитель",
+      "value": "Dyson"
+    },
+    {
+      "key": "Длина сетевого шнура",
+      "value": "1.8 м"
+    },
+    {
+      "key": "Мощность",
+      "value": "1600 Вт"
+    },
+    {
+      "key": "Ширина",
+      "value": "78 мм"
+    },
+    {
+      "key": "Высота",
+      "value": "245 мм"
+    },
+    {
+      "key": "Толщина",
+      "value": "97 мм"
+    },
+    {
+      "key": "Вес",
+      "value": "660 г"
+    },
+    {
+      "key": "Цвет",
+      "value": "Абрикосо/Топаз"
+    },
+    {
+      "key": "Ионизация",
+      "value": "есть"
+    },
+    {
+      "key": "Подача холодного воздуха",
+      "value": "есть"
+    }
+  ],
+  "images_remote": [
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-apricot/176979-01_dr-store_1500_white-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-apricot/Web-605G_Tampo_Dynamic-Spec_image_dr-store_1500_white-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-apricot/Web-605_Gallery_T1T2_Card_8-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16-apricot/dyson-hd15-apric-1200x1200.png",
+    "https://sochi.dr-store.ru/image/cache/catalog/demo-prostore/products/dyson/hd16/dyson-hd16-blue-dr-store-25-1200x1200.jpg"
+  ],
+  "images_local": [
+    "assets/product-images/93c0f1acb7c12f342bf9aa2a.jpg",
+    "assets/product-images/7feee237021d76a0cc74fb9f.jpg",
+    "assets/product-images/1adcbdc3ebf6d0102d87a1ce.png",
+    "assets/product-images/4284eb170c54949b4d54885b.jpg",
+    "assets/product-images/8f6ab98a1b244bc9b0d0500e.jpg"
+  ],
+  "updated_at": "2026-11-17T16:43:14.426562Z"
+}

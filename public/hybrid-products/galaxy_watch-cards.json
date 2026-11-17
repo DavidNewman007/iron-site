@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-16T16:58:42.647Z",
-  "count": 485,
+  "generated_at": "2026-11-17T16:43:59.728Z",
+  "count": 486,
   "byId": {
     "watch-8-40mm-graphite-оаэ-s2-18800": {
       "url": "hybrid-products/galaxy_watch/watch-8-40mm-graphite-s2-18800.html",
@@ -3881,6 +3881,14 @@
       "name": "Galaxy Watch Ultra 2 47 LTE Silver",
       "warehouse": "(S3)",
       "price": 40700
+    },
+    "galaxy-watch-8-44-silver-оаэ-s3-19300": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-44-silver-s3-19300.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-44-silver-s3-19300.html",
+      "cover": "assets/product-images/924e91edf6a06fa67647626d.jpg",
+      "name": "Galaxy Watch 8 44 Silver",
+      "warehouse": "(S3)",
+      "price": 19300
     }
   }
 }
