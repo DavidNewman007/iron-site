@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-17T16:43:59.701Z",
-  "count": 128,
+  "generated_at": "2026-11-18T16:21:52.329Z",
+  "count": 129,
   "byId": {
     "-whoop-5-0-life-годовая-подписка-s2-34500": {
       "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34500.html",
@@ -1025,6 +1025,14 @@
       "name": "Whoop 5.0 SuperKnit Obsidian Peak",
       "warehouse": "(S4)",
       "price": 24000
+    },
+    "-whoop-5-0-life-годовая-подписка-s2-34800": {
+      "url": "hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34800.html",
+      "url_en": "en/hybrid-products/gadgets/whoop-5-0-life-годовая-подписка-s2-34800.html",
+      "cover": "assets/product-images/4d9e6703c652a11877f82d11.jpg",
+      "name": "⌚️Whoop 5.0 Life + годовая подписка",
+      "warehouse": "(S2)",
+      "price": 34800
     }
   }
 }
