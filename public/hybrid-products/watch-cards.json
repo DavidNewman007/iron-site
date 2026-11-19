@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-18T16:21:51.916Z",
-  "count": 3373,
+  "generated_at": "2026-11-19T16:54:31.929Z",
+  "count": 3431,
   "byId": {
     "series-se-3-40mm-s-m-midnight-mid-meh94-j-a-япония-s1-21900": {
       "url": "hybrid-products/watch/series-se-3-40mm-s-m-midnight-mid-meh94-j-a-s1-21900.html",
@@ -26985,6 +26985,470 @@
       "name": "Apple Watch Ultra 4 Natural / Sand Trail Loop M/L",
       "warehouse": "(S3)",
       "price": 73100
+    },
+    "series-12-46mm-m-l-black-black-mjel4-x-a-австралия-s1-44900": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-black-black-mjel4-x-a-s1-44900.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-black-black-mjel4-x-a-s1-44900.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Series 12 46mm M/L Black Black MJEL4 X/A",
+      "warehouse": "(S1)",
+      "price": 44900
+    },
+    "series-12-46mm-m-l-black-black-mjel4-x-a-австралия-s1-45400": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-black-black-mjel4-x-a-s1-45400.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-black-black-mjel4-x-a-s1-45400.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Series 12 46mm M/L Black Black MJEL4 X/A",
+      "warehouse": "(S1)",
+      "price": 45400
+    },
+    "series-ultra-4-49mm-black-black-ocean-cel-mjay4-ls-a-сша-s1-72600": {
+      "url": "hybrid-products/watch/series-ultra-4-49mm-black-black-ocean-cel-mjay4-ls-a-s1-72600.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-4-49mm-black-black-ocean-cel-mjay4-ls-a-s1-72600.html",
+      "cover": "assets/product-images/81c804a036e93ab9fa32561f.jpg",
+      "name": "Series Ultra 4 49mm Black Black Ocean CEL MJAY4 LS/A",
+      "warehouse": "(S1)",
+      "price": 72600
+    },
+    "apple-watch-s12-46-space-gray-s-m-сша-s3-42300": {
+      "url": "hybrid-products/watch/apple-watch-s12-46-space-gray-s-m-s3-42300.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-s12-46-space-gray-s-m-s3-42300.html",
+      "cover": "assets/product-images/56347aa9d566dcd702f543a4.jpg",
+      "name": "Apple Watch S12 46 Space Gray S/M",
+      "warehouse": "(S3)",
+      "price": 42300
+    },
+    "apple-watch-ultra-3-black-black-titanium-milanese-loop-s-сша-s3-67200": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-black-black-titanium-milanese-loop-s-s3-67200.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-black-black-titanium-milanese-loop-s-s3-67200.html",
+      "cover": "assets/product-images/024a980a60901ca6bfe90630.jpg",
+      "name": "Apple Watch Ultra 3 Black / Black Titanium Milanese Loop S",
+      "warehouse": "(S3)",
+      "price": 67200
+    },
+    "apple-watch-ultra-3-black-anchor-blue-ocean-band-сша-s3-65400": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-black-anchor-blue-ocean-band-s3-65400.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-black-anchor-blue-ocean-band-s3-65400.html",
+      "cover": "assets/product-images/3234675036d435928b8d7c23.jpg",
+      "name": "Apple Watch Ultra 3 Black / Anchor Blue Ocean Band",
+      "warehouse": "(S3)",
+      "price": 65400
+    },
+    "apple-watch-ultra-3-black-black-charcoal-trail-loop-s-m-сша-s3-60600": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-black-black-charcoal-trail-loop-s-m-s3-60600.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-black-black-charcoal-trail-loop-s-m-s3-60600.html",
+      "cover": "assets/product-images/839840c75398b9537d090485.jpg",
+      "name": "Apple Watch Ultra 3 Black / Black Charcoal Trail Loop S/M",
+      "warehouse": "(S3)",
+      "price": 60600
+    },
+    "apple-watch-ultra-3-natural-natural-titanium-milanese-loop-l-сша-s3-65700": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-natural-natural-titanium-milanese-loop-l-s3-65700.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-natural-natural-titanium-milanese-loop-l-s3-65700.html",
+      "cover": "assets/product-images/142abe6c33dbf34ac7c64267.jpg",
+      "name": "Apple Watch Ultra 3 Natural / Natural Titanium Milanese Loop L",
+      "warehouse": "(S3)",
+      "price": 65700
+    },
+    "apple-watch-ultra-3-natural-natural-titanium-milanese-loop-s-сша-s3-67200": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-natural-natural-titanium-milanese-loop-s-s3-67200.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-natural-natural-titanium-milanese-loop-s-s3-67200.html",
+      "cover": "assets/product-images/142abe6c33dbf34ac7c64267.jpg",
+      "name": "Apple Watch Ultra 3 Natural / Natural Titanium Milanese Loop S",
+      "warehouse": "(S3)",
+      "price": 67200
+    },
+    "apple-watch-ultra-3-natural-anchor-blue-ocean-band-сша-s3-60700": {
+      "url": "hybrid-products/watch/apple-watch-ultra-3-natural-anchor-blue-ocean-band-s3-60700.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-3-natural-anchor-blue-ocean-band-s3-60700.html",
+      "cover": "assets/product-images/75fd6937c9db8e44883c25fa.jpg",
+      "name": "Apple Watch Ultra 3 Natural / Anchor Blue Ocean Band",
+      "warehouse": "(S3)",
+      "price": 60700
+    },
+    "apple-watch-ultra-4-black-tc-trn-black-ocean-band-сша-s3-71600": {
+      "url": "hybrid-products/watch/apple-watch-ultra-4-black-tc-trn-black-ocean-band-s3-71600.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-4-black-tc-trn-black-ocean-band-s3-71600.html",
+      "cover": "assets/product-images/81c804a036e93ab9fa32561f.jpg",
+      "name": "Apple Watch Ultra 4 Black / Tc Trn Black Ocean Band",
+      "warehouse": "(S3)",
+      "price": 71600
+    },
+    "apple-watch-ultra-4-natural-natural-titanium-milanese-loop-l-сша-s3-91200": {
+      "url": "hybrid-products/watch/apple-watch-ultra-4-natural-natural-titanium-milanese-loop-l-s3-91200.html",
+      "url_en": "en/hybrid-products/watch/apple-watch-ultra-4-natural-natural-titanium-milanese-loop-l-s3-91200.html",
+      "cover": "assets/product-images/213f9e5867badbfdf98b18fc.jpg",
+      "name": "Apple Watch Ultra 4 Natural / Natural Titanium Milanese Loop L",
+      "warehouse": "(S3)",
+      "price": 91200
+    },
+    "series-se-3-40mm-s-m-mid-midnight-индия-s4-22200": {
+      "url": "hybrid-products/watch/series-se-3-40mm-s-m-mid-midnight-s4-22200.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-40mm-s-m-mid-midnight-s4-22200.html",
+      "cover": "assets/product-images/8b5761f071f5a9e9ac6c3917.png",
+      "name": "Series SE 3 40mm S/M Mid Midnight",
+      "warehouse": "(S4)",
+      "price": 22200
+    },
+    "series-se-3-40mm-s-m-star-starlight-индия-s4-24000": {
+      "url": "hybrid-products/watch/series-se-3-40mm-s-m-star-starlight-s4-24000.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-40mm-s-m-star-starlight-s4-24000.html",
+      "cover": "assets/product-images/dbe0932de4119f489942c01f.jpg",
+      "name": "Series SE 3 40mm S/M Star Starlight",
+      "warehouse": "(S4)",
+      "price": 24000
+    },
+    "series-se-3-40mm-s-m-navy-blue-midnight-сингапур-s4-23100": {
+      "url": "hybrid-products/watch/series-se-3-40mm-s-m-navy-blue-midnight-s4-23100.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-40mm-s-m-navy-blue-midnight-s4-23100.html",
+      "cover": "assets/product-images/8b5761f071f5a9e9ac6c3917.png",
+      "name": "Series SE 3 40mm S/M Navy Blue Midnight",
+      "warehouse": "(S4)",
+      "price": 23100
+    },
+    "series-se-3-40mm-s-m-navy-blue-midnight-сша-s4-23700": {
+      "url": "hybrid-products/watch/series-se-3-40mm-s-m-navy-blue-midnight-s4-23700.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-40mm-s-m-navy-blue-midnight-s4-23700.html",
+      "cover": "assets/product-images/8b5761f071f5a9e9ac6c3917.png",
+      "name": "Series SE 3 40mm S/M Navy Blue Midnight",
+      "warehouse": "(S4)",
+      "price": 23700
+    },
+    "series-se-3-40mm-s-m-navy-blue-midnight-cel-сша-s4-25600": {
+      "url": "hybrid-products/watch/series-se-3-40mm-s-m-navy-blue-midnight-cel-s4-25600.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-40mm-s-m-navy-blue-midnight-cel-s4-25600.html",
+      "cover": "assets/product-images/2e8bb2eb792565745e46e5da.png",
+      "name": "Series SE 3 40mm S/M Navy Blue Midnight CEL",
+      "warehouse": "(S4)",
+      "price": 25600
+    },
+    "series-se-3-40mm-s-m-sand-starlight-cel-сша-s4-25800": {
+      "url": "hybrid-products/watch/series-se-3-40mm-s-m-sand-starlight-cel-s4-25800.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-40mm-s-m-sand-starlight-cel-s4-25800.html",
+      "cover": "assets/product-images/dbe0932de4119f489942c01f.jpg",
+      "name": "Series SE 3 40mm S/M Sand Starlight CEL",
+      "warehouse": "(S4)",
+      "price": 25800
+    },
+    "series-se-3-40mm-s-m-sand-starlight-сша-s4-24700": {
+      "url": "hybrid-products/watch/series-se-3-40mm-s-m-sand-starlight-s4-24700.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-40mm-s-m-sand-starlight-s4-24700.html",
+      "cover": "assets/product-images/dbe0932de4119f489942c01f.jpg",
+      "name": "Series SE 3 40mm S/M Sand Starlight",
+      "warehouse": "(S4)",
+      "price": 24700
+    },
+    "series-se-3-40mm-m-l-navy-blue-midnight-сингапур-s4-23300": {
+      "url": "hybrid-products/watch/series-se-3-40mm-m-l-navy-blue-midnight-s4-23300.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-40mm-m-l-navy-blue-midnight-s4-23300.html",
+      "cover": "assets/product-images/8b5761f071f5a9e9ac6c3917.png",
+      "name": "Series SE 3 40mm M/L Navy Blue Midnight",
+      "warehouse": "(S4)",
+      "price": 23300
+    },
+    "series-se-3-40mm-m-l-navy-blue-midnight-сша-s4-23700": {
+      "url": "hybrid-products/watch/series-se-3-40mm-m-l-navy-blue-midnight-s4-23700.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-40mm-m-l-navy-blue-midnight-s4-23700.html",
+      "cover": "assets/product-images/8b5761f071f5a9e9ac6c3917.png",
+      "name": "Series SE 3 40mm M/L Navy Blue Midnight",
+      "warehouse": "(S4)",
+      "price": 23700
+    },
+    "series-se-3-44mm-m-l-navy-blue-midnight-сингапур-s4-26200": {
+      "url": "hybrid-products/watch/series-se-3-44mm-m-l-navy-blue-midnight-s4-26200.html",
+      "url_en": "en/hybrid-products/watch/series-se-3-44mm-m-l-navy-blue-midnight-s4-26200.html",
+      "cover": "assets/product-images/e388b46c6e53e84a4267e925.png",
+      "name": "Series SE 3 44mm M/L Navy Blue Midnight",
+      "warehouse": "(S4)",
+      "price": 26200
+    },
+    "series-10-46mm-m-l-slate-slate-mil-lp-сша-s4-46900": {
+      "url": "hybrid-products/watch/series-10-46mm-m-l-slate-slate-mil-lp-s4-46900.html",
+      "url_en": "en/hybrid-products/watch/series-10-46mm-m-l-slate-slate-mil-lp-s4-46900.html",
+      "cover": "assets/product-images/c2b9a507d10dc5c140807c3b.jpg",
+      "name": "Series 10 46mm M/L Slate Slate Mil Lp",
+      "warehouse": "(S4)",
+      "price": 46900
+    },
+    "series-11-42mm-s-m-jet-black-black-сша-s4-33200": {
+      "url": "hybrid-products/watch/series-11-42mm-s-m-jet-black-black-s4-33200.html",
+      "url_en": "en/hybrid-products/watch/series-11-42mm-s-m-jet-black-black-s4-33200.html",
+      "cover": "assets/product-images/37c600e483b93be61e18f8ce.jpg",
+      "name": "Series 11 42mm S/M Jet Black Black",
+      "warehouse": "(S4)",
+      "price": 33200
+    },
+    "series-11-42mm-s-m-space-gray-black-cel-сербия-s4-35200": {
+      "url": "hybrid-products/watch/series-11-42mm-s-m-space-gray-black-cel-s4-35200.html",
+      "url_en": "en/hybrid-products/watch/series-11-42mm-s-m-space-gray-black-cel-s4-35200.html",
+      "cover": "assets/product-images/8c7d3e0f153f900ea90200d0.jpg",
+      "name": "Series 11 42mm S/M Space Gray Black CEL",
+      "warehouse": "(S4)",
+      "price": 35200
+    },
+    "series-11-42mm-m-l-jet-black-black-индия-s4-32800": {
+      "url": "hybrid-products/watch/series-11-42mm-m-l-jet-black-black-s4-32800.html",
+      "url_en": "en/hybrid-products/watch/series-11-42mm-m-l-jet-black-black-s4-32800.html",
+      "cover": "assets/product-images/37c600e483b93be61e18f8ce.jpg",
+      "name": "Series 11 42mm M/L Jet Black Black",
+      "warehouse": "(S4)",
+      "price": 32800
+    },
+    "series-11-46mm-m-l-space-gray-black-индия-s4-35700": {
+      "url": "hybrid-products/watch/series-11-46mm-m-l-space-gray-black-s4-35700.html",
+      "url_en": "en/hybrid-products/watch/series-11-46mm-m-l-space-gray-black-s4-35700.html",
+      "cover": "assets/product-images/8c7d3e0f153f900ea90200d0.jpg",
+      "name": "Series 11 46mm M/L Space Gray Black",
+      "warehouse": "(S4)",
+      "price": 35700
+    },
+    "series-11-46mm-m-l-slate-slate-mil-lp-cel-сша-s4-61500": {
+      "url": "hybrid-products/watch/series-11-46mm-m-l-slate-slate-mil-lp-cel-s4-61500.html",
+      "url_en": "en/hybrid-products/watch/series-11-46mm-m-l-slate-slate-mil-lp-cel-s4-61500.html",
+      "cover": "assets/product-images/4359c9a6247c4e0a86927880.jpg",
+      "name": "Series 11 46mm M/L Slate Slate Mil Lp CEL",
+      "warehouse": "(S4)",
+      "price": 61500
+    },
+    "series-12-42mm-dark-bronze-bronze-mil-lp-сша-s4-47300": {
+      "url": "hybrid-products/watch/series-12-42mm-dark-bronze-bronze-mil-lp-s4-47300.html",
+      "url_en": "en/hybrid-products/watch/series-12-42mm-dark-bronze-bronze-mil-lp-s4-47300.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 42mm Dark Bronze Bronze Mil Lp",
+      "warehouse": "(S4)",
+      "price": 47300
+    },
+    "series-12-42mm-s-m-black-black-сша-s4-38700": {
+      "url": "hybrid-products/watch/series-12-42mm-s-m-black-black-s4-38700.html",
+      "url_en": "en/hybrid-products/watch/series-12-42mm-s-m-black-black-s4-38700.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Series 12 42mm S/M Black Black",
+      "warehouse": "(S4)",
+      "price": 38700
+    },
+    "series-12-42mm-s-m-black-black-австралия-s4-38700": {
+      "url": "hybrid-products/watch/series-12-42mm-s-m-black-black-s4-38700.html",
+      "url_en": "en/hybrid-products/watch/series-12-42mm-s-m-black-black-s4-38700.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Series 12 42mm S/M Black Black",
+      "warehouse": "(S4)",
+      "price": 38700
+    },
+    "series-12-42mm-s-m-light-gold-sand-cel-австралия-s4-41300": {
+      "url": "hybrid-products/watch/series-12-42mm-s-m-light-gold-sand-cel-s4-41300.html",
+      "url_en": "en/hybrid-products/watch/series-12-42mm-s-m-light-gold-sand-cel-s4-41300.html",
+      "cover": "assets/product-images/a8c3a73714aa94bda36ea9e4.jpg",
+      "name": "Series 12 42mm S/M Light Gold Sand CEL",
+      "warehouse": "(S4)",
+      "price": 41300
+    },
+    "series-12-42mm-s-m-dark-bronze-olive-сша-s4-37800": {
+      "url": "hybrid-products/watch/series-12-42mm-s-m-dark-bronze-olive-s4-37800.html",
+      "url_en": "en/hybrid-products/watch/series-12-42mm-s-m-dark-bronze-olive-s4-37800.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 42mm S/M Dark Bronze Olive",
+      "warehouse": "(S4)",
+      "price": 37800
+    },
+    "series-12-42mm-m-l-black-black-сша-s4-41800": {
+      "url": "hybrid-products/watch/series-12-42mm-m-l-black-black-s4-41800.html",
+      "url_en": "en/hybrid-products/watch/series-12-42mm-m-l-black-black-s4-41800.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Series 12 42mm M/L Black Black",
+      "warehouse": "(S4)",
+      "price": 41800
+    },
+    "series-12-42mm-m-l-dark-bronze-olive-австралия-s4-38200": {
+      "url": "hybrid-products/watch/series-12-42mm-m-l-dark-bronze-olive-s4-38200.html",
+      "url_en": "en/hybrid-products/watch/series-12-42mm-m-l-dark-bronze-olive-s4-38200.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 42mm M/L Dark Bronze Olive",
+      "warehouse": "(S4)",
+      "price": 38200
+    },
+    "series-12-42mm-m-l-dark-bronze-olive-сша-s4-41800": {
+      "url": "hybrid-products/watch/series-12-42mm-m-l-dark-bronze-olive-s4-41800.html",
+      "url_en": "en/hybrid-products/watch/series-12-42mm-m-l-dark-bronze-olive-s4-41800.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 42mm M/L Dark Bronze Olive",
+      "warehouse": "(S4)",
+      "price": 41800
+    },
+    "series-12-46mm-s-m-dark-bronze-bronze-mil-lp-gps-австралия-s4-49600": {
+      "url": "hybrid-products/watch/series-12-46mm-s-m-dark-bronze-bronze-mil-lp-gps-s4-49600.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-s-m-dark-bronze-bronze-mil-lp-gps-s4-49600.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 46mm S/M Dark Bronze Bronze Mil Lp GPS",
+      "warehouse": "(S4)",
+      "price": 49600
+    },
+    "series-12-46mm-m-l-natural-natural-mil-lp-cel-австралия-s4-80100": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-natural-natural-mil-lp-cel-s4-80100.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-natural-natural-mil-lp-cel-s4-80100.html",
+      "cover": "assets/product-images/377590cb0cde0681c58a35a8.jpg",
+      "name": "Series 12 46mm M/L Natural Natural Mil Lp CEL",
+      "warehouse": "(S4)",
+      "price": 80100
+    },
+    "series-12-46mm-m-l-dark-bronze-bronze-mil-lp-gps-австралия-s4-49600": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-dark-bronze-bronze-mil-lp-gps-s4-49600.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-dark-bronze-bronze-mil-lp-gps-s4-49600.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 46mm M/L Dark Bronze Bronze Mil Lp GPS",
+      "warehouse": "(S4)",
+      "price": 49600
+    },
+    "series-12-46mm-m-l-dark-bronze-bronze-mil-lp-cel-австралия-s4-58200": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-dark-bronze-bronze-mil-lp-cel-s4-58200.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-dark-bronze-bronze-mil-lp-cel-s4-58200.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 46mm M/L Dark Bronze Bronze Mil Lp CEL",
+      "warehouse": "(S4)",
+      "price": 58200
+    },
+    "series-12-46mm-m-l-dark-bronze-bronze-mil-lp-сша-s4-49600": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-dark-bronze-bronze-mil-lp-s4-49600.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-dark-bronze-bronze-mil-lp-s4-49600.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 46mm M/L Dark Bronze Bronze Mil Lp",
+      "warehouse": "(S4)",
+      "price": 49600
+    },
+    "series-12-46mm-m-l-black-black-cel-австралия-s4-46100": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-black-black-cel-s4-46100.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-black-black-cel-s4-46100.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Series 12 46mm M/L Black Black CEL",
+      "warehouse": "(S4)",
+      "price": 46100
+    },
+    "series-12-46mm-m-l-black-black-сша-s4-47900": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-black-black-s4-47900.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-black-black-s4-47900.html",
+      "cover": "assets/product-images/5bc75a20a16701546d65d521.jpg",
+      "name": "Series 12 46mm M/L Black Black",
+      "warehouse": "(S4)",
+      "price": 47900
+    },
+    "series-12-46mm-m-l-space-gray-navy-blue-австралия-s4-41700": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-space-gray-navy-blue-s4-41700.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-space-gray-navy-blue-s4-41700.html",
+      "cover": "assets/product-images/56347aa9d566dcd702f543a4.jpg",
+      "name": "Series 12 46mm M/L Space Gray Navy Blue",
+      "warehouse": "(S4)",
+      "price": 41700
+    },
+    "series-12-46mm-m-l-space-gray-navy-blue-сша-s4-46600": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-space-gray-navy-blue-s4-46600.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-space-gray-navy-blue-s4-46600.html",
+      "cover": "assets/product-images/56347aa9d566dcd702f543a4.jpg",
+      "name": "Series 12 46mm M/L Space Gray Navy Blue",
+      "warehouse": "(S4)",
+      "price": 46600
+    },
+    "series-12-46mm-m-l-dark-bronze-olive-сша-s4-46600": {
+      "url": "hybrid-products/watch/series-12-46mm-m-l-dark-bronze-olive-s4-46600.html",
+      "url_en": "en/hybrid-products/watch/series-12-46mm-m-l-dark-bronze-olive-s4-46600.html",
+      "cover": "assets/product-images/da62f58f27fac74e9f589049.jpg",
+      "name": "Series 12 46mm M/L Dark Bronze Olive",
+      "warehouse": "(S4)",
+      "price": 46600
+    },
+    "series-ultra-2-49mm-black-black-ocean-2024-b-lte-сша-s4-65400": {
+      "url": "hybrid-products/watch/series-ultra-2-49mm-black-black-ocean-2024-b-lte-s4-65400.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-2-49mm-black-black-ocean-2024-b-lte-s4-65400.html",
+      "cover": "assets/product-images/f9a653422effcef3e0d9e3e5.jpg",
+      "name": "Series Ultra 2 49mm Black Black Ocean 2024 B LTE",
+      "warehouse": "(S4)",
+      "price": 65400
+    },
+    "series-ultra-2-49mm-s-black-tml-black-сингапур-s4-59900": {
+      "url": "hybrid-products/watch/series-ultra-2-49mm-s-black-tml-black-s4-59900.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-2-49mm-s-black-tml-black-s4-59900.html",
+      "cover": "assets/product-images/f9a653422effcef3e0d9e3e5.jpg",
+      "name": "Series Ultra 2 49mm S Black TML Black",
+      "warehouse": "(S4)",
+      "price": 59900
+    },
+    "series-ultra-3-49mm-m-black-black-tml-gps-cellular-оаэ-s4-67000": {
+      "url": "hybrid-products/watch/series-ultra-3-49mm-m-black-black-tml-gps-cellular-s4-67000.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-3-49mm-m-black-black-tml-gps-cellular-s4-67000.html",
+      "cover": "assets/product-images/e7f672f62c4920c78d336b9a.jpg",
+      "name": "Series Ultra 3 49mm M Black Black TML GPS + Cellular",
+      "warehouse": "(S4)",
+      "price": 67000
+    },
+    "series-ultra-3-49mm-l-black-black-tml-gps-cellular-сингапур-s4-74600": {
+      "url": "hybrid-products/watch/series-ultra-3-49mm-l-black-black-tml-gps-cellular-s4-74600.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-3-49mm-l-black-black-tml-gps-cellular-s4-74600.html",
+      "cover": "assets/product-images/e7f672f62c4920c78d336b9a.jpg",
+      "name": "Series Ultra 3 49mm L Black Black TML GPS + Cellular",
+      "warehouse": "(S4)",
+      "price": 74600
+    },
+    "series-ultra-4-49mm-l-natural-desert-alpine-cel-австралия-s4-77300": {
+      "url": "hybrid-products/watch/series-ultra-4-49mm-l-natural-desert-alpine-cel-s4-77300.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-4-49mm-l-natural-desert-alpine-cel-s4-77300.html",
+      "cover": "assets/product-images/77d69bb5e998d42d1751aed3.jpg",
+      "name": "Series Ultra 4 49mm L Natural Desert Alpine CEL",
+      "warehouse": "(S4)",
+      "price": 77300
+    },
+    "series-ultra-4-49mm-l-natural-dark-olive-alpine-cel-австралия-s4-77800": {
+      "url": "hybrid-products/watch/series-ultra-4-49mm-l-natural-dark-olive-alpine-cel-s4-77800.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-4-49mm-l-natural-dark-olive-alpine-cel-s4-77800.html",
+      "cover": "assets/product-images/e42468350b790cc2fab5e5a9.jpg",
+      "name": "Series Ultra 4 49mm L Natural Dark Olive Alpine CEL",
+      "warehouse": "(S4)",
+      "price": 77800
+    },
+    "series-ultra-4-49mm-black-black-ocean-cel-оаэ-s4-72300": {
+      "url": "hybrid-products/watch/series-ultra-4-49mm-black-black-ocean-cel-s4-72300.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-4-49mm-black-black-ocean-cel-s4-72300.html",
+      "cover": "assets/product-images/6ff299010faf7bcd249dfd8b.png",
+      "name": "Series Ultra 4 49mm Black Black Ocean CEL",
+      "warehouse": "(S4)",
+      "price": 72300
+    },
+    "series-ultra-4-49mm-black-black-ocean-cel-сша-s4-72400": {
+      "url": "hybrid-products/watch/series-ultra-4-49mm-black-black-ocean-cel-s4-72400.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-4-49mm-black-black-ocean-cel-s4-72400.html",
+      "cover": "assets/product-images/6ff299010faf7bcd249dfd8b.png",
+      "name": "Series Ultra 4 49mm Black Black Ocean CEL",
+      "warehouse": "(S4)",
+      "price": 72400
+    },
+    "series-ultra-4-49mm-black-black-ocean-cel-австралия-s4-72400": {
+      "url": "hybrid-products/watch/series-ultra-4-49mm-black-black-ocean-cel-s4-72400.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-4-49mm-black-black-ocean-cel-s4-72400.html",
+      "cover": "assets/product-images/6ff299010faf7bcd249dfd8b.png",
+      "name": "Series Ultra 4 49mm Black Black Ocean CEL",
+      "warehouse": "(S4)",
+      "price": 72400
+    },
+    "series-ultra-4-49mm-s-m-black-burgundy-trail-cel-оаэ-s4-72600": {
+      "url": "hybrid-products/watch/series-ultra-4-49mm-s-m-black-burgundy-trail-cel-s4-72600.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-4-49mm-s-m-black-burgundy-trail-cel-s4-72600.html",
+      "cover": "assets/product-images/7572323ac874aab8f53289a4.jpg",
+      "name": "Series Ultra 4 49mm S/M Black Burgundy Trail CEL",
+      "warehouse": "(S4)",
+      "price": 72600
+    },
+    "series-ultra-4-49mm-m-l-black-burgundy-trail-cel-австралия-s4-72100": {
+      "url": "hybrid-products/watch/series-ultra-4-49mm-m-l-black-burgundy-trail-cel-s4-72100.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-4-49mm-m-l-black-burgundy-trail-cel-s4-72100.html",
+      "cover": "assets/product-images/7572323ac874aab8f53289a4.jpg",
+      "name": "Series Ultra 4 49mm M/L Black Burgundy Trail CEL",
+      "warehouse": "(S4)",
+      "price": 72100
+    },
+    "series-ultra-4-49mm-m-l-black-burgundy-trail-cel-оаэ-s4-72100": {
+      "url": "hybrid-products/watch/series-ultra-4-49mm-m-l-black-burgundy-trail-cel-s4-72100.html",
+      "url_en": "en/hybrid-products/watch/series-ultra-4-49mm-m-l-black-burgundy-trail-cel-s4-72100.html",
+      "cover": "assets/product-images/7572323ac874aab8f53289a4.jpg",
+      "name": "Series Ultra 4 49mm M/L Black Burgundy Trail CEL",
+      "warehouse": "(S4)",
+      "price": 72100
     }
   }
 }

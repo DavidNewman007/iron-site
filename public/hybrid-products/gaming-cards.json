@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-18T16:21:52.269Z",
-  "count": 298,
+  "generated_at": "2026-11-19T16:54:32.286Z",
+  "count": 304,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -2385,6 +2385,54 @@
       "name": "🥽Oculus Quest 3S 128GB",
       "warehouse": "(S2)",
       "price": 35900
+    },
+    "-ps5-pro-2tb-s2-138900": {
+      "url": "hybrid-products/gaming/ps5-pro-2tb-s2-138900.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-2tb-s2-138900.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro 2TB",
+      "warehouse": "(S2)",
+      "price": 138900
+    },
+    "-ps5-slim-digital-825gb-s2-70900": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-70900.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-825gb-s2-70900.html",
+      "cover": "assets/product-images/f95aaad49057003ee5bb2533.jpg",
+      "name": "🎮PS5 Slim Digital 825GB",
+      "warehouse": "(S2)",
+      "price": 70900
+    },
+    "-nintendo-switch-2-s2-49400": {
+      "url": "hybrid-products/gaming/nintendo-switch-2-s2-49400.html",
+      "url_en": "en/hybrid-products/gaming/nintendo-switch-2-s2-49400.html",
+      "cover": "assets/product-images/a11490d73ecc76528d109a82.jpeg",
+      "name": "🎮Nintendo Switch 2",
+      "warehouse": "(S2)",
+      "price": 49400
+    },
+    "oculus-meta-quest-3s-128gb-white-япония-s4-37300": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-37300.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-128gb-white-s4-37300.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 128Gb White",
+      "warehouse": "(S4)",
+      "price": 37300
+    },
+    "oculus-meta-quest-3s-256gb-white-япония-s4-45500": {
+      "url": "hybrid-products/gaming/oculus-meta-quest-3s-256gb-white-s4-45500.html",
+      "url_en": "en/hybrid-products/gaming/oculus-meta-quest-3s-256gb-white-s4-45500.html",
+      "cover": "assets/product-images/a386ff5f4e9b678375ab6f31.jpg",
+      "name": "Oculus Meta Quest 3s 256Gb White",
+      "warehouse": "(S4)",
+      "price": 45500
+    },
+    "sony-playstation-vr-2-white-европа-s4-47300": {
+      "url": "hybrid-products/gaming/sony-playstation-vr-2-white-s4-47300.html",
+      "url_en": "en/hybrid-products/gaming/sony-playstation-vr-2-white-s4-47300.html",
+      "cover": "assets/product-images/474636c856161f23c0651f48.jpg",
+      "name": "Sony Playstation VR 2 White",
+      "warehouse": "(S4)",
+      "price": 47300
     }
   }
 }

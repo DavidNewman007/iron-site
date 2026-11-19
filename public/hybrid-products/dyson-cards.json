@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-18T16:21:52.318Z",
-  "count": 894,
+  "generated_at": "2026-11-19T16:54:32.339Z",
+  "count": 897,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -7153,6 +7153,30 @@
       "name": "Dyson Spot+Scrub AI Black/Blue",
       "warehouse": "(S3)",
       "price": 91400
+    },
+    "-hs08-prussian-blue-rich-copper-s2-38400": {
+      "url": "hybrid-products/dyson/hs08-prussian-blue-rich-copper-s2-38400.html",
+      "url_en": "en/hybrid-products/dyson/hs08-prussian-blue-rich-copper-s2-38400.html",
+      "cover": "assets/product-images/0be37ad63e9c742ac751d335.jpg",
+      "name": "👱‍♀️HS08 Prussian Blue/Rich Copper",
+      "warehouse": "(S2)",
+      "price": 38400
+    },
+    "-hs09-co-anda-2х-ceramic-pink-rose-gold-s2-45200": {
+      "url": "hybrid-products/dyson/hs09-co-anda-2х-ceramic-pink-rose-gold-s2-45200.html",
+      "url_en": "en/hybrid-products/dyson/hs09-co-anda-2х-ceramic-pink-rose-gold-s2-45200.html",
+      "cover": "assets/product-images/937d96f67f2b79a656d6e878.jpg",
+      "name": "👱‍♀️HS09 Co-Anda 2Х Ceramic Pink/Rose Gold",
+      "warehouse": "(S2)",
+      "price": 45200
+    },
+    "dyson-wash-g1-black-австралия-s3-37400": {
+      "url": "hybrid-products/dyson/dyson-wash-g1-black-s3-37400.html",
+      "url_en": "en/hybrid-products/dyson/dyson-wash-g1-black-s3-37400.html",
+      "cover": "assets/product-images/521514c19e98620a015133d2.jpg",
+      "name": "Dyson Wash G1 Black",
+      "warehouse": "(S3)",
+      "price": 37400
     }
   }
 }

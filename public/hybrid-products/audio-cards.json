@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-18T16:21:52.250Z",
-  "count": 377,
+  "generated_at": "2026-11-19T16:54:32.267Z",
+  "count": 380,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -3017,6 +3017,30 @@
       "name": "🔈Яндекс Станция Миди Серый",
       "warehouse": "(S2)",
       "price": 17400
+    },
+    "samsung-galaxy-buds-4-white-s4-12300": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-white-s4-12300.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-white-s4-12300.html",
+      "cover": "assets/product-images/ba363b8c7973322570287f8a.jpg",
+      "name": "Samsung Galaxy Buds 4 White",
+      "warehouse": "(S4)",
+      "price": 12300
+    },
+    "samsung-galaxy-buds-4-pro-pink-s4-17500": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-4-pro-pink-s4-17500.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-4-pro-pink-s4-17500.html",
+      "cover": "assets/product-images/9c24473bcf3b07c8103dfb49.jpg",
+      "name": "Samsung Galaxy Buds 4 Pro Pink",
+      "warehouse": "(S4)",
+      "price": 17500
+    },
+    "samsung-galaxy-buds-core-white-s4-4200": {
+      "url": "hybrid-products/audio/samsung-galaxy-buds-core-white-s4-4200.html",
+      "url_en": "en/hybrid-products/audio/samsung-galaxy-buds-core-white-s4-4200.html",
+      "cover": "assets/product-images/c89f5d0852ae2924cb559f59.jpg",
+      "name": "Samsung Galaxy Buds Core White",
+      "warehouse": "(S4)",
+      "price": 4200
     }
   }
 }
