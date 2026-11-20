@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-19T16:54:32.339Z",
-  "count": 897,
+  "generated_at": "2026-11-20T16:26:24.637Z",
+  "count": 902,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -7177,6 +7177,46 @@
       "name": "Dyson Wash G1 Black",
       "warehouse": "(S3)",
       "price": 37400
+    },
+    "dyson-hs08-ceramic-pink-европа-s3-39800": {
+      "url": "hybrid-products/dyson/dyson-hs08-ceramic-pink-s3-39800.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-ceramic-pink-s3-39800.html",
+      "cover": "assets/product-images/cc30c5da38c09de41d16dd32.jpg",
+      "name": "Dyson HS08 Ceramic Pink",
+      "warehouse": "(S3)",
+      "price": 39800
+    },
+    "dyson-hs08-prussian-blue-великобритания-s3-37100": {
+      "url": "hybrid-products/dyson/dyson-hs08-prussian-blue-s3-37100.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-prussian-blue-s3-37100.html",
+      "cover": "assets/product-images/0be37ad63e9c742ac751d335.jpg",
+      "name": "Dyson HS08 Prussian Blue",
+      "warehouse": "(S3)",
+      "price": 37100
+    },
+    "dyson-hs08-red-velvet-гонконг-s3-41000": {
+      "url": "hybrid-products/dyson/dyson-hs08-red-velvet-s3-41000.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs08-red-velvet-s3-41000.html",
+      "cover": "assets/product-images/3d055f96e29fd2c24f4fda49.jpg",
+      "name": "Dyson HS08 Red Velvet",
+      "warehouse": "(S3)",
+      "price": 41000
+    },
+    "dyson-hs09-ceramic-pink-re-492465-01-европа-s3-50300": {
+      "url": "hybrid-products/dyson/dyson-hs09-ceramic-pink-re-492465-01-s3-50300.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-ceramic-pink-re-492465-01-s3-50300.html",
+      "cover": "assets/product-images/3cc99ad2cd24f0f15570eae6.jpg",
+      "name": "Dyson HS09 Ceramic Pink- Re 492465-01",
+      "warehouse": "(S3)",
+      "price": 50300
+    },
+    "dyson-hs09-coanda-2x-red-velvet-великобритания-s3-55900": {
+      "url": "hybrid-products/dyson/dyson-hs09-coanda-2x-red-velvet-s3-55900.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hs09-coanda-2x-red-velvet-s3-55900.html",
+      "cover": "assets/product-images/1338d3c531149141d3d15462.jpg",
+      "name": "Dyson HS09 Coanda 2x Red Velvet",
+      "warehouse": "(S3)",
+      "price": 55900
     }
   }
 }

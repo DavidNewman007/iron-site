@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-19T16:54:32.240Z",
-  "count": 278,
+  "generated_at": "2026-11-20T16:26:24.520Z",
+  "count": 284,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -2225,6 +2225,54 @@
       "name": "iPad Pro 13 Magic Keyboard Black",
       "warehouse": "(S4)",
       "price": 39400
+    },
+    "apple-pencil-2nd-gen-s4-14000": {
+      "url": "hybrid-products/accessories/apple-pencil-2nd-gen-s4-14000.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-2nd-gen-s4-14000.html",
+      "cover": "assets/product-images/fda497d191e5cb0abebd4faa.jpg",
+      "name": "Apple Pencil (2nd Gen)",
+      "warehouse": "(S4)",
+      "price": 14000
+    },
+    "apple-magic-keyboard-white-сша-s4-16800": {
+      "url": "hybrid-products/accessories/apple-magic-keyboard-white-s4-16800.html",
+      "url_en": "en/hybrid-products/accessories/apple-magic-keyboard-white-s4-16800.html",
+      "cover": "assets/product-images/9f24e43418498bd1819adb58.jpeg",
+      "name": "Apple Magic Keyboard White",
+      "warehouse": "(S4)",
+      "price": 16800
+    },
+    "ipad-air-11-magic-keyboard-white-сша-s4-31100": {
+      "url": "hybrid-products/accessories/ipad-air-11-magic-keyboard-white-s4-31100.html",
+      "url_en": "en/hybrid-products/accessories/ipad-air-11-magic-keyboard-white-s4-31100.html",
+      "cover": "assets/product-images/9f24e43418498bd1819adb58.jpeg",
+      "name": "iPad Air 11 Magic Keyboard White",
+      "warehouse": "(S4)",
+      "price": 31100
+    },
+    "ipad-air-13-magic-keyboard-black-сша-s4-37300": {
+      "url": "hybrid-products/accessories/ipad-air-13-magic-keyboard-black-s4-37300.html",
+      "url_en": "en/hybrid-products/accessories/ipad-air-13-magic-keyboard-black-s4-37300.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Air 13 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 37300
+    },
+    "ipad-pro-11-magic-keyboard-black-индия-s4-31100": {
+      "url": "hybrid-products/accessories/ipad-pro-11-magic-keyboard-black-s4-31100.html",
+      "url_en": "en/hybrid-products/accessories/ipad-pro-11-magic-keyboard-black-s4-31100.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Pro 11 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 31100
+    },
+    "ipad-pro-13-magic-keyboard-black-сша-s4-39100": {
+      "url": "hybrid-products/accessories/ipad-pro-13-magic-keyboard-black-s4-39100.html",
+      "url_en": "en/hybrid-products/accessories/ipad-pro-13-magic-keyboard-black-s4-39100.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Pro 13 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 39100
     }
   }
 }

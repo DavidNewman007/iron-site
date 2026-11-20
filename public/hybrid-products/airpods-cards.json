@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-19T16:54:31.980Z",
-  "count": 704,
+  "generated_at": "2026-11-20T16:26:24.282Z",
+  "count": 712,
   "byId": {
     "-airpods-4-mxp63-s1-10800": {
       "url": "hybrid-products/airpods/airpods-4-mxp63-s1-10800.html",
@@ -5633,6 +5633,70 @@
       "name": "AirPods Max 2 Purple",
       "warehouse": "(S4)",
       "price": 45900
+    },
+    "airpods-max-2-midnight-европа-s3-44200": {
+      "url": "hybrid-products/airpods/airpods-max-2-midnight-s3-44200.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-midnight-s3-44200.html",
+      "cover": "assets/product-images/1611732bf1dd6c4e9030627a.jpg",
+      "name": "AirPods Max 2 Midnight",
+      "warehouse": "(S3)",
+      "price": 44200
+    },
+    "airpods-max-2-purple-европа-s3-43000": {
+      "url": "hybrid-products/airpods/airpods-max-2-purple-s3-43000.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-purple-s3-43000.html",
+      "cover": "assets/product-images/ed05f9e1384c6ce6df3cef52.jpg",
+      "name": "AirPods Max 2 Purple",
+      "warehouse": "(S3)",
+      "price": 43000
+    },
+    "airpods-max-2-starlight-европа-s3-44100": {
+      "url": "hybrid-products/airpods/airpods-max-2-starlight-s3-44100.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-starlight-s3-44100.html",
+      "cover": "assets/product-images/3fc3b26680f7e3f1f7024395.jpg",
+      "name": "AirPods Max 2 Starlight",
+      "warehouse": "(S3)",
+      "price": 44100
+    },
+    "airpods-4-anc-s4-11800": {
+      "url": "hybrid-products/airpods/airpods-4-anc-s4-11800.html",
+      "url_en": "en/hybrid-products/airpods/airpods-4-anc-s4-11800.html",
+      "cover": "assets/product-images/3555e4ead0e3b73f337a6856.jpg",
+      "name": "AirPods 4 ANC",
+      "warehouse": "(S4)",
+      "price": 11800
+    },
+    "airpods-max-usb-c-midnight-s4-40600": {
+      "url": "hybrid-products/airpods/airpods-max-usb-c-midnight-s4-40600.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-usb-c-midnight-s4-40600.html",
+      "cover": "assets/product-images/1611732bf1dd6c4e9030627a.jpg",
+      "name": "AirPods Max USB-C Midnight",
+      "warehouse": "(S4)",
+      "price": 40600
+    },
+    "airpods-max-2-blue-s4-50200": {
+      "url": "hybrid-products/airpods/airpods-max-2-blue-s4-50200.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-blue-s4-50200.html",
+      "cover": "assets/product-images/026927b2495d8f4ba255f6b2.jpg",
+      "name": "AirPods Max 2 Blue",
+      "warehouse": "(S4)",
+      "price": 50200
+    },
+    "airpods-max-2-orange-s4-45600": {
+      "url": "hybrid-products/airpods/airpods-max-2-orange-s4-45600.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-orange-s4-45600.html",
+      "cover": "assets/product-images/f1c4a3b965fedf7aa19000e5.jpg",
+      "name": "AirPods Max 2 Orange",
+      "warehouse": "(S4)",
+      "price": 45600
+    },
+    "airpods-max-2-starlight-s4-48000": {
+      "url": "hybrid-products/airpods/airpods-max-2-starlight-s4-48000.html",
+      "url_en": "en/hybrid-products/airpods/airpods-max-2-starlight-s4-48000.html",
+      "cover": "assets/product-images/3fc3b26680f7e3f1f7024395.jpg",
+      "name": "AirPods Max 2 Starlight",
+      "warehouse": "(S4)",
+      "price": 48000
     }
   }
 }
