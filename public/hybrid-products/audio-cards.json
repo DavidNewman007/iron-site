@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-20T16:26:24.577Z",
-  "count": 381,
+  "generated_at": "2026-11-21T15:15:51.058Z",
+  "count": 382,
   "byId": {
     "samsung-galaxy-buds-3-silver-оаэ-s2-9400": {
       "url": "hybrid-products/audio/samsung-galaxy-buds-3-silver-s2-9400.html",
@@ -3049,6 +3049,14 @@
       "name": "Samsung Galaxy Buds 3 Pro Silver",
       "warehouse": "(S4)",
       "price": 13500
+    },
+    "-яндекс-станция-max-черный-s2-34800": {
+      "url": "hybrid-products/audio/яндекс-станция-max-черный-s2-34800.html",
+      "url_en": "en/hybrid-products/audio/яндекс-станция-max-черный-s2-34800.html",
+      "cover": "assets/product-images/1f04736e3d615bcedf619c73.jpg",
+      "name": "🔈Яндекс Станция MAX Черный",
+      "warehouse": "(S2)",
+      "price": 34800
     }
   }
 }

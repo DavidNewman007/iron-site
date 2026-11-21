@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-20T16:26:23.872Z",
-  "count": 1698,
+  "generated_at": "2026-11-21T15:15:50.472Z",
+  "count": 1700,
   "byId": {
     "ipad-11-a16-wi-fi-128gb-blue-j-a-япония-s1-31600": {
       "url": "hybrid-products/ipad/ipad-11-a16-wi-fi-128gb-blue-j-a-s1-31600.html",
@@ -13585,6 +13585,22 @@
       "name": "iPad Pro 13 M5 512Gb Space Black Wi-Fi + Cellular",
       "warehouse": "(S4)",
       "price": 157100
+    },
+    "ipad-11-128-silver-wi-fi-мятая-коробка-сша-s3-42400": {
+      "url": "hybrid-products/ipad/ipad-11-128-silver-wi-fi-мятая-коробка-s3-42400.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-128-silver-wi-fi-мятая-коробка-s3-42400.html",
+      "cover": "assets/product-images/583a2d3c9183b1410db105a8.jpg",
+      "name": "iPad 11 128 Silver Wi-Fi (мятая коробка)",
+      "warehouse": "(S3)",
+      "price": 42400
+    },
+    "ipad-11-256-silver-wi-fi-мятая-коробка-сша-s3-53000": {
+      "url": "hybrid-products/ipad/ipad-11-256-silver-wi-fi-мятая-коробка-s3-53000.html",
+      "url_en": "en/hybrid-products/ipad/ipad-11-256-silver-wi-fi-мятая-коробка-s3-53000.html",
+      "cover": "assets/product-images/583a2d3c9183b1410db105a8.jpg",
+      "name": "iPad 11 256 Silver Wi-Fi (мятая коробка)",
+      "warehouse": "(S3)",
+      "price": 53000
     }
   }
 }

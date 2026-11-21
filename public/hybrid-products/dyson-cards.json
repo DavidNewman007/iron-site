@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-20T16:26:24.637Z",
-  "count": 902,
+  "generated_at": "2026-11-21T15:15:51.115Z",
+  "count": 910,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -7217,6 +7217,70 @@
       "name": "Dyson HS09 Coanda 2x Red Velvet",
       "warehouse": "(S3)",
       "price": 55900
+    },
+    "dyson-hd17-apricot-topaz-гонконг-s3-35900": {
+      "url": "hybrid-products/dyson/dyson-hd17-apricot-topaz-s3-35900.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd17-apricot-topaz-s3-35900.html",
+      "cover": "assets/product-images/49c5844fc9874055352cd773.jpg",
+      "name": "Dyson HD17 Apricot Topaz",
+      "warehouse": "(S3)",
+      "price": 35900
+    },
+    "dyson-gen5-purple-европа-s3-67700": {
+      "url": "hybrid-products/dyson/dyson-gen5-purple-s3-67700.html",
+      "url_en": "en/hybrid-products/dyson/dyson-gen5-purple-s3-67700.html",
+      "cover": "assets/product-images/8c325f9a31ee5f8d54991b19.jpeg",
+      "name": "Dyson Gen5 Purple",
+      "warehouse": "(S3)",
+      "price": 67700
+    },
+    "dyson-v12s-detect-slim-submarine-yellow-nickel-европа-s3-52800": {
+      "url": "hybrid-products/dyson/dyson-v12s-detect-slim-submarine-yellow-nickel-s3-52800.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v12s-detect-slim-submarine-yellow-nickel-s3-52800.html",
+      "cover": "assets/product-images/742cd664a7f8c69753640da5.jpg",
+      "name": "Dyson V12S Detect Slim Submarine Yellow/Nickel",
+      "warehouse": "(S3)",
+      "price": 52800
+    },
+    "dyson-v15-detect-absolute-sv47-yellow-nickel-австралия-s3-57400": {
+      "url": "hybrid-products/dyson/dyson-v15-detect-absolute-sv47-yellow-nickel-s3-57400.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v15-detect-absolute-sv47-yellow-nickel-s3-57400.html",
+      "cover": "assets/product-images/117cd3827ffbc1ce09d242ce.jpg",
+      "name": "Dyson V15 Detect Absolute SV47 Yellow/Nickel",
+      "warehouse": "(S3)",
+      "price": 57400
+    },
+    "dyson-v15-detect-absolute-sv47-yellow-nickel-европа-s3-58500": {
+      "url": "hybrid-products/dyson/dyson-v15-detect-absolute-sv47-yellow-nickel-s3-58500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v15-detect-absolute-sv47-yellow-nickel-s3-58500.html",
+      "cover": "assets/product-images/117cd3827ffbc1ce09d242ce.jpg",
+      "name": "Dyson V15 Detect Absolute SV47 Yellow/Nickel",
+      "warehouse": "(S3)",
+      "price": 58500
+    },
+    "dyson-v15s-detect-submarine-sv47-yellow-nickel-европа-s3-63600": {
+      "url": "hybrid-products/dyson/dyson-v15s-detect-submarine-sv47-yellow-nickel-s3-63600.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v15s-detect-submarine-sv47-yellow-nickel-s3-63600.html",
+      "cover": "assets/product-images/3e262a9d4712fcea13fd0644.jpg",
+      "name": "Dyson V15S Detect Submarine SV47 Yellow/Nickel",
+      "warehouse": "(S3)",
+      "price": 63600
+    },
+    "dyson-v15s-detect-submarine-sv47-yellow-nickel-великобритания-s3-63500": {
+      "url": "hybrid-products/dyson/dyson-v15s-detect-submarine-sv47-yellow-nickel-s3-63500.html",
+      "url_en": "en/hybrid-products/dyson/dyson-v15s-detect-submarine-sv47-yellow-nickel-s3-63500.html",
+      "cover": "assets/product-images/3e262a9d4712fcea13fd0644.jpg",
+      "name": "Dyson V15S Detect Submarine SV47 Yellow/Nickel",
+      "warehouse": "(S3)",
+      "price": 63500
+    },
+    "dyson-wash-g1-black-австралия-s3-37700": {
+      "url": "hybrid-products/dyson/dyson-wash-g1-black-s3-37700.html",
+      "url_en": "en/hybrid-products/dyson/dyson-wash-g1-black-s3-37700.html",
+      "cover": "assets/product-images/521514c19e98620a015133d2.jpg",
+      "name": "Dyson Wash G1 Black",
+      "warehouse": "(S3)",
+      "price": 37700
     }
   }
 }

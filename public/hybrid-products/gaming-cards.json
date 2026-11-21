@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-20T16:26:24.593Z",
-  "count": 307,
+  "generated_at": "2026-11-21T15:15:51.075Z",
+  "count": 309,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -2457,6 +2457,22 @@
       "name": "Oculus Meta Quest 3s 128Gb White",
       "warehouse": "(S4)",
       "price": 37000
+    },
+    "-ps5-slim-disk-1tb-s2-78100": {
+      "url": "hybrid-products/gaming/ps5-slim-disk-1tb-s2-78100.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-disk-1tb-s2-78100.html",
+      "cover": "assets/product-images/710d027896068006fabffb9c.jpg",
+      "name": "🎮PS5 Slim Disk 1TB",
+      "warehouse": "(S2)",
+      "price": 78100
+    },
+    "зарядная-станция-dualsense-s2-4800": {
+      "url": "hybrid-products/gaming/зарядная-станция-dualsense-s2-4800.html",
+      "url_en": "en/hybrid-products/gaming/зарядная-станция-dualsense-s2-4800.html",
+      "cover": "assets/product-images/96c2f9c24f186f74d0f05e1c.jpg",
+      "name": "Зарядная станция Dualsense",
+      "warehouse": "(S2)",
+      "price": 4800
     }
   }
 }
