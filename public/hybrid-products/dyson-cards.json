@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-21T15:15:51.115Z",
-  "count": 910,
+  "generated_at": "2026-11-22T15:10:42.569Z",
+  "count": 912,
   "byId": {
     "-hs08-jasper-plum-s2-45900": {
       "url": "hybrid-products/dyson/hs08-jasper-plum-s2-45900.html",
@@ -7281,6 +7281,22 @@
       "name": "Dyson Wash G1 Black",
       "warehouse": "(S3)",
       "price": 37700
+    },
+    "-hs09-co-anda-2x-plum-copper-s2-48900": {
+      "url": "hybrid-products/dyson/hs09-co-anda-2x-plum-copper-s2-48900.html",
+      "url_en": "en/hybrid-products/dyson/hs09-co-anda-2x-plum-copper-s2-48900.html",
+      "cover": "assets/product-images/436d73c15f3360ad305a0147.jpg",
+      "name": "👱‍♀️HS09 Co-Anda 2X Plum/Copper",
+      "warehouse": "(S2)",
+      "price": 48900
+    },
+    "dyson-hd17-ceramic-pink-австралия-s3-35300": {
+      "url": "hybrid-products/dyson/dyson-hd17-ceramic-pink-s3-35300.html",
+      "url_en": "en/hybrid-products/dyson/dyson-hd17-ceramic-pink-s3-35300.html",
+      "cover": "assets/product-images/b839c234358b0f5f8347f8c7.jpg",
+      "name": "Dyson HD17 Ceramic Pink",
+      "warehouse": "(S3)",
+      "price": 35300
     }
   }
 }
