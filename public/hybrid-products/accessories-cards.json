@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-22T15:10:42.501Z",
-  "count": 285,
+  "generated_at": "2026-11-23T19:04:46.090Z",
+  "count": 286,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -2281,6 +2281,14 @@
       "name": "📍AirTag 2 4pack",
       "warehouse": "(S2)",
       "price": 11400
+    },
+    "сзу-samsung-45w-pd-usb-c-black-адаптер-samsung-45w-p-s5-2200": {
+      "url": "hybrid-products/accessories/сзу-samsung-45w-pd-usb-c-black-адаптер-samsung-45w-p-s5-2200.html",
+      "url_en": "en/hybrid-products/accessories/сзу-samsung-45w-pd-usb-c-black-адаптер-samsung-45w-p-s5-2200.html",
+      "cover": "assets/product-images/b8cf1b7b683785cf3981ded0.jpg",
+      "name": "СЗУ Samsung 45W PD USB-C Black (адаптер samsung 45w p)",
+      "warehouse": "(S5)",
+      "price": 2200
     }
   }
 }

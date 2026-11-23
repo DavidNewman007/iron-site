@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-22T15:10:42.534Z",
-  "count": 309,
+  "generated_at": "2026-11-23T19:04:46.131Z",
+  "count": 311,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -2473,6 +2473,22 @@
       "name": "Зарядная станция Dualsense",
       "warehouse": "(S2)",
       "price": 4800
+    },
+    "-ps5-pro-2tb-s2-155900": {
+      "url": "hybrid-products/gaming/ps5-pro-2tb-s2-155900.html",
+      "url_en": "en/hybrid-products/gaming/ps5-pro-2tb-s2-155900.html",
+      "cover": "assets/product-images/418f7f44ca3e747bedbd233e.jpg",
+      "name": "🎮PS5 Pro 2TB",
+      "warehouse": "(S2)",
+      "price": 155900
+    },
+    "-ps5-slim-digital-1tb-s2-83400": {
+      "url": "hybrid-products/gaming/ps5-slim-digital-1tb-s2-83400.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-digital-1tb-s2-83400.html",
+      "cover": "assets/product-images/d1ce19ebcda3867d692c36e6.jpg",
+      "name": "🎮PS5 Slim Digital 1TB",
+      "warehouse": "(S2)",
+      "price": 83400
     }
   }
 }

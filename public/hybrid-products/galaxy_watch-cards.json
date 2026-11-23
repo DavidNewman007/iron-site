@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-22T15:10:42.606Z",
-  "count": 512,
+  "generated_at": "2026-11-23T19:04:46.219Z",
+  "count": 513,
   "byId": {
     "watch-8-40mm-graphite-оаэ-s2-18800": {
       "url": "hybrid-products/galaxy_watch/watch-8-40mm-graphite-s2-18800.html",
@@ -4097,6 +4097,14 @@
       "name": "Galaxy Watch Ultra 2 47 LTE Black",
       "warehouse": "(S3)",
       "price": 41200
+    },
+    "galaxy-watch-8-classic-46-black-оаэ-s3-25700": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-classic-46-black-s3-25700.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-classic-46-black-s3-25700.html",
+      "cover": "assets/product-images/e5cfeb77481bc264dfdc24a4.jpeg",
+      "name": "Galaxy Watch 8 Classic 46 Black",
+      "warehouse": "(S3)",
+      "price": 25700
     }
   }
 }
