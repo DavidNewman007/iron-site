@@ -451,7 +451,7 @@
         ? "Google не дал записать: у вашего аккаунта доступ к таблице только на просмотр." + who
         : "У этого Google-аккаунта нет доступа к базе." + who + " Если доступ открыт на другой адрес — войдите им; иначе попросите владельца открыть доступ к таблице."), { code: 403 });
     }
-    if (!r.ok) throw new Error("Google ответил " + r.status);
+    if (!r.ok) throw Object.assign(new Error("Google ответил " + r.status),{code:r.status});
     return r.json();
   }
   const A1 = (col, row, col2, row2) => encodeURIComponent(`'${CFG.sheet}'!${LETTER(col)}${row}` + (col2 != null ? `:${LETTER(col2)}${row2}` : ""));
@@ -4423,7 +4423,7 @@
   }
   async function refreshQuoteStats() {
     if(DEMO||!S.token||location.hash!=='#/quote'||document.visibilityState!=='visible')return;
-    const Q=S.quoteStats||=( {at:S.loadedAt||0,rows:null,retryAt:0,pending:null} );
+    const Q=S.quoteStats||=( {at:S.loadedAt||0,rows:null,retryAt:+store.get('crm.quoteStatsRetry')||0,pending:null} );
     if(Q.pending||Date.now()<Q.retryAt||Date.now()-Q.at<600e3)return;
     Q.pending=true;
     try {
@@ -4434,8 +4434,8 @@
       const [dates,devices,types]=data.valueRanges.map(r=>r.values||[]),rows=new Map();
       for(let i=0;i<dates.length;i++){const cells={[C.num]:dates[i]?.[0],[C.date]:dates[i]?.[1],[C.device]:devices[i]?.[0],[C.type]:types[i]?.[0]};if(cells[C.num])rows.set(i+2,{row:i+2,cells});}
       for(const [key,row] of Q.localUpdates||[])rows.set(key,row);Q.localUpdates=null;
-      Q.rows=rows;Q.at=Date.now();Q.error='';S.quoteAnnualCache=null;
-    }catch(e){Q.error=e.message;Q.retryAt=Date.now()+(e.code===429?3600e3:600e3);}
+      Q.rows=rows;Q.at=Date.now();Q.error='';Q.retryAt=0;store.del('crm.quoteStatsRetry');S.quoteAnnualCache=null;
+    }catch(e){Q.error=e.message;Q.retryAt=Date.now()+(e.code===429?3600e3:600e3);store.set('crm.quoteStatsRetry',Q.retryAt);}
     finally{Q.pending=false;if(S.quoteStats===Q&&location.hash==='#/quote'){const box=$app.querySelector('.quote-model-results');if(box)box.innerHTML=quoteModelResults();}}
   }
   function quoteSelectDevice(device) {
