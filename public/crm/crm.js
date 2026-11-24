@@ -494,6 +494,7 @@
     S.loading = false; render();
   }
   function setRows(list) {
+    S.quoteStats = null;
     const cached=new Set([...S.parts.keys(),...Object.keys(S.svcLog||{}).filter(k=>/^\d+$/.test(k)).map(Number)]);
     for(const key of cached)if(key!=='new'&&![...S.dirty.keys()].some(k=>k.startsWith(key+':'))&&!(S.parts.get(key)||[]).some(p=>p.stock&&!p.stockRestored)){
       S.parts.delete(key);if(S.svcLog)delete S.svcLog[key];if(S.partsSum)delete S.partsSum[key];
@@ -510,6 +511,8 @@
   // на каждое нажатие клавиши: по 7–8 тысячам строк поиск так идёт за миллисекунды.
   function index(r) {
     S.tipRevision = (S.tipRevision || 0) + 1;
+    if(S.quoteStats?.rows)S.quoteStats.rows.set(r.row,r);
+    if(S.quoteStats?.pending)(S.quoteStats.localUpdates ||= new Map()).set(r.row,r);
     r.hay = norm([C.num, C.name, C.phone, C.contactName, C.contactPhone, C.device, C.issue, C.work, C.parts, C.comment, C.master, C.imei, C.type, C.status, C.reminder].map(c => c === C.status ? stLabel(r.cells[c] ?? "") : r.cells[c] ?? "").join(" "));
     r.ph = phones(r.cells[C.phone]).map(p => p.d);
     // Номер «на связи» — только для поиска (звонит дочь: «я по папиному телефону»). В r.ph его
@@ -1041,7 +1044,7 @@
     ["desktop", /imac|аймак|mac ?mini|мак ?мини|mac ?studio|mac ?pro|мак ?студио|системн|моноблок|\bпк\b|компьютер/],
     ["laptop", /macbook|макбук|ноутбук|notebook|laptop|ультрабук|asus|acer|lenovo|\bhp\b|dell|msi|matebook|magicbook|thinkpad/],
   ];
-  function familyOf(device) { const s = norm(device); return (FAMILIES.find(([, re]) => re.test(s)) || ["other"])[0]; }
+  function familyOf(device) { const s = norm(device); if(/magicbook|matebook/.test(s))return 'laptop'; return (FAMILIES.find(([, re]) => re.test(s)) || ["other"])[0]; }
   const TYPICAL = {
     issue: {
       all: ["Не включается", "Требуется диагностика", "Не заряжается", "Попадание влаги", "Перезагружается", "Выключается", "Греется", "Нет изображения", "Нет звука", "Тормозит"],
@@ -4376,26 +4379,82 @@
   }
 
   // ── новый заказ ─────────────────────────────────────────
-  function quoteDeviceChoices(query='') {
-    const counts=new Map();for(const r of S.rows){if(dealKey(cell(r,C.type))==='internal')continue;const text=String(cell(r,C.device)||'').split('\n')[0].trim();if(text&&text.length<=90)counts.set(text,(counts.get(text)||0)+1);}
-    const family=S.quote?.family||'',q=norm(query),accept=d=>(!family||familyOf(d)===family)&&(!q||norm(d).includes(q)||norm(d).replace(/[^a-zа-я0-9]/g,'').includes(q.replace(/[^a-zа-я0-9]/g,'')));
-    return [...new Set([...counts.keys(),...(S.svc?.devices||[])])].filter(accept).sort((a,b)=>(counts.get(b)||0)-(counts.get(a)||0)||a.localeCompare(b)).slice(0,q?16:8);
+  function quoteModel(value) {
+    if(CANON_SKIP.some(d=>devKey(d)===devKey(String(value||'').split('\n')[0])))return null;
+    let label=String(value||'').split('\n')[0].trim().replace(/^(?:смартфон|телефон|ноутбук|планшет|моноблок)\s+/i,'');
+    if(label.length<3||label.length>140||CANON_SKIP.includes(label))return null;
+    let key=devKey(label).replace(/^apple (?=iphone)/,'');
+    // Only known metadata is removable. Never shorten Pro Max to Pro or lose SE's year.
+    const metadata='(?:\\d+\\s*(?:gb|гб|tb|тб)|black|white|blue|green|red|gold|silver|черный|белый|синий|зеленый|красный|a\\s*\\d{4})';
+    key=key.replace(new RegExp('(?:\\s+'+metadata+')+$'),'').trim();
+    const ip=/^iphone (2 g|3 g|3 gs|4s?|5[cs]?|6s?|7|8|x[rs]?|11|12|13|14|15|16|17|se)(?: (pro max|pro|plus|mini|air))?(?: (20\d{2}))?$/.exec(key);
+    if(ip)label='iPhone '+ip[1].toUpperCase()+(ip[2]?' '+({pro:'Pro','pro max':'Pro Max',plus:'Plus',mini:'mini',air:'Air'}[ip[2]]):'')+(ip[3]?' '+ip[3]:'');
+    else label=canonByKey().get(key)||label;
+    return {key,label};
+  }
+  function quoteAnnual(now=new Date()) {
+    const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Moscow'}).format(now),signature=[S.tipRevision,day,S.svc?.devices?.join('|'),S.quoteStats?.at].join(':');
+    if(S.quoteAnnualCache?.signature===signature)return S.quoteAnnualCache.data;
+    const data=globalThis.IRON_REPAIR_MODELS.annual(S.quoteStats?.rows?[...S.quoteStats.rows.values()]:S.rows,C,quoteModel,now);
+    S.quoteAnnualCache={signature,data};return data;
+  }
+  function quoteBrand(device) {
+    const t=norm(device);
+    if(/iphone|ipad|macbook|imac|mac mini|mac studio|mac pro|apple|airpods/.test(t))return 'Apple';
+    const brands=[['Samsung',/samsung|самсунг|galaxy|галакси/],['Xiaomi',/xiaomi|сяоми|ксиоми/],['Redmi',/redmi|редми/],['POCO',/poco|поко/],['Honor',/honor|хонор/],['Huawei',/huawei|хуав/],['realme',/realme|реалми/],['Google',/google|pixel/],['OPPO',/oppo|оппо/],['vivo',/vivo|виво/],['TECNO',/tecno|техно/],['Infinix',/infinix|инфиникс/],['ASUS',/asus/],['Acer',/acer/],['Lenovo',/lenovo/],['HP',/\bhp\b/],['Dell',/dell/],['MSI',/msi/],['Sony',/sony|playstation/],['Microsoft',/microsoft|xbox/],['Nintendo',/nintendo/],['OnePlus',/oneplus/],['Nokia',/nokia/],['Motorola',/motorola|\bmoto\b/]];
+    return brands.find(([,re])=>re.test(t))?.[0]||'Другие';
+  }
+  function quoteMatches(device,query='') {
+    const Q=S.quote||{},hay=devWords(device).join(' '),compact=hay.replace(/\s/g,'');
+    return (!Q.family||familyOf(device)===Q.family)&&(!Q.brand||quoteBrand(device)===Q.brand)&&devWords(query).every(w=>hay.includes(w)||compact.includes(w));
+  }
+  function quoteCatalog() {
+    const signature=[S.tipRevision,S.svc?.devices?.join('|'),S.quoteStats?.at,quoteAnnual().to].join(':');
+    if(S.quoteCatalogCache?.signature===signature)return S.quoteCatalogCache.models;
+    const models=new Map();
+    for(const value of [...quoteAnnual().models.map(x=>x.device),...canonList(),...S.rows.map(r=>cell(r,C.device))]){const m=quoteModel(value);if(m&&!models.has(m.key))models.set(m.key,m.label);}
+    const result=[...models.values()].sort((a,b)=>a.localeCompare(b,'ru',{numeric:true}));S.quoteCatalogCache={signature,models:result};return result;
+  }
+  function quoteDeviceChoices(query='') {return quoteAnnual().models.filter(x=>quoteMatches(x.device,query)).slice(0,8).map(x=>x.device);}
+  function quoteModelResults() {
+    const q=S.quote?.q||'',stats=quoteAnnual(),popular=stats.models.filter(x=>quoteMatches(x.device,q)).slice(0,8),catalog=quoteCatalog().filter(d=>quoteMatches(d,q));
+    const stamp=v=>new Date(v).toLocaleDateString('ru-RU',{timeZone:'UTC'}),at=S.quoteStats?.at||S.loadedAt;
+    return `<h4>Чаще ремонтировали за последние 12 месяцев</h4><p class="note">${stamp(stats.from)} — ${stamp(stats.to)} · только клиентские ремонты${at?' · данные на '+new Date(at).toLocaleTimeString('ru-RU',{timeZone:'Europe/Moscow',hour:'2-digit',minute:'2-digit'})+' МСК':''}. Обновляется автоматически.</p>${S.quoteStats?.error?`<p class="note">Не удалось обновить статистику. Показаны последние загруженные данные.</p>`:''}<div class="quote-devices">${popular.map(x=>`<button class="btn btn--ghost btn--sm" data-act="quotedev" data-device="${esc(x.device)}">${esc(x.device)} <small>${x.count} ${ordersWord(x.count)}</small></button>`).join('')||'<p class="note">За этот период подходящих ремонтов нет. Выберите модель из каталога или введите свою.</p>'}</div><label class="field quote-catalog"><span>Каталог моделей · ${catalog.length}</span>${selHtml('data-quote-model="1"','',[{v:'',t:'Выберите модель из отфильтрованного списка'},...catalog],'Выберите модель')}</label>`;
+  }
+  async function refreshQuoteStats() {
+    if(DEMO||!S.token||location.hash!=='#/quote'||document.visibilityState!=='visible')return;
+    const Q=S.quoteStats||=( {at:S.loadedAt||0,rows:null,retryAt:0,pending:null} );
+    if(Q.pending||Date.now()<Q.retryAt||Date.now()-Q.at<600e3)return;
+    Q.pending=true;
+    try {
+      const ranges=['A2:B','E2:E','AC2:AC'].map(r=>'ranges='+encodeURIComponent(`'${CFG.sheet}'!${r}`)).join('&');
+      const data=await api('/values:batchGet?'+ranges+'&valueRenderOption=FORMATTED_VALUE');
+      if(S.quoteStats!==Q)return;
+      if(!Array.isArray(data.valueRanges)||data.valueRanges.length!==3)throw Error('Incomplete model statistics');
+      const [dates,devices,types]=data.valueRanges.map(r=>r.values||[]),rows=new Map();
+      for(let i=0;i<dates.length;i++){const cells={[C.num]:dates[i]?.[0],[C.date]:dates[i]?.[1],[C.device]:devices[i]?.[0],[C.type]:types[i]?.[0]};if(cells[C.num])rows.set(i+2,{row:i+2,cells});}
+      for(const [key,row] of Q.localUpdates||[])rows.set(key,row);Q.localUpdates=null;
+      Q.rows=rows;Q.at=Date.now();Q.error='';S.quoteAnnualCache=null;
+    }catch(e){Q.error=e.message;Q.retryAt=Date.now()+(e.code===429?3600e3:600e3);}
+    finally{Q.pending=false;if(S.quoteStats===Q&&location.hash==='#/quote'){const box=$app.querySelector('.quote-model-results');if(box)box.innerHTML=quoteModelResults();}}
   }
   function quoteSelectDevice(device) {
     const old=S.dirty.get('quote:'+C.device)||'';
     if(old!==device&&String(S.dirty.get('quote:'+C.work)||'').trim()&&!confirm('Сменить устройство и очистить выбранные работы и детали расчёта?'))return;
     if(old!==device){for(const k of [...S.dirty.keys()])if(k.startsWith('quote:'))S.dirty.delete(k);S.parts.delete('quote');if(S.svcLog)delete S.svcLog.quote;}
-    setDirty('quote',C.device,device);setDirty('quote',C.type,'Ремонт');S.quote ||= {};S.quote.q=device;S.pp={key:'quote',open:true,dev:matchDevice(device),tariff:'',q:''};render();
+    setDirty('quote',C.device,device);setDirty('quote',C.type,'Ремонт');S.quote ||= {};S.quote.q=device;if(S.quote.brand&&quoteBrand(device)!==S.quote.brand)S.quote.brand='';S.pp={key:'quote',open:true,dev:matchDevice(device),tariff:'',q:''};render();
   }
   function renderQuote() {
     S.quote ||= {q:'',family:''};
+    refreshQuoteStats();
     if(!S.quote.tried){S.quote.tried=true;Promise.all([loadServices(),loadSupplierPrices(),loadStock()]).then(()=>{if(location.hash==='#/quote')render();});}
     const device=S.dirty.get('quote:'+C.device)||'',total=toNum(S.dirty.get('quote:'+C.total)),work=S.dirty.get('quote:'+C.work)||'',q=S.quote.q||'';
     if(!S.pp||S.pp.key!=='quote')S.pp={key:'quote',open:true,tariff:'',q:''};
-    const choices=quoteDeviceChoices(q),families=[['','Все устройства'],['phone','Телефоны'],['laptop','Ноутбуки'],['desktop','Компьютеры'],['tablet','Планшеты'],['watch','Часы'],['audio','Аудио']];
+    const families=[['','Все устройства'],['phone','Телефоны'],['laptop','Ноутбуки'],['desktop','Компьютеры'],['tablet','Планшеты'],['watch','Часы'],['audio','Аудио'],['console','Консоли'],['other','Другие']];
+    const brands=[...new Set(quoteCatalog().filter(d=>!S.quote.family||familyOf(d)===S.quote.family).map(quoteBrand))].sort();
     const manual=S.quote.manual||'';
     renderShell(`<div class="card-head" style="margin-top:14px"><a class="iconbtn" href="#" aria-label="Назад">←</a><h1>Рассчитать ремонт</h1><button class="btn btn--ghost btn--sm" data-act="quoteclear">Очистить расчёт</button></div>
-      <section class="block"><h3>1. Устройство</h3><div class="tchips">${families.map(([v,t])=>`<button class="tchip" data-act="quotefamily" data-v="${v}" aria-pressed="${S.quote.family===v}">${t}</button>`).join('')}</div><div class="row"><input class="search" data-act="quotedeviceq" value="${esc(q)}" placeholder="Модель или код: iPhone 16 Pro, A1466, Honor 9X…" autocomplete="off"><button class="btn btn--ghost btn--sm" data-act="quotedeviceuse" ${q.trim()?'':'disabled'}>Выбрать модель</button></div><div class="quote-devices">${choices.map(d=>`<button class="btn btn--ghost btn--sm" data-act="quotedev" data-device="${esc(d)}">${esc(d)}</button>`).join('')}</div>${device?`<p class="quote-selected">Выбрано: <b>${esc(device)}</b></p>`:'<p class="note">Сначала выберите устройство. Популярные модели показаны первыми.</p>'}</section>
+      <section class="block"><h3>1. Устройство</h3><label class="field"><span>Введите модель вручную или найдите по названию</span><input type="search" data-act="quotedeviceq" value="${esc(q)}" placeholder="Например: iPhone 16 Pro, Honor 9X, Samsung A55" autocomplete="off"></label><button class="btn btn--ghost btn--sm" data-act="quotedeviceuse" ${q.trim()?'':'disabled'}>Использовать введённую модель</button><h4>Или выберите по фильтрам</h4><div class="tchips">${families.map(([v,t])=>`<button class="tchip" data-act="quotefamily" data-v="${v}" aria-pressed="${(S.quote.family||'')===v}">${t}</button>`).join('')}</div><label class="field quote-brand"><span>Марка</span>${selHtml('data-quote-filter="brand"',S.quote.brand||'',[{v:'',t:'Все марки'},...brands],'Все марки')}</label><div class="quote-model-results">${quoteModelResults()}</div>${device?`<p class="quote-selected">Выбрано: <b>${esc(device)}</b></p>`:'<p class="note">Можно выбрать модель из любого списка или использовать свой текст, даже если модели нет в прайсе.</p>'}</section>
       ${device?`<section class="block"><h3>2. Работа и запчасть</h3><p class="note">Выберите работу, затем качество и склад. Описание неисправности необязательно.</p>${pricePickHtml('quote',device,'')}<details class="quote-manual" ${manual?'open':''}><summary>Работа со своей ценой</summary>${/macbook|макбук/i.test(device)?`<div class="tchips">${MAC_FLEX_WORKS.map(w=>`<button class="tchip" data-act="quoteworkpreset" data-work="${esc(w)}">${esc(w)}</button>`).join('')}</div>`:''}<div class="grid2"><label class="field"><span>Название работы</span><input data-act="quotemanualname" value="${esc(manual)}" placeholder="Введите работу"></label><label class="field"><span>Цена работы, ₽</span><input inputmode="decimal" data-act="quotemanualprice" value="${esc(S.quote.manualPrice||'')}" placeholder="Укажите цену"></label></div><button class="btn btn--ghost btn--sm" data-act="quotemanualadd">Добавить работу</button></details></section>`:''}
       <section class="block quote-total"><span>Итого по расчёту</span><strong>${total==null?'—':money(total)}</strong><p class="note">${work?esc(work):'Выбранные работы появятся здесь.'}</p><button class="btn btn--red" data-act="quotetoorder" ${device&&work&&total!=null?'':'disabled'}>Клиент согласен — создать заказ</button></section>`,{search:false});
   }
@@ -5035,7 +5094,7 @@
     if(act==='internalpick'){internalPick(+t.dataset.i);return;}
     if(act==='internalpurpose'){const key=curKey(),r=key==='new'?null:S.rows.find(x=>x.row===key);setDirty(key,C.internalMeta,JSON.stringify({...internalOf(key,r),purpose:t.dataset.v}));if(key==='new')saveDraft();render();return;}
 
-    if(act==='quotefamily'){S.quote.family=t.dataset.v;S.quote.q='';render();return;}
+    if(act==='quotefamily'){S.quote.family=t.dataset.v;S.quote.brand='';render();return;}
     if(act==='quotedev'||act==='quotedeviceuse'){quoteSelectDevice(act==='quotedev'?t.dataset.device:S.quote.q.trim());return;}
     if(act==='quoteworkpreset'){S.quote.manual=t.dataset.work;render();return;}
     if(act==='quotemanualadd'){quoteManualAdd();return;}
@@ -5262,10 +5321,12 @@
     }
   });
   function onEdit(e) {
+    if(e.target.dataset.quoteFilter){S.quote ||= {};S.quote.brand=e.target.value;render();return;}
+    if(e.target.dataset.quoteModel){if(e.target.value)quoteSelectDevice(e.target.value);return;}
     if(e.target.dataset.act==='internalq'){S.internalQ=e.target.value;clearTimeout(onEdit.internalSearch);onEdit.internalSearch=setTimeout(()=>render(),250);return;}
     if(['quotedeviceq','quotemanualname','quotemanualprice'].includes(e.target.dataset.act)){
       const a=e.target.dataset.act;S.quote ||= {};S.quote[a==='quotedeviceq'?'q':a==='quotemanualname'?'manual':'manualPrice']=e.target.value;
-      if(a==='quotedeviceq'){const box=$app.querySelector('.quote-devices');if(box)box.innerHTML=quoteDeviceChoices(e.target.value).map(d=>`<button class="btn btn--ghost btn--sm" data-act="quotedev" data-device="${esc(d)}">${esc(d)}</button>`).join('');const use=$app.querySelector('[data-act="quotedeviceuse"]');if(use)use.disabled=!e.target.value.trim();}return;
+      if(a==='quotedeviceq'){const box=$app.querySelector('.quote-model-results');if(box)box.innerHTML=quoteModelResults();const use=$app.querySelector('[data-act="quotedeviceuse"]');if(use)use.disabled=!e.target.value.trim();}return;
     }
     if(e.target.dataset.notifyphase){
       const t=e.target,key=curKey(),r=key==='new'?null:S.rows.find(x=>x.row===key),d=notificationData(key,r);
@@ -5715,8 +5776,9 @@
   }
   setInterval(checkUpdate, 600e3); setTimeout(checkUpdate, 5000);
   setInterval(() => { if(document.visibilityState === "visible") refreshSupplierPrices(); }, 60e3);
+  setInterval(refreshQuoteStats,60e3); // One Sheets batch-read per 10 minutes, visible quote only.
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") { checkUpdate(); refreshSupplierPrices(); }
+    if (document.visibilityState === "visible") { checkUpdate(); refreshSupplierPrices(); refreshQuoteStats(); }
     if (document.visibilityState === "visible" && S.rows.length && Date.now() - S.loadedAt > 120e3 && !S.dirty.size && !location.hash.startsWith("#/")) load();
   });
 
