@@ -26,7 +26,7 @@
     scope: "openid email https://www.googleapis.com/auth/spreadsheets",
     sheetId: "1ik-UGHVgJgzrWVmdjBWSlHz1qv5jh8xHRkDMgd-buA8",
     sheet: "Лист заказов",
-    lastCol: "AR", // AR — «Услуги: данные»; AQ — «Напоминание: стоп»; // AP — результат автоматического подбора; // AO «Напоминание: данные» (08.11.2026); // AM–AN «Предоплата» (24.10.2026, v77); AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
+    lastCol: "AT", // AS — получатели; AT — своё устройство/оценка внутреннего ремонта; AR — «Услуги: данные»; AQ — «Напоминание: стоп»; // AP — результат автоматического подбора; // AO «Напоминание: данные» (08.11.2026); // AM–AN «Предоплата» (24.10.2026, v77); AL «Залог: выкупить до» (22.10.2026, v73); AK «Трейд-ин» (17.10.2026, v71); AJ «Оплата» (09.10.2026, v62); AH–AI «На связи» (03.10.2026); до этого — AG
     // Двери — один и тот же CrmDoor.js, развёрнутый из-под двух аккаунтов, потому что
     // onEdit-триггеры разнесены (владелец, 25.09.2026): рабочий ironsapple держит только
     // Google Контакты, дату выдачи и «Историю статусов» (onEditTrigger), личный — всё
@@ -69,7 +69,7 @@
     payment: 35, // AJ «Оплата» (v62, 09.10.2026): наличные / перевод / карта или QR / счёт на организацию
     tradein: 36, // AK «Трейд-ин» (v71, 17.10.2026): сданные в зачёт устройства продажи, по строке на устройство
     pawnUntil: 37, // AL «Залог: выкупить до» (v73, 22.10.2026) — дата, до которой клиент выкупает устройство
-    prepay: 38, prepayKind: 39, reminder: 40, reminderRun: 41, reminderStop: 42, serviceMeta: 43 }; // AR — сохранённые суммы услуг и связи деталей;  AM «Предоплата, ₽», AN «Предоплата: частичная / полная» (v77, 24.10.2026)
+    prepay: 38, prepayKind: 39, reminder: 40, reminderRun: 41, reminderStop: 42, serviceMeta: 43, notify: 44, internalMeta: 45 }; // AR — сохранённые суммы услуг и связи деталей;  AM «Предоплата, ₽», AN «Предоплата: частичная / полная» (v77, 24.10.2026)
   const LETTER = i => { let s = ""; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
   // Все поля карточки.
@@ -123,12 +123,15 @@
     [C.reminder]: { label: "Просьба клиента" },
     [C.reminderRun]: { label: "Подбор по напоминанию" },
     [C.reminderStop]: { label: "Остановить автоподбор" },
+    [C.notify]: { label: "Получатели уведомлений" },
+    [C.internalMeta]: { label: "Внутренний ремонт: данные" },
   };
 
   // Тип сделки (колонка AC). Пусто = ремонт. Ключи — как в DealTypes.js на стороне таблицы.
   function dealKey(v) {
     const s = norm(v);
     if (s === "напоминание") return "reminder";
+    if (s === "внутренний ремонт") return "internal";
     if (!s || s === "ремонт") return "repair";
     if (s.startsWith("выкуп") && s.includes("запчаст")) return "parts";
     if (s.startsWith("выкуп")) return "buyback";
@@ -172,6 +175,7 @@
   // Пароль — только для устройства, которое остаётся у нас в ремонте.
   const HIDE = {
     repair: [], other: [],
+    internal: [C.phone,C.name,C.contactName,C.contactPhone,C.total,C.report,C.review,C.payment,C.discount,C.prepay,C.prepayKind,C.source,C.buyback],
     buyback:  [C.master, C.pass, C.parts, C.partFrom, C.warranty, C.labor, C.total, C.partCost],
     parts:    [C.master, C.pass, C.parts, C.partFrom, C.warranty, C.labor, C.total, C.partCost],
     tradein:  [C.master, C.pass, C.parts, C.partFrom, C.labor],
@@ -187,6 +191,7 @@
   // источник и прочие расходы — общие для всех устройств.
   const PER_DEVICE = {
     repair:   [C.device, C.imei, C.issue, C.master, C.pass, C.total],
+    internal: [C.device,C.imei,C.issue,C.master,C.pass],
     other:    [C.device, C.imei, C.issue, C.work, C.master, C.pass, C.total],
     buyback:  [C.device, C.imei, C.issue, C.work, C.buyback],
     parts:    [C.device, C.imei, C.issue, C.work, C.buyback],
@@ -206,6 +211,7 @@
   }
   const TYPE_UI = {
     reminder: { multi: "", start: "Ищем / ждём поступления" },
+    internal: {multi:"",start:"Принят на диагностику"},
     repair:   { multi: "Клиент сдаёт несколько устройств", start: "Принят на диагностику" },
     buyback:  { multi: "Выкупаем несколько устройств", start: "Выкуплен" },
     parts:    { multi: "Выкупаем на запчасти несколько устройств", start: "Выкуплен" },
@@ -232,6 +238,7 @@
     if (dk === "reminder") return REM_STAGES;
     const all = doneAfterReady((S.opts[C.status] || []).filter(x => !isSilent(x) && !REM_STAGES.includes(x)));
     const pick = names => all.filter(x => names.some(n => norm(x).startsWith(n)));
+    if (dk === "internal") return [...all.filter(x=>!DEAL_FINAL.some(n=>norm(x).startsWith(n))),"Разобран на запчасти"];
     if (dk === "repair") return all.filter(x => !DEAL_FINAL.some(n => norm(x).startsWith(n)));
     if (dk === "buyback") return pick(["на согл", "выкуплен"]);
     if (dk === "parts") return pick(["на согл", "выкуплен", "разобран"]);
@@ -280,7 +287,7 @@
 
   const DEMO = new URLSearchParams(location.search).has("demo");
   const S = { token: null, email: "", rows: [], byNum: new Map(), gid: 0, loadedAt: 0, loading: false,
-    since: new Map(), hist: new Map(), jr: null, histOpen: null, tab: "work", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [],
+    since: new Map(), hist: new Map(), jr: null, histOpen: null, tab: "all", q: "", limit: 60, dirty: new Map(), error: "", opts: {}, bools: new Set(), draft: null, boolVals: {}, multi: false, extra: [],
     parts: new Map(), svc: null, pp: null, view: null, // parts: ключ карточки → строки запчастей; svc — прайс сайта; pp — окно «работа из прайса»
     stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", src: "", only: null, limit: 150 }, skAdd: null, skSend: new Map(), skSent: null, tins: {} }; // склад Витали (v31); skSend/skSent — брак на возврат (v48)
   S.bools.add(C.reminderStop);
@@ -301,10 +308,9 @@
   function today() { const d = new Date(); return `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`; }
   function daysSince(v) { const d = parseDate(v); return d ? Math.floor((Date.now() - d) / 864e5) : null; }
   function digits(s) { return String(s ?? "").replace(/\D/g, ""); }
-  function phones(cell) {
-    return String(cell ?? "").split(/[,;\n/]+|\s{2,}/).map(p => p.trim()).filter(p => digits(p).length >= 10)
-      .map(p => { let d = digits(p); if (d.length === 11 && d[0] === "8") d = "7" + d.slice(1); if (d.length === 10) d = "7" + d; return { text: p, d }; });
-  }
+  const Customer = globalThis.IRON_CUSTOMER_RULES;
+  function phones(cell) { return Customer.parse(cell); }
+
   function isTrue(v) { return v === true || ["true", "ok", "да"].includes(norm(v)); }
   function toast(text, action, long) {
     $toast.innerHTML = `<span>${esc(text)}</span>` + (action ? `<button type="button">${esc(action.label)}</button>` : "");
@@ -512,7 +518,7 @@
     r.nameN = norm(String(r.cells[C.name] ?? "").split("\n")[0]);
   }
   function normDigits(d) { return d.length === 11 && d[0] === "8" ? "7" + d.slice(1) : d; }
-  const isDigitQuery = q => /^[\d\s+()\-]+$/.test(q);
+  const isDigitQuery = q => Customer.isPhoneQuery(q);
 
   // Книга клиентов из самой базы: одно имя — один клиент, у клиента может быть несколько
   // телефонов. Свежие написание имени и телефоны — сверху.
@@ -523,6 +529,11 @@
   // один; иначе такие заказы группируются между собой по имени.
   // Раньше (v6–v22) клиентом было одно имя: разные люди с одинаковым именем склеивались
   // («александр» — 18 разных номеров), а один человек с двумя написаниями — двоился.
+  function personLabel(raw) {
+    const text=String(raw||''),first=text.split('\n')[0],core=first.replace(/\([^)]*\)/g,'').trim(),parts=core.split(/\s+/),name=Customer.splitName(core);
+    if(parts.length===2&&name.reordered&&!name.uncertain&&/(ов|ев|ёв|ова|ева|ин|ина|ский|ская|цкий|цкая|енко|ян|дзе|швили|ко|ич|юк|ук|ых|их|янц)$/i.test(name.lastName))return [name.firstName,name.lastName].join(' ')+(first.match(/\s*\([^)]*\)/g)||[]).join('')+(text.includes('\n')?'\n'+text.split('\n').slice(1).join('\n'):'');
+    return text;
+  }
   function clients() {
     if (S.clients) return S.clients;
     const parent = new Map();
@@ -530,6 +541,7 @@
     const union = (a, b) => { a = find(a); b = find(b); if (a !== b) parent.set(a, b); };
     const withPhone = [], noPhone = [], byPhone = new Map();
     for (const r of S.rows) {
+      if(dealKey(cell(r,C.type))==='internal')continue;
       const ps = phones(cell(r, C.phone));
       if (!ps.length && !r.nameN) continue;
       parent.set(r, r);
@@ -556,7 +568,7 @@
       c.rows.sort((a, b) => a.row - b.row);
       c.count = c.rows.length; c.last = c.rows[c.rows.length - 1];
       for (const r of c.rows) {
-        const nm = String(cell(r, C.name)).split("\n")[0].trim();
+        const nm = personLabel(cell(r,C.name)).split("\n")[0].trim();
         if (nm) { c.name = nm; c.names.set(r.nameN, nm); r.nameN.split(" ").forEach(w => w && c.words.add(w)); }
         for (const p of phones(cell(r, C.phone))) c.phones.set(p.d, { text: p.text, d: p.d, row: r.row, date: cell(r, C.date) });
       }
@@ -616,7 +628,7 @@
     let res;
     if (isDigitQuery(q) || includeOrders && /^\s*[№#]\s*\d+\s*$/.test(q)) {
       const raw=digits(q), d=normDigits(raw); if(d.length<4&&!includeOrders)return [];
-      res=clients().filter(c=>d.length>=4&&[...c.phones.keys()].some(p=>p.includes(d))||includeOrders&&c.rows.some(r=>String(cell(r,C.num)).trim()===raw));
+      res=clients().filter(c=>d.length>=4&&[...c.phones.keys()].some(p=>Customer.phoneMatches(p,q))||includeOrders&&c.rows.some(r=>String(cell(r,C.num)).trim()===raw));
     } else {
       const tokens = norm(q).split(" ").filter(Boolean);
       if (tokens.join("").length < 3) return [];
@@ -697,13 +709,13 @@
       if (digitsOnly) {
         const num = String(cell(r, C.num)).trim();
         if (num === d) score = 1000;
-        else if (d.length >= 4 && r.ph.some(p => p.includes(d))) score = 400;
-        else if (d.length >= 4 && r.ph2.some(p => p.includes(d))) score = 350;
+        else if (d.length >= 4 && r.ph.some(p => Customer.phoneMatches(p,q))) score = 400;
+        else if (d.length >= 4 && r.ph2.some(p => Customer.phoneMatches(p,q))) score = 350;
         else if (d.length >= 4 && digits(cell(r, C.imei)).includes(d)) score = 300;
         else if (num.startsWith(d)) score = 200;
         else continue;
       } else {
-        if (!tokens.every(t => r.hay.includes(t))) continue;
+        if (!tokens.every(t => /^\+?\d[\d.()-]*$/.test(t) && digits(t).length>=4 ? [...r.ph,...r.ph2].some(p=>Customer.phoneMatches(p,t)) || String(cell(r,C.num)).includes(t) : r.hay.includes(t))) continue;
         const words = r.nameN.split(" ");
         score = 100 + tokens.filter(t => words.some(w => w.startsWith(t))).length * 50;
       }
@@ -734,6 +746,7 @@
     if (S.error && !S.rows.length) return renderShell(`<div class="empty">${esc(S.error)}<div class="row" style="justify-content:center"><button class="btn" data-act="reload">Попробовать ещё раз</button>
       <button class="btn btn--ghost" data-act="relogin">Войти другим аккаунтом</button></div></div>`);
     if (location.hash === "#/new") return renderNew();
+    if (location.hash === "#/quote") return renderQuote();
     if (location.hash === "#/sklad") return renderStock();
     const m = location.hash.match(/^#\/(\d+)/);
     if (m) return renderCard(m[1]);
@@ -762,6 +775,7 @@
         <a class="brand" href="#"><img src="../assets/logo-horizontal.png" alt="IRON SERVICE" width="128" height="34"><b>CRM</b></a><div class="top__spacer"></div>
         <div class="who">${esc(S.email)} <small class="ver">v${VERSION}</small></div>
         ${canCreate() ? `<a class="iconbtn iconbtn--add" href="#/new" title="Новый заказ">＋</a>` : ""}
+        <a class="iconbtn" href="#/quote" title="Рассчитать ремонт" aria-label="Рассчитать ремонт">₽</a>
         <a class="iconbtn" href="#/sklad" title="Склад запчастей Витали">📦</a>
         <button class="iconbtn" data-act="reload" title="Обновить">⟳</button>
         ${DEMO ? "" : `<button class="iconbtn" data-act="logout" title="Выйти">⎋</button>`}
@@ -782,6 +796,10 @@
     const t = [dk !== "repair" ? String(cell(r, C.type) || "") : "", flat(C.work) || flat(C.issue)].filter(Boolean).join(" · ");
     return t ? `<small title="${esc(t)}">${mark(t)}</small>` : "";
   }
+  function listPhoneHtml(r) {
+    const ps=phones(cell(r,C.phone)),proxy=phones(cell(r,C.contactPhone)).length;
+    return `<small class="list-phone">${ps[0]?esc(ps[0].text):''}${ps.length>1?` <span class="phone-more" title="Дополнительных номеров: ${ps.length-1}">(+${ps.length-1})</span>`:''}${proxy?` <span class="phone-proxy" title="Контакт для связи: ${esc(cell(r,C.contactName)||'указан другой номер')}">📲</span>`:''}</small>`;
+  }
   function itemHtml(r) {
     const st = cell(r, C.status), age = daysSince(cell(r, C.date));
     const old = dealKey(cell(r,C.type)) === "reminder" ? reminderOverdue(r) : !isFinal(st) && age != null && age > 14;
@@ -791,21 +809,19 @@
     if (S.view === "rows") return `<div class="ritem${menu}" role="button" tabindex="0" data-open="${esc(cell(r, C.num))}">
       <span class="ri__num">№${mark(cell(r, C.num))}</span>
       <span class="ri__date">${esc(date.slice(0, 5))}<small${old ? ' class="is-old"' : ""}>${esc(ageTxt)}</small></span>
-      <span class="ri__name">${mark(cell(r, C.name) || "без имени")}${S.q && cell(r, C.phone) ? `<small>${mark(cell(r, C.phone))}</small>` : ""}${String(cell(r, C.contactPhone) ?? "").trim() ? `<small title="Уведомления уходят человеку на связи">📲 ${mark(cell(r, C.contactName) || cell(r, C.contactPhone))}</small>` : ""}</span>
+      <span class="ri__name">${mark(personLabel(cell(r,C.name)) || "без имени")}${listPhoneHtml(r)}</span>
       <span class="ri__dev">${mark(cell(r, C.device) || "—")}${riWhat(r, dk)}</span>
       <span class="ri__st">${stChip}</span>
-      <span class="ri__sum">${dealKey(cell(r,C.type)) === "reminder" ? esc(remMeta(r).nextDate || "без срока") : money(cell(r, C.total))}</span>
+      <span class="ri__sum">${dealKey(cell(r,C.type)) === "reminder" ? esc(remMeta(r).nextDate || "без срока") : money(dealKey(cell(r,C.type))==='internal'?(toNum(cell(r,C.partCost))||0)+(toNum(cell(r,C.extra))||0):cell(r,C.total))}</span>
     </div>`;
     return `<div class="item${menu}" role="button" tabindex="0" data-open="${esc(cell(r, C.num))}">
-      <div class="item__top"><span class="item__num">№${mark(cell(r, C.num))}</span><span class="item__name">${mark(cell(r, C.name) || "без имени")}</span>${stChip}</div>
+      <div class="item__top"><span class="item__num">№${mark(cell(r, C.num))}</span><span class="item__name">${mark(personLabel(cell(r,C.name)) || "без имени")}${listPhoneHtml(r)}</span>${stChip}</div>
       <div class="item__dev">${mark(cell(r, C.device) || "—")}${cell(r, C.issue) ? `<span class="item__issue"> · ${mark(cell(r, C.issue))}</span>` : ""}</div>
       <div class="item__meta"><span class="item__date">📅 ${esc(date || "—")}${ageTxt ? ` <em class="${old ? "is-old" : ""}">${esc(ageTxt)}</em>` : ""}</span>
-        ${S.q && cell(r, C.phone) ? `<span>📞 ${mark(cell(r, C.phone))}</span>` : ""}
-        ${String(cell(r, C.contactPhone) ?? "").trim() ? `<span title="Уведомления уходят человеку на связи">📲 ${mark(cell(r, C.contactName) || cell(r, C.contactPhone))}</span>` : ""}
         ${cell(r, C.master) ? `<span>🔧 ${mark(cell(r, C.master))}</span>` : ""}
         ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}
         ${dk === "pawn" && pawnLeft(r) != null ? `<span class="chip${pawnLeft(r) < 0 ? " chip--bad" : ""}">${esc(pawnDue(pawnLeft(r)))}</span>` : ""}
-        <span class="item__sum">${dealKey(cell(r,C.type)) === "reminder" ? esc(remMeta(r).nextDate || "без срока") : money(cell(r, C.total))}</span></div>
+        <span class="item__sum">${dealKey(cell(r,C.type)) === "reminder" ? esc(remMeta(r).nextDate || "без срока") : money(dealKey(cell(r,C.type))==='internal'?(toNum(cell(r,C.partCost))||0)+(toNum(cell(r,C.extra))||0):cell(r,C.total))}</span></div>
     </div>`;
   }
   // ── статус прямо из списка (v39, 03.10.2026) ──────────────────────────────────────
@@ -823,7 +839,7 @@
     const list = statusesFor(dealKey(cell(r, C.type)));
     const opts = list.includes(st) || !st ? list : [st, ...list];
     const menu = !open ? "" : S.lst.v
-      ? `<div class="lst__menu"><p>«${esc(stLabel(S.lst.v))}» — ${dealKey(cell(r,C.type)) === "reminder" ? "этап сохранится без автоматических сообщений" : `клиенту уйдёт уведомление${groupOf(r)?.shared ? ", статус сменится у всех устройств группы" : ""}`}.</p>
+      ? `<div class="lst__menu"><p>«${esc(stLabel(S.lst.v))}» — ${["reminder","internal"].includes(dealKey(cell(r,C.type))) ? "этап сохранится без автоматических сообщений" : `клиенту уйдёт уведомление${groupOf(r)?.shared ? ", статус сменится у всех устройств группы" : ""}`}.</p>
         <div class="lst__row"><button type="button" class="btn btn--sm" data-act="lstsave" data-num="${esc(num)}">Сохранить</button><button type="button" class="btn btn--ghost btn--sm" data-act="lstback" data-num="${esc(num)}">Назад</button></div></div>`
       : `<div class="lst__menu" role="listbox">${opts.map(o => `<button type="button" class="dd__opt ${toneOf(C.status, o)}" data-act="lstpick" data-num="${esc(num)}" data-value="${esc(o)}" aria-pressed="${o === st}">${esc(stLabel(o))}</button>`).join("")}</div>`;
     return `<span class="lst${open ? " is-open" : ""}"><button type="button" class="chip chip--${statusKind(st)} lst__btn" data-act="lst" data-num="${esc(num)}" title="Сменить статус">${esc(stLabel(st) || "без статуса")} ▾</button>${menu}</span>`;
@@ -857,7 +873,7 @@
 
   function renderList() {
     const list = pick(), n = counts();
-    const tabs = [["reminders", "🔔 Напоминания", S.rows.filter(r => dealKey(cell(r, C.type)) === "reminder" && !isFinal(cell(r, C.status))).length], ["work", "В работе", n.work], ["stale", "⚡ Долго висят", n.stale], ["ready", "Готовы, ждут клиента", n.ready], ["done", "Выданы за 30 дней"], ["all", "Все"]];
+    const tabs = [["all", "Все"], ["reminders", "🔔 Напоминания", S.rows.filter(r => dealKey(cell(r, C.type)) === "reminder" && !isFinal(cell(r, C.status))).length], ["work", "В работе", n.work], ["stale", "⚡ Долго висят", n.stale], ["ready", "Готовы, ждут клиента", n.ready], ["done", "Выданы за 30 дней"] ];
     // Долгий вход включили, а это устройство ещё на часовом (v51) — одна кнопка, один раз.
     const longBar = S.authOn && !DEMO && S.token && !sidGet() && !inApp() ? `<div class="longbar">🔐 Можно не входить заново после простоя: <button type="button" class="btn btn--sm" data-act="longlogin">Запомнить вход на 30 дней</button></div>` : "";
     const pawns = S.q ? [] : S.rows.filter(r => dealKey(cell(r, C.type)) === "pawn" && pawnLeft(r) != null && pawnLeft(r) <= 1);
@@ -925,8 +941,8 @@
   // книга клиентов оболочки склеивает клиента по любому из них. Здесь — только удобство ввода:
   // каждый номер своим полем и «＋ второй номер». Клетку с одним номером и пояснением вроде
   // «писать на вотсап» не дробим — делим, только когда номеров в ней два и больше.
-  const telParts = v => phones(v).length >= 2 ? String(v ?? "").split(/\r?\n|[,;/\\]+|\s{2,}/).map(x => x.trim()).filter(Boolean) : [String(v ?? "")];
-  const telNorm = v => telParts(v).map(x => x.trim()).filter(Boolean).join("\n");
+  const telParts = v => Customer.format(v).split(/\r?\n|[,;/\\]+/).map(x=>x.trim()).filter(Boolean).length ? Customer.format(v).split(/\r?\n|[,;/\\]+/).map(x=>x.trim()).filter(Boolean) : [''];
+  const telNorm = v => Customer.format(v);
   const telRow = (c, i, value) => `<div class="tel__row"><input data-edit="${c}" data-i="${i}" value="${esc(value)}" inputmode="tel" spellcheck="false" autocorrect="off" autocapitalize="off"${i ? ' placeholder="второй номер"' : ""}>${i ? `<button type="button" class="linkbtn tel__rm" data-act="telrm" data-c="${c}" title="Убрать этот номер">✕</button>` : ""}</div>`;
   function telFieldHtml(c, label, v, dirty) {
     const parts = telParts(v);
@@ -980,11 +996,12 @@
     const list = opts.includes(current) || !current ? opts : [current, ...opts];
     return `<div class="statuses">${list.map(o => `<button type="button" class="st st--${kindOf(o)}" data-choice="${col}" data-value="${esc(o)}" aria-pressed="${o === chosen}">${esc(col === C.status ? stLabel(o) : o)}</button>`).join("")}</div>`;
   }
-  const typeOptions = () => [...new Set([...(S.opts[C.type]?.length ? S.opts[C.type] : ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Залог", "Другое"]), "Напоминание"])];
+  const typeOptions = () => [...new Set([...(S.opts[C.type]?.length ? S.opts[C.type] : ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Залог", "Другое"]), "Напоминание", "Внутренний ремонт"])];
 
   // Деньги по типу сделки: что считаем «остаётся нам».
   function moneySummary(key, val, r) {
     const n = c => toNum(val(c)) ?? 0;
+    if(key==='internal')return `Расходы сервиса: <b>${money(n(C.partCost)+n(C.extra))}</b> <span class="note">запчасти и сторонние расходы; выручка 0 ₽</span>`;
     if (key === "buyback" || key === "parts") return `Отдали клиенту: <b>${n(C.buyback).toLocaleString("ru-RU")} ₽</b> <span class="note">(маржа — при продаже)</span>`;
     if (key === "pawn") { // v73
       const given = n(C.buyback), back = n(C.total), gain = back - given, pct = given ? Math.round(gain / given * 1000) / 10 : 0;
@@ -1070,12 +1087,21 @@
       console: ["Замена HDMI-разъёма", "Ремонт привода", "Замена термопасты", "Ремонт геймпада"]
     }
   };
+  const MAC_FLEX_WORKS=['Ремонт шлейфа дисплея','Ремонт шлейфа подсветки дисплея'];
+  function flexRelevant(device,issue) {
+    const t=norm(issue);
+    const broken=/(?:разбит[а-я]*|тресн[а-я]*|лопну[а-я]*|трещин[а-я]*|скол[а-я]*)[^.;\n]{0,25}(?:матриц|диспле|экран)|(?:матриц|диспле|экран)[^.;\n]{0,25}(?:разбит|тресн|лопну|трещин|скол)/.test(t);
+    return /macbook|макбук/i.test(device)&&!broken&&/диспле|экран|матриц|мерца|полос|подсвет|гаснет|потух|изображ/.test(t);
+  }
+  function rankedWorkTips(list,device,issue) {
+    return flexRelevant(device,issue)?[...MAC_FLEX_WORKS,...list.filter(x=>!MAC_FLEX_WORKS.includes(x))]:list;
+  }
   function tipPhrases(kind, fam, device = "") {
     const text=norm(device), apple=/iphone|айфон|ipad|айпад|mac|мак|apple|airpods/.test(text);
     const home=/(?:iphone|айфон) (?:[4-8](?:s| plus)?|se)\b/.test(text);
     const face=/iphone|айфон/.test(text)&&!home||/(?:ipad|айпад) pro/.test(text);
     const touch=/(?:iphone|айфон) (?:5s|[6-8](?:s| plus)?|se)\b/.test(text)||/ipad|айпад|macbook|макбук/.test(text);
-    return [...new Set([...(TYPICAL[kind][fam]||[]),...(TIP_EXTRA[kind][fam]||[]),...TYPICAL[kind].all])].filter(p=>
+    return [...new Set([...(TYPICAL[kind][fam]||[]),...(TIP_EXTRA[kind][fam]||[]),...(kind==="work"&&/macbook|макбук/i.test(device)?MAC_FLEX_WORKS:[]),...TYPICAL[kind].all])].filter(p=>
       (!device||apple||!/яблоке|кнопк[аи] Home|Face ID|Touch ID/.test(p))&&
       (!device||fam!=="phone"||home||!/кнопк[аи] Home/.test(p))&&
       (!device||!/^Не работает Face ID|^Диагностика Face ID/.test(p)||face)&&
@@ -1113,8 +1139,13 @@
     S.tipFreq[key] = { n: S.rows.length, rev:S.tipRevision, list };
     return list;
   }
+  function refreshDeviceTips(key,r) {
+    const val=serviceValues(key,r),device=val(C.device),fam=familyOf(device);
+    for(const [kind,col] of [['issue',C.issue],['work',C.work]]){const block=$app.querySelector(`[data-tip="${col}"]`)?.closest('.tchips');if(block)block.outerHTML=typicalHtml(kind,col,fam,val(col),device);}
+  }
   function typicalHtml(kind, c, fam, text, device = "") {
-    const list = tipsOrder(kind, fam, device);
+    const key=curKey(),r=key==='new'?null:S.rows.find(x=>x.row===key);
+    const list = kind==='work'?rankedWorkTips(tipsOrder(kind,fam,device),device,serviceValues(key,r)(C.issue)):tipsOrder(kind,fam,device);
     const open = S.tipsOpen?.has(c);
     const more = list.filter((p, i) => i >= TIPS_SHOWN && !hasPhrase(text, p)).length;
     return `<div class="tchips${open ? " is-open" : ""}">${list.map((p, i) => `<button type="button" class="tchip${i >= TIPS_SHOWN && !hasPhrase(text, p) ? " tchip--more" : ""}" data-tip="${c}" data-text="${esc(p)}" aria-pressed="${hasPhrase(text, p)}">${esc(p)}</button>`).join("")}${
@@ -1328,11 +1359,12 @@
     [/диагност/, ["диагностика"]],
   ];
   // Работа → место в выдаче (0 — первая), только для узнанных; null — неисправность пуста или слова не узнаны.
-  function issueRank(text) {
+  function issueRank(text,device='') {
     const t = norm(text); if (!t) return null;
     const hits = ISSUE_OPS.map(([re, ops], i) => ({ at: t.search(re), i, ops })).filter(h => h.at >= 0).sort((a, b) => a.at - b.at || a.i - b.i);
     if (!hits.length) return null;
     const rank = new Map();
+    if(flexRelevant(device,text))for(const op of MAC_FLEX_WORKS)rank.set(norm(op),rank.size);
     for (const h of hits) for (const op of h.ops) if (!rank.has(norm(op))) rank.set(norm(op), rank.size);
     return rank;
   }
@@ -1344,7 +1376,7 @@
       if(words.length&&!words.every(w=>(PP_SYN.find(([re])=>re.test(w))?.[1]||[w,w.length>=5?w.slice(0,-1):w]).some(t=>text.includes(t))))continue;
       const id=x.device+'|'+x.operation;if(!groups.has(id))groups.set(id,{id,device:x.device,operation:x.operation,indices:[]});groups.get(id).indices.push(i);
     }
-    const rk=issueRank(issue),pop=opPopularity(familyOf(dev)),rank=o=>rk?.get(norm(o))??Infinity;
+    const rk=issueRank(issue,dev),pop=opPopularity(familyOf(dev)),rank=o=>rk?.get(norm(o))??Infinity;
     return [...groups.values()].sort((a,b)=>(rank(a.operation)-rank(b.operation))||(pop.get(b.operation)||0)-(pop.get(a.operation)||0));
   }
   function ppChoices(key, r, group) {
@@ -1522,7 +1554,7 @@
     const svc = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), work, base: x.price || 0, unpriced:x.price==null&&!x.price_free, beforeWarranty:val(C.warranty) };
     ((S.svcLog ||= {})[key] ||= []).push(svc);
     setDirty(key, C.work, addPhrase(val(C.work), work));
-    if (x.price) {
+    if (Number.isFinite(x.price)) {
       const d = parseDiscount(val(C.discount)), pay = val(C.payment), q = toNum(val(C.total)), base = (q == null ? 0 : baseOf(q, d, pay)) + x.price;
       setDirty(key, C.total, String(finalOf(base, d, pay)));
     }
@@ -1534,7 +1566,7 @@
       const src = part ? part.src : (SRC_NAME.find(([re]) => re.test(x.part_source || "")) || [, ""])[1];
       const cost = part ? part.cost : x.part_cost;
       const list = partsOf(key, r).filter(p => p.name || p.src || p.cost);
-      const row = { name: partBase + (x.variant ? ` (${x.variant})` : ""), src, cost: cost ? String(cost) : "", dev: x.device, op: x.operation, var: x.variant || "", fromSvc: true, svcId: svc.id };
+      const row = { name: partBase + (x.variant ? ` (${x.variant})` : ""), src, cost: cost != null ? String(cost) : "", dev: x.device, op: x.operation, var: x.variant || "", fromSvc: true, svcId: svc.id };
       if (part?.item) row.item = part.item;
       if (part?.stock) row.stock = part.stock; // с нашей полки — спишется при сохранении, как кнопка «взять со склада»
       list.push(row);
@@ -1542,6 +1574,7 @@
     }
     const days = x.warranty_days, had = toNum(String(val(C.warranty)).match(/\d+/)?.[0]);
     if (days && (had == null || days > had)) { svc.warrantySet = days + " дней"; setDirty(key, C.warranty, svc.warrantySet); }
+    if(key==='quote'&&S.pp)S.pp.open=false;
     const y = window.scrollY; render(); window.scrollTo(0, y);
     toast(`Добавлено: ${work}${x.price ? " — " + (x.price_is_from ? "от " : "") + money(x.price) + ". Итого " + money(val(C.total)) : ""}`, null, true);
   }
@@ -1601,7 +1634,7 @@
     return {work:text(v(C.work)),parts:text(v(C.parts)),from:text(v(C.partFrom)),cost:toNum(v(C.partCost)),client:stamp(2166136261)+'-'+stamp(2246822519)};
   }
   function storedServices(key,r) {
-    if(!['repair','other'].includes(dealKey(serviceValues(key,r)(C.type))))return null;
+    if(!['repair','other','internal'].includes(dealKey(serviceValues(key,r)(C.type))))return null;
     try{const m=JSON.parse(serviceValues(key,r)(C.serviceMeta)||'null');return m?.v===1&&Array.isArray(m.services)&&Array.isArray(m.parts)&&m.basis&&m.basis.client===serviceBasis(key,r).client?m:null;}catch{return null;}
   }
   function servicesOf(key,r) {
@@ -1611,13 +1644,13 @@
       return S.svcLog[key]=m.services.map(s=>({...s}));
     }
     if(!r)return S.svcLog[key]=[];
-    const phrases=String(v(C.work)||'').split(/[;\n]+|(?<!\d)\.|\.(?!\d)/).map(s=>s.trim()).filter(Boolean),total=baseOf(toNum(v(C.total)),parseDiscount(v(C.discount)),v(C.payment));
+    const phrases=String(v(C.work)||'').split(/[;\n]+|(?<!\d)\.|\.(?!\d)/).map(s=>s.trim()).filter(Boolean),total=dealKey(v(C.type))==='internal'?null:baseOf(toNum(v(C.total)),parseDiscount(v(C.discount)),v(C.payment));
     return S.svcLog[key]=phrases.map((work,i)=>({id:'legacy-'+r.row+'-'+i,work,base:phrases.length===1?total:null,legacy:true}));
   }
   function stageServiceMeta(key,r) {
-    const v=serviceValues(key,r);if(!['repair','other'].includes(dealKey(v(C.type))))return;
+    const v=serviceValues(key,r);if(!['repair','other','internal'].includes(dealKey(v(C.type))))return;
     const services=servicesOf(key,r).filter(s=>hasServiceText(v(C.work),s.work));
-    if(!services.length&&!v(C.serviceMeta))return;
+    if(!services.length&&!v(C.serviceMeta)&&!partsOf(key,r).some(p=>p.stock))return;
     const data={v:1,basis:serviceBasis(key,r),services,parts:partsOf(key,r).map(({stockRestored,...p})=>p)};
     setDirty(key,C.serviceMeta,JSON.stringify(data));
   }
@@ -2046,6 +2079,7 @@
   const tinBox = (key, r) => `<label class="check multi"><input type="checkbox" data-act="tin" ${tinActive(key, r) ? "checked" : ""}><b>🔄 Трейд-ин — клиент сдаёт устройство в зачёт</b></label>`;
   const DISC_TYPES = ["repair", "other", "sale_used", "sale_new", "sale_parts"];
   function payHtml(key, r, val, dk) {
+    if(dk==='internal')return "";
     const cur = String(val(C.payment) || ""), up = !["buyback", "parts", "pawn"].includes(dk), dirty = S.dirty.has(key + ":" + C.payment);
     return `<div class="field field--pay${dirty ? " is-dirty" : ""}"><span>Оплата${up ? "" : " <small class=\"note\">(платим мы — без наценки)</small>"}</span><div class="pay">${PAY_TYPES.map(p =>
       `<button type="button" class="pay__b" data-act="pay" data-v="${esc(p)}" aria-pressed="${norm(cur) === norm(p)}">${esc(p)}${up && payUp(p) ? " <small>+10%</small>" : ""}</button>`).join("")}</div></div>`;
@@ -2067,6 +2101,7 @@
   // = итог. Ниже — сколько клиент доплатит при выдаче. Где платим мы (выкуп, залог) — поля нет. В заказе из
   // нескольких устройств предоплата пишется только в первую строку (как трейд-ин), иначе посчиталась бы N раз.
   function prepayHtml(key, r, val, dk) {
+    if(dk==='internal')return "";
     if (["buyback", "parts", "pawn"].includes(dk)) return "";
     const amt = toNum(val(C.prepay)), kind = String(val(C.prepayKind) || ""), q = toNum(val(C.total));
     const rest = q != null && amt ? Math.max(0, q - amt) : null;
@@ -2518,7 +2553,7 @@
   // (владелец: «автоматически списывалась»), несколько — выбирают кнопкой. Если поставщика
   // выбрали кнопкой с качеством, берём только то же качество: иначе под «Сервисный оригинал»
   // молча списался бы TFT, который лежит на полке.
-  function skAuto(key, r, i, hint) {
+  function skTryBind(key, r, i, hint) {
     const p = partsOf(key, r)[i]; if (!p || p.stock || !norm(p.src)) return null;
     let c = skCandidates(key, r, p); if (!c?.length) return null;
     // Подпись в индексе — «Аккумуляторы · Оригинал (без привязки)», бывает и с хвостом «· SIM/eSIM».
@@ -3283,7 +3318,7 @@
   const CLOSING = ["выполнен", "продан", "обмен оформлен", "выкуплен", "разобран", "залог выкуплен", "залог не выкуплен"];
   function sumColFor(status, dk) {
     const s = norm(status);
-    if (dk === "reminder") return null;
+    if (dk === "reminder" || dk === "internal") return null;
     // Залог (v73): «в залоге» — без суммы выдачи нечего сообщать клиенту; «не выкуплен» закрывается выданным (AE),
     // «выкуплен» — суммой выкупа (Q). Так же решает таблица (OrderAutofill.js, orderCloseBlocked_).
     if (dk === "pawn") return s.startsWith("в залоге") || s.startsWith("залог не выкуплен") ? C.buyback : s.startsWith("залог выкуплен") ? C.total : null;
@@ -3423,6 +3458,7 @@
   }
   async function createReminder() {
     if (S.creating) return;
+    normalizeCustomerFields("new",null);
     const payload = { request: remDraft("new", null), name: S.dirty.get("new:" + C.name), phone: S.dirty.get("new:" + C.phone) };
     const why = reminderInvalid(payload.request, payload.name, payload.phone); if (why) return toast(why, null, true);
     busy(true); S.creating = true;
@@ -3458,10 +3494,31 @@
     saveDraft(); render();
   }
 
+  function internalOf(key,r) {try{const j=JSON.parse(serviceValues(key,r)(C.internalMeta)||'{}');return j&&j.v===1?j:{v:1,purpose:'sale'};}catch{return {v:1,purpose:'sale'};}}
+  function internalEstimate(key,r) {
+    const log=servicesOf(key,r);return log.length&&log.every(x=>x.base!=null)?log.reduce((n,x)=>n+(serviceAmount(key,r,x)||0),0):internalOf(key,r).estimate??null;
+  }
+  function stageInternal(key,r) {
+    const val=serviceValues(key,r);if(dealKey(val(C.type))!=='internal')return;
+    const meta={...internalOf(key,r),v:1,estimate:internalEstimate(key,r)};
+    setDirty(key,C.internalMeta,JSON.stringify(meta));
+    for(const [c,value] of [[C.name,'IRON SERVICE'],[C.phone,''],[C.contactName,''],[C.contactPhone,''],[C.total,'0'],[C.report,''],[C.review,''],[C.group,''],[C.gcontact,''],[C.payment,''],[C.discount,''],[C.prepay,''],[C.prepayKind,''],[C.buyback,''],[C.tradein,''],[C.source,''],[C.notify,JSON.stringify({v:1,status:[],report:[]})]])setDirty(key,c,value);
+  }
+  function internalDeviceHtml(key,r) {
+    const meta=internalOf(key,r),G=S.goods||{},q=norm(S.internalQ||''),items=(G.used||[]).map((x,i)=>({x,i})).filter(({x})=>!x.sold&&(!q||norm(x.name+' '+imeiOf(x)).includes(q)));
+    return `<section class="block"><h3>Устройство сервиса</h3><p class="note">Телефон клиента не нужен. Запчасти списываются при сохранении, выручка по заказу — 0 ₽.</p><div class="tchips">${[['sale','Под продажу'],['parts','На запчасти']].map(([v,t])=>`<button class="tchip" data-act="internalpurpose" data-v="${v}" aria-pressed="${meta.purpose===v}">${t}</button>`).join('')}</div>${meta.product?`<p class="quote-selected">Товар бота: <b>${esc(meta.product.name)}</b><br><small>ID ${esc(meta.product.id)}${meta.product.imei?' · '+esc(meta.product.imei):''}</small></p>`:''}<button class="btn btn--ghost btn--sm" data-act="internalgoods">Выбрать б/у устройство из бота</button>${S.internalGoodsOpen?`<div class="internal-goods"><input class="search" data-act="internalq" value="${esc(S.internalQ||'')}" placeholder="Модель или IMEI своей техники">${G.loading?'<p class="note">Загружаю устройства…</p>':G.error?`<p class="note">${esc(G.error)}</p>`:`<div class="quote-devices">${items.slice(0,40).map(({x,i})=>`<button class="btn btn--ghost btn--sm" data-act="internalpick" data-i="${i}">${esc(x.name)}${imeiOf(x)?' · '+esc(imeiOf(x)):''}</button>`).join('')||'<p class="note">Доступных б/у устройств не найдено. Модель можно вписать вручную.</p>'}</div>`}</div>`:''}</section>`;
+  }
+  function internalPick(i) {
+    const key=curKey(),r=key==='new'?null:S.rows.find(x=>x.row===key),x=S.goods?.used?.[i];if(!x||x.sold||dealKey(serviceValues(key,r)(C.type))!=='internal')return;
+    const meta=internalOf(key,r);meta.product={id:x.id,name:x.name,imei:imeiOf(x)};
+    setDirty(key,C.internalMeta,JSON.stringify(meta));setDirty(key,C.device,x.name);if(imeiOf(x))setDirty(key,C.imei,imeiOf(x));
+    if(x.condition&&!String(serviceValues(key,r)(C.issue)||'').trim())setDirty(key,C.issue,x.condition);S.internalGoodsOpen=false;if(key==='new')saveDraft();render();
+  }
+
   function cardBody(key, r, isNew) {
     const val = c => { const k = key + ":" + c; return S.dirty.has(k) ? S.dirty.get(k) : (r ? cell(r, c) : ""); };
     const dk = dealKey(val(C.type));
-    const hidden = c => (HIDE[dk] || []).includes(c) && !String(r ? cell(r, c) : "").trim(); // уже заполненное не прячем
+    const hidden = c => (HIDE[dk] || []).includes(c) && (dk==='internal'||!String(r ? cell(r, c) : "").trim()); // уже заполненное не прячем
     const fh = (c, extra = {}) => hidden(c) ? "" : fieldHtml(key, c, r ? cell(r, c) : "", { row: r?.row, r, force: isNew, label: labelFor(c, dk), ...extra });
     if (dk === "reminder") return reminderCard(key, r, isNew, val, fh);
     const st = r ? cell(r, C.status) : CFG.newStatus;
@@ -3477,37 +3534,38 @@
 
     if (isNew && dk !== "repair" && dk !== "other") {
       html += `<section class="block"><h3>Статус</h3>${ddHtml(key, C.status, val(C.status), statusesFor(dk), { allowEmpty: false })}
-        <p class="note">Клиенту уйдёт одно сообщение — по этому статусу. Итоговый отчёт — кнопкой в карточке после создания.</p></section>`;
+        <p class="note">${dk==='internal'?'Статус внутреннего ремонта сохраняется без клиентских сообщений.':'Клиенту уйдёт одно сообщение — по этому статусу. Итоговый отчёт — кнопкой в карточке после создания.'}</p></section>`;
     }
     if (!isNew) {
       const reportSent = isTrue(cell(r, C.report));
       const statusBlock = editable(C.status, r)
-        ? `${ddHtml(key, C.status, S.dirty.has(key + ":" + C.status) ? S.dirty.get(key + ":" + C.status) : st, statusesFor(dk), { allowEmpty: false })}<p class="note">Выберите статус и нажмите «Сохранить» внизу — клиенту уйдёт уведомление, как из таблицы.${groupOf(r)?.shared ? " <b>Статус поменяется у всех устройств группы.</b>" : ""}</p>
+        ? `${ddHtml(key, C.status, S.dirty.has(key + ":" + C.status) ? S.dirty.get(key + ":" + C.status) : st, statusesFor(dk), { allowEmpty: false })}<p class="note">${dk==='internal'?'Внутренний ремонт: статус сохранится без клиентских уведомлений.':'Выберите статус и нажмите «Сохранить» внизу — клиенту уйдёт уведомление, как из таблицы.'}${groupOf(r)?.shared ? " <b>Статус поменяется у всех устройств группы.</b>" : ""}</p>
           ${isSilent(st) ? "" : `<button type="button" class="btn btn--ghost btn--sm btn--silent" data-choice="${C.status}" data-value="${SILENT}" aria-pressed="${norm(S.dirty.get(key + ":" + C.status)) === norm(SILENT)}">🔕 Закрыть без уведомления</button>`}
-          ${resendBtn(r, st)}`
+          ${dk==='internal'?'':resendBtn(r,st)}`
         : `<div class="big">${esc(stLabel(st) || "без статуса")}</div><div class="row"><a class="btn btn--red" href="${sheetLink(r.row, C.status)}" target="_blank" rel="noopener">Сменить статус в таблице ↗</a></div>`;
       const reportBtn = editable(C.report, r)
         ? `<button type="button" class="btn ${reportSent ? "btn--ghost" : ""}" data-act="report">${reportSent ? "Отчёт уже отправлен — отправить заново" : groupOf(r)?.shared ? "📨 Отправить общий отчёт" : "📨 Отправить итоговый отчёт клиенту"}</button>`
         : `<a class="btn" href="${sheetLink(r.row, C.report)}" target="_blank" rel="noopener">Отчёт клиенту (Ok) ↗</a>`;
       html += `<section class="block"><h3>Статус</h3>${statusBlock}
-        <div class="row row--report">${reportBtn}${reviewBtn(key, r)}</div></section>`;
+        <div class="row row--report">${dk==='internal'?'':reportBtn+reviewBtn(key,r)}</div></section>`;
     }
     // v85 (25.10.2026), владелец: «блок статус и клиент поменять местами» — клиент сразу под типом сделки, статус после
     // него (и после «Что продаём» у новой продажи). order — для телефона, где колонки сливаются в одну ленту.
     const statusBox = html ? box(3, html) : ""; html = "";
 
-    html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew || editable(C.name,r) ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew || editable(C.phone,r) ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
+    if(dk!=='internal')html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew || editable(C.name,r) ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew || editable(C.phone,r) ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
       ${isNew ? `<div id="pre-contact" class="note pre-contact">${preNoteText()}</div><div id="client-devs">${clientDevicesHtml(currentNewClient())}</div>` : ""}
       ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
-      ${proxyHtml(key, r, isNew, val, fh)}
+      ${proxyHtml(key, r, isNew, val, fh)}<div data-notify-host>${recipientHtml(key,r)}</div>
       ${!isNew && canCreate() ? msgHtml(r) : ""}
       ${!isNew && canCreate() ? clientActions(r, dk) : ""}
     </section>`;
-    left += box(2, html) + box(2, reminderLinks(key, r, isNew)); html = "";
+    left += box(2, html) + (dk==='internal'?'':box(2,reminderLinks(key,r,isNew))); html = "";
     if (isNew && (dk === "sale_used" || dk === "sale_new")) left += box(2, goodsBlock(dk) + importBlock());
+    if(dk==='internal')left += box(2,internalDeviceHtml(key,r));
     left += statusBox;
 
-    const multiBox = isNew ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>${esc(TYPE_UI[dk].multi)}</b></label>` : "";
+    const multiBox = isNew && dk!=='internal' ? `<label class="check multi"><input type="checkbox" data-act="multi" ${S.multi ? "checked" : ""}><b>${esc(TYPE_UI[dk].multi)}</b></label>` : "";
     if (isNew && S.multi) {
       const cols = PER_DEVICE[dk].filter(c => !hidden(c));
       right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${TIN_TYPES.includes(dk) ? tinBox(key, r) : ""}${deviceGrid(cols, c => fh(c))}</section>`);
@@ -3516,7 +3574,7 @@
         ${payHtml(key, r, val, dk)}
         <div class="margin">${groupMoneySummary(dk)}</div></section>`);
     } else {
-    const rep = dk === "repair" || dk === "other", fam = familyOf(val(C.device)), spp = dk === "sale_parts";
+    const rep = ["repair","other","internal"].includes(dk), fam = familyOf(val(C.device)), spp = dk === "sale_parts";
     const tips = (kind, c) => rep && (isNew || editable(c, r)) ? typicalHtml(kind, c, fam, val(c), val(C.device)) : "";
     html += `<section class="block"><h3>${rep ? "Ремонт" : spp ? "Запчасти" : "Устройство"}</h3>
       ${multiBox}${TIN_TYPES.includes(dk) && (isNew || editable(C.buyback, r)) ? tinBox(key, r) : ""}
@@ -3535,7 +3593,7 @@
     right += box(4, html); html = "";
     if (TIN_TYPES.includes(dk)) right += box(5, tinHtml(key, r));
 
-    const moneyFields = (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
+    const moneyFields = dk==='internal' ? ['parts',C.extra] : (dk === "buyback" || dk === "parts") ? [C.buyback, C.extra]
       // «Чистая работа» (R) отсюда убрана (v63, 10.10.2026). Владелец: «не понимаю, что за поля; почему чистая работа
       // пустая, хотя „остаётся нам“ — по сути то же самое, и оно заполнено». R — формула таблицы (Q − S − T): в
       // карточке было её значение на момент загрузки — 0 у нового заказа и старое после правки итога, — а «Остаётся
@@ -3544,7 +3602,7 @@
       : dk === "tradein" ? [C.total, C.buyback, C.partCost, C.extra] : rep ? [C.total, "parts", C.extra] : spp ? [C.total, "parts", C.extra] : [C.total, C.partCost, C.extra];
     const partsRo = `<div class="field"><span>Запчасти (закуп), ₽ <small class="note">— сумма из списка запчастей</small></span><div class="ro" data-parts-sum>${esc(money(val(C.partCost)) || "—")}</div></div>`;
     const discBox = DISC_TYPES.includes(dk) && (isNew || editable(C.total, r)) ? discountHtml(key, r, val) : "";
-    html += `<section class="block"><h3>Деньги</h3><div class="grid4">${moneyFields.map(c => c === "parts" ? partsRo : fh(c)).join("")}${discBox}${prepayHtml(key, r, val, dk)}</div>
+    html += `<section class="block"><h3>${dk==='internal'?'Расходы сервиса':'Деньги'}</h3>${dk==='internal'?`<p class="note">Оценка работ по клиентскому прайсу: ${internalEstimate(key,r)==null?'не задана':money(internalEstimate(key,r))}. Это справочная оценка, она не попадает в выручку.</p>`:''}<div class="grid4">${moneyFields.map(c => c === "parts" ? partsRo : fh(c)).join("")}${discBox}${prepayHtml(key, r, val, dk)}</div>
       ${dk === "pawn" ? pawnChipsHtml(key, r, val) : ""}
       ${isNew || editable(C.total, r) || editable(C.buyback, r) ? payHtml(key, r, val, dk) : ""}
       <div class="margin">${moneySummary(dk, val, r)}</div></section>`;
@@ -3564,6 +3622,15 @@
   // вписан, ВСЕ уведомления по заказу уходят ему (ContactPerson.js в таблице), в каждом —
   // «👤 Владелец: … — ваш номер оставили для связи». Заказ, Google-контакт, книга клиентов,
   // история — по-прежнему за C/D. Очистил телефон — сообщения снова идут клиенту.
+  function notificationData(key,r) {
+    const v=serviceValues(key,r);
+    return {name:v(C.name),phone:v(C.phone),contact:{name:v(C.contactName),phone:v(C.contactPhone)},notify:v(C.notify),type:v(C.type)};
+  }
+  function recipientHtml(key,r) {
+    const d=notificationData(key,r),all=Customer.candidates(d);if(!all.length||Customer.internal(d))return '';
+    const selected=phase=>new Set(Customer.targets(d,phase).map(x=>x.d)),statuses=selected('status'),reports=selected('report');
+    return `<details class="notify-box" ${all.length>1?'open':''}><summary>Получатели уведомлений</summary><p class="note">Статусы и итоговый отчёт можно отправлять на разные номера.</p><div class="notify-head"><span>Номер</span><span>Статусы</span><span>Отчёт</span></div>${all.map(p=>`<div class="notify-row"><span><b>${esc(p.text)}</b><small>${p.kind==='client'?'Клиент':'На связи'}${p.name?' · '+esc(p.name):''}</small></span>${['status','report'].map(phase=>`<label><input type="checkbox" data-notifyphase="${phase}" data-phone="${esc(p.d)}" ${selected(phase).has(p.d)?'checked':''} aria-label="${phase==='status'?'Статусы':'Отчёт'}: ${esc(p.text)}"></label>`).join('')}</div>`).join('')}${!statuses.size?'<p class="note">Статусы не отправляются: получателей нет.</p>':''}${!reports.size?'<p class="note">Итоговый отчёт не отправляется: получателей нет.</p>':''}</details>`;
+  }
   function proxyHtml(key, r, isNew, val, fh) {
     const has = String(val(C.contactPhone) ?? "").trim() || String(val(C.contactName) ?? "").trim();
     if (!isNew && !editable(C.contactPhone, r)) {
@@ -3576,7 +3643,7 @@
     return `<div class="proxy">
       <div class="proxy__head">📲 На связи другой человек</div>
       <div class="grid2"><div>${fh(C.contactName)}<div class="ac" id="ac-${C.contactName}"></div></div><div>${fh(C.contactPhone)}<div class="ac" id="ac-${C.contactPhone}"></div></div></div>
-      <p class="note">Все уведомления по заказу — статусы, итоговый отчёт, напоминание об отзыве — уйдут на этот номер с пометкой, чьё это устройство. Заказ, контакт и история остаются за клиентом. Сотрите телефон — сообщения снова пойдут клиенту.${isNew ? "" : " Уже идущему заказу — впишите номер и нажмите «Отправить статус ещё раз»."}</p>
+      <p class="note">По умолчанию статусы идут человеку на связи, а итоговый отчёт — основному номеру клиента. Получателей выбирайте галочками ниже. Заказ и история остаются за владельцем устройства.${isNew ? "" : " Уже идущему заказу — впишите номер и нажмите «Отправить статус ещё раз»."}</p>
       ${ctel.length ? `<div class="row">${ctel.map(p => `<a class="btn btn--sm" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost btn--sm" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost btn--sm" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
     </div>`;
   }
@@ -3584,17 +3651,17 @@
   // заново — лишняя запись в «Историю статусов» и ещё одно сообщение с пустым статусом не
   // уходило только потому, что пустой статус не шлётся. Теперь дверь получает тот же статус с
   // флагом force (в обход 10-минутной защиты от дублей); история не пишется (old = value).
-  function resendBtn(r, st) {
-    if (!r || !st || isSilent(st) || !editable(C.status, r)) return "";
-    const to = phones(cell(r, C.contactPhone));
-    if (!to.length && !phones(cell(r, C.phone)).length) return "";
-    return `<button type="button" class="btn btn--ghost btn--sm btn--resend" data-act="resend">${to.length ? "📨 Отправить статус на номер для связи" : "↻ Отправить статус ещё раз"}</button>`;
+  function resendBtn(r,st) {
+    if(!r||!st||isSilent(st)||!editable(C.status,r))return '';
+    const to=Customer.targets(notificationData(r.row,r),'status');if(!to.length)return '';
+    return `<button type="button" class="btn btn--ghost btn--sm btn--resend" data-act="resend">↻ Отправить статус ещё раз${to.length>1?' ('+to.length+' номера)':''}</button>`;
   }
   function resendStatus(r) {
-    const num = String(cell(r, C.num)).trim(), st = cell(r, C.status);
-    const to = phones(cell(r, C.contactPhone));
-    toast(`№${num}: отправляю «${st}» ${to.length ? "на номер для связи " + to[0].text : "клиенту"}…`);
-    return doorInBackground(r, num, [{ c: C.status, v: st, old: st, force: true }]);
+    if([...S.dirty.keys()].some(k=>k.startsWith(r.row+':')))return toast('Сначала сохраните изменения и выбранных получателей',null,true);
+    const num=String(cell(r,C.num)).trim(),st=cell(r,C.status),to=Customer.targets(notificationData(r.row,r),'status');
+    if(!to.length)return toast('Для статусов не выбраны получатели',null,true);
+    toast(`№${num}: отправляю «${st}» выбранным получателям (${to.length})…`);
+    return doorInBackground(r,num,[{c:C.status,v:st,old:st,force:true}]);
   }
 
   // Группа — заказы одного клиента, созданные одной формой (колонка AG = № первого заказа).
@@ -3938,7 +4005,7 @@
     const k = 1 + (S.multi ? S.extra.filter(x => String(x[C.device] ?? "").trim()).length : 0);
     return k > 1 ? `Создать ${k} ${k < 5 ? "заказа" : "заказов"}` : "Создать заказ";
   }
-  function refreshSaveBar(key) { $app.querySelector(".savebar")?.remove(); saveBar(key, location.hash === "#/new" ? 'data-new="1"' : `data-num="${esc(location.hash.slice(2))}"`); }
+  function refreshSaveBar(key) { if(key==='quote')return; $app.querySelector(".savebar")?.remove(); saveBar(key, location.hash === "#/new" ? 'data-new="1"' : `data-num="${esc(location.hash.slice(2))}"`); }
 
 
 
@@ -4309,6 +4376,45 @@
   }
 
   // ── новый заказ ─────────────────────────────────────────
+  function quoteDeviceChoices(query='') {
+    const counts=new Map();for(const r of S.rows){if(dealKey(cell(r,C.type))==='internal')continue;const text=String(cell(r,C.device)||'').split('\n')[0].trim();if(text&&text.length<=90)counts.set(text,(counts.get(text)||0)+1);}
+    const family=S.quote?.family||'',q=norm(query),accept=d=>(!family||familyOf(d)===family)&&(!q||norm(d).includes(q)||norm(d).replace(/[^a-zа-я0-9]/g,'').includes(q.replace(/[^a-zа-я0-9]/g,'')));
+    return [...new Set([...counts.keys(),...(S.svc?.devices||[])])].filter(accept).sort((a,b)=>(counts.get(b)||0)-(counts.get(a)||0)||a.localeCompare(b)).slice(0,q?16:8);
+  }
+  function quoteSelectDevice(device) {
+    const old=S.dirty.get('quote:'+C.device)||'';
+    if(old!==device&&String(S.dirty.get('quote:'+C.work)||'').trim()&&!confirm('Сменить устройство и очистить выбранные работы и детали расчёта?'))return;
+    if(old!==device){for(const k of [...S.dirty.keys()])if(k.startsWith('quote:'))S.dirty.delete(k);S.parts.delete('quote');if(S.svcLog)delete S.svcLog.quote;}
+    setDirty('quote',C.device,device);setDirty('quote',C.type,'Ремонт');S.quote ||= {};S.quote.q=device;S.pp={key:'quote',open:true,dev:matchDevice(device),tariff:'',q:''};render();
+  }
+  function renderQuote() {
+    S.quote ||= {q:'',family:''};
+    if(!S.quote.tried){S.quote.tried=true;Promise.all([loadServices(),loadSupplierPrices(),loadStock()]).then(()=>{if(location.hash==='#/quote')render();});}
+    const device=S.dirty.get('quote:'+C.device)||'',total=toNum(S.dirty.get('quote:'+C.total)),work=S.dirty.get('quote:'+C.work)||'',q=S.quote.q||'';
+    if(!S.pp||S.pp.key!=='quote')S.pp={key:'quote',open:true,tariff:'',q:''};
+    const choices=quoteDeviceChoices(q),families=[['','Все устройства'],['phone','Телефоны'],['laptop','Ноутбуки'],['desktop','Компьютеры'],['tablet','Планшеты'],['watch','Часы'],['audio','Аудио']];
+    const manual=S.quote.manual||'';
+    renderShell(`<div class="card-head" style="margin-top:14px"><a class="iconbtn" href="#" aria-label="Назад">←</a><h1>Рассчитать ремонт</h1><button class="btn btn--ghost btn--sm" data-act="quoteclear">Очистить расчёт</button></div>
+      <section class="block"><h3>1. Устройство</h3><div class="tchips">${families.map(([v,t])=>`<button class="tchip" data-act="quotefamily" data-v="${v}" aria-pressed="${S.quote.family===v}">${t}</button>`).join('')}</div><div class="row"><input class="search" data-act="quotedeviceq" value="${esc(q)}" placeholder="Модель или код: iPhone 16 Pro, A1466, Honor 9X…" autocomplete="off"><button class="btn btn--ghost btn--sm" data-act="quotedeviceuse" ${q.trim()?'':'disabled'}>Выбрать модель</button></div><div class="quote-devices">${choices.map(d=>`<button class="btn btn--ghost btn--sm" data-act="quotedev" data-device="${esc(d)}">${esc(d)}</button>`).join('')}</div>${device?`<p class="quote-selected">Выбрано: <b>${esc(device)}</b></p>`:'<p class="note">Сначала выберите устройство. Популярные модели показаны первыми.</p>'}</section>
+      ${device?`<section class="block"><h3>2. Работа и запчасть</h3><p class="note">Выберите работу, затем качество и склад. Описание неисправности необязательно.</p>${pricePickHtml('quote',device,'')}<details class="quote-manual" ${manual?'open':''}><summary>Работа со своей ценой</summary>${/macbook|макбук/i.test(device)?`<div class="tchips">${MAC_FLEX_WORKS.map(w=>`<button class="tchip" data-act="quoteworkpreset" data-work="${esc(w)}">${esc(w)}</button>`).join('')}</div>`:''}<div class="grid2"><label class="field"><span>Название работы</span><input data-act="quotemanualname" value="${esc(manual)}" placeholder="Введите работу"></label><label class="field"><span>Цена работы, ₽</span><input inputmode="decimal" data-act="quotemanualprice" value="${esc(S.quote.manualPrice||'')}" placeholder="Укажите цену"></label></div><button class="btn btn--ghost btn--sm" data-act="quotemanualadd">Добавить работу</button></details></section>`:''}
+      <section class="block quote-total"><span>Итого по расчёту</span><strong>${total==null?'—':money(total)}</strong><p class="note">${work?esc(work):'Выбранные работы появятся здесь.'}</p><button class="btn btn--red" data-act="quotetoorder" ${device&&work&&total!=null?'':'disabled'}>Клиент согласен — создать заказ</button></section>`,{search:false});
+  }
+  function quoteManualAdd() {
+    const device=S.dirty.get('quote:'+C.device),name=String(S.quote?.manual||'').trim(),price=skCostValue(S.quote?.manualPrice);
+    if(!device||!name||price==null)return toast('Укажите устройство, работу и её цену. Нулевая цена допустима',null,true);
+    addServiceObj('quote',null,{device,operation:name,price,work:price,price_free:price===0},null);S.quote.manual='';S.quote.manualPrice='';render();
+  }
+  function quoteToOrder() {
+    const val=serviceValues('quote',null);if(!val(C.device)||!val(C.work)||toNum(val(C.total))==null)return toast('Сначала выберите устройство и работы');
+    if(store.get('crm.draft')&&!confirm('Есть незаконченный новый заказ. Заменить его этим расчётом?'))return;
+    for(const k of [...S.dirty.keys()])if(k.startsWith('new:'))S.dirty.delete(k);
+    for(const c of [C.device,C.issue,C.work,C.total,C.parts,C.partFrom,C.partCost,C.warranty])if(val(c)!=='')S.dirty.set('new:'+c,val(c));
+    S.parts.set('new',partsOf('quote',null).map(p=>({...p})));(S.svcLog||={}).new=servicesOf('quote',null).map(x=>({...x}));
+    S.dirty.set('new:'+C.type,'Ремонт');S.dirty.set('new:'+C.status,CFG.newStatus);S.dirty.set('new:'+C.date,today());
+    for(const k of [...S.dirty.keys()])if(k.startsWith('quote:'))S.dirty.delete(k);S.parts.delete('quote');if(S.svcLog)delete S.svcLog.quote;S.quote={tried:true,q:'',family:''};
+    S.multi=false;S.extra=[];S.followup=null;S.newClient=null;S.clientPick=null;S.gpicks=[];S.draft=true;S.pp=null;saveDraft();location.hash='#/new';render();toast('Расчёт перенесён. Укажите клиента и сохраните заказ');
+  }
+
   function renderNew() {
     if (!canCreate()) { location.hash = ""; return; }
     if (!S.draft) {
@@ -4351,7 +4457,7 @@
       if (S.bools.has(ch.c)) { const b = bv(ch.c); ch.w = isTrue(ch.v) ? b.on : b.off; }
       else if (ch.formula) ch.w = String(ch.v);
       else if (f?.num || ch.c === C.num) { const n = toNum(ch.v); ch.w = n == null ? String(ch.v ?? "") : n; } // номер — числом, как у всех строк
-      else ch.w = String(ch.v ?? "");
+      else ch.w = F[ch.c]?.tel ? Customer.format(ch.v) : String(ch.v ?? "");
     }
     if (DEMO) return;
     if (list.some(ch => ch.c === C.reminder)) {
@@ -4496,10 +4602,15 @@
     // force — «отправить ещё раз»: статус кнопкой resend и отчёт поверх уже отправленного (Ok → Ok).
     // Без него дверь пропустила бы то же значение как «уже обработано» в течение 10 минут.
     const force = list.filter(ch => ch.force || (ch.c === C.report && isTrue(ch.old) && isTrue(ch.v))).map(ch => ch.c + 1);
-    const body = JSON.stringify({ token: S.token, row, num, force, changes: list.map(ch => ({ col: ch.c + 1, value: String(ch.w ?? ch.v ?? ""), old: String(ch.old ?? "") })) });
+
     const all = { ok: true, results: [], statusBackground: "", issued: null, failed: [] };
     for (const di of doorOrder(list)) {
       const url = CFG.doors[di]; if (!url) continue;
+      const internal=dealKey(list.find(ch=>ch.c===C.type)?.v??cell(S.byNum.get(String(num))||{cells:{}},C.type))==='internal';
+      if(internal&&di===1)continue;
+      const outgoing=list.filter(ch=>!F[ch.c]?.tel||JSON.stringify(phones(ch.old).map(p=>p.d))!==JSON.stringify(phones(ch.w??ch.v).map(p=>p.d)));
+      if(!outgoing.some(ch=>F[ch.c]?.door))continue;
+      const body=JSON.stringify({token:S.token,row,num,force,changes:outgoing.map(ch=>({col:ch.c+1,value:String(ch.w??ch.v??''),old:String(ch.old??'')}))});
       if (only && !only.includes(di)) continue;
       try {
       // «Дверь занята» — дверь держит один запрос за раз (замок на 25 с). Когда в оболочке
@@ -4565,9 +4676,14 @@
     }).catch(e => toast(`№${num}: записано в таблицу, но ${e.failed?.includes(1) || !e.failed ? "уведомления НЕ ушли" : "часть обработки не прошла"} — ${e.message}`, { label: "Повторить", run: () => doorInBackground(r, num, list, e.failed) }, 60000));
   }
 
+  function normalizeCustomerFields(key,r) {
+    const val=serviceValues(key,r);
+    for(const c of [C.phone,C.contactPhone]){const raw=String(val(c)||''),formatted=Customer.format(raw);if(raw!==formatted)S.dirty.set(key+':'+c,formatted);}
+  }
   async function save(num) {
     const r = S.byNum.get(num); if (!r) return;
     const key = r.row;
+    normalizeCustomerFields(key,r);stageInternal(key,r);
     if(clientPhonePending(key,r))return toast("Выберите номер клиента из списка",null,true);
     stageServiceMeta(key,r);
     const list = [...S.dirty].filter(([k]) => k.startsWith(key + ":")).map(([k, v]) => { const c = +k.split(":")[1]; return { c, v, old: cell(r, c) }; });
@@ -4627,7 +4743,7 @@
       render();
       for (const [, l] of quiet) { const i = l.findIndex(ch => ch.c === C.status); if (i >= 0) l.splice(i, 1); } // тихий статус — мимо двери
       const all = [...list, ...[...others.values()].flat()];
-      toast((DEMO ? "Сохранено (демо — в таблицу не пишется)" : dkNow === "reminder" ? "Напоминание сохранено ✓ Без автоматических сообщений" : quiet.length && !all.some(ch => F[ch.c]?.door) ? "Закрыт без уведомления ✓ Клиенту ничего не отправлено" : all.some(ch => F[ch.c]?.door) ? `Сохранено ✓${others.size ? ` (и у ${others.size} устр. группы)` : ""} Уведомления отправляются…` : "Сохранено ✓") + skMsg, null, true);
+      toast((DEMO ? "Сохранено (демо — в таблицу не пишется)" : dkNow==='internal'?'Внутренний ремонт сохранён ✓ Клиентские уведомления отключены': dkNow === "reminder" ? "Напоминание сохранено ✓ Без автоматических сообщений" : quiet.length && !all.some(ch => F[ch.c]?.door) ? "Закрыт без уведомления ✓ Клиенту ничего не отправлено" : all.some(ch => F[ch.c]?.door) ? `Сохранено ✓${others.size ? ` (и у ${others.size} устр. группы)` : ""} Уведомления отправляются…` : "Сохранено ✓") + skMsg, null, true);
       // Вписали номер на связи в идущий заказ и статус не меняли — предложить отправить ему статус.
       const cp = list.find(ch => ch.c === C.contactPhone);
       if (cp && phones(cp.v).length && !stCh && !isSilent(cell(r, C.status)) && !all.some(ch => F[ch.c]?.door))
@@ -4672,10 +4788,12 @@
     if (S.followup && store.get("crm.pendingReminder")) return toast("Сначала создайте ожидающее напоминание — кнопка вверху страницы",null,true);
     if (S.followup) { const why = reminderInvalid(S.followup, S.dirty.get("new:" + C.name), S.dirty.get("new:" + C.phone)); if (why) return toast(why, null, true); }
     const get = c => S.dirty.get("new:" + c) ?? "";
+    if(dealKey(get(C.type))==='internal'&&!String(get(C.device)).trim())return toast('Укажите устройство сервиса или выберите б/у товар из бота',null,true);
     if(clientPhonePending("new",null))return toast("Выберите номер клиента из списка",null,true);
+    normalizeCustomerFields("new",null);stageInternal("new",null);
     stageServiceMeta("new",null);
     const skOps = S.multi ? [] : skPending("new"); // запчасти со склада — списать в первый заказ после записи
-    if (!String(get(C.name)).trim() && !String(get(C.phone)).trim()) return toast("Нужно имя или телефон клиента");
+    if (dealKey(get(C.type))!=='internal'&&!String(get(C.name)).trim() && !String(get(C.phone)).trim()) return toast("Нужно имя или телефон клиента");
     busy(true); S.creating = true;
     try {
       // Список полей на каждое устройство: первое — из основных полей формы, остальные —
@@ -4749,7 +4867,7 @@
       S.draft = null; S.multi = false; S.extra = []; delete S.tins.new; S.newStatusTouched = false; S.imp = null; S.parts.delete("new"); if (S.svcLog) delete S.svcLog.new; S.pp = null; S.newClient = null; store.del("crm.draft");
       location.hash = "#/" + made[0].num;
       const nums = N > 1 ? `Заказы №${made[0].num}–${made[N - 1].num}` : `Заказ №${made[0].num}`;
-      const soldMsg = await markUsedSold(made).catch(() => " · ⚠️ в боте не отмечено «Продано»");
+      const soldMsg = dkNew==='internal'?'':await markUsedSold(made).catch(() => " · ⚠️ в боте не отмечено «Продано»");
       S.goods = S.goods ? { ...S.goods, open: false, items: null } : null; // б/у в боте поменялся — перечитать при следующем открытии
       toast((DEMO ? nums + (N > 1 ? " созданы" : " создан") + " (демо)" : `${nums} записан${N > 1 ? "ы" : ""} ✓ Уведомления отправляются…`) + skMsg + soldMsg, null, true);
       // Двери по очереди, заказ за заказом — как если бы строки заполняли в таблице одну за другой.
@@ -4765,7 +4883,7 @@
   }
 
   // ── события ─────────────────────────────────────────────
-  const curKey = () => location.hash === "#/new" ? "new" : S.byNum.get(location.hash.slice(2))?.row;
+  const curKey = () => location.hash === "#/quote" ? "quote" : location.hash === "#/new" ? "new" : S.byNum.get(location.hash.slice(2))?.row;
   // A save can originate in the list, without any order in the URL.
   // Compare with the row being edited, including when another card is open.
   const curVal = (key, c) => {
@@ -4774,8 +4892,9 @@
     return r ? cell(r, c) : "";
   };
   function setDirty(key, c, v) {
+    if(F[c]?.tel)v=Customer.format(v);
     const orig = curVal(key, c);
-    const same = S.bools.has(c) ? isTrue(v) === isTrue(orig) : F[c]?.num ? toNum(v) === toNum(orig) && String(v).trim() !== "" : F[c]?.tel ? telNorm(v) === telNorm(orig) : String(v) === String(orig);
+    const same = S.bools.has(c) ? isTrue(v) === isTrue(orig) : F[c]?.num ? toNum(v) === toNum(orig) && String(v).trim() !== "" : F[c]?.tel ? String(v) === String(orig) : String(v) === String(orig);
     const keepNew = key === "new" && [C.status, C.date, C.type].includes(c);
     if (same && !keepNew) S.dirty.delete(key + ":" + c); else S.dirty.set(key + ":" + c, v);
   }
@@ -4840,7 +4959,7 @@
     if (t.dataset.psup != null) {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2));
       if(applySupplier(key, r, +t.dataset.psup, t.dataset.s, +t.dataset.c, t.dataset.t)===false){rerenderKeep();return;}
-      const sk = skAuto(key, r, +t.dataset.psup, t.dataset.t);
+      const sk = skTryBind(key, r, +t.dataset.psup, t.dataset.t);
       const y = window.scrollY; render(); window.scrollTo(0, y);
       toast(sk ? `📦 Со склада: ${skShort(sk)}${skFrom(sk)} — спишется при сохранении` : `${t.dataset.s}: закупка ${money(+t.dataset.c)}${partsOf(key, r)[+t.dataset.psup]?.fromSvc ? " · итог пересчитан" : ""}`);
       return;
@@ -4851,6 +4970,7 @@
       const p = t.dataset.text, v = hasPhrase(box.value, p) ? removePhrase(box.value, p) : addPhrase(box.value, p);
       box.value = v; setDirty(key, c, v); box.closest(".field")?.classList.toggle("is-dirty", S.dirty.has(key + ":" + c));
       t.closest(".tchips").querySelectorAll("[data-tip]").forEach(b => b.setAttribute("aria-pressed", String(hasPhrase(v, b.dataset.text))));
+      if(c===C.issue||c===C.work)refreshDeviceTips(key,key==='new'?null:S.rows.find(x=>x.row===key));
       refreshSaveBar(key); return;
     }
     if(t.dataset.act==='ppgroup'){const P=S.pp,g=P?.groups?.[+t.dataset.i];if(g){P.pending=null;P.group=g;P.q='';P.tariff='';P.limit=60;rerenderKeep();}return;}
@@ -4869,6 +4989,7 @@
     if (t.dataset.choice != null) {
       const key = curKey(), c = +t.dataset.choice;
       // Пустой тип и «Ремонт» — одно и то же: не считаем это изменением.
+      if(c===C.type&&key!=='new'&&(dealKey(t.dataset.value)==='internal'||dealKey(curVal(key,c))==='internal')&&dealKey(t.dataset.value)!==dealKey(curVal(key,c)))return toast('Для другого типа сделки создайте отдельный заказ. История внутреннего ремонта останется связана с устройством',null,true);
       const v = t.dataset.value, orig = key === "new" ? S.dirty.get(key + ":" + c) ?? "" : curVal(key, c);
       if (c === C.type && key !== "new" && v === "Напоминание" && dealKey(orig) !== "reminder") return toast("Создайте отдельное напоминание в блоке «Просьбы клиента»",null,true);
       if (c === C.type && key !== "new" && dealKey(orig) === "reminder" && v !== "Напоминание") {
@@ -4892,6 +5013,10 @@
       }
       if (miss != null) askSum(miss, `Для «${v}» нужна сумма`, true);
       if (c === C.type) {
+        if(key==='new'&&dealKey(orig)==='internal'&&dealKey(v)!=='internal'){
+          const estimate=internalEstimate(key,null);for(const c of [C.name,C.phone,C.contactName,C.contactPhone,C.internalMeta,C.notify])S.dirty.delete(key+':'+c);if(estimate!=null)setDirty(key,C.total,String(estimate));else S.dirty.delete(key+':'+C.total);
+        }
+        if(dealKey(v)==='internal'){S.multi=false;S.extra=[];S.followup=null;S.newClient=null;S.clientPick=null;S.gpicks=[];stageInternal(key,null);}
         if (key === "new" && dealKey(orig) === "reminder" && v !== "Напоминание") { S.dirty.delete("new:" + C.reminder); S.dirty.delete("new:" + C.device); S.newStatusTouched = false; }
         if (key === "new" && v === "Напоминание") {
           if (S.multi || S.extra.length || S.parts.get("new")?.some(p => p.name || p.cost || p.stock) || S.tins.new?.length) { setDirty(key,C.type,orig || "Ремонт"); return toast("Для отдельной просьбы используйте «Создать напоминание» внизу заказа"); }
@@ -4906,6 +5031,17 @@
       refreshSaveBar(key); return;
     }
     const act = t.dataset.act;
+    if(act==='internalgoods'){S.internalGoodsOpen=!S.internalGoodsOpen;if(S.internalGoodsOpen)loadGoods();render();return;}
+    if(act==='internalpick'){internalPick(+t.dataset.i);return;}
+    if(act==='internalpurpose'){const key=curKey(),r=key==='new'?null:S.rows.find(x=>x.row===key);setDirty(key,C.internalMeta,JSON.stringify({...internalOf(key,r),purpose:t.dataset.v}));if(key==='new')saveDraft();render();return;}
+
+    if(act==='quotefamily'){S.quote.family=t.dataset.v;S.quote.q='';render();return;}
+    if(act==='quotedev'||act==='quotedeviceuse'){quoteSelectDevice(act==='quotedev'?t.dataset.device:S.quote.q.trim());return;}
+    if(act==='quoteworkpreset'){S.quote.manual=t.dataset.work;render();return;}
+    if(act==='quotemanualadd'){quoteManualAdd();return;}
+    if(act==='quotetoorder'){quoteToOrder();return;}
+    if(act==='quoteclear'){for(const k of [...S.dirty.keys()])if(k.startsWith('quote:'))S.dirty.delete(k);S.parts.delete('quote');if(S.svcLog)delete S.svcLog.quote;S.quote={tried:true,q:'',family:''};S.pp=null;render();return;}
+
     if(act === "svchelp"){const key=curKey();S.svcInfoOpen ||= new Set();S.svcInfoOpen.has(key)?S.svcInfoOpen.delete(key):S.svcInfoOpen.add(key);rerenderKeep();return;}
     if (act === "clearnew") { clearNewForm(); return; }
     if (act === "remretry") { await retryReminder(); return; }
@@ -5088,7 +5224,7 @@
       if (!el.closest(".field")?.querySelector("[data-act=spellfix]")) spellNote(el, "");
     }
     else if (act === "tmore") { const c = +t.dataset.c; S.tipsOpen ||= new Set(); S.tipsOpen.has(c) ? S.tipsOpen.delete(c) : S.tipsOpen.add(c); const y = window.scrollY; render(); window.scrollTo(0, y); }
-    else if (act === "ppclose") { S.pp = null; const y = window.scrollY; render(); window.scrollTo(0, y); }
+    else if (act === "ppclose") { S.pp = curKey()==='quote'?{key:'quote',open:false}:null; const y = window.scrollY; render(); window.scrollTo(0, y); }
     else if (act === "addpart" || act === "rmpart") {
       const key = curKey(), r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), list = partsOf(key, r);
       if (act === "addpart") list.push({ name: "", src: "", cost: "" });
@@ -5126,6 +5262,17 @@
     }
   });
   function onEdit(e) {
+    if(e.target.dataset.act==='internalq'){S.internalQ=e.target.value;clearTimeout(onEdit.internalSearch);onEdit.internalSearch=setTimeout(()=>render(),250);return;}
+    if(['quotedeviceq','quotemanualname','quotemanualprice'].includes(e.target.dataset.act)){
+      const a=e.target.dataset.act;S.quote ||= {};S.quote[a==='quotedeviceq'?'q':a==='quotemanualname'?'manual':'manualPrice']=e.target.value;
+      if(a==='quotedeviceq'){const box=$app.querySelector('.quote-devices');if(box)box.innerHTML=quoteDeviceChoices(e.target.value).map(d=>`<button class="btn btn--ghost btn--sm" data-act="quotedev" data-device="${esc(d)}">${esc(d)}</button>`).join('');const use=$app.querySelector('[data-act="quotedeviceuse"]');if(use)use.disabled=!e.target.value.trim();}return;
+    }
+    if(e.target.dataset.notifyphase){
+      const t=e.target,key=curKey(),r=key==='new'?null:S.rows.find(x=>x.row===key),d=notificationData(key,r);
+      const p=Customer.policy(d.notify)||{v:1,status:Customer.targets(d,'status').map(x=>x.d),report:Customer.targets(d,'report').map(x=>x.d)};
+      const phase=t.dataset.notifyphase,ids=new Set(p[phase]);t.checked?ids.add(t.dataset.phone):ids.delete(t.dataset.phone);
+      p[phase]=[...ids];setDirty(key,C.notify,JSON.stringify({v:1,status:p.status,report:p.report}));refreshSaveBar(key);if(key==='new')saveDraft();rerenderKeep();return;
+    }
     const t = e.target;
     if (t.dataset.watchEdit != null) {
       const key=curKey(),r=key==='new'?null:S.byNum.get(location.hash.slice(2)),m=t.dataset.follow?S.followup:remDraft(key,r); if(!m)return;
@@ -5248,8 +5395,12 @@
     }
     if (t.dataset.edit == null) return;
     const key = curKey(); if (key == null) return;
-    const c = +t.dataset.edit, v = t.type === "checkbox" ? t.checked : F[c]?.tel ? telJoin(c) : t.value;
+    const c = +t.dataset.edit;
+    if(F[c]?.tel && phones(t.value).length<=1 && (e.type==='change'||(/^7\d{10}$/.test(phones(t.value)[0]?.d||'') && (t.selectionStart==null||t.selectionStart===t.value.length))))t.value=Customer.format(t.value);
+    const v = t.type === "checkbox" ? t.checked : F[c]?.tel ? telJoin(c) : t.value;
     setDirty(key, c, v);
+    if([C.device,C.issue,C.work].includes(c)){if(c===C.device&&e.type==='input'){clearTimeout(onEdit.tipRefresh);onEdit.tipRefresh=setTimeout(()=>{if(curKey()===key)refreshDeviceTips(key,key==='new'?null:S.rows.find(x=>x.row===key));},160);}else refreshDeviceTips(key,key==='new'?null:S.rows.find(x=>x.row===key));}
+    if([C.phone,C.name,C.contactPhone,C.contactName].includes(c)){const host=$app.querySelector('[data-notify-host]');if(host)host.innerHTML=recipientHtml(key,key==='new'?null:S.rows.find(x=>x.row===key));}
     t.closest(".field")?.classList.toggle("is-dirty", S.dirty.has(key + ":" + c));
     t.closest(".field")?.classList.remove("is-need");
     if (c === C.issue || c === C.work) t.closest(".field")?.parentElement?.querySelectorAll(".tchips [data-tip]").forEach(b => b.setAttribute("aria-pressed", String(hasPhrase(v, b.dataset.text))));
@@ -5283,7 +5434,7 @@
     return { sig: norm(name) + "|" + ph.map(p => p.d).join(","), name, phone: ph.map(p => p.text).join("\n") };
   }
   function precontact() {
-    if (DEMO || !CFG.doors[0] || !S.token || location.hash !== "#/new" || dealKey(S.dirty.get("new:" + C.type)) === "reminder") return;
+    if (DEMO || !CFG.doors[0] || !S.token || location.hash !== "#/new" || ["reminder","internal"].includes(dealKey(S.dirty.get("new:" + C.type)))) return;
     const x = preSig(); if (!x || S.pre?.sig === x.sig) return;
     const pre = S.pre = { sig: x.sig, state: "wait" };
     pre.promise = doorPost(CFG.doors[0], "crm-contact", JSON.stringify({ token: S.token, name: x.name, phone: x.phone }))
@@ -5397,7 +5548,7 @@
     const key=curKey();if(key==null||String(expected)!==String(key))return;
     const r=key==='new'?null:S.byNum.get(location.hash.slice(2)),cl=clients().find(x=>x.key===clientKey);if(!cl)return;
     if(r&&(!editable(C.name,r)||!editable(C.phone,r)))return;
-    if(r&&['repair','other'].includes(dealKey(cell(r,C.type)))){servicesOf(key,r);partsOf(key,r);}
+    if(r&&['repair','other','internal'].includes(dealKey(cell(r,C.type)))){servicesOf(key,r);partsOf(key,r);}
     const typed=normDigits(digits(query??$app.querySelector(`[data-edit="${C.phone}"]`)?.value??serviceValues(key,r)(C.phone))),ps=phonesOf(cl);
     const matches=fromPhone&&typed.length>=4&&!(query&&/^\s*[№#]/.test(query))?ps.filter(p=>p.d.includes(typed)):[];
     S.clientPick={card:key,client:cl.key,pending:false};if(key==='new')S.newClient=cl.key;
@@ -5537,7 +5688,7 @@
     const key = curKey(); if (key == null) return;
     const r = key === "new" ? null : S.byNum.get(location.hash.slice(2)), i = +t.dataset.part, p = partsOf(key, r)[i];
     if (!p || !norm(p.src)) return;
-    const x = p.stock ? null : skAuto(key, r, i, null);
+    const x = p.stock ? null : skTryBind(key, r, i, null);
     // Перерисовка — после того, как фокус ушёл в следующее поле, и с возвратом фокуса туда.
     setTimeout(() => {
       const a = document.activeElement, d = a?.dataset || {};
@@ -5547,7 +5698,7 @@
       if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`);
     }, 0);
   });
-  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.dataset.sel != null || e.target.dataset.watchEdit != null || e.target.dataset.pf === "name" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
+  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.dataset.sel != null || e.target.dataset.watchEdit != null || e.target.dataset.notifyphase != null || e.target.dataset.pf === "name" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
   window.addEventListener("hashchange", () => { window.scrollTo(0, 0); render(); });
   window.addEventListener("beforeunload", e => { if (S.pendingDoors > 0 || S.skDirty.size || [...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
   // Новая версия на сайте. GitHub Pages отдаёт страницу с кэшем на 10 минут, и 28.09.2026

@@ -816,3 +816,10 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 .pp__rates { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
 .pp__rates .btn { margin:0; white-space:normal; text-align:left; }
 .pp__item.is-selected { border-color:var(--gold); background:var(--ready-bg); }
+
+/* CRM123: concise contact summary in both list views. */
+.list-phone{display:block;font:400 .84rem/1.35 var(--font-body);color:var(--muted);margin-top:3px;white-space:nowrap}.phone-more{color:#a7ddb3;font-weight:700}.phone-proxy{font-size:.85em}.item__name{min-width:0}
+
+.notify-box{margin:14px 0;padding:12px;border:1px solid var(--line);border-radius:12px}.notify-box summary{cursor:pointer;font-weight:700}.notify-head,.notify-row{display:grid;grid-template-columns:minmax(0,1fr) 68px 68px;gap:8px;align-items:center}.notify-head{font-size:.85rem;color:var(--muted);margin-top:12px}.notify-row{padding:9px 0;border-top:1px solid var(--line)}.notify-row small{display:block;color:var(--muted);font-size:.82rem}.notify-row label{display:flex;justify-content:center;padding:6px}.notify-row input{width:22px;height:22px;accent-color:var(--gold)}
+
+.quote-devices{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.quote-selected{color:var(--ready)}.quote-total strong{display:block;font:600 2rem var(--font-display);color:var(--gold);margin:8px 0}.quote-manual{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}.quote-manual summary{cursor:pointer;font-weight:700;margin-bottom:10px}
