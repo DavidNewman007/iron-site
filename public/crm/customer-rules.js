@@ -51,7 +51,11 @@ var IRON_CUSTOMER_RULES = (function () {
     return out;
   }
   function policy(raw) {
-    if(raw==null||raw==='')return null;
+    // Пустая политика = null (маршрутизация по умолчанию). Ложные значения из
+    // колонок-чекбоксов (boolean false, текст "FALSE"/"TRUE", 0) — тоже пустота,
+    // а не «инвалидная политика»: иначе уведомления молча выключаются (25.11.2026).
+    if(raw==null||raw===false||raw===true||raw===0)return null;
+    var s=String(raw).trim();if(!s||/^false$/i.test(s)||/^true$/i.test(s))return null;
     try{var p=typeof raw==='string'?JSON.parse(raw):raw;if(p.v!==1||!Array.isArray(p.status)||!Array.isArray(p.report))throw Error('invalid');return p;}catch(e){return {v:1,status:[],report:[],invalid:true};}
   }
   function targets(data,phase) {
