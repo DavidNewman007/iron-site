@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-23T19:04:46.131Z",
-  "count": 311,
+  "generated_at": "2026-11-24T18:34:37.429Z",
+  "count": 317,
   "byId": {
     "-ps5-slim-digital-825gb-s2-61700": {
       "url": "hybrid-products/gaming/ps5-slim-digital-825gb-s2-61700.html",
@@ -2489,6 +2489,54 @@
       "name": "🎮PS5 Slim Digital 1TB",
       "warehouse": "(S2)",
       "price": 83400
+    },
+    "-ps5-slim-disk-1tb-s2-85000": {
+      "url": "hybrid-products/gaming/ps5-slim-disk-1tb-s2-85000.html",
+      "url_en": "en/hybrid-products/gaming/ps5-slim-disk-1tb-s2-85000.html",
+      "cover": "assets/product-images/710d027896068006fabffb9c.jpg",
+      "name": "🎮PS5 Slim Disk 1TB",
+      "warehouse": "(S2)",
+      "price": 85000
+    },
+    "-gamepad-ps5-black-s2-8300": {
+      "url": "hybrid-products/gaming/gamepad-ps5-black-s2-8300.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-black-s2-8300.html",
+      "cover": "assets/product-images/c36248458fe2e350df682200.jpg",
+      "name": "🎮GamePad PS5 Black",
+      "warehouse": "(S2)",
+      "price": 8300
+    },
+    "-gamepad-ps5-white-s2-8300": {
+      "url": "hybrid-products/gaming/gamepad-ps5-white-s2-8300.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-white-s2-8300.html",
+      "cover": "assets/product-images/44bf9e4cf263624c6e295998.jpg",
+      "name": "🎮GamePad PS5 White",
+      "warehouse": "(S2)",
+      "price": 8300
+    },
+    "-gamepad-ps5-purple-s2-8100": {
+      "url": "hybrid-products/gaming/gamepad-ps5-purple-s2-8100.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-purple-s2-8100.html",
+      "cover": "assets/product-images/7c25cb3c84391cc119714e0f.jpg",
+      "name": "🎮GamePad PS5 Purple",
+      "warehouse": "(S2)",
+      "price": 8100
+    },
+    "-gamepad-ps5-red-s2-8100": {
+      "url": "hybrid-products/gaming/gamepad-ps5-red-s2-8100.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-red-s2-8100.html",
+      "cover": "assets/product-images/626ba4adcc8a7cc476ee6c68.jpg",
+      "name": "🎮GamePad PS5 Red",
+      "warehouse": "(S2)",
+      "price": 8100
+    },
+    "-gamepad-ps5-techno-red-s2-11800": {
+      "url": "hybrid-products/gaming/gamepad-ps5-techno-red-s2-11800.html",
+      "url_en": "en/hybrid-products/gaming/gamepad-ps5-techno-red-s2-11800.html",
+      "cover": "assets/product-images/6060ab25f8228d5c146fa2d7.jpg",
+      "name": "🎮GamePad PS5 Techno Red",
+      "warehouse": "(S2)",
+      "price": 11800
     }
   }
 }

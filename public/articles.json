@@ -1,5 +1,16 @@
 [
   {
+    "slug": "limit-zaryadki-berezhem-akkumulyator",
+    "title": "Лимит зарядки: бережем аккумулятор",
+    "excerpt": "Функция «Лимит зарядки» доступна на iPhone 15 и новее. Она позволяет задать максимальный уровень заряда, например 80%, чтобы снизить износ батареи. Это ос…",
+    "image": "assets/articles/limit-zaryadki-berezhem-akkumulyator.jpg",
+    "date": "2026-11-25",
+    "url": "articles/limit-zaryadki-berezhem-akkumulyator.html",
+    "title_en": "Charging limit: protecting the battery",
+    "excerpt_en": "The \"Charging Limit\" feature is available on iPhone 15 and newer. It allows you to set a maximum charge level, such as 80%, to reduce battery wear. This i…",
+    "url_en": "en/articles/limit-zaryadki-berezhem-akkumulyator.html"
+  },
+  {
     "slug": "optimizirovannaya-zaryadka-menshe-stressa-dlya-batarei",
     "title": "Оптимизированная зарядка: меньше стресса для батареи",
     "excerpt": "Функция «Оптимизированная зарядка» помогает продлить срок службы аккумулятора, сокращая время, когда устройство находится в полностью заряженном состоянии…",
