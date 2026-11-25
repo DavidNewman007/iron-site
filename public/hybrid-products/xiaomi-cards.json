@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-24T18:34:37.791Z",
-  "count": 2687,
+  "generated_at": "2026-11-25T17:58:29.037Z",
+  "count": 2689,
   "byId": {
     "xiaomi-15-5g-12-256-green-европа-s3-53000": {
       "url": "hybrid-products/xiaomi/xiaomi-15-5g-12-256-green-s3-53000.html",
@@ -21497,6 +21497,22 @@
       "name": "Poco F8 Pro 12/256 Black",
       "warehouse": "(S3)",
       "price": 44400
+    },
+    "xiaomi-17t-12-512-black-европа-s3-49700": {
+      "url": "hybrid-products/xiaomi/xiaomi-17t-12-512-black-s3-49700.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17t-12-512-black-s3-49700.html",
+      "cover": "assets/product-images/dcab77fb6a83dab04f524380.jpg",
+      "name": "Xiaomi 17T 12/512 Black",
+      "warehouse": "(S3)",
+      "price": 49700
+    },
+    "poco-x8-pro-8-256-yellow-европа-s3-35300": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-8-256-yellow-s3-35300.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-8-256-yellow-s3-35300.html",
+      "cover": "assets/product-images/d775171ba24e4d680f539c90.jpg",
+      "name": "Poco X8 Pro 8/256 Yellow",
+      "warehouse": "(S3)",
+      "price": 35300
     }
   }
 }

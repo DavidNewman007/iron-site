@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-24T18:34:37.533Z",
-  "count": 515,
+  "generated_at": "2026-11-25T17:58:28.772Z",
+  "count": 516,
   "byId": {
     "watch-8-40mm-graphite-оаэ-s2-18800": {
       "url": "hybrid-products/galaxy_watch/watch-8-40mm-graphite-s2-18800.html",
@@ -4121,6 +4121,14 @@
       "name": "Galaxy Watch 8 46 White",
       "warehouse": "(S3)",
       "price": 22000
+    },
+    "galaxy-watch-9-40-cream-оаэ-s3-25500": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-9-40-cream-s3-25500.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-9-40-cream-s3-25500.html",
+      "cover": "assets/product-images/fca03b0890a3b883969e51c8.jpg",
+      "name": "Galaxy Watch 9 40 Cream",
+      "warehouse": "(S3)",
+      "price": 25500
     }
   }
 }
