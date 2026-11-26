@@ -2139,10 +2139,23 @@
       const inp = $app.querySelector(`[data-edit="${C.total}"]`); if (inp) inp.value = tinVal(key, r, C.total);
     }
   }
+  // Сумма всего заказа (группа устройств): «клиент доплачивает» при трейд-ине
+  // считается по всем устройствам, а не по первой строке (владелец 26.11.2026: при двух
+  // новых устройствах и двух сданных в зачёт показывалось «доплачивает» от одного устройства).
+  function tinGroupQ(key, r) {
+    if (key === "new") {
+      const base = toNum(tinVal(key, r, C.total));
+      if (!S.multi) return base;
+      return (base || 0) + S.extra.reduce((a, x) => a + (toNum(x[C.total]) || 0), 0);
+    }
+    const gr = groupOf(r);
+    if (gr) { let s = 0, any = false; for (const x of gr.rows) { const v = toNum(x === r ? tinVal(key, r, C.total) : cell(x, C.total)); if (v != null) { s += v; any = true; } } return any ? s : null; }
+    return toNum(tinVal(key, r, C.total));
+  }
   function tinHtml(key, r) {
     if (!tinActive(key, r)) return "";
     const items = tinItems(key, r), many = items.length > 1, can = key === "new" || editable(C.buyback, r);
-    const cr = creditOf(key, r), q = toNum(tinVal(key, r, C.total));
+    const cr = creditOf(key, r), q = tinGroupQ(key, r);
     const sum = `<div class="tin__sum">Зачёт: <b>${money(cr) || "0 ₽"}</b>${q != null ? ` · клиент доплачивает <b>${money(Math.max(0, q - cr)) || "0 ₽"}</b>` : ""}</div>`;
     if (!can) return `<section class="block tin"><h3>🔄 Сдал в зачёт (трейд-ин)</h3>${items.map(x => `<div class="tin__ro"><b>${esc(x.device || "устройство")}</b>${x.imei ? " · IMEI " + esc(x.imei) : ""}${x.issue ? " · " + esc(x.issue) : ""} — ${money(x.buyback) || "—"}</div>`).join("")}${sum}</section>`;
     const f = (i, k, label, kind) => { const v = items[i][k] ?? "", a = `data-tin="${i}" data-tf="${k}"`;
@@ -4042,10 +4055,17 @@
     set(C.name, o.who); set(C.phone, o.phone);
     const [first, ...rest] = o.items;
     const promo = o.promo ? Number(o.promo.amount) || 0 : 0;
-    set(C.device, first.name); set(C.total, first.price != null ? Math.max(0, first.price - promo) : "");
+    // Скидка бота — в колонку «Скидка» заказа и пропорционально по позициям (остаток —
+    // на последнюю): раньше молча вычиталась из первой позиции, и в отчёт клиенту скидка
+    // не попадала (владелец 26.11.2026).
+    const priced = o.items.filter(x => x.price != null), sumP = priced.reduce((a, x) => a + x.price, 0);
+    let left = Math.max(0, Math.min(promo, sumP)); const cut = new Map();
+    priced.forEach((x, i) => { const c = i === priced.length - 1 ? left : Math.round(promo * x.price / (sumP || 1)); cut.set(x, Math.max(0, Math.min(c, left))); left -= cut.get(x); });
+    set(C.device, first.name); set(C.total, first.price != null ? Math.max(0, first.price - (cut.get(first) || 0)) : "");
+    if (promo) set(C.discount, promo + " ₽");
     set(C.partCost, first.purchase || ""); set(C.warranty, first.warranty || "");
-    set(C.comment, [o.ref + (o.user ? " (@" + o.user + ")" : ""), o.promo ? `промокод ${o.promo.code}: −${o.promo.amount} ₽` : ""].filter(Boolean).join("; "));
-    S.extra = rest.map(x => ({ [C.device]: x.name, [C.total]: x.price != null ? String(x.price) : "", [C.partCost]: x.purchase ? String(x.purchase) : "", [C.warranty]: x.warranty || "" }));
+    set(C.comment, [o.ref + (o.user ? " (@" + o.user + ")" : ""), o.promo ? `промокод ${o.promo.code}: −${o.promo.amount} ₽ — скидка в колонке «Скидка», разложена по позициям` : ""].filter(Boolean).join("; "));
+    S.extra = rest.map(x => ({ [C.device]: x.name, [C.total]: x.price != null ? String(Math.max(0, x.price - (cut.get(x) || 0))) : "", [C.partCost]: x.purchase ? String(x.purchase) : "", [C.warranty]: x.warranty || "" }));
     S.multi = S.extra.length > 0;
     S.imp = { open: false };
     render(); window.scrollTo(0, 0);
@@ -5527,7 +5547,7 @@
       tinSync(key, r); refreshSaveBar(key); if (key === "new") saveDraft();
       const val = c => tinVal(key, r, c), dk = dealKey(val(C.type)), box = $app.querySelector(".margin");
       if (box) box.innerHTML = key === "new" && S.multi ? groupMoneySummary(dk) : moneySummary(dk, val, r);
-      const sum = $app.querySelector(".tin__sum"), cr = creditOf(key, r), q = toNum(val(C.total));
+      const sum = $app.querySelector(".tin__sum"), cr = creditOf(key, r), q = tinGroupQ(key, r);
       if (sum) sum.innerHTML = `Зачёт: <b>${money(cr) || "0 ₽"}</b>${q != null ? ` · клиент доплачивает <b>${money(Math.max(0, q - cr)) || "0 ₽"}</b>` : ""}`;
       return;
     }
