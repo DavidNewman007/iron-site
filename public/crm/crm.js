@@ -486,17 +486,62 @@
   const A1 = (col, row, col2, row2) => encodeURIComponent(`'${CFG.sheet}'!${LETTER(col)}${row}` + (col2 != null ? `:${LETTER(col2)}${row2}` : ""));
 
   // ── загрузка ────────────────────────────────────────────
+  // Кэш последней загрузки в IndexedDB (v129, 26.11.2026): лист тянется несколько
+  // секунд, и владелец всё это время видит пустую оболочку. При старте сразу рисуем
+  // прошлую загрузку (тост честно говорит, что данные прошлые), параллельно тянем
+  // свежие; правки всегда уходят в живой API, кэш только для первого экрана.
+  function idbOpen() {
+    return new Promise((res, rej) => {
+      const q = indexedDB.open("crm-cache", 1);
+      q.onupgradeneeded = () => q.result.createObjectStore("kv");
+      q.onsuccess = () => res(q.result);
+      q.onerror = () => rej(q.error);
+    });
+  }
+  async function idbGet(key) {
+    const db = await idbOpen();
+    try {
+      return await new Promise((res, rej) => {
+        const tx = db.transaction("kv", "readonly"), rq = tx.objectStore("kv").get(key);
+        rq.onsuccess = () => res(rq.result); rq.onerror = () => rej(rq.error);
+      });
+    } finally { db.close(); }
+  }
+  async function idbPut(key, val) {
+    const db = await idbOpen();
+    try {
+      await new Promise((res, rej) => {
+        const tx = db.transaction("kv", "readwrite"); tx.objectStore("kv").put(val, key);
+        tx.oncomplete = res; tx.onerror = () => rej(tx.error);
+      });
+    } finally { db.close(); }
+  }
   async function load() {
     S.loading = true; S.error = ""; S.jr = null; S.hist = new Map(); render();
+    if (!DEMO) {
+      try {
+        const c = await idbGet("rows");
+        if (c && Array.isArray(c.rows) && Date.now() - c.at < 7 * 24 * 3600e3) {
+          S.gid = c.gid || 0;
+          setRows(c.rows);
+          S.loadedAt = c.at;
+          render();
+          toast(`Показываем прошлую загрузку (${Math.max(1, Math.round((Date.now() - c.at) / 1000))} с назад) — свежие данные уже подгружаются`, null, true);
+        }
+      } catch {}
+    }
     try {
       if (DEMO) {
         const rows = await fetch("demo.json?v=3").then(r => r.json());
         S.email = "демо"; S.gid = 0; setRows(rows.map((cells, i) => ({ row: i + 2, cells })));
         demoOptions();
       } else {
-        const [metaR, whoR] = await Promise.allSettled([
+        // v129: метаданные, адрес и весь лист идут ОДНИМ заходом. Range без номера
+        // строки Sheets сам обрезает до конца листа; раньше данные ждали meta.
+        const [metaR, whoR, dataR] = await Promise.allSettled([
           api("?fields=sheets(properties(sheetId,title,gridProperties(rowCount)))"),
           fetch("https://www.googleapis.com/oauth2/v3/userinfo", { headers: { Authorization: "Bearer " + S.token } }).then(r => r.ok ? r.json() : {}),
+          api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A2:${CFG.lastCol}`)}?valueRenderOption=FORMATTED_VALUE`),
         ]);
         S.email = whoR.value?.email || lastEmail(); // v92: адрес не ответил (сеть) — почта с прошлого входа, иначе «Кто» в журнале пустой
         if (metaR.status === "rejected") {
@@ -504,14 +549,15 @@
           if (e?.code === 403 && S.email && !e.message.includes(S.email)) e.message = e.message.replace("нет доступа к базе.", `нет доступа к базе. Вы вошли как ${S.email}.`);
           throw e;
         }
+        if (dataR.status === "rejected") throw dataR.reason;
         const meta = metaR.value;
         if (S.email) store.set("crm.who", S.email);
         const sh = meta.sheets.find(s => s.properties.title === CFG.sheet);
         if (!sh) throw new Error("В таблице нет листа «" + CFG.sheet + "»");
         S.gid = sh.properties.sheetId;
-        const last = sh.properties.gridProperties.rowCount;
-        const data = await api(`/values/${encodeURIComponent(`'${CFG.sheet}'!A2:${CFG.lastCol}${last}`)}?valueRenderOption=FORMATTED_VALUE`);
-        setRows((data.values || []).map((cells, i) => ({ row: i + 2, cells })));
+        const raw = (dataR.value.values || []).map((cells, i) => ({ row: i + 2, cells }));
+        setRows(raw);
+        idbPut("rows", { at: Date.now(), gid: S.gid, rows: raw }).catch(() => {});
         await loadOptions().catch(e => console.warn("списки:", e));
         loadHistory().catch(e => console.warn("история статусов:", e)); // в фоне, не держит загрузку
       }
