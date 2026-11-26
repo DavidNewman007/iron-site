@@ -293,6 +293,7 @@
     parts: new Map(), svc: null, pp: null, view: null, // parts: ключ карточки → строки запчастей; svc — прайс сайта; pp — окно «работа из прайса»
     stock: null, skDirty: new Map(), skFailed: null, sk: { q: "", grp: "", node: "", ser: "", cls: "", tier: "", src: "", only: null, limit: 150 }, skAdd: null, skSend: new Map(), skSent: null, tins: {} }; // склад Витали (v31); skSend/skSent — брак на возврат (v48)
   S.bools.add(C.reminderStop);
+  S.listFilters={master:'',device:''};
   const $app = document.getElementById("app");
   const $toast = document.getElementById("toast");
 
@@ -596,6 +597,7 @@
     // класть нельзя: по r.ph склеивается книга клиентов, и владелец слился бы с человеком на связи.
     r.ph2 = phones(r.cells[C.contactPhone]).map(p => p.d);
     r.nameN = norm(String(r.cells[C.name] ?? "").split("\n")[0]);
+    r.deviceSearch=globalThis.IRON_DEVICE_SEARCH?.prepare(cell(r,C.device));
   }
   function normDigits(d) { return d.length === 11 && d[0] === "8" ? "7" + d.slice(1) : d; }
   const isDigitQuery = q => Customer.isPhoneQuery(q);
@@ -763,7 +765,7 @@
     if (age == null) return false;
     return isReady(cell(r, C.status)) ? age > 7 : age > 14;
   }
-  function pick() {
+  function pickBase() {
     const q = norm(S.q);
     if (q) return search(q);
     if (S.tab === "reminders") return S.rows.filter(r => dealKey(cell(r, C.type)) === "reminder").sort((a, b) => Number(isFinal(cell(a,C.status))) - Number(isFinal(cell(b,C.status))) || (remMeta(a).nextDate || "9999").localeCompare(remMeta(b).nextDate || "9999"));
@@ -772,6 +774,16 @@
     if (S.tab === "ready") return S.rows.filter(r => inWork(r) && isReady(cell(r, C.status))).reverse();
     if (S.tab === "done") return S.rows.filter(r => dealKey(cell(r, C.type)) !== "reminder" && isFinal(cell(r, C.status)) && (daysSince(cell(r, C.issued) || cell(r, C.date)) ?? 999) <= 30).reverse();
     return S.rows.slice().reverse();
+  }
+  function filterOrders(rows){
+    const F=S.listFilters,query=F.device.trim(),variants=query?globalThis.IRON_DEVICE_SEARCH.queries(query):null;
+    const masters=v=>norm(v).split(/[,;\n/]+/).map(s=>s.trim()).filter(Boolean);
+    return rows.map((r,i)=>({r,i,score:query?globalThis.IRON_DEVICE_SEARCH.score(r.deviceSearch||cell(r,C.device),variants):1})).filter(x=>(F.master==='__none'? !norm(cell(x.r,C.master)):!F.master||masters(cell(x.r,C.master)).includes(norm(F.master)))&&x.score>0).sort((a,b)=>query?b.score-a.score||a.i-b.i:a.i-b.i).map(x=>x.r);
+  }
+  function pick(){return filterOrders(pickBase());}
+  function listFiltersHtml(){
+    const names=[...new Set([...(S.opts[C.master]||[]),...S.rows.map(r=>cell(r,C.master))].flatMap(v=>String(v||'').split(/[,;\n/]+/)).map(v=>v.trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru'));
+    return `<section class="list-filters"><label class="field"><span>Мастер</span>${selHtml('data-list-master="1"',S.listFilters.master,[{v:'',t:'Все мастера'},{v:'__none',t:'Без мастера'},...names],'Все мастера')}</label><label class="field"><span>Устройство</span><input type="search" data-act="listdevice" value="${esc(S.listFilters.device)}" placeholder="Айфон 13, макбук эйр м1, Honor 9X…" autocomplete="off"></label>${S.listFilters.master||S.listFilters.device?'<button class="btn btn--ghost btn--sm" data-act="listfilterclear">Сбросить фильтры</button>':''}</section>`;
   }
   // Поиск одной строкой. Цифры: точный номер заказа → телефон (любая часть, от 4 цифр,
   // «8…» и «+7…» одинаково) → IMEI → номер по началу. Слова: должны найтись ВСЕ
@@ -814,12 +826,13 @@
 
   function counts() {
     let work = 0, ready = 0, stale = 0;
-    for (const r of S.rows) { if (inWork(r)) isReady(cell(r, C.status)) ? ready++ : work++; if (isStale(r)) stale++; }
+    for (const r of filterOrders(S.rows)) { if (inWork(r)) isReady(cell(r, C.status)) ? ready++ : work++; if (isStale(r)) stale++; }
     return { work, ready, stale };
   }
 
   // ── экраны ──────────────────────────────────────────────
   function render() {
+    if(S.approval&&location.hash!=='#/'+S.approval.number){clearTimeout(S.approval.poll);S.approval=null;}
     hideSugg?.(); // плавающий список подсказок остался бы у поля, которого после перерисовки уже нет
     if (!DEMO && !S.token) return renderLogin();
     if (S.loading && !S.rows.length) return renderShell(`<div class="spinner">Загружаю базу…</div>`);
@@ -960,6 +973,7 @@
     const pawnBar = pawns.length ? `<div class="longbar pawnbar">⏰ Залоги — срок выкупа: ${pawns.map(r => `<a href="#/${esc(cell(r, C.num))}">№${esc(cell(r, C.num))} ${esc(cell(r, C.device) || "")} — ${esc(pawnDue(pawnLeft(r)))}</a>`).join(" · ")}</div>` : "";
     let body = longBar + pawnBar + (S.q ? "" : `<nav class="tabs">${tabs.map(([k, t, c]) =>
       `<button class="tab" data-tab="${k}" aria-pressed="${S.tab === k}">${t}${c != null ? `<small>${c}</small>` : ""}</button>`).join("")}${viewToggle()}</nav>`);
+    body+=listFiltersHtml();
     if (S.q) {
       const one = S.q.startsWith("@c") ? clients().find(x => x.key === S.q.slice(1)) : null;
       const found = one ? [] : !isDigitQuery(S.q) ? findClients(S.q, 3) : [];
@@ -969,7 +983,7 @@
         return `<button class="client" data-q="@${esc(c.key)}"><b>${mark(c.name)}</b><span>${c.count} ${ordersWord(c.count)}${p ? " · " + esc(p.text) : ""}${c.phones.size > 1 ? ` (+${c.phones.size - 1})` : ""}${c.aka.length ? " · также: " + esc(c.aka.slice(0, 2).join(", ")) : ""}</span><em>все заказы клиента →</em></button>`; }).join("")}</div>`;
     }
     if (!list.length) body += `<div class="empty">${S.q ? "Ничего не нашлось" : "Здесь пусто"}</div>`;
-    else if (!S.q && S.tab === "work") {
+    else if (!S.q && S.tab === "work" && !S.listFilters.device.trim()) {
       const groups = new Map();
       for (const r of list) { const k = cell(r, C.status) || "без статуса"; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(r); }
       const rank = k => { const i = ORDER.findIndex(o => norm(k).startsWith(o)); return i < 0 ? 50 : i; };
@@ -1065,10 +1079,10 @@
   // Свой список вместо системного <select> (v77, 24.10.2026). Владелец: «в оболочке где-то были обычные всплывающие
   // списки стиля по умолчанию, как на айфоне — сделай как на сайте». Вид — как у статусов (.dd), пункты — золотом при
   // выборе. Значение — в скрытом поле с прежними data-атрибутами: выбор шлёт ему input и change, обработчики прежние.
-  function selHtml(attrs, value, opts, placeholder = "—") {
+  function selHtml(attrs, value, opts, placeholder = "—", disabled=false) {
     const list = opts.map(o => typeof o === "string" ? { v: o, t: o } : o), cur = list.find(o => o.v === (value ?? ""));
-    return `<div class="dd sel"><button type="button" class="dd__btn t-none" data-sel-btn aria-expanded="false">${cur && cur.v ? esc(cur.t) : `<span class="dd__ph">${esc(placeholder)}</span>`}<i>▾</i></button>
-      <div class="dd__list sel__list" role="listbox">${list.map(o => `<button type="button" class="dd__opt sel__opt" data-sel-v="${esc(o.v)}" aria-pressed="${o.v === (value ?? "")}">${esc(o.t)}</button>`).join("")}</div>
+    return `<div class="dd sel"><button type="button" class="dd__btn t-none" data-sel-btn aria-expanded="false" ${disabled?'disabled':''}>${cur && cur.v ? esc(cur.t) : `<span class="dd__ph">${esc(placeholder)}</span>`}<i>▾</i></button>
+      <div class="dd__list sel__list" role="listbox">${list.map(o => `<button type="button" class="dd__opt sel__opt" ${disabled?'disabled':''} data-sel-v="${esc(o.v)}" aria-pressed="${o.v === (value ?? "")}">${esc(o.t)}</button>`).join("")}</div>
       <input type="hidden" data-sel ${attrs} value="${esc(value ?? "")}"></div>`;
   }
   function choiceButtons(key, col, current, opts, kindOf) {
@@ -4112,9 +4126,74 @@
     const head = `<div class="card-head" style="margin-top:12px"><a class="iconbtn" href="#" aria-label="Назад">←</a>
       <h1>№${esc(num)}</h1>
       ${accepted ? `<span class="head-meta">принят <b>${esc(accepted)}</b>${age != null ? ` · ${age === 0 ? "сегодня" : age + " дн."}` : ""}</span>` : ""}
-      ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}<span class="chip chip--big chip--${statusKind(st)}">${esc(stLabel(st) || "без статуса")}${since ? `<small>с ${esc(since)}</small>` : ""}</span></div>`;
+      ${dk !== "repair" ? `<span class="chip">${esc(cell(r, C.type))}</span>` : ""}<span class="chip chip--big chip--${statusKind(st)}">${esc(stLabel(st) || "без статуса")}${since ? `<small>с ${esc(since)}</small>` : ""}</span>${dk==='repair'&&!isFinal(st)&&!isReady(st)?'<button class="btn btn--ghost btn--sm" data-act="approvalopen">Согласовать с клиентом</button><button class="btn btn--ghost btn--sm" data-act="passwordopen">Запросить пароль</button>':''}</div>`;
     renderShell(head + reminderOrigin(r) + groupBlock(r) + cardBody(r.row, r, false), { search: false });
     saveBar(r.row, `data-num="${esc(num)}"`);
+    if(S.approval)renderApproval();
+  }
+
+  const approvalRules=()=>globalThis.IRON_APPROVAL_RULES;
+  function approvalOrder(r){return {number:String(cell(r,C.num)),row:r.row,name:cell(r,C.name),device:cell(r,C.device),master:cell(r,C.master),status:cell(r,C.status),total:cell(r,C.total),type:cell(r,C.type),work:cell(r,C.work),issue:cell(r,C.issue),parts:cell(r,C.parts),serviceMeta:cell(r,C.serviceMeta),phones:[...new Set([...phones(cell(r,C.phone)),...phones(cell(r,C.contactPhone))].map(x=>x.d))]};}
+  const approvalRange=r=>encodeURIComponent("'"+approvalRules().sheet+"'!"+r);
+  async function approvalRows(){const j=await api('/values/'+approvalRange('A2:F'));return (j.values||[]).map((v,i)=>{let command={},agent={};try{command=JSON.parse(v[3]||'{}');agent=JSON.parse(v[4]||'{}');}catch{}return {sheetRow:i+2,id:v[0],number:String(v[1]),created:v[2],command,agent};});}
+  async function approvalCommand(A,command){if(DEMO){A.record.command=command;return;}await api('/values/'+approvalRange('D'+A.record.sheetRow)+'?valueInputOption=RAW',{method:'PUT',body:JSON.stringify({values:[[JSON.stringify(command)]]})});A.record.command=command;}
+  async function openApproval(kind='repair'){
+    const r=S.byNum.get(location.hash.slice(2));if(!r||!approvalRules().active(approvalOrder(r)))return toast('Согласование доступно для незавершённого ремонта');
+    if([...S.dirty.keys()].some(k=>k.startsWith(r.row+':'))||skPending(r.row).length)return toast('Сначала сохраните изменения заказа');
+    if(!approvalOrder(r).phones.length)return toast('Добавьте номер клиента или контакт для связи и сохраните заказ');
+    const A=S.approval={kind,number:String(cell(r,C.num)),order:approvalOrder(r),r,form:{plan:'',total:'',note:'',autoStart:true,stage:'diagnosis',phone:Customer.targets(notificationData(r.row,r),'status')[0]?.d||approvalOrder(r).phones[0],address:''},touched:{},busy:true,error:''};renderApproval();
+    try{if(!DEMO){const list=await approvalRows();A.record=list.filter(x=>x.number===A.number&&(x.command.kind||'repair')===kind).at(-1);}if(!A.record)await newApproval(A);else await pollApproval(A);}catch(e){A.error=e.message;}finally{A.busy=false;if(S.approval===A)renderApproval();}
+  }
+  async function newApproval(A=S.approval){
+    if(!A)return;A.busy=true;A.error='';renderApproval();
+    try{
+      if(!DEMO){const j=await api('/values/'+encodeURIComponent(`'${CFG.sheet}'!A${A.r.row}:${CFG.lastCol}${A.r.row}`)+'?valueRenderOption=FORMATTED_VALUE');if(String(j.values?.[0]?.[0])!==A.number)throw Error('Строка заказа изменилась. Обновите базу.');A.r.cells=j.values[0];index(A.r);A.order=approvalOrder(A.r);if(!A.order.phones.includes(A.form.phone))A.form.phone=A.order.phones[0]||'';if(!approvalRules().active(A.order))throw Error('Заказ уже завершён или не является ремонтом.');}
+      if(A.record&&!['accepted','accepted_manual','cancelled','declined','stale','expired'].includes(A.record.agent?.state))await approvalCommand(A,{...A.record.command,action:'cancel',revision:(A.record.command.revision||0)+1});
+      const id=crypto.randomUUID(),created=new Date().toISOString(),command={v:1,kind:A.kind,action:'draft',revision:1,expected:approvalRules().snapshot(A.order),phone:A.form.phone,stage:A.form.stage,actor:S.email};
+      const record={id,number:A.number,created,command,agent:{state:'drafting'}};
+      if(DEMO)record.agent={state:'ready',revision:1,expected:command.expected,proposal:{plan:A.kind==='password'?'':cell(A.r,C.work)||'Диагностика и ремонт устройства по согласованному плану',total:A.kind==='password'?null:toNum(cell(A.r,C.total)),source:['Демонстрационные данные. Реальным клиентам сообщения не отправляются.'],targets:[{address:'tg:demo',label:'Telegram'}]}};
+      else{const j=await api('/values/'+approvalRange('A:D')+':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS',{method:'POST',body:JSON.stringify({values:[[id,A.number,created,JSON.stringify(command)]]})});record.sheetRow=+j.updates?.updatedRange?.match(/!A(\d+)/)?.[1];if(!record.sheetRow)throw Error('Не удалось определить строку согласования');}
+      A.record=record;applyApprovalProposal(A);if(!DEMO)A.poll=setTimeout(()=>pollApproval(A),3000);
+    }catch(e){A.error=e.message;}finally{A.busy=false;if(S.approval===A)renderApproval();}
+  }
+  function applyApprovalProposal(A){const p=A.record?.agent?.proposal;if(!p)return;for(const key of ['plan','total'])if(!A.touched[key]&&p[key]!=null)A.form[key]=String(p[key]);if(!(p.targets||[]).some(x=>x.address===A.form.address))A.form.address=p.targets?.[0]?.address||'';}
+  async function pollApproval(A,once=false){
+    clearTimeout(A.poll);if(S.approval!==A)return;
+    if(document.visibilityState==='hidden'){A.poll=setTimeout(()=>pollApproval(A),30000);return;}
+    try{const record=(await approvalRows()).find(x=>x.id===A.record.id);if(S.approval!==A)return;if(record&&JSON.stringify(record)!==JSON.stringify(A.record)){A.record=record;applyApprovalProposal(A);A.error='';
+      const state=record.agent?.state,sync=['accepted','accepted_manual','password_received'].includes(state)&&A.syncedAt!==record.agent.updatedAt&&!([...S.dirty.keys()].some(k=>k.startsWith(A.r.row+':')));
+      if(sync){const j=await api('/values/'+encodeURIComponent(`'${CFG.sheet}'!A${A.r.row}:${CFG.lastCol}${A.r.row}`)+'?valueRenderOption=FORMATTED_VALUE');if(String(j.values?.[0]?.[0])===A.number&&S.approval===A){A.r.cells=j.values[0];index(A.r);A.order=approvalOrder(A.r);A.syncedAt=record.agent.updatedAt;renderCard(A.number);}}
+      renderApproval();}}
+    catch(e){A.error=e.message;renderApproval();}
+    if(!once&&S.approval===A)A.poll=setTimeout(()=>pollApproval(A),10000);
+  }
+  async function sendApproval(){
+    const A=S.approval;if(!A||A.busy)return;const f=A.form,total=approvalRules().amount(f.total),password=A.kind==='password';
+    if(A.record?.agent?.state!=='ready'||A.record.command.action==='send'||!password&&(!f.plan.trim()||total==null)||!f.address)return toast('Проверьте работы, сумму и получателя; дождитесь подготовки предложения');
+    A.busy=true;A.error='';renderApproval();
+    try{const command={...A.record.command,action:'send',basedOn:A.record.agent.revision,revision:(A.record.command.revision||0)+1,payload:{...f,total},actor:S.email};await approvalCommand(A,command);if(DEMO)A.record.agent={...A.record.agent,state:'awaiting',sentAt:new Date().toISOString(),sentText:password?passwordPreview(A):approvalRules().message({id:A.record.id,number:A.number,device:A.order.device,...f,total})};else A.poll=setTimeout(()=>pollApproval(A),1500);}
+    catch(e){A.error='Не удалось подтвердить запись команды. Проверим состояние перед повторной отправкой.';if(!DEMO)A.poll=setTimeout(()=>pollApproval(A),1500);}
+    finally{A.busy=false;if(S.approval===A)renderApproval();}
+  }
+  function passwordPreview(A){const proxy=phones(cell(A.r,C.contactPhone)).some(x=>x.d===A.form.phone)&&!phones(cell(A.r,C.phone)).some(x=>x.d===A.form.phone);return approvalRules().passwordMessage({number:A.number,device:A.order.device,firstName:Customer.personName(cell(A.r,proxy?C.contactName:C.name)),note:A.form.note});}
+  function renderApproval(){
+    const A=S.approval;if(!A)return;
+    const old=$app.querySelector('.approval-overlay'),focus=document.activeElement,field=focus?.dataset?.approvalField,pos=focus?.selectionStart,scroll=old?.querySelector('.approval-panel')?.scrollTop||0;
+    old?.remove();
+    const password=A.kind==='password',f=A.form,agent=A.record?.agent||{},phase=agent.state||'drafting',queued=A.record?.command.action==='send'&&phase==='ready',ready=phase==='ready'&&!queued;
+    const terminal=['accepted','accepted_manual','declined','cancelled','stale','expired','error','send_uncertain','master_uncertain','password_received','password_personal','password_uncertain'].includes(phase);
+    const names={drafting:'Агент готовит предложение по заказу и переписке мастера…',ready:'Предложение готово — проверьте и отредактируйте',sending:'Отправляем клиенту…',awaiting:'Сообщение отправлено. Ждём решения клиента',accepting:'Фиксируем согласие и передаём мастеру…',accepted:'Клиент согласовал. Заказ в работе, мастер уведомлён',accepted_manual:'Клиент согласовал. Дальнейший запуск оставлен вам',declined:'Клиент отказался от предложенных работ',cancelled:'Запрос отменён',stale:'Данные изменились — нужен новый запрос',expired:'Срок запроса истёк',send_uncertain:'Доставку клиенту нужно проверить в переписке',master_uncertain:'Согласие получено — проверьте передачу мастеру',error:'Не удалось завершить действие',password_processing:'Записываем код в заказ и передаём мастеру…',password_received:'Код записан в заказ и передан мастеру',password_personal:'Клиент выбрал личный ввод кода',password_uncertain:'Запись кода или передачу мастеру нужно проверить'};
+    if(password){names.drafting='Готовим запрос кода устройства…';names.ready='Запрос готов — проверьте получателя и текст';names.awaiting='Запрос отправлен. Ждём код или решение ввести его лично';}
+    const total=approvalRules().amount(f.total),preview=password?passwordPreview(A):total!=null&&f.plan.trim()?approvalRules().message({id:A.record?.id||'preview',number:A.number,device:A.order.device,...f,total}):'Заполните план работ и клиентскую стоимость.';
+    const recipients=A.order.phones.map(p=>({v:p,t:Customer.format(p)+(phones(cell(A.r,C.contactPhone)).some(x=>x.d===p)?' · контакт для связи':' · клиент')}));
+    const controls=terminal||['sending','awaiting','accepting','password_processing'].includes(phase)||queued||A.busy;
+    const priceChoices=agent.proposal?.prices||[];
+    const planFields=password?'':`<label class="field"><span>Что предложить клиенту</span><textarea data-approval-field="plan" ${controls?'disabled':''} maxlength="2000" placeholder="Перечислите предстоящие работы и запчасти">${esc(f.plan)}</textarea></label>${priceChoices.length?`<label class="field"><span>Варианты из прайса</span>${selHtml('data-approval-field="pricePreset"','',[{v:'',t:'Выбрать вариант и стоимость'},...priceChoices.map((p,i)=>({v:String(i),t:p.label+' · '+money(p.value)}))],'Выбрать вариант и стоимость',controls)}</label>`:''}<div class="grid2"><label class="field"><span>Стоимость для клиента, ₽</span><input inputmode="decimal" data-approval-field="total" value="${esc(f.total)}" ${controls?'disabled':''} placeholder="Укажите клиентскую сумму"></label><label class="field"><span>Этап</span>${selHtml('data-approval-field="stage"',f.stage,[{v:'diagnosis',t:'После диагностики'},{v:'preliminary',t:'Предварительный план'}],'Этап',controls)}</label></div><label class="approval-check"><input type="checkbox" data-approval-field="autoStart" ${f.autoStart?'checked':''} ${controls?'disabled':''}> После согласия — поставить «В работе» и сообщить мастеру</label>`;
+    const source=password?'':`<details><summary>На чём основано предложение</summary>${agent.proposal?.diagnosis?`<p>${esc(agent.proposal.diagnosis)}</p>`:''}<div class="approval-source">${(agent.proposal?.source||[]).map(x=>`<p>${esc(x)}</p>`).join('')||'<p class="note">Ожидаем информацию по заказу.</p>'}</div></details>`;
+    $app.insertAdjacentHTML('beforeend',`<div class="approval-overlay" role="dialog" aria-modal="true" aria-label="${password?'Запрос пароля':'Согласование с клиентом'}"><section class="approval-panel"><div class="row"><h2>${password?'Запросить пароль':'Согласовать ремонт'} №${esc(A.number)}</h2><button class="btn btn--ghost btn--sm" data-act="approvalclose">Закрыть</button></div><p><b>${esc(A.order.device)}</b> · мастер ${esc(A.order.master||'не назначен')}</p><p class="approval-state">${esc(queued?'Отправка поставлена в очередь':names[phase]||phase)}${agent.passwordReceipt?.count?' · вариантов: '+agent.passwordReceipt.count:''}</p>${A.error||agent.error?`<p class="approval-error">${esc(A.error||agent.error)}</p>`:''}${agent.proposal?.warning?`<p class="note">${esc(agent.proposal.warning)}</p>`:''}
+      <div class="grid2"><label class="field"><span>Получатель</span>${selHtml('data-approval-field="phone"',f.phone,recipients,'Выберите номер',controls)}</label><label class="field"><span>Куда отправить</span>${selHtml('data-approval-field="address"',f.address,(agent.proposal?.targets||[]).map(x=>({v:x.address,t:x.label})),'Переписка пока не найдена',controls)}</label></div>${planFields}<details ${f.note?'open':''}><summary>Дополнение клиенту</summary><label class="field"><textarea data-approval-field="note" maxlength="700" ${controls?'disabled':''}>${esc(f.note)}</textarea></label></details>${source}<h3>Сообщение клиенту</h3><pre class="approval-preview">${esc(agent.sentText||preview)}</pre>${!A.order.master?'<p class="note">Для отправки сначала назначьте мастера в заказе.</p>':''}<div class="row"><button class="btn btn--red" data-act="approvalsend" ${ready&&!A.busy&&f.address&&(password||f.plan.trim()&&total!=null)&&A.order.master?'':'disabled'}>${password?'Отправить запрос':'Отправить клиенту'}</button>${!['accepted','accepted_manual','declined','cancelled'].includes(phase)?'<button class="btn btn--ghost" data-act="approvalcancel">Отменить запрос</button>':''}${terminal?'<button class="btn btn--ghost" data-act="approvalnew">Новый запрос</button>':''}<button class="btn btn--ghost btn--sm" data-act="approvalrefresh">Обновить состояние</button></div></section></div>`);
+    const panel=$app.querySelector('.approval-panel');if(panel)panel.scrollTop=scroll;
+    if(field){const input=$app.querySelector('[data-approval-field="'+field+'"]');if(input){input.focus();try{input.setSelectionRange(pos,pos);}catch{}}}
   }
 
   function saveBar(key, attrs) {
@@ -5226,6 +5305,14 @@
       refreshSaveBar(key); return;
     }
     const act = t.dataset.act;
+    if(act==='approvalopen'){await openApproval();return;}
+    if(act==='passwordopen'){await openApproval('password');return;}
+    if(act==='approvalclose'){if(S.approval)clearTimeout(S.approval.poll);S.approval=null;$app.querySelector('.approval-overlay')?.remove();return;}
+    if(act==='approvalsend'){await sendApproval();return;}
+    if(act==='approvalnew'){await newApproval();return;}
+    if(act==='approvalrefresh'){if(S.approval&&!DEMO)await pollApproval(S.approval);else renderApproval();return;}
+    if(act==='approvalcancel'){const A=S.approval;if(!A||A.busy||!A.record)return;A.busy=true;try{await approvalCommand(A,{...A.record.command,action:'cancel',revision:(A.record.command.revision||0)+1});if(DEMO)A.record.agent.state='cancelled';else A.poll=setTimeout(()=>pollApproval(A),1000);}catch(e){A.error=e.message;}finally{A.busy=false;renderApproval();}return;}
+    if(act==='listfilterclear'){S.listFilters={master:'',device:''};S.limit=60;renderList();return;}
     if(act==='internalgoods'){S.internalGoodsOpen=!S.internalGoodsOpen;if(S.internalGoodsOpen)loadGoods();render();return;}
     if(act==='internalpick'){internalPick(+t.dataset.i);return;}
     if(act==='internalpurpose'){const key=curKey(),r=key==='new'?null:S.rows.find(x=>x.row===key);setDirty(key,C.internalMeta,JSON.stringify({...internalOf(key,r),purpose:t.dataset.v}));if(key==='new')saveDraft();render();return;}
@@ -5457,6 +5544,12 @@
     }
   });
   function onEdit(e) {
+    if(e.target.dataset.approvalField){const A=S.approval;if(!A)return;const key=e.target.dataset.approvalField,previous=A.form[key];if(key==='pricePreset'){const p=A.record?.agent?.proposal?.prices?.[+e.target.value];if(e.target.value!==''&&p){A.form.total=String(p.value);A.touched.total=true;if(p.variant&&!A.form.plan.includes(p.variant)){A.form.plan+='\nВариант детали: '+p.variant;A.touched.plan=true;}}renderApproval();return;}A.form[key]=e.target.type==='checkbox'?e.target.checked:e.target.value;A.touched[key]=true;if(key==='phone'){if(previous!==A.form[key])newApproval(A);return;}renderApproval();return;}
+    if(e.target.dataset.listMaster){S.listFilters.master=e.target.value;S.limit=60;renderList();return;}
+    if(e.target.dataset.act==='listdevice'){
+      const value=e.target.value,pos=e.target.selectionStart;S.listFilters.device=value;S.limit=60;clearTimeout(onEdit.listDevice);
+      onEdit.listDevice=setTimeout(()=>{renderList();const input=$app.querySelector('[data-act="listdevice"]');if(input){input.focus();try{input.setSelectionRange(pos,pos);}catch{}}},120);return;
+    }
     if(e.target.dataset.quoteFilter){S.quote ||= {};S.quote.brand=e.target.value;render();return;}
     if(e.target.dataset.quoteModel){if(e.target.value)quoteSelectDevice(e.target.value);return;}
     if(e.target.dataset.act==='internalq'){S.internalQ=e.target.value;clearTimeout(onEdit.internalSearch);onEdit.internalSearch=setTimeout(()=>render(),250);return;}
