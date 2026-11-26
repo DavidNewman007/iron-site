@@ -4658,7 +4658,7 @@
     if (S.jr?.list) S.jr.list.push(...rows.map(jrParse)); // открытая «История» видит правку сразу
     if (DEMO) return;
     const put = () => api(`/values/${encodeURIComponent(`'${JOURNAL}'!A:H`)}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, { method: "POST", body: JSON.stringify({ values: rows }) });
-    try { await put(); }
+    try { await put(); jrSelfTs = ts; }
     catch {
       try { await ensureJournal(); await put(); }
       catch (e) { console.warn("журнал изменений:", e); toast("Сохранено, но в «Журнал изменений» не записалось: " + e.message, null, true); }
@@ -4856,12 +4856,20 @@
     if (lack.length) return toast(`Не закрыть группу: нет суммы у ${lack.join(", ")} — откройте эти заказы и впишите`, null, true);
     busy(true);
     try {
+      const conflicts = [];
       const check = async x => {
         if (DEMO) return;
         const chk = await api(`/values/${A1(0, x.row)}`);
         if (String(chk.values?.[0]?.[0] ?? "").trim() !== String(cell(x, C.num)).trim()) throw new Error("Строка в таблице сдвинулась — обновите список (⟳) и повторите");
+        // Вариант A (владелец 26.11): пока мы редактировали, коллега мог поменять те же клетки.
+        const cur = chk.values?.[0] || [], chs = x === r ? list : (others.get(x) || []);
+        for (const ch of chs) {
+          const nowV = String(cur[ch.c] ?? "");
+          if (nowV !== String(ch.old ?? "")) conflicts.push({ num: cell(x, C.num), field: F[ch.c]?.label || "колонка " + (ch.c + 1), was: ch.old, now: nowV });
+        }
       };
       await Promise.all([r, ...others.keys()].map(check));
+      if (conflicts.length && !confirm(`Коллега изменил клетки, которые вы правите:\n\n${conflicts.map(c => `№${c.num} · ${c.field}: когда вы открывали — «${c.was}», сейчас — «${c.now}»`).join("\n")}\n\nOK — записать ваше значение поверх; «Отмена» — не сохранять (правка останется в форме).`)) { busy(false); return; }
       await Promise.all([list.length ? writeCells(r.row, list) : null, ...[...others].map(([x, l]) => writeCells(x.row, l))]);
       journal([...jrRows(num, r.row, list), ...[...others].flatMap(([x, l]) => jrRows(cell(x, C.num), x.row, l))]); // v84, в фоне
       const skMsg = skOps.length ? await skWriteOff(num, skOps) : "";
@@ -5869,6 +5877,32 @@
     } catch {}
   }
   setInterval(checkUpdate, 600e3); setTimeout(checkUpdate, 5000);
+  // Вариант A (владелец 26.11.2026): работа с разных устройств. Раз в минуту читаем хвост
+  // «Журнала изменений»; если появились строки свежее нашего последнего среза — плашка
+  // «Коллега обновил базу … Обновить». Свои строки не считаем (jrSelfTs). Автоперезагрузку
+  // не делаем — у пользователя может быть несохранённая форма.
+  let jrSeen = null, jrSelfTs = "";
+  async function checkJournal() {
+    if (DEMO || !S.token || S.loading) return;
+    try {
+      const meta = await api("?fields=sheets(properties(title,gridProperties(rowCount)))");
+      const sh = (meta.sheets || []).find(s => s.properties.title === JOURNAL); if (!sh) return;
+      const last = sh.properties.gridProperties.rowCount; if (last < 2) return;
+      const v = await api(`/values/${encodeURIComponent(`'${JOURNAL}'!A${Math.max(2, last - 5)}:H${last}`)}`);
+      const rows = (v.values || []).map(r => ({ when: String(r[0] || ""), num: String(r[1] || ""), who: String(r[3] || ""), field: String(r[4] || "") })).filter(r => r.when);
+      if (!rows.length) return;
+      const top = rows[rows.length - 1];
+      if (!jrSeen) { jrSeen = top; return; }
+      if (top.when === jrSeen.when && top.num === jrSeen.num && top.field === jrSeen.field) return;
+      const fresh = rows.filter(r => r.when !== jrSeen.when || r.num !== jrSeen.num || r.field !== jrSeen.field);
+      jrSeen = top;
+      if (fresh.every(r => r.when === jrSelfTs)) return; // только что свои строки
+      const nums = [...new Set(fresh.map(r => r.num).filter(Boolean))].join(", №");
+      const who = (fresh[fresh.length - 1]?.who || "").split("@")[0] || "кто-то";
+      toast(`Коллега обновил базу: ${fresh.length} правк${fresh.length === 1 ? "а" : "и"}${nums ? ` (№${nums})` : ""}, последняя — ${who} в ${top.when.slice(-5)}`, { label: "Обновить", run: () => S.dirty.size ? toast("У вас есть несохранённые правки — сохраните их, потом нажмите ⟳", null, true) : load() }, 30000);
+    } catch {}
+  }
+  setInterval(checkJournal, 60e3); setTimeout(checkJournal, 15e3);
   setInterval(() => { if(document.visibilityState === "visible") refreshSupplierPrices(); }, 60e3);
   setInterval(refreshQuoteStats,60e3); // One Sheets batch-read per 10 minutes, visible quote only.
   document.addEventListener("visibilitychange", () => {
