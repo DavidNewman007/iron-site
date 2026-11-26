@@ -108,7 +108,7 @@
     // Без door: сама правка ничего не шлёт. Отправить на новый номер — кнопкой «Отправить статус ещё раз».
     [C.contactName]: { label: "Имя того, кто на связи" },
     [C.contactPhone]: { label: "Телефон того, кто на связи", tel: true },
-    [C.pass]: { label: "Пароль устройства 🔑" },
+    [C.pass]: { label: "Пароль устройства 🔑", area: true },
     [C.type]: { label: "Тип сделки", door: true },
     [C.imei]: { label: "IMEI / S\\N", door: true }, // AD1 в таблице — «IMEI / S\N» (28.09.2026)
     [C.buyback]: { label: "Выкуп / зачёт, ₽", num: true, door: true },
@@ -201,7 +201,7 @@
     sale_parts: [C.device, C.issue, C.warranty, C.total, C.partCost],
     pawn:     [C.device, C.imei, C.issue, C.buyback, C.total, C.pawnUntil],
   };
-  const AREAS = [C.issue, C.work];
+  const AREAS = [C.issue, C.work, C.pass];
   // Раскладка полей устройства: короткие — попарно, тексты — рядом, деньги — в строку.
   function deviceGrid(cols, fieldFn) {
     const text = cols.filter(c => !AREAS.includes(c) && !F[c]?.num), areas = cols.filter(c => AREAS.includes(c)), nums = cols.filter(c => F[c]?.num);
@@ -4182,7 +4182,7 @@
     old?.remove();
     const password=A.kind==='password',f=A.form,agent=A.record?.agent||{},phase=agent.state||'drafting',queued=A.record?.command.action==='send'&&phase==='ready',ready=phase==='ready'&&!queued;
     const terminal=['accepted','accepted_manual','declined','cancelled','stale','expired','error','send_uncertain','master_uncertain','password_received','password_personal','password_uncertain'].includes(phase);
-    const names={drafting:'Агент готовит предложение по заказу и переписке мастера…',ready:'Предложение готово — проверьте и отредактируйте',sending:'Отправляем клиенту…',awaiting:'Сообщение отправлено. Ждём решения клиента',accepting:'Фиксируем согласие и передаём мастеру…',accepted:'Клиент согласовал. Заказ в работе, мастер уведомлён',accepted_manual:'Клиент согласовал. Дальнейший запуск оставлен вам',declined:'Клиент отказался от предложенных работ',cancelled:'Запрос отменён',stale:'Данные изменились — нужен новый запрос',expired:'Срок запроса истёк',send_uncertain:'Доставку клиенту нужно проверить в переписке',master_uncertain:'Согласие получено — проверьте передачу мастеру',error:'Не удалось завершить действие',password_processing:'Записываем код в заказ и передаём мастеру…',password_received:'Код записан в заказ и передан мастеру',password_personal:'Клиент выбрал личный ввод кода',password_uncertain:'Запись кода или передачу мастеру нужно проверить'};
+    const names={drafting:'Агент готовит предложение по заказу и переписке мастера…',ready:'Предложение готово — проверьте и отредактируйте',sending:'Отправляем клиенту…',awaiting:'Сообщение отправлено. Ждём решения клиента',accepting:'Фиксируем согласие и передаём мастеру…',accepted:'Клиент согласовал. Заказ в работе, мастер уведомлён',accepted_manual:'Клиент согласовал. Дальнейший запуск оставлен вам',declined:'Клиент отказался от предложенных работ',cancelled:'Запрос отменён',stale:'Данные изменились — нужен новый запрос',expired:'Срок запроса истёк',send_uncertain:'Доставку клиенту нужно проверить в переписке',master_uncertain:'Согласие получено — проверьте передачу мастеру',error:'Не удалось завершить действие',password_processing:'Записываем код в заказ и передаём мастеру…',password_received:'Код записан в заказ и передан мастеру',password_personal:'Клиент не передаёт код — предложен личный ввод',password_uncertain:'Запись кода или передачу мастеру нужно проверить'};
     if(password){names.drafting='Готовим запрос кода устройства…';names.ready='Запрос готов — проверьте получателя и текст';names.awaiting='Запрос отправлен. Ждём код или решение ввести его лично';}
     const total=approvalRules().amount(f.total),preview=password?passwordPreview(A):total!=null&&f.plan.trim()?approvalRules().message({id:A.record?.id||'preview',number:A.number,device:A.order.device,...f,total}):'Заполните план работ и клиентскую стоимость.';
     const recipients=A.order.phones.map(p=>({v:p,t:Customer.format(p)+(phones(cell(A.r,C.contactPhone)).some(x=>x.d===p)?' · контакт для связи':' · клиент')}));
