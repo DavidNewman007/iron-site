@@ -321,19 +321,22 @@
     if (c === "943") return { k: "osset", n: "Южная Осетия" };
     return { k: "ru", n: "Россия" };
   }
+  const COUNTRY_FILE = { ru: "russia", abkh: "abkhazia", osset: "south_ossetia" };
   function countryFlag(d) {
     const co = countryOf(d);
-    return `<span class="cflag${co ? " cflag-" + co.k : ""}" title="${co ? (co.k === "ru" ? "Россия" : co.n + " — звонки платные, лучше писать в WhatsApp/Telegram") : ""}"${co ? "" : " hidden"}></span>`;
+    return `<span class="cflag-wrap"${co ? "" : " hidden"} title="${co ? (co.k === "ru" ? "Россия" : co.n + " — звонки платные, лучше писать в WhatsApp/Telegram") : ""}"><img class="cflag" src="/assets/flags/${co ? COUNTRY_FILE[co.k] : "russia"}.svg" alt=""></span>`;
   }
   function countryChip(d) {
     const co = countryOf(d);
-    return co && co.k !== "ru" ? `<span class="btn country-chip cc-${co.k}" title="звонки платные — пишите в WhatsApp или Telegram">${co.n}</span>` : "";
+    return co && co.k !== "ru" ? `<span class="btn country-chip cc-${co.k}" title="звонки платные — пишите в WhatsApp или Telegram"><img class="cflag-mini" src="/assets/flags/${COUNTRY_FILE[co.k]}.svg" alt="">${co.n}</span>` : "";
   }
   function paintCflag(slot, cellValue) {
     const co = countryOf(phones(cellValue)[0]?.d);
-    slot.className = "cflag" + (co ? " cflag-" + co.k : "");
-    slot.title = co ? (co.k === "ru" ? "Россия" : co.n + " — звонки платные, лучше писать в WhatsApp/Telegram") : "";
     slot.hidden = !co;
+    if (!co) return;
+    slot.title = co.k === "ru" ? "Россия" : co.n + " — звонки платные, лучше писать в WhatsApp/Telegram";
+    const img = slot.querySelector("img");
+    if (img) img.src = "/assets/flags/" + COUNTRY_FILE[co.k] + ".svg";
   }
 
 
