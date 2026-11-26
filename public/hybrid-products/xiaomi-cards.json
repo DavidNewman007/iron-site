@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-25T17:58:29.037Z",
-  "count": 2689,
+  "generated_at": "2026-11-26T17:42:04.643Z",
+  "count": 2695,
   "byId": {
     "xiaomi-15-5g-12-256-green-европа-s3-53000": {
       "url": "hybrid-products/xiaomi/xiaomi-15-5g-12-256-green-s3-53000.html",
@@ -21513,6 +21513,54 @@
       "name": "Poco X8 Pro 8/256 Yellow",
       "warehouse": "(S3)",
       "price": 35300
+    },
+    "xiaomi-17t-12-512-blue-европа-s3-50100": {
+      "url": "hybrid-products/xiaomi/xiaomi-17t-12-512-blue-s3-50100.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17t-12-512-blue-s3-50100.html",
+      "cover": "assets/product-images/0471c09b2b77ee18b08e62bf.jpg",
+      "name": "Xiaomi 17T 12/512 Blue",
+      "warehouse": "(S3)",
+      "price": 50100
+    },
+    "xiaomi-17t-12-512-violet-европа-s3-50100": {
+      "url": "hybrid-products/xiaomi/xiaomi-17t-12-512-violet-s3-50100.html",
+      "url_en": "en/hybrid-products/xiaomi/xiaomi-17t-12-512-violet-s3-50100.html",
+      "cover": "assets/product-images/b5a6582f48d7dddd17ef67f9.jpg",
+      "name": "Xiaomi 17T 12/512 Violet",
+      "warehouse": "(S3)",
+      "price": 50100
+    },
+    "redmi-note-17-6-128-black-nfc-европа-s3-21900": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-6-128-black-nfc-s3-21900.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-6-128-black-nfc-s3-21900.html",
+      "cover": "assets/product-images/bc7ab43bb08f05a73393318c.jpg",
+      "name": "Redmi Note 17 6/128 Black (NFC)",
+      "warehouse": "(S3)",
+      "price": 21900
+    },
+    "redmi-note-17-pro-8-512-blue-nfc-европа-s3-34400": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-512-blue-nfc-s3-34400.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-512-blue-nfc-s3-34400.html",
+      "cover": "assets/product-images/cf93278785239b111eab2ddf.jpg",
+      "name": "Redmi Note 17 Pro 8/512 Blue (NFC)",
+      "warehouse": "(S3)",
+      "price": 34400
+    },
+    "redmi-note-17-pro-8-512-purple-nfc-европа-s3-34400": {
+      "url": "hybrid-products/xiaomi/redmi-note-17-pro-8-512-purple-nfc-s3-34400.html",
+      "url_en": "en/hybrid-products/xiaomi/redmi-note-17-pro-8-512-purple-nfc-s3-34400.html",
+      "cover": "assets/product-images/fd08ced0420a38cf1e55bf59.jpg",
+      "name": "Redmi Note 17 Pro 8/512 Purple (NFC)",
+      "warehouse": "(S3)",
+      "price": 34400
+    },
+    "poco-x8-pro-max-12-512-orange-европа-s3-49200": {
+      "url": "hybrid-products/xiaomi/poco-x8-pro-max-12-512-orange-s3-49200.html",
+      "url_en": "en/hybrid-products/xiaomi/poco-x8-pro-max-12-512-orange-s3-49200.html",
+      "cover": "assets/product-images/261a58fce1bc4017e05470f5.jpg",
+      "name": "Poco X8 Pro Max 12/512 Orange",
+      "warehouse": "(S3)",
+      "price": 49200
     }
   }
 }

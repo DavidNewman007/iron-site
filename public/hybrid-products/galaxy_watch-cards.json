@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-25T17:58:28.772Z",
-  "count": 516,
+  "generated_at": "2026-11-26T17:42:04.432Z",
+  "count": 520,
   "byId": {
     "watch-8-40mm-graphite-оаэ-s2-18800": {
       "url": "hybrid-products/galaxy_watch/watch-8-40mm-graphite-s2-18800.html",
@@ -4129,6 +4129,38 @@
       "name": "Galaxy Watch 9 40 Cream",
       "warehouse": "(S3)",
       "price": 25500
+    },
+    "galaxy-watch-8-40-lte-graphite-оаэ-s3-21900": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-40-lte-graphite-s3-21900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-40-lte-graphite-s3-21900.html",
+      "cover": "assets/product-images/af4dcf854441bd35c4123f90.jpg",
+      "name": "Galaxy Watch 8 40 LTE Graphite",
+      "warehouse": "(S3)",
+      "price": 21900
+    },
+    "galaxy-watch-8-40-lte-silver-оаэ-s3-22900": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-8-40-lte-silver-s3-22900.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-8-40-lte-silver-s3-22900.html",
+      "cover": "assets/product-images/0e29195520f0a5f21bf1ba14.jpg",
+      "name": "Galaxy Watch 8 40 LTE Silver",
+      "warehouse": "(S3)",
+      "price": 22900
+    },
+    "galaxy-watch-9-40-graphite-оаэ-s3-25100": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-9-40-graphite-s3-25100.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-9-40-graphite-s3-25100.html",
+      "cover": "assets/product-images/0cad74e212681711cdcb4a06.jpg",
+      "name": "Galaxy Watch 9 40 Graphite",
+      "warehouse": "(S3)",
+      "price": 25100
+    },
+    "galaxy-watch-9-44-lte-graphite-оаэ-s3-28200": {
+      "url": "hybrid-products/galaxy_watch/galaxy-watch-9-44-lte-graphite-s3-28200.html",
+      "url_en": "en/hybrid-products/galaxy_watch/galaxy-watch-9-44-lte-graphite-s3-28200.html",
+      "cover": "assets/product-images/0cad74e212681711cdcb4a06.jpg",
+      "name": "Galaxy Watch 9 44 LTE Graphite",
+      "warehouse": "(S3)",
+      "price": 28200
     }
   }
 }
