@@ -243,7 +243,7 @@
     if (dk === "buyback") return pick(["на согл", "выкуплен"]);
     if (dk === "parts") return pick(["на согл", "выкуплен", "разобран"]);
     if (dk === "tradein") return pick(["на согл", "ждем предоплату", "обмен оформлен"]);
-    if (dk === "sale_used" || dk === "sale_new" || dk === "sale_parts") return pick(["на согл", "ждем предоплату", "продан"]);
+    if (dk === "sale_used" || dk === "sale_new" || dk === "sale_parts") return pick(["заказ создан", "на согл", "ждем предоплату", "продан"]);
     if (dk === "pawn") return pick(["в залоге", "залог выкуплен", "залог не выкуплен"]);
     return all.filter(x => !norm(x).startsWith("залог") && !norm(x).startsWith("в залоге"));
   }
@@ -739,7 +739,7 @@
   }
   function demoOptions() {
     const uniq = c => [...new Set(S.rows.map(r => String(cell(r, c)).trim()).filter(Boolean))];
-    S.opts[C.status] = ["Принят на диагностику", "На согласовании", "Ждем предоплату", "Заказана запчасть", "В работе", "Готов ожидает клиента", "Выполнен", "Отказ от ремонта после диагностики", "Выкуплен", "Разобран на запчасти", "Обмен оформлен", "Продан", "В залоге", "Залог выкуплен", "Залог не выкуплен"];
+    S.opts[C.status] = ["Принят на диагностику", "Заказ создан", "На согласовании", "Ждем предоплату", "Заказана запчасть", "В работе", "Готов ожидает клиента", "Выполнен", "Отказ от ремонта после диагностики", "Выкуплен", "Разобран на запчасти", "Обмен оформлен", "Продан", "В залоге", "Залог выкуплен", "Залог не выкуплен"];
     S.opts[C.master] = uniq(C.master).sort();
     S.opts[C.source] = uniq(C.source);
     S.opts[C.type] = ["Ремонт", "Выкуп", "Выкуп на запчасти", "Trade-in", "Продажа б/у", "Продажа нового", "Продажа запчастей", "Залог", "Другое"];
@@ -1389,7 +1389,7 @@
     if (!list.length) return "";
     return `<div class="pp__sub">${title}</div>` + list.map(({ x, j }) => `<button type="button" class="pp__item${x.kind === "stock" ? " is-stock" : ""}" data-svx="${j}">
         <b>${esc(cap(x.operation))} <span class="note">${x.kind === "stock" ? "📦 с полки" : esc(x.src)} · ${esc(x.variant)}</span>${x.here ? ` <span class="psup__here">в Сочи</span>` : ""}</b>
-        <span>${money(x.price)} <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_price || x.cost)}${x.part_price && x.part_price !== x.cost ? ` (закупка ${money(x.cost)})` : ""}${x.kind === "stock" ? ` · на полке ${x.qty} шт` + (isVitalya(x.src) ? " (Виталя)" : isDonor(x.src) ? " (донор)" : x.src ? " (" + esc(x.src) + ")" : "") : ""}</em>${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("") + (title.startsWith("📦") ? `<div class="pp__sub">Прайс</div>` : "");
+        <span>${money(x.price)} <em class="note">= работа ${money(x.work)} + запчасть ${money(x.part_price || x.cost)}${x.part_price && x.part_price !== x.cost ? ` (закупка ${money(x.cost)})` : ""}${x.kind === "stock" ? ` · на полке ${x.qty} шт` + ((() => { const rv = skReserve().get(String(x.key || "").trim()) || 0; return rv ? ` · в резерве ${rv}` : ""; })()) + (isVitalya(x.src) ? " (Виталя)" : isDonor(x.src) ? " (донор)" : x.src ? " (" + esc(x.src) + ")" : "") : ""}</em>${x.warranty_days ? " · гар. " + x.warranty_days + " дн." : ""}</span><i>＋</i></button>`).join("") + (title.startsWith("📦") ? `<div class="pp__sub">Прайс</div>` : "");
   }
   // Сколько заказов этой техники с такой работой (v76, 23.10.2026; владелец — «самые часто используемые виды работ
   // перенеси в верх списка»): работа узнаётся в «Выполненных работах» по детали (PART_OP: «акб» → замена
@@ -2653,6 +2653,24 @@
     if (r && skWrittenOff(cell(r, C.num)).some(w => w.key === c[0].key)) return null; // уже списывали в этот заказ — пусть решат кнопкой
     return skBind(key, r, i, c[0].key);
   }
+  // Резерв (владелец 26.11.2026): запчасть, привязанная «со склада» в незакрытом заказе,
+  // ещё не списана — она зарезервирована под этот заказ. Списание происходит только когда
+  // заказ закрывают («Выполнен», «Продан» и т.п.), а не в момент сохранения.
+  function skReserve() {
+    const ck = (S.tipRevision || 0) + ":" + S.dirty.size + ":" + (S.loadedAt || 0);
+    if (S.resv && S.resv.ck === ck) return S.resv.map;
+    const map = new Map();
+    try {
+      for (const r of S.rows) {
+        const st = norm(String(cell(r, C.status) || ""));
+        if (/выполнен/.test(st) || DEAL_FINAL.some(n => st.startsWith(n))) continue;
+        const wo = new Set(skWrittenOff(cell(r, C.num)).map(w => String(w.key).trim()));
+        for (const p of partsOf(r.row, r)) if (p.stock && !p.stockRestored && !wo.has(String(p.stock).trim())) map.set(String(p.stock).trim(), (map.get(String(p.stock).trim()) || 0) + 1);
+      }
+    } catch (e) { console.warn("резервы:", e); }
+    S.resv = { ck, map };
+    return map;
+  }
   const skPending = key => (S.parts.get(key) || []).filter(p => p.stock && !p.stockRestored && skSrcMatch(p.src, S.stock?.byKey?.get(p.stock))).map(p => ({ key: p.stock, name: String(p.name).trim() }));
   // Сколько каждой позиции списано в заказ: сумма движения по номеру заказа.
   function skWrittenOff(num) {
@@ -2853,7 +2871,7 @@
     if (!S.stock?.rows) return "";
     const bound = p.stock && S.stock.byKey.get(p.stock);
     if (bound && skSrcMatch(p.src, bound))
-      return `<div class="psk is-on">📦 Со склада: <b>${esc(skShort(bound) + skFrom(bound))}</b> — ${p.stockRestored?(r&&skWrittenOff(cell(r,C.num)).some(w=>w.key===p.stock)?"уже списана со склада":"сохранённая привязка; списание проверьте по журналу"):"спишется при сохранении"}<button type="button" class="linkbtn" data-act="skunbind" data-i="${i}">${p.stockRestored?"убрать привязку":"не со склада"}</button></div>`;
+      return `<div class="psk is-on">📦 Со склада: <b>${esc(skShort(bound) + skFrom(bound))}</b> — ${p.stockRestored?(r&&skWrittenOff(cell(r,C.num)).some(w=>w.key===p.stock)?"уже списана со склада":"сохранённая привязка; списание проверьте по журналу"):"спишется при выполнении заказа"}<button type="button" class="linkbtn" data-act="skunbind" data-i="${i}">${p.stockRestored?"убрать привязку":"не со склада"}</button></div>`;
     if (!norm(p.src) && !String(p.name).trim()) return ""; // пустая строка — не подсказываем
     if (skCovered(key, r).has(i)) return `<div class="psk is-on"><span>📦 уже списана со склада</span></div>`;
     const c = skCandidates(key, r, p);
@@ -4072,6 +4090,7 @@
     set(C.comment, [o.ref + (o.user ? " (@" + o.user + ")" : ""),
       disc ? `скидка ${disc.toLocaleString("ru-RU")} ₽${kindRu ? " (" + kindRu + ")" : ""}` + (hasPricing ? " — цены позиций уже со скидкой" : " — разложена по позициям") : "",
       pre.length ? "под заказ: " + pre.join(", ") : ""].filter(Boolean).join("; "));
+    if (pre.length) set(C.status, "Заказ создан");
     S.extra = rest.map(x => ({ [C.device]: x.name, [C.total]: x.price != null ? String(Math.max(0, x.price - (cut.get(x) || 0))) : "", [C.partCost]: x.purchase ? String(x.purchase) : "", [C.warranty]: x.warranty || "" }));
     S.multi = S.extra.length > 0;
     S.imp = { open: false };
@@ -4859,7 +4878,9 @@
     }
     const skOps = skPending(key); // запчасти со склада Витали — списать после записи заказа
     if (!list.length && !skOps.length) return;
+    const finSt = v => /выполнен/i.test(String(v ?? "")) || DEAL_FINAL.some(n => norm(String(v ?? "")).startsWith(n));
     if (!list.length) { // в заказе ничего не поменялось, только выбрали запчасть со склада
+      if (!finSt(cell(r, C.status))) { render(); toast(`№${num}: запчасть 📦 зарезервирована — спишется, когда заказ будет выполнен`, null, true); return; }
       busy(true);
       const msg = await skWriteOff(num, skOps);
       S.parts.delete(key); render(); toast(`№${num}:${msg.replace(/^ ·/, "")}`, null, true);
@@ -4899,7 +4920,8 @@
       if (conflicts.length && !confirm(`Коллега изменил клетки, которые вы правите:\n\n${conflicts.map(c => `№${c.num} · ${c.field}: когда вы открывали — «${c.was}», сейчас — «${c.now}»`).join("\n")}\n\nOK — записать ваше значение поверх; «Отмена» — не сохранять (правка останется в форме).`)) { busy(false); return; }
       await Promise.all([list.length ? writeCells(r.row, list) : null, ...[...others].map(([x, l]) => writeCells(x.row, l))]);
       journal([...jrRows(num, r.row, list), ...[...others].flatMap(([x, l]) => jrRows(cell(x, C.num), x.row, l))]); // v84, в фоне
-      const skMsg = skOps.length ? await skWriteOff(num, skOps) : "";
+      const closingNow = stCh && finSt(stCh.v), wasFinal = finSt(cell(r, C.status));
+      const skMsg = skOps.length ? ((closingNow || wasFinal) ? await skWriteOff(num, skOps) : " · 📦 зарезервировано — спишется при выполнении заказа") : "";
       // Тихое закрытие: дверь не зовём (клиенту ничего), историю пишем сами.
       const quiet = [[r, list], ...others].filter(([x, l]) => l.some(ch => ch.c === C.status && (isSilent(ch.v) || dealKey(get(C.type)) === "reminder")));
       if (quiet.length) await logStatus(quiet.map(([x, l]) => { const ch = l.find(c => c.c === C.status); return [x.row, ch.old, ch.v]; }));
