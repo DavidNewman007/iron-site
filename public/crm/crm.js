@@ -3679,7 +3679,7 @@
       const cols = PER_DEVICE[dk].filter(c => !hidden(c));
       right += box(4, `<section class="block"><h3>Устройство 1</h3>${multiBox}${TIN_TYPES.includes(dk) ? tinBox(key, r) : ""}${deviceGrid(cols, c => fh(c))}</section>`);
       right += box(5, extraDevicesHtml(dk) + (TIN_TYPES.includes(dk) ? tinHtml(key, r) : ""));
-      right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}${TIN_TYPES.includes(dk) ? fh(C.pass, { area: true }) : ""}${prepayHtml(key, r, val, dk)}</div>
+      right += box(6, `<section class="block"><h3>Общее для всех устройств</h3><div class="grid2 grid2--wide">${fh(C.comment)}${fh(C.extra)}${TIN_TYPES.includes(dk) ? fh(C.pass, { area: true }) : ""}${DISC_TYPES.includes(dk) && (isNew || editable(C.total, r)) ? discountHtml(key, r, val) : ""}${prepayHtml(key, r, val, dk)}</div>
         ${payHtml(key, r, val, dk)}
         <div class="margin">${groupMoneySummary(dk)}</div></section>`);
     } else {
@@ -3816,12 +3816,14 @@
       .filter(v => toNum(v) == null).length;
     const warn = missing ? `<div class="note" style="color:var(--wait)">⚠️ Без суммы: ${missing} из ${N} — впишите, иначе итог не сойдётся.</div>` : "";
     const f = n => n.toLocaleString("ru-RU") + " ₽";
+    const d = parseDiscount(S.dirty.get("new:" + C.discount) || "");
+    const dline = d && get(C.total) ? `<div class="note">Без скидки ${f(baseOf(get(C.total), d, S.dirty.get("new:" + C.payment) || ""))} · скидка ${discText(d)}</div>` : "";
     if (dk === "buyback" || dk === "parts") return `Итого отдаём клиенту за ${N} устр.: <b>${f(get(C.buyback))}</b>${warn}`;
     if (dk === "pawn") return `Залог ${N} устр.: выдали <b>${f(get(C.buyback))}</b> · вернёт <b>${f(get(C.total))}</b> · доход при выкупе <b>${f(get(C.total) - get(C.buyback))}</b>${warn}`;
     if (dk === "tradein") return `Доплата ${f(get(C.total))} + зачёт ${f(get(C.buyback))} − закупка ${f(get(C.partCost))} − расходы ${f(extra)} = остаётся нам: <b>${f(get(C.total) + get(C.buyback) - get(C.partCost) - extra)}</b>${warn}`;
     const cr = TIN_TYPES.includes(dk) ? (toNum(S.dirty.get("new:" + C.buyback)) || 0) : 0, tinLine = cr ? `<div class="note">🔄 Трейд-ин: зачёт ${f(cr)} → клиент доплачивает <b>${f(Math.max(0, get(C.total) - cr))}</b></div>` : "";
-    if (dk.startsWith("sale")) return `Итого по ${N} устр.: <b>${f(get(C.total))}</b> · закупка ${f(get(C.partCost))} · остаётся нам: <b>${f(get(C.total) - get(C.partCost) - extra)}</b>${warn}${tinLine}`;
-    return `Итого по ${N} устр.: <b>${f(get(C.total))}</b>${warn}`;
+    if (dk.startsWith("sale")) return `Итого по ${N} устр.: <b>${f(get(C.total))}</b> · закупка ${f(get(C.partCost))} · остаётся нам: <b>${f(get(C.total) - get(C.partCost) - extra)}</b>${warn}${tinLine}${dline}`;
+    return `Итого по ${N} устр.: <b>${f(get(C.total))}</b>${warn}${dline}`;
   }
 
   // «Напомнить об отзыве» — кнопкой-переключателем рядом с кнопкой отчёта (владелец,
