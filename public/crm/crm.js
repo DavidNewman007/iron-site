@@ -4055,16 +4055,23 @@
     set(C.name, o.who); set(C.phone, o.phone);
     const [first, ...rest] = o.items;
     const promo = o.promo ? Number(o.promo.amount) || 0 : 0;
-    // Скидка бота — в колонку «Скидка» заказа и пропорционально по позициям (остаток —
-    // на последнюю): раньше молча вычиталась из первой позиции, и в отчёт клиенту скидка
-    // не попадала (владелец 26.11.2026).
+    // Скидка бота бывает трёх видов: промокод, «за несколько товаров» (bundle) и акция
+    // (offer). Бот считает её сам и отдаёт в o.pricing.discount, а цены позиций УЖЕ со
+    // скидкой. Раньше в CRM доходил только промокод (и то молча вычитался из первой
+    // позиции), а скидка за несколько товаров не виднела вовсе (владелец 26.11.2026).
+    const hasPricing = Boolean(o.pricing);
+    const disc = hasPricing && o.pricing.discount ? Number(o.pricing.discount.amount) || 0 : promo;
+    const kindRu = { promo: "промокод", bundle: "за несколько товаров", offer: "акция" }[(hasPricing && o.pricing.discount?.kind) || (promo ? "promo" : "")] || "";
     const priced = o.items.filter(x => x.price != null), sumP = priced.reduce((a, x) => a + x.price, 0);
-    let left = Math.max(0, Math.min(promo, sumP)); const cut = new Map();
-    priced.forEach((x, i) => { const c = i === priced.length - 1 ? left : Math.round(promo * x.price / (sumP || 1)); cut.set(x, Math.max(0, Math.min(c, left))); left -= cut.get(x); });
-    set(C.device, first.name); set(C.total, first.price != null ? Math.max(0, first.price - (cut.get(first) || 0)) : "");
-    if (promo) set(C.discount, promo + " ₽");
+    let left = hasPricing ? 0 : Math.max(0, Math.min(promo, sumP)); const cut = new Map();
+    if (!hasPricing) priced.forEach((x, i) => { const c = i === priced.length - 1 ? left : Math.round(promo * x.price / (sumP || 1)); cut.set(x, Math.max(0, Math.min(c, left))); left -= cut.get(x); });
+    set(C.device, first.name); set(C.total, first.price != null ? String(Math.max(0, first.price - (cut.get(first) || 0))) : "");
+    if (disc) set(C.discount, disc + " ₽");
     set(C.partCost, first.purchase || ""); set(C.warranty, first.warranty || "");
-    set(C.comment, [o.ref + (o.user ? " (@" + o.user + ")" : ""), o.promo ? `промокод ${o.promo.code}: −${o.promo.amount} ₽ — скидка в колонке «Скидка», разложена по позициям` : ""].filter(Boolean).join("; "));
+    const pre = o.items.filter(x => x.preorder).map(x => x.name);
+    set(C.comment, [o.ref + (o.user ? " (@" + o.user + ")" : ""),
+      disc ? `скидка ${disc.toLocaleString("ru-RU")} ₽${kindRu ? " (" + kindRu + ")" : ""}` + (hasPricing ? " — цены позиций уже со скидкой" : " — разложена по позициям") : "",
+      pre.length ? "под заказ: " + pre.join(", ") : ""].filter(Boolean).join("; "));
     S.extra = rest.map(x => ({ [C.device]: x.name, [C.total]: x.price != null ? String(Math.max(0, x.price - (cut.get(x) || 0))) : "", [C.partCost]: x.purchase ? String(x.purchase) : "", [C.warranty]: x.warranty || "" }));
     S.multi = S.extra.length > 0;
     S.imp = { open: false };
