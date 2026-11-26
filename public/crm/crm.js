@@ -5735,6 +5735,23 @@
     if (it.dataset.client) pickClient(it.dataset.client, it.dataset.from === String(C.phone),it.dataset.card??curKey(),it.dataset.query??null);
     else if (it.dataset.phone) pickClientPhone(it.dataset.phone,it.dataset.card??curKey());
   });
+  // Автоформат телефона прямо во время ввода (v126, 26.11.2026): как только в
+  // поле собрался завершённый номер — 10 цифр без префикса (9xx мобильный, 3xx/4xx
+  // регион) или 11 с 8/7 — сразу приводим к канону: российские 8-xxx, Абхазия/ЮО
+  // (940/941/943) — +7-xxx. Отдельный слушатель, чтобы не зависеть от порядка и
+  // ранних return в onEdit; каретка обязана быть в конце — в середине поля номер
+  // не переставляем.
+  document.addEventListener("input", e => {
+    const t = e.target;
+    if (t.dataset?.edit == null || t.dataset.act != null) return;
+    const c = +t.dataset.edit;
+    if (!F[c]?.tel) return;
+    const p = Customer.parse(t.value);
+    if (p.length === 1 && /^7\d{10}$/.test(p[0].d) && (t.selectionStart == null || t.selectionStart === t.value.length)) {
+      const f = Customer.format(t.value);
+      if (f !== t.value) t.value = f;
+    }
+  });
   document.addEventListener("input", onEdit);
   // Форма своей позиции: поставщика вписали руками — перерисовать подписи (донор → «с какого
   // устройства», Виталя → «попадёт в его таблицу») и подсветку кнопок.
@@ -5759,7 +5776,7 @@
       if (x) toast(`📦 Со склада: ${skShort(x)}${skFrom(x)} — спишется при сохранении`);
     }, 0);
   });
-  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.dataset.sel != null || e.target.dataset.watchEdit != null || e.target.dataset.notifyphase != null || e.target.dataset.pf === "name" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device))) && e.target.dataset.act !== "multi") onEdit(e); });
+  document.addEventListener("change", e => { if ((e.target.tagName === "SELECT" || e.target.dataset.sel != null || e.target.dataset.watchEdit != null || e.target.dataset.notifyphase != null || e.target.dataset.pf === "name" || e.target.type === "checkbox" || e.target.dataset.act === "impdate" || e.target.dataset.edit === String(C.device) || (e.target.dataset.extra != null && e.target.dataset.col === String(C.device)) || (e.target.dataset.edit != null && F[+e.target.dataset.edit]?.tel)) && e.target.dataset.act !== "multi") onEdit(e); });
   window.addEventListener("hashchange", () => { window.scrollTo(0, 0); render(); });
   window.addEventListener("beforeunload", e => { if (S.pendingDoors > 0 || S.skDirty.size || [...S.dirty.keys()].some(k => !k.startsWith("new:"))) { e.preventDefault(); e.returnValue = ""; } });
   // Новая версия на сайте. GitHub Pages отдаёт страницу с кэшем на 10 минут, и 28.09.2026
