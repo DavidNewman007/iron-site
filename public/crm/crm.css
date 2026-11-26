@@ -824,3 +824,10 @@ mark { background: var(--gold); color: var(--black); border-radius: 3px; padding
 
 .quote-devices{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.quote-selected{color:var(--ready)}.quote-total strong{display:block;font:600 2rem var(--font-display);color:var(--gold);margin:8px 0}.quote-manual{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}.quote-manual summary{cursor:pointer;font-weight:700;margin-bottom:10px}
 .quote-devices .btn{white-space:normal;text-align:left}.quote-devices small{color:var(--ready);font:400 .9rem var(--font-body);display:block;text-transform:none;letter-spacing:0}.quote-brand{max-width:400px;margin-top:12px}.quote-catalog{margin-top:18px}.quote-model-results h4{margin-bottom:4px}.quote-model-results select{max-width:100%;min-width:0}.quote-model-results .note{margin-top:4px}
+
+/* Флаг страны у «Клиент» и чип у WhatsApp/Telegram (v66, 26.11.2026, план93 §11.101) */
+.cflag{display:inline-block;width:1.2em;height:.85em;vertical-align:-.08em;border-radius:2px;margin-left:.4em;background:linear-gradient(#fff 33.3%,#0039a6 33.3% 66.6%,#d52b1e 66.6%);box-shadow:0 0 0 1px rgba(0,0,0,.45)}
+.cflag-abkh{background:repeating-linear-gradient(180deg,#1a7d3c 0 3px,#fff 3px 6px)}
+.cflag-osset{background:linear-gradient(#fff 33.3%,#c81e2c 33.3% 66.6%,#f2d400 66.6%)}
+.country-chip{cursor:default;border:1px solid #33513d;background:linear-gradient(90deg,rgba(26,125,60,.28),rgba(26,125,60,.10));color:#d7ecdd}
+.country-chip.cc-osset{border-color:#5a4a2a;background:linear-gradient(90deg,rgba(200,30,44,.22),rgba(242,212,0,.10));color:#f0e6cd}

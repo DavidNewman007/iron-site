@@ -310,6 +310,32 @@
   function digits(s) { return String(s ?? "").replace(/\D/g, ""); }
   const Customer = globalThis.IRON_CUSTOMER_RULES;
   function phones(cell) { return Customer.parse(cell); }
+  // Страна по коду номера (владелец 26.11.2026): Абхазия 940/941, Южная Осетия 943 —
+  // обычные звонки туда платные, лучше писать в WhatsApp/Telegram. Пометки в карточке:
+  // флажок у заголовка «Клиент» (для любых завершённых номеров, включая Россию) и
+  // чип-подпись у кнопок WhatsApp/Telegram (только Абхазия/ЮО — это сигнал «не звонить»).
+  function countryOf(d) {
+    if (!/^7\d{10}$/.test(String(d || ""))) return null;
+    const c = String(d).slice(1, 4);
+    if (c === "940" || c === "941") return { k: "abkh", n: "Абхазия" };
+    if (c === "943") return { k: "osset", n: "Южная Осетия" };
+    return { k: "ru", n: "Россия" };
+  }
+  function countryFlag(d) {
+    const co = countryOf(d);
+    return `<span class="cflag${co ? " cflag-" + co.k : ""}" title="${co ? (co.k === "ru" ? "Россия" : co.n + " — звонки платные, лучше писать в WhatsApp/Telegram") : ""}"${co ? "" : " hidden"}></span>`;
+  }
+  function countryChip(d) {
+    const co = countryOf(d);
+    return co && co.k !== "ru" ? `<span class="btn country-chip cc-${co.k}" title="звонки платные — пишите в WhatsApp или Telegram">${co.n}</span>` : "";
+  }
+  function paintCflag(slot, cellValue) {
+    const co = countryOf(phones(cellValue)[0]?.d);
+    slot.className = "cflag" + (co ? " cflag-" + co.k : "");
+    slot.title = co ? (co.k === "ru" ? "Россия" : co.n + " — звонки платные, лучше писать в WhatsApp/Telegram") : "";
+    slot.hidden = !co;
+  }
+
 
   function isTrue(v) { return v === true || ["true", "ok", "да"].includes(norm(v)); }
   function toast(text, action, long) {
@@ -3438,7 +3464,7 @@
     let m = remDraft(key, r);
     if (!m.id) { m = blankReminder(); S.dirty.set(key + ":" + C.reminder, JSON.stringify(m)); }
     return `<div class="card-grid"><div class="col"><section class="block"><h3>Тип сделки</h3><b>🔔 Напоминание</b>${isNew ? `<button type="button" class="btn btn--ghost btn--sm" data-choice="${C.type}" data-value="Ремонт">Выбрать другой тип</button>` : ""}</section>
-      <section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew||editable(C.name,r)?`<div class="ac" id="ac-${C.name}"></div>`:""}</div><div>${fh(C.phone)}${isNew||editable(C.phone,r)?`<div class="ac" id="ac-${C.phone}"></div>`:""}</div></div>${r ? msgHtml(r) : ""}</section>
+      <section class="block"><h3>Клиент ${countryFlag(phones(val(C.phone))[0]?.d)}</h3><div class="grid2"><div>${fh(C.name)}${isNew||editable(C.name,r)?`<div class="ac" id="ac-${C.name}"></div>`:""}</div><div>${fh(C.phone)}${isNew||editable(C.phone,r)?`<div class="ac" id="ac-${C.phone}"></div>`:""}</div></div>${r ? msgHtml(r) : ""}</section>
       <section class="block"><h3>Этап напоминания</h3>${r && reminderOverdue(r) ? `<p class="rem--overdue">Просрочен контакт: ${esc(remMeta(r).nextDate)}</p>` : ""}${isNew ? `<b>${esc(REM_STAGES[0])}</b>` : ddHtml(key, C.status, val(C.status) || REM_STAGES[0], REM_STAGES, { allowEmpty: false })}<p class="note">Ручная смена этапа сама по себе не отправляет сообщение. Автоподбор поставит «Сообщили клиенту» после подтверждённой отправки; вручную отмечайте только после связи.</p></section>
       ${!isNew && S.remConverting === key ? `<section class="block"><h3>Клиент согласен — какой тип сделки?</h3>${choiceButtons(key, C.type, "Напоминание", typeOptions().filter(x => x !== "Напоминание" && !/trade|трейд/i.test(x)), () => "type")}<p class="note">Трейд-ин — через галочку в продаже. После выбора заполните конкретное устройство, цену и остальные поля; затем сохраните.</p></section>` : !isNew && !isFinal(val(C.status)) ? `<button type="button" class="btn btn--red" data-act="remconvert">Клиент согласен — оформить сделку</button>` : ""}
       ${r ? `<section class="block">${histHtml(r)}${deleteBox(r)}</section>` : ""}</div><div class="col"><section class="block"><h3>Просьба клиента</h3>${reminderFields(m)}<p class="note">Бюджет — жёсткий предел подбора; для замены включает деталь и работу. Цена сделки записывается отдельно после согласования.</p></section>${reminderRuntime(r)}</div></div>`;
@@ -3556,9 +3582,9 @@
     // него (и после «Что продаём» у новой продажи). order — для телефона, где колонки сливаются в одну ленту.
     const statusBox = html ? box(3, html) : ""; html = "";
 
-    if(dk!=='internal')html += `<section class="block"><h3>Клиент</h3><div class="grid2"><div>${fh(C.name)}${isNew || editable(C.name,r) ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew || editable(C.phone,r) ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
+    if(dk!=='internal')html += `<section class="block"><h3>Клиент ${countryFlag(tel[0]?.d)}</h3><div class="grid2"><div>${fh(C.name)}${isNew || editable(C.name,r) ? `<div class="ac" id="ac-${C.name}"></div>` : ""}</div><div>${fh(C.phone)}${isNew || editable(C.phone,r) ? `<div class="ac" id="ac-${C.phone}"></div>` : ""}</div></div>
       ${isNew ? `<div id="pre-contact" class="note pre-contact">${preNoteText()}</div><div id="client-devs">${clientDevicesHtml(currentNewClient())}</div>` : ""}
-      ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
+      ${tel.length ? `<div class="row">${tel.map(p => `<a class="btn" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>${countryChip(p.d)}`).join("")}</div>` : ""}
       ${proxyHtml(key, r, isNew, val, fh)}<div data-notify-host>${recipientHtml(key,r)}</div>
       ${!isNew && canCreate() ? msgHtml(r) : ""}
       ${!isNew && canCreate() ? clientActions(r, dk) : ""}
@@ -3647,7 +3673,7 @@
       <div class="proxy__head">📲 На связи другой человек</div>
       <div class="grid2"><div>${fh(C.contactName)}<div class="ac" id="ac-${C.contactName}"></div></div><div>${fh(C.contactPhone)}<div class="ac" id="ac-${C.contactPhone}"></div></div></div>
       <p class="note">По умолчанию статусы идут человеку на связи, а итоговый отчёт — основному номеру клиента. Получателей выбирайте галочками ниже. Заказ и история остаются за владельцем устройства.${isNew ? "" : " Уже идущему заказу — впишите номер и нажмите «Отправить статус ещё раз»."}</p>
-      ${ctel.length ? `<div class="row">${ctel.map(p => `<a class="btn btn--sm" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost btn--sm" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost btn--sm" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>`).join("")}</div>` : ""}
+      ${ctel.length ? `<div class="row">${ctel.map(p => `<a class="btn btn--sm" href="tel:+${p.d}">📞 ${esc(p.text)}</a><a class="btn btn--ghost btn--sm" href="https://wa.me/${p.d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn--ghost btn--sm" href="https://t.me/+${p.d}" target="_blank" rel="noopener">Telegram</a>${countryChip(p.d)}`).join("")}</div>` : ""}
     </div>`;
   }
   // Повторная отправка текущего статуса (03.10.2026). Раньше для этого стирали статус и ставили
@@ -5751,6 +5777,8 @@
       const f = Customer.format(t.value);
       if (f !== t.value) t.value = f;
     }
+    const blk = t.closest(".block"), cflagSlot = blk && blk.querySelector(".cflag");
+    if (cflagSlot) paintCflag(cflagSlot, t.value);
   });
   document.addEventListener("input", onEdit);
   // Форма своей позиции: поставщика вписали руками — перерисовать подписи (донор → «с какого
