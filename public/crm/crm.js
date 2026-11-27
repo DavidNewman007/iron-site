@@ -1087,7 +1087,7 @@
   function selHtml(attrs, value, opts, placeholder = "—", disabled=false) {
     const list = opts.map(o => typeof o === "string" ? { v: o, t: o } : o), cur = list.find(o => o.v === (value ?? ""));
     const swatch=o=>/^#[0-9a-f]{6}$/i.test(o?.color||'')?`<span class="master-swatch" style="background:${o.color}" aria-hidden="true"></span>`:'';
-    return `<div class="dd sel"><button type="button" class="dd__btn t-none" data-sel-btn aria-expanded="false" ${disabled?'disabled':''}>${cur && cur.v ? swatch(cur)+esc(cur.t) : `<span class="dd__ph">${esc(placeholder)}</span>`}<i>▾</i></button>
+    return `<div class="dd sel"><button type="button" class="dd__btn t-none" data-sel-btn aria-expanded="false" ${disabled?'disabled':''}>${cur && cur.v ? `<span>${swatch(cur)}${esc(cur.t)}</span>` : `<span class="dd__ph">${esc(placeholder)}</span>`}<i>▾</i></button>
       <div class="dd__list sel__list" role="listbox">${list.map(o => `<button type="button" class="dd__opt sel__opt" ${disabled?'disabled':''} data-sel-v="${esc(o.v)}" aria-pressed="${o.v === (value ?? "")}">${swatch(o)}${esc(o.t)}</button>`).join("")}</div>
       <input type="hidden" data-sel ${attrs} value="${esc(value ?? "")}"></div>`;
   }
