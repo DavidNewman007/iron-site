@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-26T17:42:04.303Z",
-  "count": 286,
+  "generated_at": "2026-11-27T17:43:51.341Z",
+  "count": 291,
   "byId": {
     "-pencil-usb-c-muwa3-s1-9200": {
       "url": "hybrid-products/accessories/pencil-usb-c-muwa3-s1-9200.html",
@@ -2289,6 +2289,46 @@
       "name": "СЗУ Samsung 45W PD USB-C Black (адаптер samsung 45w p)",
       "warehouse": "(S5)",
       "price": 2200
+    },
+    "apple-pencil-usb-c-s4-8000": {
+      "url": "hybrid-products/accessories/apple-pencil-usb-c-s4-8000.html",
+      "url_en": "en/hybrid-products/accessories/apple-pencil-usb-c-s4-8000.html",
+      "cover": "assets/product-images/3d538523d6e220f186331fa3.jpg",
+      "name": "Apple Pencil (USB-C)",
+      "warehouse": "(S4)",
+      "price": 8000
+    },
+    "ipad-air-11-magic-keyboard-black-сша-s4-30500": {
+      "url": "hybrid-products/accessories/ipad-air-11-magic-keyboard-black-s4-30500.html",
+      "url_en": "en/hybrid-products/accessories/ipad-air-11-magic-keyboard-black-s4-30500.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Air 11 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 30500
+    },
+    "ipad-pro-11-magic-keyboard-black-индия-s4-30900": {
+      "url": "hybrid-products/accessories/ipad-pro-11-magic-keyboard-black-s4-30900.html",
+      "url_en": "en/hybrid-products/accessories/ipad-pro-11-magic-keyboard-black-s4-30900.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Pro 11 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 30900
+    },
+    "ipad-pro-11-magic-keyboard-black-гонконг-s4-30900": {
+      "url": "hybrid-products/accessories/ipad-pro-11-magic-keyboard-black-s4-30900.html",
+      "url_en": "en/hybrid-products/accessories/ipad-pro-11-magic-keyboard-black-s4-30900.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Pro 11 Magic Keyboard Black",
+      "warehouse": "(S4)",
+      "price": 30900
+    },
+    "ipad-smart-keyboard-folio-black-оаэ-s4-16500": {
+      "url": "hybrid-products/accessories/ipad-smart-keyboard-folio-black-s4-16500.html",
+      "url_en": "en/hybrid-products/accessories/ipad-smart-keyboard-folio-black-s4-16500.html",
+      "cover": "assets/product-images/4b7a536eac80f4695b68dd23.jpeg",
+      "name": "iPad Smart Keyboard Folio Black",
+      "warehouse": "(S4)",
+      "price": 16500
     }
   }
 }
