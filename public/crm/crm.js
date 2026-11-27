@@ -740,6 +740,7 @@
       const v = await api(`/values/${encodeURIComponent(rng)}`);
       S.opts[c] = [...new Set((v.values || []).flat().map(x => String(x).trim()).filter(Boolean))];
     }));
+    if(S.listFilters.master&&S.listFilters.master!=='__none'&&!(S.opts[C.master]||[]).some(x=>norm(x)===norm(S.listFilters.master)))S.listFilters.master='';
   }
   function demoOptions() {
     const uniq = c => [...new Set(S.rows.map(r => String(cell(r, c)).trim()).filter(Boolean))];
@@ -782,8 +783,8 @@
   }
   function pick(){return filterOrders(pickBase());}
   function listFiltersHtml(){
-    const names=[...new Set([...(S.opts[C.master]||[]),...S.rows.map(r=>cell(r,C.master))].flatMap(v=>String(v||'').split(/[,;\n/]+/)).map(v=>v.trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru'));
-    return `<section class="list-filters"><label class="field"><span>Мастер</span>${selHtml('data-list-master="1"',S.listFilters.master,[{v:'',t:'Все мастера'},{v:'__none',t:'Без мастера'},...names],'Все мастера')}</label><label class="field"><span>Устройство</span><input type="search" data-act="listdevice" value="${esc(S.listFilters.device)}" placeholder="Айфон 13, макбук эйр м1, Honor 9X…" autocomplete="off"></label>${S.listFilters.master||S.listFilters.device?'<button class="btn btn--ghost btn--sm" data-act="listfilterclear">Сбросить фильтры</button>':''}</section>`;
+    const names=[...new Set((S.opts[C.master]||[]).map(v=>String(v||'').trim()).filter(Boolean))];
+    return `<section class="list-filters"><label class="field"><span>Мастер</span>${selHtml('data-list-master="1"',S.listFilters.master,[{v:'',t:'Все мастера'},{v:'__none',t:'Без мастера'},...names],'Все мастера')}${!names.length?'<small class="note">Список мастеров загружается из таблицы. Если он не появился, обновите данные.</small>':''}</label><label class="field"><span>Устройство</span><input type="search" data-act="listdevice" value="${esc(S.listFilters.device)}" placeholder="Айфон 13, макбук эйр м1, Honor 9X…" autocomplete="off"></label>${S.listFilters.master||S.listFilters.device?'<button class="btn btn--ghost btn--sm" data-act="listfilterclear">Сбросить фильтры</button>':''}</section>`;
   }
   // Поиск одной строкой. Цифры: точный номер заказа → телефон (любая часть, от 4 цифр,
   // «8…» и «+7…» одинаково) → IMEI → номер по началу. Слова: должны найтись ВСЕ
