@@ -4990,7 +4990,9 @@
       const conflicts = [];
       const check = async x => {
         if (DEMO) return;
-        const chk = await api(`/values/${A1(0, x.row)}`);
+        // Compare the same formatted columns that were loaded into the card.
+        // A single-cell A request has no status, price or other values to compare.
+        const chk = await api(`/values/${A1(0, x.row, C.internalMeta, x.row)}?valueRenderOption=FORMATTED_VALUE`);
         if (String(chk.values?.[0]?.[0] ?? "").trim() !== String(cell(x, C.num)).trim()) throw new Error("Строка в таблице сдвинулась — обновите список (⟳) и повторите");
         // Вариант A (владелец 26.11): пока мы редактировали, коллега мог поменять те же клетки.
         const cur = chk.values?.[0] || [], chs = x === r ? list : (others.get(x) || []);
