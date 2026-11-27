@@ -782,9 +782,13 @@
     return rows.map((r,i)=>({r,i,score:query?globalThis.IRON_DEVICE_SEARCH.score(r.deviceSearch||cell(r,C.device),variants):1})).filter(x=>(F.master==='__none'? !norm(cell(x.r,C.master)):!F.master||masters(cell(x.r,C.master)).includes(norm(F.master)))&&x.score>0).sort((a,b)=>query?b.score-a.score||a.i-b.i:a.i-b.i).map(x=>x.r);
   }
   function pick(){return filterOrders(pickBase());}
+  // Dropdown option colours observed in the sheet's validation editor, 27.11.2026.
+  // The Sheets API does not expose these colours; bind to the exact master name,
+  // never to its position, so reordering the validation list does not change them.
+  const MASTER_COLORS={'Давид':'#c8ee66','Артур':'#4b9188','Владимир':'#7d51a0','Флорид':'#e2e2e2','Арсен':'#cf5430','Клим':'#d67e25','Володя (фото-техника)':'#4792d9','Дмитрий':'#e0c9ef','Адам':'#1e459b','Юра West':'#353535'};
   function listFiltersHtml(){
     const names=[...new Set((S.opts[C.master]||[]).map(v=>String(v||'').trim()).filter(Boolean))];
-    return `<section class="list-filters"><label class="field"><span>Мастер</span>${selHtml('data-list-master="1"',S.listFilters.master,[{v:'',t:'Все мастера'},{v:'__none',t:'Без мастера'},...names],'Все мастера')}${!names.length?'<small class="note">Список мастеров загружается из таблицы. Если он не появился, обновите данные.</small>':''}</label><label class="field"><span>Устройство</span><input type="search" data-act="listdevice" value="${esc(S.listFilters.device)}" placeholder="Айфон 13, макбук эйр м1, Honor 9X…" autocomplete="off"></label>${S.listFilters.master||S.listFilters.device?'<button class="btn btn--ghost btn--sm" data-act="listfilterclear">Сбросить фильтры</button>':''}</section>`;
+    return `<section class="list-filters"><label class="field"><span>Мастер</span>${selHtml('data-list-master="1"',S.listFilters.master,[{v:'',t:'Все мастера'},{v:'__none',t:'Без мастера'},...names.map(v=>({v,t:v,color:MASTER_COLORS[v]}))],'Все мастера')}${!names.length?'<small class="note">Список мастеров загружается из таблицы. Если он не появился, обновите данные.</small>':''}</label><label class="field"><span>Устройство</span><input type="search" data-act="listdevice" value="${esc(S.listFilters.device)}" placeholder="Айфон 13, макбук эйр м1, Honor 9X…" autocomplete="off"></label>${S.listFilters.master||S.listFilters.device?'<button class="btn btn--ghost btn--sm" data-act="listfilterclear">Сбросить фильтры</button>':''}</section>`;
   }
   // Поиск одной строкой. Цифры: точный номер заказа → телефон (любая часть, от 4 цифр,
   // «8…» и «+7…» одинаково) → IMEI → номер по началу. Слова: должны найтись ВСЕ
@@ -1082,8 +1086,9 @@
   // выборе. Значение — в скрытом поле с прежними data-атрибутами: выбор шлёт ему input и change, обработчики прежние.
   function selHtml(attrs, value, opts, placeholder = "—", disabled=false) {
     const list = opts.map(o => typeof o === "string" ? { v: o, t: o } : o), cur = list.find(o => o.v === (value ?? ""));
-    return `<div class="dd sel"><button type="button" class="dd__btn t-none" data-sel-btn aria-expanded="false" ${disabled?'disabled':''}>${cur && cur.v ? esc(cur.t) : `<span class="dd__ph">${esc(placeholder)}</span>`}<i>▾</i></button>
-      <div class="dd__list sel__list" role="listbox">${list.map(o => `<button type="button" class="dd__opt sel__opt" ${disabled?'disabled':''} data-sel-v="${esc(o.v)}" aria-pressed="${o.v === (value ?? "")}">${esc(o.t)}</button>`).join("")}</div>
+    const swatch=o=>/^#[0-9a-f]{6}$/i.test(o?.color||'')?`<span class="master-swatch" style="background:${o.color}" aria-hidden="true"></span>`:'';
+    return `<div class="dd sel"><button type="button" class="dd__btn t-none" data-sel-btn aria-expanded="false" ${disabled?'disabled':''}>${cur && cur.v ? swatch(cur)+esc(cur.t) : `<span class="dd__ph">${esc(placeholder)}</span>`}<i>▾</i></button>
+      <div class="dd__list sel__list" role="listbox">${list.map(o => `<button type="button" class="dd__opt sel__opt" ${disabled?'disabled':''} data-sel-v="${esc(o.v)}" aria-pressed="${o.v === (value ?? "")}">${swatch(o)}${esc(o.t)}</button>`).join("")}</div>
       <input type="hidden" data-sel ${attrs} value="${esc(value ?? "")}"></div>`;
   }
   function choiceButtons(key, col, current, opts, kindOf) {
